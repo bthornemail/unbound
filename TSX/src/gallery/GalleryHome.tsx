@@ -5,7 +5,9 @@ import { examples, groups } from './examples';
 export default function GalleryHome() {
   const [query, setQuery] = useState('');
   const q = query.trim().toLowerCase();
-  const visible = examples.filter((e) => !q || e.title.toLowerCase().includes(q) || e.group.toLowerCase().includes(q));
+  const visible = examples.filter(
+    (e) => !q || [e.title, e.group, e.summary, e.description].some((text) => text.toLowerCase().includes(q)),
+  );
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
@@ -35,13 +37,15 @@ export default function GalleryHome() {
                   <Link
                     key={e.slug}
                     to={`/examples/${e.slug}`}
-                    className="group rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-gray-400 hover:shadow-md"
+                    className="group flex flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-gray-400 hover:shadow-md"
                   >
                     <div className="mb-2 flex items-center justify-between text-xs text-gray-500">
                       <span className="rounded-full bg-gray-100 px-2 py-0.5">{e.group}</span>
                       <span>#{examples.indexOf(e) + 1}</span>
                     </div>
                     <h3 className="font-semibold group-hover:underline">{e.title}</h3>
+                    <p className="mt-1 text-sm font-medium text-gray-700">{e.summary}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-gray-500">{e.description}</p>
                   </Link>
                 ))}
               </div>

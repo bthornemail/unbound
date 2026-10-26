@@ -67,7 +67,7 @@ export default function ExampleView() {
         <Link to="/" className={navButton}>
           ← Gallery
         </Link>
-        <h1 className="min-w-0 flex-1 truncate text-center font-semibold">
+        <h1 className="min-w-0 flex-1 truncate text-center font-semibold" title={example.summary}>
           {example.title}
           <span className="ml-2 text-sm font-normal text-gray-400">
             {index + 1} / {examples.length}
