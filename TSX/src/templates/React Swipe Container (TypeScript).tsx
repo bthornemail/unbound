@@ -103,13 +103,13 @@ const SwipeContainer: React.FC<SwipeContainerProps> = ({
   );
 };
 
-  const defaultCards = [
-    { id: 1, color: 'bg-red-400', title: 'Card 1' },
-    { id: 2, color: 'bg-blue-400', title: 'Card 2' },
-    { id: 3, color: 'bg-green-400', title: 'Card 3' },
-    { id: 4, color: 'bg-yellow-400', title: 'Card 4' },
-    { id: 5, color: 'bg-purple-400', title: 'Card 5',element:  <AtomicALUSurface />}
-  ];
+const defaultCards = [
+  { id: 1, color: 'bg-red-400', title: 'Card 1' },
+  { id: 2, color: 'bg-blue-400', title: 'Card 2' },
+  { id: 3, color: 'bg-green-400', title: 'Card 3' },
+  { id: 4, color: 'bg-yellow-400', title: 'Card 4' },
+  { id: 5, color: 'bg-purple-400', title: 'Card 5', element: <AtomicALUSurface /> }
+];
 // Demo component to show the swipe container in action
 const SwipeDemo: React.FC<{ cards?: typeof defaultCards }> = ({ cards = defaultCards }) => {
   const [currentCard, setCurrentCard] = useState(0);
@@ -140,7 +140,7 @@ const SwipeDemo: React.FC<{ cards?: typeof defaultCards }> = ({ cards = defaultC
         <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
           Swipe Container Demo
         </h1>
-        
+
         <div className="mb-6">
           <p className="text-center text-gray-600 mb-2">
             Try swiping on the card below:
@@ -150,6 +150,9 @@ const SwipeDemo: React.FC<{ cards?: typeof defaultCards }> = ({ cards = defaultC
           </p>
         </div>
 
+        <h3 className="text-2xl font-bold mb-4">
+          {cards[currentCard].title}
+        </h3>
         <SwipeContainer
           onSwipeLeft={nextCard}
           onSwipeRight={prevCard}
@@ -158,7 +161,7 @@ const SwipeDemo: React.FC<{ cards?: typeof defaultCards }> = ({ cards = defaultC
           threshold={50}
           className="mb-6"
         >
-          {cards[currentCard].element ? cards[currentCard].element :          <div className={`${cards[currentCard].color} rounded-lg shadow-lg p-8 text-center text-white transition-all duration-300 cursor-grab active:cursor-grabbing`}>
+          {cards[currentCard].element ? cards[currentCard].element : <div className={`${cards[currentCard].color} rounded-lg shadow-lg p-8 text-center text-white transition-all duration-300 cursor-grab active:cursor-grabbing`}>
             <h2 className="text-2xl font-bold mb-4">
               {cards[currentCard].title}
             </h2>
@@ -170,7 +173,7 @@ const SwipeDemo: React.FC<{ cards?: typeof defaultCards }> = ({ cards = defaultC
             </p>
           </div>
           }
- 
+
         </SwipeContainer>
 
         <div className="text-center space-y-4">
@@ -178,15 +181,17 @@ const SwipeDemo: React.FC<{ cards?: typeof defaultCards }> = ({ cards = defaultC
             {cards.map((_, index) => (
               <div
                 key={index}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentCard ? 'bg-gray-600' : 'bg-gray-300'
-                }`}
+                className={`w-2 h-2 rounded-full transition-colors ${index === currentCard ? 'bg-gray-600' : 'bg-gray-300'
+                  }`}
               />
             ))}
           </div>
-          
+
           {lastSwipe && (
             <div className="bg-white rounded-lg p-4 shadow-md">
+              <span className="text-lg mb-4">
+                Card {currentCard + 1} of {cards.length}
+              </span>
               <p className="text-sm text-gray-600">Last Action:</p>
               <p className="font-semibold text-gray-800">{lastSwipe}</p>
             </div>
