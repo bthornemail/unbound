@@ -1,0 +1,681 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Play, RotateCcw, Zap, Pause, SkipForward } from 'lucide-react';
+
+const GeometricHypergraphAI = () => {
+  const canvasRef = useRef(null);
+  const animationRef = useRef(null);
+  const [vertices, setVertices] = useState([]);
+  const [simplices, setSimplices] = useState([]);
+  const [hyperedges, setHyperedges] = useState([]);
+  const [bettiNumbers, setBettiNumbers] = useState({ b0: 0, b1: 0, b2: 0 });
+  const [messages, setMessages] = useState([]);
+  const [isMessagePassing, setIsMessagePassing] = useState(false);
+  const [messageStep, setMessageStep] = useState(0);
+  const [learningRate, setLearningRate] = useState(0.1);
+  const [loss, setLoss] = useState(0);
+  const [epoch, setEpoch] = useState(0);
+
+  // Deltoid parametric equations (3-cusp hypocycloid)
+  const deltoid = (t) => {
+    const a = 100;
+    return {
+      x: 2 * a * Math.cos(t) + a * Math.cos(2 * t),
+      y: 2 * a * Math.sin(t) - a * Math.sin(2 * t)
+    };
+  };
+
+  // Astroid parametric equations (4-cusp hypocycloid)
+  const astroid = (t) => {
+    const a = 80;
+    return {
+      x: a * Math.pow(Math.cos(t), 3),
+      y: a * Math.pow(Math.sin(t), 3)
+    };
+  };
+
+  // Map 3D point to Deltoid (for feature projection)
+  const projectToDeltoid = (point) => {
+    const angle = Math.atan2(point.y, point.x);
+    const magnitude = Math.sqrt(point.x * point.x + point.y * point.y);
+    const t = angle + magnitude * 0.01;
+    const projected = deltoid(t);
+    
+    // Calculate distance to manifold (for loss computation)
+    const dist = Math.sqrt(
+      Math.pow(point.x - projected.x, 2) + 
+      Math.pow(point.y - projected.y, 2)
+    );
+    
+    return { ...projected, distanceToManifold: dist };
+  };
+
+  // Map 4D aggregate to Astroid (for weight regularization)
+  const projectToAstroid = (weights) => {
+    const t = (weights.reduce((a, b) => a + b, 0) / weights.length) * Math.PI * 2;
+    const projected = astroid(t);
+    
+    // Calculate regularization loss
+    const avgWeight = weights.reduce((a, b) => a + b, 0) / weights.length;
+    const variance = weights.reduce((acc, w) => acc + Math.pow(w - avgWeight, 2), 0);
+    
+    return { ...projected, regularizationLoss: variance };
+  };
+
+  // Calculate Betti numbers
+  const calculateBettiNumbers = () => {
+    if (vertices.length === 0) return { b0: 0, b1: 0, b2: 0 };
+    
+    const b0 = Math.max(1, Math.floor(vertices.length / 4));
+    const edges = simplices.length * 6;
+    const b1 = Math.max(0, edges - vertices.length + b0);
+    const b2 = Math.max(0, simplices.length - edges + vertices.length - b0);
+    
+    return { b0, b1, b2 };
+  };
+
+  // Message passing aggregation function
+  const aggregateMessages = (targetSimplex, incomingMessages) => {
+    if (incomingMessages.length === 0) return targetSimplex.features;
+    
+    // Aggregate features from neighboring simplices
+    const aggregated = targetSimplex.features.map((feat, idx) => {
+      const msgSum = incomingMessages.reduce((sum, msg) => {
+        return sum + (msg.content[idx] || 0) * msg.weight;
+      }, 0);
+      return feat + learningRate * msgSum;
+    });
+    
+    return aggregated;
+  };
+
+  // Message passing step - propagate information through hypergraph
+  const performMessagePassing = () => {
+    const newMessages = [];
+    
+    // Phase 1: Vertex to Simplex messages (data flows to features)
+    vertices.forEach(vertex => {
+      simplices.forEach(simplex => {
+        if (simplex.vertices.includes(vertex.id)) {
+          newMessages.push({
+            id: `v${vertex.id}-s${simplex.id}`,
+            from: vertex.id,
+            to: simplex.id,
+            type: 'vertex-to-simplex',
+            content: [vertex.weight, vertex.weight * 0.5, vertex.weight * 0.3],
+            weight: 0.3,
+            source: { x: vertex.x, y: vertex.y },
+            target: { x: simplex.center.x, y: simplex.center.y }
+          });
+        }
+      });
+    });
+    
+    // Phase 2: Simplex to Simplex messages (feature interactions)
+    simplices.forEach((s1, i) => {
+      simplices.forEach((s2, j) => {
+        if (i !== j) {
+          // Check if they share vertices (adjacent simplices)
+          const sharedVerts = s1.vertices.filter(v => s2.vertices.includes(v));
+          if (sharedVerts.length >= 2) {
+            newMessages.push({
+              id: `s${s1.id}-s${s2.id}`,
+              from: s1.id,
+              to: s2.id,
+              type: 'simplex-to-simplex',
+              content: s1.features,
+              weight: 0.5,
+              source: { x: s1.center.x, y: s1.center.y },
+              target: { x: s2.center.x, y: s2.center.y }
+            });
+          }
+        }
+      });
+    });
+    
+    // Phase 3: Hyperedge messages (high-order interactions)
+    hyperedges.forEach(he => {
+      const connectedSimplices = he.simplices.map(idx => simplices[idx]).filter(Boolean);
+      
+      connectedSimplices.forEach((source, i) => {
+        connectedSimplices.slice(i + 1).forEach(target => {
+          newMessages.push({
+            id: `h${he.id}-s${source.id}-s${target.id}`,
+            from: source.id,
+            to: target.id,
+            type: 'hyperedge',
+            content: he.weights,
+            weight: 0.7,
+            source: { x: source.center.x, y: source.center.y },
+            target: { x: target.center.x, y: target.center.y },
+            hyperedgeId: he.id
+          });
+        });
+      });
+    });
+    
+    return newMessages;
+  };
+
+  // Update simplex features based on messages
+  const updateSimplexFeatures = (msgs) => {
+    const updatedSimplices = simplices.map(simplex => {
+      // Get all messages targeting this simplex
+      const incomingMsgs = msgs.filter(m => m.to === simplex.id);
+      
+      // Aggregate messages
+      const newFeatures = aggregateMessages(simplex, incomingMsgs);
+      
+      // Project onto Deltoid manifold
+      const centerWithFeatures = {
+        x: simplex.center.x + newFeatures[0] * 10,
+        y: simplex.center.y + newFeatures[1] * 10,
+        z: simplex.center.z + newFeatures[2] * 10
+      };
+      
+      const projected = projectToDeltoid(centerWithFeatures);
+      
+      return {
+        ...simplex,
+        features: newFeatures,
+        mappedFeatures: projected,
+        activation: Math.tanh(newFeatures.reduce((a, b) => a + b, 0))
+      };
+    });
+    
+    return updatedSimplices;
+  };
+
+  // Update hyperedge weights
+  const updateHyperedgeWeights = () => {
+    const updatedHyperedges = hyperedges.map(he => {
+      const connectedSimplices = he.simplices.map(idx => simplices[idx]).filter(Boolean);
+      
+      // Aggregate features from connected simplices
+      const aggregatedFeatures = connectedSimplices.reduce((acc, s) => {
+        return acc.map((v, i) => v + (s.features[i] || 0));
+      }, [0, 0, 0, 0]);
+      
+      const newWeights = aggregatedFeatures.map(f => Math.tanh(f * learningRate));
+      
+      // Project onto Astroid manifold
+      const projected = projectToAstroid(newWeights);
+      
+      return {
+        ...he,
+        weights: newWeights,
+        mappedWeights: projected
+      };
+    });
+    
+    return updatedHyperedges;
+  };
+
+  // Calculate loss (geometric constraint violation)
+  const calculateLoss = () => {
+    let totalLoss = 0;
+    
+    // Deltoid constraint loss (simplices)
+    simplices.forEach(s => {
+      if (s.mappedFeatures?.distanceToManifold) {
+        totalLoss += s.mappedFeatures.distanceToManifold;
+      }
+    });
+    
+    // Astroid constraint loss (hyperedges)
+    hyperedges.forEach(he => {
+      if (he.mappedWeights?.regularizationLoss) {
+        totalLoss += he.mappedWeights.regularizationLoss * 0.5;
+      }
+    });
+    
+    return totalLoss / (simplices.length + hyperedges.length || 1);
+  };
+
+  // Run one epoch of message passing
+  const runMessagePassingEpoch = () => {
+    // Generate messages
+    const msgs = performMessagePassing();
+    setMessages(msgs);
+    
+    // Update simplices based on messages
+    const updatedSimplices = updateSimplexFeatures(msgs);
+    setSimplices(updatedSimplices);
+    
+    // Update hyperedge weights
+    const updatedHyperedges = updateHyperedgeWeights();
+    setHyperedges(updatedHyperedges);
+    
+    // Calculate loss
+    const newLoss = calculateLoss();
+    setLoss(newLoss);
+    setEpoch(e => e + 1);
+  };
+
+  // Animation loop for message passing
+  useEffect(() => {
+    if (isMessagePassing && vertices.length > 0) {
+      animationRef.current = setTimeout(() => {
+        runMessagePassingEpoch();
+        setMessageStep(s => s + 1);
+      }, 500);
+    }
+    
+    return () => {
+      if (animationRef.current) clearTimeout(animationRef.current);
+    };
+  }, [isMessagePassing, messageStep, vertices, simplices, hyperedges]);
+
+  // Add vertex
+  const addVertex = (x, y) => {
+    const newVertex = {
+      id: vertices.length,
+      x: x - 400,
+      y: y - 300,
+      z: Math.random() * 100 - 50,
+      weight: Math.random()
+    };
+    
+    const newVertices = [...vertices, newVertex];
+    setVertices(newVertices);
+    
+    // Auto-form tetrahedra when we have 4 vertices
+    if (newVertices.length % 4 === 0) {
+      const tetIndices = newVertices.slice(-4).map(v => v.id);
+      formTetrahedron(tetIndices, newVertices);
+    }
+  };
+
+  // Form tetrahedron
+  const formTetrahedron = (vertexIndices, verts = vertices) => {
+    if (vertexIndices.length !== 4) return;
+    
+    const tet = {
+      id: simplices.length,
+      vertices: vertexIndices,
+      center: { x: 0, y: 0, z: 0 },
+      features: [Math.random(), Math.random(), Math.random()],
+      type: 'tetrahedron',
+      schlaefli: '{3,3}',
+      activation: 0
+    };
+    
+    // Calculate center
+    vertexIndices.forEach(idx => {
+      const v = verts[idx];
+      tet.center.x += v.x / 4;
+      tet.center.y += v.y / 4;
+      tet.center.z += v.z / 4;
+    });
+    
+    const projected = projectToDeltoid(tet.center);
+    tet.mappedFeatures = projected;
+    
+    const newSimplices = [...simplices, tet];
+    setSimplices(newSimplices);
+    
+    // Form 5-simplex hyperedge
+    if (newSimplices.length >= 6 && newSimplices.length % 6 === 0) {
+      form5Simplex(newSimplices.slice(-6).map(s => s.id));
+    }
+  };
+
+  // Form 5-simplex hyperedge
+  const form5Simplex = (simplicialIndices) => {
+    if (simplicialIndices.length !== 6) return;
+    
+    const hyperedge = {
+      id: hyperedges.length,
+      simplices: simplicialIndices,
+      weights: [Math.random(), Math.random(), Math.random(), Math.random()],
+      type: '5-simplex',
+      schlaefli: '{3,3,3,3}'
+    };
+    
+    const projected = projectToAstroid(hyperedge.weights);
+    hyperedge.mappedWeights = projected;
+    
+    setHyperedges([...hyperedges, hyperedge]);
+  };
+
+  // Update Betti numbers
+  useEffect(() => {
+    setBettiNumbers(calculateBettiNumbers());
+  }, [vertices, simplices]);
+
+  // Drawing
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, 800, 600);
+    
+    // Draw Deltoid guide
+    ctx.strokeStyle = 'rgba(100, 150, 255, 0.2)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let t = 0; t <= Math.PI * 2; t += 0.01) {
+      const p = deltoid(t);
+      if (t === 0) ctx.moveTo(p.x + 400, p.y + 300);
+      else ctx.lineTo(p.x + 400, p.y + 300);
+    }
+    ctx.stroke();
+    
+    // Draw Astroid guide
+    ctx.strokeStyle = 'rgba(255, 150, 100, 0.2)';
+    ctx.beginPath();
+    for (let t = 0; t <= Math.PI * 2; t += 0.01) {
+      const p = astroid(t);
+      if (t === 0) ctx.moveTo(p.x + 400, p.y + 300);
+      else ctx.lineTo(p.x + 400, p.y + 300);
+    }
+    ctx.stroke();
+    
+    // Draw messages (animated)
+    messages.forEach((msg, idx) => {
+      const alpha = Math.max(0, 1 - (messageStep % 10) * 0.1);
+      
+      if (msg.type === 'vertex-to-simplex') {
+        ctx.strokeStyle = `rgba(100, 255, 150, ${alpha * 0.6})`;
+        ctx.lineWidth = 2;
+      } else if (msg.type === 'simplex-to-simplex') {
+        ctx.strokeStyle = `rgba(100, 200, 255, ${alpha * 0.6})`;
+        ctx.lineWidth = 2;
+      } else if (msg.type === 'hyperedge') {
+        ctx.strokeStyle = `rgba(255, 100, 150, ${alpha * 0.8})`;
+        ctx.lineWidth = 3;
+      }
+      
+      ctx.beginPath();
+      ctx.moveTo(msg.source.x + 400, msg.source.y + 300);
+      ctx.lineTo(msg.target.x + 400, msg.target.y + 300);
+      ctx.stroke();
+      
+      // Draw arrow
+      const angle = Math.atan2(msg.target.y - msg.source.y, msg.target.x - msg.source.x);
+      const arrowX = msg.target.x + 400;
+      const arrowY = msg.target.y + 300;
+      
+      ctx.fillStyle = ctx.strokeStyle;
+      ctx.beginPath();
+      ctx.moveTo(arrowX, arrowY);
+      ctx.lineTo(arrowX - 10 * Math.cos(angle - Math.PI / 6), arrowY - 10 * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(arrowX - 10 * Math.cos(angle + Math.PI / 6), arrowY - 10 * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+    });
+    
+    // Draw hyperedges
+    hyperedges.forEach(he => {
+      const connectedSimplices = he.simplices.map(idx => simplices[idx]).filter(Boolean);
+      
+      ctx.strokeStyle = 'rgba(255, 100, 100, 0.3)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 5]);
+      
+      connectedSimplices.forEach((s1, i) => {
+        connectedSimplices.slice(i + 1).forEach(s2 => {
+          ctx.beginPath();
+          ctx.moveTo(s1.center.x + 400, s1.center.y + 300);
+          ctx.lineTo(s2.center.x + 400, s2.center.y + 300);
+          ctx.stroke();
+        });
+      });
+      
+      ctx.setLineDash([]);
+      
+      // Draw mapped weight
+      if (he.mappedWeights) {
+        ctx.fillStyle = 'rgba(255, 50, 50, 0.8)';
+        ctx.beginPath();
+        ctx.arc(he.mappedWeights.x + 400, he.mappedWeights.y + 300, 6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+    
+    // Draw simplices
+    simplices.forEach(tet => {
+      const verts = tet.vertices.map(idx => vertices[idx]).filter(Boolean);
+      
+      // Draw edges
+      ctx.strokeStyle = 'rgba(100, 200, 255, 0.4)';
+      ctx.lineWidth = 2;
+      verts.forEach((v1, i) => {
+        verts.slice(i + 1).forEach(v2 => {
+          ctx.beginPath();
+          ctx.moveTo(v1.x + 400, v1.y + 300);
+          ctx.lineTo(v2.x + 400, v2.y + 300);
+          ctx.stroke();
+        });
+      });
+      
+      // Draw center with activation color
+      const activation = tet.activation || 0;
+      const hue = 200 + activation * 100;
+      ctx.fillStyle = `hsla(${hue}, 80%, 60%, 0.8)`;
+      ctx.beginPath();
+      ctx.arc(tet.center.x + 400, tet.center.y + 300, 7, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Draw mapped feature
+      if (tet.mappedFeatures) {
+        ctx.fillStyle = 'rgba(50, 100, 255, 0.8)';
+        ctx.beginPath();
+        ctx.arc(tet.mappedFeatures.x + 400, tet.mappedFeatures.y + 300, 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+    
+    // Draw vertices
+    vertices.forEach(v => {
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.strokeStyle = 'rgba(100, 150, 255, 1)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(v.x + 400, v.y + 300, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    });
+    
+  }, [vertices, simplices, hyperedges, messages, messageStep]);
+
+  const handleCanvasClick = (e) => {
+    if (isMessagePassing) return;
+    const rect = canvasRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    addVertex(x, y);
+  };
+
+  const reset = () => {
+    setVertices([]);
+    setSimplices([]);
+    setHyperedges([]);
+    setMessages([]);
+    setIsMessagePassing(false);
+    setMessageStep(0);
+    setEpoch(0);
+    setLoss(0);
+  };
+
+  const generateRandom = () => {
+    const newVertices = [];
+    for (let i = 0; i < 12; i++) {
+      newVertices.push({
+        id: i,
+        x: (Math.random() - 0.5) * 300,
+        y: (Math.random() - 0.5) * 300,
+        z: (Math.random() - 0.5) * 100,
+        weight: Math.random()
+      });
+    }
+    setVertices(newVertices);
+    
+    const newSimplices = [];
+    for (let i = 0; i < 3; i++) {
+      const tetIndices = [i * 4, i * 4 + 1, i * 4 + 2, i * 4 + 3];
+      const tet = {
+        id: i,
+        vertices: tetIndices,
+        center: { x: 0, y: 0, z: 0 },
+        features: [Math.random(), Math.random(), Math.random()],
+        type: 'tetrahedron',
+        schlaefli: '{3,3}',
+        activation: 0
+      };
+      
+      tetIndices.forEach(idx => {
+        tet.center.x += newVertices[idx].x / 4;
+        tet.center.y += newVertices[idx].y / 4;
+        tet.center.z += newVertices[idx].z / 4;
+      });
+      
+      tet.mappedFeatures = projectToDeltoid(tet.center);
+      newSimplices.push(tet);
+    }
+    setSimplices(newSimplices);
+    setEpoch(0);
+    setLoss(0);
+  };
+
+  const toggleMessagePassing = () => {
+    setIsMessagePassing(!isMessagePassing);
+  };
+
+  const stepOnce = () => {
+    runMessagePassingEpoch();
+  };
+
+  return (
+    <div className="w-full h-screen bg-gray-900 text-white p-4 overflow-auto">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-4">
+          <h1 className="text-3xl font-bold mb-2">Geometric Hypergraph Message Passing</h1>
+          <p className="text-gray-400 text-sm">
+            Topological learning with manifold-constrained message propagation
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-5 gap-3 mb-4">
+          <div className="bg-gray-800 p-3 rounded">
+            <div className="text-xs text-gray-400 mb-1">Vertices</div>
+            <div className="text-2xl font-bold">{vertices.length}</div>
+          </div>
+          <div className="bg-gray-800 p-3 rounded">
+            <div className="text-xs text-gray-400 mb-1">Tetrahedra</div>
+            <div className="text-xl font-bold">{simplices.length}</div>
+            <div className="text-xs text-blue-400">{simplices.length > 0 ? '{3,3}' : ''}</div>
+          </div>
+          <div className="bg-gray-800 p-3 rounded">
+            <div className="text-xs text-gray-400 mb-1">5-Simplices</div>
+            <div className="text-xl font-bold">{hyperedges.length}</div>
+            <div className="text-xs text-red-400">{hyperedges.length > 0 ? '{3,3,3,3}' : ''}</div>
+          </div>
+          <div className="bg-gray-800 p-3 rounded">
+            <div className="text-xs text-gray-400 mb-1">Betti Numbers</div>
+            <div className="text-sm">β₀={bettiNumbers.b0}</div>
+            <div className="text-sm">β₁={bettiNumbers.b1} β₂={bettiNumbers.b2}</div>
+          </div>
+          <div className="bg-gray-800 p-3 rounded">
+            <div className="text-xs text-gray-400 mb-1">Training</div>
+            <div className="text-sm">Epoch: {epoch}</div>
+            <div className="text-sm">Loss: {loss.toFixed(4)}</div>
+          </div>
+        </div>
+        
+        <div className="flex gap-2 mb-4 flex-wrap">
+          <button
+            onClick={generateRandom}
+            className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded flex items-center gap-2 disabled:opacity-50"
+            disabled={isMessagePassing}
+          >
+            <Play size={16} />
+            Generate
+          </button>
+          <button
+            onClick={toggleMessagePassing}
+            className={`${isMessagePassing ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} px-4 py-2 rounded flex items-center gap-2 disabled:opacity-50`}
+            disabled={vertices.length === 0}
+          >
+            {isMessagePassing ? <Pause size={16} /> : <Zap size={16} />}
+            {isMessagePassing ? 'Stop' : 'Start'} Message Passing
+          </button>
+          <button
+            onClick={stepOnce}
+            className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded flex items-center gap-2 disabled:opacity-50"
+            disabled={vertices.length === 0 || isMessagePassing}
+          >
+            <SkipForward size={16} />
+            Step Once
+          </button>
+          <button
+            onClick={reset}
+            className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded flex items-center gap-2"
+          >
+            <RotateCcw size={16} />
+            Reset
+          </button>
+          <div className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded">
+            <label className="text-xs text-gray-400">Learning Rate:</label>
+            <input
+              type="range"
+              min="0.01"
+              max="0.5"
+              step="0.01"
+              value={learningRate}
+              onChange={(e) => setLearningRate(parseFloat(e.target.value))}
+              className="w-24"
+            />
+            <span className="text-xs">{learningRate.toFixed(2)}</span>
+          </div>
+        </div>
+        
+        <div className="bg-gray-800 rounded-lg p-4">
+          <canvas
+            ref={canvasRef}
+            width={800}
+            height={600}
+            onClick={handleCanvasClick}
+            className="border border-gray-700 rounded cursor-crosshair w-full"
+            style={{ maxHeight: '600px' }}
+          />
+          
+          <div className="mt-4 grid grid-cols-3 gap-3 text-xs">
+            <div className="bg-gray-900 p-3 rounded">
+              <div className="font-bold mb-2 text-green-400">Phase 1: Vertex → Simplex</div>
+              <div className="text-gray-400">
+                Data flows from vertices to tetrahedra. Each vertex sends its weight to connected simplices.
+              </div>
+            </div>
+            <div className="bg-gray-900 p-3 rounded">
+              <div className="font-bold mb-2 text-blue-400">Phase 2: Simplex → Simplex</div>
+              <div className="text-gray-400">
+                Adjacent tetrahedra exchange features. Features constrained by Deltoid manifold.
+              </div>
+            </div>
+            <div className="bg-gray-900 p-3 rounded">
+              <div className="font-bold mb-2 text-red-400">Phase 3: Hyperedge Messages</div>
+              <div className="text-gray-400">
+                5-simplex hyperedges propagate high-order interactions. Weights constrained by Astroid.
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-3 bg-gray-900 p-3 rounded text-xs">
+            <div className="font-bold mb-2">Message Passing Algorithm:</div>
+            <div className="text-gray-400 space-y-1">
+              <div>1. Aggregate incoming messages at each simplex</div>
+              <div>2. Update features using weighted sum with learning rate</div>
+              <div>3. Project updated features onto Deltoid manifold (regularization)</div>
+              <div>4. Update hyperedge weights based on connected simplex activations</div>
+              <div>5. Project weights onto Astroid manifold (weight constraints)</div>
+              <div>6. Calculate geometric loss (distance to manifolds)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default GeometricHypergraphAI;

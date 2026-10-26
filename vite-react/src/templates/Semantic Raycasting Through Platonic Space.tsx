@@ -1,0 +1,194 @@
+import React, { useState } from 'react';
+import { Eye, Plus, Minus, Layers } from 'lucide-react';
+
+export default function SemanticRaycastViz() {
+  const [wordCount, setWordCount] = useState(4);
+  const [raycastActive, setRaycastActive] = useState(false);
+  
+  const platonicSolids = [
+    { name: 'Tetrahedron', vertices: 4, dim: '0D' },
+    { name: 'Cube', vertices: 6, dim: '1D' },
+    { name: 'Octahedron', vertices: 8, dim: '2D' },
+    { name: 'Icosahedron', vertices: 12, dim: '3D' },
+    { name: 'Dodecahedron', vertices: 20, dim: '4D' }
+  ];
+  
+  const getCurrentSolid = () => {
+    if (wordCount <= 4) return platonicSolids[0];
+    if (wordCount <= 6) return platonicSolids[1];
+    if (wordCount <= 8) return platonicSolids[2];
+    if (wordCount <= 12) return platonicSolids[3];
+    return platonicSolids[4];
+  };
+  
+  const currentSolid = getCurrentSolid();
+  const centroid = 10; // (4+6+8+12+20)/5
+  
+  const getRelativeDim = (offset: number) => {
+    const base = wordCount;
+    const target = base + offset;
+    if (offset === 0) return `n = ${base} (POINT)`;
+    if (Math.abs(offset) === 1) return `n ${offset > 0 ? '+' : ''}${offset} = ${target} (LINE)`;
+    if (Math.abs(offset) === 2) return `n ${offset > 0 ? '+' : ''}${offset} = ${target} (PLANE)`;
+    if (Math.abs(offset) === 3) return `n ${offset > 0 ? '+' : ''}${offset} = ${target} (TRANSFORMER)`;
+    return `n ${offset > 0 ? '+' : ''}${offset} = ${target}`;
+  };
+
+  return (
+    <div className="w-full max-w-4xl mx-auto p-6 bg-gradient-to-br from-slate-900 to-slate-800 rounded-lg text-white">
+      <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+        <Layers className="w-6 h-6" />
+        Semantic Raycasting: n ± k Operations
+      </h2>
+      
+      {/* Word Count Control */}
+      <div className="bg-slate-800 p-6 rounded-lg mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-lg">Current Word Count (Dimension n):</span>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setWordCount(Math.max(1, wordCount - 1))}
+              className="bg-red-600 hover:bg-red-700 p-2 rounded-lg transition"
+            >
+              <Minus className="w-5 h-5" />
+            </button>
+            <span className="text-3xl font-bold text-blue-400 w-16 text-center">
+              {wordCount}
+            </span>
+            <button
+              onClick={() => setWordCount(Math.min(20, wordCount + 1))}
+              className="bg-green-600 hover:bg-green-700 p-2 rounded-lg transition"
+            >
+              <Plus className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+        
+        <div className="text-sm text-slate-300">
+          Current structure: <span className="text-yellow-400 font-semibold">{wordCount} words</span> in semantic space
+        </div>
+      </div>
+
+      {/* Current Platonic Projection */}
+      <div className="bg-gradient-to-r from-purple-900 to-indigo-900 p-6 rounded-lg mb-6">
+        <h3 className="text-xl font-semibold mb-3">Active Platonic Solid</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <div className="text-3xl font-bold text-purple-300">{currentSolid.name}</div>
+            <div className="text-lg text-purple-200">{currentSolid.vertices} vertices</div>
+            <div className="text-sm text-purple-300">Projection: {currentSolid.dim}</div>
+          </div>
+          <div className="flex flex-col justify-center">
+            <div className="text-sm text-slate-300">Centroid Distance:</div>
+            <div className="text-2xl font-bold text-yellow-400">
+              {Math.abs(currentSolid.vertices - centroid).toFixed(1)}
+            </div>
+            <div className="text-xs text-slate-400">from center [10, 10, 10, 10]</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Raycasting Controls */}
+      <div className="bg-slate-800 p-6 rounded-lg mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-semibold">Raycasting</h3>
+          <button
+            onClick={() => setRaycastActive(!raycastActive)}
+            className={`px-6 py-2 rounded-lg transition flex items-center gap-2 ${
+              raycastActive 
+                ? 'bg-green-600 hover:bg-green-700' 
+                : 'bg-slate-700 hover:bg-slate-600'
+            }`}
+          >
+            <Eye className="w-5 h-5" />
+            {raycastActive ? 'Casting Rays' : 'Inactive'}
+          </button>
+        </div>
+        
+        {raycastActive && (
+          <div className="space-y-2 text-sm">
+            <div className="bg-slate-700 p-3 rounded">
+              <span className="text-blue-400">→</span> Ray projects from viewpoint through {currentSolid.name}
+            </div>
+            <div className="bg-slate-700 p-3 rounded">
+              <span className="text-green-400">→</span> {wordCount}D structure reduces to {wordCount - 1}D projection
+            </div>
+            <div className="bg-slate-700 p-3 rounded">
+              <span className="text-yellow-400">→</span> Each word becomes a vertex in the projection
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Relative Dimensions (n ± k) */}
+      <div className="bg-slate-800 p-6 rounded-lg">
+        <h3 className="text-xl font-semibold mb-4">Relative Dimensional Structure</h3>
+        
+        <div className="space-y-3">
+          {/* n-3 to n+3 */}
+          {[-3, -2, -1, 0, 1, 2, 3].map(offset => {
+            const isTransformer = Math.abs(offset) === 3;
+            const isPlane = Math.abs(offset) === 2;
+            const isLine = Math.abs(offset) === 1;
+            const isPoint = offset === 0;
+            
+            return (
+              <div
+                key={offset}
+                className={`p-4 rounded-lg transition ${
+                  isPoint 
+                    ? 'bg-red-600 ring-2 ring-red-400' 
+                    : isTransformer
+                    ? 'bg-blue-700'
+                    : isPlane
+                    ? 'bg-yellow-700'
+                    : isLine
+                    ? 'bg-green-700'
+                    : 'bg-slate-700'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="font-mono text-lg">
+                    {getRelativeDim(offset)}
+                  </div>
+                  <div className="text-sm">
+                    {isTransformer && '🔄 TRANSFORM'}
+                    {isPlane && '📐 PLANE'}
+                    {isLine && '📏 LINE'}
+                    {isPoint && '⭐ POINT (reference)'}
+                  </div>
+                </div>
+                
+                {isLine && (
+                  <div className="mt-2 text-xs text-slate-300">
+                    {offset > 0 
+                      ? '+ Add another word → expand dimension → raycast to project back'
+                      : '- Remove a word → collapse dimension via raycasting'
+                    }
+                  </div>
+                )}
+                
+                {isTransformer && offset > 0 && wordCount === 4 && (
+                  <div className="mt-2 text-xs text-blue-200">
+                    4 + 3 = 7 (Fano Plane) - Complete projective transformation!
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Explanation */}
+      <div className="mt-6 p-4 bg-slate-700 rounded-lg text-sm text-slate-300">
+        <h4 className="font-semibold text-white mb-2">How It Works:</h4>
+        <ul className="space-y-1 list-disc list-inside">
+          <li><span className="text-green-400">±1 (LINE)</span>: Add/remove a word, then raycast to project back</li>
+          <li><span className="text-yellow-400">±2 (PLANE)</span>: Two-step expansion/reduction creates planar projection</li>
+          <li><span className="text-blue-400">±3 (TRANSFORMER)</span>: Changes reference frame - rotates entire semantic space</li>
+          <li><span className="text-purple-400">Raycasting</span>: Projects higher-D structure through Platonic solid onto lower-D view</li>
+        </ul>
+      </div>
+    </div>
+  );
+}

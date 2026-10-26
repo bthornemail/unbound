@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media Spectrum → 4-bit XOR Adder (Quad Offscreen Workers)</title>
+<style>
+:root {
+  --bg: #0f0f13;
+  --panel: #18181e;
+  --border: #2c2c34;
+  --text: #eceef2;
+  --muted: #9a9aa5;
+  --accent: #6d93ff;
+  --accent-dim: #1e2942;
+  --cell-low: #20222c;
+  --cell-hi: #6d93ff;
+  --danger: #ff6b68;
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --cue-energy: 0;
+  --cue-pan: 0;
+  --op-mode: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+}
+h1 { font-size: 15px; margin: 0; }
+.sub { font-size: 11px; color: var(--muted); max-width: 520px; line-height: 1.4; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls label { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+button, select {
+  font-size: 12px; padding: 6px 10px; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--panel); color: var(--text); cursor: pointer;
+}
+button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+button:disabled { opacity: .4; cursor: not-allowed; }
+input[type=range] { width: 100px; }
+.status { font-size: 11px; color: var(--muted); margin-left: auto; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 240px 1fr 280px;
+  grid-template-rows: auto 1fr auto;
+  gap: 1px; background: var(--border);
+  min-height: calc(100vh - 110px);
+}
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.panel { background: var(--panel); padding: 10px; overflow: auto; }
+.panel h2 {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--muted); margin: 0 0 8px;
+}
+
+/* Real oscilloscope look */
+#oscilloscope-wrap {
+  margin-bottom: 12px;
+  border: 2px solid #1a2a1a;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #020804;
+  box-shadow:
+    inset 0 0 30px rgba(0, 40, 0, 0.6),
+    0 0 0 1px #0a1a0a;
+  position: relative;
+}
+#oscilloscope-wrap::after {
+  /* subtle CRT vignette */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.45) 100%);
+}
+#oscilloscope {
+  display: block;
+  width: 100%;
+  height: 110px;
+}
+
+/* Spectrum grid */
+#asciiGrid {
+  display: grid; grid-template-columns: repeat(16, 1fr); gap: 2px;
+  max-width: 420px; margin: 0 auto;
+}
+.cell {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  font-family: ui-monospace, Menlo, monospace; font-size: 9px;
+  border-radius: 3px; background: var(--cell-low); transition: background .06s linear;
+}
+
+#ports { font-family: ui-monospace, Menlo, monospace; font-size: 10px; max-height: 320px; overflow: auto; }
+.port-row { display: flex; justify-content: space-between; padding: 1px 3px; border-radius: 3px; }
+.port-row span.v { color: var(--muted); }
+
+.quad {
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+  gap: 4px; height: 100%; min-height: 420px;
+}
+.cam {
+  position: relative; background: #0a0a0e; border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden;
+}
+.cam canvas { width: 100%; height: 100%; display: block; }
+.cam .label {
+  position: absolute; top: 4px; left: 6px; font-size: 10px;
+  background: rgba(0,0,0,.65); padding: 2px 6px; border-radius: 4px;
+  pointer-events: none;
+}
+.cam .label b { color: var(--accent); }
+
+.adder { display: flex; flex-direction: column; gap: 10px; }
+.bits { display: flex; gap: 6px; flex-wrap: wrap; font-family: ui-monospace, monospace; }
+.bit {
+  width: 28px; height: 28px; border-radius: 4px; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; font-size: 12px;
+  background: var(--cell-low); cursor: pointer; user-select: none;
+}
+.bit.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.bit.carry { border-color: var(--warn); }
+.op-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.op-row label { font-size: 11px; color: var(--muted); }
+
+footer {
+  grid-column: 1 / -1;
+  padding: 8px 12px; border-top: 1px solid var(--border); background: var(--panel);
+}
+#timeline {
+  display: flex; gap: 3px; overflow-x: auto; padding: 4px 0; min-height: 36px;
+}
+.cue {
+  flex: 0 0 auto; font-size: 9px; font-family: ui-monospace, monospace;
+  color: var(--muted); border: 1px solid var(--border); border-radius: 4px;
+  padding: 3px 6px; cursor: pointer; background: var(--panel);
+}
+.cue.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+.cue.bound { outline: 1px solid var(--ok); }
+
+.energy-bar {
+  height: 4px; background: linear-gradient(90deg, var(--cell-low), var(--accent));
+  width: calc(var(--cue-energy) * 1%); border-radius: 2px; transition: width .08s;
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Media Spectrum → 4-bit XOR Adder</h1>
+    <div class="sub">
+      Real FFT (AnalyserNode) drives four OffscreenCanvas workers modelling the 5 / 6 / 8 / 10 transistor XOR topologies.
+      Spectrum snapshots become scrubbable VTT-style cues that bind CSS custom properties &amp; operation mode.
+    </div>
+  </div>
+  <div class="controls">
+    <label>Source <input type="file" id="fileInput" accept="audio/*,video/*"></label>
+    <button id="micBtn">🎙 Mic</button>
+    <button id="playBtn" class="primary" disabled>▶ Play</button>
+    <label>Pan <input type="range" id="pan" min="-1" max="1" step="0.05" value="0"></label>
+    <label>Snap every <input type="range" id="interval" min="120" max="1500" step="30" value="400"> ms</label>
+    <label>Op
+      <select id="opSelect">
+        <option value="0">ADD</option>
+        <option value="1">SUB (XOR + invert)</option>
+        <option value="2">XOR-only</option>
+        <option value="3">AND-mask</option>
+      </select>
+    </label>
+  </div>
+  <div class="status" id="status">No source · workers ready</div>
+</header>
+
+<div class="grid">
+  <section class="panel">
+    <h2>Oscilloscope (time domain)</h2>
+    <div id="oscilloscope-wrap">
+      <canvas id="oscilloscope" width="400" height="110"></canvas>
+    </div>
+    <h2>Spectrum (8×16 = 128 bins)</h2>
+    <div id="asciiGrid"></div>
+    <h2 style="margin-top:12px">Ports (ch000–ch127)</h2>
+    <div id="ports"></div>
+  </section>
+
+  <section class="panel" style="padding:6px">
+    <h2>Quad camera views — one OffscreenCanvas worker per XOR topology</h2>
+    <div class="quad">
+      <div class="cam" id="cam0">
+        <canvas id="cv0"></canvas>
+        <div class="label"><b>XOR-5</b> discrete · 5 BJT</div>
+      </div>
+      <div class="cam" id="cam1">
+        <canvas id="cv1"></canvas>
+        <div class="label"><b>XOR-6</b> buffered · 6 BJT</div>
+      </div>
+      <div class="cam" id="cam2">
+        <canvas id="cv2"></canvas>
+        <div class="label"><b>XOR-8</b> NAND ×4 · 8 BJT</div>
+      </div>
+      <div class="cam" id="cam3">
+        <canvas id="cv3"></canvas>
+        <div class="label"><b>XOR-10</b> NOR ×5 · 10 BJT</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel adder">
+    <h2>4-bit Adder Control Surface</h2>
+    <div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Operand A (click bits)</div>
+      <div class="bits" id="bitsA"></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Operand B</div>
+      <div class="bits" id="bitsB"></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Sum / Result + Carry</div>
+      <div class="bits" id="bitsS"></div>
+    </div>
+    <div class="op-row">
+      <label>Mode driven by cue energy → <span id="modeLabel">ADD</span></label>
+    </div>
+    <div class="energy-bar" id="energyBar"></div>
+    <div style="font-size:10px;color:var(--muted);line-height:1.4;margin-top:6px">
+      Low-band energy modulates A; mid-band modulates B.
+      High energy can auto-switch operation when a cue is bound.
+      Double-click timeline to return to live.
+    </div>
+    <div style="margin-top:8px">
+      <button id="bindBtn">Bind current cue → CSS / mode</button>
+      <button id="unbindBtn">Unbind all</button>
+    </div>
+    <div id="legend" style="font-size:10px;color:var(--muted);margin-top:10px"></div>
+  </section>
+
+  <footer>
+    <h2 style="font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:0 0 4px">
+      Timeline — scrubbable proto-cues (click to inspect / Shift-click to bind)
+    </h2>
+    <div id="timeline"></div>
+  </footer>
+</div>
+
+<video id="mediaEl" style="display:none" crossorigin="anonymous"></video>
+
+<script>
+(() => {
+  const ROWS = 8, COLS = 16, N = 128;
+  const rowLabels = [
+    '0x0_ bins 0–15 (low → A)',
+    '0x1_ bins 16–31',
+    '0x2_ bins 32–47 (mid → B)',
+    '0x3_ bins 48–63',
+    '0x4_ bins 64–79',
+    '0x5_ bins 80–95',
+    '0x6_ bins 96–111',
+    '0x7_ bins 112–127 (high → mode)'
+  ];
+
+  const fileInput = document.getElementById('fileInput');
+  const micBtn    = document.getElementById('micBtn');
+  const playBtn   = document.getElementById('playBtn');
+  const panCtl    = document.getElementById('pan');
+  const intervalCtl = document.getElementById('interval');
+  const opSelect  = document.getElementById('opSelect');
+  const statusEl  = document.getElementById('status');
+  const portsEl   = document.getElementById('ports');
+  const gridEl    = document.getElementById('asciiGrid');
+  const timelineEl= document.getElementById('timeline');
+  const mediaEl   = document.getElementById('mediaEl');
+  const energyBar = document.getElementById('energyBar');
+  const modeLabel = document.getElementById('modeLabel');
+  const bindBtn   = document.getElementById('bindBtn');
+  const unbindBtn = document.getElementById('unbindBtn');
+
+  // Build spectrum cells + port rows
+  const cells = [];
+  for (let i = 0; i < N; i++) {
+    const c = document.createElement('div');
+    c.className = 'cell';
+    gridEl.appendChild(c);
+    cells.push(c);
+
+    const p = document.createElement('div');
+    p.className = 'port-row';
+    p.innerHTML = `<span>ch${String(i).padStart(3,'0')}</span><span class="v">0</span>`;
+    portsEl.appendChild(p);
+  }
+  const portVals = Array.from(portsEl.querySelectorAll('.v'));
+
+  const legendEl = document.getElementById('legend');
+  rowLabels.forEach((l, i) => {
+    const d = document.createElement('div');
+    d.textContent = `Row ${i}: ${l}`;
+    legendEl.appendChild(d);
+  });
+
+  // 4-bit UI
+  let A = 0b0101, B = 0b0011;
+  const bitsA = document.getElementById('bitsA');
+  const bitsB = document.getElementById('bitsB');
+  const bitsS = document.getElementById('bitsS');
+
+  function renderBits(el, val, editable, isResult = false) {
+    el.innerHTML = '';
+    for (let i = 3; i >= 0; i--) {
+      const b = document.createElement('div');
+      b.className = 'bit' + (((val >> i) & 1) ? ' on' : '');
+      b.textContent = (val >> i) & 1;
+      if (editable) {
+        b.addEventListener('click', () => {
+          if (el === bitsA) A ^= (1 << i);
+          else B ^= (1 << i);
+          updateAdder();
+        });
+      }
+      el.appendChild(b);
+    }
+    if (isResult) {
+      const c = document.createElement('div');
+      c.className = 'bit carry';
+      c.textContent = 'C';
+      c.title = 'Carry out';
+      el.appendChild(c);
+    }
+  }
+
+  function xor5(a, b) { return a ^ b; }
+  function xor6(a, b) { return a ^ b; }
+  function xor8(a, b) { return a ^ b; }
+  function xor10(a, b){ return a ^ b; }
+
+  function fullAdder(a, b, cin, topo = 0) {
+    const xorFn = [xor5, xor6, xor8, xor10][topo % 4];
+    const sum = xorFn(xorFn(a, b), cin);
+    const cout = (a & b) | (cin & (a ^ b));
+    return { sum, cout };
+  }
+
+  function compute(A, B, mode) {
+    let result = 0, carry = 0;
+    if (mode === 2) {
+      for (let i = 0; i < 4; i++) {
+        result |= (xor5((A >> i) & 1, (B >> i) & 1)) << i;
+      }
+      return { result, carry: 0 };
+    }
+    if (mode === 3) return { result: A & B, carry: 0 };
+
+    const Bb = mode === 1 ? (~B & 0xF) : B;
+    carry = mode === 1 ? 1 : 0;
+    for (let i = 0; i < 4; i++) {
+      const { sum, cout } = fullAdder((A >> i) & 1, (Bb >> i) & 1, carry, i);
+      result |= sum << i;
+      carry = cout;
+    }
+    return { result: result & 0xF, carry };
+  }
+
+  function updateAdder() {
+    const mode = parseInt(opSelect.value, 10);
+    const { result, carry } = compute(A, B, mode);
+    renderBits(bitsA, A, true);
+    renderBits(bitsB, B, true);
+    renderBits(bitsS, result, false, true);
+    const carryEl = bitsS.querySelector('.carry');
+    if (carryEl) {
+      carryEl.classList.toggle('on', !!carry);
+      carryEl.textContent = carry ? '1' : '0';
+    }
+    modeLabel.textContent = opSelect.options[mode].text;
+    document.documentElement.style.setProperty('--op-mode', mode);
+
+    workers.forEach((w, i) => {
+      w.postMessage({
+        type: 'state',
+        A, B, result, carry, mode,
+        topo: i,
+        energy: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--cue-energy')) || 0
+      });
+    });
+  }
+
+  // ---------- Audio + Spectrum + Oscilloscope ----------
+  let audioCtx, analyser, waveAnalyser, sourceNode, pannerNode, dataArr, waveArr;
+  let playing = false, rafId = null;
+  let cues = [];
+  let lastSnapshotAt = 0;
+  let viewingCueIdx = null;
+  let boundCueIdx = null;
+
+  const oscCanvas = document.getElementById('oscilloscope');
+  const oscCtx = oscCanvas.getContext('2d');
+
+  function ensureCtx() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.65;
+      dataArr = new Uint8Array(analyser.frequencyBinCount);
+
+      waveAnalyser = audioCtx.createAnalyser();
+      waveAnalyser.fftSize = 2048;
+      waveAnalyser.smoothingTimeConstant = 0.25;
+      waveArr = new Uint8Array(waveAnalyser.frequencyBinCount);
+
+      pannerNode = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+    }
+    return audioCtx;
+  }
+
+  function wireGraph(node, toDest) {
+    try { node.disconnect(); } catch (_) {}
+    if (pannerNode) {
+      node.connect(pannerNode);
+      pannerNode.connect(analyser);
+      pannerNode.connect(waveAnalyser);
+    } else {
+      node.connect(analyser);
+      node.connect(waveAnalyser);
+    }
+    if (toDest) analyser.connect(audioCtx.destination);
+  }
+
+  // ========== REAL OSCILLOSCOPE RENDERER ==========
+  function drawWaveform() {
+    if (!waveAnalyser || !oscCtx) return;
+
+    waveAnalyser.getByteTimeDomainData(waveArr);
+
+    const W = oscCanvas.width;
+    const H = oscCanvas.height;
+    const midY = H / 2;
+
+    // 1. Phosphor fade / persistence (dark green residual)
+    oscCtx.fillStyle = 'rgba(2, 8, 4, 0.35)';
+    oscCtx.fillRect(0, 0, W, H);
+
+    // 2. Classic CRT grid
+    oscCtx.lineWidth = 1;
+    // minor grid
+    oscCtx.strokeStyle = 'rgba(0, 80, 30, 0.25)';
+    const minorX = W / 50;
+    const minorY = H / 20;
+    oscCtx.beginPath();
+    for (let x = 0; x <= W; x += minorX) {
+      oscCtx.moveTo(x, 0); oscCtx.lineTo(x, H);
+    }
+    for (let y = 0; y <= H; y += minorY) {
+      oscCtx.moveTo(0, y); oscCtx.lineTo(W, y);
+    }
+    oscCtx.stroke();
+
+    // major grid (10×8 style)
+    oscCtx.strokeStyle = 'rgba(0, 140, 50, 0.35)';
+    const majorX = W / 10;
+    const majorY = H / 8;
+    oscCtx.beginPath();
+    for (let x = 0; x <= W; x += majorX) {
+      oscCtx.moveTo(x, 0); oscCtx.lineTo(x, H);
+    }
+    for (let y = 0; y <= H; y += majorY) {
+      oscCtx.moveTo(0, y); oscCtx.lineTo(W, y);
+    }
+    oscCtx.stroke();
+
+    // bright center crosshairs
+    oscCtx.strokeStyle = 'rgba(0, 220, 80, 0.45)';
+    oscCtx.lineWidth = 1.2;
+    oscCtx.beginPath();
+    oscCtx.moveTo(0, midY); oscCtx.lineTo(W, midY);
+    oscCtx.moveTo(W / 2, 0); oscCtx.lineTo(W / 2, H);
+    oscCtx.stroke();
+
+    // 3. Build the waveform path
+    const sliceWidth = W / waveArr.length;
+    oscCtx.beginPath();
+    let x = 0;
+    for (let i = 0; i < waveArr.length; i++) {
+      const v = waveArr[i] / 128.0;          // 0..2
+      const y = (v * H) / 2;
+      if (i === 0) oscCtx.moveTo(x, y);
+      else         oscCtx.lineTo(x, y);
+      x += sliceWidth;
+    }
+
+    // 4. Multi-pass phosphor glow (outer soft → inner bright)
+    // Outer glow
+    oscCtx.strokeStyle = 'rgba(0, 255, 70, 0.08)';
+    oscCtx.lineWidth = 9;
+    oscCtx.lineJoin = 'round';
+    oscCtx.lineCap = 'round';
+    oscCtx.stroke();
+
+    // Mid glow
+    oscCtx.strokeStyle = 'rgba(0, 255, 90, 0.22)';
+    oscCtx.lineWidth = 4.5;
+    oscCtx.stroke();
+
+    // Core bright green
+    oscCtx.strokeStyle = '#00ff5a';
+    oscCtx.lineWidth = 1.6;
+    oscCtx.stroke();
+
+    // Hot center (almost white-green)
+    oscCtx.strokeStyle = 'rgba(180, 255, 200, 0.85)';
+    oscCtx.lineWidth = 0.7;
+    oscCtx.stroke();
+
+    // 5. Very subtle horizontal scan lines (CRT feel)
+    oscCtx.fillStyle = 'rgba(0, 0, 0, 0.07)';
+    for (let y = 0; y < H; y += 3) {
+      oscCtx.fillRect(0, y, W, 1);
+    }
+  }
+
+  fileInput.addEventListener('change', async e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    ensureCtx();
+    if (mediaEl.src) URL.revokeObjectURL(mediaEl.src);
+    mediaEl.src = URL.createObjectURL(file);
+    sourceNode = audioCtx.createMediaElementSource(mediaEl);
+    wireGraph(sourceNode, true);
+    statusEl.textContent = `Loaded: ${file.name}`;
+    playBtn.disabled = false;
+
+    while (mediaEl.textTracks.length) mediaEl.removeTrack(mediaEl.textTracks[0]);
+    const track = mediaEl.addTextTrack('metadata', 'spectrum-cues', 'en');
+    track.mode = 'hidden';
+  });
+
+  micBtn.addEventListener('click', async () => {
+    try {
+      ensureCtx();
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      sourceNode = audioCtx.createMediaStreamSource(stream);
+      wireGraph(sourceNode, false);
+      statusEl.textContent = 'Microphone (monitor only)';
+      playBtn.disabled = false;
+      startLoop();
+      playing = true;
+      playBtn.textContent = '■ Stop';
+    } catch (err) {
+      statusEl.textContent = 'Mic error: ' + err.message;
+    }
+  });
+
+  playBtn.addEventListener('click', async () => {
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') await audioCtx.resume();
+    if (mediaEl.src) {
+      if (playing) mediaEl.pause();
+      else mediaEl.play();
+    }
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Play';
+    if (playing) startLoop(); else stopLoop();
+  });
+
+  panCtl.addEventListener('input', () => {
+    if (pannerNode) pannerNode.pan.value = parseFloat(panCtl.value);
+  });
+
+  opSelect.addEventListener('change', updateAdder);
+
+  function snapshotToGrid(arr) {
+    let energy = 0;
+    for (let i = 0; i < N; i++) {
+      const v = arr[i] || 0;
+      energy += v;
+      const pct = v / 255;
+      cells[i].style.background = `color-mix(in srgb, var(--cell-low), var(--cell-hi) ${Math.round(pct * 100)}%)`;
+      cells[i].textContent = v > 45 ? String.fromCharCode(0x20 + (v % 95)) : '';
+      portVals[i].textContent = v;
+    }
+    const avgEnergy = energy / (N * 255) * 100;
+    document.documentElement.style.setProperty('--cue-energy', avgEnergy.toFixed(1));
+    energyBar.style.width = avgEnergy + '%';
+  }
+
+  function startLoop() {
+    cancelAnimationFrame(rafId);
+    const tick = () => {
+      if (!analyser) return;
+      analyser.getByteFrequencyData(dataArr);
+      if (viewingCueIdx === null) snapshotToGrid(dataArr);
+
+      drawWaveform();   // always live
+
+      const now = performance.now();
+      const interval = parseInt(intervalCtl.value, 10);
+      if (now - lastSnapshotAt >= interval) {
+        lastSnapshotAt = now;
+        addCue(Array.from(dataArr));
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+  }
+  function stopLoop() { cancelAnimationFrame(rafId); }
+
+  function addCue(snapshot) {
+    const t = mediaEl.src && !mediaEl.paused ? mediaEl.currentTime : performance.now() / 1000;
+    const energy = snapshot.reduce((a, b) => a + b, 0) / (N * 255) * 100;
+    cues.push({ t, snapshot, energy });
+    if (cues.length > 80) cues.shift();
+    renderTimeline();
+
+    if (mediaEl.textTracks.length) {
+      const track = mediaEl.textTracks[0];
+      const cue = new VTTCue(t, t + 0.4, JSON.stringify({ energy: energy.toFixed(1) }));
+      try { track.addCue(cue); } catch (_) {}
+    }
+  }
+
+  function renderTimeline() {
+    timelineEl.innerHTML = '';
+    cues.forEach((c, idx) => {
+      const el = document.createElement('div');
+      el.className = 'cue' +
+        (viewingCueIdx === idx ? ' active' : '') +
+        (boundCueIdx === idx ? ' bound' : '');
+      el.textContent = c.t.toFixed(2) + 's · E' + c.energy.toFixed(0);
+      el.title = 'Click to inspect · Shift-click to bind';
+      el.addEventListener('click', e => {
+        if (e.shiftKey) {
+          boundCueIdx = idx;
+          applyBoundCue(c);
+        } else {
+          viewingCueIdx = idx;
+          snapshotToGrid(c.snapshot);
+        }
+        renderTimeline();
+      });
+      timelineEl.appendChild(el);
+    });
+    timelineEl.scrollLeft = timelineEl.scrollWidth;
+  }
+
+  timelineEl.addEventListener('dblclick', e => {
+    if (e.target === timelineEl) {
+      viewingCueIdx = null;
+      renderTimeline();
+    }
+  });
+
+  function applyBoundCue(c) {
+    document.documentElement.style.setProperty('--cue-energy', c.energy.toFixed(1));
+    const mode = c.energy > 55 ? 1 : c.energy > 35 ? 2 : 0;
+    opSelect.value = String(mode);
+    updateAdder();
+    statusEl.textContent = `Bound cue @ ${c.t.toFixed(2)}s → mode ${opSelect.options[mode].text}`;
+  }
+
+  bindBtn.addEventListener('click', () => {
+    if (viewingCueIdx !== null) {
+      boundCueIdx = viewingCueIdx;
+      applyBoundCue(cues[viewingCueIdx]);
+      renderTimeline();
+    } else {
+      statusEl.textContent = 'Select a cue first, then bind';
+    }
+  });
+  unbindBtn.addEventListener('click', () => {
+    boundCueIdx = null;
+    renderTimeline();
+    statusEl.textContent = 'Unbound';
+  });
+
+  // ---------- OffscreenCanvas Workers ----------
+  const workerCode = `
+    const topologies = [
+      { name: 'XOR-5', transistors: 5, color: '#6d93ff' },
+      { name: 'XOR-6', transistors: 6, color: '#4ade80' },
+      { name: 'XOR-8', transistors: 8, color: '#fbbf24' },
+      { name: 'XOR-10', transistors: 10, color: '#ff6b68' }
+    ];
+
+    let canvas, ctx, W, H, state = { A:0, B:0, result:0, carry:0, mode:0, topo:0, energy:0 };
+    let t = 0;
+
+    function drawTransistor(x, y, on, scale = 1) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(scale, scale);
+      ctx.fillStyle = on ? '#e2e8f0' : '#334155';
+      ctx.beginPath();
+      ctx.moveTo(-6, -8); ctx.lineTo(6, -8); ctx.lineTo(6, 8); ctx.lineTo(-6, 8);
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = on ? '#94a3b8' : '#475569';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, -8); ctx.lineTo(0, -14);
+      ctx.moveTo(-4, 8); ctx.lineTo(-4, 14);
+      ctx.moveTo(4, 8); ctx.lineTo(4, 14);
+      ctx.stroke();
+      if (on) {
+        ctx.fillStyle = '#fbbf24';
+        ctx.beginPath(); ctx.arc(0, 0, 2.5, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function drawWire(x1, y1, x2, y2, active) {
+      ctx.strokeStyle = active ? '#6d93ff' : '#334155';
+      ctx.lineWidth = active ? 2 : 1;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+
+    function render() {
+      if (!ctx) return;
+      t += 0.016;
+      const topo = topologies[state.topo % 4];
+      ctx.fillStyle = '#0a0a0e';
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.fillStyle = 'rgba(0,0,0,0.55)';
+      ctx.fillRect(0, 0, W, 22);
+      ctx.fillStyle = topo.color;
+      ctx.font = 'bold 11px ui-monospace, monospace';
+      ctx.fillText(topo.name + '  ·  ' + topo.transistors + ' BJT', 8, 15);
+
+      const n = topo.transistors;
+      const cx = W / 2, cy = H / 2 + 10;
+      const spread = Math.min(W * 0.7, n * 28);
+
+      const aOn = !!(state.A & 1);
+      const bOn = !!(state.B & 1);
+      const outOn = !!(state.result & 1);
+
+      drawWire(20, cy - 30, cx - spread/2, cy - 30, aOn);
+      drawWire(20, cy + 30, cx - spread/2, cy + 30, bOn);
+      ctx.fillStyle = aOn ? '#6d93ff' : '#475569';
+      ctx.font = '10px monospace';
+      ctx.fillText('A', 6, cy - 26);
+      ctx.fillStyle = bOn ? '#6d93ff' : '#475569';
+      ctx.fillText('B', 6, cy + 34);
+
+      for (let i = 0; i < n; i++) {
+        const frac = n === 1 ? 0.5 : i / (n - 1);
+        const x = cx - spread/2 + frac * spread;
+        const y = cy + Math.sin(frac * Math.PI) * (i % 2 ? 18 : -18);
+        const active = (i < 2 && (aOn || bOn)) || (i >= n - 2 && outOn) ||
+                       (state.energy > 40 && Math.sin(t * 3 + i) > 0.3);
+        drawTransistor(x, y, active, 1.1);
+        if (i > 0) {
+          const prevFrac = (i - 1) / (n - 1);
+          const px = cx - spread/2 + prevFrac * spread;
+          const py = cy + Math.sin(prevFrac * Math.PI) * ((i - 1) % 2 ? 18 : -18);
+          drawWire(px + 6, py, x - 6, y, active);
+        }
+      }
+
+      const ledX = W - 36, ledY = cy;
+      drawWire(cx + spread/2 + 10, cy, ledX - 12, ledY, outOn);
+      ctx.beginPath();
+      ctx.arc(ledX, ledY, 9, 0, Math.PI * 2);
+      ctx.fillStyle = outOn ? topo.color : '#1e293b';
+      ctx.fill();
+      ctx.strokeStyle = '#64748b';
+      ctx.stroke();
+      if (outOn) {
+        ctx.fillStyle = '#fff';
+        ctx.font = '9px monospace';
+        ctx.fillText('1', ledX - 3, ledY + 3);
+      }
+
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(8, H - 14, W - 16, 6);
+      ctx.fillStyle = topo.color;
+      ctx.fillRect(8, H - 14, (W - 16) * Math.min(1, state.energy / 100), 6);
+
+      const modes = ['ADD', 'SUB', 'XOR', 'AND'];
+      ctx.fillStyle = 'rgba(0,0,0,0.5)';
+      ctx.fillRect(W - 52, 4, 44, 14);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '9px monospace';
+      ctx.fillText(modes[state.mode] || 'ADD', W - 46, 14);
+
+      requestAnimationFrame(render);
+    }
+
+    self.onmessage = (e) => {
+      const msg = e.data;
+      if (msg.type === 'init') {
+        canvas = msg.canvas;
+        ctx = canvas.getContext('2d');
+        W = canvas.width;
+        H = canvas.height;
+        state.topo = msg.topo;
+        render();
+      } else if (msg.type === 'state') {
+        Object.assign(state, msg);
+      } else if (msg.type === 'resize') {
+        if (canvas) {
+          canvas.width = msg.w;
+          canvas.height = msg.h;
+          W = msg.w; H = msg.h;
+        }
+      }
+    };
+  `;
+
+  const workers = [];
+
+  function initWorkers() {
+    const blob = new Blob([workerCode], { type: 'application/javascript' });
+    const url = URL.createObjectURL(blob);
+
+    for (let i = 0; i < 4; i++) {
+      const cv = document.getElementById('cv' + i);
+      const rect = cv.parentElement.getBoundingClientRect();
+      cv.width = Math.max(200, Math.floor(rect.width * devicePixelRatio));
+      cv.height = Math.max(160, Math.floor(rect.height * devicePixelRatio));
+
+      const off = cv.transferControlToOffscreen();
+      const w = new Worker(url);
+      w.postMessage({ type: 'init', canvas: off, topo: i }, [off]);
+      workers.push(w);
+    }
+    URL.revokeObjectURL(url);
+  }
+
+  const ro = new ResizeObserver(entries => {
+    entries.forEach(entry => {
+      const idx = ['cam0','cam1','cam2','cam3'].indexOf(entry.target.id);
+      if (idx < 0 || !workers[idx]) return;
+      const w = Math.floor(entry.contentRect.width * devicePixelRatio);
+      const h = Math.floor(entry.contentRect.height * devicePixelRatio);
+      workers[idx].postMessage({ type: 'resize', w, h });
+    });
+  });
+  ['cam0','cam1','cam2','cam3'].forEach(id => ro.observe(document.getElementById(id)));
+
+  function resizeOscilloscope() {
+    const wrap = document.getElementById('oscilloscope-wrap');
+    if (!wrap || !oscCanvas) return;
+    const rect = wrap.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    oscCanvas.width = Math.floor(rect.width * dpr);
+    oscCanvas.height = Math.floor(110 * dpr);
+    oscCanvas.style.width = rect.width + 'px';
+    oscCanvas.style.height = '110px';
+  }
+  window.addEventListener('resize', resizeOscilloscope);
+  requestAnimationFrame(resizeOscilloscope);
+
+  // boot
+  initWorkers();
+  updateAdder();
+  statusEl.textContent = 'Workers live · load audio or use mic';
+})();
+</script>
+</body>
+</html>

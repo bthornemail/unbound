@@ -1,0 +1,459 @@
+import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
+
+// QR Code generation using a simple canvas approach
+const generateQRCode = (text, size = 200) => {
+  // Simple placeholder QR code pattern - in production, use a proper QR library
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  
+  // Fill background
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, size, size);
+  
+  // Simple pattern representing QR code
+  ctx.fillStyle = '#000000';
+  const cellSize = size / 20;
+  for (let i = 0; i < 20; i++) {
+    for (let j = 0; j < 20; j++) {
+      if ((i + j + text.length) % 3 === 0) {
+        ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+      }
+    }
+  }
+  
+  // Add text overlay
+  ctx.fillStyle = '#FF0000';
+  ctx.font = '12px Arial';
+  ctx.fillText(text.slice(0, 8) + '...', 10, size - 10);
+  
+  return canvas.toDataURL();
+};
+
+const Spinner = () => (
+  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+);
+
+const Alert = ({ type, children, onClose }) => {
+  const baseClasses = "p-4 rounded-lg border mb-4 flex justify-between items-start";
+  const typeClasses = {
+    danger: "bg-red-50 border-red-300 text-red-700",
+    info: "bg-blue-50 border-blue-300 text-blue-700",
+    success: "bg-green-50 border-green-300 text-green-700"
+  };
+
+  return (
+    <div className={`${baseClasses} ${typeClasses[type]}`}>
+      <div className="flex-1">{children}</div>
+      {onClose && (
+        <button 
+          onClick={onClose}
+          className="ml-4 text-gray-400 hover:text-gray-600 font-bold"
+        >
+          ×
+        </button>
+      )}
+    </div>
+  );
+};
+
+const Badge = ({ variant, children }) => {
+  const variants = {
+    success: "bg-green-100 text-green-800",
+    danger: "bg-red-100 text-red-800"
+  };
+  
+  return (
+    <span className={`px-2 py-1 rounded-full text-xs font-medium ${variants[variant]}`}>
+      {children}
+    </span>
+  );
+};
+
+const WebAuthnWalletApp = () => {
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [wallet, setWallet] = useState(null);
+  const [qrCodes, setQrCodes] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [qrText, setQrText] = useState('');
+  const [credentialId, setCredentialId] = useState(null);
+
+  // Check if WebAuthn is supported
+  const isWebAuthnSupported = () => {
+    return window.PublicKeyCredential !== undefined;
+  };
+
+  // Generate a new Ethereum wallet
+  const generateWallet = () => {
+    const newWallet = ethers.Wallet.createRandom();
+    setWallet(newWallet);
+    return newWallet;
+  };
+
+  // WebAuthn Registration
+  const handleRegister = async () => {
+    if (!isWebAuthnSupported()) {
+      setError('WebAuthn is not supported in this browser');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      // Generate challenge
+      const challenge = new Uint8Array(32);
+      crypto.getRandomValues(challenge);
+
+      const publicKeyCredentialCreationOptions = {
+        challenge,
+        rp: {
+          name: "Wallet QR App",
+          id: window.location.hostname,
+        },
+        user: {
+          id: new TextEncoder().encode("user123"),
+          name: "wallet-user",
+          displayName: "Wallet User",
+        },
+        pubKeyCredParams: [{alg: -7, type: "public-key"}],
+        authenticatorSelection: {
+          authenticatorAttachment: "platform",
+          userVerification: "required"
+        },
+        timeout: 60000,
+        attestation: "direct"
+      };
+
+      const credential = await navigator.credentials.create({
+        publicKey: publicKeyCredentialCreationOptions
+      });
+
+      if (credential) {
+        setCredentialId(credential.id);
+        setIsRegistered(true);
+        
+        // Generate wallet after successful registration
+        const newWallet = generateWallet();
+        
+        setError('');
+        console.log('Registration successful:', credential);
+      }
+    } catch (err) {
+      setError(`Registration failed: ${err.message}`);
+      console.error('Registration error:', err);
+    }
+
+    setLoading(false);
+  };
+
+  // WebAuthn Authentication
+  const handleAuthenticate = async () => {
+    if (!credentialId) {
+      setError('No credential found. Please register first.');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const challenge = new Uint8Array(32);
+      crypto.getRandomValues(challenge);
+
+      const publicKeyCredentialRequestOptions = {
+        challenge,
+        allowCredentials: [{
+          id: new TextEncoder().encode(credentialId),
+          type: 'public-key',
+        }],
+        timeout: 60000,
+        userVerification: "required"
+      };
+
+      const assertion = await navigator.credentials.get({
+        publicKey: publicKeyCredentialRequestOptions
+      });
+
+      if (assertion) {
+        setIsAuthenticated(true);
+        setError('');
+        console.log('Authentication successful:', assertion);
+      }
+    } catch (err) {
+      setError(`Authentication failed: ${err.message}`);
+      console.error('Authentication error:', err);
+    }
+
+    setLoading(false);
+  };
+
+  // Create and sign QR code
+  const handleCreateQRCode = async () => {
+    if (!wallet || !qrText.trim()) {
+      setError('Please enter text for the QR code');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      // Create QR code data
+      const qrData = {
+        text: qrText,
+        walletAddress: wallet.address,
+        timestamp: Date.now(),
+        id: Math.random().toString(36).substr(2, 9)
+      };
+
+      // Sign the QR data with wallet
+      const message = JSON.stringify(qrData);
+      const signature = await wallet.signMessage(message);
+      
+      // Generate QR code image
+      const qrImage = generateQRCode(qrText);
+
+      const signedQRCode = {
+        ...qrData,
+        signature,
+        qrImage,
+        verified: true
+      };
+
+      setQrCodes(prev => [signedQRCode, ...prev]);
+      setQrText('');
+      setError('');
+    } catch (err) {
+      setError(`Failed to create QR code: ${err.message}`);
+      console.error('QR creation error:', err);
+    }
+
+    setLoading(false);
+  };
+
+  // Verify QR code signature
+  const verifyQRCode = async (qrCode) => {
+    try {
+      const message = JSON.stringify({
+        text: qrCode.text,
+        walletAddress: qrCode.walletAddress,
+        timestamp: qrCode.timestamp,
+        id: qrCode.id
+      });
+
+      const recoveredAddress = ethers.utils.verifyMessage(message, qrCode.signature);
+      return recoveredAddress.toLowerCase() === qrCode.walletAddress.toLowerCase();
+    } catch (err) {
+      console.error('Verification error:', err);
+      return false;
+    }
+  };
+
+  // Reset application state
+  const handleReset = () => {
+    setIsRegistered(false);
+    setIsAuthenticated(false);
+    setWallet(null);
+    setQrCodes([]);
+    setCredentialId(null);
+    setError('');
+  };
+
+  useEffect(() => {
+    // Check if already registered (in real app, this would check server/storage)
+    const savedCredential = localStorage.getItem('webauthn-credential-id');
+    if (savedCredential) {
+      setCredentialId(savedCredential);
+      setIsRegistered(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save credential ID to localStorage
+    if (credentialId) {
+      localStorage.setItem('webauthn-credential-id', credentialId);
+    }
+  }, [credentialId]);
+
+  if (!isWebAuthnSupported()) {
+    return (
+      <div className="max-w-4xl mx-auto mt-8 p-6">
+        <Alert type="danger">
+          WebAuthn is not supported in this browser. Please use a modern browser with WebAuthn support.
+        </Alert>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-6xl mx-auto mt-6 p-6">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-blue-600 text-white p-6">
+          <h1 className="text-2xl font-bold mb-0">WebAuthn Wallet QR Code Manager</h1>
+        </div>
+        
+        <div className="p-6">
+          {error && (
+            <Alert type="danger" onClose={() => setError('')}>
+              {error}
+            </Alert>
+          )}
+
+          {/* Registration/Authentication Section */}
+          {!isAuthenticated && (
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
+              <h2 className="text-lg font-semibold mb-4">Authentication</h2>
+              {!isRegistered ? (
+                <div>
+                  <p className="mb-4 text-gray-700">Register your device for secure authentication:</p>
+                  <button 
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center disabled:opacity-50"
+                    onClick={handleRegister}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <Spinner />
+                        Registering...
+                      </>
+                    ) : (
+                      'Register Device'
+                    )}
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <p className="mb-4 text-gray-700">Device registered. Authenticate to access wallet features:</p>
+                  <div className="flex gap-2">
+                    <button 
+                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center disabled:opacity-50"
+                      onClick={handleAuthenticate}
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <>
+                          <Spinner />
+                          Authenticating...
+                        </>
+                      ) : (
+                        'Authenticate'
+                      )}
+                    </button>
+                    <button 
+                      className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
+                      onClick={handleReset}
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Wallet Info Section */}
+          {isAuthenticated && wallet && (
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
+              <h2 className="text-lg font-semibold mb-4">Wallet Information</h2>
+              <div className="space-y-2">
+                <p><strong>Address:</strong> <code className="bg-gray-100 px-2 py-1 rounded">{wallet.address}</code></p>
+                <p><strong>Status:</strong> <Badge variant="success">Authenticated</Badge></p>
+                <button 
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"
+                  onClick={handleReset}
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* QR Code Creation Section */}
+          {isAuthenticated && (
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
+              <h2 className="text-lg font-semibold mb-4">Create Signed QR Code</h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    QR Code Content
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter text or data for QR code"
+                    value={qrText}
+                    onChange={(e) => setQrText(e.target.value)}
+                  />
+                </div>
+                <button 
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center disabled:opacity-50"
+                  onClick={handleCreateQRCode}
+                  disabled={loading || !qrText.trim()}
+                >
+                  {loading ? (
+                    <>
+                      <Spinner />
+                      Creating...
+                    </>
+                  ) : (
+                    'Create & Sign QR Code'
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* QR Codes Display Section */}
+          {qrCodes.length > 0 && (
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+              <h2 className="text-lg font-semibold mb-4">Generated QR Codes ({qrCodes.length})</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {qrCodes.map((qr) => (
+                  <div key={qr.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    <img 
+                      src={qr.qrImage} 
+                      alt="QR Code"
+                      className="w-full h-48 object-contain bg-gray-100"
+                    />
+                    <div className="p-4">
+                      <h3 className="font-semibold text-gray-900 mb-2">{qr.text}</h3>
+                      <div className="text-sm text-gray-600 space-y-1">
+                        <p>
+                          <strong>Address:</strong><br />
+                          <code className="text-xs bg-gray-100 px-1 py-0.5 rounded">
+                            {qr.walletAddress.slice(0, 10)}...{qr.walletAddress.slice(-8)}
+                          </code>
+                        </p>
+                        <p>
+                          <strong>Created:</strong> {new Date(qr.timestamp).toLocaleString()}
+                        </p>
+                        <p>
+                          <Badge variant={qr.verified ? 'success' : 'danger'}>
+                            {qr.verified ? 'Verified' : 'Unverified'}
+                          </Badge>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {isAuthenticated && qrCodes.length === 0 && (
+            <Alert type="info">
+              No QR codes created yet. Use the form above to create your first signed QR code.
+            </Alert>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default WebAuthnWalletApp;

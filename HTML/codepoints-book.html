@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Codepoint Popup Book · literal paths</title>
+  <!--
+    Plain-text friendly SPA for busybox httpd / any HTTP/1.1 server.
+    Expected response headers when served:
+      Content-Type: text/html; charset=utf-8
+    Linked resources (SVG, VTT) are fetched as:
+      image/svg+xml  ·  text/vtt  ·  text/plain
+    No CDN, no imports, no build. Relative paths only.
+  -->
+  <style>
+    :root {
+      --bg: #071013;
+      --ink: #d7fff5;
+      --dim: #6a9a8e;
+      --accent: #72ffe0;
+      --cell: #122022;
+      --line: #23695d;
+      --hot: #c26a2b;
+      --ok: #2f7d4a;
+      --stage-w: min(96vw, 960px);
+      --stage-h: min(58vh, 540px);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f4f7f6; --ink: #122022; --dim: #4a6a60;
+        --accent: #0a6a5a; --cell: #fff; --line: #8ab;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; min-height: 100%;
+      background: var(--bg); color: var(--ink);
+      font: 14px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    main {
+      max-width: 1100px; margin: 0 auto;
+      padding: max(12px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right))
+               max(24px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+    }
+    header { margin-bottom: 1rem; }
+    h1 {
+      margin: 0 0 .25rem; font-size: clamp(1.2rem, 4vw, 1.6rem);
+      color: var(--accent); letter-spacing: .04em;
+    }
+    .sub { color: var(--dim); font-size: 12px; }
+    .book {
+      display: grid;
+      grid-template-columns: minmax(160px, 220px) 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 720px) {
+      .book { grid-template-columns: 1fr; }
+    }
+    nav.paths {
+      border: 1px solid var(--line); border-radius: 8px;
+      background: var(--cell); padding: .6rem .5rem;
+      max-height: var(--stage-h); overflow: auto;
+    }
+    nav.paths button {
+      display: block; width: 100%; text-align: left;
+      background: transparent; border: 0; color: var(--ink);
+      font: inherit; padding: .4rem .5rem; border-radius: 4px;
+      cursor: pointer;
+    }
+    nav.paths button:hover,
+    nav.paths button[aria-current="page"] {
+      background: #1a3030; color: var(--accent);
+    }
+    nav.paths .child {
+      padding-left: 1.1rem; color: var(--dim); font-size: 12px;
+    }
+    nav.paths .child[aria-current="page"] { color: var(--accent); }
+    .stage-wrap {
+      border: 1px solid var(--line); border-radius: 8px;
+      background: #020607; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .stage-bar {
+      display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+      padding: .5rem .75rem; border-bottom: 1px solid var(--line);
+      font-size: 12px; color: var(--dim);
+    }
+    .stage-bar strong { color: var(--accent); font-weight: 600; }
+    .stage-bar button {
+      font: inherit; font-size: 12px; cursor: pointer;
+      background: var(--cell); color: var(--ink);
+      border: 1px solid var(--line); border-radius: 4px;
+      padding: .25rem .55rem;
+    }
+    .stage-bar button:hover { border-color: var(--accent); color: var(--accent); }
+    canvas#page {
+      display: block; width: 100%; height: var(--stage-h);
+      background: #020607; touch-action: none;
+    }
+    .cue-panel {
+      border-top: 1px solid var(--line);
+      padding: .55rem .75rem; min-height: 3.2rem;
+      font-size: 12px; color: var(--dim);
+    }
+    .cue-panel .active { color: var(--accent); }
+    .meta {
+      margin-top: .75rem; font-size: 11px; color: var(--dim);
+      display: grid; gap: .35rem;
+    }
+    .meta code { color: var(--ink); }
+    video#cue-engine {
+      position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>CODEPOINT POPUP BOOK</h1>
+      <p class="sub">
+        Uppercase template-literal paths · nested lowercase codepoint children ·
+        canvas pages · TextTrack / VTTCue frames · media-query layout ·
+        HTTP/1.1 relative fetches (<code>text/html</code>, <code>image/svg+xml</code>, <code>text/vtt</code>)
+      </p>
+    </header>
+
+    <div class="book">
+      <nav class="paths" id="path-nav" aria-label="Literal path index"></nav>
+      <div class="stage-wrap">
+        <div class="stage-bar">
+          <span>page <strong id="page-name">—</strong></span>
+          <span id="page-range">range 20–7E</span>
+          <button type="button" id="btn-prev" title="Previous page">←</button>
+          <button type="button" id="btn-next" title="Next page">→</button>
+          <button type="button" id="btn-step" title="Advance delta">Δ step</button>
+          <button type="button" id="btn-play" title="Play cue track">play cues</button>
+          <span id="state-hex">state 0x0000</span>
+        </div>
+        <canvas id="page" width="960" height="540" aria-label="SVG page canvas"></canvas>
+        <div class="cue-panel" id="cue-panel" aria-live="polite">
+          <span class="active" id="cue-text">load a path · cues bind to TextTrack</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div>path grammar: <code>(/[:uppercase:][:lowercase:]?/)</code> nested — Uppercase = MPT node (template literal name), lowercase = child codepoint list</div>
+      <div>delta: <code>rotl16(1) ^ rotl16(3) ^ rotl16(14) ^ 0x1d1d</code> · same law as probe / agent-commons</div>
+      <div>MIME when served over HTTP/1.1: document <code>text/html; charset=utf-8</code> · pages <code>image/svg+xml</code> · cues <code>text/vtt</code></div>
+    </div>
+  </main>
+
+  <!-- Hidden media element hosts TextTrack; cues drive frame labels -->
+  <video id="cue-engine" muted playsinline></video>
+
+  <script>
+(function () {
+  'use strict';
+
+  // ── delta law (W16) — projection of the BusyBox probe ─────────────
+  function rotl16(v, n) {
+    return ((v << n) | (v >>> (16 - n))) & 0xffff;
+  }
+  function nextState(v) {
+    return (rotl16(v, 1) ^ rotl16(v, 3) ^ rotl16(v, 14) ^ 0x1d1d) & 0xffff;
+  }
+
+  // ── selected literal range (printable ASCII) ─────────────────────
+  const RANGE_LO = 0x20;
+  const RANGE_HI = 0x7e;
+
+  // ── Uppercase template-literal path tree ─────────────────────────
+  // Shape: (/[:uppercase:][:lowercase:]?/) nested
+  // Uppercase = MPT node / page key
+  // lowercase = child codepoint-list segment
+  const PATHS = {
+    WORD: {
+      src: null,
+      kind: 'literal',
+      text: 'WORD',
+      children: {
+        codepoints: [0x57, 0x4f, 0x52, 0x44],
+        reverse: 'DROW',
+      },
+    },
+    GOD: {
+      src: null,
+      kind: 'literal',
+      text: 'GOD',
+      children: {
+        codepoints: [0x47, 0x4f, 0x44],
+        reverse: 'DOG',
+      },
+    },
+    OF: {
+      src: null,
+      kind: 'literal',
+      text: 'OF',
+      children: {
+        codepoints: [0x4f, 0x46],
+        dual: 'of',
+        dualCodepoints: [0x6f, 0x66],
+        xor: [0x20, 0x20],
+      },
+    },
+    IS: {
+      src: null,
+      kind: 'literal',
+      text: 'IS',
+      children: {
+        codepoints: [0x49, 0x53],
+        dual: 'is',
+        dualCodepoints: [0x69, 0x73],
+        xor: [0x20, 0x20],
+      },
+    },
+    CGAT: {
+      src: './Difference_DNA_RNA-EN.svg',
+      kind: 'svg',
+      children: {
+        bases: ['C', 'G', 'A', 'T'],
+        codepoints: [0x43, 0x47, 0x41, 0x54],
+      },
+    },
+    CGAU: {
+      src: './Difference_DNA_RNA-EN.svg',
+      kind: 'svg',
+      children: {
+        bases: ['C', 'G', 'A', 'U'],
+        codepoints: [0x43, 0x47, 0x41, 0x55],
+      },
+    },
+    E8: {
+      src: './e8-step.svg',
+      kind: 'svg',
+      children: {
+        step: '12deg',
+        shells: 8,
+        roots: 240,
+      },
+    },
+    CLA: {
+      src: './Four_bit_adder_with_carry_lookahead.svg',
+      kind: 'svg',
+      children: {
+        bits: 4,
+        orbit: ['AA55', '718E', 'EE11', 'CA35'],
+      },
+    },
+    KMAP: {
+      src: './Karnaugh_map_torus.svg',
+      kind: 'svg',
+      children: {
+        gray: true,
+        alt: './K-map_6,8,9,10,11,12,13,14.svg',
+      },
+    },
+    SMITH: {
+      src: './Smith_chart_gen.svg',
+      kind: 'svg',
+      children: {
+        step: '12deg',
+      },
+    },
+    PROOFS: {
+      src: './visual-proofs.svg',
+      kind: 'svg',
+      children: {
+        table: 'periodic',
+        elements: 34,
+      },
+    },
+    DELTA: {
+      src: null,
+      kind: 'law',
+      children: {
+        formula: 'rotl1^rotl3^rotl14^0x1d1d',
+        width: 16,
+        period: 8,
+      },
+    },
+  };
+
+  // Flat page order for prev/next (Uppercase nodes only)
+  const PAGE_KEYS = Object.keys(PATHS);
+
+  // ── DOM ──────────────────────────────────────────────────────────
+  const canvas = document.getElementById('page');
+  const ctx = canvas.getContext('2d');
+  const nav = document.getElementById('path-nav');
+  const pageName = document.getElementById('page-name');
+  const pageRange = document.getElementById('page-range');
+  const stateHex = document.getElementById('state-hex');
+  const cueText = document.getElementById('cue-text');
+  const cueEngine = document.getElementById('cue-engine');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const btnStep = document.getElementById('btn-step');
+  const btnPlay = document.getElementById('btn-play');
+
+  let pageIndex = 0;
+  let state = 0x0000;
+  let raf = 0;
+  let imgCache = new Map();
+  let track = null;
+  let reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => draw());
+  matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
+    reducedMotion = e.matches;
+  });
+
+  // ── build path nav from Uppercase / lowercase tree ───────────────
+  function buildNav() {
+    nav.innerHTML = '';
+    for (const key of PAGE_KEYS) {
+      const node = PATHS[key];
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = key;
+      btn.dataset.key = key;
+      btn.addEventListener('click', () => openPage(key));
+      nav.appendChild(btn);
+      const kids = node.children || {};
+      for (const child of Object.keys(kids)) {
+        // lowercase child path
+        const cbtn = document.createElement('button');
+        cbtn.type = 'button';
+        cbtn.className = 'child';
+        cbtn.textContent = child;
+        cbtn.dataset.key = key;
+        cbtn.dataset.child = child;
+        cbtn.addEventListener('click', () => openPage(key, child));
+        nav.appendChild(cbtn);
+      }
+    }
+  }
+
+  function openPage(key, child) {
+    const idx = PAGE_KEYS.indexOf(key);
+    if (idx >= 0) pageIndex = idx;
+    const node = PATHS[key];
+    pageName.textContent = child ? `${key}/${child}` : key;
+    for (const b of nav.querySelectorAll('button')) {
+      const on =
+        b.dataset.key === key &&
+        (child ? b.dataset.child === child : !b.dataset.child);
+      b.setAttribute('aria-current', on ? 'page' : 'false');
+    }
+    loadCues(key, child);
+    draw(child);
+  }
+
+  // ── image load ───────────────────────────────────────────────────
+  function loadImage(src) {
+    if (!src) return Promise.resolve(null);
+    if (imgCache.has(src)) return Promise.resolve(imgCache.get(src));
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.decoding = 'async';
+      img.onload = () => { imgCache.set(src, img); resolve(img); };
+      img.onerror = () => resolve(null);
+      // relative URL — server should send image/svg+xml
+      img.src = src;
+    });
+  }
+
+  // ── TextTrack / VTTCue frames ────────────────────────────────────
+  // Build an in-memory WebVTT from the path node, attach as blob track.
+  function loadCues(key, child) {
+    const node = PATHS[key];
+    const lines = [];
+    lines.push('WEBVTT');
+    lines.push('');
+    lines.push('NOTE HTTP/1.1 Content-Type: text/vtt');
+    lines.push('');
+    const kids = node.children || {};
+    let t = 0;
+    const mk = (label, body) => {
+      const a = fmtTime(t);
+      t += 1.2;
+      const b = fmtTime(t);
+      lines.push(`${a} --> ${b}`);
+      lines.push(`${label}: ${body}`);
+      lines.push('');
+    };
+    mk(key, node.kind || 'node');
+    if (child && kids[child] !== undefined) {
+      mk(child, formatChild(kids[child]));
+    } else {
+      for (const [k, v] of Object.entries(kids)) mk(k, formatChild(v));
+    }
+    mk('delta', '0x' + state.toString(16).padStart(4, '0'));
+    mk('range', RANGE_LO.toString(16) + '-' + RANGE_HI.toString(16));
+
+    const blob = new Blob([lines.join('\n')], { type: 'text/vtt' });
+    const url = URL.createObjectURL(blob);
+
+    // reset video + track
+    while (cueEngine.textTracks.length) {
+      /* clear by replacing source */
+      break;
+    }
+    cueEngine.pause();
+    // Remove old tracks by resetting media
+    cueEngine.removeAttribute('src');
+    const old = cueEngine.querySelector('track');
+    if (old) old.remove();
+
+    const tr = document.createElement('track');
+    tr.kind = 'captions';
+    tr.label = key;
+    tr.srclang = 'en';
+    tr.src = url;
+    tr.default = true;
+    cueEngine.appendChild(tr);
+
+    // Silent media timeline long enough for cues (data URI wav silence optional;
+    // many browsers fire cues on track mode even without media — use play with empty)
+    // Use a minimal media: blank canvas stream is heavy; instead step cues manually on play.
+    track = null;
+    tr.addEventListener('load', () => {
+      track = tr.track;
+      if (track) track.mode = 'showing';
+    });
+    // Fallback: parse cues ourselves for display
+    window.__cueLines = lines.filter((l) => l && !l.startsWith('NOTE') && !l.startsWith('WEBVTT') && !l.includes('-->'));
+    window.__cueIdx = 0;
+    cueText.textContent = window.__cueLines[0] || '';
+  }
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `00:${String(m).padStart(2, '0')}:${s.toFixed(3).padStart(6, '0')}`;
+  }
+
+  function formatChild(v) {
+    if (Array.isArray(v)) {
+      if (typeof v[0] === 'number') {
+        return v.map((n) => n.toString(16).padStart(2, '0')).join(' ');
+      }
+      return v.join(',');
+    }
+    if (v && typeof v === 'object') return JSON.stringify(v);
+    return String(v);
+  }
+
+  // ── canvas draw ──────────────────────────────────────────────────
+  async function draw(child) {
+    const key = PAGE_KEYS[pageIndex];
+    const node = PATHS[key];
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cssW = canvas.clientWidth || 960;
+    const cssH = canvas.clientHeight || 540;
+    canvas.width = Math.floor(cssW * dpr);
+    canvas.height = Math.floor(cssH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const W = cssW;
+    const H = cssH;
+    const dark = matchMedia('(prefers-color-scheme: dark)').matches ||
+      !matchMedia('(prefers-color-scheme: light)').matches;
+
+    ctx.fillStyle = dark ? '#020607' : '#f8fafa';
+    ctx.fillRect(0, 0, W, H);
+
+    // try SVG page
+    let drewSvg = false;
+    if (node.src) {
+      const img = await loadImage(node.src);
+      if (img) {
+        const scale = Math.min((W - 24) / img.naturalWidth, (H - 24) / img.naturalHeight);
+        const dw = img.naturalWidth * scale;
+        const dh = img.naturalHeight * scale;
+        ctx.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh);
+        drewSvg = true;
+      }
+    }
+
+    // overlay: codepoint mapping strip + path
+    ctx.save();
+    ctx.fillStyle = dark ? 'rgba(7,16,19,0.82)' : 'rgba(255,255,255,0.88)';
+    ctx.fillRect(0, H - 72, W, 72);
+    ctx.fillStyle = dark ? '#72ffe0' : '#0a6a5a';
+    ctx.font = '13px ui-monospace, monospace';
+    ctx.fillText(pageName.textContent, 12, H - 48);
+
+    const kids = node.children || {};
+    let cps = null;
+    if (child && Array.isArray(kids[child]) && typeof kids[child][0] === 'number') {
+      cps = kids[child];
+    } else if (Array.isArray(kids.codepoints)) {
+      cps = kids.codepoints;
+    }
+    ctx.fillStyle = dark ? '#d7fff5' : '#122022';
+    ctx.font = '12px ui-monospace, monospace';
+    if (cps) {
+      const label = cps.map((n) => n.toString(16).padStart(2, '0')).join(' ');
+      ctx.fillText('codepoints ' + label, 12, H - 28);
+      // deviation vs selected range
+      const out = cps.filter((n) => n < RANGE_LO || n > RANGE_HI).length;
+      ctx.fillStyle = out ? '#c26a2b' : '#2f7d4a';
+      ctx.fillText(
+        out ? `deviation ${out} outside ${RANGE_LO.toString(16)}-${RANGE_HI.toString(16)}` :
+              `all inside ${RANGE_LO.toString(16)}-${RANGE_HI.toString(16)}`,
+        12, H - 10
+      );
+    } else if (child && kids[child] !== undefined) {
+      ctx.fillText(child + ' · ' + formatChild(kids[child]), 12, H - 28);
+    } else if (!drewSvg) {
+      // pure law / literal page
+      drawLiteralPage(ctx, W, H - 72, key, node, dark);
+    }
+
+    // state badge
+    ctx.fillStyle = dark ? '#6a9a8e' : '#4a6a60';
+    ctx.font = '11px ui-monospace, monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText('Δ 0x' + state.toString(16).padStart(4, '0'), W - 12, H - 12);
+    ctx.textAlign = 'left';
+    ctx.restore();
+
+    stateHex.textContent = 'state 0x' + state.toString(16).padStart(4, '0');
+  }
+
+  function drawLiteralPage(ctx, W, H, key, node, dark) {
+    const text = node.text || key;
+    ctx.fillStyle = dark ? '#72ffe0' : '#0a6a5a';
+    ctx.font = 'bold 48px ui-monospace, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(text, W / 2, H / 2 - 10);
+    const kids = node.children || {};
+    if (Array.isArray(kids.codepoints)) {
+      ctx.font = '18px ui-monospace, monospace';
+      ctx.fillStyle = dark ? '#d7fff5' : '#122022';
+      ctx.fillText(
+        kids.codepoints.map((n) => n.toString(16).padStart(2, '0')).join('  '),
+        W / 2,
+        H / 2 + 36
+      );
+    }
+    if (kids.xor) {
+      ctx.font = '14px ui-monospace, monospace';
+      ctx.fillStyle = '#e0c060';
+      ctx.fillText('⊕ ' + kids.xor.map((n) => n.toString(16)).join(' '), W / 2, H / 2 + 64);
+    }
+    if (kids.reverse) {
+      ctx.fillStyle = dark ? '#6a9a8e' : '#4a6a60';
+      ctx.fillText('↺ ' + kids.reverse, W / 2, H / 2 + 90);
+    }
+    ctx.textAlign = 'left';
+  }
+
+  // ── controls ─────────────────────────────────────────────────────
+  btnPrev.addEventListener('click', () => {
+    pageIndex = (pageIndex - 1 + PAGE_KEYS.length) % PAGE_KEYS.length;
+    openPage(PAGE_KEYS[pageIndex]);
+  });
+  btnNext.addEventListener('click', () => {
+    pageIndex = (pageIndex + 1) % PAGE_KEYS.length;
+    openPage(PAGE_KEYS[pageIndex]);
+  });
+  btnStep.addEventListener('click', () => {
+    state = nextState(state);
+    stateHex.textContent = 'state 0x' + state.toString(16).padStart(4, '0');
+    // use low bits to nudge page index when on DELTA
+    if (PAGE_KEYS[pageIndex] === 'DELTA') {
+      draw();
+    } else {
+      // subtle: re-draw with updated badge
+      draw(nav.querySelector('button[aria-current="page"]')?.dataset.child);
+    }
+  });
+  btnPlay.addEventListener('click', () => {
+    const lines = window.__cueLines || [];
+    if (!lines.length) return;
+    let i = 0;
+    const tick = () => {
+      cueText.textContent = lines[i] || '';
+      i += 1;
+      if (i < lines.length && !reducedMotion) {
+        setTimeout(tick, 1200);
+      }
+    };
+    tick();
+  });
+
+  // resize
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => draw(
+      nav.querySelector('button[aria-current="page"]')?.dataset.child
+    ));
+  });
+
+  // ── init ─────────────────────────────────────────────────────────
+  buildNav();
+  pageRange.textContent = `range ${RANGE_LO.toString(16)}–${RANGE_HI.toString(16)}`;
+  openPage(PAGE_KEYS[0]);
+})();
+  </script>
+</body>
+</html>

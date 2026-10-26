@@ -1,0 +1,312 @@
+import React, { useState } from 'react';
+
+interface Vertex {
+  id: string;
+  label: string;
+  x: number;
+  y: number;
+  z: number;
+  color: string;
+}
+
+interface Edge {
+  id: string;
+  from: string;
+  to: string;
+  color: string;
+}
+
+const TetrahedronGraph: React.FC = () => {
+  const [view, setView] = useState<'3d' | 'planar'>('3d');
+  const [selectedVertex, setSelectedVertex] = useState<string | null>(null);
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+
+  // Tetrahedron vertices in 3D space
+  const tetrahedronVertices: Vertex[] = [
+    { id: 'A', label: 'A', x: 0, y: 0, z: 0, color: '#ef4444' },
+    { id: 'B', label: 'B', x: 1, y: 0, z: 0, color: '#3b82f6' },
+    { id: 'C', label: 'C', x: 0.5, y: Math.sqrt(3)/2, z: 0, color: '#10b981' },
+    { id: 'D', label: 'D', x: 0.5, y: Math.sqrt(3)/6, z: Math.sqrt(6)/3, color: '#f59e0b' }
+  ];
+
+  // All edges in complete graph K4 (tetrahedron)
+  const edges: Edge[] = [
+    { id: 'AB', from: 'A', to: 'B', color: '#6b7280' },
+    { id: 'AC', from: 'A', to: 'C', color: '#6b7280' },
+    { id: 'AD', from: 'A', to: 'D', color: '#6b7280' },
+    { id: 'BC', from: 'B', to: 'C', color: '#6b7280' },
+    { id: 'BD', from: 'B', to: 'D', color: '#6b7280' },
+    { id: 'CD', from: 'C', to: 'D', color: '#6b7280' }
+  ];
+
+  // Planar representation vertices (for 2D view)
+  const planarVertices: Vertex[] = [
+    { id: 'A', label: 'A', x: 300, y: 350, z: 0, color: '#ef4444' },
+    { id: 'B', label: 'B', x: 200, y: 200, z: 0, color: '#3b82f6' },
+    { id: 'C', label: 'C', x: 400, y: 200, z: 0, color: '#10b981' },
+    { id: 'D', label: 'D', x: 300, y: 100, z: 0, color: '#f59e0b' }
+  ];
+
+  // Project 3D point to 2D with rotation
+  const project3DTo2D = (vertex: Vertex, rotX: number, rotY: number): { x: number, y: number } => {
+    const scale = 150;
+    const centerX = 300;
+    const centerY = 200;
+    
+    // Apply rotation
+    const cosX = Math.cos(rotX);
+    const sinX = Math.sin(rotX);
+    const cosY = Math.cos(rotY);
+    const sinY = Math.sin(rotY);
+    
+    const x1 = vertex.x;
+    const y1 = vertex.y * cosX - vertex.z * sinX;
+    const z1 = vertex.y * sinX + vertex.z * cosX;
+    
+    const x2 = x1 * cosY + z1 * sinY;
+    const y2 = y1;
+    
+    return {
+      x: centerX + x2 * scale,
+      y: centerY - y2 * scale
+    };
+  };
+
+  const currentVertices = view === '3d' ? tetrahedronVertices : planarVertices;
+  const projectedVertices = view === '3d' 
+    ? tetrahedronVertices.map(v => ({ ...v, ...project3DTo2D(v, rotation.x, rotation.y) }))
+    : planarVertices;
+
+  const getVertexDegree = (vertexId: string): number => {
+    return edges.filter(e => e.from === vertexId || e.to === vertexId).length;
+  };
+
+  const getNeighbors = (vertexId: string): string[] => {
+    return edges
+      .filter(e => e.from === vertexId || e.to === vertexId)
+      .map(e => e.from === vertexId ? e.to : e.from);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (view === '3d') {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      setRotation({ x: (y - 0.5) * Math.PI, y: (x - 0.5) * Math.PI });
+    }
+  };
+
+  return (
+    <div className="w-full p-6 bg-white rounded-lg shadow-lg">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">Tetrahedral Graph (K₄)</h2>
+        <p className="text-gray-600">
+          The complete graph on 4 vertices, representing the edges and vertices of a tetrahedron
+        </p>
+      </div>
+
+      {/* View Toggle */}
+      <div className="mb-6">
+        <div className="flex gap-2">
+          <button
+            onClick={() => setView('3d')}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              view === '3d' 
+                ? 'bg-blue-500 text-white' 
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+          >
+            3D View
+          </button>
+          <button
+            onClick={() => setView('planar')}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              view === 'planar' 
+                ? 'bg-blue-500 text-white' 
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+          >
+            Planar View
+          </button>
+        </div>
+        {view === '3d' && (
+          <p className="text-sm text-gray-500 mt-2">Move your mouse over the graph to rotate it</p>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Graph Visualization */}
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold mb-3">Graph Visualization</h3>
+          <svg
+            width="600"
+            height="400"
+            viewBox="0 0 600 400"
+            className="border border-gray-300 rounded bg-white cursor-move"
+            onMouseMove={handleMouseMove}
+          >
+            {/* Edges */}
+            {edges.map(edge => {
+              const fromVertex = projectedVertices.find(v => v.id === edge.from)!;
+              const toVertex = projectedVertices.find(v => v.id === edge.to)!;
+              const isHighlighted = selectedVertex === edge.from || selectedVertex === edge.to;
+              
+              return (
+                <line
+                  key={edge.id}
+                  x1={fromVertex.x}
+                  y1={fromVertex.y}
+                  x2={toVertex.x}
+                  y2={toVertex.y}
+                  stroke={isHighlighted ? '#ef4444' : edge.color}
+                  strokeWidth={isHighlighted ? 3 : 2}
+                  opacity={isHighlighted ? 1 : 0.6}
+                />
+              );
+            })}
+
+            {/* Vertices */}
+            {projectedVertices.map(vertex => (
+              <g key={vertex.id}>
+                <circle
+                  cx={vertex.x}
+                  cy={vertex.y}
+                  r={selectedVertex === vertex.id ? 20 : 15}
+                  fill={vertex.color}
+                  stroke="white"
+                  strokeWidth="3"
+                  className="cursor-pointer"
+                  onClick={() => setSelectedVertex(
+                    selectedVertex === vertex.id ? null : vertex.id
+                  )}
+                />
+                <text
+                  x={vertex.x}
+                  y={vertex.y}
+                  textAnchor="middle"
+                  dy="0.35em"
+                  fill="white"
+                  fontSize="14"
+                  fontWeight="bold"
+                  pointerEvents="none"
+                >
+                  {vertex.label}
+                </text>
+              </g>
+            ))}
+          </svg>
+        </div>
+
+        {/* Graph Properties */}
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold mb-3">Graph Properties</h3>
+          
+          <div className="space-y-4">
+            <div className="bg-white p-4 rounded-lg border">
+              <h4 className="font-semibold text-gray-800 mb-2">Basic Properties</h4>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="text-gray-600">Vertices:</span>
+                  <span className="font-medium ml-2">4</span>
+                </div>
+                <div>
+                  <span className="text-gray-600">Edges:</span>
+                  <span className="font-medium ml-2">6</span>
+                </div>
+                <div>
+                  <span className="text-gray-600">Type:</span>
+                  <span className="font-medium ml-2">Complete Graph (K₄)</span>
+                </div>
+                <div>
+                  <span className="text-gray-600">Faces:</span>
+                  <span className="font-medium ml-2">4 (in 3D)</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg border">
+              <h4 className="font-semibold text-gray-800 mb-2">Vertex Degrees</h4>
+              <div className="space-y-2">
+                {currentVertices.map(vertex => (
+                  <div key={vertex.id} className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div 
+                        className="w-4 h-4 rounded-full mr-2"
+                        style={{ backgroundColor: vertex.color }}
+                      ></div>
+                      <span className="font-medium">Vertex {vertex.label}</span>
+                    </div>
+                    <span className="text-sm text-gray-600">
+                      Degree: {getVertexDegree(vertex.id)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {selectedVertex && (
+              <div className="bg-white p-4 rounded-lg border border-blue-300">
+                <h4 className="font-semibold text-gray-800 mb-2">
+                  Vertex {selectedVertex} Details
+                </h4>
+                <div className="text-sm">
+                  <p className="text-gray-600 mb-2">
+                    Connected to: {getNeighbors(selectedVertex).join(', ')}
+                  </p>
+                  <p className="text-gray-600">
+                    Degree: {getVertexDegree(selectedVertex)}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Mathematical Properties */}
+      <div className="mt-6 bg-gray-50 p-4 rounded-lg">
+        <h3 className="text-lg font-semibold mb-3">Mathematical Properties</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white p-4 rounded-lg border">
+            <h4 className="font-semibold text-blue-600 mb-2">Graph Theory</h4>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Complete graph K₄</li>
+              <li>• Regular graph (degree 3)</li>
+              <li>• Eulerian circuit exists</li>
+              <li>• Hamiltonian</li>
+            </ul>
+          </div>
+          <div className="bg-white p-4 rounded-lg border">
+            <h4 className="font-semibold text-green-600 mb-2">Geometry</h4>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Platonic solid</li>
+              <li>• 4 triangular faces</li>
+              <li>• Euler's formula: V - E + F = 2</li>
+              <li>• Self-dual polyhedron</li>
+            </ul>
+          </div>
+          <div className="bg-white p-4 rounded-lg border">
+            <h4 className="font-semibold text-purple-600 mb-2">Connectivity</h4>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Vertex connectivity: 3</li>
+              <li>• Edge connectivity: 3</li>
+              <li>• Diameter: 1</li>
+              <li>• Girth: 3</li>
+            </ul>
+          </div>
+          <div className="bg-white p-4 rounded-lg border">
+            <h4 className="font-semibold text-orange-600 mb-2">Chromatic</h4>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Chromatic number: 4</li>
+              <li>• Edge chromatic number: 3</li>
+              <li>• Clique number: 4</li>
+              <li>• Independence number: 1</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TetrahedronGraph;

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptocurrency Fano Plane Cycle</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- OrbitControls for camera interaction -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Hide scrollbars */
+            font-family: 'Inter', sans-serif; /* Use Inter font */
+            background-color: #1a202c; /* Dark background */
+            color: #e2e8f0; /* Light text color */
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        #info-panel {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: rgba(26, 32, 44, 0.8); /* Dark background with transparency */
+            padding: 1rem;
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: calc(100% - 2rem); /* Limit height for responsiveness */
+            overflow-y: auto; /* Enable scrolling if content overflows */
+            z-index: 10;
+        }
+        #controls-panel {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(26, 32, 44, 0.8);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        #loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            z-index: 1000;
+        }
+        .crypto-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .crypto-item:last-child {
+            border-bottom: none;
+        }
+        .crypto-name {
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        .crypto-price {
+            color: #48bb78; /* Green color for prices */
+        }
+        button {
+            @apply bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-overlay">
+        <p>Loading cryptocurrency data and setting up visualization...</p>
+    </div>
+
+    <div id="info-panel" class="text-sm">
+        <h2 class="text-lg font-bold mb-2">Cryptocurrency Values</h2>
+        <div id="crypto-prices-display">
+            <!-- Crypto prices will be dynamically inserted here -->
+        </div>
+        <p class="mt-4 text-xs text-gray-400">
+            * Sizes of spheres reflect current market prices.
+            <br>
+            * Updates every 30 seconds.
+        </p>
+    </div>
+
+    <div id="controls-panel">
+        <button id="cycleFanoPlaneBtn">Cycle Fano Plane Lines</button>
+    </div>
+
+    <script>
+        // Global variables for Three.js scene
+        let scene, camera, renderer, controls;
+        // Array to store Three.js mesh objects for cryptocurrencies
+        const cryptoMeshes = [];
+        // Array to store Three.js line objects for Fano Plane connections
+        const fanoLinesObjects = [];
+        // Object to store text sprites for labels
+        const cryptoLabels = {};
+
+        // Index to track the currently highlighted Fano Plane line
+        let currentFanoLineIndex = -1; // -1 means no line is highlighted initially
+
+        // Configuration for cryptocurrencies to fetch (7 for Fano Plane)
+        // Mapped to Fano Plane points 1-7 (index 0-6 in array)
+        const cryptocurrencies = [
+            { id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', color: 0xffa500 }, // Point 1
+            { id: 'ethereum', name: 'Ethereum', symbol: 'ETH', color: 0x667eea }, // Point 2
+            { id: 'ripple', name: 'XRP', color: 0x4299e1 }, // Point 3
+            { id: 'solana', name: 'Solana', symbol: 'SOL', color: 0x9f7aea }, // Point 4
+            { id: 'cardano', name: 'Cardano', symbol: 'ADA', color: 0xf6ad55 }, // Point 5
+            { id: 'dogecoin', name: 'Dogecoin', symbol: 'DOGE', color: 0xf6e05e }, // Point 6
+            { id: 'polkadot', name: 'Polkadot', symbol: 'DOT', color: 0xe91e63 } // Point 7 (Center for visualization)
+        ];
+
+        // Fano Plane lines using indices of the cryptocurrencies array (0-6)
+        // These correspond to the standard Fano Plane lines {1,2,3}, {1,4,5}, etc.
+        const fanoLinesConfig = [
+            [0, 1, 2], // {1, 2, 3} - BTC, ETH, XRP
+            [0, 3, 4], // {1, 4, 5} - BTC, SOL, ADA
+            [0, 5, 6], // {1, 6, 7} - BTC, DOGE, DOT
+            [1, 3, 5], // {2, 4, 6} - ETH, SOL, DOGE
+            [1, 4, 6], // {2, 5, 7} - ETH, ADA, DOT
+            [2, 3, 6], // {3, 4, 7} - XRP, SOL, DOT
+            [2, 4, 5]  // {3, 5, 6} - XRP, ADA, DOGE (the "circular" line)
+        ];
+
+        // Base URL for CoinGecko API
+        const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3/simple/price';
+        // Interval for fetching data (in milliseconds)
+        const FETCH_INTERVAL = 30000; // 30 seconds
+
+        // Highlight colors
+        const HIGHLIGHT_SPHERE_COLOR = new THREE.Color(0xffff00); // Bright yellow for spheres
+        const HIGHLIGHT_LINE_COLOR = new THREE.Color(0xffd700); // Gold for lines
+        const DEFAULT_LINE_COLOR = new THREE.Color(0x6b7280); // Gray for lines
+        const DEFAULT_LINE_OPACITY = 0.5;
+
+        /**
+         * Initializes the Three.js scene, camera, renderer, and controls.
+         */
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1a202c); // Dark background
+
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5; // Initial camera position
+
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            // OrbitControls for camera interaction
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true; // Enable smooth camera movement
+            controls.dampingFactor = 0.05;
+            controls.screenSpacePanning = false;
+            controls.minDistance = 2;
+            controls.maxDistance = 10;
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 2); // Soft white light
+            scene.add(ambientLight);
+            const pointLight = new THREE.PointLight(0xffffff, 1);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+
+            // Handle window resizing
+            window.addEventListener('resize', onWindowResize, false);
+
+            // Setup Fano Plane nodes and lines
+            setupFanoPlane();
+
+            // Add event listener for the cycle button
+            document.getElementById('cycleFanoPlaneBtn').addEventListener('click', cycleFanoPlaneHighlight);
+
+            animate(); // Start the animation loop
+        }
+
+        /**
+         * Sets up the 7 cryptocurrency spheres in a Fano Plane configuration
+         * and draws the connecting lines.
+         */
+        function setupFanoPlane() {
+            const R_outer = 2.5; // Radius for the outer circle points
+            const R_inner = 0; // Center point
+
+            // Define positions for the 7 Fano Plane points
+            // Point 7 (index 6: Polkadot) is at the center (0,0,0)
+            // Points 1-6 (indices 0-5) are on a circle in the XY plane
+            const positions = [
+                // Point 1 (index 0: Bitcoin)
+                new THREE.Vector3(R_outer, 0, 0),
+                // Point 2 (index 1: Ethereum)
+                new THREE.Vector3(R_outer * Math.cos(Math.PI / 3), R_outer * Math.sin(Math.PI / 3), 0),
+                // Point 3 (index 2: Ripple)
+                new THREE.Vector3(R_outer * Math.cos(2 * Math.PI / 3), R_outer * Math.sin(2 * Math.PI / 3), 0),
+                // Point 4 (index 3: Solana)
+                new THREE.Vector3(R_outer * Math.cos(Math.PI), R_outer * Math.sin(Math.PI), 0),
+                // Point 5 (index 4: Cardano)
+                new THREE.Vector3(R_outer * Math.cos(4 * Math.PI / 3), R_outer * Math.sin(4 * Math.PI / 3), 0),
+                // Point 6 (index 5: Dogecoin)
+                new THREE.Vector3(R_outer * Math.cos(5 * Math.PI / 3), R_outer * Math.sin(5 * Math.PI / 3), 0),
+                // Point 7 (index 6: Polkadot) - Center
+                new THREE.Vector3(R_inner, R_inner, R_inner)
+            ];
+
+            // Create spheres for each cryptocurrency
+            cryptocurrencies.forEach((crypto, index) => {
+                const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Small initial size
+                const material = new THREE.MeshPhongMaterial({ color: crypto.color });
+                const sphere = new THREE.Mesh(geometry, material);
+                sphere.position.copy(positions[index]);
+                sphere.userData.id = crypto.id; // Store crypto ID for later lookup
+                sphere.userData.originalColor = crypto.color; // Store original color
+                scene.add(sphere);
+                cryptoMeshes.push(sphere);
+
+                // Create text label for each crypto
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                const fontSize = 48;
+                context.font = `${fontSize}px Inter`;
+                const textWidth = context.measureText(crypto.symbol).width;
+                canvas.width = textWidth + 20;
+                canvas.height = fontSize + 20;
+                context.font = `${fontSize}px Inter`;
+                context.fillStyle = 'white';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.fillText(crypto.symbol, canvas.width / 2, canvas.height / 2);
+
+                const texture = new THREE.CanvasTexture(canvas);
+                const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
+                const sprite = new THREE.Sprite(spriteMaterial);
+                sprite.scale.set(0.5, 0.25, 1); // Adjust scale as needed
+                sprite.position.copy(sphere.position).add(new THREE.Vector3(0, 0.2, 0)); // Position above sphere
+                scene.add(sprite);
+                cryptoLabels[crypto.id] = sprite; // Store sprite for updates
+            });
+
+            // Draw Fano Plane lines
+            fanoLinesConfig.forEach(lineIndices => {
+                const points = [];
+                lineIndices.forEach(index => {
+                    points.push(cryptoMeshes[index].position);
+                });
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                const material = new THREE.LineBasicMaterial({ color: DEFAULT_LINE_COLOR, transparent: true, opacity: DEFAULT_LINE_OPACITY });
+                const line = new THREE.Line(geometry, material);
+                scene.add(line);
+                fanoLinesObjects.push(line);
+            });
+        }
+
+        /**
+         * Fetches cryptocurrency prices from CoinGecko API.
+         */
+        async function fetchCryptoPrices() {
+            document.getElementById('loading-overlay').style.display = 'flex'; // Show loading overlay
+            const ids = cryptocurrencies.map(c => c.id).join(',');
+            const vsCurrencies = 'usd';
+            const url = `${COINGECKO_API_URL}?ids=${ids}&vs_currencies=${vsCurrencies}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                updateVisualization(data);
+            } catch (error) {
+                console.error('Error fetching cryptocurrency prices:', error);
+                document.getElementById('crypto-prices-display').innerHTML = '<p class="text-red-500">Failed to load prices. Please try again later.</p>';
+            } finally {
+                document.getElementById('loading-overlay').style.display = 'none'; // Hide loading overlay
+            }
+        }
+
+        /**
+         * Updates the 3D visualization based on fetched cryptocurrency prices.
+         * @param {object} data - The price data from CoinGecko API.
+         */
+        function updateVisualization(data) {
+            let maxPrice = 0;
+            // Find the maximum price for normalization
+            for (const crypto of cryptocurrencies) {
+                if (data[crypto.id] && data[crypto.id].usd) {
+                    maxPrice = Math.max(maxPrice, data[crypto.id].usd);
+                }
+            }
+
+            const priceDisplay = document.getElementById('crypto-prices-display');
+            priceDisplay.innerHTML = ''; // Clear previous prices
+
+            cryptoMeshes.forEach(sphere => {
+                const cryptoId = sphere.userData.id;
+                const priceInfo = data[cryptoId];
+                if (priceInfo && priceInfo.usd) {
+                    const price = priceInfo.usd;
+                    // Normalize price to scale sphere size (e.g., 0.1 to 1.0)
+                    // Using a logarithmic scale for better visual distinction across vastly different prices
+                    const minLogPrice = Math.log(0.001); // Smallest possible price for log scale
+                    const maxLogPrice = Math.log(Math.max(maxPrice, 0.001)); // Ensure maxLogPrice is not -Infinity
+                    const normalizedPrice = (Math.log(Math.max(price, 0.001)) - minLogPrice) / (maxLogPrice - minLogPrice);
+                    const scaleFactor = 0.1 + normalizedPrice * 0.9; // Scale from 0.1 to 1.0
+
+                    sphere.scale.set(scaleFactor, scaleFactor, scaleFactor);
+
+                    // Update text label position
+                    if (cryptoLabels[cryptoId]) {
+                        // Position label above the sphere, considering its scaled size
+                        cryptoLabels[cryptoId].position.copy(sphere.position).add(new THREE.Vector3(0, sphere.geometry.parameters.radius * scaleFactor + 0.1, 0));
+                    }
+
+                    // Update price display in the info panel
+                    const cryptoName = cryptocurrencies.find(c => c.id === cryptoId)?.name || cryptoId;
+                    const priceElement = document.createElement('div');
+                    priceElement.className = 'crypto-item';
+                    priceElement.innerHTML = `
+                        <span class="crypto-name">${cryptoName} (${cryptoId.toUpperCase()})</span>
+                        <span class="crypto-price">$${price.toFixed(2)}</span>
+                    `;
+                    priceDisplay.appendChild(priceElement);
+                } else {
+                    // If price data is missing, reset scale and show N/A
+                    sphere.scale.set(0.1, 0.1, 0.1); // Reset to base size
+                    const cryptoName = cryptocurrencies.find(c => c.id === cryptoId)?.name || cryptoId;
+                    const priceElement = document.createElement('div');
+                    priceElement.className = 'crypto-item';
+                    priceElement.innerHTML = `
+                        <span class="crypto-name">${cryptoName} (${cryptoId.toUpperCase()})</span>
+                        <span class="crypto-price text-red-500">N/A</span>
+                    `;
+                    priceDisplay.appendChild(priceElement);
+                }
+            });
+        }
+
+        /**
+         * Cycles through the 7 Fano Plane lines and highlights the current one.
+         */
+        function cycleFanoPlaneHighlight() {
+            // Reset all spheres and lines to their default state first
+            cryptoMeshes.forEach(mesh => {
+                // Ensure the material is a MeshPhongMaterial to set color
+                if (mesh.material instanceof THREE.MeshPhongMaterial) {
+                    mesh.material.color.set(mesh.userData.originalColor);
+                }
+            });
+            fanoLinesObjects.forEach(line => {
+                // Ensure the material is a LineBasicMaterial to set color and opacity
+                if (line.material instanceof THREE.LineBasicMaterial) {
+                    line.material.color.set(DEFAULT_LINE_COLOR);
+                    line.material.opacity = DEFAULT_LINE_OPACITY;
+                }
+            });
+
+            // Increment current Fano line index, loop back to 0 if at end
+            currentFanoLineIndex = (currentFanoLineIndex + 1) % fanoLinesConfig.length;
+
+            // Get the indices of the cryptocurrencies on the current Fano line
+            const currentLineCryptoIndices = fanoLinesConfig[currentFanoLineIndex];
+
+            // Highlight the spheres on the current line
+            currentLineCryptoIndices.forEach(index => {
+                const mesh = cryptoMeshes[index];
+                if (mesh && mesh.material instanceof THREE.MeshPhongMaterial) {
+                    mesh.material.color.set(HIGHLIGHT_SPHERE_COLOR);
+                }
+            });
+
+            // Highlight the current line itself
+            const currentLineObject = fanoLinesObjects[currentFanoLineIndex];
+            if (currentLineObject && currentLineObject.material instanceof THREE.LineBasicMaterial) {
+                currentLineObject.material.color.set(HIGHLIGHT_LINE_COLOR);
+                currentLineObject.material.opacity = 1.0; // Make it fully opaque
+            }
+        }
+
+        /**
+         * Handles window resize events to keep the canvas responsive.
+         */
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        /**
+         * Animation loop for Three.js.
+         */
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update(); // Only required if controls.enableDamping or controls.autoRotate are set to true
+            renderer.render(scene, camera);
+        }
+
+        // Start the application when the window loads
+        window.onload = function () {
+            init();
+            fetchCryptoPrices(); // Initial fetch
+            setInterval(fetchCryptoPrices, FETCH_INTERVAL); // Fetch prices periodically
+        };
+    </script>
+</body>
+</html>

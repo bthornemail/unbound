@@ -1,0 +1,279 @@
+import React, { useState, useEffect, useRef } from 'react';
+
+interface Vertex {
+  id: string;
+  label: string;
+  x: number;
+  y: number;
+  color: string;
+}
+
+interface Hyperedge {
+  id: string;
+  vertices: string[];
+  label: string;
+  color: string;
+}
+
+interface IncidenceHypergraph {
+  vertices: Vertex[];
+  hyperedges: Hyperedge[];
+}
+
+const IncidenceHypergraphViz: React.FC = () => {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [selectedEdge, setSelectedEdge] = useState<string | null>(null);
+  const [hoveredVertex, setHoveredVertex] = useState<string | null>(null);
+
+  // Sample hypergraph data
+  const hypergraph: IncidenceHypergraph = {
+    vertices: [
+      { id: 'v1', label: 'A', x: 100, y: 100, color: '#3b82f6' },
+      { id: 'v2', label: 'B', x: 300, y: 80, color: '#3b82f6' },
+      { id: 'v3', label: 'C', x: 500, y: 120, color: '#3b82f6' },
+      { id: 'v4', label: 'D', x: 200, y: 250, color: '#3b82f6' },
+      { id: 'v5', label: 'E', x: 400, y: 280, color: '#3b82f6' },
+      { id: 'v6', label: 'F', x: 150, y: 400, color: '#3b82f6' },
+      { id: 'v7', label: 'G', x: 350, y: 420, color: '#3b82f6' },
+    ],
+    hyperedges: [
+      { id: 'e1', vertices: ['v1', 'v2', 'v3'], label: 'H₁', color: '#ef4444' },
+      { id: 'e2', vertices: ['v2', 'v4', 'v5'], label: 'H₂', color: '#10b981' },
+      { id: 'e3', vertices: ['v4', 'v6', 'v7'], label: 'H₃', color: '#f59e0b' },
+      { id: 'e4', vertices: ['v1', 'v5', 'v7'], label: 'H₄', color: '#8b5cf6' },
+      { id: 'e5', vertices: ['v3', 'v6'], label: 'H₅', color: '#ec4899' },
+    ]
+  };
+
+  // Calculate convex hull for hyperedge visualization
+  const getConvexHull = (points: {x: number, y: number}[]): {x: number, y: number}[] => {
+    if (points.length < 3) return points;
+    
+    // Simple convex hull using gift wrapping algorithm
+    const hull: {x: number, y: number}[] = [];
+    let leftmost = 0;
+    
+    for (let i = 1; i < points.length; i++) {
+      if (points[i].x < points[leftmost].x) {
+        leftmost = i;
+      }
+    }
+    
+    let p = leftmost;
+    do {
+      hull.push(points[p]);
+      let q = (p + 1) % points.length;
+      
+      for (let i = 0; i < points.length; i++) {
+        if (orientation(points[p], points[i], points[q]) === 2) {
+          q = i;
+        }
+      }
+      p = q;
+    } while (p !== leftmost);
+    
+    return hull;
+  };
+
+  const orientation = (p: {x: number, y: number}, q: {x: number, y: number}, r: {x: number, y: number}): number => {
+    const val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
+    if (val === 0) return 0;
+    return val > 0 ? 1 : 2;
+  };
+
+  const getHyperedgePath = (hyperedge: Hyperedge): string => {
+    const edgeVertices = hyperedge.vertices.map(vId => 
+      hypergraph.vertices.find(v => v.id === vId)!
+    );
+    
+    if (edgeVertices.length === 2) {
+      // For 2-vertex hyperedges, draw a line
+      const [v1, v2] = edgeVertices;
+      return `M ${v1.x} ${v1.y} L ${v2.x} ${v2.y}`;
+    } else {
+      // For 3+ vertex hyperedges, draw a convex hull
+      const hull = getConvexHull(edgeVertices);
+      if (hull.length < 3) return '';
+      
+      const pathData = hull.map((point, i) => 
+        `${i === 0 ? 'M' : 'L'} ${point.x} ${point.y}`
+      ).join(' ') + ' Z';
+      
+      return pathData;
+    }
+  };
+
+  const getIncidenceMatrix = (): number[][] => {
+    const matrix: number[][] = [];
+    
+    hypergraph.vertices.forEach((vertex, i) => {
+      matrix[i] = [];
+      hypergraph.hyperedges.forEach((edge, j) => {
+        matrix[i][j] = edge.vertices.includes(vertex.id) ? 1 : 0;
+      });
+    });
+    
+    return matrix;
+  };
+
+  const incidenceMatrix = getIncidenceMatrix();
+
+  return (
+    <div className="w-full p-6 bg-white rounded-lg shadow-lg">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">Incidence Hypergraph</h2>
+        <p className="text-gray-600">Vertices connected by hyperedges (edges connecting multiple vertices)</p>
+      </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Hypergraph Visualization */}
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold mb-3">Graph Visualization</h3>
+          <svg
+            ref={svgRef}
+            width="600"
+            height="500"
+            viewBox="0 0 600 500"
+            className="border border-gray-300 rounded bg-white"
+          >
+            {/* Hyperedges */}
+            {hypergraph.hyperedges.map(hyperedge => (
+              <g key={hyperedge.id}>
+                {hyperedge.vertices.length > 2 ? (
+                  <path
+                    d={getHyperedgePath(hyperedge)}
+                    fill={hyperedge.color}
+                    fillOpacity={selectedEdge === hyperedge.id ? 0.3 : 0.1}
+                    stroke={hyperedge.color}
+                    strokeWidth={selectedEdge === hyperedge.id ? 3 : 2}
+                    strokeOpacity={0.8}
+                    className="cursor-pointer"
+                    onClick={() => setSelectedEdge(selectedEdge === hyperedge.id ? null : hyperedge.id)}
+                  />
+                ) : (
+                  <line
+                    x1={hypergraph.vertices.find(v => v.id === hyperedge.vertices[0])?.x}
+                    y1={hypergraph.vertices.find(v => v.id === hyperedge.vertices[0])?.y}
+                    x2={hypergraph.vertices.find(v => v.id === hyperedge.vertices[1])?.x}
+                    y2={hypergraph.vertices.find(v => v.id === hyperedge.vertices[1])?.y}
+                    stroke={hyperedge.color}
+                    strokeWidth={selectedEdge === hyperedge.id ? 4 : 3}
+                    className="cursor-pointer"
+                    onClick={() => setSelectedEdge(selectedEdge === hyperedge.id ? null : hyperedge.id)}
+                  />
+                )}
+              </g>
+            ))}
+            
+            {/* Vertices */}
+            {hypergraph.vertices.map(vertex => (
+              <g key={vertex.id}>
+                <circle
+                  cx={vertex.x}
+                  cy={vertex.y}
+                  r={hoveredVertex === vertex.id ? 18 : 15}
+                  fill={vertex.color}
+                  stroke="white"
+                  strokeWidth="2"
+                  className="cursor-pointer"
+                  onMouseEnter={() => setHoveredVertex(vertex.id)}
+                  onMouseLeave={() => setHoveredVertex(null)}
+                />
+                <text
+                  x={vertex.x}
+                  y={vertex.y}
+                  textAnchor="middle"
+                  dy="0.35em"
+                  fill="white"
+                  fontSize="12"
+                  fontWeight="bold"
+                  pointerEvents="none"
+                >
+                  {vertex.label}
+                </text>
+              </g>
+            ))}
+          </svg>
+        </div>
+
+        {/* Incidence Matrix */}
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold mb-3">Incidence Matrix</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-gray-300">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="border border-gray-300 p-2 text-sm">Vertex</th>
+                  {hypergraph.hyperedges.map(edge => (
+                    <th 
+                      key={edge.id} 
+                      className="border border-gray-300 p-2 text-sm"
+                      style={{ backgroundColor: selectedEdge === edge.id ? `${edge.color}20` : undefined }}
+                    >
+                      {edge.label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {hypergraph.vertices.map((vertex, i) => (
+                  <tr key={vertex.id} className={hoveredVertex === vertex.id ? 'bg-blue-50' : ''}>
+                    <td className="border border-gray-300 p-2 text-sm font-medium">
+                      {vertex.label}
+                    </td>
+                    {incidenceMatrix[i].map((value, j) => (
+                      <td 
+                        key={j} 
+                        className="border border-gray-300 p-2 text-sm text-center"
+                        style={{ 
+                          backgroundColor: value === 1 ? `${hypergraph.hyperedges[j].color}30` : 'white',
+                          fontWeight: value === 1 ? 'bold' : 'normal'
+                        }}
+                      >
+                        {value}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {/* Hyperedge Legend */}
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold mb-3">Hyperedges</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {hypergraph.hyperedges.map(edge => (
+            <div 
+              key={edge.id}
+              className={`p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                selectedEdge === edge.id 
+                  ? 'border-gray-800 shadow-md' 
+                  : 'border-gray-200 hover:border-gray-400'
+              }`}
+              onClick={() => setSelectedEdge(selectedEdge === edge.id ? null : edge.id)}
+              style={{ backgroundColor: `${edge.color}10` }}
+            >
+              <div className="flex items-center mb-2">
+                <div 
+                  className="w-4 h-4 rounded-full mr-2"
+                  style={{ backgroundColor: edge.color }}
+                ></div>
+                <span className="font-medium">{edge.label}</span>
+              </div>
+              <p className="text-sm text-gray-600">
+                Connects: {edge.vertices.map(vId => 
+                  hypergraph.vertices.find(v => v.id === vId)?.label
+                ).join(', ')}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default IncidenceHypergraphViz;

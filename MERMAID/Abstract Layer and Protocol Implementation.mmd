@@ -1,0 +1,35 @@
+graph TD
+    subgraph Abstract_Layer
+        PredefNodes[Predefined Protocol Nodes] --> ContentTypes
+        ContentTypes --> Doc[Document Nodes]
+        ContentTypes --> Asset[Asset Nodes]
+        ContentTypes --> Serv[Service Nodes]
+        
+        PredefNodes --> Interfaces
+        Interfaces --> WordNetIF[WordNet Interface]
+        Interfaces --> ProtocolIF[Protocol Interface]
+        
+        PredefNodes --> Implementations
+        Implementations --> Messenger
+        Implementations --> Ledger
+        Implementations --> SocialNet[Social Network]
+        Implementations --> Marketplace
+        Implementations --> University
+        Implementations --> BlockchainRPC[Blockchain RPC]
+    end
+    
+    subgraph Network_Types
+        Networks --> Private[Private Key Protected]
+        Networks --> Shared[Shared Key Protected]
+        Networks --> Public[Public Posted]
+    end
+    
+    subgraph Protocol_Layer
+        BaseProtocol[Base Protocol Definition]
+        BaseProtocol --> ContentDelivery[Content Delivery System]
+        BaseProtocol --> NetworkDef[Network Definitions]
+        BaseProtocol --> AbstractImpl[Implementation Templates]
+    end
+
+    PredefNodes --> Networks
+    Interfaces --> BaseProtocol

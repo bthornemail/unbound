@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WESIRI — Federated Light Protocol</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap');
+
+:root {
+  --bg:       #080706;
+  --bg1:      #0e0c0a;
+  --bg2:      #141210;
+  --gold:     #c9b99a;
+  --gold2:    #8a7860;
+  --dim:      #3a3530;
+  --dimmer:   #1e1c18;
+  --text:     #e8e4dc;
+  --mono:     'Space Mono', monospace;
+  --serif:    'Cormorant Garamond', Georgia, serif;
+  --red:      #ff3028; --orange: #ff9030; --yellow: #ffe048;
+  --green:    #40d048; --blue:   #3090ff; --indigo: #5048d8; --violet: #8830e8;
+  --white:    #ffffff;
+  --kk: #00ff44; --ku: #ffee00; --uk: #ff8800; --uu: #4455ff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 11px;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── LAYOUT ── */
+#app {
+  display: grid;
+  grid-template-columns: 280px 1fr 280px;
+  grid-template-rows: 48px 1fr 200px;
+  height: 100vh;
+  gap: 1px;
+  background: var(--dim);
+}
+
+header {
+  grid-column: 1 / -1;
+  background: var(--bg1);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 24px;
+  border-bottom: 1px solid var(--dim);
+}
+
+header h1 {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: 4px;
+}
+
+header .status-bar {
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
+  font-size: 9px;
+  color: var(--gold2);
+  letter-spacing: 1px;
+}
+
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* ── PANELS ── */
+.panel {
+  background: var(--bg1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-title {
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: var(--gold2);
+  padding: 10px 14px 6px;
+  border-bottom: 1px solid var(--dimmer);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--dim) transparent;
+}
+
+/* ── CENTRE CANVAS ── */
+#centre {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+#main-canvas-wrap {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── LIGHT RINGS SVG ── */
+#rings-svg {
+  width: min(480px, 90%);
+  height: min(480px, 90%);
+}
+
+/* LED dots */
+.led { transition: fill 0.12s, r 0.12s, filter 0.12s; cursor: pointer; }
+.led:hover { filter: brightness(1.8); }
+.led.active { filter: drop-shadow(0 0 4px currentColor); }
+
+/* Fano lines */
+.fano-line-svg { stroke: var(--dim); stroke-width: 1.5; fill: none; opacity: 0.4; transition: stroke 0.2s, opacity 0.2s; }
+.fano-line-svg.lit { opacity: 1; stroke-width: 2.5; }
+
+/* ── BOTTOM BAR ── */
+#bottom {
+  grid-column: 1 / -1;
+  background: var(--bg1);
+  border-top: 1px solid var(--dim);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--dim);
+}
+
+.bottom-cell {
+  background: var(--bg1);
+  padding: 8px 14px;
+  overflow: hidden;
+}
+
+.bottom-cell-title {
+  font-size: 7px;
+  letter-spacing: 2px;
+  color: var(--gold2);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* ── NDJSON STREAM ── */
+#stream-log {
+  font-size: 8px;
+  line-height: 1.6;
+  color: var(--gold2);
+  overflow-y: auto;
+  height: 100%;
+  max-height: 160px;
+}
+
+.stream-line {
+  border-left: 2px solid var(--dimmer);
+  padding-left: 6px;
+  margin-bottom: 2px;
+  animation: fadein 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stream-line.commit  { border-color: var(--kk); color: #88ffaa; }
+.stream-line.sync    { border-color: var(--ku); color: #ffee88; }
+.stream-line.face_eval { border-color: var(--uk); color: #ffaa66; }
+.stream-line.projection { border-color: var(--uu); color: #8899ff; }
+
+@keyframes fadein { from { opacity:0; transform: translateX(-4px); } to { opacity:1; transform: translateX(0); } }
+
+/* ── EPISTEMIC SQUARE ── */
+#epistemic-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#ep-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── SPO TABLE ── */
+.spo-row {
+  display: grid;
+  grid-template-columns: 70px 24px 50px 60px;
+  gap: 4px;
+  padding: 2px 0;
+  border-bottom: 1px solid var(--dimmer);
+  align-items: center;
+}
+
+.spo-name { color: var(--gold); font-size: 9px; }
+.spo-quad {
+  font-size: 7px;
+  font-weight: bold;
+  text-align: center;
+  padding: 1px 3px;
+  border-radius: 2px;
+}
+.spo-quad.KK { background: rgba(0,255,68,.15); color: var(--kk); }
+.spo-quad.KU { background: rgba(255,238,0,.15); color: var(--ku); }
+.spo-quad.UK { background: rgba(255,136,0,.15); color: var(--uk); }
+.spo-quad.UU { background: rgba(68,85,255,.15); color: var(--uu); }
+.spo-role { font-size: 8px; color: var(--gold2); }
+.spo-repl { font-size: 7px; color: var(--dim); font-style: italic; }
+
+/* ── FACE INVARIANTS ── */
+.face-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--dimmer);
+}
+.face-id { font-size: 9px; color: var(--gold); width: 20px; }
+.face-pts { font-size: 8px; color: var(--gold2); width: 60px; }
+.face-status {
+  font-size: 7px;
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-weight: bold;
+}
+.face-status.pass { background: rgba(0,255,68,.15); color: var(--kk); }
+.face-status.fail { background: rgba(255,48,40,.12); color: #ff6660; }
+.face-inv { font-size: 7px; color: var(--dim); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── CENTROID METER ── */
+.centroid-bar-wrap {
+  margin: 8px 0;
+}
+.centroid-bar-bg {
+  height: 4px;
+  background: var(--dimmer);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 4px 0;
+}
+.centroid-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--kk), var(--ku));
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.centroid-val { font-size: 11px; color: var(--gold); font-family: var(--serif); }
+
+/* ── DOCUMENT GRAPH ── */
+.doc-node {
+  padding: 5px 8px;
+  border: 1px solid var(--dimmer);
+  border-radius: 3px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  font-size: 8px;
+}
+.doc-node:hover { border-color: var(--gold2); background: var(--dimmer); }
+.doc-node.active { border-color: var(--gold); }
+.doc-node-hash { color: var(--gold2); font-size: 7px; margin-top: 2px; }
+.doc-node-type { color: var(--kk); font-size: 7px; }
+
+/* ── CONTROLS ── */
+.ctrl-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.ctrl-label { font-size: 8px; color: var(--gold2); width: 80px; }
+
+input[type=range] {
+  -webkit-appearance: none;
+  height: 2px;
+  background: var(--dim);
+  border-radius: 1px;
+  flex: 1;
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+}
+
+.btn {
+  font-family: var(--mono);
+  font-size: 8px;
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid var(--dim);
+  color: var(--gold2);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn:hover { border-color: var(--gold); color: var(--gold); }
+.btn.active { border-color: var(--kk); color: var(--kk); }
+
+/* ── 16x16 WINDOW ── */
+#window-grid {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 1px;
+  width: 100%;
+}
+.win-cell {
+  aspect-ratio: 1;
+  border-radius: 1px;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+/* ── QR HASH DISPLAY ── */
+#qr-ring {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+#basis-hash-text {
+  font-size: 7px;
+  color: var(--gold2);
+  word-break: break-all;
+  text-align: center;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+
+/* ── ESP32 STATUS ── */
+.esp-node {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--dimmer);
+}
+.esp-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.esp-id { font-size: 8px; color: var(--gold2); flex: 1; }
+.esp-state { font-size: 7px; color: var(--dim); }
+.esp-metric { font-size: 8px; font-weight: bold; }
+
+/* Sabbath glow */
+body.sabbath { animation: sabbath-pulse 1s ease-in-out infinite alternate; }
+@keyframes sabbath-pulse {
+  from { background: #080706; }
+  to   { background: #0a0e0a; }
+}
+
+/* spin animation for epistemic square */
+@keyframes spin-ring {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HEADER -->
+  <header>
+    <h1>WESIRI</h1>
+    <span style="font-size:8px;color:var(--gold2);letter-spacing:2px">FEDERATED LIGHT PROTOCOL</span>
+    <div class="status-bar">
+      <span><span class="status-dot" style="background:var(--kk)"></span>BASIS</span>
+      <span id="hdr-lc">lc:0</span>
+      <span id="hdr-tick">tick:0</span>
+      <span id="hdr-angle">0.0°</span>
+      <span id="hdr-metric">Φ:0.00</span>
+      <span id="hdr-sabbath" style="color:var(--dim)">SABBATH:—</span>
+    </div>
+  </header>
+
+  <!-- LEFT: Document Graph + Controls -->
+  <div class="panel">
+    <div class="panel-title">Document Graph · Federated SVGs</div>
+    <div class="panel-body">
+
+      <div style="margin-bottom:10px">
+        <div class="ctrl-row">
+          <span class="ctrl-label">spin speed</span>
+          <input type="range" id="spin-speed" min="0.1" max="3" step="0.1" value="0.5">
+          <span id="spin-val" style="font-size:8px;color:var(--gold);width:28px">0.5°</span>
+        </div>
+        <div class="ctrl-row">
+          <span class="ctrl-label">auto-rotate</span>
+          <button class="btn active" id="btn-rotate" onclick="toggleRotate()">ON</button>
+          <button class="btn" id="btn-sabbath" onclick="seekSabbath()">SEEK Ω</button>
+        </div>
+        <div class="ctrl-row">
+          <span class="ctrl-label">pattern</span>
+          <button class="btn" onclick="runPattern('tetrahedral_sweep')">SWEEP</button>
+          <button class="btn" onclick="runPattern('fano_line_cycle')">LINES</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom:8px;font-size:7px;color:var(--dim);letter-spacing:1px">SVG DOCUMENT NODES</div>
+      <div id="doc-graph"></div>
+
+      <div style="margin-top:12px;margin-bottom:6px;font-size:7px;color:var(--dim);letter-spacing:1px">ESP32 LATTICE</div>
+      <div id="esp-list"></div>
+
+      <div style="margin-top:12px;margin-bottom:6px;font-size:7px;color:var(--dim);letter-spacing:1px">NDJSON COMMIT LOG</div>
+      <div id="stream-log"></div>
+    </div>
+  </div>
+
+  <!-- CENTRE: Main light ring canvas -->
+  <div id="centre">
+    <div id="main-canvas-wrap">
+      <svg id="rings-svg" viewBox="-300 -300 600 600" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow-sm">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-md">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-lg">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Fano lines (drawn first, below LEDs) -->
+        <g id="svg-fano-lines"></g>
+
+        <!-- Epistemic square overlay (rotating) -->
+        <g id="ep-square-overlay" opacity="0.15">
+          <line x1="-240" y1="0" x2="240" y2="0" stroke="var(--gold2)" stroke-width="0.5"/>
+          <line x1="0" y1="-240" x2="0" y2="240" stroke="var(--gold2)" stroke-width="0.5"/>
+        </g>
+
+        <!-- Ring groups -->
+        <g id="svg-rings"></g>
+
+        <!-- 16x16 window overlay (outermost) -->
+        <g id="svg-window" opacity="0.4" transform="rotate(0)"></g>
+
+        <!-- Center LED -->
+        <circle id="led-center" cx="0" cy="0" r="8" fill="var(--white)" class="led"
+                data-path="m/240'/0'/0'/8'" data-fano="8"
+                filter="url(#glow-md)"/>
+        <text x="0" y="16" text-anchor="middle" fill="var(--gold2)"
+              style="font-family:var(--mono);font-size:7px">genesis·gate</text>
+      </svg>
+    </div>
+
+    <!-- Active line indicator -->
+    <div style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+                display:flex;gap:6px;align-items:center">
+      <span style="font-size:7px;color:var(--gold2);letter-spacing:1px">ACTIVE LINE</span>
+      <div id="active-line-display" style="font-size:10px;color:var(--gold);font-family:var(--serif)">—</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Epistemic square + SPO state -->
+  <div class="panel">
+    <div class="panel-title">Epistemic State · Rumsfeldian</div>
+    <div class="panel-body">
+
+      <!-- Mini epistemic square -->
+      <svg id="ep-svg" viewBox="0 0 200 200" style="width:100%;height:160px;margin-bottom:8px">
+        <rect width="100" height="100" x="100" y="100" fill="rgba(0,255,68,0.08)"/>
+        <rect width="100" height="100" x="0"   y="100" fill="rgba(255,238,0,0.08)"/>
+        <rect width="100" height="100" x="100" y="0"   fill="rgba(255,136,0,0.08)"/>
+        <rect width="100" height="100" x="0"   y="0"   fill="rgba(68,85,255,0.08)"/>
+        <line x1="100" y1="0" x2="100" y2="200" stroke="var(--dim)" stroke-width="1"/>
+        <line x1="0" y1="100" x2="200" y2="100" stroke="var(--dim)" stroke-width="1"/>
+        <text x="150" y="195" text-anchor="middle" fill="var(--kk)" style="font-size:7px;font-family:var(--mono)">KK</text>
+        <text x="50"  y="195" text-anchor="middle" fill="var(--ku)" style="font-size:7px;font-family:var(--mono)">KU</text>
+        <text x="150" y="12"  text-anchor="middle" fill="var(--uk)" style="font-size:7px;font-family:var(--mono)">UK</text>
+        <text x="50"  y="12"  text-anchor="middle" fill="var(--uu)" style="font-size:7px;font-family:var(--mono)">UU</text>
+        <g id="ep-points-g"></g>
+        <circle cx="100" cy="100" r="3" fill="var(--white)" opacity="0.6"/>
+      </svg>
+
+      <!-- SPO table -->
+      <div style="margin-bottom:6px;font-size:7px;color:var(--dim);letter-spacing:1px">SPO CONTEXT</div>
+      <div id="spo-table"></div>
+
+      <!-- Centroid -->
+      <div style="margin-top:10px;margin-bottom:6px;font-size:7px;color:var(--dim);letter-spacing:1px">CENTROID · STOP METRIC</div>
+      <div class="centroid-bar-wrap">
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+          <span class="centroid-val" id="cent-metric">0.00</span>
+          <span id="cent-sabbath" style="font-size:9px;color:var(--dim)">Φ</span>
+        </div>
+        <div class="centroid-bar-bg">
+          <div class="centroid-bar-fill" id="cent-bar" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Face invariants -->
+      <div style="margin-top:10px;margin-bottom:6px;font-size:7px;color:var(--dim);letter-spacing:1px">FACE INVARIANTS · L1–L7</div>
+      <div id="face-table"></div>
+
+      <!-- Basis hash -->
+      <div style="margin-top:10px;margin-bottom:6px;font-size:7px;color:var(--dim);letter-spacing:1px">BASIS · HASH</div>
+      <div id="basis-hash-text"></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM: 16x16 window | NDJSON schema | WordNet basis | SPO narrative -->
+  <div id="bottom">
+    <div class="bottom-cell">
+      <div class="bottom-cell-title">16×16 Shared Array Buffer · w-depth</div>
+      <div id="window-grid"></div>
+    </div>
+    <div class="bottom-cell">
+      <div class="bottom-cell-title">WordNet Basis · Signed SPO Simplex</div>
+      <div id="wordnet-panel"></div>
+    </div>
+    <div class="bottom-cell">
+      <div class="bottom-cell-title">NDJSON CommitEvent · Schema</div>
+      <div id="schema-panel" style="font-size:7px;color:var(--gold2);line-height:1.7;overflow-y:auto;max-height:150px"></div>
+    </div>
+    <div class="bottom-cell">
+      <div class="bottom-cell-title">Narrative · SPO Triple Stream</div>
+      <div id="narrative-panel" style="font-size:8px;color:var(--gold2);line-height:1.8;overflow-y:auto;max-height:150px;font-family:var(--serif);font-style:italic"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════════════
+
+const FANO_POINTS = [
+  { id:1, name:'Metatron',  baseX: 0.15, baseY: 0.15, color:'#ff3028', hue:0   },
+  { id:2, name:'Solomon',   baseX: 0.35, baseY: 0.15, color:'#ff9030', hue:30  },
+  { id:3, name:'Solon',     baseX:-0.05, baseY: 0.15, color:'#ffe048', hue:60  },
+  { id:4, name:'Asabiyyah', baseX: 0.0,  baseY:-0.25, color:'#40d048', hue:120 },
+  { id:5, name:'Enoch',     baseX:-0.35, baseY: 0.15, color:'#3090ff', hue:240 },
+  { id:6, name:'Speaker',   baseX: 0.35, baseY: 0.15, color:'#5048d8', hue:270 },
+  { id:7, name:'Genesis',   baseX: 0.0,  baseY: 0.35, color:'#8830e8', hue:300 },
+];
+
+const FANO_LINES = [
+  { id:'L1', points:[1,2,4] },
+  { id:'L2', points:[1,3,5] },
+  { id:'L3', points:[1,6,7] },
+  { id:'L4', points:[2,3,6] },
+  { id:'L5', points:[2,5,7] },
+  { id:'L6', points:[3,4,6] },
+  { id:'L7', points:[4,5,7] },
+];
+
+const QUADRANT_MAP = {
+  KK: { spo:'subject',   role:'Intent',    golden:'freedom',  repl:'READ',  io:'stdin',  color:'#00ff44' },
+  KU: { spo:'predicate', role:'Event',     golden:'grace',    repl:'EVAL',  io:'stdout', color:'#ffee00' },
+  UK: { spo:'object',    role:'Incidence', golden:'maybe',    repl:'PRINT', io:'port',   color:'#ff8800' },
+  UU: { spo:'centroid',  role:'Stop',      golden:'stop',     repl:'LOOP',  io:'file',   color:'#4455ff' },
+};
+
+// Physical ring layout — from lights.json
+const RINGS = [
+  { r:0,   count:1,  purpose:'center'    },
+  { r:28,  count:8,  purpose:'fano'      },
+  { r:52,  count:12, purpose:'harmonics' },
+  { r:76,  count:16, purpose:'canvas'    },
+  { r:102, count:24, purpose:'rotation'  },
+  { r:130, count:32, purpose:'expansion' },
+  { r:160, count:40, purpose:'h58'       },
+  { r:190, count:48, purpose:'hex'       },
+  { r:222, count:60, purpose:'dodeca'    },
+];
+
+// Hardware layers mapped to protocol layers
+const HW_LAYERS = [
+  { id:'global',   name:'WESIRI 241',    leds:241, purpose:240, color:'#c9b99a', desc:'Full State · Garden Ring' },
+  { id:'local',    name:'7-ring talisman', leds:7, purpose:7,   color:'#ff3028', desc:'Local State · Talisman' },
+  { id:'shared',   name:'16×16 matrix',  leds:256, purpose:256, color:'#3090ff', desc:'Shared State · Window' },
+  { id:'artifact', name:'100px single',  leds:100, purpose:100, color:'#8830e8', desc:'Artifact · SHA360°' },
+];
+
+// SVG documents in the federated graph
+const SVG_DOCS = [
+  { id:'fano-garden-seed-kernel', name:'Seed Kernel',       hash:'0xa1b2c3d4', type:'canonical', color:'#c9b99a' },
+  { id:'fano-with-light-arrays',  name:'Light Arrays',      hash:'0xe5f6a7b8', type:'projection', color:'#3090ff' },
+  { id:'fano-garden',             name:'Garden',            hash:'0xc9d0e1f2', type:'instance',   color:'#40d048' },
+  { id:'epistemic-square',        name:'Epistemic Square',  hash:'0x23a4b5c6', type:'operator',   color:'#ffee00' },
+  { id:'dome-svg',                name:'Dome',              hash:'0x78d9e0f1', type:'projection', color:'#ff9030' },
+];
+
+// Mock ESP32 nodes in the C3 lattice
+const ESP_NODES = [
+  { id:'esp-s3-00', role:'controller', state:'sealed',    metric:1.00, color:'#00ff44' },
+  { id:'esp-c3-01', role:'sensor',     state:'validated', metric:0.71, color:'#ffee00' },
+  { id:'esp-c3-02', role:'sensor',     state:'validated', metric:0.57, color:'#ffee00' },
+  { id:'esp-c3-03', role:'sensor',     state:'pending',   metric:0.28, color:'#ff8800' },
+  { id:'esp-c3-04', role:'sensor',     state:'pending',   metric:0.14, color:'#ff8800' },
+];
+
+// WordNet basis words mapped to golden twelve
+const WORDNET_SIMPLEX = [
+  { word:'Freedom',     face:'agency', synset:'freedom.n.01', depth:4, w:0.25 },
+  { word:'Grace',       face:'ethics', synset:'grace.n.03',   depth:6, w:0.375 },
+  { word:'Yes',         face:'logic',  synset:'yes.n.01',     depth:2, w:0.125 },
+  { word:'Stop',        face:'logic',  synset:'stop.v.01',    depth:5, w:0.3125 },
+  { word:'Love',        face:'ethics', synset:'love.n.01',    depth:7, w:0.4375 },
+  { word:'Sovereignty', face:'agency', synset:'sovereignty.n.01', depth:5, w:0.3125 },
+];
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+
+let state = {
+  angle:       0,
+  spinSpeed:   0.5,
+  autoRotate:  true,
+  lc:          0,
+  prevHash:    null,
+  tick:        0,
+  cycle:       0,
+  quadrants:   {},   // fano_id -> KK|KU|UK|UU
+  ledColors:   {},   // path -> {h,s,v}
+  activeLine:  null,
+  faces:       [],
+  centroid:    { stop_metric:0, closure_ratio:0, sabbath:false, reason:'' },
+  pattern:     null,
+  patternStep: 0,
+  basisHash:   '0x' + Array.from({length:32}, () => Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join(''),
+  sabGrid:     new Uint32Array(256),
+  narratives:  [],
+};
+
+// ═══════════════════════════════════════════════════════
+// CRYPTO (lightweight stub — sha256-like via XOR chain)
+// ═══════════════════════════════════════════════════════
+
+function hashStr(s) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = (h * 0x01000193) >>> 0;
+  }
+  return '0x' + h.toString(16).padStart(8,'0') +
+         ((h ^ 0xdeadbeef) >>> 0).toString(16).padStart(8,'0');
+}
+
+// ═══════════════════════════════════════════════════════
+// EPISTEMIC SQUARE MATH (mirrors epistemic-square.js)
+// ═══════════════════════════════════════════════════════
+
+function rotatePoint(p, angleDeg) {
+  const rad  = -angleDeg * Math.PI / 180;
+  const cosA = Math.cos(rad), sinA = Math.sin(rad);
+  return {
+    x: p.baseX * cosA - p.baseY * sinA,
+    y: p.baseX * sinA + p.baseY * cosA,
+  };
+}
+
+function getQuadrant(x, y) {
+  if (x >= 0 && y >= 0) return 'KK';
+  if (x <  0 && y >= 0) return 'KU';
+  if (x >= 0 && y <  0) return 'UK';
+  return 'UU';
+}
+
+function updateQuadrants(angleDeg) {
+  const q = {};
+  FANO_POINTS.forEach(p => {
+    const { x, y } = rotatePoint(p, angleDeg);
+    q[p.id] = getQuadrant(x, y);
+  });
+  return q;
+}
+
+// ═══════════════════════════════════════════════════════
+// FACE EVALUATION
+// ═══════════════════════════════════════════════════════
+
+function evaluateFaces(quads) {
+  return FANO_LINES.map(line => {
+    const qs    = line.points.map(pid => quads[pid]);
+    const roles = qs.map(q => QUADRANT_MAP[q].spo);
+    const u     = new Set(roles);
+    const isSPO = u.has('subject') && u.has('predicate') && u.has('object');
+    const isCoherent = u.size === 1;
+    return {
+      face_id: line.id,
+      vertices: line.points.map(pid => `v${pid}`),
+      invariant_name: isSPO ? 'spo_triple_closure' : isCoherent ? 'coherent_state' : 'partial',
+      status: (isSPO || isCoherent) ? 'pass' : 'fail',
+      quadrants: qs,
+      roles,
+    };
+  });
+}
+
+function computeCentroid(faces) {
+  const pass = faces.filter(f => f.status === 'pass').length;
+  const cr   = pass / 7;
+  return {
+    stop_metric:   cr,
+    closure_ratio: cr,
+    sabbath:       cr === 1.0,
+    reason:        cr === 1.0 ? 'all_invariants_closed' : `incomplete_faces:${pass}/7`,
+    pass,
+  };
+}
+
+// ═══════════════════════════════════════════════════════
+// COMMIT EMISSION
+// ═══════════════════════════════════════════════════════
+
+function emitCommit(type, extra = {}) {
+  const payload = {
+    id:     `cmt-${state.cycle}-${state.tick}-${Date.now()}`,
+    t:      Date.now(),
+    lc:     state.lc++,
+    type,
+    tick:   state.tick,
+    angle:  state.angle.toFixed(2),
+    centroid: state.centroid,
+    faces:  state.faces,
+    basisHash: state.basisHash,
+    prev_hash: state.prevHash,
+    ...extra,
+  };
+  payload.self_hash = hashStr(JSON.stringify(payload));
+  payload.sig       = hashStr('sig:' + payload.self_hash);
+  state.prevHash    = payload.self_hash;
+
+  // Log to stream
+  appendStream(payload);
+
+  // Update SAB
+  FANO_POINTS.forEach(p => {
+    const q   = state.quadrants[p.id] || 'UU';
+    const row = p.id - 1;
+    const col = Math.floor((state.angle % 360) / 360 * 16);
+    const idx = row * 16 + col;
+    state.sabGrid[idx] = p.hue;
+  });
+
+  // Narrative
+  if (type === 'face_eval' || type === 'commit') {
+    buildNarrative(payload);
+  }
+
+  return payload;
+}
+
+// ═══════════════════════════════════════════════════════
+// SVG RING BUILDER
+// ═══════════════════════════════════════════════════════
+
+function buildRings() {
+  const ringsG = document.getElementById('svg-rings');
+  const linesG = document.getElementById('svg-fano-lines');
+  ringsG.innerHTML = '';
+  linesG.innerHTML = '';
+
+  RINGS.forEach((ring, ri) => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.id = `ring-${ri}`;
+
+    if (ri === 0) return; // center handled separately
+
+    for (let li = 0; li < ring.count; li++) {
+      const angleDeg = (li / ring.count) * 360;
+      const angleRad = (angleDeg - 90) * Math.PI / 180;
+      const cx = ring.r * Math.cos(angleRad);
+      const cy = ring.r * Math.sin(angleRad);
+      const fanoId = (li % 7) + 1;
+      const fano   = FANO_POINTS.find(p => p.id === fanoId);
+      const ledR   = ri <= 2 ? 5 : ri <= 4 ? 4 : ri <= 6 ? 3 : 2.5;
+
+      const path = `m/240'/${ri}'/${li}'/${fanoId}'`;
+
+      const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx', cx.toFixed(1));
+      c.setAttribute('cy', cy.toFixed(1));
+      c.setAttribute('r',  ledR);
+      c.setAttribute('fill', fano.color);
+      c.setAttribute('opacity', '0.7');
+      c.setAttribute('class','led');
+      c.dataset.path  = path;
+      c.dataset.fano  = fanoId;
+      c.dataset.ring  = ri;
+      c.dataset.led   = li;
+      c.id = `led-r${ri}-l${li}`;
+
+      // Click to highlight fano line
+      c.addEventListener('click', () => highlightFanoLines(fanoId));
+      g.appendChild(c);
+    }
+    ringsG.appendChild(g);
+  });
+
+  // Draw Fano lines using ring-1 positions as anchor points
+  const ring1 = RINGS[1];
+  const ptPos = {};
+  FANO_POINTS.forEach((fp, fi) => {
+    const angleDeg = (fi / 7) * 360;
+    const angleRad = (angleDeg - 90) * Math.PI / 180;
+    ptPos[fp.id] = {
+      x: ring1.r * Math.cos(angleRad),
+      y: ring1.r * Math.sin(angleRad),
+    };
+  });
+
+  FANO_LINES.forEach(line => {
+    const [a,b,c] = line.points.map(pid => ptPos[pid]);
+    const el = document.createElementNS('http://www.w3.org/2000/svg','line');
+    // Draw as triangle centroid-connected lines
+    const cx2 = (a.x+b.x+c.x)/3, cy2 = (a.y+b.y+c.y)/3;
+    // Draw 3 lines from each vertex to centroid
+    line.points.forEach(pid => {
+      const p = ptPos[pid];
+      const seg = document.createElementNS('http://www.w3.org/2000/svg','line');
+      seg.setAttribute('x1', p.x.toFixed(1));
+      seg.setAttribute('y1', p.y.toFixed(1));
+      seg.setAttribute('x2', cx2.toFixed(1));
+      seg.setAttribute('y2', cy2.toFixed(1));
+      seg.setAttribute('class','fano-line-svg');
+      seg.dataset.line = line.id;
+      linesG.appendChild(seg);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// HIGHLIGHT FANO LINES
+// ═══════════════════════════════════════════════════════
+
+function highlightFanoLines(fanoId) {
+  const activeLines = FANO_LINES.filter(l => l.points.includes(fanoId));
+  document.querySelectorAll('.fano-line-svg').forEach(el => {
+    const isActive = activeLines.some(l => l.id === el.dataset.line);
+    el.classList.toggle('lit', isActive);
+    el.style.stroke = isActive
+      ? FANO_POINTS.find(p => p.id === fanoId).color
+      : '';
+  });
+  state.activeLine = activeLines.map(l=>l.id).join(', ');
+  document.getElementById('active-line-display').textContent =
+    state.activeLine || '—';
+}
+
+// ═══════════════════════════════════════════════════════
+// UPDATE LED COLORS FROM QUADRANT STATE
+// ═══════════════════════════════════════════════════════
+
+function updateLEDColors() {
+  document.querySelectorAll('.led[data-fano]').forEach(el => {
+    const fanoId = parseInt(el.dataset.fano);
+    if (!fanoId || fanoId > 7) return;
+    const q     = state.quadrants[fanoId] || 'UU';
+    const qColor = QUADRANT_MAP[q].color;
+    const base   = FANO_POINTS.find(p => p.id === fanoId)?.color || '#ffffff';
+
+    // Blend base color with quadrant color based on metric
+    el.style.fill = q === 'KK' ? base :
+                    q === 'UU' ? '#223' : base;
+    el.style.opacity = q === 'KK' ? '1' : q === 'KU' ? '0.8' : '0.5';
+    if (q === 'KK') el.setAttribute('filter','url(#glow-sm)');
+    else el.removeAttribute('filter');
+  });
+
+  // Center LED reflects sabbath
+  const center = document.getElementById('led-center');
+  if (state.centroid.sabbath) {
+    center.setAttribute('fill','#ffffff');
+    center.setAttribute('filter','url(#glow-lg)');
+    document.body.classList.add('sabbath');
+  } else {
+    center.setAttribute('fill', '#888888');
+    center.setAttribute('filter','url(#glow-md)');
+    document.body.classList.remove('sabbath');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// UPDATE EPISTEMIC SQUARE (mini)
+// ═══════════════════════════════════════════════════════
+
+function updateEpistemicSquare() {
+  const g = document.getElementById('ep-points-g');
+  g.innerHTML = '';
+  FANO_POINTS.forEach(fp => {
+    const pos = rotatePoint(fp, state.angle);
+    const q   = state.quadrants[fp.id] || 'UU';
+    const cx  = 100 + pos.x * 200;
+    const cy  = 100 - pos.y * 200; // SVG y-flip
+    const c   = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx', cx.toFixed(1));
+    c.setAttribute('cy', cy.toFixed(1));
+    c.setAttribute('r', '5');
+    c.setAttribute('fill', QUADRANT_MAP[q].color);
+    c.setAttribute('opacity','0.9');
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x', cx.toFixed(1));
+    t.setAttribute('y', (cy - 8).toFixed(1));
+    t.setAttribute('text-anchor','middle');
+    t.setAttribute('fill', fp.color);
+    t.setAttribute('style','font-size:6px;font-family:monospace');
+    t.textContent = fp.name.slice(0,3);
+    g.appendChild(c);
+    g.appendChild(t);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// UPDATE SPO TABLE
+// ═══════════════════════════════════════════════════════
+
+function updateSPOTable() {
+  const el = document.getElementById('spo-table');
+  el.innerHTML = FANO_POINTS.map(fp => {
+    const q  = state.quadrants[fp.id] || 'UU';
+    const qm = QUADRANT_MAP[q];
+    return `<div class="spo-row">
+      <span class="spo-name" style="color:${fp.color}">${fp.name}</span>
+      <span class="spo-quad ${q}">${q}</span>
+      <span class="spo-role">${qm.role}</span>
+      <span class="spo-repl">${qm.repl}·${qm.io}</span>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// UPDATE FACE TABLE
+// ═══════════════════════════════════════════════════════
+
+function updateFaceTable() {
+  const el = document.getElementById('face-table');
+  el.innerHTML = state.faces.map(f => `
+    <div class="face-row">
+      <span class="face-id">${f.face_id}</span>
+      <span class="face-pts">{${f.vertices.join(',')}}</span>
+      <span class="face-status ${f.status}">${f.status.toUpperCase()}</span>
+      <span class="face-inv">${f.invariant_name}</span>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// UPDATE CENTROID
+// ═══════════════════════════════════════════════════════
+
+function updateCentroid() {
+  const c = state.centroid;
+  document.getElementById('cent-metric').textContent = c.stop_metric.toFixed(4);
+  document.getElementById('cent-bar').style.width = (c.stop_metric * 100) + '%';
+  const sab = document.getElementById('cent-sabbath');
+  sab.textContent = c.sabbath ? 'SABBATH ✦' : 'Φ ' + (c.stop_metric * 7).toFixed(0) + '/7';
+  sab.style.color = c.sabbath ? '#00ff44' : 'var(--dim)';
+
+  // Header
+  document.getElementById('hdr-metric').textContent = 'Φ:' + c.stop_metric.toFixed(2);
+  document.getElementById('hdr-sabbath').textContent = c.sabbath ? 'SABBATH:✦' : 'SABBATH:—';
+  document.getElementById('hdr-sabbath').style.color = c.sabbath ? '#00ff44' : 'var(--dim)';
+}
+
+// ═══════════════════════════════════════════════════════
+// UPDATE 16x16 SAB WINDOW
+// ═══════════════════════════════════════════════════════
+
+function updateWindow() {
+  const el = document.getElementById('window-grid');
+  if (!el.children.length) {
+    // Build grid once
+    for (let i = 0; i < 256; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'win-cell';
+      cell.title = `SAB[${i}] row=${Math.floor(i/16)} col=${i%16}`;
+      el.appendChild(cell);
+    }
+  }
+  const cells = el.children;
+  for (let i = 0; i < 256; i++) {
+    const row = Math.floor(i / 16);
+    const col = i % 16;
+    const fanoId = (row % 7) + 1;
+    const q = state.quadrants[fanoId] || 'UU';
+    const baseHue = FANO_POINTS[fanoId-1].hue;
+    const alpha = col / 15 * 0.8 + 0.1; // w-depth fade
+    const qColors = { KK:'0,255,68', KU:'255,238,0', UK:'255,136,0', UU:'68,85,255' };
+    cells[i].style.background = `rgba(${qColors[q]},${(alpha * (row < 12 ? 0.6 : 0.3)).toFixed(2)})`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// STREAM LOG
+// ═══════════════════════════════════════════════════════
+
+function appendStream(commit) {
+  const el = document.getElementById('stream-log');
+  const line = document.createElement('div');
+  line.className = `stream-line ${commit.type}`;
+  line.textContent = `lc:${commit.lc} ${commit.type} ${commit.self_hash?.slice(0,14)}… Φ:${commit.centroid?.stop_metric?.toFixed(2)||'—'}`;
+  el.insertBefore(line, el.firstChild);
+  // Keep max 40 lines
+  while (el.children.length > 40) el.removeChild(el.lastChild);
+
+  // Schema panel shows latest commit
+  document.getElementById('schema-panel').textContent =
+    JSON.stringify({
+      id:   commit.id?.slice(0,20)+'…',
+      t:    commit.t,
+      lc:   commit.lc,
+      type: commit.type,
+      centroid: commit.centroid,
+      prev_hash: commit.prev_hash?.slice(0,14)+'…',
+      self_hash: commit.self_hash?.slice(0,14)+'…',
+    }, null, 1);
+}
+
+// ═══════════════════════════════════════════════════════
+// NARRATIVE BUILDER
+// ═══════════════════════════════════════════════════════
+
+const NARRATIVE_TEMPLATES = {
+  subject_pass:   (n,r) => `${n} intends ${r} through the open channel`,
+  predicate_pass: (n,r) => `${n} mediates the event toward resolution`,
+  object_pass:    (n,r) => `${n} receives incidence, closes the triple`,
+  centroid_pass:  (n,r) => `${n} rests at the centroid — meaning held`,
+  sabbath:        ()    => `All seven lines close. The garden is sealed. ✦`,
+};
+
+function buildNarrative(commit) {
+  if (commit.centroid?.sabbath) {
+    state.narratives.unshift(NARRATIVE_TEMPLATES.sabbath());
+  } else {
+    const subjects = FANO_POINTS.filter(p => state.quadrants[p.id] === 'KK');
+    if (subjects.length) {
+      const n = subjects[0].name;
+      const r = QUADRANT_MAP['KK'].golden;
+      state.narratives.unshift(NARRATIVE_TEMPLATES.subject_pass(n, r));
+    }
+  }
+  if (state.narratives.length > 20) state.narratives = state.narratives.slice(0,20);
+
+  const el = document.getElementById('narrative-panel');
+  el.innerHTML = state.narratives.map(t =>
+    `<div style="padding:2px 0;border-bottom:1px solid var(--dimmer)">${t}</div>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// WORDNET PANEL
+// ═══════════════════════════════════════════════════════
+
+function buildWordnetPanel() {
+  const el = document.getElementById('wordnet-panel');
+  el.innerHTML = `
+    <div style="font-size:7px;color:var(--gold2);line-height:1.8">
+      <div style="color:var(--dim);margin-bottom:4px">basis: ${state.basisHash.slice(0,20)}…</div>
+      ${WORDNET_SIMPLEX.map(ws => `
+        <div style="display:flex;gap:6px;align-items:center;padding:2px 0;border-bottom:1px solid var(--dimmer)">
+          <span style="color:${ws.face==='agency'?'#00ff44':ws.face==='ethics'?'#ffee00':'#ff8800'};width:12px">▸</span>
+          <span style="width:70px;color:var(--gold)">${ws.word}</span>
+          <span style="color:var(--dim);flex:1">${ws.synset}</span>
+          <span style="color:var(--gold2)">w=${ws.w.toFixed(3)}</span>
+        </div>`).join('')}
+      <div style="margin-top:8px;color:var(--dim)">WordNet 3.1 · SHA256:</div>
+      <div style="color:var(--gold2);word-break:break-all;font-size:6px">${state.basisHash}</div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// DOCUMENT GRAPH PANEL
+// ═══════════════════════════════════════════════════════
+
+function buildDocGraph() {
+  const el = document.getElementById('doc-graph');
+  el.innerHTML = SVG_DOCS.map(doc => `
+    <div class="doc-node" onclick="selectDoc('${doc.id}')" id="docnode-${doc.id}">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:${doc.color};font-size:9px">${doc.name}</span>
+        <span class="doc-node-type">${doc.type}</span>
+      </div>
+      <div class="doc-node-hash">${doc.hash} · ${doc.id}</div>
+    </div>`).join('');
+}
+
+function selectDoc(id) {
+  document.querySelectorAll('.doc-node').forEach(n => n.classList.remove('active'));
+  const el = document.getElementById('docnode-' + id);
+  if (el) el.classList.add('active');
+  appendStream({ lc:state.lc++, type:'projection', t:Date.now(),
+    self_hash: hashStr('prj:'+id+Date.now()),
+    prev_hash: state.prevHash,
+    centroid: state.centroid,
+    id: `prj-${id}-${Date.now()}` });
+}
+
+// ═══════════════════════════════════════════════════════
+// ESP32 LATTICE PANEL
+// ═══════════════════════════════════════════════════════
+
+function buildESPList() {
+  const el = document.getElementById('esp-list');
+  el.innerHTML = ESP_NODES.map(n => `
+    <div class="esp-node">
+      <span class="esp-dot" style="background:${n.color}"></span>
+      <span class="esp-id">${n.id}</span>
+      <span class="esp-state" style="color:${n.color}">${n.state}</span>
+      <span class="esp-metric" style="color:${n.color}">${n.metric.toFixed(2)}</span>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// PATTERN RUNNER
+// ═══════════════════════════════════════════════════════
+
+function runPattern(name) {
+  state.pattern = name;
+  state.patternStep = 0;
+  appendStream({ lc:state.lc++, type:'face_eval', t:Date.now(),
+    self_hash: hashStr('pat:'+name), prev_hash: state.prevHash,
+    centroid: state.centroid, id:`pat-${name}-${Date.now()}` });
+}
+
+function stepPattern() {
+  if (!state.pattern) return;
+  if (state.pattern === 'tetrahedral_sweep') {
+    // Sweep radially ring by ring
+    const ring = RINGS[state.patternStep % RINGS.length];
+    document.querySelectorAll(`.led[data-ring="${state.patternStep % RINGS.length}"]`).forEach(el => {
+      el.setAttribute('filter','url(#glow-md)');
+      setTimeout(() => el.removeAttribute('filter'), 400);
+    });
+    state.patternStep++;
+    if (state.patternStep >= RINGS.length) state.pattern = null;
+  } else if (state.pattern === 'fano_line_cycle') {
+    const line = FANO_LINES[state.patternStep % 7];
+    document.querySelectorAll('.fano-line-svg').forEach(el => {
+      const isActive = el.dataset.line === line.id;
+      el.classList.toggle('lit', isActive);
+    });
+    state.activeLine = line.id;
+    document.getElementById('active-line-display').textContent = line.id + ' {' + line.points.join(',') + '}';
+    state.patternStep++;
+    if (state.patternStep >= 7) { state.pattern = null; document.querySelectorAll('.fano-line-svg').forEach(el=>el.classList.remove('lit')); }
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════════════════
+
+function toggleRotate() {
+  state.autoRotate = !state.autoRotate;
+  const btn = document.getElementById('btn-rotate');
+  btn.textContent = state.autoRotate ? 'ON' : 'OFF';
+  btn.classList.toggle('active', state.autoRotate);
+}
+
+function seekSabbath() {
+  // Find nearest angle where sabbath occurs
+  // Try angles in steps until sabbath or max search
+  for (let a = state.angle; a < state.angle + 360; a += 0.5) {
+    const q = updateQuadrants(a);
+    const f = evaluateFaces(q);
+    const c = computeCentroid(f);
+    if (c.sabbath) {
+      state.angle = a % 360;
+      break;
+    }
+  }
+}
+
+document.getElementById('spin-speed').addEventListener('input', function() {
+  state.spinSpeed = parseFloat(this.value);
+  document.getElementById('spin-val').textContent = this.value + '°';
+});
+
+// ═══════════════════════════════════════════════════════
+// MAIN LOOP
+// ═══════════════════════════════════════════════════════
+
+let frameCount = 0;
+
+function tick() {
+  if (state.autoRotate) {
+    state.angle = (state.angle + state.spinSpeed) % 360;
+    state.tick++;
+    if (state.tick >= 720) { state.tick = 0; state.cycle++; }
+  }
+
+  // Update quadrant state
+  state.quadrants = updateQuadrants(state.angle);
+  state.faces     = evaluateFaces(state.quadrants);
+  state.centroid  = computeCentroid(state.faces);
+
+  // Header
+  document.getElementById('hdr-lc').textContent    = 'lc:' + state.lc;
+  document.getElementById('hdr-tick').textContent  = 'tick:' + state.tick;
+  document.getElementById('hdr-angle').textContent = state.angle.toFixed(1) + '°';
+
+  // Visual updates
+  updateLEDColors();
+  updateEpistemicSquare();
+  updateSPOTable();
+  updateCentroid();
+  updateFaceTable();
+  updateWindow();
+
+  // Pattern
+  if (frameCount % 8 === 0) stepPattern();
+
+  // Emit commits at transition boundaries (every ~10 frames)
+  if (frameCount % 10 === 0) {
+    const type = state.centroid.sabbath ? 'commit'
+               : state.tick % 90 === 0  ? 'sync'
+               : 'face_eval';
+    emitCommit(type);
+  }
+
+  frameCount++;
+  requestAnimationFrame(tick);
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+
+function init() {
+  buildRings();
+  buildDocGraph();
+  buildESPList();
+  buildWordnetPanel();
+
+  // Basis hash display
+  document.getElementById('basis-hash-text').textContent = state.basisHash;
+
+  // Initial commit
+  state.quadrants = updateQuadrants(0);
+  state.faces     = evaluateFaces(state.quadrants);
+  state.centroid  = computeCentroid(state.faces);
+  emitCommit('vertex_init');
+
+  // Select first doc
+  selectDoc('fano-garden-seed-kernel');
+
+  tick();
+}
+
+window.addEventListener('load', init);
+</script>
+</body>
+</html>

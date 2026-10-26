@@ -1,0 +1,944 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 980" width="1200" height="980">
+  <title>Visual proofs — periodic table index · delta-driven</title>
+  <desc>One pure SVG. Click an element in the periodic table to reveal its visual proof. Animations are discrete steps in the spirit of delta (rotl1⊕rotl3⊕rotr2⊕const). Period 4: tetrahedron literals WORD GOD OF of and DNA/RNA CGAT CGAU codepoint differences.</desc>
+
+  <defs>
+    <style>
+      :root { --bg:#0a1214; --ink:#d7fff5; --dim:#6a9a8e; --accent:#72ffe0; --cell:#122022; --cell-b:#23695d; --hot:#1f4e9c; --warm:#c26a2b; --ok:#2f7d4a; }
+      svg { background: var(--bg); }
+      text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: var(--ink); }
+      .title { font-size: 18px; fill: var(--accent); letter-spacing: 0.06em; }
+      .sub { font-size: 11px; fill: var(--dim); }
+      .sym { font-size: 16px; font-weight: 700; fill: var(--accent); text-anchor: middle; }
+      .anum { font-size: 9px; fill: var(--dim); }
+      .ename { font-size: 8px; fill: var(--ink); text-anchor: middle; }
+      .cell { fill: var(--cell); stroke: var(--cell-b); stroke-width: 1.2; rx: 4; cursor: pointer; }
+      .cell:hover { stroke: var(--accent); stroke-width: 2; }
+      a { cursor: pointer; }
+      .stage-frame { fill: #071013; stroke: var(--cell-b); stroke-width: 1.5; rx: 8; }
+      .stage-title { font-size: 14px; fill: var(--accent); }
+      .caption { font-size: 11px; fill: var(--dim); }
+      .plus { fill: #1f4e9c; } .minus { fill: #9cb6e0; }
+      .even { fill: #2f7d4a; } .odd { fill: #c26a2b; }
+      .still { fill: #e0c060; }
+      .orbit { fill: #72ffe0; }
+      .ring { fill: none; stroke: #2a4a44; stroke-width: 1; }
+      .wire { fill: none; stroke: #3a6a60; stroke-width: 1.5; }
+      .gate { fill: #122022; stroke: var(--accent); stroke-width: 1.2; }
+      .label { font-size: 10px; fill: var(--ink); }
+      .proof { display: none; }
+      .proof:target { display: block; }
+      #default-view { display: block; }
+      .proof:target ~ #default-view { display: none; }
+      @media (prefers-color-scheme: light) {
+        :root { --bg:#f4f7f6; --ink:#122022; --dim:#4a6a60; --accent:#0a6a5a; --cell:#fff; --cell-b:#8ab; }
+        .stage-frame { fill: #fff; }
+        .plus { fill: #1f4e9c; } .minus { fill: #6a90c0; }
+        .still { fill: #b8860b; } .orbit { fill: #0a6a5a; }
+        .ring { stroke: #cde; } .wire { stroke: #8ab; }
+        .gate { fill: #f8fafa; stroke: #0a6a5a; }
+      }
+    </style>
+
+    <!-- reusable markers -->
+    <marker id="arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#72ffe0"/>
+    </marker>
+  </defs>
+
+  <!-- ════════ HEADER ════════ -->
+  <text class="title" x="24" y="28">VISUAL PROOFS</text>
+  <text class="sub" x="24" y="46">periodic table index · click an element · delta steps the figure</text>
+
+  <!-- ════════ PERIODIC TABLE INDEX ════════ -->
+  <!-- layout:  periods (rows) × groups (cols), element-style cells -->
+  <g id="periodic-table" transform="translate(24, 64)">
+    <!-- column headers (groups) -->
+    <g class="sub" font-size="9">
+      <text x="28" y="0" text-anchor="middle">I</text>
+      <text x="84" y="0" text-anchor="middle">II</text>
+      <text x="140" y="0" text-anchor="middle">III</text>
+      <text x="196" y="0" text-anchor="middle">IV</text>
+      <text x="252" y="0" text-anchor="middle">V</text>
+      <text x="308" y="0" text-anchor="middle">VI</text>
+      <text x="364" y="0" text-anchor="middle">VII</text>
+      <text x="420" y="0" text-anchor="middle">VIII</text>
+    </g>
+
+    <!-- Period 1 — kernel primitives -->
+    <text class="sub" x="-14" y="36" font-size="9">1</text>
+    <a xlink:href="#proof-delta">
+      <g transform="translate(0,12)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">1</text>
+        <text class="sym" x="26" y="32">Δ</text>
+        <text class="ename" x="26" y="46">delta</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-L">
+      <g transform="translate(56,12)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">2</text>
+        <text class="sym" x="26" y="32">L</text>
+        <text class="ename" x="26" y="46">linear</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-K">
+      <g transform="translate(112,12)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">3</text>
+        <text class="sym" x="26" y="32">K</text>
+        <text class="ename" x="26" y="46">K(p,C)</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-mask">
+      <g transform="translate(168,12)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">4</text>
+        <text class="sym" x="26" y="32">μ</text>
+        <text class="ename" x="26" y="46">mask</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-replay">
+      <g transform="translate(224,12)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">5</text>
+        <text class="sym" x="26" y="32">↻</text>
+        <text class="ename" x="26" y="46">replay</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-const">
+      <g transform="translate(280,12)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">6</text>
+        <text class="sym" x="26" y="32">1D</text>
+        <text class="ename" x="26" y="46">const</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-w16">
+      <g transform="translate(336,12)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">7</text>
+        <text class="sym" x="26" y="32">16</text>
+        <text class="ename" x="26" y="46">W16</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-65536">
+      <g transform="translate(392,12)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">8</text>
+        <text class="sym" x="26" y="32">2¹⁶</text>
+        <text class="ename" x="26" y="46">space</text>
+      </g>
+    </a>
+
+    <!-- Period 2 — still / orbit / square / boot -->
+    <text class="sub" x="-14" y="100" font-size="9">2</text>
+    <a xlink:href="#proof-still">
+      <g transform="translate(0,76)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">9</text>
+        <text class="sym" x="26" y="32">⊙</text>
+        <text class="ename" x="26" y="46">still</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-aa55">
+      <g transform="translate(56,76)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">10</text>
+        <text class="sym" x="26" y="32">AA</text>
+        <text class="ename" x="26" y="46">boot</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-orbit">
+      <g transform="translate(112,76)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">11</text>
+        <text class="sym" x="26" y="32">○₄</text>
+        <text class="ename" x="26" y="46">orbit</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-square">
+      <g transform="translate(168,76)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">12</text>
+        <text class="sym" x="26" y="32">□</text>
+        <text class="ename" x="26" y="46">square</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-null">
+      <g transform="translate(224,76)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">13</text>
+        <text class="sym" x="26" y="32">∅∅</text>
+        <text class="ename" x="26" y="46">NULL²</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-xnor">
+      <g transform="translate(280,76)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">14</text>
+        <text class="sym" x="26" y="32">⊙̸</text>
+        <text class="ename" x="26" y="46">xnor</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-parity">
+      <g transform="translate(336,76)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">15</text>
+        <text class="sym" x="26" y="32">π</text>
+        <text class="ename" x="26" y="46">parity</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-nibble">
+      <g transform="translate(392,76)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">16</text>
+        <text class="sym" x="26" y="32">n₄</text>
+        <text class="ename" x="26" y="46">nibble</text>
+      </g>
+    </a>
+
+    <!-- Period 3 — structures / geometry -->
+    <text class="sub" x="-14" y="164" font-size="9">3</text>
+    <a xlink:href="#proof-cla">
+      <g transform="translate(0,140)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">17</text>
+        <text class="sym" x="26" y="32">Σ</text>
+        <text class="ename" x="26" y="46">CLA</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-e8">
+      <g transform="translate(56,140)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">18</text>
+        <text class="sym" x="26" y="32">E8</text>
+        <text class="ename" x="26" y="46">Coxeter</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-kmap">
+      <g transform="translate(112,140)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">19</text>
+        <text class="sym" x="26" y="32">Km</text>
+        <text class="ename" x="26" y="46">K-map</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-smith">
+      <g transform="translate(168,140)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">20</text>
+        <text class="sym" x="26" y="32">Sm</text>
+        <text class="ename" x="26" y="46">Smith</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-octal">
+      <g transform="translate(224,140)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">21</text>
+        <text class="sym" x="26" y="32">8</text>
+        <text class="ename" x="26" y="46">octal</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-998001">
+      <g transform="translate(280,140)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">22</text>
+        <text class="sym" x="26" y="32">1/₉</text>
+        <text class="ename" x="26" y="46">998001</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-fano">
+      <g transform="translate(336,140)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">23</text>
+        <text class="sym" x="26" y="32">F₇</text>
+        <text class="ename" x="26" y="46">Fano</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-yhwh">
+      <g transform="translate(392,140)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">24</text>
+        <text class="sym" x="26" y="32">יה</text>
+        <text class="ename" x="26" y="46">YHWH</text>
+      </g>
+    </a>
+
+    <!-- Period 4 — tetrahedron literals · DNA/RNA · reverse -->
+    <text class="sub" x="-14" y="228" font-size="9">4</text>
+    <a xlink:href="#proof-word">
+      <g transform="translate(0,204)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">25</text>
+        <text class="sym" x="26" y="32">W</text>
+        <text class="ename" x="26" y="46">WORD</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-god">
+      <g transform="translate(56,204)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">26</text>
+        <text class="sym" x="26" y="32">G</text>
+        <text class="ename" x="26" y="46">GOD</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-of">
+      <g transform="translate(112,204)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">27</text>
+        <text class="sym" x="26" y="32">OF</text>
+        <text class="ename" x="26" y="46">OF/of</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-is">
+      <g transform="translate(168,204)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">28</text>
+        <text class="sym" x="26" y="32">IS</text>
+        <text class="ename" x="26" y="46">IS/is</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-cgat">
+      <g transform="translate(224,204)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">29</text>
+        <text class="sym" x="26" y="32">AT</text>
+        <text class="ename" x="26" y="46">CGAT</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-cgau">
+      <g transform="translate(280,204)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">30</text>
+        <text class="sym" x="26" y="32">AU</text>
+        <text class="ename" x="26" y="46">CGAU</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-tu">
+      <g transform="translate(336,204)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">31</text>
+        <text class="sym" x="26" y="32">T/U</text>
+        <text class="ename" x="26" y="46">diff</text>
+      </g>
+    </a>
+    <a xlink:href="#proof-rev">
+      <g transform="translate(392,204)">
+        <rect class="cell" width="52" height="52"/>
+        <text class="anum" x="6" y="14">32</text>
+        <text class="sym" x="26" y="32">↺</text>
+        <text class="ename" x="26" y="46">reverse</text>
+      </g>
+    </a>
+  <a xlink:href="#proof-tetra"><g transform="translate(0,268)"><rect class="cell" width="444" height="36" rx="4"/><text class="anum" x="8" y="14">33</text><text class="sym" x="222" y="24" font-size="14">◇  TETRA  WORD · GOD · OF · of</text></g></a><a xlink:href="#proof-codepoints"><g transform="translate(0,312)"><rect class="cell" width="444" height="36" rx="4"/><text class="anum" x="8" y="14">34</text><text class="sym" x="222" y="24" font-size="13">▦  CODEPOINTS  deviations from 20–7E</text></g></a></g>
+
+  <!-- ════════ STAGE ════════ -->
+  <rect class="stage-frame" x="500" y="60" width="676" height="880"/>
+  <text class="sub" x="516" y="82">stage · selected proof visual</text>
+
+  <!-- default view when nothing targeted -->
+  <!-- ════ PROOF VISUALS (shown via :target) ════ -->
+
+  <!-- 1 Δ delta -->
+  <g id="proof-delta" class="proof">
+    <text class="stage-title" x="516" y="120">Δ  delta</text>
+    <text class="caption" x="516" y="140">mask n (rotl1 ⊕ rotl3 ⊕ rotr2 ⊕ const) — one step of the law</text>
+    <g transform="translate(840, 400)">
+      <!-- state word as 16 dots, animated by discrete rotation of highlight -->
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="0;45;90;135;180;225;270;315;360" keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1" dur="8s" calcMode="discrete" repeatCount="indefinite"/>
+        <circle class="orbit" cx="0" cy="-90" r="8"/>
+      </g>
+      <circle class="ring" r="90"/>
+      <!-- 16 bit positions -->
+      <g id="delta-bits">
+        <!-- generated positions on circle -->
+        <circle class="plus" cx="0" cy="-90" r="3"/>
+        <circle class="minus" cx="34.4" cy="-83.1" r="3"/>
+        <circle class="plus" cx="63.6" cy="-63.6" r="3"/>
+        <circle class="minus" cx="83.1" cy="-34.4" r="3"/>
+        <circle class="plus" cx="90" cy="0" r="3"/>
+        <circle class="minus" cx="83.1" cy="34.4" r="3"/>
+        <circle class="plus" cx="63.6" cy="63.6" r="3"/>
+        <circle class="minus" cx="34.4" cy="83.1" r="3"/>
+        <circle class="plus" cx="0" cy="90" r="3"/>
+        <circle class="minus" cx="-34.4" cy="83.1" r="3"/>
+        <circle class="plus" cx="-63.6" cy="63.6" r="3"/>
+        <circle class="minus" cx="-83.1" cy="34.4" r="3"/>
+        <circle class="plus" cx="-90" cy="0" r="3"/>
+        <circle class="minus" cx="-83.1" cy="-34.4" r="3"/>
+        <circle class="plus" cx="-63.6" cy="-63.6" r="3"/>
+        <circle class="minus" cx="-34.4" cy="-83.1" r="3"/>
+      </g>
+      <text class="label" x="0" y="130" text-anchor="middle">one discrete step · period 8 on W16</text>
+    </g>
+  </g>
+
+  <!-- 2 L linear still points -->
+  <g id="proof-L" class="proof">
+    <text class="stage-title" x="516" y="120">L  linear part — still points</text>
+    <text class="caption" x="516" y="140">L(p)=rotl1⊕rotl3⊕rotl14 · eight fixed words: even-parity nibble ×4</text>
+    <g transform="translate(620, 220)">
+      <!-- 8 still words as large cells -->
+      <g font-size="12" text-anchor="middle">
+        <g transform="translate(0,0)"><rect class="gate" width="100" height="36" rx="4"/><text class="still" x="50" y="23">0000</text></g>
+        <g transform="translate(120,0)"><rect class="gate" width="100" height="36" rx="4"/><text class="still" x="50" y="23">3333</text></g>
+        <g transform="translate(240,0)"><rect class="gate" width="100" height="36" rx="4"/><text class="still" x="50" y="23">5555</text></g>
+        <g transform="translate(360,0)"><rect class="gate" width="100" height="36" rx="4"/><text class="still" x="50" y="23">6666</text></g>
+        <g transform="translate(0,60)"><rect class="gate" width="100" height="36" rx="4"/><text class="still" x="50" y="23">9999</text></g>
+        <g transform="translate(120,60)"><rect class="gate" width="100" height="36" rx="4"/><text class="still" x="50" y="23">AAAA</text></g>
+        <g transform="translate(240,60)"><rect class="gate" width="100" height="36" rx="4"/><text class="still" x="50" y="23">CCCC</text></g>
+        <g transform="translate(360,60)"><rect class="gate" width="100" height="36" rx="4"/><text class="still" x="50" y="23">FFFF</text></g>
+      </g>
+      <text class="caption" x="230" y="130" text-anchor="middle">L(p)=p  ⇔  nibble even parity, repeated four times</text>
+      <!-- pulse on stills -->
+      <g>
+        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+        <circle class="still" cx="50" cy="18" r="0"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- 3 K -->
+  <g id="proof-K" class="proof">
+    <text class="stage-title" x="516" y="120">K(p,C) = L(p) ⊕ C</text>
+    <text class="caption" x="516" y="140">full delta step · C selects the coset</text>
+    <g transform="translate(840, 400)">
+      <circle class="ring" r="100"/>
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="0;90;180;270;360" keyTimes="0;0.25;0.5;0.75;1" dur="4s" calcMode="discrete" repeatCount="indefinite"/>
+        <circle class="orbit" cx="0" cy="-100" r="10"/>
+        <text class="label" x="0" y="-118" text-anchor="middle">p</text>
+      </g>
+      <text class="label" x="0" y="8" text-anchor="middle">C</text>
+      <text class="caption" x="0" y="140" text-anchor="middle">period depends on C · 1D1D → 4 on AA55 · 1D → 8 ∀</text>
+    </g>
+  </g>
+
+  <!-- 4 mask -->
+  <g id="proof-mask" class="proof">
+    <text class="stage-title" x="516" y="120">μ  mask n</text>
+    <text class="caption" x="516" y="140">land with 2ⁿ−1 · keeps the contiguous width field</text>
+    <g transform="translate(620, 280)">
+      <text class="label" x="0" y="0">width n bits</text>
+      <!-- bar representing full register vs masked -->
+      <rect x="0" y="20" width="480" height="24" fill="#1a3030" stroke="#23695d"/>
+      <rect x="0" y="20" width="240" height="24" fill="#1f4e9c" opacity="0.7">
+        <animate attributeName="width" values="120;240;360;480;240" keyTimes="0;0.25;0.5;0.75;1" dur="6s" calcMode="discrete" repeatCount="indefinite"/>
+      </rect>
+      <text class="caption" x="0" y="70">masked region tracks n · outside bits forced 0</text>
+    </g>
+  </g>
+
+  <!-- 5 replay -->
+  <g id="proof-replay" class="proof">
+    <text class="stage-title" x="516" y="120">↻  replay</text>
+    <text class="caption" x="516" y="140">iterate delta · list length = steps · deterministic</text>
+    <g transform="translate(620, 260)">
+      <!-- chain of states -->
+      <g font-size="11" text-anchor="middle">
+        <g transform="translate(0,0)"><rect class="gate" width="70" height="32" rx="3"/><text x="35" y="21" class="orbit">s₀</text></g>
+        <line class="wire" x1="70" y1="16" x2="100" y2="16" marker-end="url(#arrow)"/>
+        <g transform="translate(100,0)"><rect class="gate" width="70" height="32" rx="3"/><text x="35" y="21" class="orbit">s₁</text></g>
+        <line class="wire" x1="170" y1="16" x2="200" y2="16" marker-end="url(#arrow)"/>
+        <g transform="translate(200,0)"><rect class="gate" width="70" height="32" rx="3"/><text x="35" y="21" class="orbit">s₂</text></g>
+        <line class="wire" x1="270" y1="16" x2="300" y2="16" marker-end="url(#arrow)"/>
+        <g transform="translate(300,0)"><rect class="gate" width="70" height="32" rx="3"/><text x="35" y="21" class="orbit">…</text></g>
+        <line class="wire" x1="370" y1="16" x2="400" y2="16" marker-end="url(#arrow)"/>
+        <g transform="translate(400,0)"><rect class="gate" width="70" height="32" rx="3"/><text x="35" y="21" class="orbit">sₖ</text></g>
+      </g>
+      <text class="caption" x="235" y="70" text-anchor="middle">seed₁ = seed₂  ⇒  replay equal · Coq: replay_deterministic</text>
+    </g>
+  </g>
+
+  <!-- 6 const -->
+  <g id="proof-const" class="proof">
+    <text class="stage-title" x="516" y="120">1D  constant</text>
+    <text class="caption" x="516" y="140">repeat_byte 0x1D · width-aligned</text>
+    <g transform="translate(700, 300)">
+      <text class="label" x="0" y="0">0x1D1D (W16)</text>
+      <text class="label" x="0" y="30">0x1D1D1D1D (W32)</text>
+      <text class="label" x="0" y="60">… pattern fills n bits</text>
+      <text class="caption" x="0" y="110">AA55 under 1D1D: period 4 · under 1D: period 8 ∀ words</text>
+    </g>
+  </g>
+
+  <!-- 7 W16 -->
+  <g id="proof-w16" class="proof">
+    <text class="stage-title" x="516" y="120">W16</text>
+    <text class="caption" x="516" y="140">16-bit width · oscillator period 8 for every seed</text>
+    <g transform="translate(840, 400)">
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="0;45;90;135;180;225;270;315;360" keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1" dur="8s" calcMode="discrete" repeatCount="indefinite"/>
+        <polygon points="0,-80 20,-20 0,0 -20,-20" class="orbit" opacity="0.9"/>
+      </g>
+      <circle class="ring" r="80"/>
+      <text class="caption" x="0" y="120" text-anchor="middle">8 discrete ticks close the tour</text>
+    </g>
+  </g>
+
+  <!-- 8 65536 -->
+  <g id="proof-65536" class="proof">
+    <text class="stage-title" x="516" y="120">2¹⁶ = 65536</text>
+    <text class="caption" x="516" y="140">contiguous address space of one 16-pair word</text>
+    <g transform="translate(620, 250)">
+      <!-- grid suggestion -->
+      <g stroke="#23695d" stroke-width="0.5" fill="none">
+        <rect x="0" y="0" width="480" height="240"/>
+        <!-- simplified lattice -->
+        <path d="M0,60 H480 M0,120 H480 M0,180 H480 M120,0 V240 M240,0 V240 M360,0 V240"/>
+      </g>
+      <circle class="orbit" cx="0" cy="0" r="5">
+        <animate attributeName="cx" values="0;120;240;360;480;360;240;120;0" dur="8s" calcMode="discrete" repeatCount="indefinite"/>
+        <animate attributeName="cy" values="0;60;0;120;60;180;240;180;0" dur="8s" calcMode="discrete" repeatCount="indefinite"/>
+      </circle>
+      <text class="caption" x="240" y="270" text-anchor="middle">delta walks the lattice · every address reachable</text>
+    </g>
+  </g>
+
+  <!-- 9 still (duplicate emphasis with L) -->
+  <g id="proof-still" class="proof">
+    <text class="stage-title" x="516" y="120">⊙  still points of L</text>
+    <text class="caption" x="516" y="140">I-222: eight words · even-parity nibble repeated</text>
+    <g transform="translate(700, 280)">
+      <g font-size="14" text-anchor="middle" class="still">
+        <text x="0" y="0">0000</text><text x="100" y="0">3333</text>
+        <text x="200" y="0">5555</text><text x="300" y="0">6666</text>
+        <text x="0" y="40">9999</text><text x="100" y="40">AAAA</text>
+        <text x="200" y="40">CCCC</text><text x="300" y="40">FFFF</text>
+      </g>
+      <text class="caption" x="150" y="100" text-anchor="middle">L leaves them fixed · not still under full K(·,1D1D)</text>
+    </g>
+  </g>
+
+  <!-- 10 AA55 boot -->
+  <g id="proof-aa55" class="proof">
+    <text class="stage-title" x="516" y="120">AA55  boot mark</text>
+    <text class="caption" x="516" y="140">sector[510]=55 sector[511]=AA · little-endian word 0xAA55</text>
+    <g transform="translate(620, 260)">
+      <!-- sector bar -->
+      <rect x="0" y="0" width="480" height="40" fill="#122022" stroke="#23695d"/>
+      <rect x="400" y="0" width="40" height="40" fill="#c26a2b" opacity="0.8"/>
+      <rect x="440" y="0" width="40" height="40" fill="#1f4e9c" opacity="0.8"/>
+      <text class="label" x="420" y="25" text-anchor="middle">55</text>
+      <text class="label" x="460" y="25" text-anchor="middle">AA</text>
+      <text class="caption" x="0" y="70">offsets 510 · 511 — the last pair of the 512-byte sector</text>
+      <text class="caption" x="0" y="100">AA = 10101010 · 55 = 01010101 · every bit differs</text>
+    </g>
+  </g>
+
+  <!-- 11 orbit -->
+  <g id="proof-orbit" class="proof">
+    <text class="stage-title" x="516" y="120">○₄  AA55 orbit under K(·,1D1D)</text>
+    <text class="caption" x="516" y="140">I-222: AA55 → 718E → EE11 → CA35 → AA55</text>
+    <g transform="translate(840, 400)">
+      <circle class="ring" r="110"/>
+      <!-- four orbit nodes -->
+      <g font-size="12" text-anchor="middle">
+        <g transform="translate(0,-110)">
+          <circle class="orbit" r="18"/>
+          <text x="0" y="4" fill="#0a1214" font-size="9">AA55</text>
+        </g>
+        <g transform="translate(110,0)">
+          <circle class="plus" r="18"/>
+          <text x="0" y="4" fill="#fff" font-size="9">718E</text>
+        </g>
+        <g transform="translate(0,110)">
+          <circle class="minus" r="18"/>
+          <text x="0" y="4" fill="#0a1214" font-size="9">EE11</text>
+        </g>
+        <g transform="translate(-110,0)">
+          <circle class="even" r="18"/>
+          <text x="0" y="4" fill="#fff" font-size="9">CA35</text>
+        </g>
+      </g>
+      <!-- moving token -->
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="0;90;180;270;360" keyTimes="0;0.25;0.5;0.75;1" dur="4s" calcMode="discrete" repeatCount="indefinite"/>
+        <circle cx="0" cy="-110" r="6" fill="#fff"/>
+      </g>
+      <text class="caption" x="0" y="150" text-anchor="middle">period 4 · not a still point</text>
+    </g>
+  </g>
+
+  <!-- 12 square -->
+  <g id="proof-square" class="proof">
+    <text class="stage-title" x="516" y="120">□  carry-less square  (GF(2)[x])</text>
+    <text class="caption" x="516" y="140">bit i → bit 2i · square(AA)=4444 · square(55)=1111 · square(FF)=5555</text>
+    <g transform="translate(700, 280)">
+      <text class="label" x="0" y="0">AA  →  4444</text>
+      <text class="label" x="0" y="28">55  →  1111</text>
+      <text class="label" x="0" y="56">FF  →  5555  (still point)</text>
+      <text class="label" x="0" y="84">AA55 → 44441111</text>
+      <text class="caption" x="0" y="130">squaring is linear over GF(2): □(a)⊕□(b)=□(a⊕b)</text>
+    </g>
+  </g>
+
+  <!-- 13 NULL NULL -->
+  <g id="proof-null" class="proof">
+    <text class="stage-title" x="516" y="120">∅∅  NULL NULL squared</text>
+    <text class="caption" x="516" y="140">AA XNOR 55 = 00 · word against itself turned XNOR = 00 00</text>
+    <g transform="translate(750, 320)">
+      <text class="label" x="0" y="0">AA ⊕ 55 = FF</text>
+      <text class="label" x="0" y="30">AA ⊙̸ 55 = 00</text>
+      <text class="label" x="0" y="60">□(FF) = 5555 ∈ still</text>
+      <text class="caption" x="0" y="110">the boot pair's difference, squared, lands on a still point</text>
+    </g>
+  </g>
+
+  <!-- 14 xnor -->
+  <g id="proof-xnor" class="proof">
+    <text class="stage-title" x="516" y="120">⊙̸  XNOR</text>
+    <text class="caption" x="516" y="140">~(a⊕b) · AA XNOR 55 = 00 · project check: xor ^ xnor = 0xff</text>
+    <g transform="translate(700, 300)">
+      <text class="label" x="0" y="0">byte law:  a⊕b  and  a⊙̸b  partition the bits</text>
+      <text class="label" x="0" y="40">harness: check-xor-xnor.sh</text>
+    </g>
+  </g>
+
+  <!-- 15 parity -->
+  <g id="proof-parity" class="proof">
+    <text class="stage-title" x="516" y="120">π  nibble parity</text>
+    <text class="caption" x="516" y="140">still nibbles are exactly the even-parity 4-bit values</text>
+    <g transform="translate(650, 260)">
+      <g font-size="11">
+        <text class="still" x="0" y="0">0 3 5 6 9 A C F</text>
+        <text class="caption" x="0" y="30">even parity · each repeated ×4 makes a still word</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- 16 nibble / AA55 path on adder -->
+  <g id="proof-nibble" class="proof">
+    <text class="stage-title" x="516" y="120">n₄  AA55 nibbles on the adder</text>
+    <text class="caption" x="516" y="140">[A,A,5,5] sum 30 · YHWH [10,5,6,5] sum 26 · share 10 and 5</text>
+    <g transform="translate(650, 280)">
+      <g font-size="18" text-anchor="middle">
+        <g transform="translate(0,0)"><rect class="gate" width="60" height="48" rx="4"/><text class="orbit" x="30" y="30">A</text></g>
+        <g transform="translate(80,0)"><rect class="gate" width="60" height="48" rx="4"/><text class="orbit" x="30" y="30">A</text></g>
+        <g transform="translate(160,0)"><rect class="gate" width="60" height="48" rx="4"/><text class="orbit" x="30" y="30">5</text></g>
+        <g transform="translate(240,0)"><rect class="gate" width="60" height="48" rx="4"/><text class="orbit" x="30" y="30">5</text></g>
+      </g>
+      <text class="caption" x="150" y="90" text-anchor="middle">four-bit path · I-222 §5</text>
+    </g>
+  </g>
+
+  <!-- 17 CLA -->
+  <g id="proof-cla" class="proof">
+    <text class="stage-title" x="516" y="120">Σ  four-bit CLA</text>
+    <text class="caption" x="516" y="140">Gᵢ=Aᵢ·Bᵢ  Pᵢ=Aᵢ⊕Bᵢ  Cᵢ₊₁=Gᵢ+PᵢCᵢ  Sᵢ=Pᵢ⊕Cᵢ</text>
+    <g transform="translate(620, 240)">
+      <!-- simplified 4-unit strip -->
+      <g font-size="10" text-anchor="middle">
+        <g transform="translate(0,0)">
+          <rect class="gate" width="100" height="80" rx="4"/>
+          <text x="50" y="25">unit 0</text>
+          <text class="label" x="50" y="45">G₀ P₀</text>
+          <text class="label" x="50" y="65">→ C₁</text>
+        </g>
+        <g transform="translate(120,0)">
+          <rect class="gate" width="100" height="80" rx="4"/>
+          <text x="50" y="25">unit 1</text>
+          <text class="label" x="50" y="45">G₁ P₁</text>
+          <text class="label" x="50" y="65">→ C₂</text>
+        </g>
+        <g transform="translate(240,0)">
+          <rect class="gate" width="100" height="80" rx="4"/>
+          <text x="50" y="25">unit 2</text>
+          <text class="label" x="50" y="45">G₂ P₂</text>
+          <text class="label" x="50" y="65">→ C₃</text>
+        </g>
+        <g transform="translate(360,0)">
+          <rect class="gate" width="100" height="80" rx="4"/>
+          <text x="50" y="25">unit 3</text>
+          <text class="label" x="50" y="45">G₃ P₃</text>
+          <text class="label" x="50" y="65">→ C₄</text>
+        </g>
+      </g>
+      <!-- delta lights units in orbit order -->
+      <rect x="0" y="0" width="100" height="80" rx="4" fill="#72ffe0" opacity="0.15">
+        <animate attributeName="x" values="0;120;240;360;0" keyTimes="0;0.25;0.5;0.75;1" dur="4s" calcMode="discrete" repeatCount="indefinite"/>
+      </rect>
+      <text class="caption" x="230" y="120" text-anchor="middle">tour s ↦ unit s  (AA55 orbit period 4)</text>
+    </g>
+  </g>
+
+  <!-- 18 E8 -->
+  <g id="proof-e8" class="proof">
+    <text class="stage-title" x="516" y="120">E8  Coxeter step</text>
+    <text class="caption" x="516" y="140">240 roots · 8 shells · 12° discrete turn · 30 steps = full · 15 = −1</text>
+    <g transform="translate(840, 420)">
+      <circle class="ring" r="40"/><circle class="ring" r="60"/>
+      <circle class="ring" r="80"/><circle class="ring" r="100"/>
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="0;-12;-24;-36;-48;-60;-72;-84;-96;-108;-120;-132;-144;-156;-168;-180;-192;-204;-216;-228;-240;-252;-264;-276;-288;-300;-312;-324;-336;-348;-360" keyTimes="0;0.0333;0.0667;0.1;0.1333;0.1667;0.2;0.2333;0.2667;0.3;0.3333;0.3667;0.4;0.4333;0.4667;0.5;0.5333;0.5667;0.6;0.6333;0.6667;0.7;0.7333;0.7667;0.8;0.8333;0.8667;0.9;0.9333;0.9667;1" dur="15s" calcMode="discrete" repeatCount="indefinite"/>
+        <!-- sample roots on outer ring -->
+        <circle class="plus" cx="0" cy="-100" r="3"/>
+        <circle class="minus" cx="20.8" cy="-97.8" r="3"/>
+        <circle class="plus" cx="40.7" cy="-91.4" r="3"/>
+        <circle class="minus" cx="58.8" cy="-80.9" r="3"/>
+        <circle class="plus" cx="74.2" cy="-67.1" r="3"/>
+        <circle class="minus" cx="86.6" cy="-50.0" r="3"/>
+        <circle class="plus" cx="95.1" cy="-30.9" r="3"/>
+        <circle class="minus" cx="99.4" cy="-10.5" r="3"/>
+        <circle class="plus" cx="99.4" cy="10.5" r="3"/>
+        <circle class="minus" cx="95.1" cy="30.9" r="3"/>
+        <circle class="plus" cx="86.6" cy="50.0" r="3"/>
+        <circle class="minus" cx="74.2" cy="67.1" r="3"/>
+        <circle class="plus" cx="58.8" cy="80.9" r="3"/>
+        <circle class="minus" cx="40.7" cy="91.4" r="3"/>
+        <circle class="plus" cx="20.8" cy="97.8" r="3"/>
+        <circle class="minus" cx="0" cy="100" r="3"/>
+      </g>
+      <text class="caption" x="0" y="140" text-anchor="middle">one step of c = 12° · same discrete law as delta tours</text>
+    </g>
+  </g>
+
+  <!-- 19 K-map -->
+  <g id="proof-kmap" class="proof">
+    <text class="stage-title" x="516" y="120">Km  Karnaugh / Gray</text>
+    <text class="caption" x="516" y="140">Gray-code adjacency · 4 discrete 90° steps cycle the torus</text>
+    <g transform="translate(780, 380)">
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="0;90;180;270;360" keyTimes="0;0.25;0.5;0.75;1" dur="8s" calcMode="discrete" repeatCount="indefinite"/>
+        <rect x="-60" y="-60" width="50" height="50" class="gate"/><text class="label" x="-35" y="-30">00</text>
+        <rect x="-10" y="-60" width="50" height="50" class="gate"/><text class="label" x="15" y="-30">01</text>
+        <rect x="-10" y="-10" width="50" height="50" class="gate"/><text class="label" x="15" y="20">11</text>
+        <rect x="-60" y="-10" width="50" height="50" class="gate"/><text class="label" x="-35" y="20">10</text>
+      </g>
+      <text class="caption" x="0" y="100" text-anchor="middle">neighbours differ by one bit · torus wrap</text>
+    </g>
+  </g>
+
+  <!-- 20 Smith -->
+  <g id="proof-smith" class="proof">
+    <text class="stage-title" x="516" y="120">Sm  Smith chart loci</text>
+    <text class="caption" x="516" y="140">constant-|Γ| circles · 12° discrete turn of the reflection plane</text>
+    <g transform="translate(840, 420)">
+      <circle class="ring" r="30"/><circle class="ring" r="55"/><circle class="ring" r="80"/><circle class="ring" r="100"/>
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="0;-12;-24;-36;-48;-60;-72;-84;-96;-108;-120;-132;-144;-156;-168;-180;-192;-204;-216;-228;-240;-252;-264;-276;-288;-300;-312;-324;-336;-348;-360" keyTimes="0;0.0333;0.0667;0.1;0.1333;0.1667;0.2;0.2333;0.2667;0.3;0.3333;0.3667;0.4;0.4333;0.4667;0.5;0.5333;0.5667;0.6;0.6333;0.6667;0.7;0.7333;0.7667;0.8;0.8333;0.8667;0.9;0.9333;0.9667;1" dur="15s" calcMode="discrete" repeatCount="indefinite"/>
+        <line class="wire" x1="0" y1="0" x2="100" y2="0"/>
+        <circle class="orbit" cx="100" cy="0" r="5"/>
+      </g>
+      <text class="caption" x="0" y="140" text-anchor="middle">same 30-step / 12° grammar as E8</text>
+    </g>
+  </g>
+
+  <!-- 21 octal -->
+  <g id="proof-octal" class="proof">
+    <text class="stage-title" x="516" y="120">8  octal dialectic 16-pairs</text>
+    <text class="caption" x="516" y="140">variables as pairs of octal digits · each pair spans 64 · 1024 pairs → 65536</text>
+    <g transform="translate(700, 300)">
+      <text class="label" x="0" y="0">(oₕ , oₗ)  per 16-bit limb</text>
+      <text class="label" x="0" y="30">Aᵢ Bᵢ Gᵢ Pᵢ Cᵢ Sᵢ  all read as pairs</text>
+      <text class="caption" x="0" y="80">delineates the contiguous 65536-space</text>
+    </g>
+  </g>
+
+  <!-- 22 998001 -->
+  <g id="proof-998001" class="proof">
+    <text class="stage-title" x="516" y="120">1/998001</text>
+    <text class="caption" x="516" y="140">0.000001002003…997998999… · contiguous counters in the expansion</text>
+    <g transform="translate(620, 280)">
+      <text class="label" x="0" y="0">same shape: linear index → structured runs</text>
+      <text class="label" x="0" y="30">here: linear 0…65535 → octal dialectic pairs</text>
+      <text class="caption" x="0" y="80">delta walks the space the way the decimal walks its digits</text>
+    </g>
+  </g>
+
+  <!-- 23 Fano -->
+  <g id="proof-fano" class="proof">
+    <text class="stage-title" x="516" y="120">F₇  Fano converger</text>
+    <text class="caption" x="516" y="140">7-bit · mark a⊕b for every lit pair · ≤2 steps → one of 16 constants</text>
+    <g transform="translate(840, 400)">
+      <!-- Fano plane points -->
+      <circle class="plus" cx="0" cy="-70" r="6"/>
+      <circle class="plus" cx="60" cy="-25" r="6"/>
+      <circle class="plus" cx="40" cy="50" r="6"/>
+      <circle class="plus" cx="-40" cy="50" r="6"/>
+      <circle class="plus" cx="-60" cy="-25" r="6"/>
+      <circle class="plus" cx="0" cy="0" r="6"/>
+      <circle class="plus" cx="0" cy="70" r="6"/>
+      <g fill="none" stroke="#23695d" stroke-width="1">
+        <ellipse cx="0" cy="-20" rx="55" ry="55"/>
+        <line x1="-60" y1="-25" x2="60" y2="-25"/>
+        <line x1="0" y1="-70" x2="0" y2="70"/>
+      </g>
+      <text class="caption" x="0" y="120" text-anchor="middle">empty · 7 points · 7 lines · full</text>
+    </g>
+  </g>
+
+  <!-- 24 YHWH -->
+  <g id="proof-yhwh" class="proof">
+    <text class="stage-title" x="516" y="120">יהוה  /  AA55</text>
+    <text class="caption" x="516" y="140">YHWH [10,5,6,5] sum 26 · AA55 [10,10,5,5] sum 30 · share Yod &amp; He</text>
+    <g transform="translate(700, 300)">
+      <text class="label" x="0" y="0">Yod 10 · He 5 · Vav 6 · He 5</text>
+      <text class="label" x="0" y="30">A 10 · A 10 · 5 · 5</text>
+      <text class="caption" x="0" y="80">four-bit adder is the scale · I-222</text>
+    </g>
+  </g>
+
+  <!-- 25 WORD -->
+  <g id="proof-word" class="proof">
+    <text class="stage-title" x="516" y="120">WORD</text>
+    <text class="caption" x="516" y="140">literal vertex · codepoints 57 4F 52 44 · tetrahedron with GOD · OF · of</text>
+    <g transform="translate(620, 240)">
+      <g font-size="22" text-anchor="middle">
+        <g transform="translate(0,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="orbit" x="35" y="36">W</text><text class="caption" x="35" y="70">57</text></g>
+        <g transform="translate(90,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="orbit" x="35" y="36">O</text><text class="caption" x="35" y="70">4F</text></g>
+        <g transform="translate(180,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="orbit" x="35" y="36">R</text><text class="caption" x="35" y="70">52</text></g>
+        <g transform="translate(270,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="orbit" x="35" y="36">D</text><text class="caption" x="35" y="70">44</text></g>
+      </g>
+      <text class="caption" x="170" y="120" text-anchor="middle">G|W · O · R? · D — W and G share the left column of the dialectic</text>
+      <text class="caption" x="170" y="145" text-anchor="middle">reverse log: DROW · back-logging the vertex</text>
+    </g>
+  </g>
+
+  <!-- 26 GOD -->
+  <g id="proof-god" class="proof">
+    <text class="stage-title" x="516" y="120">GOD</text>
+    <text class="caption" x="516" y="140">literal vertex · codepoints 47 4F 44 · shares O·D with WORD</text>
+    <g transform="translate(650, 260)">
+      <g font-size="22" text-anchor="middle">
+        <g transform="translate(0,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="orbit" x="35" y="36">G</text><text class="caption" x="35" y="70">47</text></g>
+        <g transform="translate(90,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="orbit" x="35" y="36">O</text><text class="caption" x="35" y="70">4F</text></g>
+        <g transform="translate(180,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="orbit" x="35" y="36">D</text><text class="caption" x="35" y="70">44</text></g>
+      </g>
+      <text class="caption" x="125" y="120" text-anchor="middle">G aligns with DNA/RNA G (Guanine) · O·D locked with WORD</text>
+    </g>
+  </g>
+
+  <!-- 27 OF / of -->
+  <g id="proof-of" class="proof">
+    <text class="stage-title" x="516" y="120">OF ↔ of</text>
+    <text class="caption" x="516" y="140">the one literal edge · OF ⊕ of = 20 20 · case bit only</text>
+    <g transform="translate(650, 250)">
+      <g font-size="22" text-anchor="middle">
+        <g transform="translate(0,0)"><rect class="gate" width="80" height="56" rx="4"/><text class="orbit" x="40" y="36">O F</text><text class="caption" x="40" y="70">4F 46</text></g>
+        <g transform="translate(140,0)"><rect class="gate" width="80" height="56" rx="4"/><text class="orbit" x="40" y="36">o f</text><text class="caption" x="40" y="70">6F 66</text></g>
+      </g>
+      <text class="label" x="110" y="100" text-anchor="middle">⊕</text>
+      <text class="still" x="110" y="130" text-anchor="middle" font-size="16">20 20</text>
+      <text class="caption" x="110" y="160" text-anchor="middle">O|F · single-bit case flip per letter · tetra-mask comparable edge</text>
+    </g>
+  </g>
+
+  <!-- 28 IS / is -->
+  <g id="proof-is" class="proof">
+    <text class="stage-title" x="516" y="120">IS ↔ is</text>
+    <text class="caption" x="516" y="140">same case-bit law · IS ⊕ is = 20 20 · around OF in the dialectic</text>
+    <g transform="translate(650, 250)">
+      <g font-size="22" text-anchor="middle">
+        <g transform="translate(0,0)"><rect class="gate" width="80" height="56" rx="4"/><text class="orbit" x="40" y="36">I S</text><text class="caption" x="40" y="70">49 53</text></g>
+        <g transform="translate(140,0)"><rect class="gate" width="80" height="56" rx="4"/><text class="orbit" x="40" y="36">i s</text><text class="caption" x="40" y="70">69 73</text></g>
+      </g>
+      <text class="still" x="110" y="120" text-anchor="middle" font-size="16">20 20</text>
+      <text class="caption" x="110" y="150" text-anchor="middle">I|S · parallel to O|F · reverse log: SI / si</text>
+    </g>
+  </g>
+
+  <!-- 29 CGAT DNA -->
+  <g id="proof-cgat" class="proof">
+    <text class="stage-title" x="516" y="120">CGAT  DNA</text>
+    <text class="caption" x="516" y="140">Cytosine Guanine Adenine Thymine · codepoints 43 47 41 54</text>
+    <g transform="translate(620, 240)">
+      <g font-size="20" text-anchor="middle">
+        <g transform="translate(0,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="plus" x="35" y="36">C</text><text class="caption" x="35" y="70">43</text></g>
+        <g transform="translate(90,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="even" x="35" y="36">G</text><text class="caption" x="35" y="70">47</text></g>
+        <g transform="translate(180,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="orbit" x="35" y="36">A</text><text class="caption" x="35" y="70">41</text></g>
+        <g transform="translate(270,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="odd" x="35" y="36">T</text><text class="caption" x="35" y="70">54</text></g>
+      </g>
+      <text class="caption" x="170" y="120" text-anchor="middle">like WORD: four letters · G shared with GOD · T is the DNA-only base</text>
+      <text class="caption" x="170" y="145" text-anchor="middle">Difference_DNA_RNA-EN.svg · helix of sugar-phosphates</text>
+    </g>
+  </g>
+
+  <!-- 30 CGAU RNA -->
+  <g id="proof-cgau" class="proof">
+    <text class="stage-title" x="516" y="120">CGAU  RNA</text>
+    <text class="caption" x="516" y="140">Cytosine Guanine Adenine Uracil · codepoints 43 47 41 55</text>
+    <g transform="translate(620, 240)">
+      <g font-size="20" text-anchor="middle">
+        <g transform="translate(0,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="plus" x="35" y="36">C</text><text class="caption" x="35" y="70">43</text></g>
+        <g transform="translate(90,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="even" x="35" y="36">G</text><text class="caption" x="35" y="70">47</text></g>
+        <g transform="translate(180,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="orbit" x="35" y="36">A</text><text class="caption" x="35" y="70">41</text></g>
+        <g transform="translate(270,0)"><rect class="gate" width="70" height="56" rx="4"/><text class="still" x="35" y="36">U</text><text class="caption" x="35" y="70">55</text></g>
+      </g>
+      <text class="caption" x="170" y="120" text-anchor="middle">like GOD shortened form · U replaces T · single-bit codepoint step</text>
+    </g>
+  </g>
+
+  <!-- 31 T/U difference -->
+  <g id="proof-tu" class="proof">
+    <text class="stage-title" x="516" y="120">T/U  the difference</text>
+    <text class="caption" x="516" y="140">CGAT ⊕ CGAU = 00 00 00 01 · T=54 U=55 · one bit · the ? in the dialectic</text>
+    <g transform="translate(620, 230)">
+      <g font-size="18" text-anchor="middle">
+        <g transform="translate(0,0)">
+          <rect class="gate" width="200" height="40" rx="4"/>
+          <text class="label" x="100" y="26">C G A T</text>
+        </g>
+        <g transform="translate(0,60)">
+          <rect class="gate" width="200" height="40" rx="4"/>
+          <text class="label" x="100" y="26">C G A U</text>
+        </g>
+      </g>
+      <!-- highlight last position -->
+      <rect x="150" y="0" width="50" height="40" fill="#c26a2b" opacity="0.35" rx="4">
+        <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="150" y="60" width="50" height="40" fill="#e0c060" opacity="0.35" rx="4">
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
+      </rect>
+      <text class="still" x="100" y="130" text-anchor="middle" font-size="14">⊕ → 00 00 00 01</text>
+      <text class="caption" x="100" y="160" text-anchor="middle">G|W O R? D · O|F I|S · the ? is the T↔U slot · reverse back-logs the pair</text>
+      <text class="caption" x="100" y="185" text-anchor="middle">same shape as OF↔of (case bit) but here the RNA/DNA base bit</text>
+    </g>
+  </g>
+
+  <!-- 32 reverse / back logging -->
+  <g id="proof-rev" class="proof">
+    <text class="stage-title" x="516" y="120">↺  reverse back logging</text>
+    <text class="caption" x="516" y="140">read each literal backward · DROW · DOG · FO · si · TAGC · UAGC</text>
+    <g transform="translate(600, 220)">
+      <g font-size="14">
+        <text class="label" x="0" y="0">WORD → DROW</text>
+        <text class="label" x="0" y="28">GOD  → DOG</text>
+        <text class="label" x="0" y="56">OF   → FO</text>
+        <text class="label" x="0" y="84">IS   → SI</text>
+        <text class="label" x="0" y="112">CGAT → TAGC</text>
+        <text class="label" x="0" y="140">CGAU → UAGC</text>
+      </g>
+      <g transform="translate(220,0)" font-size="14">
+        <text class="caption" x="0" y="0">forward = DNA/WORD axis</text>
+        <text class="caption" x="0" y="28">reverse = back-logged read</text>
+        <text class="caption" x="0" y="56">delta steps the index;</text>
+        <text class="caption" x="0" y="84">reverse is the other face</text>
+        <text class="caption" x="0" y="112">of the same pair</text>
+        <text class="caption" x="0" y="140">(like OF/of case dual)</text>
+      </g>
+      <!-- discrete flip animation -->
+      <g transform="translate(100, 200)">
+        <text class="orbit" font-size="20" text-anchor="middle">
+          <animate attributeName="opacity" values="1;0;1;0;1" keyTimes="0;0.25;0.5;0.75;1" dur="4s" calcMode="discrete" repeatCount="indefinite"/>
+          CGAT
+        </text>
+        <text class="still" font-size="20" text-anchor="middle" y="0">
+          <animate attributeName="opacity" values="0;1;0;1;0" keyTimes="0;0.25;0.5;0.75;1" dur="4s" calcMode="discrete" repeatCount="indefinite"/>
+          TAGC
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- footer -->
+  <text class="sub" x="24" y="960">pure SVG · :target shows proof · discrete SMIL = delta steps · I-222 · tetra WORD·GOD·OF·of · CGAT/CGAU · reverse back logging</text>
+<g id="proof-tetra" class="proof"><text class="stage-title" x="516" y="120">◇  tetrahedron</text><text class="caption" x="516" y="140">four vertices · six edges · only OF↔of is comparable (0x20 case bit) · raw bytes, no pad</text><g id="tetra-fig"><line x1="720" y1="280" x2="980" y2="280" stroke="#23695d" stroke-width="1.5" stroke-dasharray="6 4"/><text x="850.0" y="268.0" text-anchor="middle" font-size="10" fill="#6a9a8e">len≠</text><line x1="720" y1="280" x2="720" y2="520" stroke="#23695d" stroke-width="1.5" stroke-dasharray="6 4"/><text x="692.0" y="400.0" text-anchor="middle" font-size="10" fill="#6a9a8e">len≠</text><line x1="720" y1="280" x2="980" y2="520" stroke="#23695d" stroke-width="1.5" stroke-dasharray="6 4"/><text x="840.0" y="392.0" text-anchor="middle" font-size="10" fill="#6a9a8e">len≠</text><line x1="980" y1="280" x2="720" y2="520" stroke="#23695d" stroke-width="1.5" stroke-dasharray="6 4"/><text x="860.0" y="392.0" text-anchor="middle" font-size="10" fill="#6a9a8e">len≠</text><line x1="980" y1="280" x2="980" y2="520" stroke="#23695d" stroke-width="1.5" stroke-dasharray="6 4"/><text x="1008.0" y="400.0" text-anchor="middle" font-size="10" fill="#6a9a8e">len≠</text><line x1="720" y1="520" x2="980" y2="520" stroke="#e0c060" stroke-width="3"/><text x="850.0" y="536.0" text-anchor="middle" font-size="10" fill="#e0c060">20 20</text><g transform="translate(680,256)"><rect class="gate" width="80" height="48" rx="6"/><text class="orbit" x="40" y="30" text-anchor="middle" font-size="16">WORD</text></g><g transform="translate(940,256)"><rect class="gate" width="80" height="48" rx="6"/><text class="orbit" x="40" y="30" text-anchor="middle" font-size="16">GOD</text></g><g transform="translate(680,496)"><rect class="gate" width="80" height="48" rx="6"/><text class="orbit" x="40" y="30" text-anchor="middle" font-size="16">OF</text></g><g transform="translate(940,496)"><rect class="gate" width="80" height="48" rx="6" stroke="#e0c060"/><text class="still" x="40" y="30" text-anchor="middle" font-size="16">of</text></g><line x1="720" y1="520" x2="980" y2="520" stroke="#e0c060" stroke-width="5" opacity="0.4"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="2s" repeatCount="indefinite"/></line></g><text class="caption" x="516" y="580">codepoints</text><text class="label" x="516" y="605">WORD  57 4F 52 44</text><text class="label" x="676" y="605">GOD  47 4F 44</text><text class="label" x="836" y="605">OF  4F 46</text><text class="label" x="996" y="605">of  6F 66</text><text class="caption" x="516" y="640">OF ⊕ of = 20 20  ·  the only equal-length edge · tetra-mask reports the other five not comparable</text><text class="caption" x="516" y="660">G|W O R? D · O|F I|S · CGAT/CGAU is the same shape (single-slot difference)</text></g><g id="proof-codepoints" class="proof"><text class="stage-title" x="516" y="110">▦  literal codepoint deviations</text><text class="caption" x="516" y="128">selected range 20–7E (printable ASCII) · each SVG as in-range % and 32-bin spectrum</text><text class="caption" x="516" y="155">file</text><text class="caption" x="720" y="155">bytes</text><text class="caption" x="790" y="155">in-range</text><text class="caption" x="870" y="155">out</text><text class="caption" x="920" y="155">spectrum (00→FF)</text><text class="label" x="516" y="184">Difference DNA RNA-EN</text><text class="caption" x="720" y="184">127863</text><text class="label" x="790" y="184">98.9%</text><text class="odd" x="870" y="184">1354</text><rect x="920.0" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="927.5" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="935.0" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="942.5" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="950.0" y="189" width="7.0" height="9" fill="#72ffe0" opacity="0.85"/><rect x="957.5" y="187" width="7.0" height="11" fill="#72ffe0" opacity="0.85"/><rect x="965.0" y="170" width="7.0" height="28" fill="#72ffe0" opacity="0.85"/><rect x="972.5" y="188" width="7.0" height="10" fill="#72ffe0" opacity="0.85"/><rect x="980.0" y="197" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="987.5" y="197" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="995.0" y="197" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1002.5" y="197" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1010.0" y="190" width="7.0" height="8" fill="#72ffe0" opacity="0.85"/><rect x="1017.5" y="185" width="7.0" height="13" fill="#72ffe0" opacity="0.85"/><rect x="1025.0" y="188" width="7.0" height="10" fill="#72ffe0" opacity="0.85"/><rect x="1032.5" y="197" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1040.0" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1047.5" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1055.0" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1062.5" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1070.0" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1077.5" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1085.0" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1092.5" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1100.0" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1107.5" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1115.0" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1122.5" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1130.0" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1137.5" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1145.0" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1152.5" y="197" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><line x1="950.0" x2="1040.0" y1="202" y2="202" stroke="#72ffe0" stroke-width="1.5"/><text class="label" x="516" y="232">Four bit adder with carry lo</text><text class="caption" x="720" y="232">46187</text><text class="label" x="790" y="232">98.6%</text><text class="odd" x="870" y="232">656</text><rect x="920.0" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="927.5" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="935.0" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="942.5" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="950.0" y="224" width="7.0" height="22" fill="#72ffe0" opacity="0.85"/><rect x="957.5" y="239" width="7.0" height="7" fill="#72ffe0" opacity="0.85"/><rect x="965.0" y="218" width="7.0" height="28" fill="#72ffe0" opacity="0.85"/><rect x="972.5" y="232" width="7.0" height="14" fill="#72ffe0" opacity="0.85"/><rect x="980.0" y="245" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="987.5" y="245" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="995.0" y="245" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1002.5" y="245" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1010.0" y="232" width="7.0" height="14" fill="#72ffe0" opacity="0.85"/><rect x="1017.5" y="232" width="7.0" height="14" fill="#72ffe0" opacity="0.85"/><rect x="1025.0" y="228" width="7.0" height="18" fill="#72ffe0" opacity="0.85"/><rect x="1032.5" y="244" width="7.0" height="2" fill="#72ffe0" opacity="0.85"/><rect x="1040.0" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1047.5" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1055.0" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1062.5" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1070.0" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1077.5" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1085.0" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1092.5" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1100.0" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1107.5" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1115.0" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1122.5" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1130.0" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1137.5" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1145.0" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1152.5" y="245" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><line x1="950.0" x2="1040.0" y1="250" y2="250" stroke="#72ffe0" stroke-width="1.5"/><text class="label" x="516" y="280">K-map 6,8,9,10,11,12,13,14</text><text class="caption" x="720" y="280">5083</text><text class="label" x="790" y="280">98.8%</text><text class="caption" x="870" y="280">61</text><rect x="920.0" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="927.5" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="935.0" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="942.5" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="950.0" y="272" width="7.0" height="22" fill="#72ffe0" opacity="0.85"/><rect x="957.5" y="285" width="7.0" height="9" fill="#72ffe0" opacity="0.85"/><rect x="965.0" y="266" width="7.0" height="28" fill="#72ffe0" opacity="0.85"/><rect x="972.5" y="273" width="7.0" height="21" fill="#72ffe0" opacity="0.85"/><rect x="980.0" y="293" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="987.5" y="293" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="995.0" y="293" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1002.5" y="293" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1010.0" y="280" width="7.0" height="14" fill="#72ffe0" opacity="0.85"/><rect x="1017.5" y="281" width="7.0" height="13" fill="#72ffe0" opacity="0.85"/><rect x="1025.0" y="275" width="7.0" height="19" fill="#72ffe0" opacity="0.85"/><rect x="1032.5" y="288" width="7.0" height="6" fill="#72ffe0" opacity="0.85"/><rect x="1040.0" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1047.5" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1055.0" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1062.5" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1070.0" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1077.5" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1085.0" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1092.5" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1100.0" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1107.5" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1115.0" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1122.5" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1130.0" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1137.5" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1145.0" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1152.5" y="293" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><line x1="950.0" x2="1040.0" y1="298" y2="298" stroke="#72ffe0" stroke-width="1.5"/><text class="label" x="516" y="328">Karnaugh map torus</text><text class="caption" x="720" y="328">8125</text><text class="label" x="790" y="328">98.4%</text><text class="odd" x="870" y="328">126</text><rect x="920.0" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="927.5" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="935.0" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="942.5" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="950.0" y="314" width="7.0" height="28" fill="#72ffe0" opacity="0.85"/><rect x="957.5" y="333" width="7.0" height="9" fill="#72ffe0" opacity="0.85"/><rect x="965.0" y="326" width="7.0" height="16" fill="#72ffe0" opacity="0.85"/><rect x="972.5" y="329" width="7.0" height="13" fill="#72ffe0" opacity="0.85"/><rect x="980.0" y="341" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="987.5" y="341" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="995.0" y="341" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1002.5" y="341" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1010.0" y="325" width="7.0" height="17" fill="#72ffe0" opacity="0.85"/><rect x="1017.5" y="327" width="7.0" height="15" fill="#72ffe0" opacity="0.85"/><rect x="1025.0" y="325" width="7.0" height="17" fill="#72ffe0" opacity="0.85"/><rect x="1032.5" y="338" width="7.0" height="4" fill="#72ffe0" opacity="0.85"/><rect x="1040.0" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1047.5" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1055.0" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1062.5" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1070.0" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1077.5" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1085.0" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1092.5" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1100.0" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1107.5" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1115.0" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1122.5" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1130.0" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1137.5" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1145.0" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1152.5" y="341" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><line x1="950.0" x2="1040.0" y1="346" y2="346" stroke="#72ffe0" stroke-width="1.5"/><text class="label" x="516" y="376">Smith chart gen</text><text class="caption" x="720" y="376">523703</text><text class="orbit" x="790" y="376">100.0%</text><text class="caption" x="870" y="376">18</text><rect x="920.0" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="927.5" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="935.0" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="942.5" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="950.0" y="382" width="7.0" height="8" fill="#72ffe0" opacity="0.85"/><rect x="957.5" y="371" width="7.0" height="19" fill="#72ffe0" opacity="0.85"/><rect x="965.0" y="362" width="7.0" height="28" fill="#72ffe0" opacity="0.85"/><rect x="972.5" y="385" width="7.0" height="5" fill="#72ffe0" opacity="0.85"/><rect x="980.0" y="389" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="987.5" y="389" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="995.0" y="389" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1002.5" y="389" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1010.0" y="388" width="7.0" height="2" fill="#72ffe0" opacity="0.85"/><rect x="1017.5" y="386" width="7.0" height="4" fill="#72ffe0" opacity="0.85"/><rect x="1025.0" y="388" width="7.0" height="2" fill="#72ffe0" opacity="0.85"/><rect x="1032.5" y="389" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1040.0" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1047.5" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1055.0" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1062.5" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1070.0" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1077.5" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1085.0" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1092.5" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1100.0" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1107.5" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1115.0" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1122.5" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1130.0" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1137.5" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1145.0" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1152.5" y="389" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><line x1="950.0" x2="1040.0" y1="394" y2="394" stroke="#72ffe0" stroke-width="1.5"/><text class="label" x="516" y="424">e8-step</text><text class="caption" x="720" y="424">14966</text><text class="orbit" x="790" y="424">99.9%</text><text class="caption" x="870" y="424">22</text><rect x="920.0" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="927.5" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="935.0" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="942.5" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="950.0" y="410" width="7.0" height="28" fill="#72ffe0" opacity="0.85"/><rect x="957.5" y="429" width="7.0" height="9" fill="#72ffe0" opacity="0.85"/><rect x="965.0" y="412" width="7.0" height="26" fill="#72ffe0" opacity="0.85"/><rect x="972.5" y="421" width="7.0" height="17" fill="#72ffe0" opacity="0.85"/><rect x="980.0" y="437" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="987.5" y="437" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="995.0" y="437" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1002.5" y="437" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1010.0" y="422" width="7.0" height="16" fill="#72ffe0" opacity="0.85"/><rect x="1017.5" y="426" width="7.0" height="12" fill="#72ffe0" opacity="0.85"/><rect x="1025.0" y="423" width="7.0" height="15" fill="#72ffe0" opacity="0.85"/><rect x="1032.5" y="434" width="7.0" height="4" fill="#72ffe0" opacity="0.85"/><rect x="1040.0" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1047.5" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1055.0" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1062.5" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1070.0" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1077.5" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1085.0" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1092.5" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1100.0" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1107.5" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1115.0" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1122.5" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1130.0" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1137.5" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1145.0" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1152.5" y="437" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><line x1="950.0" x2="1040.0" y1="442" y2="442" stroke="#72ffe0" stroke-width="1.5"/><text class="label" x="516" y="472">visual-proofs</text><text class="caption" x="720" y="472">53852</text><text class="label" x="790" y="472">96.5%</text><text class="odd" x="870" y="472">1909</text><rect x="920.0" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="927.5" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="935.0" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="942.5" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="950.0" y="458" width="7.0" height="28" fill="#72ffe0" opacity="0.85"/><rect x="957.5" y="482" width="7.0" height="4" fill="#72ffe0" opacity="0.85"/><rect x="965.0" y="477" width="7.0" height="9" fill="#72ffe0" opacity="0.85"/><rect x="972.5" y="474" width="7.0" height="12" fill="#72ffe0" opacity="0.85"/><rect x="980.0" y="485" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="987.5" y="485" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="995.0" y="485" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1002.5" y="485" width="7.0" height="1" fill="#72ffe0" opacity="0.85"/><rect x="1010.0" y="471" width="7.0" height="15" fill="#72ffe0" opacity="0.85"/><rect x="1017.5" y="474" width="7.0" height="12" fill="#72ffe0" opacity="0.85"/><rect x="1025.0" y="471" width="7.0" height="15" fill="#72ffe0" opacity="0.85"/><rect x="1032.5" y="482" width="7.0" height="4" fill="#72ffe0" opacity="0.85"/><rect x="1040.0" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1047.5" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1055.0" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1062.5" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1070.0" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1077.5" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1085.0" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1092.5" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1100.0" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1107.5" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1115.0" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1122.5" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1130.0" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1137.5" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1145.0" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><rect x="1152.5" y="485" width="7.0" height="1" fill="#c26a2b" opacity="0.7"/><line x1="950.0" x2="1040.0" y1="490" y2="490" stroke="#72ffe0" stroke-width="1.5"/><text class="caption" x="516" y="526">cyan = bins inside 20–7E · orange = outside · deviation = mass outside the selected literal range</text><text class="caption" x="516" y="546">embedded as raw byte histograms · same measurement style as tetra-mask (no pad, no truncate)</text></g><g id="default-view">
+    <text class="stage-title" x="516" y="120">◇  tetrahedron</text><text class="caption" x="516" y="140">click  ◇ TETRA  in the table (or any vertex) · four vertices · six edges</text><g transform="translate(750,220)"><line x1="0" y1="0" x2="200" y2="0" stroke="#23695d" stroke-width="1.5" stroke-dasharray="5 3"/><line x1="0" y1="0" x2="0" y2="160" stroke="#23695d" stroke-width="1.5" stroke-dasharray="5 3"/><line x1="0" y1="0" x2="200" y2="160" stroke="#23695d" stroke-width="1.5" stroke-dasharray="5 3"/><line x1="200" y1="0" x2="0" y2="160" stroke="#23695d" stroke-width="1.5" stroke-dasharray="5 3"/><line x1="200" y1="0" x2="200" y2="160" stroke="#23695d" stroke-width="1.5" stroke-dasharray="5 3"/><line x1="0" y1="160" x2="200" y2="160" stroke="#e0c060" stroke-width="3"/><g transform="translate(-30,-16)"><rect class="gate" width="60" height="32" rx="4"/><text x="30" y="21" text-anchor="middle" font-size="12" class="orbit">WORD</text></g><g transform="translate(170,-16)"><rect class="gate" width="60" height="32" rx="4"/><text x="30" y="21" text-anchor="middle" font-size="12" class="orbit">GOD</text></g><g transform="translate(-30,144)"><rect class="gate" width="60" height="32" rx="4"/><text x="30" y="21" text-anchor="middle" font-size="12" class="orbit">OF</text></g><g transform="translate(170,144)"><rect class="gate" width="60" height="32" rx="4" stroke="#e0c060"/><text x="30" y="21" text-anchor="middle" font-size="12" class="still">of</text></g><text x="100" y="200" text-anchor="middle" class="caption">lit edge OF↔of = 20 20 · five edges not comparable</text></g></g>
+
+  </svg>

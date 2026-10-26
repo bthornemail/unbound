@@ -1,0 +1,191 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Term Treemap</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one column; the term's treemap over a witness scrubber, then the masks between witnesses. */
+:root {
+  --bg: #f3f4f1; --panel: #ffffff; --ink: #1d2320; --muted: #5d6762; --rule: #d6dbd6;
+  --letter: #2f5d7c; --letter-ink: #ffffff; --marks: #c98a2b; --marks-ink: #1d2320; --accent: #2f5d7c;
+  --f-body: "IBM Plex Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --f-heb: "Frank Ruhl Libre", "SBL Hebrew", "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121614; --panel: #1a201d; --ink: #e3e8e4; --muted: #9aa6a0; --rule: #2c3530;
+  --letter: #6fa8cf; --letter-ink: #0e1512; --marks: #e0a54a; --marks-ink: #0e1512; --accent: #6fa8cf; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121614; --panel: #1a201d; --ink: #e3e8e4; --muted: #9aa6a0; --rule: #2c3530;
+  --letter: #6fa8cf; --letter-ink: #0e1512; --marks: #e0a54a; --marks-ink: #0e1512; --accent: #6fa8cf; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font: 16px/1.55 var(--f-body); }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 32px 64px; display: grid; gap: 20px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1 { font-size: 1.7rem; margin: 0; font-weight: 600; text-wrap: balance; }
+p { margin: 0; max-width: 65ch; }
+.muted { color: var(--muted); }
+.eyebrow { font: 600 .75rem var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.heb { font-family: var(--f-heb); }
+.stage { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 12px; display: grid; gap: 12px; min-width: 0; }
+.frame-label { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; font-family: var(--f-mono); }
+.frame-label .idx { color: var(--muted); }
+.frame-label .name { font-weight: 600; font-size: 1.1rem; }
+.frame-label .lit { font-family: var(--f-heb); font-size: 1.6rem; }
+svg { display: block; width: 100%; height: auto; }
+svg text { pointer-events: none; }
+.absent { font: 600 1rem var(--f-mono); fill: var(--muted); }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+button { font: 600 .85rem var(--f-mono); padding: 6px 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--ink); cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input[type=range] { flex: 1 1 200px; accent-color: var(--accent); min-width: 0; }
+.ticks { display: grid; grid-template-columns: repeat(4, 1fr); font: .75rem var(--f-mono); color: var(--muted); }
+.ticks span:nth-child(2) { text-align: center; } .ticks span:nth-child(3) { text-align: center; } .ticks span:last-child { text-align: right; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: .9rem; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; font: .85rem var(--f-mono); font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 6px 12px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th { color: var(--muted); font-weight: 600; }
+td.on { color: var(--marks); font-weight: 600; }
+footer { font-size: .85rem; color: var(--muted); display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 16px; }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <div class="eyebrow">ZIGUAROTH · _CATALOG/YHWH</div>
+    <h1>YHWH across the four witnesses</h1>
+    <p class="muted">The structure is fixed: the Name, its four letter cells, and in each cell a letter layer and a mark layer. Only the values change from witness to witness. A tile that grows or shrinks is where two witnesses differ. No witness is taken as right.</p>
+  </header>
+
+  <section class="stage" aria-label="Treemap of the term">
+    <div class="frame-label" aria-live="polite">
+      <span class="idx" id="f-idx">_CODICES[0]</span>
+      <span class="name" id="f-name">ALEPPO</span>
+      <span class="lit" id="f-lit"></span>
+      <span class="muted" id="f-src"></span>
+    </div>
+    <svg id="map" viewBox="0 0 800 420" role="img" aria-label="Treemap of YHWH's letter cells for the selected witness"></svg>
+    <div class="controls">
+      <button type="button" id="play">Play</button>
+      <input type="range" id="scrub" min="0" max="3" step="1" value="0" aria-label="Witness">
+    </div>
+    <div class="ticks"><span>[0] ALEPPO</span><span>[1] ROSETTA</span><span>[2] BEHISTUN</span><span>[3] LENINGRAD</span></div>
+    <div class="legend">
+      <span><i style="background:var(--letter)"></i>letter layer (the consonant)</span>
+      <span><i style="background:var(--marks)"></i>mark layer (vowel points; size = how many)</span>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:10px">
+    <h2 style="font-size:1.1rem;margin:0">The masks between witnesses</h2>
+    <p class="muted">One bit per letter cell, read right to left with the Hebrew: 1 where the pair differs. An absent witness holds the empty base, so against a reading every cell differs, and two absent witnesses show no difference.</p>
+    <div class="table-wrap"><table id="masks"></table></div>
+  </section>
+
+  <footer>
+    <p>Leningrad: Westminster Leningrad Codex, Deuteronomy 29:1 (Sefaria's Hebrew numbering; 29:2 in most English Bibles), public domain, via Sefaria. Aleppo: Miqra according to the Masorah (MAM), based on the Aleppo Codex, he.wikisource via Sefaria, CC BY-SA; its one word here, יְהֹוָה, is shared under that licence. Accents removed. Rosetta and Behistun do not contain this passage.</p>
+    <p>After the animated treemap in Observable's D3 gallery: one hierarchy, keyframes that change only the values, laid out with d3.treemapResquarify so the tiles keep their places.</p>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+// Each witness, as its literal code points (accents removed). An empty string lacks the passage.
+const WITNESSES = [
+  { idx: 0, name: "ALEPPO", src: "MAM, Deut 29:1", text: "יְהֹוָה" },
+  { idx: 1, name: "ROSETTA", src: "absent: the empty base", text: "" },
+  { idx: 2, name: "BEHISTUN", src: "absent: the empty base", text: "" },
+  { idx: 3, name: "LENINGRAD", src: "WLC, Deut 29:1", text: "יְהוָה" },
+];
+const MARK = { 0x05B0: "sheva", 0x05B8: "qamatz", 0x05B9: "holam" };
+const isLetter = (c) => c >= "א" && c <= "ת";
+function cells(text) {
+  const out = [];
+  for (const c of text.normalize("NFC")) {
+    if (isLetter(c) || !out.length) out.push({ letter: c, marks: [] });
+    else out[out.length - 1].marks.push(c);
+  }
+  return out;
+}
+const perWitness = WITNESSES.map((w) => cells(w.text));
+const n = Math.max(...perWitness.map((c) => c.length));
+const LETTERS = [...Array(n).keys()].map((k) => perWitness.find((c) => c[k])?.[k].letter);
+
+// One fixed hierarchy; each leaf carries one value per witness.
+const data = { name: "YHWH", children: LETTERS.map((letter, k) => ({
+  name: `cell ${k + 1}`, letter, k,
+  children: [
+    { name: "letter", layer: "letter", values: perWitness.map((c) => c[k] ? 1 : 0), labels: perWitness.map((c) => c[k]?.letter ?? "") },
+    { name: "marks", layer: "marks", values: perWitness.map((c) => c[k]?.marks.length ?? 0),
+      labels: perWitness.map((c) => (c[k]?.marks ?? []).map((m) => MARK[m.codePointAt(0)] ?? "mark").join(" ")) },
+  ] })) };
+
+const W = 800, H = 420;
+const svg = d3.select("#map");
+const treemap = d3.treemap().tile(d3.treemapResquarify).size([W, H]).paddingInner(4).paddingOuter(2).round(true);
+const root = treemap(d3.hierarchy(data).sum((d) => d.values ? d3.sum(d.values) : 0).sort((a, b) => b.value - a.value));
+const leaves = root.leaves();
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+const g = svg.selectAll("g.leaf").data(leaves).join("g").attr("class", "leaf");
+g.append("rect").attr("rx", 3);
+g.append("text").attr("class", "glyph heb").attr("text-anchor", "middle").attr("dominant-baseline", "central");
+g.append("text").attr("class", "cap").attr("text-anchor", "middle").style("font", "600 12px var(--f-mono)");
+const absent = svg.append("text").attr("class", "absent").attr("x", W / 2).attr("y", H / 2).attr("text-anchor", "middle");
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let index = 0;
+function draw(i, animate) {
+  index = i;
+  const w = WITNESSES[i];
+  treemap(root.sum((d) => d.values ? d.values[i] : 0));
+  const t = svg.transition().duration(animate && !reduce ? 900 : 0).ease(d3.easeCubicInOut);
+  g.transition(t).attr("transform", (d) => `translate(${d.x0},${d.y0})`);
+  g.select("rect").attr("fill", (d) => css(d.data.layer === "letter" ? "--letter" : "--marks"))
+    .transition(t).attr("width", (d) => Math.max(0, d.x1 - d.x0)).attr("height", (d) => Math.max(0, d.y1 - d.y0));
+  g.select("text.glyph")
+    .attr("fill", (d) => css(d.data.layer === "letter" ? "--letter-ink" : "--marks-ink"))
+    .text((d) => d.data.layer === "letter" ? d.data.labels[i] : (d.data.labels[i] ? "◌" + perWitness[i][d.parent.data.k]?.marks.join("") : ""))
+    .transition(t).attr("x", (d) => (d.x1 - d.x0) / 2).attr("y", (d) => (d.y1 - d.y0) / 2 - 8)
+    .style("font-size", (d) => Math.max(0, Math.min(56, (d.y1 - d.y0) * 0.5, (d.x1 - d.x0) * 0.6)) + "px")
+    .style("opacity", (d) => d.value ? 1 : 0);
+  g.select("text.cap")
+    .attr("fill", (d) => css(d.data.layer === "letter" ? "--letter-ink" : "--marks-ink"))
+    .text((d) => d.data.layer === "letter" ? d.parent.data.name : d.data.labels[i])
+    .transition(t).attr("x", (d) => (d.x1 - d.x0) / 2).attr("y", (d) => Math.max(14, (d.y1 - d.y0) - 12))
+    .style("opacity", (d) => d.value && (d.x1 - d.x0) > 44 && (d.y1 - d.y0) > 40 ? 1 : 0);
+  absent.text(root.value ? "" : `${w.name} lacks this passage: the empty base`);
+  d3.select("#f-idx").text(`_CODICES[${w.idx}]`);
+  d3.select("#f-name").text(w.name);
+  d3.select("#f-lit").text(w.text || "∅");
+  d3.select("#f-src").text(w.src);
+  document.getElementById("scrub").value = i;
+}
+
+// Masks: every pair, no reference witness.
+const mask = (a, b, key) => [...Array(n).keys()].map((k) => {
+  const x = a[k], y = b[k];
+  if (!x && !y) return "";
+  return x && y && (key === "letter" ? x.letter === y.letter : x.marks.join() === y.marks.join()) ? "0" : "1";
+}).join("");
+const rows = [];
+for (let i = 0; i < 4; i++) for (let j = i + 1; j < 4; j++) {
+  const L = mask(perWitness[i], perWitness[j], "letter"), M = mask(perWitness[i], perWitness[j], "marks");
+  rows.push(`<tr><td>[${i}] ${WITNESSES[i].name} · [${j}] ${WITNESSES[j].name}</td><td class="${L.includes("1") ? "on" : ""}">${L || "(both empty)"}</td><td class="${M.includes("1") ? "on" : ""}">${M || "(both empty)"}</td></tr>`);
+}
+document.getElementById("masks").innerHTML = `<thead><tr><th>pair</th><th>letters</th><th>marks</th></tr></thead><tbody>${rows.join("")}</tbody>`;
+
+let timer = null;
+const playBtn = document.getElementById("play");
+function stop() { clearInterval(timer); timer = null; playBtn.textContent = "Play"; }
+playBtn.addEventListener("click", () => {
+  if (timer) return stop();
+  playBtn.textContent = "Pause";
+  timer = setInterval(() => draw((index + 1) % 4, true), 1800);
+});
+document.getElementById("scrub").addEventListener("input", (e) => { stop(); draw(+e.target.value, true); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => draw(index, false));
+draw(0, false);
+</script>
+
+</body></html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Reality Compiler - Interactive Multiverse</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050510; }
+        .glass-panel {
+            background: rgba(20, 20, 35, 0.7);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        canvas:hover { cursor: pointer; }
+        .sidebar { transition: transform 0.3s ease-in-out; }
+        .sidebar.hidden-right { transform: translateX(110%); }
+        /* Style for the console output */
+        #console-output {
+            position: fixed;
+            bottom: 5px;
+            left: 5px;
+            width: 300px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.5);
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            z-index: 10;
+        }
+    </style>
+    <!-- Importmap for Three.js modules -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body class="text-white overflow-hidden">
+    <!-- Main canvas for the Three.js scene -->
+    <canvas id="main-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
+
+    <!-- Left Sidebar for Pipeline Creation -->
+    <div class="sidebar absolute top-5 left-5 z-10 p-4 rounded-xl glass-panel shadow-lg flex flex-col gap-4 w-64">
+        <h3 class="text-lg font-bold text-indigo-300">System Creator</h3>
+        
+        <div id="pipeline-functions" class="mb-4">
+            <label class="font-bold text-gray-300">1. Select Functions:</label>
+            <div class="flex items-center gap-2 mb-2">
+                <label for="function-filter" class="text-sm">Filter:</label>
+                <select id="function-filter" class="bg-gray-900/50 text-white rounded-lg p-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                    <option value="All">All</option>
+                    <option value="Math">Math</option>
+                    <option value="Data">Data</option>
+                    <option value="State">State</option>
+                    <option value="String">String</option>
+                    <option value="MCP">MCP</option>
+                </select>
+            </div>
+            <!-- Checkboxes will be dynamically inserted here -->
+            <div id="function-checkboxes"></div>
+        </div>
+
+        <div class="mb-4">
+            <label for="pipeline-input" class="font-bold text-gray-300">2. Initial Data (JSON):</label>
+            <textarea id="pipeline-input" class="w-full h-16 bg-gray-900/50 rounded-lg p-2 text-xs font-mono mt-2 focus:outline-none focus:ring-2 focus:ring-indigo-400">{"value":10}</textarea>
+        </div>
+        
+        <button id="add-system-btn" class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+            Add Custom System
+        </button>
+
+        <hr class="border-indigo-900/50 my-4" />
+
+        <h3 class="text-lg font-bold text-teal-300">Reality Quantizer</h3>
+        <div class="mb-4">
+            <label for="text-input" class="font-bold text-gray-300">Enter a phrase to quantize:</label>
+            <textarea id="text-input" class="w-full h-16 bg-gray-900/50 rounded-lg p-2 text-xs font-mono mt-2 focus:outline-none focus:ring-2 focus:ring-teal-400">The cat sat on the mat.</textarea>
+        </div>
+        <button id="add-quantized-system-btn" class="bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+            Quantize and Add System
+        </button>
+    </div>
+
+    <!-- Right Sidebar for Inspection -->
+    <div id="inspector-sidebar" class="sidebar hidden-right absolute top-5 right-5 z-10 p-4 rounded-xl glass-panel shadow-lg flex flex-col gap-4 w-72">
+        <h3 class="text-lg font-bold text-yellow-300">System Inspector</h3>
+        <div id="selected-info" class="flex flex-col gap-2 text-sm">
+            <div class="flex justify-between border-b border-yellow-900/50 pb-1">
+                <span class="font-bold">ID:</span>
+                <span id="selected-id" class="font-mono text-gray-300"></span>
+            </div>
+            <div class="flex flex-col gap-1 border-b border-yellow-900/50 pb-1">
+                <span class="font-bold">Pipeline:</span>
+                <span id="selected-pipeline" class="font-mono text-gray-300 text-xs break-all"></span>
+            </div>
+            <div class="flex flex-col gap-1">
+                <span class="font-bold">Latest Result:</span>
+                <pre id="selected-result" class="font-mono text-gray-300 text-xs bg-gray-900/50 p-2 rounded-md max-h-48 overflow-auto"></pre>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bottom Control Panel -->
+    <div class="controls-panel absolute bottom-5 left-1/2 -translate-x-1/2 z-10 p-4 rounded-xl glass-panel shadow-lg flex items-center flex-wrap justify-center gap-4">
+        <button id="run-sequence-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+            Run Selection Sequence
+        </button>
+        <div id="info-display" class="bg-gray-900/50 p-2 rounded-lg text-sm flex flex-col text-center">
+             <div>
+                 <span class="font-mono text-indigo-300">Systems Active: </span>
+                 <span id="system-count" class="font-mono text-gray-300">0</span>
+             </div>
+             <div id="sequence-display" class="mt-1 pt-1 border-t border-indigo-900/50">
+                 <span class="font-mono text-indigo-300">Sequence: </span>
+                 <span id="sequence-queue" class="font-mono text-gray-300">None</span>
+             </div>
+        </div>
+    </div>
+
+    <!-- Console output box for logging -->
+    <pre id="console-output"></pre>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // --- Core Logic ---
+        
+        // Custom logging to a UI element
+        const consoleOutput = document.getElementById('console-output');
+        function log(message) {
+            const now = new Date().toLocaleTimeString();
+            const text = `[${now}] ${JSON.stringify(message, null, 2)}`;
+            consoleOutput.textContent += text + '\n';
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+        
+        // Harmonic encoding for computational state
+        function harmonize(input) {
+            const jsonString = JSON.stringify(input);
+            let hash = 0;
+            for (let i = 0; i < jsonString.length; i++) {
+                const char = jsonString.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash |= 0;
+            }
+            // Return a simple object with a consistent ID and hash
+            return { id: `hv-${hash.toString(16)}`, h: hash };
+        }
+        
+        // The core computational engine for binding and unbinding execution traces
+        class CQEExecutionMapper {
+            constructor() {
+                // A simplified engine for this simulation
+                this.cqe = new (class {
+                    bind(a, b) { return { bound: a.map((v, i) => v + (b[i] || 0)) } }
+                    unbind(b, a) { return b.map((v, i) => v - (a[i] || 0)) }
+                })();
+            }
+            // Compares two execution traces and returns their similarity and RMSE
+            compare(trace1, trace2) {
+                if (trace1.length === 0 || trace2.length === 0) return { rmse: Infinity, similarity: 0 };
+                const maxLength = Math.max(trace1.length, trace2.length);
+                const paddedTrace1 = [...trace1, ...new Array(maxLength - trace1.length).fill(0)];
+                const paddedTrace2 = [...trace2, ...new Array(maxLength - trace2.length).fill(0)];
+                const { bound } = this.cqe.bind(paddedTrace1, paddedTrace2);
+                const unbound = this.cqe.unbind(bound, paddedTrace1);
+                let sumOfSquaredErrors = 0;
+                for (let i = 0; i < maxLength; i++) {
+                    const error = (unbound[i] || 0) - (paddedTrace2[i] || 0);
+                    sumOfSquaredErrors += Math.pow(error, 2);
+                }
+                const rmse = Math.sqrt(sumOfSquaredErrors / maxLength);
+                return { rmse, similarity: 1 / (1 + rmse) };
+            }
+        }
+        
+        // A class to execute a pipeline and keep track of its state
+        class RecursiveEncoder {
+            constructor() { this.stack = []; }
+            async execute(pipeline, initialData) {
+                let data = initialData;
+                this.stack = [];
+                log(`Starting pipeline with data: ${JSON.stringify(data)}`);
+                for (const step of pipeline) {
+                    this.stack.push({ lambda: step, args: [data], result: null });
+                    try {
+                        data = await step.implementation(data);
+                        this.stack[this.stack.length - 1].result = data;
+                    } catch (err) {
+                        log(`Error in step: ${err.message}`);
+                        this.stack[this.stack.length - 1].result = { error: err.message };
+                        data = this.stack[this.stack.length - 1].result;
+                    }
+                }
+                log('Pipeline execution complete.');
+                return data;
+            }
+            // Gets a numerical trace of the execution for comparison
+            getExecutionTrace() {
+                return this.stack.map(step => harmonize(step.result).h);
+            }
+        }
+
+        // --- Pure Function Computation Engine (User-provided) ---
+        const PURE_FUNCTIONS = {
+            // Math
+            add: (a, b) => a + b,
+            subtract: (a, b) => a - b,
+            multiply: (a, b) => a * b,
+            divide: (a, b) => b !== 0 ? a / b : NaN,
+            power: (a, b) => Math.pow(a, b),
+            sqrt: (x) => Math.sqrt(x),
+            abs: (x) => Math.abs(x),
+            sum: (arr) => arr.reduce((acc, val) => acc + val, 0),
+            filter: (predicate, arr) => arr.filter(predicate),
+            // String
+            capitalize: (str) => str.charAt(0).toUpperCase() + str.slice(1),
+            reverse: (str) => str.split('').reverse().join(''),
+            toLower: (str) => str.toLowerCase(),
+            trim: (str) => str.trim(),
+            concat: (str1, str2) => str1 + str2,
+        };
+        
+        // Simulating a tool library that the MCP agent can call
+        const MCP_TOOLS = {
+            getTimestamp: () => Date.now(),
+            getRandomNumber: () => Math.random() * 100,
+            convertDataToString: (data) => JSON.stringify(data),
+            pingServer: () => "Server is responsive."
+        };
+
+        class PureFunctionEngine {
+            constructor() {
+                this.functions = { ...PURE_FUNCTIONS };
+                this.computationHistory = [];
+            }
+            registerFunction(name, fn) {
+                if (typeof fn === 'function') {
+                    this.functions[name] = fn;
+                    return true;
+                }
+                return false;
+            }
+            compute(functionName, ...args) {
+                if (this.functions[functionName]) {
+                    const result = this.functions[functionName](...args);
+                    this.computationHistory.push({
+                        function: functionName,
+                        args: args,
+                        result: result,
+                        timestamp: Date.now()
+                    });
+                    return result;
+                }
+                throw new Error(`Function ${functionName} not found`);
+            }
+            composeChain(operations, initialValue) {
+                return operations.reduce((value, op) => {
+                    const funcArgs = Array.isArray(op.args) ? op.args.slice() : [];
+                    const func = this.functions[op.function];
+                    if (!func) throw new Error(`Function ${op.function} not found in composition.`);
+                    const finalArgs = [value, ...funcArgs];
+                    return func(...finalArgs);
+                }, initialValue);
+            }
+        }
+        
+        // --- LLM Interaction Module ---
+        async function callLLM(prompt) {
+            const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            let response;
+            let retries = 0;
+            const maxRetries = 5;
+            const delay = 1000;
+
+            while (retries < maxRetries) {
+                try {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (response.status === 429) { // Too Many Requests
+                        retries++;
+                        await new Promise(res => setTimeout(res, delay * Math.pow(2, retries)));
+                        continue;
+                    }
+                    if (!response.ok) {
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        throw new Error('LLM response format is unexpected or empty.');
+                    }
+                } catch (error) {
+                    log(`LLM call attempt ${retries + 1} failed: ${error.message}`);
+                    retries++;
+                    if (retries >= maxRetries) {
+                        throw error;
+                    }
+                    await new Promise(res => setTimeout(res, delay * Math.pow(2, retries)));
+                }
+            }
+        }
+        
+        // --- ALL_FUNCTIONS: A library of pre-defined pipelines for the UI ---
+        const ALL_FUNCTIONS = {
+            initWithValue: { description: 'Init w/ Value', implementation: data => ({ ...data, value: data.value || 1 }), category: 'Data' },
+            initWithEnergy: { description: 'Init w/ Energy', implementation: data => ({ ...data, energy: data.energy || 100 }), category: 'Data' },
+            doubleValue: { description: 'Double Value', implementation: data => ({ ...data, value: (data.value || 0) * 2 }), category: 'Math' },
+            halveValue: { description: 'Halve Value', implementation: data => ({ ...data, value: (data.value || 0) / 2 }), category: 'Math' },
+            decayEnergy: { description: 'Decay Energy', implementation: data => ({ ...data, energy: (data.energy || 0) * 0.9 }), category: 'Math' },
+            oscillate: { description: 'Oscillate', implementation: data => ({ ...data, value: Math.sin((data.phase || 0) + Date.now()/1000) }), category: 'Math' },
+            setStateGrown: { description: 'Set State: Grown', implementation: data => ({ ...data, state: 'Grown' }), category: 'State' },
+            setStateDecayed: { description: 'Set State: Decayed', implementation: data => ({ ...data, state: 'Decayed' }), category: 'State' },
+            
+            pureMath: {
+                description: 'Pure Math', category: 'Math', implementation: data => {
+                    const engine = new PureFunctionEngine();
+                    const value = data.value || 0;
+                    const result = engine.compute('add', value, engine.compute('multiply', value, 2));
+                    return { ...data, value: result, computation: 'add(x, multiply(x, 2))' };
+                }
+            },
+            pureCompose: {
+                description: 'Pure Compose', category: 'Math', implementation: data => {
+                    const engine = new PureFunctionEngine();
+                    const operations = [
+                        { function: 'multiply', args: [3] },
+                        { function: 'add', args: [10] },
+                        { function: 'sqrt' }
+                    ];
+                    const result = engine.composeChain(operations, data.value || 1);
+                    return { ...data, value: result, computation: 'sqrt(add(multiply(x, 3), 10))' };
+                }
+            },
+            stringCase: {
+                description: 'Convert to Lowercase', category: 'String', implementation: data => {
+                    const engine = new PureFunctionEngine();
+                    const value = data.value || '';
+                    const result = engine.compute('toLower', value);
+                    return { ...data, value: result };
+                }
+            },
+            stringReverse: {
+                description: 'Reverse String', category: 'String', implementation: data => {
+                    const engine = new PureFunctionEngine();
+                    const value = data.value || '';
+                    const result = engine.compute('reverse', value);
+                    return { ...data, value: result };
+                }
+            },
+            mcpAgent: {
+                description: 'MCP Agent',
+                category: 'MCP',
+                implementation: async data => {
+                    log("MCP Agent: Connecting to server...");
+                    const availableTools = Object.keys(MCP_TOOLS).join(', ');
+                    const prompt = `You are a helpful assistant. Based on the following data: ${JSON.stringify(data)}, select the best tool from the list to use next: [${availableTools}]. Just respond with the tool's name and nothing else.`;
+                    
+                    let toolToCall = "convertDataToString"; // Fallback tool
+                    try {
+                        const llmResponse = await callLLM(prompt);
+                        const trimmedResponse = llmResponse.trim();
+                        if (MCP_TOOLS.hasOwnProperty(trimmedResponse)) {
+                            toolToCall = trimmedResponse;
+                        } else {
+                            log(`MCP Agent: LLM selected unknown tool "${trimmedResponse}". Using fallback.`);
+                        }
+                    } catch (e) {
+                        log(`MCP Agent: LLM decision failed. Using fallback. Error: ${e.message}`);
+                    }
+                    
+                    log(`MCP Agent: Calling tool "${toolToCall}"...`);
+                    const toolResult = MCP_TOOLS[toolToCall](data);
+                    
+                    return { ...data, mcpResult: { toolCalled: toolToCall, result: toolResult }, trace: harmonize({ toolToCall, toolResult }).h };
+                }
+            },
+        };
+
+        // Class to handle the simplified text quantization logic.
+        class TextQuantizer {
+            async quantize(text) {
+                log("Quantizing text with LLM agent...");
+                try {
+                    const prompt = `Given the following phrase, return a JSON object with a conceptual 'vector' field containing a numerical array representing the essence of the phrase. Also include the original 'phrase' and a brief 'summary'.
+Example: For 'hot coffee', return {"phrase": "hot coffee", "summary": "A warm drink.", "vector": [1, 5, 2]}.
+Phrase to process: "${text}"
+`;
+                    const llmResponse = await callLLM(prompt);
+                    const parsedResponse = JSON.parse(llmResponse.substring(llmResponse.indexOf('{'), llmResponse.lastIndexOf('}') + 1));
+                    return { text: text, quantizedVector: parsedResponse.vector, summary: parsedResponse.summary };
+                } catch (e) {
+                    log(`Quantization error: ${e.message}`);
+                    return { text: text, quantizedVector: [] };
+                }
+            }
+        }
+        
+        // Represents a single computational system in the simulation.
+        class ComputationalSystem {
+            constructor(id, initialPosition, scene, pipeline, pipelineName, geometry) {
+                this.id = id;
+                this.scene = scene;
+                this.position = initialPosition.clone();
+                this.velocity = new THREE.Vector3();
+                this.acceleration = new THREE.Vector3();
+                this.encoder = new RecursiveEncoder();
+                this.pipeline = pipeline;
+                this.pipelineName = pipelineName;
+                this.executionTrace = [];
+                this.latestResult = {};
+                this.createMesh(geometry);
+            }
+            // Runs the system's pipeline with the given data.
+            async run(initialData) {
+                this.latestResult = await this.encoder.execute(this.pipeline, initialData);
+                // For a quantized system, the trace is the vector itself
+                if (initialData.quantizedVector) {
+                    this.executionTrace = initialData.quantizedVector;
+                } else {
+                    this.executionTrace = this.encoder.getExecutionTrace();
+                }
+            }
+            // Creates the 3D mesh for the system.
+            createMesh(geometry) {
+                const color = new THREE.Color().setHSL(Math.random(), 0.8, 0.6);
+                this.material = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.4, metalness: 0.3, roughness: 0.5, transparent: true, opacity: 0.9 });
+                const meshGeometry = geometry || new THREE.TetrahedronGeometry(1.5, 0);
+                this.mesh = new THREE.Mesh(meshGeometry, this.material);
+                this.mesh.userData.system = this;
+                this.scene.add(this.mesh);
+            }
+            // Updates the system's physics state.
+            update(deltaTime) {
+                this.velocity.add(this.acceleration.clone().multiplyScalar(deltaTime));
+                this.velocity.multiplyScalar(0.96); // Damping factor
+                this.position.add(this.velocity.clone().multiplyScalar(deltaTime));
+                this.acceleration.set(0, 0, 0); // Reset acceleration
+                this.mesh.position.copy(this.position);
+                this.mesh.rotation.x += this.velocity.y * 0.1;
+                this.mesh.rotation.y += this.velocity.x * 0.1;
+            }
+            // Removes the system from the scene.
+            dispose() {
+                this.scene.remove(this.mesh);
+                if (this.mesh.geometry) this.mesh.geometry.dispose();
+                if (this.mesh.material) this.mesh.material.dispose();
+            }
+        }
+
+        // Manages the entire simulation, including scene, physics, and UI.
+        class SimulationManager {
+            constructor() {
+                this.systems = [];
+                this.nextSystemId = 0;
+                this.selectedSystem = null;
+                this.selectionQueue = []; // For ordered execution
+                this.mapper = new CQEExecutionMapper();
+                this.textQuantizer = new TextQuantizer(); // New instance for text quantization
+                this.INTER_FORCE_STRENGTH = 25.0; // Strength of attraction/repulsion
+                this.SIMILARITY_THRESHOLD = 0.9; // Threshold for displaying connection lines
+                
+                this.initScene();
+                this.initUI();
+                this.animate();
+            }
+            
+            initScene() {
+                this.scene = new THREE.Scene();
+                this.clock = new THREE.Clock();
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+                this.camera.position.set(0, 15, 50);
+                const canvas = document.getElementById('main-canvas');
+                this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+                this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+                this.controls.enableDamping = true;
+                
+                // Add lighting
+                this.scene.add(new THREE.AmbientLight(0xcccccc, 1.5));
+                this.scene.add(new THREE.DirectionalLight(0xffffff, 2.0));
+                
+                // Set up raycasting for mouse interaction
+                this.raycaster = new THREE.Raycaster();
+                this.mouse = new THREE.Vector2();
+                
+                // Set up lines for visual connections
+                this.lineGeometry = new THREE.BufferGeometry();
+                this.lineMaterial = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.7 });
+                this.lines = new THREE.LineSegments(this.lineGeometry, this.lineMaterial);
+                this.scene.add(this.lines);
+            }
+            
+            initUI() {
+                // Event listeners for UI buttons and window resize/mouse clicks
+                document.getElementById('add-system-btn').addEventListener('click', () => this.addCustomSystem());
+                document.getElementById('add-quantized-system-btn').addEventListener('click', () => this.addQuantizedSystem());
+                document.getElementById('run-sequence-btn').addEventListener('click', () => this.runSelectionSequence());
+                window.addEventListener('resize', () => this.onWindowResize(), false);
+                window.addEventListener('click', (event) => this.onMouseClick(event), false);
+                document.getElementById('function-filter').addEventListener('change', () => this.filterFunctions());
+                
+                // Initial data templates for dynamic input
+                this.dataTemplates = {
+                    'All': `{"value":10}`,
+                    'Math': `{"value":10, "energy":50}`,
+                    'Data': `{"data_point": "sample_A"}`,
+                    'State': `{"status": "initialized"}`,
+                    'String': `{"value": "Hello, Multiverse!"}`,
+                    'MCP': `{"input_data": "I need to know the current timestamp."}`
+                };
+                
+                document.getElementById('function-filter').addEventListener('change', (e) => {
+                    const selectedCategory = e.target.value;
+                    const inputField = document.getElementById('pipeline-input');
+                    inputField.value = this.dataTemplates[selectedCategory] || this.dataTemplates['All'];
+                    this.filterFunctions();
+                });
+                
+                this.filterFunctions();
+            }
+
+            // Filters and populates the function selection checkboxes based on category
+            filterFunctions() {
+                const selectedCategory = document.getElementById('function-filter').value;
+                const functionsContainer = document.getElementById('function-checkboxes');
+                functionsContainer.innerHTML = ''; // Clear existing checkboxes
+
+                Object.entries(ALL_FUNCTIONS).forEach(([key, func]) => {
+                    if (selectedCategory === 'All' || func.category === selectedCategory) {
+                        const div = document.createElement('div');
+                        div.className = 'flex items-center gap-2';
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = key;
+                        checkbox.value = key;
+                        checkbox.className = 'form-checkbox h-4 w-4 text-indigo-600 bg-gray-800 border-gray-600 rounded';
+                        const label = document.createElement('label');
+                        label.htmlFor = key;
+                        label.textContent = func.description;
+                        label.className = 'text-sm';
+                        div.appendChild(checkbox);
+                        div.appendChild(label);
+                        functionsContainer.appendChild(div);
+                    }
+                });
+            }
+            
+            // Creates and adds a new system from the pipeline creator.
+            async addCustomSystem() {
+                const selectedFunctions = [];
+                const pipelineNameParts = [];
+                document.querySelectorAll('#function-checkboxes input[type="checkbox"]:checked').forEach(c => {
+                    selectedFunctions.push(ALL_FUNCTIONS[c.value]);
+                    pipelineNameParts.push(c.value);
+                });
+                if (selectedFunctions.length === 0) {
+                    alert("Please select at least one function.");
+                    return;
+                }
+                
+                const pipelineName = pipelineNameParts.join(' + ');
+                let initialData;
+                try {
+                    initialData = JSON.parse(document.getElementById('pipeline-input').value);
+                } catch (e) {
+                    alert("Invalid JSON input.");
+                    return;
+                }
+                
+                const spawnRadius = 30;
+                const position = new THREE.Vector3((Math.random() - 0.5) * spawnRadius, (Math.random() - 0.5) * spawnRadius, (Math.random() - 0.5) * spawnRadius);
+                const system = new ComputationalSystem(this.nextSystemId++, position, this.scene, selectedFunctions, pipelineName, new THREE.TetrahedronGeometry(1.5, 0));
+                await system.run(initialData);
+                this.systems.push(system);
+                
+                document.getElementById('system-count').textContent = this.systems.length;
+            }
+
+            // Creates and adds a new system from the text quantizer.
+            async addQuantizedSystem() {
+                const textInput = document.getElementById('text-input').value;
+                if (!textInput) {
+                    alert("Please enter a phrase to quantize.");
+                    return;
+                }
+                
+                // Show a loading indicator
+                const quantizerBtn = document.getElementById('add-quantized-system-btn');
+                quantizerBtn.disabled = true;
+                quantizerBtn.textContent = "Processing...";
+                
+                let quantizedData;
+                try {
+                    // Quantize the text
+                    quantizedData = await this.textQuantizer.quantize(textInput);
+                } finally {
+                    quantizerBtn.disabled = false;
+                    quantizerBtn.textContent = "Quantize and Add System";
+                }
+                
+                const spawnRadius = 30;
+                const position = new THREE.Vector3((Math.random() - 0.5) * spawnRadius, (Math.random() - 0.5) * spawnRadius, (Math.random() - 0.5) * spawnRadius);
+                // Create a new system, passing the quantized data directly and giving it a sphere geometry
+                const system = new ComputationalSystem(this.nextSystemId++, position, this.scene, [], textInput, new THREE.SphereGeometry(1.5, 16, 16));
+                // Set the execution trace to be the quantized vector for similarity comparison
+                system.executionTrace = quantizedData.quantizedVector;
+                system.latestResult = quantizedData;
+                this.systems.push(system);
+                
+                document.getElementById('system-count').textContent = this.systems.length;
+            }
+            
+            // Runs the pipelines for all systems in the selection queue.
+            async runSelectionSequence() {
+                if (this.selectionQueue.length === 0) {
+                    alert("No systems selected. Use Shift+Click to add systems to the sequence.");
+                    return;
+                }
+                
+                let initialData;
+                try {
+                    initialData = JSON.parse(document.getElementById('pipeline-input').value);
+                } catch (e) {
+                    alert("Invalid JSON input.");
+                    return;
+                }
+                
+                for (const system of this.selectionQueue) {
+                    await system.run(initialData);
+                }
+                // Update the inspector with the result of the last system in the sequence.
+                this.updateInspector(this.selectionQueue[this.selectionQueue.length - 1]);
+            }
+            
+            // Applies physics forces between systems based on their execution trace similarity.
+            updatePhysics(deltaTime) {
+                const linePoints = [];
+                const lineColors = [];
+                const attractiveColor = new THREE.Color(0x00ff00);
+                
+                for (let i = 0; i < this.systems.length; i++) {
+                    for (let j = i + 1; j < this.systems.length; j++) {
+                        const sysA = this.systems[i];
+                        const sysB = this.systems[j];
+                        
+                        const { similarity } = this.mapper.compare(sysA.executionTrace, sysB.executionTrace);
+                        
+                        // Calculate a force based on similarity
+                        const forceMag = (similarity - 0.5) * this.INTER_FORCE_STRENGTH;
+                        const distVec = new THREE.Vector3().subVectors(sysB.position, sysA.position);
+                        const distSq = Math.max(distVec.lengthSq(), 4);
+                        const forceDir = distVec.normalize();
+                        const finalForce = forceDir.multiplyScalar(forceMag / distSq);
+                        
+                        sysA.acceleration.add(finalForce);
+                        sysB.acceleration.sub(finalForce);
+                        
+                        // Draw a line if the systems are very similar
+                        if (similarity > this.SIMILARITY_THRESHOLD) {
+                            linePoints.push(sysA.position, sysB.position);
+                            lineColors.push(attractiveColor.r, attractiveColor.g, attractiveColor.b, attractiveColor.r, attractiveColor.g, attractiveColor.b);
+                        }
+                    }
+                }
+                this.lineGeometry.setFromPoints(linePoints);
+                this.lineGeometry.setAttribute('color', new THREE.Float32BufferAttribute(lineColors, 3));
+                
+                // Update each system's position and rotation
+                for (const system of this.systems) {
+                    system.update(deltaTime);
+                }
+            }
+            
+            // Updates the right-hand inspector panel.
+            updateInspector(system) {
+                const inspector = document.getElementById('inspector-sidebar');
+                if (system) {
+                    this.selectedSystem = system;
+                    inspector.classList.remove('hidden-right');
+                    document.getElementById('selected-id').textContent = `Sys-${this.selectedSystem.id}`;
+                    document.getElementById('selected-pipeline').textContent = this.selectedSystem.pipelineName;
+                    document.getElementById('selected-result').textContent = JSON.stringify(this.selectedSystem.latestResult, null, 2);
+                } else {
+                    this.selectedSystem = null;
+                    inspector.classList.add('hidden-right');
+                }
+            }
+            
+            // Updates the display for the selection queue.
+            updateSequenceDisplay() {
+                const queueDiv = document.getElementById('sequence-queue');
+                if (this.selectionQueue.length > 0) {
+                    queueDiv.textContent = this.selectionQueue.map(s => `Sys-${s.id}`).join(' → ');
+                } else {
+                    queueDiv.textContent = "None";
+                }
+                // Also update visual highlighting
+                for (const system of this.systems) {
+                    const isInQueue = this.selectionQueue.includes(system);
+                    system.material.emissiveIntensity = isInQueue ? 0.7 : 0.4;
+                }
+                if (this.selectedSystem) {
+                    this.selectedSystem.material.emissiveIntensity = 1.0;
+                }
+            }
+            
+            // Handles mouse clicks for system selection.
+            onMouseClick(event) {
+                // Ignore clicks on UI panels
+                if (event.target.closest('.sidebar') || event.target.closest('.controls-panel')) return;
+                
+                this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                this.raycaster.setFromCamera(this.mouse, this.camera);
+                const intersects = this.raycaster.intersectObjects(this.scene.children);
+                
+                if (intersects.length > 0 && intersects[0].object.userData.system) {
+                    const clickedSystem = intersects[0].object.userData.system;
+                    if (event.shiftKey) {
+                        // Add to queue if not already there
+                        if (!this.selectionQueue.includes(clickedSystem)) {
+                            this.selectionQueue.push(clickedSystem);
+                        }
+                    } else {
+                        // Regular click resets the queue to just this one
+                        this.selectionQueue = [clickedSystem];
+                    }
+                    this.updateInspector(clickedSystem);
+                } else {
+                    // Clicking background deselects and clears queue
+                    this.selectionQueue = [];
+                    this.updateInspector(null);
+                }
+                this.updateSequenceDisplay();
+            }
+            
+            // Main animation loop.
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                const deltaTime = this.clock.getDelta();
+                this.updatePhysics(deltaTime);
+                this.controls.update();
+                this.renderer.render(this.scene, this.camera);
+            }
+            
+            // Handles window resizing.
+            onWindowResize() {
+                this.camera.aspect = window.innerWidth / window.innerHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        }
+        
+        // Start the simulation when the page loads
+        document.addEventListener('DOMContentLoaded', () => new SimulationManager());
+    </script>
+</body>
+</html>

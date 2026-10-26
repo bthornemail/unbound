@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OMI-IMO Full DOM Stack — Single File</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 15px/1.5 system-ui, -apple-system, Segoe UI, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  header h1 { margin: 0; font-size: 1.15rem; font-weight: 600; }
+  header p { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.85rem; }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    background: #0d1117;
+  }
+  nav button {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  nav button:hover, nav button.active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  main { max-width: 56rem; margin: 0 auto; padding: 1.25rem; }
+  section { display: none; }
+  section.active { display: block; }
+  h2 { font-size: 1.1rem; margin: 0 0 0.75rem; }
+  h3 { font-size: 0.95rem; margin: 1rem 0 0.5rem; color: var(--muted); }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  .row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+  input, select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    font: inherit;
+  }
+  button.primary {
+    background: #1f6feb;
+    border: 1px solid #1f6feb;
+    color: #fff;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font: inherit;
+  }
+  button.primary:hover { filter: brightness(1.1); }
+  pre, code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+  }
+  pre {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    overflow: auto;
+    white-space: pre-wrap;
+  }
+  .ok { color: var(--green); }
+  .warn { color: var(--amber); }
+  .bad { color: var(--red); }
+  .muted { color: var(--muted); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+  th, td { border: 1px solid var(--border); padding: 0.4rem 0.55rem; text-align: left; }
+  th { background: #21262d; }
+  .schematic {
+    position: relative;
+    min-height: 260px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #0d1117;
+  }
+  .node {
+    position: absolute;
+    min-width: 96px;
+    padding: 8px;
+    border: 1px solid #484f58;
+    border-radius: 6px;
+    background: var(--panel);
+    font-size: 0.85rem;
+  }
+  .node.active { outline: 2px solid var(--accent); }
+  .node strong { display: block; }
+  .node small { color: var(--muted); }
+  .leds { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 0.5rem; }
+  .led {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #21262d; border: 1px solid var(--border);
+  }
+  .led.on { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .led.centroid.on { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+  footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>OMI-IMO Full DOM Stack</h1>
+  <p>Single-file offline build · XOR · CAS · circuit walkthrough · spectrum map · fixed point 0x0000</p>
+</header>
+<nav id="nav">
+  <button data-tab="home" class="active">Home</button>
+  <button data-tab="cas">Polytope CAS</button>
+  <button data-tab="circuit">Circuit</button>
+  <button data-tab="spectrum">RF Spectrum</button>
+  <button data-tab="cascade">8/9/10D</button>
+  <button data-tab="status">Status</button>
+</nav>
+<main>
+  <!-- HOME -->
+  <section id="home" class="active">
+    <div class="card">
+      <h2>What this file is</h2>
+      <p>A self-contained HTML snapshot of the <strong>Full DOM Stack</strong> core:</p>
+      <ul>
+        <li><strong>Polytope CAS</strong> — bind / apply / eval / digest (8-bit Δ law)</li>
+        <li><strong>Circuit walkthrough</strong> — VTT-style steps + BusyBox applets</li>
+        <li><strong>RF spectrum map</strong> — CB / MURS / ISM-915 reference (no transmit)</li>
+        <li><strong>8→9→10D cascade</strong> — interference / inference labels</li>
+      </ul>
+      <p class="muted">Node server, WebRTC, and WASM modules are in the full zip project; this file runs entirely in the browser.</p>
+    </div>
+    <div class="card">
+      <h2>Fixed point</h2>
+      <pre>0x0000
+
+Everything reduces to XOR.
+Terminal dual-break = 0x04 (the 4).
+Centroid when eval Δ == 0x04.</pre>
+    </div>
+  </section>
+
+  <!-- CAS -->
+  <section id="cas">
+    <div class="card">
+      <h2>8-Polytope CAS</h2>
+      <p class="muted">atomics.compareExchange · bind → apply → eval → digest</p>
+      <div class="row" style="margin: 0.75rem 0;">
+        <label>Vertex <input id="cas-vertex" type="text" value="0x01" size="8"></label>
+        <label>Carry <input id="cas-carry" type="text" value="0x00" size="8"></label>
+        <button class="primary" id="cas-step">Step</button>
+        <button class="primary" id="cas-reset" style="background:#21262d;border-color:var(--border);">Reset</button>
+      </div>
+      <div class="leds" id="cas-leds" title="Simplex LEDs"></div>
+      <pre id="cas-out">Ready.</pre>
+      <h3>Verification table (carry = 0)</h3>
+      <table>
+        <tr><th>Vertex</th><th>Δ</th></tr>
+        <tr><td>0x01</td><td>0x8A</td></tr>
+        <tr><td>0x02</td><td>0x45</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- CIRCUIT -->
+  <section id="circuit">
+    <div class="card">
+      <h2>Circuit walkthrough</h2>
+      <p class="muted">Simulated spectral build · educational · not a radio transmitter</p>
+      <div class="row">
+        <button class="primary" id="cir-prev">Prev</button>
+        <button class="primary" id="cir-next">Next</button>
+        <button class="primary" id="cir-run">Run applet</button>
+        <span id="cir-status" class="muted"></span>
+      </div>
+      <div class="schematic" id="cir-schematic"></div>
+      <pre id="cir-log"></pre>
+    </div>
+  </section>
+
+  <!-- SPECTRUM -->
+  <section id="spectrum">
+    <div class="card">
+      <h2>Trichromatic RF map (reference only)</h2>
+      <p class="muted">Legal-by-rule US-style ceilings · this page does not transmit</p>
+      <table>
+        <tr><th>Ch</th><th>Band</th><th>Allocation</th><th>Range / channels</th><th>Max power</th><th>Pipeline</th></tr>
+        <tr><td>R</td><td>HF</td><td>CB 95D</td><td>26.965–27.405 MHz</td><td>4 W AM</td><td>Canvas A</td></tr>
+        <tr><td>G</td><td>VHF</td><td>MURS 95J</td><td>151.82 / 88 / 94 · 154.57 / 60</td><td>2 W</td><td>Canvas B</td></tr>
+        <tr><td>B</td><td>UHF</td><td>ISM-915</td><td>902–928 MHz</td><td>1 W</td><td>Canvas C</td></tr>
+      </table>
+      <pre id="spec-json"></pre>
+    </div>
+  </section>
+
+  <!-- CASCADE -->
+  <section id="cascade">
+    <div class="card">
+      <h2>8D / 9D / 10D cascade</h2>
+      <pre>8D base  --inject-->  9D interference  --infer-->  10D inference
+
+Interference9 = Δ9 ⊕ Eval9_old ⊕ 0x004
+Inference10   = Δ10 ⊕ Eval10_old ⊕ 0x004
+isometric_lock when both low bytes == 0x04
+
+Practical: 8D on breadboard (74HC86/74HC74);
+9D/10D in software; RF optional for digests.</pre>
+      <button class="primary" id="cas-cascade">Run cascade demo</button>
+      <pre id="cascade-out">—</pre>
+    </div>
+  </section>
+
+  <!-- STATUS -->
+  <section id="status">
+    <div class="card">
+      <h2>Embedded self-checks</h2>
+      <pre id="status-out">Running…</pre>
+    </div>
+    <div class="card">
+      <h2>Full project</h2>
+      <p>For the complete Node stack (server, workers, tests, docs), use the project zip <code>omi-dom-stack-full.zip</code> from the workspace.</p>
+      <pre>unzip omi-dom-stack-full.zip
+cd omi-dom-stack && npm install && node server/server.js
+# http://localhost:8742</pre>
+    </div>
+  </section>
+
+  <footer>
+    OMI-IMO · single HTML · everything is XOR · fixed point 0x0000 · observer is you
+  </footer>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  // —— tabs ——
+  const sections = document.querySelectorAll('main > section');
+  document.getElementById('nav').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-tab]');
+    if (!btn) return;
+    document.querySelectorAll('nav button').forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+    sections.forEach((s) => s.classList.toggle('active', s.id === btn.dataset.tab));
+  });
+
+  function parseByte(s) {
+    s = String(s).trim();
+    if (/^0x/i.test(s)) return parseInt(s, 16) & 0xff;
+    return (parseInt(s, 10) || 0) & 0xff;
+  }
+  function hex(n, w) {
+    return '0x' + (n & ((1 << (w * 4)) - 1)).toString(16).padStart(w, '0');
+  }
+
+  // —— 8D polytope CAS ——
+  const TERMINAL = 0x04;
+  function apply8(vertex, carry) {
+    const b = vertex & 0xff;
+    const c = (carry == null ? 0 : carry) & 0xff;
+    const s16 =
+      (((b >> 0) & 1) << 1) | (((b >> 1) & 1) << 0) |
+      (((b >> 2) & 1) << 3) | (((b >> 3) & 1) << 2) |
+      (((b >> 4) & 1) << 5) | (((b >> 5) & 1) << 4) |
+      (((b >> 6) & 1) << 7) | (((b >> 7) & 1) << 6);
+    const rev4 = (n) =>
+      ((n & 1) << 3) | ((n & 2) << 1) | ((n & 4) >> 1) | ((n & 8) >> 3);
+    const s32 = ((rev4((b >> 4) & 0xf) << 4) | rev4(b & 0xf)) & 0xff;
+    let s64 = 0, t = b;
+    for (let i = 0; i < 8; i++) { s64 = (s64 << 1) | (t & 1); t >>= 1; }
+    const delta = (s16 ^ s32 ^ s64 ^ c) & 0xff;
+    return { s16: s16 & 0xff, s32, s64: s64 & 0xff, delta };
+  }
+  function parity8(b) {
+    b &= 0xff; b ^= b >> 4; b ^= b >> 2; b ^= b >> 1; return b & 1;
+  }
+  let casState = { bind: 0, eval: 0 };
+  function casStep(v, c) {
+    const applied = apply8(v, c);
+    const oldEval = casState.eval;
+    casState = { bind: v & 0xff, eval: applied.delta };
+    return {
+      bind: casState.bind,
+      apply: applied,
+      eval: casState.eval,
+      oldEval,
+      centroid: applied.delta === TERMINAL
+    };
+  }
+  function renderLeds(bind) {
+    const box = document.getElementById('cas-leds');
+    box.innerHTML = '';
+    const leds = [parity8(bind)];
+    for (let i = 0; i < 8; i++) leds.push((bind >> i) & 1);
+    leds.forEach((on, i) => {
+      const d = document.createElement('div');
+      d.className = 'led' + (on ? ' on' : '') + (i === 0 ? ' centroid' : '');
+      d.title = i === 0 ? 'parity' : 'bit ' + (i - 1);
+      box.appendChild(d);
+    });
+  }
+  document.getElementById('cas-step').onclick = () => {
+    const v = parseByte(document.getElementById('cas-vertex').value);
+    const c = parseByte(document.getElementById('cas-carry').value);
+    const r = casStep(v, c);
+    renderLeds(r.bind);
+    document.getElementById('cas-out').textContent =
+      'bind  ' + hex(r.bind, 2) + '\n' +
+      's16   ' + hex(r.apply.s16, 2) + '  s32 ' + hex(r.apply.s32, 2) + '  s64 ' + hex(r.apply.s64, 2) + '\n' +
+      'Δ     ' + hex(r.apply.delta, 2) + (r.centroid ? '  · centroid ON' : '') + '\n' +
+      'eval  ' + hex(r.eval, 2) + '  (prev ' + hex(r.oldEval, 2) + ')';
+  };
+  document.getElementById('cas-reset').onclick = () => {
+    casState = { bind: 0, eval: 0 };
+    renderLeds(0);
+    document.getElementById('cas-out').textContent = 'Reset.';
+  };
+  renderLeds(0);
+
+  // —— Circuit walkthrough ——
+  const LESSONS = [
+    { id: 'boot', title: 'Boot the bus', applet: 'echo', narrative: '3! streams. No hardware required.', node: { id: 'bus', label: '3! bus' } },
+    { id: 'xor', title: 'Place XOR gate', applet: 'xor', narrative: 'Everything reduces to XOR.', node: { id: 'xor1', label: 'XOR' } },
+    { id: 'fano', title: 'Fano tick (−7D)', applet: 'probe', narrative: 'Phase mod 7 before 8D.', node: { id: 'fano', label: 'Fano −7D' } },
+    { id: 'e8', title: 'E₈ shell (240)', applet: 'connect', narrative: '240 roots ↔ 240-clock.', node: { id: 'e8', label: 'E₈ 240' } },
+    { id: 'obs', title: 'Observer @ 0D', applet: 'probe', narrative: 'Centroid 0x0000.', node: { id: 'obs', label: '0x0000' } },
+    { id: 'wit', title: 'Witness & share', applet: 'digest', narrative: 'Pseudo-persist the schematic.', node: { id: 'wit', label: 'witness' } }
+  ];
+  function runApplet(name) {
+    if (name === 'xor') return { ok: true, out: 0x0f ^ 0xf0 };
+    if (name === 'digest') {
+      let h = 0;
+      const s = LESSONS.map((L) => L.id).join('|');
+      for (let i = 0; i < s.length; i++) h = (h ^ s.charCodeAt(i)) & 0xffff;
+      return { ok: true, out: hex(h, 4) };
+    }
+    if (name === 'echo') return { ok: true, out: 'bus ready' };
+    if (name === 'connect') return { ok: true, out: 'link fano → e8' };
+    return { ok: true, out: { centroid: '0x0000' } };
+  }
+  let step = 0;
+  const schematic = document.getElementById('cir-schematic');
+  LESSONS.forEach((L, i) => {
+    const x = 24 + (i % 3) * 130;
+    const y = 24 + Math.floor(i / 3) * 110;
+    const el = document.createElement('div');
+    el.className = 'node';
+    el.id = 'n-' + L.node.id;
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.innerHTML = '<strong>' + L.node.label + '</strong><small>' + L.applet + '</small>';
+    schematic.appendChild(el);
+  });
+  function showCircuit() {
+    const L = LESSONS[step];
+    document.getElementById('cir-status').textContent = 'Step ' + (step + 1) + '/' + LESSONS.length + ': ' + L.title;
+    document.querySelectorAll('.node').forEach((el, i) => el.classList.toggle('active', i === step));
+    document.getElementById('cir-log').textContent =
+      L.narrative + '\n\n' + JSON.stringify(runApplet(L.applet), null, 2);
+    try { localStorage.setItem('omi-single-circuit-step', String(step)); } catch (_) {}
+  }
+  document.getElementById('cir-prev').onclick = () => { step = Math.max(0, step - 1); showCircuit(); };
+  document.getElementById('cir-next').onclick = () => { step = Math.min(LESSONS.length - 1, step + 1); showCircuit(); };
+  document.getElementById('cir-run').onclick = () => showCircuit();
+  try {
+    const s = localStorage.getItem('omi-single-circuit-step');
+    if (s != null) step = Math.min(LESSONS.length - 1, parseInt(s, 10) || 0);
+  } catch (_) {}
+  showCircuit();
+
+  // —— Spectrum ——
+  const SPECTRUM = {
+    protocol: 'OMI-IMO-TRICHROMATIC-RF',
+    version: '1.0.0',
+    global_fixed_point: '0x0000',
+    spectrum_matrix: {
+      channel_r: { band: 'HF', allocation: 'CB', frequency_min_mhz: 26.965, frequency_max_mhz: 27.405, max_power_watts: 4 },
+      channel_g: { band: 'VHF', allocation: 'MURS', discrete_channels_mhz: [151.82, 151.88, 151.94, 154.57, 154.6], max_power_watts: 2 },
+      channel_b: { band: 'UHF', allocation: 'ISM-915', frequency_min_mhz: 902, frequency_max_mhz: 928, max_power_watts: 1 }
+    }
+  };
+  document.getElementById('spec-json').textContent = JSON.stringify(SPECTRUM, null, 2);
+
+  // —— Cascade demo (simplified 9/10 inject labels) ——
+  document.getElementById('cas-cascade').onclick = () => {
+    const pure = apply8(0x01, 0);
+    const inj = 0x04; // quiet 9D cold-start interference low byte
+    const modulated = apply8(0x01, inj);
+    const lock = true; // quiet 9D/10D → terminal low bytes
+    document.getElementById('cascade-out').textContent =
+      '8D pure Δ(0x01,0) = ' + hex(pure.delta, 2) + '\n' +
+      'injected carry      = ' + hex(inj, 2) + '\n' +
+      '8D Δ(0x01, inj)    = ' + hex(modulated.delta, 2) + '\n' +
+      'isometric_lock     = ' + lock + '\n' +
+      'terminal           = ' + hex(TERMINAL, 2);
+  };
+
+  // —— Self-checks ——
+  (function selfCheck() {
+    const lines = [];
+    const a1 = apply8(0x01, 0);
+    const a2 = apply8(0x02, 0);
+    lines.push(a1.delta === 0x8a ? 'PASS Δ(0x01)=0x8A' : 'FAIL Δ(0x01)');
+    lines.push(a2.delta === 0x45 ? 'PASS Δ(0x02)=0x45' : 'FAIL Δ(0x02)');
+    lines.push(apply8(0x2a, 0).delta === 0x04 ? 'PASS centroid vertex 0x2A→Δ=0x04' : 'FAIL centroid path');
+    lines.push(SPECTRUM.global_fixed_point === '0x0000' ? 'PASS fixed point' : 'FAIL fixed point');
+    lines.push(LESSONS.length === 6 ? 'PASS circuit lessons' : 'FAIL lessons');
+    const failed = lines.filter((l) => l.indexOf('FAIL') === 0).length;
+    document.getElementById('status-out').innerHTML =
+      lines.map((l) => (l.indexOf('PASS') === 0 ? '<span class="ok">' + l + '</span>' : '<span class="bad">' + l + '</span>')).join('\n') +
+      '\n\n' + (failed ? failed + ' failed' : 'All embedded checks green.');
+  })();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+graph TB
+    subgraph "Reference Frame n=4 (Base Space)"
+        N4["n = 4<br/>POINT<br/>4D Semantic Tetrahedron<br/>{subject, predicate, object, modality}"]
+    end
+    
+    subgraph "n ± 1: LINES (Connections)"
+        N3["n - 1 = 3<br/>LINE (backward)<br/>3D Shape<br/>Volume of meaning"]
+        N5["n + 1 = 5<br/>LINE (forward)<br/>3D + 1D trajectory<br/>Path through meaning"]
+    end
+    
+    subgraph "n ± 2: PLANES (Projections)"
+        N2["n - 2 = 2<br/>PLANE (projection down)<br/>2D Plane<br/>Flattened context"]
+        N6["n + 2 = 6<br/>PLANE (projection up)<br/>2 × 3D shapes<br/>Dual meanings"]
+    end
+    
+    subgraph "n ± 3: TRANSFORMERS (Frame Shifts)"
+        N1["n - 3 = 1<br/>TRANSFORMER (collapse)<br/>1D Line<br/>Reduces to pure relation"]
+        N7["n + 3 = 7<br/>TRANSFORMER (expand)<br/>Fano Plane<br/>Complete projective space<br/>ALL perspectives unified"]
+    end
+    
+    subgraph "Boundaries"
+        N0["n - 4 = 0<br/>Absolute Origin<br/>Pure symbol"]
+        N8["n + 4 = 8<br/>Next Reference Frame<br/>New 4D point at higher level"]
+    end
+    
+    N4 -->|"−1 step"| N3
+    N4 -->|"+1 step"| N5
+    
+    N4 -->|"−2 steps"| N2
+    N4 -->|"+2 steps"| N6
+    
+    N4 -.->|"−3 TRANSFORM"| N1
+    N4 -.->|"+3 TRANSFORM"| N7
+    
+    N3 --> N2 --> N1 --> N0
+    N5 --> N6 --> N7 --> N8
+    
+    style N4 fill:#ff6b6b,stroke:#c92a2a,stroke-width:4px,color:#fff
+    style N1 fill:#4dabf7,stroke:#1864ab,stroke-width:3px,color:#fff
+    style N7 fill:#4dabf7,stroke:#1864ab,stroke-width:3px,color:#fff
+    style N0 fill:#f1f3f5,stroke:#868e96,stroke-width:2px
+    style N8 fill:#f1f3f5,stroke:#868e96,stroke-width:2px
+    
+    classDef lineStyle fill:#51cf66,stroke:#2b8a3e,stroke-width:2px,color:#fff
+    classDef planeStyle fill:#ffd43b,stroke:#f08c00,stroke-width:2px,color:#000
+    
+    class N3,N5 lineStyle
+    class N2,N6 planeStyle

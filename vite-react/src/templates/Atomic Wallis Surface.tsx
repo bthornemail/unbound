@@ -1,0 +1,227 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { Cpu, Compass, Activity, Zap, Layers } from 'lucide-react';
+
+/**
+ * ATOMIC WALLIS SURFACE
+ * 4-Channel Sonar (τ₁₅ x 4 = 60 slots)
+ * Master Period: 5040 (7!)
+ * Notation: Wallis Sexagesimal (Mathesis Universalis)
+ * Aegean Witness: Dynamic Orientation Header
+ */
+
+const MASTER_PERIOD = 5040;
+const GOAL_CYCLE = 360;
+const SONAR_PERIOD = 60;
+const FANO_PERIOD = 7;
+const SYNC_UNIT = 120; // Resolution for coherence pulses
+
+const FANO_LINES = [
+  [0, 1, 3], [0, 2, 5], [0, 4, 6],
+  [1, 2, 4], [1, 5, 6],
+  [2, 3, 6],
+  [3, 4, 5]
+];
+
+const CHANNELS = [
+  { id: 0, name: "1-BIT HEX", desc: "Binary Character Codes" },
+  { id: 1, name: "6-DOT BRAILLE", desc: "Standard Tactile" },
+  { id: 2, name: "8-DOT BRAILLE", desc: "Extended Register" },
+  { id: 3, name: "BRAILLE/HEX PAIR", desc: "Dialectical Join" }
+];
+
+// --- Wallis / Aegean Logic ---
+
+const getAegean = (n) => {
+  // Aegean units 1-9 start at 0x10107
+  const units = [0x10107, 0x10108, 0x10109, 0x1010A, 0x1010B, 0x1010C, 0x1010D, 0x1010E, 0x1010F];
+  const index = Math.min(8, Math.max(0, (n % 10) - 1));
+  return String.fromCodePoint(units[index] || 0x10107);
+};
+
+// Wallis sexagesimal decomposition: (60^1) ‵ (60^0) ° (60^-1) ′ (60^-2) ″
+const getWallisDecomp = (tick) => {
+  const units = tick % 60;
+  const primes = Math.floor(tick / 60) % 60;
+  const doublePrimes = Math.floor(tick / 3600);
+  return { 
+    u: units, 
+    p: primes, 
+    dp: doublePrimes,
+    str: `${doublePrimes}‵‵ ${primes}‵ ${units}°` 
+  };
+};
+
+const getBraille8 = (n) => String.fromCharCode(0x2800 + (n % 256));
+const getHexagram = (n) => String.fromCodePoint(0x4DC0 + (n % 64));
+
+const App = () => {
+  const [tick, setTick] = useState(0);
+  const [isRunning, setIsRunning] = useState(true);
+  const [speed, setSpeed] = useState(100);
+
+  useEffect(() => {
+    let timer;
+    if (isRunning) {
+      timer = setInterval(() => {
+        setTick(t => (t + 1) % MASTER_PERIOD);
+      }, speed);
+    }
+    return () => clearInterval(timer);
+  }, [isRunning, speed]);
+
+  const sonar = useMemo(() => {
+    const phase = tick % SONAR_PERIOD;
+    return { phase, channel: Math.floor(phase / 15), lane: phase % 15 };
+  }, [tick]);
+
+  const fano = useMemo(() => ({ 
+    phase: tick % FANO_PERIOD, 
+    triplet: FANO_LINES[tick % FANO_PERIOD] 
+  }), [tick]);
+
+  const wallis = useMemo(() => getWallisDecomp(tick), [tick]);
+
+  const projection = useMemo(() => {
+    const seed = sonar.lane + (fano.phase * 2);
+    switch (sonar.channel) {
+      case 0: return { char: (seed % 16).toString(16).toUpperCase(), sub: `HEX_${seed}` };
+      case 1: return { char: String.fromCharCode(0x2800 + (seed % 64)), sub: `B6_${seed}` };
+      case 2: return { char: getBraille8(seed), sub: `B8_${seed}` };
+      case 3: return { char: `${getBraille8(seed)}${getHexagram(seed)}`, sub: "JOIN" };
+      default: return { char: "?", sub: "" };
+    }
+  }, [sonar, fano]);
+
+  const alignment = 1.0 - ((Math.abs((sonar.phase * 7) - (fano.phase * 60)) % 420) / 420);
+
+  return (
+    <div className="min-h-screen bg-neutral-950 text-white p-4 flex flex-col font-mono overflow-hidden">
+      
+      {/* Aegean Wallis Header - Orienting the Metrology */}
+      <div className="flex justify-between items-center py-6 px-4 border-b border-white/5">
+        <div className="flex items-center gap-3">
+          <span className="text-4xl text-blue-500 opacity-80">{getAegean(wallis.dp || 1)}</span>
+          <div className="flex flex-col">
+            <span className="text-[10px] text-white/20 font-black tracking-widest uppercase">Mathesis Universalis</span>
+            <span className="text-lg font-bold text-white/60">{wallis.dp}‵‵ {wallis.p}‵</span>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <h1 className="text-xs font-black tracking-[0.5em] text-white/20 uppercase">Atomic Wallis Surface</h1>
+          <p className="text-[10px] text-blue-400 mt-1">τ₇ ∩ τ₁₅ ∩ 7! Compliance</p>
+        </div>
+
+        <div className="flex items-center gap-3 text-right">
+          <div className="flex flex-col">
+            <span className="text-[10px] text-white/20 font-black tracking-widest uppercase">Sexagesimal Unit</span>
+            <span className="text-lg font-bold text-white/60">{wallis.u}° 00′ 00″</span>
+          </div>
+          <span className="text-4xl text-emerald-500 opacity-80">{getAegean(wallis.u || 1)}</span>
+        </div>
+      </div>
+
+      {/* Main Animation Frame */}
+      <div className="flex-1 flex flex-col items-center justify-center relative">
+        
+        {/* Background Radial Sync Glow */}
+        <div className={`absolute inset-0 transition-opacity duration-1000 ${tick % SYNC_UNIT === 0 ? 'opacity-20' : 'opacity-0'}`}>
+          <div className="absolute inset-0 bg-blue-500 blur-[120px] rounded-full scale-75" />
+        </div>
+
+        {/* Central Projection */}
+        <div className="relative z-10 text-center space-y-8">
+          <div className={`text-[40vh] leading-none transition-all duration-150 transform ${alignment > 0.9 ? 'scale-110 brightness-125' : 'scale-100'}`}>
+            <span className="drop-shadow-[0_0_50px_rgba(255,255,255,0.05)] select-none">
+              {projection.char}
+            </span>
+          </div>
+
+          <div className="inline-flex flex-col items-center">
+            <div className="bg-white text-black px-8 py-2 text-3xl font-black tracking-tighter shadow-xl">
+              {projection.sub}
+            </div>
+            <div className="text-[10px] text-white/30 tracking-[0.4em] uppercase mt-3">
+              Channel {sonar.channel} // Lane {sonar.lane}
+            </div>
+          </div>
+        </div>
+
+        {/* Chiral Bit / Fano Points (Left Sidebar) */}
+        <div className="absolute left-10 top-1/2 -translate-y-1/2 space-y-6">
+          <p className="text-[9px] font-black text-white/20 uppercase vertical-text tracking-[0.5em] mb-4">Fano_Selection</p>
+          <div className="flex flex-col gap-2">
+            {[0,1,2,3,4,5,6].map(p => (
+              <div 
+                key={p} 
+                className={`w-1 transition-all duration-300 ${
+                  fano.triplet.includes(p) ? 'bg-blue-500 h-10 shadow-[0_0_10px_blue]' : 'bg-white/5 h-6'
+                }`} 
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Sonar Sweep (Right Sidebar) */}
+        <div className="absolute right-10 top-1/2 -translate-y-1/2 space-y-6 flex flex-col items-end">
+          <p className="text-[9px] font-black text-white/20 uppercase vertical-text tracking-[0.5em] mb-4">Sonar_Lattice</p>
+          <div className="flex flex-col gap-1 h-64 w-1 bg-white/5 relative">
+            <div 
+              className="absolute w-4 -left-1.5 h-1 bg-emerald-500 shadow-[0_0_10px_#10b981] transition-all duration-100"
+              style={{ top: `${(sonar.phase / 60) * 100}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Controls & Metrics */}
+      <div className="p-8 border-t border-white/5 grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="space-y-2">
+          <p className="text-[10px] font-black text-white/20 uppercase tracking-widest flex items-center gap-2">
+            <Cpu size={12} /> Temporal Engine
+          </p>
+          <div className="flex items-center gap-4">
+            <button onClick={() => setIsRunning(!isRunning)} className="p-2 border border-white/20 rounded hover:bg-white hover:text-black">
+              {isRunning ? <Zap size={16} /> : <Activity size={16} />}
+            </button>
+            <input 
+              type="range" min="20" max="300" value={speed} onChange={e => setSpeed(Number(e.target.value))}
+              className="flex-1 accent-white"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <p className="text-[10px] font-black text-white/20 uppercase">Goal Alignment</p>
+          <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+            <div className="h-full bg-amber-500" style={{ width: `${((tick % GOAL_CYCLE) / GOAL_CYCLE) * 100}%` }} />
+          </div>
+          <p className="text-[10px] text-right text-white/40">{tick % GOAL_CYCLE}° / 360°</p>
+        </div>
+
+        <div className="flex flex-col justify-center border-l border-white/10 pl-8">
+          <p className="text-[10px] font-black text-white/20 uppercase">Wallis Index</p>
+          <p className="text-xl font-bold tracking-tighter text-blue-400">
+            {wallis.dp} : {wallis.p} : {wallis.u}
+          </p>
+        </div>
+
+        <div className="flex flex-col justify-center border-l border-white/10 pl-8">
+          <p className="text-[10px] font-black text-white/20 uppercase">Incidence State</p>
+          <p className={`text-xl font-bold tracking-tighter ${alignment > 0.8 ? 'text-emerald-400' : 'text-white/40'}`}>
+            {(alignment * 100).toFixed(0)}% COHERENCE
+          </p>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .vertical-text {
+          writing-mode: vertical-rl;
+          text-orientation: mixed;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default App;

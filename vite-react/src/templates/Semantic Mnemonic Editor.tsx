@@ -1,0 +1,312 @@
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import * as THREE from 'three';
+import { 
+  Plus, Zap, Hash, Database, Layers, 
+  Terminal, Share2, Hexagon, Search,
+  BookOpen, Globe, Activity
+} from 'lucide-react';
+
+// --- Versioned Semantic Table (Mock 2048 words) ---
+// Split 1024 Subjects (0-1023) and 1024 Predicates (1024-2047)
+const SUBJECTS = ["GALAXY", "NEURON", "CRYSTAL", "ENGINE", "FOREST", "OVAL", "VECTOR", "PULSE", "VOID", "ORB", "LICHEN", "QUARK", "MEMBRANE", "TEMPLE", "STRATUM", "PYRE", "CORTEX", "NEXUS", "STORM", "MANTLE"];
+const PREDICATES = ["SPIN", "GROW", "FOLD", "DECAY", "RISE", "FUSE", "FLOW", "BURN", "SHIFT", "ECHO", "RECURSE", "OSCILLATE", "DIVERGE", "PULSE", "DRIFT", "CLEAVE", "MERGE", "VOID", "ALIGN", "WARP"];
+
+// Helper to fill table to 1024 each for 11-bit mapping
+const getWord = (index) => {
+  if (index < 1024) return SUBJECTS[index % SUBJECTS.length] + "_" + (index % 100);
+  return PREDICATES[(index - 1024) % PREDICATES.length] + "_" + (index % 100);
+};
+
+const RINGS_241 = [1, 8, 12, 16, 24, 32, 40, 48, 60];
+
+// --- Fano Scrubber Component ---
+const FanoScrubber = ({ colors, angle, onRotate, size = 140 }) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const svgRef = useRef(null);
+  const points = [{ cx: 89, cy: 101 }, { cx: 46, cy: 76 }, { cx: 132, cy: 75 }, { cx: 3, cy: 151 }, { cx: 89, cy: 151 }, { cx: 175, cy: 151 }, { cx: 90, cy: 3 }];
+
+  const handleMove = (e) => {
+    if (!isDragging || !svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const rad = Math.atan2(clientY - cy, clientX - cx);
+    onRotate(((rad * 180 / Math.PI) + 450) % 360);
+  };
+
+  return (
+    <div className="relative cursor-crosshair touch-none select-none">
+      <svg 
+        ref={svgRef} width={size} height={size * 0.86} viewBox="0 0 178 154"
+        onMouseDown={() => setIsDragging(true)} onMouseUp={() => setIsDragging(false)}
+        onMouseMove={handleMove} onTouchStart={() => setIsDragging(true)}
+        onTouchEnd={() => setIsDragging(false)} onTouchMove={handleMove}
+      >
+        <g transform={`rotate(${angle}, 89, 77)`}>
+          <path d="M 89 1 L 176 151 L 3 151 Z" fill="none" stroke="#333" strokeWidth="2" />
+          {points.map((p, i) => (
+            <circle key={i} cx={p.cx} cy={p.cy} r="10" fill={colors[i] || '#111'} className="stroke-black stroke-2 transition-colors duration-500" />
+          ))}
+        </g>
+      </svg>
+    </div>
+  );
+};
+
+const App = () => {
+  const [nodes, setNodes] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
+  const [mnemonicInput, setMnemonicInput] = useState("");
+  
+  const mountRef = useRef(null);
+  const sceneRef = useRef(null);
+  const meshesRef = useRef({});
+
+  // --- Core Determinism Logic ---
+  const mnemonicToNode = async (mnemonic) => {
+    // 1. Convert words to bits (placeholder 2-word system for demo)
+    const words = mnemonic.trim().toUpperCase().split(" ");
+    const seedText = words.join("_");
+    const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(seedText));
+    const hash = new Uint8Array(hashBuffer);
+
+    // 2. Derive Pfister Rings
+    const rings = [];
+    let bitIdx = 0;
+    RINGS_241.forEach(count => {
+      const bits = [];
+      for (let i = 0; i < count; i++) {
+        const byte = Math.floor(bitIdx / 8) % hash.length;
+        const bit = 7 - (bitIdx % 8);
+        bits.push((hash[byte] >> bit) & 1);
+        bitIdx++;
+      }
+      rings.push(bits);
+    });
+
+    // 3. Derive 240° Color Wheel & Centroid
+    const hue = hash[0] % 240; 
+    const id = hash.slice(0, 4).reduce((acc, v) => acc + v.toString(16), "");
+
+    return {
+      id,
+      mnemonic: seedText,
+      hue,
+      angle: hue,
+      rings,
+      position: [(hash[1] - 128) * 2, (hash[2] - 128), (hash[3] - 128) * 2]
+    };
+  };
+
+  // --- Three.js Setup ---
+  useEffect(() => {
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x020202);
+    sceneRef.current = scene;
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
+    camera.position.set(150, 150, 350);
+    
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    mountRef.current.appendChild(renderer.domElement);
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.2);
+    scene.add(ambient);
+    const point = new THREE.PointLight(0x3b82f6, 1, 1000);
+    point.position.set(200, 200, 200);
+    scene.add(point);
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      Object.values(meshesRef.current).forEach(m => {
+        m.rotation.y += 0.002;
+        m.position.y += Math.sin(Date.now() * 0.001 + m.position.x) * 0.05;
+      });
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    return () => renderer.dispose();
+  }, []);
+
+  const spawnFromMnemonic = async () => {
+    if (!mnemonicInput) return;
+    const nodeData = await mnemonicToNode(mnemonicInput);
+    
+    setNodes(prev => {
+      if (prev.find(n => n.id === nodeData.id)) return prev;
+      return [...prev, nodeData];
+    });
+    setSelectedId(nodeData.id);
+    syncMesh(nodeData);
+    setMnemonicInput("");
+  };
+
+  const syncMesh = (node) => {
+    if (!sceneRef.current) return;
+    if (!meshesRef.current[node.id]) {
+      const geo = new THREE.IcosahedronGeometry(Math.random() * 10 + 20, 2);
+      const mat = new THREE.MeshPhongMaterial({ vertexColors: true, flatShading: true });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(...node.position);
+      sceneRef.current.add(mesh);
+      meshesRef.current[node.id] = mesh;
+    }
+    
+    const mesh = meshesRef.current[node.id];
+    const colors = [];
+    const color = new THREE.Color();
+    const posAttr = mesh.geometry.attributes.position;
+    
+    for (let i = 0; i < posAttr.count; i++) {
+      const ringIdx = i % 9;
+      const bit = node.rings[ringIdx][i % node.rings[ringIdx].length];
+      color.setHSL((node.hue / 360), 0.8, bit ? 0.7 : 0.05);
+      colors.push(color.r, color.g, color.b);
+    }
+    
+    mesh.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+    mesh.geometry.attributes.color.needsUpdate = true;
+  };
+
+  const selectedNode = useMemo(() => nodes.find(n => n.id === selectedId), [nodes, selectedId]);
+
+  return (
+    <div className="w-full h-screen bg-black text-zinc-400 font-mono flex overflow-hidden">
+      {/* SEMANTIC SIDEBAR */}
+      <aside className="w-80 h-full bg-zinc-900/40 backdrop-blur-2xl border-r border-zinc-800 p-6 flex flex-col z-10">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="p-2 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+            <BookOpen size={20} className="text-blue-400" />
+          </div>
+          <div>
+            <h1 className="text-[10px] font-black text-white tracking-[0.3em] uppercase">Mnemonic_Editor</h1>
+            <div className="text-[8px] text-zinc-500">VERSIONED_WORDNET_v1.0</div>
+          </div>
+        </div>
+
+        {/* INPUT BOX */}
+        <div className="space-y-4 mb-8">
+          <div className="flex flex-col gap-2">
+            <span className="text-[9px] text-zinc-600 font-bold uppercase tracking-widest">Generate_Identity</span>
+            <div className="flex gap-2">
+              <input 
+                value={mnemonicInput}
+                onChange={(e) => setMnemonicInput(e.target.value)}
+                placeholder="SUBJECT PREDICATE..."
+                className="flex-1 bg-black border border-zinc-800 rounded-xl px-4 py-3 text-[10px] text-white focus:border-blue-500 outline-none transition-all placeholder:text-zinc-700"
+                onKeyDown={(e) => e.key === 'Enter' && spawnFromMnemonic()}
+              />
+              <button 
+                onClick={spawnFromMnemonic}
+                className="p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors"
+              >
+                <Plus size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* NODE LIST */}
+        <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+          <span className="text-[9px] text-zinc-600 font-bold uppercase tracking-widest block mb-1">Active_Synsets</span>
+          {nodes.map(node => (
+            <div 
+              key={node.id}
+              onClick={() => setSelectedId(node.id)}
+              className={`p-4 rounded-2xl border transition-all cursor-pointer group ${selectedId === node.id ? 'bg-blue-600/10 border-blue-500/50' : 'bg-zinc-800/20 border-zinc-800 hover:border-zinc-700'}`}
+            >
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-[10px] font-black text-white group-hover:text-blue-400 transition-colors uppercase tracking-tighter">
+                  {node.mnemonic}
+                </span>
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: `hsl(${node.hue}, 80%, 60%)` }} />
+              </div>
+              
+              {selectedId === node.id && (
+                <div className="mt-4 flex flex-col items-center gap-4 animate-in fade-in slide-in-from-top-2">
+                   <FanoScrubber 
+                      colors={node.rings[1].slice(0, 7).map(b => b ? `hsl(${node.hue}, 80%, 60%)` : '#111')}
+                      angle={node.angle}
+                      onRotate={(a) => {
+                        const updated = { ...node, angle: a };
+                        setNodes(prev => prev.map(n => n.id === node.id ? updated : n));
+                        syncMesh(updated);
+                      }}
+                   />
+                   <div className="w-full flex justify-between items-center text-[8px] text-zinc-500 font-bold">
+                      <span>ID: 0x{node.id}</span>
+                      <span>HUE: {Math.floor(node.hue)}°</span>
+                   </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-zinc-800 flex justify-between text-[8px] text-zinc-600 font-bold">
+          <span>NODES: {nodes.length}</span>
+          <span className="flex items-center gap-1"><Activity size={8} /> LIVE_GRAPH</span>
+        </div>
+      </aside>
+
+      {/* VIEWPORT */}
+      <main className="flex-1 relative">
+        <div ref={mountRef} className="w-full h-full" />
+        
+        {/* HUD Overlay */}
+        <div className="absolute top-10 left-10 pointer-events-none">
+          <div className="text-[12px] font-black text-white tracking-[0.6em] uppercase mb-1">Deterministic_Semantic_Mesh</div>
+          <div className="h-[1px] w-48 bg-gradient-to-r from-blue-500 to-transparent" />
+        </div>
+
+        <div className="absolute top-10 right-10 flex gap-4 pointer-events-none">
+          <div className="bg-black/60 backdrop-blur-md border border-zinc-800 p-4 rounded-2xl flex items-center gap-4">
+            <Globe size={16} className="text-zinc-500" />
+            <div className="text-right">
+              <div className="text-[8px] text-zinc-600 font-bold uppercase">Universe_State</div>
+              <div className="text-[10px] text-white font-black tracking-widest uppercase">Federated_Cloud_01</div>
+            </div>
+          </div>
+        </div>
+
+        {selectedNode && (
+          <div className="absolute bottom-10 left-10 right-10 flex justify-center pointer-events-none">
+            <div className="bg-black/80 backdrop-blur-xl border border-zinc-800 p-6 rounded-[2rem] flex items-center gap-8 animate-in slide-in-from-bottom-8">
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-[8px] text-zinc-600 font-bold uppercase">Centroid_Phase</span>
+                <div className="text-xl font-black text-white italic">{Math.floor(selectedNode.angle)}°</div>
+              </div>
+              <div className="h-10 w-[1px] bg-zinc-800" />
+              <div className="flex flex-col gap-2">
+                <span className="text-[8px] text-zinc-600 font-bold uppercase">Pfister_Spectral_Density</span>
+                <div className="flex gap-0.5">
+                  {selectedNode.rings[5].slice(0, 24).map((b, i) => (
+                    <div key={i} className={`w-1 h-4 rounded-full ${b ? 'bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]' : 'bg-zinc-800'}`} />
+                  ))}
+                </div>
+              </div>
+              <div className="h-10 w-[1px] bg-zinc-800" />
+              <div className="flex flex-col gap-1">
+                <span className="text-[8px] text-zinc-600 font-bold uppercase">Synset_ID</span>
+                <div className="text-[10px] text-blue-400 font-black tracking-widest uppercase italic">{selectedNode.mnemonic}</div>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #444; }
+      `}</style>
+    </div>
+  );
+};
+
+export default App;

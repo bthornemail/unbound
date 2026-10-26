@@ -1,0 +1,48 @@
+flowchart TD
+    subgraph Peer["Peer Device"]
+        HD["HD Node Wallet"]
+        MT["Merkle Trees"]
+        LC["Local Content Storage"]
+        ESP["ESP32 Hardware Wallet"]
+    end
+
+    subgraph Discovery["Discovery Layer"]
+        SS["Signaling Server (ESP32)"]
+        PS["Peer Discovery"]
+        GD["Graph Discovery"]
+    end
+
+    subgraph DataTypes["Protocol Data Types"]
+        Peers["Peers"]
+        Conn["Connections"]
+        Graphs["DAG Graphs"]
+        Content["Content"]
+        Services["Services"]
+    end
+
+    subgraph Network["Network Layer"]
+        BT["Bluetooth"]
+        WF["WiFi"]
+        OT["Other Transmission"]
+    end
+
+    subgraph AI["AI Layer"]
+        GNN["GNN Models"]
+        CON["Consensus"]
+        TOP["Topology Optimization"]
+    end
+
+    Peer --> Discovery
+    Discovery --> Network
+    Network --> DataTypes
+    DataTypes --> AI
+    AI --> Network
+
+    subgraph Security["Security Layer"]
+        PGP["OpenPGP"]
+        SIG["Shared Signatures"]
+        MR["Merkle Roots"]
+    end
+
+    Peer --> Security
+    Security --> DataTypes

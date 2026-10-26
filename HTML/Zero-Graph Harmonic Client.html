@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zero-Graph Harmonic Client</title>
+<style>
+  body { 
+    font-family: 'Courier New', monospace; 
+    max-width: 800px; 
+    margin: 2rem auto; 
+    padding: 1rem;
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+    color: #e0e0e0;
+    min-height: 100vh;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #00d4aa;
+    text-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+  }
+  
+  .container {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 212, 170, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  
+  label {
+    display: block;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #00d4aa;
+    font-weight: bold;
+  }
+  
+  input, button, textarea { 
+    font-size: 1rem; 
+    padding: 0.8rem; 
+    margin: 0.3rem 0; 
+    width: 100%; 
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 212, 170, 0.3);
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s ease;
+  }
+  
+  input:focus, button:focus {
+    outline: none;
+    border-color: #00d4aa;
+    box-shadow: 0 0 15px rgba(0, 212, 170, 0.3);
+  }
+  
+  button {
+    background: linear-gradient(45deg, #00d4aa, #0066cc);
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 212, 170, 0.4);
+  }
+  
+  #entriesList { 
+    list-style: none; 
+    padding-left: 0; 
+    margin-top: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  #entriesList li { 
+    padding: 0.8rem; 
+    border-bottom: 1px solid rgba(0, 212, 170, 0.2);
+    background: rgba(255, 255, 255, 0.03);
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  #entriesList li:hover {
+    background: rgba(0, 212, 170, 0.1);
+    transform: translateX(5px);
+  }
+  
+  .similarity { 
+    font-weight: bold; 
+    float: right; 
+    color: #00d4aa;
+    background: rgba(0, 212, 170, 0.2);
+    padding: 0.2rem 0.5rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+  }
+  
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(0, 212, 170, 0.1);
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+  
+  .file-input {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border: 2px dashed rgba(0, 212, 170, 0.3);
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .file-input:hover {
+    border-color: #00d4aa;
+    background: rgba(0, 212, 170, 0.05);
+  }
+  
+  .section {
+    margin-bottom: 2rem;
+  }
+  
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 212, 170, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 212, 170, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 212, 170, 0); }
+  }
+  
+  .peer-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(0, 212, 170, 0.1);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #cc0066;
+    animation: blink 2s infinite;
+  }
+  
+  .status-dot.connected {
+    background: #00d4aa;
+    animation: none;
+  }
+  
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+  }
+  
+  .peer-list {
+    max-height: 150px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .peer-item {
+    padding: 0.3rem;
+    border-bottom: 1px solid rgba(0, 212, 170, 0.1);
+    font-size: 0.9rem;
+    font
+</style>
+</head>
+<body>
+
+<h1>Zero-Graph Harmonic Client</h1>
+
+<div class="container">
+  <div class="section">
+    <label for="addInput">Add Word / Text:</label>
+    <input type="text" id="addInput" placeholder="Type a word or phrase..." />
+    <button id="addBtn" class="pulse">Add Entry</button>
+  </div>
+
+  <div class="section">
+    <label for="searchInput">Search Similarity:</label>
+    <input type="text" id="searchInput" placeholder="Type to search harmonically..." />
+  </div>
+
+  <div class="section">
+    <h2 style="color: #00d4aa;">P2P Network Status</h2>
+    <div class="peer-status">
+      <div class="status-dot" id="connectionStatus"></div>
+      <span id="statusText">Initializing P2P Node...</span>
+    </div>
+    <div>
+      <button id="startNodeBtn">Start P2P Node</button>
+      <button id="stopNodeBtn" style="background: linear-gradient(45deg, #cc0066, #990033);">Stop Node</button>
+    </div>
+    <div>
+      <label for="connectPeer">Connect to Peer:</label>
+      <input type="text" id="connectPeer" placeholder="/ip4/127.0.0.1/tcp/4001/p2p/12D3Ko..." />
+      <button id="connectBtn">Connect</button>
+    </div>
+    <div class="peer-list" id="peerList"></div>
+  </div>
+
+  <div class="section">
+    <h2 style="color: #00d4aa;">Harmonic Entries</h2>
+    <div class="stats">
+      <span>Total Entries: <span id="totalCount">0</span></span>
+      <span>Visible: <span id="visibleCount">0</span></span>
+      <span>Search Active: <span id="searchActive">No</span></span>
+    </div>
+    <ul id="entriesList"></ul>
+  </div>
+
+  <div class="section">
+    <button id="exportBtn">Export Harmonic Database</button>
+    <button id="syncBtn" style="background: linear-gradient(45deg, #6600cc, #4400aa);">Sync with P2P Network</button>
+    <div class="file-input">
+      <input type="file" id="importFile" style="display: none;" accept=".json" />
+      <label for="importFile">📁 Import Harmonic Database (JSON)</label>
+    </div>
+    <button id="clearBtn" style="background: linear-gradient(45deg, #cc0066, #990033); margin-top: 1rem;">Clear All Entries</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/libp2p/0.46.4/libp2p.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/it-pipe/3.0.1/it-pipe.min.js"></script>
+<script>
+// Harmonic Vector Implementation
+class HarmonicVector {
+  constructor(id, length, sin, cos, tan, h, buffer) {
+    this.id = id;
+    this.length = length;
+    this.sin = sin;
+    this.cos = cos;
+    this.tan = tan;
+    this.h = h;
+    this.buffer = buffer;
+  }
+}
+
+class ZGDEntry {
+  constructor(id, buffer, vector, metadata = {}) {
+    this.id = id;
+    this.buffer = buffer;
+    this.vector = vector;
+    this.metadata = { timestamp: Date.now(), ...metadata };
+  }
+}
+
+// Harmonize function from spec
+function harmonize(input, originBuffer = null) {
+  let view;
+  if (typeof input === "string") {
+    view = new TextEncoder().encode(input.toUpperCase());
+  } else {
+    view = new Uint8Array(input.buffer || input);
+  }
+
+  const rawValues = Array.from(view);
+  const values = originBuffer
+    ? rawValues.map((v, i) => v ^ new Uint8Array(originBuffer)[i % originBuffer.byteLength])
+    : rawValues;
+
+  const h = Math.hypot(...values);
+  return new HarmonicVector(
+    typeof input === "string" ? input : `BUFFER_${view.length}`,
+    values.length,
+    Math.sin(h / Math.PI),
+    Math.cos(h / 1.61803398875), // Golden ratio
+    Math.tan(Math.PI / (h || 1e-10)),
+    h,
+    view.buffer
+  );
+}
+
+// Convert buffer to unit ray
+function typedArrayToRay(input) {
+  const norm = Math.hypot(...input);
+  return norm === 0 ? Array.from(input) : Array.from(input).map(v => v / norm);
+}
+
+// Cosine similarity
+function cosineSimilarity(a, b) {
+  const len = Math.min(a.length, b.length);
+  let dot = 0;
+  for (let i = 0; i < len; i++) dot += a[i] * b[i];
+  return dot;
+}
+
+// Application State
+let database = [];
+let p2pNode = null;
+let isP2PActive = false;
+
+// P2P Protocol Handler
+const ZERO_GRAPH_PROTOCOL = '/zero-graph/1.0.0';
+
+class ZeroGraphP2P {
+  constructor() {
+    this.node = null;
+    this.peers = new Map();
+    this.messageHandlers = new Map();
+  }
+
+  async createNode() {
+    try {
+      // Create a basic libp2p node configuration
+      const { createLibp2p } = Libp2p;
+      const { webSockets } = WebSockets;
+      const { noise } = Noise;
+      const { mplex } = Mplex;
+      const { bootstrap } = Bootstrap;
+      
+      this.node = await createLibp2p({
+        addresses: {
+          listen: ['/ip4/0.0.0.0/tcp/0/ws']
+        },
+        transports: [webSockets()],
+        connectionEncryption: [noise()],
+        streamMuxers: [mplex()],
+        peerDiscovery: [
+          bootstrap({
+            list: [
+              '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
+              '/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa'
+            ]
+          })
+        ]
+      });
+
+      // Handle incoming connections
+      this.node.handle(ZERO_GRAPH_PROTOCOL, ({ stream }) => {
+        this.handleIncomingStream(stream);
+      });
+
+      // Listen for peer connections
+      this.node.addEventListener('peer:connect', (evt) => {
+        const peerId = evt.detail.remotePeer.toString();
+        this.peers.set(peerId, evt.detail);
+        this.updatePeerList();
+        this.updateStatus('connected', `Connected to ${this.peers.size} peers`);
+      });
+
+      this.node.addEventListener('peer:disconnect', (evt) => {
+        const peerId = evt.detail.remotePeer.toString();
+        this.peers.delete(peerId);
+        this.updatePeerList();
+        this.updateStatus('connected', `Connected to ${this.peers.size} peers`);
+      });
+
+      await this.node.start();
+      isP2PActive = true;
+      this.updateStatus('connected', `P2P Node Started - ID: ${this.node.peerId.toString().slice(0, 20)}...`);
+      
+      return true;
+    } catch (error) {
+      console.error('Failed to create P2P node:', error);
+      this.updateStatus('disconnected', 'Failed to start P2P node');
+      return false;
+    }
+  }
+
+  async stopNode() {
+    if (this.node) {
+      await this.node.stop();
+      this.node = null;
+      isP2PActive = false;
+      this.peers.clear();
+      this.updatePeerList();
+      this.updateStatus('disconnected', 'P2P Node Stopped');
+    }
+  }
+
+  async connectToPeer(multiaddr) {
+    if (!this.node) return false;
+    
+    try {
+      const connection = await this.node.dial(multiaddr);
+      return true;
+    } catch (error) {
+      console.error('Failed to connect to peer:', error);
+      return false;
+    }
+  }
+
+  async broadcastHarmonicEntry(entry) {
+    if (!this.node || this.peers.size === 0) return;
+
+    const message = {
+      type: 'harmonic_entry',
+      data: {
+        id: entry.id,
+        buffer: Array.from(new Uint8Array(entry.buffer)),
+        vector: entry.vector,
+        metadata: entry.metadata
+      },
+      timestamp: Date.now()
+    };
+
+    const messageData = new TextEncoder().encode(JSON.stringify(message));
+
+    for (const [peerId, peer] of this.peers) {
+      try {
+        const stream = await this.node.dialProtocol(peer.remotePeer, ZERO_GRAPH_PROTOCOL);
+        await pipe([messageData], stream);
+      } catch (error) {
+        console.error(`Failed to send to peer ${peerId}:`, error);
+      }
+    }
+  }
+
+  async handleIncomingStream(stream) {
+    try {
+      const data = await pipe(stream, async function* (source) {
+        for await (const chunk of source) {
+          yield chunk;
+        }
+      });
+
+      const messageBuffer = Buffer.concat(data);
+      const message = JSON.parse(messageBuffer.toString());
+
+      if (message.type === 'harmonic_entry') {
+        this.handleHarmonicEntry(message.data);
+      } else if (message.type === 'sync_request') {
+        this.handleSyncRequest(message.data);
+      }
+    } catch (error) {
+      console.error('Error handling incoming stream:', error);
+    }
+  }
+
+  handleHarmonicEntry(entryData) {
+    // Check if entry already exists
+    const exists = database.some(entry => entry.id === entryData.id);
+    if (!exists) {
+      const entry = new ZGDEntry(
+        entryData.id,
+        new Uint8Array(entryData.buffer).buffer,
+        entryData.vector,
+        entryData.metadata
+      );
+      database.push(entry);
+      renderEntries(searchInput.value);
+      
+      // Visual notification of new peer entry
+      const notification = document.createElement('div');
+      notification.textContent = `📡 Received: ${entryData.id}`;
+      notification.style.cssText = `
+        position: fixed; top: 20px; right: 20px; 
+        background: rgba(0, 212, 170, 0.9); 
+        color: white; padding: 1rem; border-radius: 8px;
+        z-index: 1000; font-weight: bold;
+      `;
+      document.body.appendChild(notification);
+      setTimeout(() => notification.remove(), 3000);
+    }
+  }
+
+  async syncWithPeers() {
+    if (!this.node || this.peers.size === 0) return;
+
+    const syncMessage = {
+      type: 'sync_request',
+      data: database.map(entry => ({
+        id: entry.id,
+        buffer: Array.from(new Uint8Array(entry.buffer)),
+        vector: entry.vector,
+        metadata: entry.metadata
+      })),
+      timestamp: Date.now()
+    };
+
+    const messageData = new TextEncoder().encode(JSON.stringify(syncMessage));
+
+    for (const [peerId, peer] of this.peers) {
+      try {
+        const stream = await this.node.dialProtocol(peer.remotePeer, ZERO_GRAPH_PROTOCOL);
+        await pipe([messageData], stream);
+      } catch (error) {
+        console.error(`Failed to sync with peer ${peerId}:`, error);
+      }
+    }
+  }
+
+  updateStatus(status, message) {
+    const statusDot = document.getElementById('connectionStatus');
+    const statusText = document.getElementById('statusText');
+    
+    if (status === 'connected') {
+      statusDot.classList.add('connected');
+    } else {
+      statusDot.classList.remove('connected');
+    }
+    
+    statusText.textContent = message;
+  }
+
+  updatePeerList() {
+    const peerList = document.getElementById('peerList');
+    peerList.innerHTML = '';
+    
+    if (this.peers.size === 0) {
+      peerList.innerHTML = '<div class="peer-item">No peers connected</div>';
+      return;
+    }
+
+    for (const [peerId, peer] of this.peers) {
+      const peerItem = document.createElement('div');
+      peerItem.className = 'peer-item';
+      peerItem.textContent = `🔗 ${peerId.slice(0, 20)}...`;
+      peerList.appendChild(peerItem);
+    }
+  }
+}
+
+// Initialize P2P instance
+const p2pInstance = new ZeroGraphP2P();
+
+// DOM Elements
+const addInput = document.getElementById("addInput");
+const addBtn = document.getElementById("addBtn");
+const searchInput = document.getElementById("searchInput");
+const entriesList = document.getElementById("entriesList");
+const exportBtn = document.getElementById("exportBtn");
+const importFile = document.getElementById("importFile");
+const clearBtn = document.getElementById("clearBtn");
+const totalCount = document.getElementById("totalCount");
+const visibleCount = document.getElementById("visibleCount");
+const searchActive = document.getElementById("searchActive");
+
+// P2P DOM Elements
+const startNodeBtn = document.getElementById("startNodeBtn");
+const stopNodeBtn = document.getElementById("stopNodeBtn");
+const connectPeer = document.getElementById("connectPeer");
+const connectBtn = document.getElementById("connectBtn");
+const syncBtn = document.getElementById("syncBtn");
+
+// Render entries with optional similarity filter
+function renderEntries(filter = "") {
+  entriesList.innerHTML = "";
+  const hasFilter = filter.trim() !== "";
+  
+  const queryVector = hasFilter
+    ? typedArrayToRay(new TextEncoder().encode(filter.toUpperCase()))
+    : null;
+
+  const scored = database.map(entry => {
+    const sim = queryVector
+      ? cosineSimilarity(queryVector, entry.vector)
+      : null;
+    return { entry, similarity: sim };
+  });
+
+  const filtered = scored
+    .filter(x => hasFilter ? (x.similarity || 0) > 0.1 : true)
+    .sort((a, b) => (b.similarity || 0) - (a.similarity || 0));
+
+  // Update stats
+  totalCount.textContent = database.length;
+  visibleCount.textContent = filtered.length;
+  searchActive.textContent = hasFilter ? "Yes" : "No";
+
+  for (const { entry, similarity } of filtered) {
+    const li = document.createElement("li");
+    li.textContent = entry.id;
+    
+    if (similarity !== null) {
+      const span = document.createElement("span");
+      span.textContent = similarity.toFixed(3);
+      span.className = "similarity";
+      li.appendChild(span);
+    }
+    
+    entriesList.appendChild(li);
+  }
+}
+
+// Add new entry
+function addEntry(text) {
+  if (!text.trim()) return;
+  
+  // Check for duplicates
+  if (database.some(entry => entry.id === text)) {
+    alert("Entry already exists!");
+    return;
+  }
+  
+  const hv = harmonize(text);
+  const vector = typedArrayToRay(new Uint8Array(hv.buffer));
+  const entry = new ZGDEntry(text, hv.buffer, vector);
+  
+  database.push(entry);
+  renderEntries(searchInput.value);
+  
+  // Broadcast to P2P network
+  if (isP2PActive) {
+    p2pInstance.broadcastHarmonicEntry(entry);
+  }
+  
+  // Brief visual feedback
+  addBtn.style.background = "linear-gradient(45deg, #00ff88, #0088ff)";
+  setTimeout(() => {
+    addBtn.style.background = "linear-gradient(45deg, #00d4aa, #0066cc)";
+  }, 300);
+}
+
+// Event Listeners
+addBtn.onclick = () => {
+  addEntry(addInput.value);
+  addInput.value = "";
+  addInput.focus();
+};
+
+addInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    addEntry(addInput.value);
+    addInput.value = "";
+  }
+});
+
+searchInput.oninput = () => {
+  renderEntries(searchInput.value);
+};
+
+exportBtn.onclick = () => {
+  const exportData = database.map(entry => ({
+    id: entry.id,
+    buffer: Array.from(new Uint8Array(entry.buffer)),
+    vector: entry.vector,
+    metadata: entry.metadata,
+  }));
+  
+  const json = JSON.stringify(exportData, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `zero-graph-harmonic-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+importFile.onchange = (e) => {
+  const files = e.target.files;
+  if (!files || files.length === 0) return;
+  
+  const file = files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const text = reader.result;
+      const imported = JSON.parse(text);
+      
+      let imported_count = 0;
+      for (const item of imported) {
+        // Check for duplicates
+        if (!database.some(entry => entry.id === item.id)) {
+          database.push(new ZGDEntry(
+            item.id,
+            new Uint8Array(item.buffer).buffer,
+            item.vector,
+            item.metadata
+          ));
+          imported_count++;
+        }
+      }
+      
+      renderEntries(searchInput.value);
+      alert(`Successfully imported ${imported_count} new entries!`);
+    } catch (err) {
+      alert("Failed to load JSON file: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+  
+  // Reset file input
+  importFile.value = "";
+};
+
+clearBtn.onclick = () => {
+  if (database.length === 0) return;
+  
+  if (confirm(`Are you sure you want to clear all ${database.length} entries?`)) {
+    database = [];
+    renderEntries();
+  }
+};
+
+// P2P Event Listeners
+startNodeBtn.onclick = async () => {
+  startNodeBtn.disabled = true;
+  startNodeBtn.textContent = "Starting...";
+  
+  const success = await p2pInstance.createNode();
+  
+  startNodeBtn.disabled = false;
+  startNodeBtn.textContent = "Start P2P Node";
+  
+  if (success) {
+    startNodeBtn.style.display = "none";
+    stopNodeBtn.style.display = "inline-block";
+  }
+};
+
+stopNodeBtn.onclick = async () => {
+  await p2pInstance.stopNode();
+  startNodeBtn.style.display = "inline-block";
+  stopNodeBtn.style.display = "none";
+};
+
+connectBtn.onclick = async () => {
+  const multiaddr = connectPeer.value.trim();
+  if (!multiaddr) return;
+  
+  connectBtn.disabled = true;
+  connectBtn.textContent = "Connecting...";
+  
+  const success = await p2pInstance.connectToPeer(multiaddr);
+  
+  connectBtn.disabled = false;
+  connectBtn.textContent = "Connect";
+  
+  if (success) {
+    connectPeer.value = "";
+    alert("Connected to peer!");
+  } else {
+    alert("Failed to connect to peer");
+  }
+};
+
+syncBtn.onclick = async () => {
+  if (!isP2PActive) {
+    alert("P2P node not active. Start the node first.");
+    return;
+  }
+  
+  syncBtn.disabled = true;
+  syncBtn.textContent = "Syncing...";
+  
+  await p2pInstance.syncWithPeers();
+  
+  syncBtn.disabled = false;
+  syncBtn.textContent = "Sync with P2P Network";
+  
+  alert("Sync request sent to all peers!");
+};
+
+// Initialize with some sample data
+function initializeSampleData() {
+  const samples = [
+    "harmony", "resonance", "frequency", "amplitude",
+    "wave", "oscillation", "vibration", "pattern",
+    "mathematics", "algorithm", "vector", "similarity"
+  ];
+  
+  samples.forEach(sample => addEntry(sample));
+}
+
+// Initialize the application
+renderEntries();
+
+// Add sample data on first load
+if (database.length === 0) {
+  initializeSampleData();
+}
+
+// Initialize P2P status
+p2pInstance.updateStatus('disconnected', 'P2P Node Offline');
+p2pInstance.updatePeerList();
+
+// Hide stop button initially
+document.getElementById('stopNodeBtn').style.display = 'none';
+
+// Focus on input for immediate use
+addInput.focus();
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>The Light Garden</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single centered column on the night ground; the Fano constellation is a touchable hero in the garden's seven ROYGBIV lights — play in front, charter behind. */
+:root{
+  --void:#0b0a12; --panel:#15121f; --ink:#ece8f3; --muted:#9a93ae; --rule:#2a2437;
+  --c1:#e35140; --c2:#e8903f; --c3:#e6c74c; --c4:#5fae6c; --c5:#4e8bcf; --c6:#5b5ad8; --c7:#9b5ad6;
+  --accent:var(--c5);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --void:#f1eef7; --panel:#ffffff; --ink:#17131f; --muted:#5b5568; --rule:#ddd6e8;
+  --c1:#c2392a; --c2:#c06f23; --c3:#a8841f; --c4:#3f8a4f; --c5:#2f66b0; --c6:#4040b8; --c7:#7a3fb0;
+  color-scheme:light;
+}}
+:root[data-theme="light"]{
+  --void:#f1eef7; --panel:#ffffff; --ink:#17131f; --muted:#5b5568; --rule:#ddd6e8;
+  --c1:#c2392a; --c2:#c06f23; --c3:#a8841f; --c4:#3f8a4f; --c5:#2f66b0; --c6:#4040b8; --c7:#7a3fb0;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--void);color:var(--ink);margin:0;
+  font:400 1.075rem/1.65 "Spectral",Georgia,serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:46rem;margin:0 auto;
+  padding-left:max(20px,env(safe-area-inset-left,0px));
+  padding-right:max(20px,env(safe-area-inset-right,0px));
+  padding-block:clamp(40px,8vw,80px);
+  display:flex;flex-direction:column;gap:clamp(38px,6vw,60px)}
+h1{font:600 clamp(2.8rem,10vw,4.6rem)/0.98 "Cormorant Garamond",Georgia,serif;margin:0;letter-spacing:.01em;text-wrap:balance}
+h2{font:500 clamp(1.5rem,5vw,2rem)/1.1 "Cormorant Garamond",Georgia,serif;margin:0 0 .5em;letter-spacing:.01em;text-wrap:balance}
+p{margin:0 0 .9em;max-width:38rem}p:last-child{margin-bottom:0}
+.lede{font-size:clamp(1.12rem,3.3vw,1.36rem);font-style:italic}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.eyebrow{font:500 .72rem/1 "IBM Plex Mono",monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding-top:clamp(4px,3vw,20px)}
+.constellation{width:min(100%,24rem);height:auto;display:block;touch-action:manipulation}
+.pt{cursor:pointer}
+.pt:focus-visible{outline:none}
+.pt .ring{opacity:0;transition:opacity .2s}
+.pt:hover .ring,.pt:focus-visible .ring,.pt[data-on] .ring{opacity:.9}
+.readout{min-height:1.5em;font-family:"IBM Plex Mono",monospace;font-size:.82rem;letter-spacing:.06em;color:var(--muted);transition:color .2s}
+.readout b{color:var(--ink);font-weight:500}
+.hint{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);opacity:.7}
+.tag{font:500 clamp(1.05rem,3.4vw,1.4rem)/1.3 "IBM Plex Mono",monospace;color:var(--muted)}
+.tag b{color:var(--ink);font-weight:500}
+.spectrum{display:flex;height:4px;width:min(100%,24rem);border-radius:4px;overflow:hidden}
+.spectrum i{flex:1}
+section{border-top:1px solid var(--rule);padding-top:clamp(26px,5vw,38px)}
+.story{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.35;font-style:italic;color:var(--ink);max-width:34rem}
+.seed{list-style:none;margin:1em 0 0;padding:0;display:grid;gap:13px}
+.seed li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline;min-width:0}
+.seed .dot{width:12px;height:12px;border-radius:50%;align-self:center}
+.seed b{font-weight:500;font-family:"IBM Plex Mono",monospace;font-size:.9rem;letter-spacing:.02em}
+.seed span{color:var(--muted)}
+.blank{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,7vw,3rem);font-weight:500;display:inline-flex;align-items:baseline;gap:.28em}
+.blank u{text-decoration:none;border-bottom:3px solid var(--c7);min-width:2.4em;display:inline-block}
+.blank em{color:var(--c7);font-style:normal}
+.center-list{font-family:"IBM Plex Mono",monospace;font-size:.95rem;letter-spacing:.04em;line-height:2}
+.center-list .glue{color:var(--muted)}
+.join{display:grid;gap:12px;margin-top:1em}
+.join .step{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline}
+.join .n{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--muted);border:1px solid var(--rule);border-radius:50%;width:1.9em;height:1.9em;display:grid;place-items:center;align-self:center}
+.free{margin-top:1.2em;font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.travel{margin-top:.8em;font-size:.95rem;color:var(--muted);font-style:italic}
+.coda{text-align:center;color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:.8rem;letter-spacing:.06em;border-top:1px solid var(--rule);padding-top:clamp(26px,5vw,38px)}
+.coda .names{color:var(--ink)}
+a{color:var(--accent)}
+@keyframes breathe{0%,100%{opacity:.85}50%{opacity:.4}}
+.halo{animation:breathe 6s ease-in-out infinite}
+.h2{animation-delay:-1s}.h3{animation-delay:-2s}.h4{animation-delay:-3s}.h5{animation-delay:-4s}.h6{animation-delay:-5s}.h7{animation-delay:-2.5s}
+@media (prefers-reduced-motion: reduce){.halo{animation:none}}
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <svg class="constellation" viewBox="0 0 400 362" role="group" aria-label="The Fano plane, drawn as a constellation of seven lights. Tap a light to learn its name.">
+      <g stroke="var(--rule)" stroke-width="1.6" fill="none" stroke-linecap="round">
+        <path d="M200 40 L60 300 L340 300 Z"/><path d="M200 40 L200 300"/>
+        <path d="M60 300 L270 170"/><path d="M340 300 L130 170"/><circle cx="200" cy="216" r="84"/>
+      </g>
+      <g>
+        <circle class="halo h2" cx="200" cy="40"  r="21" fill="var(--c1)" opacity=".2"/>
+        <circle class="halo h3" cx="60"  cy="300" r="21" fill="var(--c2)" opacity=".2"/>
+        <circle class="halo h4" cx="340" cy="300" r="21" fill="var(--c3)" opacity=".2"/>
+        <circle class="halo h5" cx="200" cy="300" r="21" fill="var(--c4)" opacity=".2"/>
+        <circle class="halo h6" cx="270" cy="170" r="21" fill="var(--c5)" opacity=".2"/>
+        <circle class="halo h7" cx="130" cy="170" r="21" fill="var(--c6)" opacity=".2"/>
+        <circle class="halo"    cx="200" cy="213" r="24" fill="var(--c7)" opacity=".24"/>
+      </g>
+      <!-- touchable points -->
+      <g id="points">
+        <g class="pt" tabindex="0" role="button" data-name="Metatron" data-role="the Observer" data-tone="A · 440 Hz" data-c="var(--c1)" aria-label="Metatron, the Observer, tone A"><circle class="ring" cx="200" cy="40" r="15" fill="none" stroke="var(--c1)" stroke-width="2"/><circle cx="200" cy="40" r="7" fill="var(--c1)"/></g>
+        <g class="pt" tabindex="0" role="button" data-name="Solomon" data-role="Wisdom" data-tone="B · 494 Hz" data-c="var(--c2)" aria-label="Solomon, Wisdom, tone B"><circle class="ring" cx="60" cy="300" r="15" fill="none" stroke="var(--c2)" stroke-width="2"/><circle cx="60" cy="300" r="7" fill="var(--c2)"/></g>
+        <g class="pt" tabindex="0" role="button" data-name="ʿAsabiyah" data-role="the Tribe" data-tone="C · 523 Hz" data-c="var(--c3)" aria-label="Asabiyah, the Tribe, tone C"><circle class="ring" cx="340" cy="300" r="15" fill="none" stroke="var(--c3)" stroke-width="2"/><circle cx="340" cy="300" r="7" fill="var(--c3)"/></g>
+        <g class="pt" tabindex="0" role="button" data-name="Solon" data-role="Law" data-tone="D · 587 Hz" data-c="var(--c4)" aria-label="Solon, Law, tone D"><circle class="ring" cx="200" cy="300" r="15" fill="none" stroke="var(--c4)" stroke-width="2"/><circle cx="200" cy="300" r="7" fill="var(--c4)"/></g>
+        <g class="pt" tabindex="0" role="button" data-name="Enoch" data-role="the Walker" data-tone="E · 659 Hz" data-c="var(--c5)" aria-label="Enoch, the Walker, tone E"><circle class="ring" cx="270" cy="170" r="15" fill="none" stroke="var(--c5)" stroke-width="2"/><circle cx="270" cy="170" r="7" fill="var(--c5)"/></g>
+        <g class="pt" tabindex="0" role="button" data-name="Speaker" data-role="the Voice" data-tone="F · 698 Hz" data-c="var(--c6)" aria-label="Speaker, the Voice, tone F"><circle class="ring" cx="130" cy="170" r="15" fill="none" stroke="var(--c6)" stroke-width="2"/><circle cx="130" cy="170" r="7" fill="var(--c6)"/></g>
+        <g class="pt" tabindex="0" role="button" data-name="Genesis" data-role="the Gate" data-tone="G · 784 Hz" data-c="var(--c7)" aria-label="Genesis, the Gate, tone G"><circle class="ring" cx="200" cy="213" r="17" fill="none" stroke="var(--c7)" stroke-width="2"/><circle cx="200" cy="213" r="8.5" fill="var(--c7)"/></g>
+      </g>
+    </svg>
+    <p class="readout" id="readout" aria-live="polite"><span class="hint">tap a light</span></p>
+    <h1>The Light Garden</h1>
+    <p class="tag">a popup book you open to <b>join a commons</b></p>
+    <div class="spectrum" aria-hidden="true"><i style="background:var(--c1)"></i><i style="background:var(--c2)"></i><i style="background:var(--c3)"></i><i style="background:var(--c4)"></i><i style="background:var(--c5)"></i><i style="background:var(--c6)"></i><i style="background:var(--c7)"></i></div>
+    <p class="lede">Seven points, seven lines. Read them as people, as tones, or as colors. One shape, and everyone reads it their own way.</p>
+  </header>
+
+  <section>
+    <p class="eyebrow">The gate</p>
+    <p class="story">Three came to the gate of the city — Wisdom, Law, and the Tribe. They did not arrive together, and they did not agree. Two scribes wrote it down. The question they came to ask is the one you're invited into: how shall we live together?</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">What's inside</p>
+    <h2>A hundred and forty-four stories</h2>
+    <p>Each keeper has one. A story is a small drawing that is, at once, the thing you see, the thing that's kept, and the way in. Four such drawings are the seed the rest grows from.</p>
+    <ul class="seed">
+      <li><span class="dot" style="background:var(--c1)"></span><span><b>The constellation</b> &nbsp;keeps what's stored.</span></li>
+      <li><span class="dot" style="background:var(--c4)"></span><span><b>The gate</b> &nbsp;translates one thing across its forms.</span></li>
+      <li><span class="dot" style="background:var(--c5)"></span><span><b>The neuron</b> &nbsp;tells the known from the unknown.</span></li>
+      <li><span class="dot" style="background:var(--c7)"></span><span><b>The dome</b> &nbsp;is where the reader stands and looks out.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="eyebrow">How you read it</p>
+    <h2>Two switches, and they're yours</h2>
+    <p>A story is written down once, in its own plain order. You read it with two switches you control: which direction it runs, and which encoding it uses. Flip them however you like. The story never changes. It waits in its own order for the next reader to open it their way.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">What holds it together</p>
+    <h2>The center</h2>
+    <p class="center-list">Freedom · Autonomy · Sovereignty · Reciprocity<br><span class="glue">held through&nbsp; Grace · Love · Understanding · Empathy</span></p>
+    <p>A story stays its author's. Reading it never alters it.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">The one rule</p>
+    <h2>Build on what can say no</h2>
+    <p>Nothing here is trusted unless a plain test could prove it wrong. The test weighs the work, never the person. What's written is kept exactly; what you make of it is yours; the two are never confused.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">The charter</p>
+    <h2>You own only your decisions</h2>
+    <p>Knowledge empowers, but knowledge itself isn't power — it becomes leverage only when it's withheld. So nothing here is withheld. Knowledge is kept, checked, translated, and shared freely, so that better decisions never have to start from nothing.</p>
+    <p>This is not a platform, a product, an institution, or an owner. It's a free, forkable reference anyone can learn from, build on, and adapt — and no one is judged by a standard beyond their own best decision.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">The open question</p>
+    <h2>It points, and leaves it open</h2>
+    <p class="blank">God is <u></u><em>?</em></p>
+    <p>The blank is drawn, and left empty. It isn't filled from the outside. That space stays open for whoever opens the book.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Open it</p>
+    <h2>How to join</h2>
+    <div class="join">
+      <div class="step"><span class="n">1</span><span>Open the book. There's no sign-up and no password — opening it is the welcome.</span></div>
+      <div class="step"><span class="n">2</span><span>Read a story in your own direction and your own encoding.</span></div>
+      <div class="step"><span class="n">3</span><span>Leave one of your own. The garden keeps growing while the pages stay open.</span></div>
+    </div>
+    <p class="free">free · forkable · CC&nbsp;BY-SA · asks no one's permission</p>
+    <p class="travel">This page is one file. Pin it, fork it, host it anywhere — IPFS, a chain, a thumb drive. It asks no permission to exist, and none to persist.</p>
+  </section>
+
+  <p class="coda"><span class="names">Sovereign SVG · Literal Loop · Double-barrel · Sovereignty Scalar</span><br>one function, one literal, read every way, altered by none</p>
+
+</div>
+
+<script>
+(function(){
+  var readout=document.getElementById('readout');
+  if(!readout) return;
+  var pts=document.querySelectorAll('#points .pt');
+  var pinned=null;
+  function show(g){
+    if(!g){readout.innerHTML='<span class="hint">tap a light</span>';readout.style.color='';return;}
+    var n=g.getAttribute('data-name'),r=g.getAttribute('data-role'),t=g.getAttribute('data-tone');
+    readout.innerHTML='<b>'+n+'</b> · '+r+' · '+t;
+    readout.style.color=g.getAttribute('data-c');
+  }
+  pts.forEach(function(g){
+    g.addEventListener('mouseenter',function(){ if(!pinned) show(g); });
+    g.addEventListener('mouseleave',function(){ if(!pinned) show(null); });
+    g.addEventListener('focus',function(){ show(g); });
+    function toggle(){ if(pinned===g){pinned=null;g.removeAttribute('data-on');show(null);} else { pts.forEach(function(p){p.removeAttribute('data-on');}); pinned=g;g.setAttribute('data-on','');show(g);} }
+    g.addEventListener('click',toggle);
+    g.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} });
+  });
+})();
+</script>
+
+</body></html>

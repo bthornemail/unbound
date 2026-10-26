@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philosophical Constellation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #64b5f6, #81c784, #ffb74d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        
+        .visualization-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #constellation {
+            width: 100%;
+            height: 700px;
+            border-radius: 15px;
+            background: radial-gradient(circle at center, rgba(100, 181, 246, 0.1) 0%, transparent 70%);
+        }
+        
+        .node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .node:hover {
+            transform-origin: center;
+            animation: pulse 1s infinite;
+        }
+        
+        .node-circle {
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+        
+        .node-text {
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            pointer-events: none;
+        }
+        
+        .connection-line {
+            stroke: rgba(255, 255, 255, 0.2);
+            stroke-width: 1;
+            opacity: 0.6;
+        }
+        
+        .polygon-path {
+            fill: none;
+            stroke: rgba(100, 181, 246, 0.4);
+            stroke-width: 2;
+            stroke-dasharray: 5,5;
+            opacity: 0.7;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            background: rgba(100, 181, 246, 0.2);
+            border: 1px solid rgba(100, 181, 246, 0.5);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background: rgba(100, 181, 246, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .control-btn.active {
+            background: rgba(100, 181, 246, 0.6);
+        }
+        
+        .info-panel {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .node-info {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Philosophical Constellation</h1>
+        <p class="subtitle">A geometric mapping of consciousness and existence</p>
+        
+        <div class="visualization-container">
+            <svg id="constellation" viewBox="0 0 800 700">
+                <!-- Background circles for reference -->
+                <circle cx="400" cy="350" r="100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <circle cx="400" cy="350" r="150" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <circle cx="400" cy="350" r="200" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <circle cx="400" cy="350" r="250" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            </svg>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn active" onclick="toggleView('constellation')">Constellation</button>
+            <button class="control-btn" onclick="toggleView('polygon')">Polygon</button>
+            <button class="control-btn" onclick="toggleView('radial')">Radial</button>
+            <button class="control-btn" onclick="toggleLabels()">Toggle Labels</button>
+        </div>
+        
+        <div class="info-panel">
+            <div id="node-info" class="node-info">
+                <h3>Click a node to explore its properties</h3>
+                <p>Each concept is positioned based on its mathematical signature - combining length, trigonometric values, and distance from center.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const nodes = [
+            { label: 'WORD', length: 4, sin: 0.220687666874, cos: -0.8028776377074802, hypot: 158.61273593252216 },
+            { label: 'OF', length: 2, sin: 0.8189694980088413, cos: -0.738886476686837, hypot: 105.55093557141026 },
+            { label: 'GOD', length: 3, sin: 0.6409863898212246, cos: -0.8287125069803852, hypot: 126.11899143269423 },
+            { label: 'CONSCIOUS', length: 9, sin: -0.998425109210433, cos: 0.4887578286578185, hypot: 232.1120419107979 },
+            { label: 'DISCERNMENT', length: 11, sin: -0.9261009178830361, cos: -0.6566019548168714, hypot: 250.4595775769016 },
+            { label: 'ATTENTION', length: 9, sin: -0.99774961448846, cos: 0.5072277878310437, hypot: 232.14650546583724 },
+            { label: 'OBSERVATION', length: 11, sin: -0.33319084970286134, cos: 0.656705065931082, hypot: 255.54256005605015 },
+            { label: 'EXISTENCE', length: 9, sin: -0.2388652198985888, cos: -0.8201712333800959, hypot: 227.7586441828279 },
+            { label: 'FREEDOM', length: 7, sin: -0.7384975416473207, cos: 0.5391810767331712, hypot: 194.7819293466414 },
+            { label: 'AUTONOMY', length: 8, sin: 0.414259756535543, cos: 0.3296375971904362, hypot: 225.65903482909786 },
+            { label: 'RECIPROCITY', length: 11, sin: -0.23719244918800006, cos: 0.498502580479822, hypot: 255.85738214872754 },
+            { label: 'SOVEREIGNTY', length: 11, sin: 0.9924035846542879, cos: -0.37842484533730397, hypot: 261.1570408777064 },
+            { label: 'RELATIONSHIPS', length: 13, sin: 0.29358887526122557, cos: -0.154169666948357, hypot: 277.28505188704275 },
+            { label: 'ROLES', length: 5, sin: -0.8712084737931206, cos: 0.5995916031218397, hypot: 174.3301465610581 },
+            { label: 'RULES', length: 5, sin: -0.16570295749625444, cos: -0.8853979857031379, hypot: 177.12989583918352 },
+            { label: 'RESPONSIBILITIES', length: 16, sin: -0.2727748694082873, cos: 0.4238162668440545, hypot: 306.8256834099779 },
+            { label: 'REFERENCES', length: 10, sin: -0.7493536843445043, cos: 0.972269128055703, hypot: 234.20930809854676 },
+            { label: 'ENTITY', length: 6, sin: -0.575371240014862, cos: 0.14609304784669525, hypot: 195.46610959447676 },
+            { label: 'IDENTITY', length: 8, sin: 0.673768776073281, cos: -0.8569545372561784, hypot: 219.45386758952324 },
+            { label: 'GENESIS', length: 7, sin: 0.5924218336088813, cos: -0.7622545681223598, hypot: 199.38405151867087 },
+            { label: 'REVELATION', length: 10, sin: 0.9970431074894595, cos: 0.06884443865071334, hypot: 241.56365620680606 }
+        ];
+
+        const centerX = 400;
+        const centerY = 350;
+        const scale = 0.8;
+        let currentView = 'constellation';
+        let showLabels = true;
+
+        function getColor(index, total) {
+            const hue = (index * 360 / total) % 360;
+            return `hsl(${hue}, 70%, 60%)`;
+        }
+
+        function calculatePosition(node, index) {
+            switch(currentView) {
+                case 'constellation':
+                    return {
+                        x: centerX + (node.hypot * node.cos * scale),
+                        y: centerY + (node.hypot * node.sin * scale)
+                    };
+                case 'polygon':
+                    const angle = (index * 2 * Math.PI) / nodes.length;
+                    const radius = 200;
+                    return {
+                        x: centerX + radius * Math.cos(angle),
+                        y: centerY + radius * Math.sin(angle)
+                    };
+                case 'radial':
+                    const radialAngle = (index * 2 * Math.PI) / nodes.length;
+                    const radialRadius = (node.hypot * scale * 0.8);
+                    return {
+                        x: centerX + radialRadius * Math.cos(radialAngle),
+                        y: centerY + radialRadius * Math.sin(radialAngle)
+                    };
+                default:
+                    return { x: centerX, y: centerY };
+            }
+        }
+
+        function renderVisualization() {
+            const svg = document.getElementById('constellation');
+            svg.innerHTML = `
+                <circle cx="400" cy="350" r="100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <circle cx="400" cy="350" r="150" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <circle cx="400" cy="350" r="200" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <circle cx="400" cy="350" r="250" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            `;
+
+            // Draw connections
+            if (currentView === 'constellation' || currentView === 'polygon') {
+                const positions = nodes.map((node, index) => calculatePosition(node, index));
+                
+                // Draw polygon outline
+                const pathData = positions.map((pos, index) => 
+                    index === 0 ? `M ${pos.x} ${pos.y}` : `L ${pos.x} ${pos.y}`
+                ).join(' ') + ' Z';
+                
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', pathData);
+                path.setAttribute('class', 'polygon-path');
+                svg.appendChild(path);
+
+                // Draw connection lines to center
+                positions.forEach(pos => {
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', centerX);
+                    line.setAttribute('y1', centerY);
+                    line.setAttribute('x2', pos.x);
+                    line.setAttribute('y2', pos.y);
+                    line.setAttribute('class', 'connection-line');
+                    svg.appendChild(line);
+                });
+            }
+
+            // Draw nodes
+            nodes.forEach((node, index) => {
+                const pos = calculatePosition(node, index);
+                const color = getColor(index, nodes.length);
+                const radius = Math.max(4, Math.min(12, node.length * 1.5));
+
+                // Create node group
+                const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                group.setAttribute('class', 'node');
+                group.setAttribute('data-index', index);
+
+                // Node circle
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', pos.x);
+                circle.setAttribute('cy', pos.y);
+                circle.setAttribute('r', radius);
+                circle.setAttribute('fill', color);
+                circle.setAttribute('class', 'node-circle');
+                group.appendChild(circle);
+
+                // Node label
+                if (showLabels) {
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', pos.x);
+                    text.setAttribute('y', pos.y - radius - 8);
+                    text.setAttribute('text-anchor', 'middle');
+                    text.setAttribute('font-size', '12');
+                    text.setAttribute('fill', color);
+                    text.setAttribute('class', 'node-text');
+                    text.textContent = node.label;
+                    group.appendChild(text);
+                }
+
+                // Add click handler
+                group.addEventListener('click', () => showNodeInfo(node, index));
+                
+                svg.appendChild(group);
+            });
+        }
+
+        function toggleView(view) {
+            currentView = view;
+            document.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderVisualization();
+        }
+
+        function toggleLabels() {
+            showLabels = !showLabels;
+            renderVisualization();
+        }
+
+        function showNodeInfo(node, index) {
+            const infoDiv = document.getElementById('node-info');
+            const angle = Math.atan2(node.sin, node.cos) * (180 / Math.PI);
+            
+            infoDiv.innerHTML = `
+                <h3>${node.label}</h3>
+                <p><strong>Length:</strong> ${node.length} characters</p>
+                <p><strong>Distance from Center:</strong> ${node.hypot.toFixed(2)} units</p>
+                <p><strong>Angle:</strong> ${angle.toFixed(1)}°</p>
+                <p><strong>Trigonometric Values:</strong></p>
+                <ul>
+                    <li>Sin: ${node.sin.toFixed(4)}</li>
+                    <li>Cos: ${node.cos.toFixed(4)}</li>
+                    <li>Tan: ${node.tan.toFixed(6)}</li>
+                </ul>
+                <p><strong>Position:</strong> This concept occupies a unique position in the philosophical space, derived from its mathematical signature.</p>
+            `;
+            infoDiv.style.display = 'block';
+        }
+
+        // Initialize
+        renderVisualization();
+    </script>
+</body>
+</html>

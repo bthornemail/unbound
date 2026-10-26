@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Epistemic Observability Engine — Canvas Model</title>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --panel: #121820;
+    --border: #1e2a38;
+    --text: #e6edf3;
+    --muted: #8b9bb4;
+    --accent: #3b82f6;
+    --kk: #22c55e;
+    --ku: #eab308;
+    --uk: #f97316;
+    --uu: #ef4444;
+    --cyan: #22d3ee;
+    --purple: #a78bfa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--panel);
+  }
+  header h1 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  header .badge {
+    font-size: 0.7rem;
+    background: #1e3a5f;
+    color: var(--cyan);
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    flex: 1;
+    min-height: 0;
+  }
+  .canvas-wrap {
+    position: relative;
+    background: #0a0e13;
+    border-right: 1px solid var(--border);
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .sidebar {
+    background: var(--panel);
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .section {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    background: #0f1520;
+  }
+  .section h2 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+  .row:last-child { margin-bottom: 0; }
+  label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    min-width: 70px;
+  }
+  input[type="range"] {
+    flex: 1;
+    accent-color: var(--accent);
+  }
+  input[type="number"] {
+    width: 64px;
+    background: #0b0f14;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+  button {
+    background: #1e3a5f;
+    color: var(--text);
+    border: 1px solid #2a4a6f;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  button:hover { background: #2a4a6f; }
+  button.primary {
+    background: var(--accent);
+    border-color: #2563eb;
+  }
+  button.primary:hover { background: #2563eb; }
+  button.danger {
+    background: #7f1d1d;
+    border-color: #991b1b;
+  }
+  .bars {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+  }
+  .bar-label {
+    width: 28px;
+    font-weight: 600;
+  }
+  .bar-track {
+    flex: 1;
+    height: 10px;
+    background: #1a2332;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.25s ease;
+  }
+  .bar-val {
+    width: 36px;
+    text-align: right;
+    color: var(--muted);
+  }
+  .kk .bar-fill { background: var(--kk); }
+  .ku .bar-fill { background: var(--ku); }
+  .uk .bar-fill { background: var(--uk); }
+  .uu .bar-fill { background: var(--uu); }
+  .metric {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+  }
+  .metric span:last-child {
+    font-family: ui-monospace, monospace;
+    color: var(--cyan);
+  }
+  .log {
+    font-family: ui-monospace, monospace;
+    font-size: 0.7rem;
+    max-height: 140px;
+    overflow-y: auto;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .log .entry { margin-bottom: 2px; }
+  .log .cid { color: var(--purple); }
+  .hint {
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+  .status {
+    display: flex;
+    gap: 12px;
+    font-size: 0.75rem;
+  }
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 8px 20px;
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--panel);
+    display: flex;
+    justify-content: space-between;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .canvas-wrap { height: 420px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Epistemic Observability Engine</h1>
+  <div class="status">
+    <span class="status-item"><span class="dot" style="background:var(--kk)"></span> KK</span>
+    <span class="status-item"><span class="dot" style="background:var(--ku)"></span> KU</span>
+    <span class="status-item"><span class="dot" style="background:var(--uk)"></span> UK</span>
+    <span class="status-item"><span class="dot" style="background:var(--uu)"></span> UU</span>
+    <span class="badge">Canvas Model · v1.0</span>
+  </div>
+</header>
+
+<div class="layout">
+  <div class="canvas-wrap">
+    <canvas id="c"></canvas>
+  </div>
+
+  <aside class="sidebar">
+    <!-- Epistemic State -->
+    <div class="section">
+      <h2>Epistemic Vector</h2>
+      <div class="bars">
+        <div class="bar-row kk">
+          <span class="bar-label">KK</span>
+          <div class="bar-track"><div class="bar-fill" id="bar-kk" style="width:40%"></div></div>
+          <span class="bar-val" id="val-kk">0.40</span>
+        </div>
+        <div class="bar-row ku">
+          <span class="bar-label">KU</span>
+          <div class="bar-track"><div class="bar-fill" id="bar-ku" style="width:30%"></div></div>
+          <span class="bar-val" id="val-ku">0.30</span>
+        </div>
+        <div class="bar-row uk">
+          <span class="bar-label">UK</span>
+          <div class="bar-track"><div class="bar-fill" id="bar-uk" style="width:50%"></div></div>
+          <span class="bar-val" id="val-uk">0.50</span>
+        </div>
+        <div class="bar-row uu">
+          <span class="bar-label">UU</span>
+          <div class="bar-track"><div class="bar-fill" id="bar-uu" style="width:25%"></div></div>
+          <span class="bar-val" id="val-uu">0.25</span>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button onclick="randomizeEpistemic()">Randomize</button>
+        <button onclick="resetEpistemic()">Reset</button>
+      </div>
+    </div>
+
+    <!-- Observability -->
+    <div class="section">
+      <h2>Observability · UK · φ(V)</h2>
+      <div class="row">
+        <label>Vertices V</label>
+        <input type="range" id="v-slider" min="1" max="2000" value="100" oninput="updateV(this.value)">
+        <input type="number" id="v-num" value="100" min="1" max="5000" onchange="updateV(this.value)">
+      </div>
+      <div class="metric"><span>φ(V)</span><span id="phi-val">40</span></div>
+      <div class="metric"><span>UK · φ(V)</span><span id="obs-val">20.00</span></div>
+      <div class="metric"><span>Bound status</span><span id="bound-status" style="color:var(--kk)">stable</span></div>
+      <p class="hint" style="margin-top:8px">As V grows, UK variance would explode. Multiplying by Euler’s totient φ(V) keeps the observable state bounded.</p>
+    </div>
+
+    <!-- Geometry / Canonicalization -->
+    <div class="section">
+      <h2>Geometry & Canonicalization</h2>
+      <div class="row">
+        <button class="primary" onclick="addPoint()">Add Point</button>
+        <button onclick="canonicalize()">Canonicalize</button>
+        <button class="danger" onclick="clearPoints()">Clear</button>
+      </div>
+      <p class="hint" style="margin-top:8px">Click canvas to place points. Canonicalize runs successive reflections toward the dominant chamber (x≥0, y≥0).</p>
+    </div>
+
+    <!-- Q* & RBAC -->
+    <div class="section">
+      <h2>Q* Cost & Geometric RBAC</h2>
+      <div class="metric"><span>Q* cost J</span><span id="q-cost">—</span></div>
+      <div class="metric"><span>Access</span><span id="access-status">—</span></div>
+      <div class="row" style="margin-top:8px">
+        <button onclick="computeQ()">Evaluate Q*</button>
+        <button onclick="checkAccess()">Check Access</button>
+      </div>
+      <p class="hint" style="margin-top:8px">Q* minimizes ||UK·φ − observation||. Access is granted when Euclidean distance to grant point &lt; threshold.</p>
+    </div>
+
+    <!-- Provenance -->
+    <div class="section">
+      <h2>Provenance Log (Merkle-style)</h2>
+      <div class="log" id="log"></div>
+      <div class="row" style="margin-top:8px">
+        <button onclick="clearLog()">Clear Log</button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <span>Kernel · Canonicalization · Observability Parameterizer · Q* · Geometric RBAC</span>
+  <span>Single-file canvas model of the Epistemic Observability Engine</span>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// Core State
+// ─────────────────────────────────────────────────────────────
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+let W = 0, H = 0, cx = 0, cy = 0, scale = 1;
+
+const state = {
+  points: [],           // {x,y, id, color, canonical}
+  epistemic: { kk: 0.4, ku: 0.3, uk: 0.5, uu: 0.25 },
+  V: 100,
+  phi: 40,
+  obs: 20,
+  grantPoint: { x: 0.6, y: 0.4 },
+  threshold: 0.55,
+  animating: false,
+  log: []
+};
+
+// ─────────────────────────────────────────────────────────────
+// Math helpers
+// ─────────────────────────────────────────────────────────────
+function eulerTotient(n) {
+  n = Math.floor(Math.max(1, n));
+  let result = n;
+  for (let p = 2; p * p <= n; p++) {
+    if (n % p === 0) {
+      while (n % p === 0) n /= p;
+      result -= result / p;
+    }
+  }
+  if (n > 1) result -= result / n;
+  return Math.floor(result);
+}
+
+function dist(a, b) {
+  const dx = a.x - b.x, dy = a.y - b.y;
+  return Math.sqrt(dx*dx + dy*dy);
+}
+
+function reflect(p, normal) {
+  // Reflect point p over the line defined by unit normal
+  const dot = p.x * normal.x + p.y * normal.y;
+  return {
+    x: p.x - 2 * dot * normal.x,
+    y: p.y - 2 * dot * normal.y
+  };
+}
+
+// Simple roots for 2-D “Weyl” approximation of dominant chamber
+const SIMPLE_ROOTS = [
+  { x: 1, y: 0 },   // reflect over y-axis if x < 0
+  { x: 0, y: 1 }    // reflect over x-axis if y < 0
+];
+
+function isDominant(p) {
+  return p.x >= -1e-9 && p.y >= -1e-9;
+}
+
+function canonicalizePoint(p) {
+  let cur = { ...p };
+  const path = [{ ...cur }];
+  // Max 4 reflections is enough in 2-D
+  for (let i = 0; i < 6; i++) {
+    if (isDominant(cur)) break;
+    if (cur.x < 0) {
+      cur = reflect(cur, SIMPLE_ROOTS[0]);
+      path.push({ ...cur });
+    }
+    if (cur.y < 0) {
+      cur = reflect(cur, SIMPLE_ROOTS[1]);
+      path.push({ ...cur });
+    }
+  }
+  return path;
+}
+
+// ─────────────────────────────────────────────────────────────
+// Logging / Provenance
+// ─────────────────────────────────────────────────────────────
+function cid() {
+  return 'mlss://' + Math.random().toString(16).slice(2, 10);
+}
+
+function log(msg, type = 'info') {
+  const entry = { t: Date.now(), msg, type, cid: cid() };
+  state.log.unshift(entry);
+  if (state.log.length > 40) state.log.pop();
+  renderLog();
+}
+
+function renderLog() {
+  const el = document.getElementById('log');
+  el.innerHTML = state.log.map(e =>
+    `<div class="entry"><span class="cid">${e.cid.slice(0,14)}</span> · ${e.msg}</div>`
+  ).join('');
+}
+
+function clearLog() {
+  state.log = [];
+  renderLog();
+}
+
+// ─────────────────────────────────────────────────────────────
+// Epistemic UI
+// ─────────────────────────────────────────────────────────────
+function updateEpistemicUI() {
+  const e = state.epistemic;
+  const max = Math.max(e.kk, e.ku, e.uk, e.uu, 0.01);
+  document.getElementById('bar-kk').style.width = (e.kk / max * 100) + '%';
+  document.getElementById('bar-ku').style.width = (e.ku / max * 100) + '%';
+  document.getElementById('bar-uk').style.width = (e.uk / max * 100) + '%';
+  document.getElementById('bar-uu').style.width = (e.uu / max * 100) + '%';
+  document.getElementById('val-kk').textContent = e.kk.toFixed(2);
+  document.getElementById('val-ku').textContent = e.ku.toFixed(2);
+  document.getElementById('val-uk').textContent = e.uk.toFixed(2);
+  document.getElementById('val-uu').textContent = e.uu.toFixed(2);
+  updateObservability();
+}
+
+function randomizeEpistemic() {
+  state.epistemic = {
+    kk: +(Math.random() * 0.9 + 0.1).toFixed(2),
+    ku: +(Math.random() * 0.9 + 0.1).toFixed(2),
+    uk: +(Math.random() * 0.9 + 0.1).toFixed(2),
+    uu: +(Math.random() * 0.9 + 0.1).toFixed(2)
+  };
+  updateEpistemicUI();
+  log('Epistemic vector randomized');
+}
+
+function resetEpistemic() {
+  state.epistemic = { kk: 0.4, ku: 0.3, uk: 0.5, uu: 0.25 };
+  updateEpistemicUI();
+  log('Epistemic vector reset');
+}
+
+// ─────────────────────────────────────────────────────────────
+// Observability
+// ─────────────────────────────────────────────────────────────
+function updateV(v) {
+  v = Math.max(1, Math.min(5000, +v || 1));
+  state.V = v;
+  document.getElementById('v-slider').value = Math.min(2000, v);
+  document.getElementById('v-num').value = v;
+  updateObservability();
+}
+
+function updateObservability() {
+  state.phi = eulerTotient(state.V);
+  state.obs = state.epistemic.uk * state.phi;
+  document.getElementById('phi-val').textContent = state.phi;
+  document.getElementById('obs-val').textContent = state.obs.toFixed(2);
+  const bound = state.obs < 200 ? 'stable' : state.obs < 800 ? 'elevated' : 'high';
+  const el = document.getElementById('bound-status');
+  el.textContent = bound;
+  el.style.color = bound === 'stable' ? 'var(--kk)' : bound === 'elevated' ? 'var(--ku)' : 'var(--uu)';
+}
+
+// ─────────────────────────────────────────────────────────────
+// Points & Geometry
+// ─────────────────────────────────────────────────────────────
+function addPoint(px, py) {
+  let x, y;
+  if (px !== undefined) {
+    // from click (pixel → normalized)
+    x = (px - cx) / scale;
+    y = (cy - py) / scale; // flip y
+  } else {
+    x = (Math.random() - 0.5) * 2.4;
+    y = (Math.random() - 0.5) * 2.4;
+  }
+  const id = state.points.length;
+  state.points.push({
+    x, y, id,
+    color: `hsl(${(id * 47) % 360}, 70%, 60%)`,
+    path: null,
+    step: 0
+  });
+  log(`Point P${id} added at (${x.toFixed(2)}, ${y.toFixed(2)})`);
+  draw();
+}
+
+function clearPoints() {
+  state.points = [];
+  log('All points cleared');
+  draw();
+}
+
+function canonicalize() {
+  if (state.animating) return;
+  state.animating = true;
+  let any = false;
+  state.points.forEach(p => {
+    if (!isDominant(p)) {
+      p.path = canonicalizePoint(p);
+      p.step = 0;
+      any = true;
+    }
+  });
+  if (!any) {
+    log('All points already in dominant chamber');
+    state.animating = false;
+    return;
+  }
+  log('Canonicalization started (Weyl reflections)');
+  animateCanonicalize();
+}
+
+function animateCanonicalize() {
+  let done = true;
+  state.points.forEach(p => {
+    if (p.path && p.step < p.path.length - 1) {
+      p.step++;
+      const next = p.path[p.step];
+      p.x = next.x;
+      p.y = next.y;
+      done = false;
+    }
+  });
+  draw();
+  if (!done) {
+    requestAnimationFrame(() => setTimeout(animateCanonicalize, 220));
+  } else {
+    state.points.forEach(p => { p.path = null; });
+    state.animating = false;
+    log('Canonicalization complete → dominant chamber');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Q* & Access
+// ─────────────────────────────────────────────────────────────
+function computeQ() {
+  // Synthetic observation = average of current points projected
+  let obsX = 0, obsY = 0;
+  if (state.points.length) {
+    state.points.forEach(p => { obsX += p.x; obsY += p.y; });
+    obsX /= state.points.length;
+    obsY /= state.points.length;
+  } else {
+    obsX = 0.3; obsY = 0.2;
+  }
+  // Target state derived from observability
+  const target = state.obs / 100; // scale
+  const J = Math.sqrt((state.epistemic.uk * state.phi / 100 - target) ** 2 + (obsX - 0.4) ** 2);
+  document.getElementById('q-cost').textContent = J.toFixed(4);
+  log(`Q* cost J = ${J.toFixed(4)} (observation vs UK·φ)`);
+}
+
+function checkAccess() {
+  if (!state.points.length) {
+    document.getElementById('access-status').textContent = 'no points';
+    return;
+  }
+  // Use first point as agent, grantPoint as resource
+  const agent = state.points[0];
+  const d = dist(agent, state.grantPoint);
+  const allowed = d < state.threshold;
+  const el = document.getElementById('access-status');
+  el.textContent = allowed ? 'GRANTED' : 'DENIED';
+  el.style.color = allowed ? 'var(--kk)' : 'var(--uu)';
+  log(`RBAC check: dist=${d.toFixed(3)} ${allowed ? '< threshold → GRANT' : '≥ threshold → DENY'}`);
+  draw();
+}
+
+// ─────────────────────────────────────────────────────────────
+// Drawing
+// ─────────────────────────────────────────────────────────────
+function resize() {
+  const wrap = canvas.parentElement;
+  W = wrap.clientWidth;
+  H = wrap.clientHeight;
+  canvas.width = W * devicePixelRatio;
+  canvas.height = H * devicePixelRatio;
+  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  cx = W / 2;
+  cy = H / 2;
+  scale = Math.min(W, H) * 0.32;
+  draw();
+}
+
+function toScreen(p) {
+  return {
+    x: cx + p.x * scale,
+    y: cy - p.y * scale
+  };
+}
+
+function drawGrid() {
+  ctx.strokeStyle = '#1a2332';
+  ctx.lineWidth = 1;
+  // axes
+  ctx.beginPath();
+  ctx.moveTo(0, cy); ctx.lineTo(W, cy);
+  ctx.moveTo(cx, 0); ctx.lineTo(cx, H);
+  ctx.stroke();
+
+  // dominant chamber shading
+  ctx.fillStyle = 'rgba(34, 197, 94, 0.06)';
+  ctx.fillRect(cx, 0, W - cx, cy);
+
+  // unit circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, scale, 0, Math.PI * 2);
+  ctx.strokeStyle = '#1e2a38';
+  ctx.stroke();
+
+  // labels
+  ctx.fillStyle = '#4a5568';
+  ctx.font = '11px system-ui';
+  ctx.fillText('+x', W - 24, cy - 6);
+  ctx.fillText('+y', cx + 6, 14);
+  ctx.fillText('dominant chamber', cx + 12, 28);
+}
+
+function drawGrant() {
+  const s = toScreen(state.grantPoint);
+  // threshold circle
+  ctx.beginPath();
+  ctx.arc(s.x, s.y, state.threshold * scale, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(167, 139, 250, 0.35)';
+  ctx.setLineDash([4, 4]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  // grant point
+  ctx.beginPath();
+  ctx.arc(s.x, s.y, 7, 0, Math.PI * 2);
+  ctx.fillStyle = '#a78bfa';
+  ctx.fill();
+  ctx.fillStyle = '#c4b5fd';
+  ctx.font = '11px system-ui';
+  ctx.fillText('grant', s.x + 10, s.y - 6);
+}
+
+function drawPoints() {
+  state.points.forEach(p => {
+    const s = toScreen(p);
+    // trail if animating
+    if (p.path) {
+      ctx.beginPath();
+      p.path.forEach((pt, i) => {
+        const sp = toScreen(pt);
+        if (i === 0) ctx.moveTo(sp.x, sp.y);
+        else ctx.lineTo(sp.x, sp.y);
+      });
+      ctx.strokeStyle = p.color + '88';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+    // point
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, 8, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    ctx.strokeStyle = '#0b0f14';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    // id
+    ctx.fillStyle = '#e6edf3';
+    ctx.font = '10px system-ui';
+    ctx.fillText('P' + p.id, s.x + 10, s.y + 4);
+  });
+}
+
+function drawEpistemicRadar() {
+  // small radar in corner
+  const rx = 70, ry = H - 70, r = 42;
+  const e = state.epistemic;
+  const vals = [e.kk, e.ku, e.uk, e.uu];
+  const colors = ['#22c55e', '#eab308', '#f97316', '#ef4444'];
+  const labels = ['KK', 'KU', 'UK', 'UU'];
+  const max = Math.max(...vals, 0.5);
+
+  ctx.beginPath();
+  ctx.arc(rx, ry, r, 0, Math.PI * 2);
+  ctx.strokeStyle = '#1e2a38';
+  ctx.stroke();
+
+  ctx.beginPath();
+  vals.forEach((v, i) => {
+    const ang = -Math.PI / 2 + i * (Math.PI / 2);
+    const len = (v / max) * r;
+    const x = rx + Math.cos(ang) * len;
+    const y = ry + Math.sin(ang) * len;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(59, 130, 246, 0.15)';
+  ctx.fill();
+  ctx.strokeStyle = '#3b82f6';
+  ctx.stroke();
+
+  vals.forEach((v, i) => {
+    const ang = -Math.PI / 2 + i * (Math.PI / 2);
+    const x = rx + Math.cos(ang) * (r + 12);
+    const y = ry + Math.sin(ang) * (r + 12);
+    ctx.fillStyle = colors[i];
+    ctx.font = '9px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(labels[i], x, y + 3);
+  });
+  ctx.textAlign = 'left';
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  drawGrid();
+  drawGrant();
+  drawPoints();
+  drawEpistemicRadar();
+}
+
+// ─────────────────────────────────────────────────────────────
+// Events
+// ─────────────────────────────────────────────────────────────
+canvas.addEventListener('click', e => {
+  const rect = canvas.getBoundingClientRect();
+  addPoint(e.clientX - rect.left, e.clientY - rect.top);
+});
+
+window.addEventListener('resize', resize);
+
+// ─────────────────────────────────────────────────────────────
+// Init
+// ─────────────────────────────────────────────────────────────
+function init() {
+  resize();
+  updateEpistemicUI();
+  // seed a few points
+  addPoint();
+  addPoint();
+  log('Engine ready · click canvas to place points');
+  log('Core formula active: Observable = UK · φ(V)');
+}
+
+init();
+</script>
+</body>
+</html>

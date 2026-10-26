@@ -1,0 +1,180 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { Activity, Zap, Compass, Maximize2, Cpu } from 'lucide-react';
+
+/**
+ * ATOMIC INCIDENCE MONITOR (7! SYNC)
+ * Integrates the τ₇ Fano and τ₁₅ Sonar clocks to drive 
+ * a massive Unicode projection surface.
+ */
+
+// --- Timing Constants (from AtomicKernel.Timing) ---
+const MASTER_PERIOD = 5040; // 7!
+const GOAL_CYCLE = 360;
+const SONAR_PERIOD = 60;
+const FANO_PERIOD = 7;
+
+const FANO_LINES = [
+  [0, 1, 3], [0, 2, 5], [0, 4, 6],
+  [1, 2, 4], [1, 5, 6],
+  [2, 3, 6],
+  [3, 4, 5]
+];
+
+// --- Plane Mapping ---
+const PLANES = [
+  { name: "BMP", range: [0x2800, 0x2BFF], label: "Basic Multilingual (Tactile/Math)" },
+  { name: "SMP", range: [0x10100, 0x1013F], label: "Supplementary (Aegean/Ancient)" },
+  { name: "SIP", range: [0x20000, 0x2003F], label: "Ideographic (Structure)" },
+  { name: "TIP", range: [0x30000, 0x3003F], label: "Tertiary (Abstract)" }
+];
+
+const App = () => {
+  const [tick, setTick] = useState(0);
+  const [isRunning, setIsRunning] = useState(true);
+  const [speed, setSpeed] = useState(80); // ms per tick
+
+  useEffect(() => {
+    let timer;
+    if (isRunning) {
+      timer = setInterval(() => {
+        setTick(t => (t + 1) % MASTER_PERIOD);
+      }, speed);
+    }
+    return () => clearInterval(timer);
+  }, [isRunning, speed]);
+
+  // --- Derived Animation State ---
+  const sonar = useMemo(() => {
+    const phase = tick % SONAR_PERIOD;
+    const channel = Math.floor(phase / 15);
+    const lane = phase % 15;
+    return { phase, channel, lane, cycle: Math.floor(tick / SONAR_PERIOD) };
+  }, [tick]);
+
+  const fano = useMemo(() => {
+    const phase = tick % FANO_PERIOD;
+    return { phase, triplet: FANO_LINES[phase] };
+  }, [tick]);
+
+  // Compute the "Current Codepoint" based on Sonar/Fano intersection
+  const activeCodepoint = useMemo(() => {
+    const planeBase = PLANES[sonar.channel].range[0];
+    // Use sonar lane as the primary offset, and Fano phase as the jitter
+    const offset = (sonar.lane * 4) + fano.phase;
+    return planeBase + offset;
+  }, [sonar, fano]);
+
+  const alignment = useMemo(() => {
+    const sPhase = tick % SONAR_PERIOD;
+    const fPhase = tick % FANO_PERIOD;
+    const diff = Math.abs((sPhase * FANO_PERIOD) - (fPhase * SONAR_PERIOD)) % 420;
+    return 1.0 - (diff / 420);
+  }, [tick]);
+
+  const char = String.fromCodePoint(activeCodepoint);
+
+  return (
+    <div className="min-h-screen bg-black text-white p-6 font-mono overflow-hidden flex flex-col">
+      {/* Top HUD */}
+      <div className="flex justify-between items-start border-b border-white/10 pb-4 mb-4">
+        <div>
+          <h1 className="text-sm font-black tracking-widest text-white/40 flex items-center gap-2">
+            <Cpu size={14} className="text-blue-500" /> ATOMIC_INCIDENCE_SURFACE // {MASTER_PERIOD}!!
+          </h1>
+          <div className="flex gap-4 mt-1">
+             <div className="text-[10px] text-blue-400">TICK: {tick.toString().padStart(4, '0')}</div>
+             <div className="text-[10px] text-emerald-400">CH: {PLANES[sonar.channel].name}</div>
+             <div className="text-[10px] text-amber-400">JITTER: {(alignment * 100).toFixed(0)}%</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-4">
+          <input 
+            type="range" min="20" max="300" value={speed} onChange={e => setSpeed(Number(e.target.value))}
+            className="w-20 accent-white"
+          />
+          <button onClick={() => setIsRunning(!isRunning)} className="text-[10px] border border-white/20 px-2 py-1 hover:bg-white hover:text-black transition">
+            {isRunning ? "HALT" : "RESUME"}
+          </button>
+        </div>
+      </div>
+
+      {/* Main Animation Frame */}
+      <div className="flex-1 relative flex items-center justify-center border border-white/5 rounded-lg bg-gradient-to-b from-transparent to-blue-900/5">
+        
+        {/* Massive Background Glyph - The "Display" */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+          <span className="text-[60vh] leading-none text-white/[0.03] transition-all duration-300 transform scale-110">
+            {char}
+          </span>
+        </div>
+
+        {/* Primary Glyph Presentation */}
+        <div className="relative z-10 flex flex-col items-center gap-8">
+          <div className={`text-[40vh] leading-none transition-all duration-150 ${alignment > 0.8 ? 'text-white scale-105' : 'text-white/80'}`} 
+               style={{ textShadow: alignment > 0.9 ? '0 0 40px rgba(255,255,255,0.3)' : 'none' }}>
+            {char}
+          </div>
+          
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-2xl font-bold tracking-widest bg-white text-black px-4 py-1">
+              U+{activeCodepoint.toString(16).toUpperCase()}
+            </span>
+            <span className="text-[10px] text-white/40 uppercase tracking-[0.3em]">
+              Plane: {PLANES[sonar.channel].label}
+            </span>
+          </div>
+        </div>
+
+        {/* Fano Overlay (Corner) */}
+        <div className="absolute bottom-8 right-8 text-right space-y-2">
+          <div className="flex gap-1 justify-end">
+            {[0,1,2,3,4,5,6].map(p => (
+              <div key={p} className={`w-1 h-4 ${fano.triplet.includes(p) ? 'bg-blue-500 shadow-[0_0_8px_blue]' : 'bg-white/10'}`} />
+            ))}
+          </div>
+          <p className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Fano Line Active</p>
+        </div>
+
+        {/* Sonar Progress Overlay (Bottom) */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-white/5">
+          <div className="h-full bg-emerald-500 transition-all duration-150" 
+               style={{ width: `${(sonar.phase / 60) * 100}%`, boxShadow: '0 0 10px #10b981' }} />
+        </div>
+      </div>
+
+      {/* HUD Footer: Structural Metadata */}
+      <div className="grid grid-cols-4 gap-4 mt-4 text-[10px] font-bold uppercase tracking-tighter">
+        <div className="border border-white/10 p-3 bg-white/5">
+          <p className="text-white/40 mb-1">Rotation (360°)</p>
+          <div className="flex items-center gap-2">
+            <Compass size={12} className="text-amber-500" />
+            <span>{(tick % GOAL_CYCLE).toString().padStart(3, '0')} / {GOAL_CYCLE}</span>
+          </div>
+        </div>
+        <div className="border border-white/10 p-3 bg-white/5">
+          <p className="text-white/40 mb-1">Sync State</p>
+          <div className="flex items-center gap-2">
+            <Zap size={12} className={tick % 120 === 0 ? "text-white" : "text-white/20"} />
+            <span>{tick % 120 === 0 ? "COHERENT" : "DRIFTING"}</span>
+          </div>
+        </div>
+        <div className="border border-white/10 p-3 bg-white/5">
+          <p className="text-white/40 mb-1">Incidence Type</p>
+          <div className="flex items-center gap-2">
+            <Activity size={12} className="text-blue-400" />
+            <span>τ₇ ∩ τ₁₅ Intersection</span>
+          </div>
+        </div>
+        <div className="border border-white/10 p-3 bg-white/5">
+          <p className="text-white/40 mb-1">Status</p>
+          <div className="flex items-center gap-2">
+            <Maximize2 size={12} className="text-emerald-500" />
+            <span>MASTER_SYNC_7!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;

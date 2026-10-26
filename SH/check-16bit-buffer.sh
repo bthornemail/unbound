@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Validate the fixed buffer-size invariant implied by a 16-bit state space.
+# This is structural self-validation, not cryptographic authentication.
+
+set -eu
+
+BUSYBOX=${BUSYBOX:-busybox}
+FILE=${1:-}
+
+[ -n "$FILE" ] || {
+    printf 'Usage: sh check-16bit-buffer.sh FILE\n' >&2
+    exit 2
+}
+
+[ -r "$FILE" ] || {
+    printf 'Cannot read: %s\n' "$FILE" >&2
+    exit 2
+}
+
+BYTES=$("$BUSYBOX" wc -c < "$FILE")
+[ "$BYTES" -eq 65536 ] || {
+    printf 'FAIL: expected 65536 bytes, got %s\n' "$BYTES" >&2
+    exit 1
+}
+
+printf '%s\n' 'PASS: 16-bit buffer length is 65536 bytes'
