@@ -92,6 +92,8 @@ PLAN9/space/floor.c
 PLAN9/src/space.rc
 PLAN9/space/observe.c
 PLAN9/src/observe.rc
+PLAN9/space/agentd.c
+PLAN9/src/agentd.rc
 PLAN9/src/zcast.c
 PLAN9/src/cast.rc
 PLAN9/src/stack.c

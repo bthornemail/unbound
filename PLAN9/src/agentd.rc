@@ -1,0 +1,11 @@
+#!/bin/rc
+# agentd.rc - inside Plan 9: serve the running floor's agents on tcp port 8000
+# (forwarded to the host's 127.0.0.1:18000 by run.sh), one agentd a connection.
+# Start the floor first (space.rc -o).
+rfork e
+w=/tmp/zad
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/space/agentd.c} || exit tar
+@{cd $w/unbound/PLAN9/space && 8c agentd.c && 8l -o $w/agentd agentd.8} || exit compile
+aux/listen1 -t tcp!*!8000 $w/agentd

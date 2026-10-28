@@ -62,3 +62,7 @@ boxed is public with a 273 MB .git; a push carrying a binary archive (d2dc754) t
 frames-server
 00:00:14.000 --> 00:00:15.000
 python3 PLAN9/frames.py serves /frame.png and /vtt/... on 127.0.0.1:8790 while QEMU runs; nothing in the guest changes. pkill -f with a pattern found in the shell's own command line stops that shell: stop a server by its port (lsof -t -iTCP:PORT).
+
+restart-guest
+00:00:15.000 --> 00:00:16.000
+To restart the guest: fshalt in Plan 9 (fossil flushed), then quit at the monitor; QEMU exits a few seconds later. run.sh boots again; then the screen (aux/vga, binds), the floor (space.rc -o) and agentd (agentd.rc) are started again. The floor starts at its seeds.
