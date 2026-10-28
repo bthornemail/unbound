@@ -103,6 +103,11 @@ PLAN9/src/zpcas.c
 PLAN9/src/pcas.rc
 PLAN9/src/zobs.c
 PLAN9/src/obs.rc
+PLAN9/src/vtttime.rc
+PLAN9/src/zgrex.c
+PLAN9/src/grex.rc
+$(cd "$HERE" && ls in/grex/* | sed 's|^|PLAN9/|')
+$(cd "$HERE" && ls in/vtttime/* | sed 's|^|PLAN9/|')
 PLAN9/in/pcas/table
 PLAN9/in/fano/table
 $(cd "$HERE" && ls in/pss/* | sed 's|^|PLAN9/|')

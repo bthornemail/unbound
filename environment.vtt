@@ -86,3 +86,7 @@ QEMU vmgenid is a 128-bit GUID changed on snapshot restore, readable by guest fi
 rc-apostrophe
 00:00:20.000 --> 00:00:21.000
 An apostrophe in an unquoted rc word (the module's) opens a quote: the script fails with token EOF at its end. Keep messages in rc scripts free of apostrophes, or quote them with doubled quotes.
+
+character-universe
+00:00:21.000 --> 00:00:22.000
+A negated class ([^...]) needs a universe of characters, which WSN leaves undefined: the regex-constraints port chose printable ASCII, 0x20 to 0x7E. A token outside it is outside the grammar, where the JavaScript would still match it.

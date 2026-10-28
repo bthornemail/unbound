@@ -38,3 +38,7 @@ unbound/PLAN9: zaudit.c, audit.rc and in/audit (the 138 records read from ~/devo
 boxed-images
 00:00:08.000 --> 00:00:09.000
 boxed pushed (45f6001): 9legacy-qemu.img.bz2 (132 MB) taken out of the author's commit, kept on disk; it and plan9-usb.img.bz2 (242 MB) listed in .gitignore, both over GitHub's 100 MB limit.
+
+omi-dom-port
+00:00:09.000 --> 00:00:10.000
+The omi-dom port, 2026-10-28: 7 of 48 shared modules in Plan 9 (unbound/PLAN9/src), each checked against the module's own output: projective-swap-space (zpss; the turn is its even half), fano-7d-gate (zfano; its involution cannot fail), parallel-engine (zpe; compare-exchange, with proofs/proof.c's race fixed), polytope-cas (zpcas; a real linear involution, boxedPINE's three swaps summed), observer-sync (zobs; observers that read, with a falsifier), hit-zones-cues (wsn/vtttime.wsn; 145 invalid timestamps found), regex-constraints (wsn/g.wsn and zgrex; 6 constraints are not context-free). 41 remain; github omi-dom main holds both of Grok's versions (e1e379c) and awaits every selfTest (614b39e).

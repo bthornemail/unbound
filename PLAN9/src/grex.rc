@@ -1,0 +1,37 @@
+#!/bin/rc
+# grex.rc - inside Plan 9: omi-dom's regex-constraints ported. Its 17
+# constraints without backreferences are productions of wsn/g.wsn, asked by
+# zlazy; its 6 with backreferences are zgrex.c. Every token's answers must be
+# the module's own (in/grex, written by its admits() on the host). zprec on
+# the grammar.
+rfork e
+ifs='
+'
+w=/tmp/zgx
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zlazy.c PLAN9/src/zprec.c PLAN9/src/zgrex.c PLAN9/wsn/g.wsn PLAN9/in/grex} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(t in zlazy zprec zgrex){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+g=$p/wsn/g.wsn
+fail=0
+{ for(t in `{cat $p/in/grex/tokens}){
+	b=''
+	for(n in `{cat $p/in/grex/productions}){
+		if($w/zlazy $g $n $t >/dev/null) b=$b^1
+		if not b=$b^0
+	}
+	echo $b
+} } > $w/wsn.bits
+$w/zgrex < $p/in/grex/tokens > $w/grex.bits
+if(cmp -s $w/wsn.bits $p/in/grex/expected.wsn) echo ok the 17 constraints in WSN answer as the module for every token
+if not { echo FAIL the WSN constraints differ from the module; fail=1 }
+if(cmp -s $w/grex.bits $p/in/grex/expected.grex) echo ok the 6 backreference constraints in C answer as the module for every token
+if not { echo FAIL the backreference constraints differ from the module; fail=1 }
+echo `{wc -l < $p/in/grex/tokens} tokens
+$w/zprec $g | tail -1
+if(~ $fail 0) echo 'grex.rc: every answer as expected'
+@{cd $w && tar cf /dev/sd02/data wsn.bits grex.bits} || exit tar

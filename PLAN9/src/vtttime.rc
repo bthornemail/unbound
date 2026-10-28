@@ -1,0 +1,28 @@
+#!/bin/rc
+# vtttime.rc - inside Plan 9: omi-dom's hit-zones-cues, its contract: the
+# WebVTT timestamps and timing lines it writes (in/vtttime, written by the
+# module's own toVttTime and cuesToWebVTT on the host) against wsn/vtttime.wsn,
+# asked by zlazy; and zprec on the grammar. To the output disk as vtttime/.
+rfork e
+ifs='
+'
+w=/tmp/zvt
+rm -rf $w
+mkdir -p $w/unbound $w/vtttime
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zlazy.c PLAN9/src/zprec.c PLAN9/wsn/vtttime.wsn PLAN9/in/vtttime/times PLAN9/in/vtttime/timings} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(t in zlazy zprec){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+g=$p/wsn/vtttime.wsn
+fn ask {
+	if($w/zlazy $g $1 $2 >/dev/null) echo yes
+	if not echo no
+}
+{
+	$w/zprec $g
+	for(t in `{cat $p/in/vtttime/times}) echo TIME `{ask TIME $t} $t
+	for(t in `{cat $p/in/vtttime/timings}) echo TIMING `{ask TIMING $t} $t
+} > $w/vtttime/answers >[2=1]
+@{cd $w && tar cf /dev/sd02/data vtttime} || exit tar
