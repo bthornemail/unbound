@@ -1,0 +1,21 @@
+#!/bin/rc
+# poly.rc - inside Plan 9: omi-dom's polytope-9d-inject and polytope-10d-infer
+# ported (zpoly.c), checked against the modules (in/poly, written from the
+# JavaScript on the host), then what the widening does to apply's algebra.
+rfork e
+w=/tmp/zpoly
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zpoly.c PLAN9/in/poly/apply9 PLAN9/in/poly/apply10 PLAN9/in/poly/cascade} || exit tar
+cd $w/unbound/PLAN9/src
+8c zpoly.c && 8l -o $w/zpoly zpoly.8 || exit compile
+fail=0
+$w/zpoly test || fail=1
+for(t in apply9 apply10 cascade){
+	$w/zpoly $t > $w/$t
+	if(cmp -s $w/$t $w/unbound/PLAN9/in/poly/$t) echo ok $t gives what the module gives
+	if not { echo FAIL $t differs from the module; fail=1 }
+}
+$w/zpoly algebra || fail=1
+$w/zpoly deviation || fail=1
+if(~ $fail 0) echo 'poly.rc: every answer as expected'

@@ -90,3 +90,7 @@ An apostrophe in an unquoted rc word (the module's) opens a quote: the script fa
 character-universe
 00:00:21.000 --> 00:00:22.000
 A negated class ([^...]) needs a universe of characters, which WSN leaves undefined: the regex-constraints port chose printable ASCII, 0x20 to 0x7E. A token outside it is outside the grammar, where the JavaScript would still match it.
+
+nibble-parity-deviation
+00:00:22.000 --> 00:00:23.000
+The author: the nibble parity is the deviation from YHWH. Measured (zpoly deviation): what apply leaves in place, with each value's nibble parity, is 16 values at 8 bits (one application; parities 0 3 12 15), 4 at 10 bits (two applications; 000 155 2AA 3FF, parities 0 1 2 3, the top two bits, since a repeated nibble cancels) and 4 at 11 bits (000 020 050 070, parities 0 2 5 7). Each set folds to zero by XOR, but that holds for any linear map (the set is a subspace), so the fold is no evidence. YHWH as ASCII folds to 0E, not zero. The reading is recorded, not checked.
