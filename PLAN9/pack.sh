@@ -115,6 +115,9 @@ PLAN9/src/zprobe.c
 PLAN9/src/probe.rc
 PLAN9/src/zbar.c
 PLAN9/src/bar.rc
+PLAN9/src/zpipe.c
+PLAN9/src/pipe.rc
+$(cd "$HERE" && ls in/pipe/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/grex/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/vtttime/* | sed 's|^|PLAN9/|')
 PLAN9/in/pcas/table

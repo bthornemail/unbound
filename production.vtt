@@ -50,3 +50,7 @@ The omi-dom port, 2026-10-28: 9 of 48 shared modules in Plan 9, with polytope-9d
 omi-dom-port-11
 00:00:11.000 --> 00:00:12.000
 The omi-dom port, 2026-10-28: 11 of 48 shared modules in Plan 9, with system-probe (zprobe; its health was a constant) and worker-barrier (zbar; a real barrier, raced, with a falsifier). 37 remain.
+
+omi-dom-port-12
+00:00:12.000 --> 00:00:13.000
+The omi-dom port, 2026-10-28: 12 of 48 shared modules, with constraint-pipeline (zpipe; its text and binary paths read the same bytes differently, and admissible cannot be false). 36 remain. The I-series (proofs/js-docs/JS-PROOF-INDEX.md, 118 records, in WSN as wsn/js/catalog) is the ground each port cites, not re-proves.

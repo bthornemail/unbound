@@ -1,0 +1,41 @@
+#!/bin/rc
+# pipe.rc - inside Plan 9: omi-dom's constraint-pipeline ported (zpipe.c),
+# every input's five layer counts against the module's own (in/pipe/expected,
+# written by runPipeline on the host); the binary path forced on the text
+# inputs; each text line the module yields asked of wsn/pipeline.wsn's LINE
+# by zlazy; zprec on the delimiter layer as the regex states it (pipe.wsn)
+# and as the text path applies it (pipeline.wsn).
+rfork e
+ifs='
+'
+w=/tmp/zpipe
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zpipe.c PLAN9/src/zlazy.c PLAN9/src/zprec.c PLAN9/wsn/pipe.wsn PLAN9/wsn/pipeline.wsn PLAN9/in/pipe} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(t in zpipe zlazy zprec){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+fail=0
+ins=`{cd $p/in/pipe && ls | grep '^[0-9]+$'}
+@{cd $p/in/pipe && $w/zpipe $ins} > $w/got
+if(cmp -s $w/got $p/in/pipe/expected) echo ok every input gives the five counts the module gives, `{wc -l < $w/got} inputs
+if not { echo FAIL the counts differ from the module; diff $w/got $p/in/pipe/expected; fail=1 }
+@{cd $p/in/pipe && $w/zpipe -b $ins} > $w/forced
+awk 'NR==FNR { t[FNR] = $2; a[FNR] = $4 " " $5 " " $6 " " $7 " " $8; next }
+	t[FNR] == "text" { n++; if(a[FNR] != $4 " " $5 " " $6 " " $7 " " $8) d++ }
+	END { print "the same bytes through the binary path: " d " of " n " text inputs give other counts" }' $w/got $w/forced
+ifs='
+'
+g=$p/wsn/pipeline.wsn
+{ for(i in `{seq `{wc -l < $p/in/pipe/lines}}){
+	t=`{sed -n $i^p $p/in/pipe/lines}
+	if($w/zlazy $g LINE $"t >/dev/null) echo yes
+	if not echo no
+} } > $w/lines
+if(cmp -s $w/lines $p/in/pipe/lines.expected) echo ok zlazy answers on `{wc -l < $w/lines} text lines of the module as the printable-ASCII expression does
+if not { echo FAIL zlazy differs on the lines; fail=1 }
+$w/zprec $p/wsn/pipe.wsn
+$w/zprec $g
+if(~ $fail 0) echo 'pipe.rc: every answer as expected'
