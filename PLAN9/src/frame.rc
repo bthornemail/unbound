@@ -1,0 +1,32 @@
+#!/bin/rc
+# frame.rc - inside Plan 9: serve the frame (zframe) at /n/frame, tick it, and
+# check the returns: segments after 8, the count after 60, both after 120.
+rfork ne
+ifs='
+'
+w=/tmp/zfr
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zframe.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c zframe.c && 8l -o $w/zframe zframe.8 || exit compile
+mkdir -p /n/frame
+$w/zframe -m /n/frame || exit zframe
+fn segs { for(i in 0 1 2 3 4 5 6 7) cat /n/frame/$i | sed 's/.*state/state/' }
+fn show { for(i in 0 1 2 3 4 5 6 7) cat /n/frame/$i }
+fn ticks { for(k in `{seq 1 $1}) echo tick > /n/frame/ctl }
+segs > $w/seed
+show
+if(~ `{sed -n 2p $w/seed} `{sed -n 3p $w/seed}) echo frame.rc: SOLOMON and SOLON share a seed
+if not echo frame.rc: SOLOMON and SOLON have distinct seeds
+fail=0
+ticks 8
+if(! cmp -s $w/seed <{segs}){ echo frame.rc: FAIL segments not back after 8; fail=1 }
+if(! ~ `{cat /n/frame/tick} 8){ echo frame.rc: FAIL tick is not 8; fail=1 }
+ticks 52
+if(! ~ `{cat /n/frame/tick} 0){ echo frame.rc: FAIL tick not back at 0 after 60; fail=1 }
+if(cmp -s $w/seed <{segs}){ echo frame.rc: FAIL segments back after 60, not expected; fail=1 }
+ticks 60
+if(! ~ `{cat /n/frame/tick} 0 || ! cmp -s $w/seed <{segs}){ echo frame.rc: FAIL not all back after 120; fail=1 }
+if(~ $fail 0) echo 'frame.rc: segments return every 8 ticks, the count every 60, both together at 120'
+unmount /n/frame
