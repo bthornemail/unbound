@@ -158,3 +158,11 @@ src/stepd.c: the shared step() as a 9P file server at /n/step: R0 R1 R2 read the
 omi-dom-merge
 00:00:38.000 --> 00:00:39.000
 github omi-dom: Grok's two lines joined. The building version (22-23 September, from /home/main/Programs/omi-dom-stack) kept whole on branch snapshot-2026-09-22; main (the package version) gains only what it lacked: 11 modules, 12 docs, client/circuit.html. npm test now awaits every selfTest in its own process: 46 pass, 0 fail, 2 without selfTest.
+
+prec-c
+00:00:39.000 --> 00:00:40.000
+src/prec.c is prec.awk in Plan 9 C, line for line (wsn.awk's file form only). Over the same 447 files: the same 35,738 Wirth-Weber relations, each held in the same set of files; only the order of each file list differs, awk's being its hash order (precheck.rc).
+
+zprec
+00:00:40.000 --> 00:00:41.000
+src/zprec.c decides the four conditions of a simple precedence grammar on any WSN: no erasing rules ([ ] and { } derive the empty string in BNF), no useless rules, one relation per pair, unique right sides. wsn/step.wsn (STEP = SET FLAG TURN RESET) and wsn/turns.wsn (what stepd accepts, TURNS = TURN | TURN TURNS, without the empty string) pass all four. stack.wsn fails 1 (EMPTY) and 2 (the HELD productions are undefined until cast); the audit contract fails 1 (8 productions use [ ] or { }) and 2 (ERRORRECORD's rules unreachable from RECORD). WSN hides the empty string; it is still in the language.

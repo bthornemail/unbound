@@ -70,3 +70,15 @@ To restart the guest: fshalt in Plan 9 (fossil flushed), then quit at the monito
 rc-server-in-backquote
 00:00:16.000 --> 00:00:17.000
 A server started inside an rc backquote holds the backquote's pipe open and rc waits for ever; start it with its output to /dev/null. Delete does not free a console shell blocked so; the guest had to be quit and booted again. A redirection that fails (a read-only file) stops an rc script: try such a write in a subshell, @{...}.
+
+led-flag
+00:00:17.000 --> 00:00:18.000
+The VNC LED pseudo-encoding (RFB -261) has 3 bits: Caps, Num, Scroll. 9legacy's kbd.c drives only Num ("if(0 &amp;&amp; kbscan-&gt;caps) /* we don't implement caps lock */", Scroll never set), so this guest shows 000 (FLAG clear, the RESET default) or 010 (FLAG set): the one bit Plan 9 lights is FLAG, and the host can toggle it with QEMU sendkey num_lock. Recorded, not wired: -display none, so no VNC client sees it without -vnc 127.0.0.1:1 (a restart), and stepd cannot read the NumLock bit without a kernel change: a display, not an input.
+
+ged-absent
+00:00:18.000 --> 00:00:19.000
+QEMU's GED (ACPI0013) belongs to hardware-reduced machines (microvm, ARM virt). This guest runs QEMU's pc machine, which has no GED; I-120's GED in its title still has nothing behind it in this runtime.
+
+vmgenid-unused
+00:00:19.000 --> 00:00:20.000
+QEMU vmgenid is a 128-bit GUID changed on snapshot restore, readable by guest firmware through two fw_cfg blobs (/etc/vmgenid_guid, /etc/vmgenid_addr). Nothing here uses snapshots: it would mark world reloaded but has no reader. Recorded, not wired.
