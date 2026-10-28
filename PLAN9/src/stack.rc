@@ -1,0 +1,58 @@
+#!/bin/rc
+# stack.rc - inside Plan 9: the stack element served by stack.c at /n/stack,
+# tested live: identity (a read returns the byte written), fullness (a second
+# write while full is refused), and the cast (YHWH refuses a vowel, YAHWEH
+# takes it); then each zeroth's pipeline sequence through the element under
+# both casts, as cast.rc asks the grammar.
+rfork en
+w=/tmp/zst
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/stack.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c stack.c && 8l -o $w/stack stack.8 || exit compile
+$w/stack -m /n/stack || exit stack
+fail=0
+fn put { echo -n $1 >/n/stack/in >[2]/dev/null }
+fn get { cat /n/stack/out >[2]/dev/null }
+fn check {
+	if(~ $1 $2) echo ok $3
+	if not { echo FAIL $3: got $1 want $2; fail=1 }
+}
+fn takes { if(put $1) echo yes; if not echo no }
+
+# no cast: WSN leaves letter undefined, nothing is taken
+check `{takes Y} no 'no cast: Y refused'
+
+echo YHWH >/n/stack/cast
+check `{takes Y} yes 'YHWH: Y taken'
+st=`{cat /n/stack/state}
+check $"st 'full Y' 'state full Y'
+check `{takes H} no 'full: a second write refused'
+check `{get} Y 'identity: Y given back'
+check `{cat /n/stack/state} empty 'state empty'
+check `{if(get) echo yes; if not echo no} no 'empty: a read refused'
+check `{takes a} no 'YHWH: the vowel a refused'
+
+echo YAHWEH >/n/stack/cast
+check `{takes a} yes 'YAHWEH: a taken'
+check `{get} a 'identity: a given back, not A'
+check `{takes A} no 'YAHWEH: A refused (the cast holds a, lowered 0x20)'
+
+# each zeroth's pipeline sequence through the element, under both casts
+fn run {
+	echo $1 >/n/stack/cast
+	r=yes
+	for(c in $*(2-)) if(~ $r yes){
+		if(! put $c) r=no
+		if not if(! ~ `{get} $c) r=no
+	}
+	echo $r
+}
+check `{run YHWH Y H W H} yes 'YHWH sequence under YHWH'
+check `{run YAHWEH Y H W H} yes 'YHWH sequence under YAHWEH'
+check `{run YHWH Y a H W e H} no 'YAHWEH sequence under YHWH'
+check `{run YAHWEH Y a H W e H} yes 'YAHWEH sequence under YAHWEH'
+
+unmount /n/stack
+if(~ $fail 0) echo 'stack.rc: every answer as expected'

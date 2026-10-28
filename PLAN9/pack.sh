@@ -79,6 +79,10 @@ PLAN9/src/zplaces.c
 PLAN9/src/places.rc
 PLAN9/src/ztrie.c
 PLAN9/src/tries.rc
+PLAN9/src/zcast.c
+PLAN9/src/cast.rc
+PLAN9/src/stack.c
+PLAN9/src/stack.rc
 $(cd "$HERE" && ls in/tries/*.paths | sed 's|^|PLAN9/|')
 PLAN9/in/gen1.txt
 PLAN9/src/template.rc

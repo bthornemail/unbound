@@ -1,0 +1,47 @@
+#!/bin/rc
+# cast.rc - inside Plan 9: the stack element (wsn/stack.wsn) executed under the
+# type cast of each zeroth (zcast YHWH, zcast YAHWEH), by zlazy. Each typed
+# grammar is read by zwsn first; then each sentence is asked of STACK under both
+# casts, and the answer compared with the one expected.
+rfork e
+w=/tmp/zk
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zcast.c PLAN9/src/zlazy.c PLAN9/src/zwsn.c PLAN9/wsn/stack.wsn} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(t in zcast zlazy zwsn){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+for(z in YHWH YAHWEH){
+	$w/zcast $z > $w/$z.cast.wsn
+	cat $p/wsn/stack.wsn $w/$z.cast.wsn > $w/$z.wsn
+	echo '--' $z
+	cat $w/$z.cast.wsn
+	$w/zwsn $w/$z.wsn || exit zwsn
+}
+fail=0
+fn ask {
+	for(z in YHWH YAHWEH){
+		if($w/zlazy $w/$z.wsn STACK $1 >/dev/null) got=yes
+		if not got=no
+		if(~ $z YHWH) want=$2
+		if not want=$3
+		if(! ~ $got $want){
+			echo FAIL $z $1 got $got want $want
+			fail=1
+		}
+		if not echo $z $1 $got
+	}
+}
+# sentence                                      under YHWH  under YAHWEH
+ask 'in?Y'                                      yes yes
+ask 'in?Yout!Y'                                 yes yes
+ask 'in?Yout!H'                                 no  no
+ask 'in?a'                                      no  yes
+ask 'in?aout!a'                                 no  yes
+# YHWH through the element, letter by letter: the consonant skeleton
+ask 'in?Yout!Yin?Hout!Hin?Wout!Win?Hout!H'      yes yes
+# YAHWEH through the pipeline (vowels lowered), letter by letter
+ask 'in?Yout!Yin?aout!ain?Hout!Hin?Wout!Win?eout!ein?Hout!H' no yes
+if(~ $fail 0) echo 'cast.rc: every answer as expected'
