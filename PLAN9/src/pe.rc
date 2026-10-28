@@ -1,0 +1,14 @@
+#!/bin/rc
+# pe.rc - inside Plan 9: omi-dom's parallel-engine ported (zpe.c): its selfTest
+# and the values its engine gives, then the race (eight procs, one cell).
+rfork e
+w=/tmp/zpe
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zpe.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c zpe.c && 8l -o $w/zpe zpe.8 || exit compile
+fail=0
+$w/zpe test || fail=1
+$w/zpe race || fail=1
+if(~ $fail 0) echo 'pe.rc: every answer as expected'

@@ -67,8 +67,13 @@ compareexchange(u32int *p, u32int exp, u32int repl)
 {
 	u32int old;
 
-	old = *p;
-	if(old == exp && cas32(p, exp, repl))
-		return exp;
-	return old;
+	for(;;){
+		old = *p;
+		if(old != exp)
+			return old;
+		if(cas32(p, exp, repl))
+			return exp;
+		/* the cell changed between the read and cas32: read it again, rather
+		 * than return exp as though the exchange had happened */
+	}
 }

@@ -97,6 +97,8 @@ PLAN9/src/zpss.c
 PLAN9/src/pss.rc
 PLAN9/src/zfano.c
 PLAN9/src/fano.rc
+PLAN9/src/zpe.c
+PLAN9/src/pe.rc
 PLAN9/in/fano/table
 $(cd "$HERE" && ls in/pss/* | sed 's|^|PLAN9/|')
 PLAN9/src/zcue.c
