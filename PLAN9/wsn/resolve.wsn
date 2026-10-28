@@ -1,0 +1,1 @@
+RESOLUTION = "unknown_command fallback" | "invalid_input sanitize" | "stream_broken reconnect" | "version_mismatch upgrade" | "state_corrupt reset" | "unknown default" .

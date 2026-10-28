@@ -1,0 +1,113 @@
+#!/bin/rc
+# resolve.rc - inside Plan 9: omi-dom's shared/prolog-resolve.js in rc, as the
+# wordnet shim did for WordNet: no Prolog, a table and a lookup. A message is
+# classified by switch on glob patterns, the kind looked up in the rule table
+# (a here document), the action run as recover() does. Every case must give the
+# module's kind, action, rule and output (in/resolve, written by selfHeal on the
+# host); every version compatibleVersion's answer (awk, parseInt as JavaScript
+# reads it); each (kind, action) asked of wsn/resolve.wsn, in the relation exactly
+# when a rule matched. The module lowercases the message, then tests ePIPE: a
+# condition that cannot hold, since epipe beside it is what matches.
+rfork e
+w=/tmp/zres
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zlazy.c PLAN9/wsn/resolve.wsn PLAN9/in/resolve} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zlazy.c && 8l -o $w/zlazy zlazy.8 || exit compile
+tab='	'
+ifs='
+'
+cat > $w/rules <<'!'
+unknown_command fallback
+invalid_input sanitize
+stream_broken reconnect
+version_mismatch upgrade
+state_corrupt reset
+unknown default
+!
+# toLowerCase as far as the patterns can see: ASCII, and the Kelvin sign, which lowers to k
+fn classify {
+	m=`{echo -n $1 | tr 'A-ZK' 'a-zk'}
+	switch($"m){
+	case *'not found'* *'unknown command'*
+		echo unknown_command
+	case *invalid*
+		echo invalid_input
+	case *stream* *epipe*
+		echo stream_broken
+	case *version*
+		echo version_mismatch
+	case *corrupt*
+		echo state_corrupt
+	case *
+		echo unknown
+	}
+}
+fn field { echo -n $1 | awk -F'	' '{ print $'$2' }' }
+fn recover {
+	switch($1){
+	case fallback
+		echo 'help: known applets echo|cat|xor|true|false — tried: '^$"command
+	case sanitize
+		s=$"input
+		if(~ $s '') s=$"message
+		echo -n $s | tr -d -c 'A-Za-z0-9_.\055 \011\012\013\014\015   -     　﻿'
+		echo
+	case reconnect
+		echo 'streams reconnected (virtual)'
+	case upgrade
+		echo 'compat mode 1.36.0..2.0.0'
+	case reset
+		echo 'state reset'
+	case *
+		echo 'default recovery'
+	}
+}
+fail=0
+{ for(i in `{seq `{wc -l < $p/in/resolve/cases}}){
+	line=`{sed -n $i^p $p/in/resolve/cases}
+	kind=`{field $"line 1}
+	message=`{field $"line 2}
+	input=`{field $"line 3}
+	command=`{field $"line 4}
+	if(~ $"kind '') kind=`{classify $"message}
+	action=`{awk '$1 == "'$"kind'" { print $2 }' $w/rules}
+	rule=rule
+	if(~ $"action ''){ action=default; rule=none }
+	out=`{recover $"action}
+	echo $"kind^$tab^$"action^$tab^$rule^$tab^$"out
+} } > $w/got
+if(cmp -s $w/got $p/in/resolve/expected) echo ok every case gives the kind, action, rule and output of the module, `{wc -l < $w/got} cases
+if not { echo FAIL the cases differ; diff $w/got $p/in/resolve/expected; fail=1 }
+awk 'function num(x) { sub(/^[ \t\r\n]+/, "", x); sub(/^\+/, "", x); if(match(x, /^[0-9]+/)) return substr(x, 1, RLENGTH) + 0; return 0 }
+	function parse(s, a,  f, n, i) { sub(/-.*$/, "", s); n = split(s, f, "."); for(i = 1; i <= 3; i++) a[i] = i <= n ? num(f[i]) : 0 }
+	function cmp(a, b,  i) { for(i = 1; i <= 3; i++) if(a[i] != b[i]) return a[i] - b[i]; return 0 }
+	BEGIN { parse("1.36.0", lo); parse("2.0.0", hi) }
+	{ parse($0, v); print (cmp(v, lo) >= 0 && cmp(v, hi) <= 0) ? "yes" : "no" }' $p/in/resolve/versions > $w/versions
+if(cmp -s $w/versions $p/in/resolve/versions.expected) echo ok every version gets the answer of the module, `{wc -l < $w/versions} versions
+if not { echo FAIL the versions differ; diff $w/versions $p/in/resolve/versions.expected; fail=1 }
+{ for(i in `{seq `{wc -l < $w/got}}){
+	line=`{sed -n $i^p $w/got}
+	r=`{field $"line 3}
+	pair=`{field $"line 1}^' '^`{field $"line 2}
+	if($w/zlazy $p/wsn/resolve.wsn RESOLUTION $"pair >/dev/null) a=rule
+	if not a=none
+	if(~ $a $r) echo same
+	if not echo DIFFERS $"pair
+} } > $w/rel
+if(! grep -s DIFFERS $w/rel) echo ok each kind and action is in the WSN relation exactly when a rule matched
+if not { echo FAIL; grep DIFFERS $w/rel; fail=1 }
+# the module selfTest, its six assertions
+if(~ `{classify 'command not found'} unknown_command) echo ok classify not found
+if not fail=1
+if(~ `{awk '$1 == "unknown_command" { print $2 }' $w/rules} fallback) echo ok resolve fallback
+if not fail=1
+input='a<script>' message='' { o=`{recover sanitize} }
+if(! ~ $"o *'<'*) echo ok sanitize healed
+if not fail=1
+v=`{sed -n 1,3p $w/versions}
+if(~ $"v 'yes yes no') echo ok compat 1.36, compat 2.0, incompat 3.0
+if not fail=1
+if(~ $fail 0) echo 'resolve.rc: every answer as expected'

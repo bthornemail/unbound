@@ -1,0 +1,22 @@
+unknown_command	fallback	rule	help: known applets echo|cat|xor|true|false — tried: 
+unknown_command	fallback	rule	help: known applets echo|cat|xor|true|false — tried: zz
+invalid_input	sanitize	rule	invalid input
+invalid_input	sanitize	rule	Invalid version 3
+stream_broken	reconnect	rule	streams reconnected (virtual)
+stream_broken	reconnect	rule	streams reconnected (virtual)
+stream_broken	reconnect	rule	streams reconnected (virtual)
+version_mismatch	upgrade	rule	compat mode 1.36.0..2.0.0
+state_corrupt	reset	rule	state reset
+unknown	default	rule	default recovery
+unknown	default	rule	default recovery
+unknown_command	fallback	rule	help: known applets echo|cat|xor|true|false — tried: 
+unknown_command	fallback	rule	help: known applets echo|cat|xor|true|false — tried: 
+unknown_command	fallback	rule	help: known applets echo|cat|xor|true|false — tried: ls
+weird	default	none	default recovery
+unknown	default	rule	default recovery
+invalid_input	sanitize	rule	ascriptalert1script
+invalid_input	sanitize	rule	x y　z
+invalid_input	sanitize	rule	keep_this-one.ok not this
+stream_broken	reconnect	rule	streams reconnected (virtual)
+version_mismatch	upgrade	rule	compat mode 1.36.0..2.0.0
+state_corrupt	reset	rule	state reset

@@ -102,3 +102,7 @@ The author: the YHWH reading binds an observer to the ZIGUAROTH codex and the Co
 exhte-correction
 00:00:24.000 --> 00:00:25.000
 Correction to reading-binds: EXHTE is no invention. It is I-207's: BRIAN XOR CODEX XOR DEEPS = 45 58 48 54 45, EXHTE, a tag; I-226 folds the three to it (all three close to the witness, two make only a control-code difference), I-228 routes universal://EXHTE, and space.test.ts checks it in the Commons. And YHWH as ASCII folds to 0E, the same literal as I-207's year line, 20 XOR 26 = 0E. Recorded as two equal literals, not as one derived from the other.
+
+polytron-precursor
+00:00:25.000 --> 00:00:26.000
+The author, of omi-files/polytron (docs/INDEX.md, the Tetragrammatron; OSI_MODEL.md): "this is the previous version of this project before I knew binary or hexadecimal encoding or how to read or understand logic operations". Its kernel K(p, C) = rotl(p,1) ^ rotl(p,3) ^ rotr(p,2) ^ C (kernel.c, holemap.c, tetra-viewer.c) is boxedPINE's delta16 (core/src/verified/delta.ts, its period 8 proved in Coq), and its CONSTITUTIONAL_C is 0x1D, GS, the group separator of FS GS RS US (1C 1D 1E 1F), as tetra-viewer.c names it ("GS - constitutional gray"); 0001 1101, four bits set.
