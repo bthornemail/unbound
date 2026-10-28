@@ -170,3 +170,7 @@ src/zprec.c decides the four conditions of a simple precedence grammar on any WS
 omi-dom-pss
 00:00:41.000 --> 00:00:42.000
 First omi-dom module ported: shared/projective-swap-space.js as src/zpss.c (pss.rc). The module is a table of labels plus one computation, the 3! orderings of the layout unit (BL BO BPE). zpss gives its six orderings in its order, its role table exactly (both checked against the JavaScript's own output, in/pss) and its ten selfTest assertions; several of those assert the module's own constants. Against stepd, every sequence of up to three turns reaches 3 of the 6 orderings, the rotations (BL BO BPE, BO BPE BL, BPE BL BO); the three single swaps are never reached. The module does not reduce to the turn: the turn is its even half, the swaps (swap16-like) are the other.
+
+omi-dom-fano
+00:00:42.000 --> 00:00:43.000
+Second omi-dom module ported: shared/fano-7d-gate.js as src/zfano.c (fano.rc). Every byte gives what the module gives (256 of 256: phase, parity, the closure once and twice, the chirality locks, the strict gate, the line), the Fano axioms hold over its lines (each pair of the 7 points on one line, each point on 3), and its sixteen assertions pass, its two token forms under Plan 9 regexp(2). Finding: its 13-mask involution cannot fail (any XOR cascade applied twice cancels), and the 13 masks XOR to 0x00, so one pass is already the identity for all 256 bytes. Neither the turn nor an exchange: its own primitive, an XOR fold to zero over a Fano incidence table.

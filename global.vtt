@@ -78,3 +78,7 @@ one-import
 omi-files-port
 00:00:18.000 --> 00:00:19.000
 2026-10-28 the author: port boxed/omi-files to Plan 9 and remove each once finished. Settled: the contracts first (goldens and negatives to WSN, checked by zlazy and OMI.WSN), implementations project by project (the C projects port; TypeScript, Python, Emacs Lisp and Scheme have no Plan 9 runtime and would be rewrites). A folder is removed only when its work is on GitHub, another working copy exists, and its port is verified.
+
+turn-and-exchange
+00:00:19.000 --> 00:00:20.000
+2026-10-28 the author: stepd stays PL360 (IS and OF only), because the exchange is the observer or agent operation, not the turn. The turn is the even half of the three names' six orderings; an exchange of two registers is the other half and belongs to whoever interjects. Nothing exchanges stepd's registers yet; agentd's POST writes the floor's agent states, not stepd.

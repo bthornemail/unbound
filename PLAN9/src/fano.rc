@@ -1,0 +1,19 @@
+#!/bin/rc
+# fano.rc - inside Plan 9: omi-dom's fano-7d-gate ported (zfano.c), checked
+# against the module itself: the table every byte gives (in/fano/table, written
+# from the JavaScript on the host), the Fano plane's axioms, and the sixteen
+# selfTest assertions.
+rfork e
+w=/tmp/zfano
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zfano.c PLAN9/in/fano/table} || exit tar
+cd $w/unbound/PLAN9/src
+8c zfano.c && 8l -o $w/zfano zfano.8 || exit compile
+fail=0
+$w/zfano test || fail=1
+$w/zfano axioms || fail=1
+$w/zfano table > $w/table
+if(cmp -s $w/table $w/unbound/PLAN9/in/fano/table) echo ok every byte gives what the module gives, 256 of 256
+if not { echo FAIL the table differs from the module; fail=1 }
+if(~ $fail 0) echo 'fano.rc: every answer as expected'
