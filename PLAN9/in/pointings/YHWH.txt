@@ -1,0 +1,7 @@
+LENINGRAD	Genesis 2:4	1	יְהוָה
+LENINGRAD	Genesis 3:14	1	יְהֹוָה
+LENINGRAD	Judges 16:28	1	יְהוָה
+LENINGRAD	Judges 16:28	2	יֱהֹוִה
+LENINGRAD	Genesis 15:2	1	יֱהוִה
+LENINGRAD	I Kings 2:26	1	יְהֹוִה
+LENINGRAD	Ezekiel 24:24	1	יְהוִה
