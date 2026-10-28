@@ -1,0 +1,18 @@
+#!/bin/rc
+# pcas.rc - inside Plan 9: omi-dom's polytope-cas ported (zpcas.c), checked
+# against the module (in/pcas/table, written from the JavaScript on the host),
+# then what its apply is: the three swaps summed, an involution, linear.
+rfork e
+w=/tmp/zpcas
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zpcas.c PLAN9/in/pcas/table} || exit tar
+cd $w/unbound/PLAN9/src
+8c zpcas.c && 8l -o $w/zpcas zpcas.8 || exit compile
+fail=0
+$w/zpcas test || fail=1
+$w/zpcas table > $w/table
+if(cmp -s $w/table $w/unbound/PLAN9/in/pcas/table) echo ok every byte gives what the module gives, 256 of 256
+if not { echo FAIL the table differs from the module; fail=1 }
+$w/zpcas algebra || fail=1
+if(~ $fail 0) echo 'pcas.rc: every answer as expected'

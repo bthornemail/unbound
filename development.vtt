@@ -182,3 +182,11 @@ Third omi-dom module ported, the first with host dependencies: shared/parallel-e
 proof-cas-race
 00:00:44.000 --> 00:00:45.000
 proofs/proof.c compareexchange read the cell, then cas32; if another proc changed it in between, cas32 failed and it returned exp, as though the exchange had happened. Harmless single-threaded, wrong under concurrency: it now reads again. The 20 I-records still pass, 0 failing assertions.
+
+worker-design-trap
+00:00:45.000 --> 00:00:46.000
+For worker-based modules (parallel-engine done; system-probe and worker-barrier still to port): every worker receives every run, and a worker that takes the lock after another finished sees IDLE and still answers. A port must match each answer on the command posted, as the JavaScript does, or a late IDLE answer replaces the real one.
+
+omi-dom-pcas
+00:00:46.000 --> 00:00:47.000
+Fourth omi-dom module ported: shared/polytope-cas.js as src/zpcas.c (pcas.rc). Every byte gives the module's table (256 of 256) and its fifteen assertions pass. Finding: its compareExchange compares nothing; each step replaces eval with apply(vertex). apply is the XOR of three bit permutations, on bit positions i to i^1, i^3, i^7: boxedPINE's swap16, swap32, swap64, there on byte positions, here on bits, summed rather than composed. Over GF(2) the sum squares to the identity, so apply without a carry is a real involution (256 of 256), linear (65536 of 65536 pairs), and two passes stay the identity for exactly the 16 carries it leaves fixed. Its selfTest checks none of this. Column: the swap algebra, an involution; not compare-exchange.
