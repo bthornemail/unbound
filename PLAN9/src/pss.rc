@@ -1,0 +1,46 @@
+#!/bin/rc
+# pss.rc - inside Plan 9: omi-dom's projective-swap-space ported (zpss.c),
+# checked against the module itself (in/pss, written from the JavaScript on the
+# host: its six orderings and its role table) and against the turn: which of the
+# six orderings can stepd reach by turns? YHWH YAHWEH ADONAI stand for BL BO BPE.
+rfork en
+w=/tmp/zpss
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zpss.c PLAN9/src/step.c PLAN9/src/step.h PLAN9/src/stepd.c PLAN9/in/pss/orderings PLAN9/in/pss/roles} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zpss.c step.c stepd.c && 8l -o $w/zpss zpss.8 && 8l -o $w/stepd stepd.8 step.8 || exit compile
+fail=0
+fn check {
+	if(~ $1 $2) echo ok $3
+	if not { echo FAIL $3: got $1 want $2; fail=1 }
+}
+$w/zpss test || fail=1
+$w/zpss orderings > $w/orderings
+if(cmp -s $w/orderings $p/in/pss/orderings) echo ok the six orderings, in the order of the module
+if not { echo FAIL the orderings differ from the module; fail=1 }
+for(d in 3 4 5 8 24 2048 2036 7) $w/zpss role $d
+{ for(d in 3 4 5 8 24 2048 2036 7) $w/zpss role $d } > $w/roles
+if(cmp -s $w/roles $p/in/pss/roles) echo ok the role table, as the module gives them
+if not { echo FAIL the role table differs from the module; fail=1 }
+
+# the turn: every sequence of IS and OF up to three writes, through stepd
+fn run {
+	unmount /n/step >[2]/dev/null
+	$w/stepd </dev/null >/dev/null >[2=1] || exit stepd
+	for(d in $*) echo $d > /n/step/FLAG
+	a=`{cat /n/step/R0}; b=`{cat /n/step/R1}; c=`{cat /n/step/R2}
+	echo $a(1) $b(1) $c(1) | sed 's/YAHWEH/BO/g; s/YHWH/BL/g; s/ADONAI/BPE/g'
+}
+{ for(s in '' IS OF 'IS IS' 'IS OF' 'OF IS' 'OF OF' 'IS IS IS' 'IS IS OF' 'IS OF IS' 'IS OF OF' 'OF IS IS' 'OF IS OF' 'OF OF IS' 'OF OF OF'){
+	run `{echo $s}
+} } | sort -u > $w/reached
+unmount /n/step >[2]/dev/null
+echo the turns reach `{wc -l < $w/reached} of the six orderings:
+cat $w/reached
+echo not reached:
+sort $w/orderings | comm -23 - $w/reached
+n=`{wc -l < $w/reached}
+check $n 3 'the turn reaches three orderings, the rotations'
+if(~ $fail 0) echo 'pss.rc: every answer as expected'

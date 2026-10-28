@@ -166,3 +166,7 @@ src/prec.c is prec.awk in Plan 9 C, line for line (wsn.awk's file form only). Ov
 zprec
 00:00:40.000 --> 00:00:41.000
 src/zprec.c decides the four conditions of a simple precedence grammar on any WSN: no erasing rules ([ ] and { } derive the empty string in BNF), no useless rules, one relation per pair, unique right sides. wsn/step.wsn (STEP = SET FLAG TURN RESET) and wsn/turns.wsn (what stepd accepts, TURNS = TURN | TURN TURNS, without the empty string) pass all four. stack.wsn fails 1 (EMPTY) and 2 (the HELD productions are undefined until cast); the audit contract fails 1 (8 productions use [ ] or { }) and 2 (ERRORRECORD's rules unreachable from RECORD). WSN hides the empty string; it is still in the language.
+
+omi-dom-pss
+00:00:41.000 --> 00:00:42.000
+First omi-dom module ported: shared/projective-swap-space.js as src/zpss.c (pss.rc). The module is a table of labels plus one computation, the 3! orderings of the layout unit (BL BO BPE). zpss gives its six orderings in its order, its role table exactly (both checked against the JavaScript's own output, in/pss) and its ten selfTest assertions; several of those assert the module's own constants. Against stepd, every sequence of up to three turns reaches 3 of the 6 orderings, the rotations (BL BO BPE, BO BPE BL, BPE BL BO); the three single swaps are never reached. The module does not reduce to the turn: the turn is its even half, the swaps (swap16-like) are the other.

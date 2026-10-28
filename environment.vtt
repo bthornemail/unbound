@@ -82,3 +82,7 @@ QEMU's GED (ACPI0013) belongs to hardware-reduced machines (microvm, ARM virt). 
 vmgenid-unused
 00:00:19.000 --> 00:00:20.000
 QEMU vmgenid is a 128-bit GUID changed on snapshot restore, readable by guest firmware through two fw_cfg blobs (/etc/vmgenid_guid, /etc/vmgenid_addr). Nothing here uses snapshots: it would mark world reloaded but has no reader. Recorded, not wired.
+
+rc-apostrophe
+00:00:20.000 --> 00:00:21.000
+An apostrophe in an unquoted rc word (the module's) opens a quote: the script fails with token EOF at its end. Keep messages in rc scripts free of apostrophes, or quote them with doubled quotes.
