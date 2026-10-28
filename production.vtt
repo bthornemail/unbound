@@ -34,3 +34,7 @@ Replaces uncommitted: the five scratch files were committed by the author in unb
 audit-contract
 00:00:07.000 --> 00:00:08.000
 unbound/PLAN9: zaudit.c, audit.rc and in/audit (the 138 records read from ~/devops/light-garden/audit) placed; the grammar and answers come out of Plan 9 as audit/audit.wsn and audit/answers.
+
+boxed-images
+00:00:08.000 --> 00:00:09.000
+boxed pushed (45f6001): 9legacy-qemu.img.bz2 (132 MB) taken out of the author's commit, kept on disk; it and plan9-usb.img.bz2 (242 MB) listed in .gitignore, both over GitHub's 100 MB limit.

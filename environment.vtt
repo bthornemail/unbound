@@ -58,3 +58,7 @@ tar rf /dev/sd02/data file appends to the output disk's tar instead of replacing
 boxed-push
 00:00:13.000 --> 00:00:14.000
 boxed is public with a 273 MB .git; a push carrying a binary archive (d2dc754) takes many minutes. fold.pdf (Hutton's paper) stays untracked there: a published paper is not redistributed.
+
+frames-server
+00:00:14.000 --> 00:00:15.000
+python3 PLAN9/frames.py serves /frame.png and /vtt/... on 127.0.0.1:8790 while QEMU runs; nothing in the guest changes. pkill -f with a pattern found in the shell's own command line stops that shell: stop a server by its port (lsof -t -iTCP:PORT).

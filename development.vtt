@@ -138,3 +138,7 @@ zaudit (audit.rc) writes light-garden audit's contract as WSN: canonical JSON, t
 audit-negatives
 00:00:33.000 --> 00:00:34.000
 24 of 63 audit negatives carry no error key: 11 trace negatives state negation by value (expected_exists false, expected_broken true), and 13 feature negatives are auto-generated-coverage filler with expected true, the same shape as golden filler: they assert nothing negative.
+
+guest-frame
+00:00:34.000 --> 00:00:35.000
+Stage 1 of the XR view: PLAN9/frames.py serves the guest's own screen (a QEMU screendump as PNG, about 80 ms a frame) and the VTT tracks on 127.0.0.1:8790; boxedPINE space/guest.html draws the frames to a canvas, whose captureStream is a video carrying the narrative track, on a plane in three.js: any angle by drag or ?angle=, VR by VRButton. Seen in headless Chrome at 0 and 60 degrees with the floor ticking and the cues firing. Stage 2, the agents from any angle, needs the state served from Plan 9 over 9P.
