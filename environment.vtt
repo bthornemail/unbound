@@ -110,3 +110,7 @@ The author, of omi-files/polytron (docs/INDEX.md, the Tetragrammatron; OSI_MODEL
 ladder-replaced
 00:00:26.000 --> 00:00:27.000
 omi-files/polytron/OSI_MODEL.md, the bootstrap ladder of the previous version (polytron-precursor): dot notation, a Lisp 1.5 reader and evaluator, a C runtime, Guix lowering, QEMU and GNOME Boxes, an Atom/Electron editor surface. Each rung since replaced by a settled decision (global.vtt): dot notation by Wirth syntax notation, its reader and evaluator by zlazy, zprec and OMI.WSN (wsn-only); the runtime by Plan 9 C, Guix by pack.sh and its tar, Boxes by 9legacy under QEMU (plan9-runtime); the editor surface by the browser rooms of boxedPINE's space/, a projection, not authority. Its split of canonical, realization and projection carries over unchanged.
+
+even-goes-to-zero
+00:00:27.000 --> 00:00:28.000
+2026-10-28 the author, of omi-dom-orch: "the even go to 0 which is the gnomon the sum of two squares the measure of the square to get the offset". Measured (zorch law): what goes to 0 on a graph of even degrees is each epoch's change to the digest; the digest itself stays the XOR of the features (15 on the 4-cycle), and converge reaches diff 0 only for that one target, in one step; every other target runs its 16 steps without converging. Beside it, as a second fact and not derived from the first: the gnomon of a square, (n+1)^2 - n^2 = 2n + 1, is always odd, and in zorch only odd degrees leave a residue. boxedPINE's space/src/gnomon.ts is another dial: polytron's K with C = 0x1D, returning after 8 steps.
