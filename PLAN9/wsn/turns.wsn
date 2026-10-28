@@ -1,0 +1,2 @@
+TURNS = TURN | TURN TURNS .
+TURN = "IS" | "OF" .

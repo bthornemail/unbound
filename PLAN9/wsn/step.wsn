@@ -1,0 +1,5 @@
+STEP = SET FLAG TURN RESET .
+SET = "SET" .
+FLAG = "IS" | "OF" .
+TURN = "TURN" .
+RESET = "RESET" .

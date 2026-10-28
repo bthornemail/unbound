@@ -90,6 +90,9 @@ PLAN9/src/step.h
 PLAN9/src/stepd.c
 PLAN9/src/steptest.c
 PLAN9/src/step.rc
+PLAN9/src/prec.c
+PLAN9/src/zprec.c
+PLAN9/src/precheck.rc
 PLAN9/src/zcue.c
 PLAN9/src/cues.rc
 PLAN9/in/cues.txt

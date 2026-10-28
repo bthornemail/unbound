@@ -1,0 +1,34 @@
+#!/bin/rc
+# precheck.rc - inside Plan 9: prec (prec.awk in C) against prec.awk over the
+# same wsn files, compared as sorted lines; then zprec, the four conditions of
+# a simple precedence grammar, on step.wsn, turns.wsn, stack.wsn and the
+# audit contract (zaudit). To the output disk as precheck/.
+rfork e
+ifs='
+'
+w=/tmp/zpc
+rm -rf $w
+mkdir -p $w/unbound $w/precheck
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(t in prec zprec zaudit){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+cd $p/wsn
+awk -f ../src/prec.awk `{cat LIST} | sort > $w/precheck/awk.tsv || exit awk
+$w/prec `{cat LIST} | sort > $w/precheck/c.tsv || exit prec
+{
+	echo awk `{wc -l < $w/precheck/awk.tsv} relations, C `{wc -l < $w/precheck/c.tsv}
+	# awk lists each relation's files in its hash order: compare the relations
+	awk -F'	' '{print $1, $2, $3}' $w/precheck/awk.tsv | sort > $w/precheck/awk.rel
+	awk -F'	' '{print $1, $2, $3}' $w/precheck/c.tsv | sort > $w/precheck/c.rel
+	if(cmp -s $w/precheck/awk.rel $w/precheck/c.rel) echo 'prec and prec.awk: the same relations'
+	if not echo 'prec and prec.awk: the relations DIFFER'
+	$w/zaudit $p/in/audit/KEYS > $w/precheck/audit.wsn
+	for(g in $p/wsn/step.wsn $p/wsn/turns.wsn $p/wsn/stack.wsn $w/precheck/audit.wsn){
+		echo
+		$w/zprec $g
+	}
+} > $w/precheck/report >[2=1]
+@{cd $w && tar cf /dev/sd02/data precheck} || exit tar
