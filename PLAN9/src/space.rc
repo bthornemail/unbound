@@ -1,0 +1,12 @@
+#!/bin/rc
+# space.rc - inside Plan 9: the Agent Commons floor (PLAN9/space/floor.c) on
+# the screen. The screen must be in graphics with draw and mouse bound:
+#	aux/vga -m vesa -l 1024x768x16; bind -a '#i' /dev; bind -a '#m' /dev
+rfork e
+w=/tmp/zs
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/space/floor.c} || exit tar
+cd $w/unbound/PLAN9/space
+8c floor.c && 8l -o $w/floor floor.8 || exit compile
+$w/floor $*

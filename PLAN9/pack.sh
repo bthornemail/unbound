@@ -79,10 +79,25 @@ PLAN9/src/zplaces.c
 PLAN9/src/places.rc
 PLAN9/src/ztrie.c
 PLAN9/src/tries.rc
+PLAN9/src/zframe.c
+PLAN9/src/frame.rc
+PLAN9/src/zkey.c
+PLAN9/src/key.rc
+PLAN9/src/zvtt.c
+PLAN9/src/vtt.rc
+PLAN9/src/zcue.c
+PLAN9/src/cues.rc
+PLAN9/in/cues.txt
+PLAN9/space/floor.c
+PLAN9/src/space.rc
+PLAN9/space/observe.c
+PLAN9/src/observe.rc
 PLAN9/src/zcast.c
 PLAN9/src/cast.rc
 PLAN9/src/stack.c
 PLAN9/src/stack.rc
+
+$(cd "$HERE" && ls in/narrative/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/tries/*.paths | sed 's|^|PLAN9/|')
 PLAN9/in/gen1.txt
 PLAN9/src/template.rc

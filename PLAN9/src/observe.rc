@@ -1,0 +1,11 @@
+#!/bin/rc
+# observe.rc - inside Plan 9: the Observer (PLAN9/space/observe.c) on the running
+# floor: observe.rc to read, observe.rc TAG state to interject.
+rfork e
+w=/tmp/zo
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/space/observe.c} || exit tar
+@{cd $w/unbound/PLAN9/space && 8c observe.c && 8l -o $w/observe observe.8} || exit compile
+pid=`{ps | grep ' floor$'}
+$w/observe $pid(2) $*
