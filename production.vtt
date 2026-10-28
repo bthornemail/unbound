@@ -54,3 +54,7 @@ The omi-dom port, 2026-10-28: 11 of 48 shared modules in Plan 9, with system-pro
 omi-dom-port-12
 00:00:12.000 --> 00:00:13.000
 The omi-dom port, 2026-10-28: 12 of 48 shared modules, with constraint-pipeline (zpipe; its text and binary paths read the same bytes differently, and admissible cannot be false). 36 remain. The I-series (proofs/js-docs/JS-PROOF-INDEX.md, 118 records, in WSN as wsn/js/catalog) is the ground each port cites, not re-proves.
+
+omi-dom-port-14
+00:00:13.000 --> 00:00:14.000
+The omi-dom port, 2026-10-28: 14 of 48 shared modules, with prolog-resolve (resolve.rc, rc and zver.c; ePIPE cannot match) and contrasting-orchestrator (zorch; on even-degree graphs its loop cannot move the digest). 34 remain.

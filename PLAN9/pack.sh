@@ -119,6 +119,9 @@ PLAN9/src/zpipe.c
 PLAN9/src/pipe.rc
 PLAN9/src/resolve.rc
 PLAN9/src/zver.c
+PLAN9/src/zorch.c
+PLAN9/src/orch.rc
+$(cd "$HERE" && ls in/orch/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/resolve/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/pipe/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/grex/* | sed 's|^|PLAN9/|')

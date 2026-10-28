@@ -1,0 +1,20 @@
+#!/bin/rc
+# orch.rc - inside Plan 9: omi-dom's contrasting-orchestrator ported (zorch.c),
+# converge for every target on six graphs against the module (in/orch/converge,
+# written by the JavaScript on the host), the law behind it over every filter,
+# and the module selfTest.
+rfork e
+w=/tmp/zorch
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zorch.c PLAN9/in/orch} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zorch.c && 8l -o $w/zorch zorch.8 || exit compile
+fail=0
+$w/zorch converge $p/in/orch/graphs > $w/converge
+if(cmp -s $w/converge $p/in/orch/converge) echo ok every target on every graph converges as the module does, `{wc -l < $w/converge} runs
+if not { echo FAIL converge differs from the module; fail=1 }
+$w/zorch law $p/in/orch/graphs || fail=1
+$w/zorch test || fail=1
+if(~ $fail 0) echo 'orch.rc: every answer as expected'
