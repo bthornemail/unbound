@@ -1,0 +1,15 @@
+#!/bin/rc
+# obs.rc - inside Plan 9: omi-dom's observer-sync ported (zobs.c): its four
+# assertions, then observers that read a ruler a writer keeps changing.
+rfork e
+w=/tmp/zobs
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zobs.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c zobs.c && 8l -o $w/zobs zobs.8 || exit compile
+fail=0
+$w/zobs test || fail=1
+$w/zobs read || fail=1
+$w/zobs unchecked || fail=1
+if(~ $fail 0) echo 'obs.rc: every answer as expected'
