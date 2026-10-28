@@ -1,0 +1,151 @@
+RECORD = HEAD HOSTHEADERISMANDATORYRFC EVERYHTTPBROWSERCONNECTSTOTHEGLOBALNODE WINDOWINHERITSFROMEVENTTARGET WINDOWASANESTEDFRAMEWINDOW THENUMBERAT UPPERCASELETTERSAREHEADERSTOPATHINDICES UPPERCASEANDLOWERCASECONVERGEINBASE ALLREDUCTIONCONVERGESTO THEUPPERCASELETTERSASHEADERSCOUNT THETHINDEXOFTHETHINDEXCELL .
+
+HEAD =
+  "// i139.ts — I-139: Host header, window frame, uppercase-as-header"
+  "import assert from ""node:assert"";"
+  .
+
+HOSTHEADERISMANDATORYRFC =
+  "// ── 1. Host header is mandatory (RFC §14.23) ────────────────────"
+  "// ""A client that sends an HTTP/1.1 request MUST send a Host header."""
+  "// ""Servers MUST report a 400 (Bad Request) error if ... no Host header."""
+  "function http11RequestValid(headers: Record<string, string>): number {"
+  "  if (!(""Host"" in headers)) return 400;"
+  "  return 200;"
+  "}"
+  "assert.strictEqual(http11RequestValid({}), 400, ""no Host -> 400"");"
+  "assert.strictEqual("
+  "  http11RequestValid({ Host: ""example.com"" }),"
+  "  200,"
+  "  ""Host present -> 200"""
+  ");"
+  .
+
+EVERYHTTPBROWSERCONNECTSTOTHEGLOBALNODE =
+  "// ── 2. Every HTTP/1.1 browser connects to the global node ────────"
+  "// The Host header names the global node (the origin server)."
+  "// The browser is the EventTarget client."
+  "// window is the frame the browser reads from."
+  "const mandatoryHeaders = [""Host""];"
+  "assert.strictEqual(mandatoryHeaders.length, 1, ""exactly one mandatory header"");"
+  "assert.strictEqual(mandatoryHeaders[0], ""Host"", ""Host is the mandatory header"");"
+  .
+
+WINDOWINHERITSFROMEVENTTARGET =
+  "// ── 3. window inherits from EventTarget ─────────────────────────"
+  "// (Model, no browser needed.)"
+  "class EventTargetMock {"
+  "  listeners: Map<string, Function[]> = new Map();"
+  "  addEventListener(t: string, fn: Function) {"
+  "    if (!this.listeners.has(t)) this.listeners.set(t, []);"
+  "    this.listeners.get(t)!.push(fn);"
+  "  }"
+  "  dispatchEvent(e: { type: string }) {"
+  "    for (const fn of this.listeners.get(e.type) ?? []) fn(e);"
+  "  }"
+  "}"
+  "class WindowMock extends EventTargetMock {"
+  "  frames: WindowMock[] = [];"
+  "}"
+  "const w = new WindowMock();"
+  "assert.ok(w instanceof EventTargetMock, ""window <: EventTarget"");"
+  .
+
+WINDOWASANESTEDFRAMEWINDOW =
+  "// ── 4. window as a nested frame: window[4][4][19] ───────────────"
+  "// The path index is a 3-tuple: [frame, subframe, cell]."
+  "function address(frame: number, sub: number, cell: number): [number, number, number] {"
+  "  return [frame, sub, cell];"
+  "}"
+  "const addr = address(4, 4, 19);"
+  "assert.deepStrictEqual(addr, [4, 4, 19], ""address (4, 4, 19)"");"
+  "// 4th index of the 4th index, cell 19"
+  "assert.strictEqual(addr[0], 4, ""4th frame"");"
+  "assert.strictEqual(addr[1], 4, ""4th subframe"");"
+  "assert.strictEqual(addr[2], 19, ""cell 19"");"
+  .
+
+THENUMBERAT =
+  "// ── 5. The number at (4, 4, 19) ─────────────────────────────────"
+  "// In base-36: 19 = J (position 19)"
+  "// In ASCII:   19 = 0x13 = DC3 (device control 3)"
+  "// The ""number"" depends on which frame is read."
+  "const base36 = ""0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  "assert.strictEqual(base36[19], ""J"", ""base-36 index 19 = J"");"
+  "assert.strictEqual(0x13, 19, ""ASCII 0x13 = 19"");"
+  "assert.strictEqual(0x13, 0x10 | 0x03, ""0x13 = 0x10 | 0x03 (DC3)"");"
+  .
+
+UPPERCASELETTERSAREHEADERSTOPATHINDICES =
+  "// ── 6. Uppercase letters are headers to path indices ────────────"
+  "// A1, B2, Z9: letter is the header, digit is the path index."
+  "type Header = { letter: string; index: number };"
+  "function parse(s: string): Header {"
+  "  const m = /^([A-Z])(\d+)$/.exec(s);"
+  "  if (!m) throw new Error(""invalid header"");"
+  "  return { letter: m[1], index: Number(m[2]) };"
+  "}"
+  "assert.deepStrictEqual(parse(""A1""), { letter: ""A"", index: 1 },  ""A1"");"
+  "assert.deepStrictEqual(parse(""B2""), { letter: ""B"", index: 2 },  ""B2"");"
+  "assert.deepStrictEqual(parse(""Z9""), { letter: ""Z"", index: 9 },  ""Z9"");"
+  .
+
+UPPERCASEANDLOWERCASECONVERGEINBASE =
+  "// ── 7. Uppercase and lowercase converge in base-36 ──────────────"
+  "// A-Z: 0x41-0x5A ; a-z: 0x61-0x7A. Difference = 0x20."
+  "function upperLowerDelta(upper: string, lower: string): number {"
+  "  return lower.charCodeAt(0) - upper.charCodeAt(0);"
+  "}"
+  "assert.strictEqual(upperLowerDelta(""A"", ""a""), 0x20, ""A -> a = 0x20"");"
+  "assert.strictEqual(upperLowerDelta(""Z"", ""z""), 0x20, ""Z -> z = 0x20"");"
+  "// base-36 treats upper and lower the same"
+  "assert.strictEqual(parseInt(""A"", 36), 10, ""base-36 A = 10"");"
+  "assert.strictEqual(parseInt(""a"", 36), 10, ""base-36 a = 10"");"
+  "assert.strictEqual(parseInt(""Z"", 36), 35, ""base-36 Z = 35"");"
+  "assert.strictEqual(parseInt(""z"", 36), 35, ""base-36 z = 35"");"
+  .
+
+ALLREDUCTIONCONVERGESTO =
+  "// ── 8. All reduction converges to 0 ─────────────────────────────"
+  "// (A-Z + 0-9) mod 36 always lands in 0..35, with 36 wrapping to 0."
+  "for (let i = 0; i < 36; i++) {"
+  "  assert.strictEqual(i % 36, i, `base-36 index ${i} stays`);"
+  "}"
+  "assert.strictEqual(36 % 36, 0, ""36 wraps to 0"");"
+  "// every value in the 36-block reduces to 0..35"
+  "const block = ""0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  "for (const c of block) {"
+  "  const v = parseInt(c, 36);"
+  "  assert.ok(v >= 0 && v < 36, `block char ${c} -> ${v}`);"
+  "}"
+  .
+
+THEUPPERCASELETTERSASHEADERSCOUNT =
+  "// ── 9. The uppercase letters as headers count 26 ────────────────"
+  "const upper = ""ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  "assert.strictEqual(upper.length, 26, ""26 uppercase headers"");"
+  "// their base-36 values are 10..35"
+  "assert.strictEqual(parseInt(""A"", 36), 10, ""A = 10"");"
+  "assert.strictEqual(parseInt(""Z"", 36), 35, ""Z = 35"");"
+  "// 26 headers map to the upper 26 of base-36's 36 digits"
+  .
+
+THETHINDEXOFTHETHINDEXCELL =
+  "// ── 10. The 4th index of the 4th index, cell 19 ─────────────────"
+  "// Reading: frame 4, subframe 4, cell 19."
+  "// Convert to linear: 4*36*36 + 4*36 + 19 = 5184 + 144 + 19 = 5347"
+  "const linear = 4 * 36 * 36 + 4 * 36 + 19;"
+  "assert.strictEqual(linear, 5347, ""linearized (4,4,19) = 5347"");"
+  "// mod 36: 5347 = 148 * 36 + 19"
+  "assert.strictEqual(5347 % 36, 19, ""5347 mod 36 = 19"");"
+  "assert.strictEqual(Math.floor(5347 / 36), 148, ""5347 / 36 = 148"");"
+  "assert.strictEqual(148 % 36, 4, ""148 mod 36 = 4 (subframe)"");"
+  "assert.strictEqual(Math.floor(148 / 36), 4, ""148 / 36 = 4 (frame)"");"
+  "// the digits of 5347 in base 36 are 4, 4, 19"
+  "function toBase36(n: number): string {"
+  "  return n.toString(36).toUpperCase();"
+  "}"
+  "assert.strictEqual(toBase36(5347), ""44J"", ""5347 in base-36 = 44J"");"
+  "// 4, 4, J=19 — the address reads back exactly"
+  "console.log(""I-139: Host header + window frame + uppercase-as-header — passed"");"
+  .

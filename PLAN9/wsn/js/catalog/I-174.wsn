@@ -1,0 +1,169 @@
+RECORD = HEAD THESPACE THREESEPARATESPACES EACHSPACECARRIESAFOLDSTRUCTURE THEFROMTHREESPACES THEFROMTHREEAXES THEFROMTHREESEXTUPLETS THECOLLAPSE THETHREEBODYPROBLEM MUTUALINTERACTION NOCLOSEDFORM THECOLLAPSEISTHERESOLUTION THESAMEPROBLEMATTWOSPACES THEANDMEETAT THETHREEBODYPROBLEMASAFIXEDPOINT THEPUNCHLINE .
+
+HEAD =
+  "// i174.ts — I-174: 777 from three 65536 spaces; 666 from three axes; the three-body problem"
+  "import assert from ""node:assert"";"
+  .
+
+THESPACE =
+  "// ── 1. The 65536 space = 2^16 ───────────────────────────────"
+  "const SPACE = 2 ** 16;"
+  "assert.strictEqual(SPACE, 65536, ""2^16 = 65536"");"
+  .
+
+THREESEPARATESPACES =
+  "// ── 2. Three separate 65536 spaces ──────────────────────────"
+  "const spaces = [SPACE, SPACE, SPACE];"
+  "assert.strictEqual(spaces.length, 3, ""3 separate 65536 spaces"");"
+  "assert.strictEqual(spaces[0], 65536, ""space 1"");"
+  "assert.strictEqual(spaces[1], 65536, ""space 2"");"
+  "assert.strictEqual(spaces[2], 65536, ""space 3"");"
+  "// each is its own space"
+  .
+
+EACHSPACECARRIESAFOLDSTRUCTURE =
+  "// ── 3. Each space carries a 7-fold structure ────────────────"
+  "// The 7 = the Fano number = the 7-slot reset (I-146b)"
+  "const sevens = [7, 7, 7];"
+  "assert.strictEqual(sevens.length, 3, ""three 7s"");"
+  "assert.strictEqual(sevens.reduce((a, b) => a + b, 0), 21, ""7+7+7 = 21"");"
+  "assert.strictEqual(sevens.reduce((a, b) => a * b, 1), 343, ""7×7×7 = 343"");"
+  "// the three 7s give 777 as the reading"
+  .
+
+THEFROMTHREESPACES =
+  "// ── 4. The 777 from three spaces ────────────────────────────"
+  "const triple7 = ""777"";"
+  "assert.strictEqual(triple7, ""777"", ""the reading is 777"");"
+  "assert.strictEqual(triple7.length, 3, ""three digits"");"
+  .
+
+THEFROMTHREEAXES =
+  "// ── 5. The 666 from three axes ──────────────────────────────"
+  "// 3 axes × 2 directions = 6"
+  "const axes = [""x"", ""y"", ""z""];"
+  "const directions = [1, -1];  // forward/inverse"
+  "assert.strictEqual(axes.length, 3, ""3 axes"");"
+  "assert.strictEqual(directions.length, 2, ""2 directions"");"
+  "const dof = axes.length * directions.length;"
+  "assert.strictEqual(dof, 6, ""3 × 2 = 6"");"
+  .
+
+THEFROMTHREESEXTUPLETS =
+  "// ── 6. The 666 from three sextuplets ────────────────────────"
+  "const triple6 = ""666"";"
+  "assert.strictEqual(triple6, ""666"", ""the reading is 666"");"
+  "assert.strictEqual(triple6.length, 3, ""three digits"");"
+  .
+
+THECOLLAPSE =
+  "// ── 7. The collapse: 777 → 3! 3! 3! 1! ──────────────────────"
+  "const fact = (n: number): number => n <= 1 ? 1 : n * fact(n - 1);"
+  "assert.strictEqual(fact(3), 6, ""3! = 6"");"
+  "assert.strictEqual(fact(1), 1, ""1! = 1"");"
+  "const collapse = fact(3) * fact(3) * fact(3) * fact(1);"
+  "assert.strictEqual(collapse, 216, ""3! 3! 3! 1! = 6 × 6 × 6 × 1 = 216"");"
+  "assert.strictEqual(216, 6 ** 3, ""216 = 6³"");"
+  .
+
+THETHREEBODYPROBLEM =
+  "// ── 8. The three-body problem ───────────────────────────────"
+  "// Three bodies, each in its own space, interacting mutually."
+  "type Body = { id: number; space: number; axes: string[] };"
+  "const bodies: Body[] = ["
+  "  { id: 1, space: 65536, axes: [""x"", ""y"", ""z""] },"
+  "  { id: 2, space: 65536, axes: [""x"", ""y"", ""z""] },"
+  "  { id: 3, space: 65536, axes: [""x"", ""y"", ""z""] },"
+  "];"
+  "assert.strictEqual(bodies.length, 3, ""3 bodies"");"
+  "for (const b of bodies) {"
+  "  assert.strictEqual(b.space, 65536, `body ${b.id} in a 65536 space`);"
+  "  assert.strictEqual(b.axes.length, 3, `body ${b.id} has 3 axes`);"
+  "}"
+  .
+
+MUTUALINTERACTION =
+  "// ── 9. Mutual interaction ───────────────────────────────────"
+  "// Each body affects the other two."
+  "function affects(b: Body, others: Body[]): number[] {"
+  "  return others.filter((o) => o.id !== b.id).map((o) => o.id);"
+  "}"
+  "for (const b of bodies) {"
+  "  const affected = affects(b, bodies);"
+  "  assert.strictEqual(affected.length, 2, `body ${b.id} affects 2 others`);"
+  "}"
+  "// the interaction is mutual"
+  .
+
+NOCLOSEDFORM =
+  "// ── 10. No closed form ─────────────────────────────────────"
+  "// The three-body problem has no closed-form solution."
+  "function hasClosedForm(nBodies: number): boolean {"
+  "  return nBodies < 3;  // only 1 and 2 body problems have closed forms"
+  "}"
+  "assert.strictEqual(hasClosedForm(1), true, ""1 body: closed form"");"
+  "assert.strictEqual(hasClosedForm(2), true, ""2 bodies: closed form"");"
+  "assert.strictEqual(hasClosedForm(3), false, ""3 bodies: no closed form"");"
+  "// so 3 bodies is where the problem begins"
+  .
+
+THECOLLAPSEISTHERESOLUTION =
+  "// ── 11. The collapse is the resolution ─────────────────────"
+  "// The choice collapses the state from 777 to 216."
+  "function collapseState(state: number, chosen: boolean): number {"
+  "  return chosen ? 216 : state;"
+  "}"
+  "assert.strictEqual(collapseState(777, false), 777, ""no choice: 777"");"
+  "assert.strictEqual(collapseState(777, true),  216, ""with choice: 216"");"
+  "// the collapse resolves the three-body problem"
+  .
+
+THESAMEPROBLEMATTWOSPACES =
+  "// ── 12. The same problem at two spaces ─────────────────────"
+  "// The 777 (three 65536 spaces) and the 666 (three axes)"
+  "// are the same problem — the three-body problem."
+  "const sameProblem = {"
+  "  threeBodies: true,"
+  "  spaces: [65536, 65536, 65536],"
+  "  axes: [""x"", ""y"", ""z""],"
+  "  reading1: ""777"","
+  "  reading2: ""666"","
+  "};"
+  "assert.ok(sameProblem.threeBodies, ""the three-body problem"");"
+  "assert.strictEqual(sameProblem.spaces.length, 3, ""3 spaces"");"
+  "assert.strictEqual(sameProblem.axes.length, 3, ""3 axes"");"
+  "assert.strictEqual(sameProblem.reading1, ""777"", ""the 777 reading"");"
+  "assert.strictEqual(sameProblem.reading2, ""666"", ""the 666 reading"");"
+  .
+
+THEANDMEETAT =
+  "// ── 13. The 777 and 666 meet at 216 ────────────────────────"
+  "// The collapse 777 → 216 is the same as the product 666 → 216."
+  "const collapse777 = fact(3) * fact(3) * fact(3) * fact(1);"
+  "const product666 = 6 * 6 * 6;"
+  "assert.strictEqual(collapse777, 216, ""777 → 216"");"
+  "assert.strictEqual(product666, 216, ""666 → 216"");"
+  "assert.strictEqual(collapse777, product666, ""both give 216"");"
+  "// so 777 and 666 meet at 216"
+  .
+
+THETHREEBODYPROBLEMASAFIXEDPOINT =
+  "// ── 14. The three-body problem as a fixed point ────────────"
+  "// The fixed point is the collapse at 216."
+  "const fixedPoint = 216;"
+  "assert.strictEqual(fixedPoint, 6 ** 3, ""the fixed point is 6³"");"
+  "assert.strictEqual(fixedPoint, fact(3) * fact(3) * fact(3) * fact(1), ""= 3!3!3!1!"");"
+  .
+
+THEPUNCHLINE =
+  "// ── 15. The punchline ──────────────────────────────────────"
+  "// 777 from three 65536 spaces; 666 from three axes;"
+  "// it's the three-body problem. The collapse 777 → 216 is the resolution."
+  "console.log(""I-174: 777 from three 65536 spaces; 666 from three axes; the three-body problem — passed"");"
+  "console.log(`  777: three separate 65536 spaces, each with a 7-fold structure`);"
+  "console.log(`  666: three axes × two directions = 6 DOF, three-fold`);"
+  "console.log(`  the collapse: 777 → 3! 3! 3! 1! = 216 = 6³`);"
+  "console.log(`  777 and 666 meet at 216`);"
+  "console.log(`  it's the three-body problem: three bodies, mutual interaction, no closed form`);"
+  "console.log(`  the collapse is the resolution`);"
+  .

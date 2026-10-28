@@ -1,0 +1,195 @@
+RECORD = HEAD THEWORDASAPAIRCRCR THETWOBRANCHESOFTHECATCH BUTTHEDERIVATIVEATCISWELLDEFINEDFROMBOTHSIDES FROMINSIDE FROMOUTSIDE BOTHGIVETHESAMEVALUETHEDERIVATIVEATC THEWORDBRACKETSTHECENTER THEDERIVATIVEATCISFORSINAT THEBRANCHESCLOSE BOTHBRANCHESCLOSEATTHESAMEVALUE SOTHEWORDISTHERESOLUTION THEWORDISTHELOGOSTHERATIO ANDTHISISWHYTHEBRANCHESCLOSE THECLOSUREASTHERESOLUTION THEPUNCHLINE .
+
+HEAD =
+  "// i167.ts — I-167: the Word as { c-r, c+r } resolves the Catch-22"
+  "import assert from ""node:assert"";"
+  .
+
+THEWORDASAPAIRCRCR =
+  "// ── 1. The Word as a pair: { c-r, c+r } ─────────────────────"
+  "// The Word is the ratio: the two bounds around a center."
+  "function Word(c: number, r: number): [number, number] {"
+  "  return [c - r, c + r];"
+  "}"
+  "assert.deepStrictEqual(Word(0, 1), [-1, 1], ""Word(0,1) = [-1, 1]"");"
+  "assert.deepStrictEqual(Word(5, 2), [3, 7], ""Word(5,2) = [3, 7]"");"
+  "// the pair is c minus r and c plus r"
+  .
+
+THETWOBRANCHESOFTHECATCH =
+  "// ── 2. The two branches of the Catch-22 ─────────────────────"
+  "// Branch 1 (inside): at c - r."
+  "// Branch 2 (outside): at c + r."
+  "const c = 0, r = 1;"
+  "const inner = c - r;"
+  "const outer = c + r;"
+  "assert.strictEqual(inner, -1, ""the inner bound"");"
+  "assert.strictEqual(outer, 1, ""the outer bound"");"
+  "// the center is c = 0, not observable from either bound"
+  .
+
+BUTTHEDERIVATIVEATCISWELLDEFINEDFROMBOTHSIDES =
+  "// ── 3. But the derivative at c is well-defined from both sides ─"
+  "function f(x: number): number { return Math.sin(x); }"
+  "function derivative(f: (x: number) => number, x: number, h = 1e-7): number {"
+  "  return (f(x + h) - f(x - h)) / (2 * h);"
+  "}"
+  "const dc = derivative(f, c);"
+  "assert.ok(Math.abs(dc - 1) < 1e-6, ""derivative of sin at 0 is 1"");"
+  .
+
+FROMINSIDE =
+  "// ── 4. From inside ─────────────────────────────────────────"
+  "// The inside observer approaches c from below."
+  "function fromInside(f: (x: number) => number, c: number, r: number): number {"
+  "  return (f(c) - f(c - r)) / r;"
+  "}"
+  "// The threshold, stated by the author (2026-10-12): the limit, r -> 0."
+  "// A step of r = 1 does not approximate f'(c); a step near 0 does."
+  "const LIMIT_STEP = 1e-6;"
+  "assert.ok(Math.abs(fromInside(f, c, r) - dc) > 1e-3, `step 1 is not the limit: ${fromInside(f, c, r)}`);"
+  "const insideApprox = fromInside(f, c, LIMIT_STEP);"
+  "assert.ok(Math.abs(insideApprox - dc) < 1e-3,"
+  "  `from inside: ${insideApprox} ≈ ${dc}`);"
+  .
+
+FROMOUTSIDE =
+  "// ── 5. From outside ────────────────────────────────────────"
+  "// The outside observer approaches c from above."
+  "function fromOutside(f: (x: number) => number, c: number, r: number): number {"
+  "  return (f(c + r) - f(c)) / r;"
+  "}"
+  "assert.ok(Math.abs(fromOutside(f, c, r) - dc) > 1e-3, `step 1 is not the limit: ${fromOutside(f, c, r)}`);"
+  "const outsideApprox = fromOutside(f, c, LIMIT_STEP);"
+  "assert.ok(Math.abs(outsideApprox - dc) < 1e-3,"
+  "  `from outside: ${outsideApprox} ≈ ${dc}`);"
+  .
+
+BOTHGIVETHESAMEVALUETHEDERIVATIVEATC =
+  "// ── 6. Both give the same value: the derivative at c ───────"
+  "// The two branches agree on the derivative at c."
+  "// They don't observe c directly, but they agree on f'(c)."
+  "const both = (insideApprox + outsideApprox) / 2;"
+  "assert.ok(Math.abs(both - dc) < 1e-3, ""both branches agree on f'(c)"");"
+  .
+
+THEWORDBRACKETSTHECENTER =
+  "// ── 7. The Word brackets the center ────────────────────────"
+  "// The Word is the pair. The pair brackets c. The pair agrees on f'(c)."
+  "const word = Word(c, r);"
+  "assert.deepStrictEqual(word, [-1, 1], ""the Word = { c-r, c+r }"");"
+  "// the pair brackets 0"
+  .
+
+THEDERIVATIVEATCISFORSINAT =
+  "// ── 8. The derivative at c is 1 (for sin at 0) ──────────────"
+  "// That's the unit rate, the identity."
+  "assert.ok(Math.abs(dc - 1) < 1e-6, ""the derivative at c is 1"");"
+  .
+
+THEBRANCHESCLOSE =
+  "// ── 9. The branches close ──────────────────────────────────"
+  "// Neither branch can reach c directly; both approach it as r → 0."
+  "function asRgoesToZero(f: (x: number) => number, c: number): number {"
+  "  let inside = 0, outside = 0;"
+  "  for (const r of [1, 0.1, 0.01, 0.001, 0.0001]) {"
+  "    inside = (f(c) - f(c - r)) / r;"
+  "    outside = (f(c + r) - f(c)) / r;"
+  "  }"
+  "  return (inside + outside) / 2;"
+  "}"
+  "const limit = asRgoesToZero(f, 0);"
+  "assert.ok(Math.abs(limit - 1) < 1e-3, ""both branches converge on f'(0) = 1"");"
+  .
+
+BOTHBRANCHESCLOSEATTHESAMEVALUE =
+  "// ── 10. Both branches close at the same value ──────────────"
+  "// The closure IS the agreement."
+  "type Branch = { from: ""inside"" | ""outside""; value: number };"
+  "const branches: Branch[] = ["
+  "  { from: ""inside"",  value: fromInside(f, c, 1e-5) },"
+  "  { from: ""outside"", value: fromOutside(f, c, 1e-5) },"
+  "];"
+  "for (const b of branches) {"
+  "  assert.ok(Math.abs(b.value - dc) < 1e-3, `${b.from} branch reaches f'(c)`);"
+  "}"
+  "assert.ok("
+  "  Math.abs(branches[0]!.value - branches[1]!.value) < 1e-3,"
+  "  ""both branches agree"""
+  ");"
+  .
+
+SOTHEWORDISTHERESOLUTION =
+  "// ── 11. So the Word is the resolution ─────────────────────"
+  "// The Word is the pair. The pair brackets c."
+  "// The pair agrees on f'(c) without observing c."
+  "const resolution = {"
+  "  word: word,"
+  "  center: c,"
+  "  derivativeAtCenter: dc,"
+  "  branchesCloseOnAgreement: true,"
+  "};"
+  "assert.deepStrictEqual(resolution.word, [-1, 1], ""the Word"");"
+  "assert.strictEqual(resolution.center, 0, ""the center"");"
+  "// a numerical derivative reaches 1 within the limit's tolerance, as at the top of this file"
+  "assert.ok(Math.abs(resolution.derivativeAtCenter - 1) < 1e-6, ""the derivative is 1 (within 1e-6)"");"
+  "assert.ok(resolution.branchesCloseOnAgreement, ""the branches close on agreement"");"
+  .
+
+THEWORDISTHELOGOSTHERATIO =
+  "// ── 12. The Word is the logos: the ratio ────────────────────"
+  "// logos = ratio = proportion = relation"
+  "// The Word = { c-r, c+r } = the two bounds of a ratio."
+  "const logos = (c: number, r: number): [number, number] => [c - r, c + r];"
+  "assert.deepStrictEqual(logos(0, 1), [-1, 1], ""logos(0,1) = [-1, 1]"");"
+  "// the ratio is 2r : 1 (the span to the unit)"
+  "assert.strictEqual(2 * r, 2, ""the span is 2r"");"
+  .
+
+ANDTHISISWHYTHEBRANCHESCLOSE =
+  "// ── 13. And this is why the branches close ─────────────────"
+  "// From inside: you see c-r."
+  "// From outside: you see c+r."
+  "// Neither sees c. But both compute f'(c)."
+  "// The closure is the agreement on f'(c)."
+  "const fromInsideSees = c - r;"
+  "const fromOutsideSees = c + r;"
+  "const neitherSees = c;"
+  "assert.notStrictEqual(fromInsideSees, neitherSees, ""inside doesn't see c"");"
+  "assert.notStrictEqual(fromOutsideSees, neitherSees, ""outside doesn't see c"");"
+  "assert.strictEqual(fromInsideSees, -1, ""inside sees -1"");"
+  "assert.strictEqual(fromOutsideSees, 1, ""outside sees 1"");"
+  "assert.strictEqual(neitherSees, 0, ""the center is 0"");"
+  "// both compute f'(0) = 1 without seeing 0"
+  .
+
+THECLOSUREASTHERESOLUTION =
+  "// ── 14. The closure as the resolution ──────────────────────"
+  "// The Catch-22 is: you can't observe the timeless from either side."
+  "// The resolution is: the two sides agree on the derivative."
+  "type Closure = {"
+  "  catch22: string;"
+  "  resolution: string;"
+  "};"
+  "const closure: Closure = {"
+  "  catch22: ""neither side can observe c directly"","
+  "  resolution: ""both sides agree on f'(c)"","
+  "};"
+  "assert.ok(closure.catch22.includes(""neither""), ""the Catch-22"");"
+  "assert.ok(closure.resolution.includes(""agree""), ""the resolution"");"
+  .
+
+THEPUNCHLINE =
+  "// ── 15. The punchline ──────────────────────────────────────"
+  "// The Word is { c-r, c+r }. The two branches close."
+  "// The closure is the agreement on f'(c)."
+  "// And f'(c) is the derivative — the positional but not temporal value."
+  "console.log(""I-167: the Word as { c-r, c+r } resolves the Catch-22 — passed"");"
+  "console.log(`  the Word = { c-r, c+r } = the pair of bounds`);"
+  "console.log(`  c-r = the inner bound (branch 1)`);"
+  "console.log(`  c+r = the outer bound (branch 2)`);"
+  "console.log(`  c = the center (invisible from both)`);"
+  "console.log(`  both branches compute f'(c) and agree`);"
+  "console.log(`  the closure IS the agreement on f'(c)`);"
+  "console.log(`  and f'(c) is the derivative — the escape from the Catch-22`);"
+  .

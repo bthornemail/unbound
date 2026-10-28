@@ -1,0 +1,40 @@
+KARNAUGHREDUCTION = CHECKED .
+
+CHECKED = COQ SCOPE KARNAUGHREDUCTIONOWNER KARNAUGHREDUCTIONPROOF KARNAUGHREDUCTIONROW KARNAUGHREDUCTIONLOOKUP KARNAUGHREDUCTIONROWFULLBYTE KARNAUGHREDUCTIONLOOKUPALLONESLASTROW .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+KARNAUGHREDUCTIONOWNER =
+  "Definition karnaugh_reduction04_owner : Prop := True."
+  .
+
+KARNAUGHREDUCTIONPROOF =
+  "Definition karnaugh_reduction04_proof : karnaugh_reduction04_owner := I."
+  .
+
+KARNAUGHREDUCTIONROW =
+  "Definition karnaugh_reduction04_row (x : N) : N := N.land x 0x3F."
+  .
+
+KARNAUGHREDUCTIONLOOKUP =
+  "Definition karnaugh_reduction04_lookup (table input : N) : bool :="
+  "  N.testbit table (karnaugh_reduction04_row input)."
+  .
+
+KARNAUGHREDUCTIONROWFULLBYTE =
+  "Theorem karnaugh_reduction04_row_full_byte :"
+  "  karnaugh_reduction04_row 0xFF = 0x3F."
+  "Proof. vm_compute; reflexivity. Qed."
+  .
+
+KARNAUGHREDUCTIONLOOKUPALLONESLASTROW =
+  "Theorem karnaugh_reduction04_lookup_all_ones_last_row :"
+  "  karnaugh_reduction04_lookup 0xFFFFFFFFFFFFFFFF 0x3F = true."
+  "Proof. vm_compute; reflexivity. Qed."
+  .

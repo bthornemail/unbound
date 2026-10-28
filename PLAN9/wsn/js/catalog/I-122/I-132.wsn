@@ -1,0 +1,18 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-132: exponent meeting"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-132"", ""exponent meeting (2^4, 2^5, 2^6, 2^16, 16^10)"", () => {"
+  "  assert.strictEqual(2 ** 4, 16);"
+  "  assert.strictEqual(2 ** 5, 32);"
+  "  assert.strictEqual(2 ** 6, 64);"
+  "  assert.strictEqual(2 ** 16, 65536);"
+  "  assert.strictEqual(16 ** 10, 2 ** 40);"
+  "  for (let n = 0; n <= 10; n++) {"
+  "    assert.strictEqual(Math.log2(16 ** n), 4 * n);"
+  "  }"
+  "  assert.strictEqual(2 ** 16, 16 ** 4);"
+  "}, ""point/line/duality"");"
+  .

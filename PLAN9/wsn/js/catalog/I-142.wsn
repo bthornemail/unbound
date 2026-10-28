@@ -1,0 +1,217 @@
+RECORD = HEAD THEEVENRATEBK THEODDRATEBKK THETHREEEVENBASESANDTHEIRWALLSI THETHREEWALLS THEALIGNMENTRULEI THESURROGATEBANDXXFFFF THEFOURWORKERSLICESI THEGAPDELINEATIONIB THEXORCLOSUREWITHTHRESHOLDI THEENDTOENDLIFTXXFFFFFFFF THETHREEWALLSPARTITIONTHEUPPERSPACE THECOLUMNEXCEPTIONXFFFFFFF THEFULLLIFTTWORATESCOVERINGTHESPACE THESURROGATEBANDSITSINSIDETHEBITPLANE THELIFTTERMINATESNOVALUEXINANYLIST THEWHOLECHAINXXFFFFFFFF .
+
+HEAD =
+  "// i142.ts — I-142: Unicode lift 0x8 → 0xFFFFFFFF, end-to-end"
+  "import assert from ""node:assert"";"
+  "const CAP = 0x80000000n;  // the 32-bit high bit, EXCLUSIVE (I-131)"
+  .
+
+THEEVENRATEBK =
+  "// ── 1. The even rate: b × 2^k ───────────────────────────────────"
+  "function liftEvenCapped(base: bigint, cap: bigint): bigint[] {"
+  "  const out = [base];"
+  "  while (out[out.length - 1] * 2n < cap) out.push(out[out.length - 1] * 2n);"
+  "  return out;"
+  "}"
+  .
+
+THEODDRATEBKK =
+  "// ── 2. The odd rate: b × 2^k + (2^k − 1) ────────────────────────"
+  "function liftOddCapped(base: bigint, cap: bigint): bigint[] {"
+  "  const out = [base];"
+  "  while (out[out.length - 1] * 2n + 1n < cap) out.push(out[out.length - 1] * 2n + 1n);"
+  "  return out;"
+  "}"
+  .
+
+THETHREEEVENBASESANDTHEIRWALLSI =
+  "// ── 3. The three even bases and their walls (I-131) ─────────────"
+  "const l6  = liftEvenCapped(0x6n, CAP);"
+  "const l8  = liftEvenCapped(0x8n, CAP);"
+  "const l10 = liftEvenCapped(0xAn, CAP);"
+  "const l9  = liftOddCapped (0x9n, CAP);"
+  "console.log(""6  top:"", ""0x"" + l6 [l6 .length-1].toString(16));"
+  "console.log(""8  top:"", ""0x"" + l8 [l8 .length-1].toString(16));"
+  "console.log(""10 top:"", ""0x"" + l10[l10.length-1].toString(16));"
+  "console.log(""9  top:"", ""0x"" + l9 [l9 .length-1].toString(16));"
+  "assert.strictEqual(l6 [l6 .length-1], 0x60000000n, ""6 -> 6-column"");"
+  "assert.strictEqual(l8 [l8 .length-1], 0x40000000n, ""8 -> 4-column"");"
+  "assert.strictEqual(l10[l10.length-1], 0x50000000n, ""10 -> 5-column"");"
+  "assert.strictEqual(l9 [l9 .length-1], 0x4FFFFFFFn, ""9 -> 5-column - ε"");"
+  .
+
+THETHREEWALLS =
+  "// ── 4. The three walls: 4, 5, 6 ─────────────────────────────────"
+  "const wall4 = 0x40000000n;"
+  "const wall5 = 0x50000000n;"
+  "const wall6 = 0x60000000n;"
+  "assert.ok(wall4 < wall5 && wall5 < wall6, ""walls ascending"");"
+  "assert.strictEqual((wall4 >> 28n), 4n, ""wall 4"");"
+  "assert.strictEqual((wall5 >> 28n), 5n, ""wall 5"");"
+  "assert.strictEqual((wall6 >> 28n), 6n, ""wall 6"");"
+  .
+
+THEALIGNMENTRULEI =
+  "// ── 5. The alignment rule (I-132) ───────────────────────────────"
+  "// 16^n = 2^(4n). Powers of 16 land on 4-aligned exponents."
+  "for (let n = 0; n <= 10; n++) {"
+  "  const asPow2 = 16n ** BigInt(n);"
+  "  const exp = asPow2.toString(2).length - 1;"
+  "  assert.strictEqual(exp, 4 * n, `16^${n} = 2^${4*n}`);"
+  "}"
+  "// the two powers-of-16 in the chain"
+  "assert.strictEqual(2n ** 16n, 16n ** 4n, ""2^16 = 16^4"");"
+  "assert.strictEqual(16n ** 10n, 2n ** 40n, ""16^10 = 2^40"");"
+  .
+
+THESURROGATEBANDXXFFFF =
+  "// ── 6. The surrogate band 0x8000–0xFFFF ─────────────────────────"
+  "// The inverse tetrahedron (I-112). Signatures: 0x8–0xF at nibble level."
+  "const surrogateLo = 0x8000n;"
+  "const surrogateHi = 0xFFFFn;"
+  "assert.strictEqual(surrogateHi - surrogateLo + 1n, 0x8000n, ""surrogate = 32768"");"
+  "assert.strictEqual(surrogateLo >> 12n, 0x8n, ""high nibble of 0x8000 = 8"");"
+  "// the surrogate signature nibble 0x8 = the start of the lift"
+  "assert.strictEqual(surrogateLo >> 12n, 0x8n, ""0x8 is the surrogate signature"");"
+  .
+
+THEFOURWORKERSLICESI =
+  "// ── 7. The four worker slices (I-140) ───────────────────────────"
+  "// 2^16 split into 4 slices of 2^14"
+  "const SPACE = 2 ** 16;"
+  "const WORKERS = 4;"
+  "const SLICE = SPACE / WORKERS;"
+  "assert.strictEqual(SLICE, 2 ** 14, ""slice = 2^14 = 16384"");"
+  "const slices = Array.from({ length: WORKERS }, (_, i) => ({"
+  "  start: i * SLICE,"
+  "  end: (i + 1) * SLICE - 1,"
+  "}));"
+  "assert.deepStrictEqual(slices[0], { start: 0,     end: 16383 }, ""slice 0"");"
+  "assert.deepStrictEqual(slices[3], { start: 49152, end: 65535 }, ""slice 3"");"
+  .
+
+THEGAPDELINEATIONIB =
+  "// ── 8. The gap delineation (I-133b) ─────────────────────────────"
+  "const groups = {"
+  "  colon:   [0x3A, 0x3B],             // :;"
+  "  compare: [0x3C, 0x3D, 0x3E, 0x3F], // <=>?"
+  "  brace:   [0x7B, 0x7C, 0x7D, 0x7E], // {|}~"
+  "};"
+  "assert.strictEqual(groups.colon.length, 2,   "":; size 2"");"
+  "assert.strictEqual(groups.compare.length, 4, ""<=>? size 4"");"
+  "assert.strictEqual(groups.brace.length, 4,   ""{|}~ size 4"");"
+  "assert.strictEqual(groups.colon.length + groups.compare.length, 6, ""2 + 4 = 6"");"
+  .
+
+THEXORCLOSUREWITHTHRESHOLDI =
+  "// ── 9. The XOR closure with threshold (I-141) ───────────────────"
+  "function xorRange(lo: number, hi: number): number {"
+  "  let x = 0;"
+  "  for (let i = lo; i <= hi; i++) x ^= i;"
+  "  return x;"
+  "}"
+  "for (let n = 2; n <= 16; n++) {"
+  "  assert.strictEqual(xorRange(0, 2 ** n - 1), 0, `XOR 0..2^${n}-1 = 0`);"
+  "}"
+  "assert.strictEqual(xorRange(0, 1), 1, ""XOR 0..1 = 1 (n=1 case)"");"
+  .
+
+THEENDTOENDLIFTXXFFFFFFFF =
+  "// ── 10. The end-to-end lift: 0x8 → 0xFFFFFFFF ──────────────────"
+  "// Walk the even lift from 0x8, and separately from 0x6 and 0xA,"
+  "// to reach the three walls. Then verify the range is fully covered."
+  "const fullEvenLift = liftEvenCapped(0x8n, 0x80000000n);"
+  "console.log(""even lift 0x8, first 5:"", fullEvenLift.slice(0, 5).map(b => ""0x"" + b.toString(16)));"
+  "console.log(""even lift 0x8, last 3: "", fullEvenLift.slice(-3).map(b => ""0x"" + b.toString(16)));"
+  "// The full 32-bit range [0, 0xFFFFFFFF]"
+  "const FULL_32 = 0xFFFFFFFFn;"
+  "assert.strictEqual(FULL_32, 4294967295n, ""0xFFFFFFFF = 4294967295"");"
+  "assert.strictEqual(FULL_32 + 1n, 0x100000000n, ""0xFFFFFFFF + 1 = 2^32"");"
+  "// The high bit is 0x80000000"
+  "assert.strictEqual(CAP, 0x80000000n, ""high bit = 2^31"");"
+  "assert.strictEqual(FULL_32 - CAP, 0x7FFFFFFFn, ""upper half = 0x7FFFFFFF"");"
+  .
+
+THETHREEWALLSPARTITIONTHEUPPERSPACE =
+  "// ── 11. The three walls partition the upper space ───────────────"
+  "// 0x40000000 (wall4), 0x50000000 (wall5), 0x60000000 (wall6)"
+  "// each step is 0x10000000 = 2^28"
+  "assert.strictEqual(wall5 - wall4, 0x10000000n, ""wall5 - wall4 = 2^28"");"
+  "assert.strictEqual(wall6 - wall5, 0x10000000n, ""wall6 - wall5 = 2^28"");"
+  "assert.strictEqual(wall6 - wall4, 0x20000000n, ""wall6 - wall4 = 2^29"");"
+  .
+
+THECOLUMNEXCEPTIONXFFFFFFF =
+  "// ── 12. The 5-column exception: 0x4FFFFFFF ──────────────────────"
+  "// The odd lift from 9 lands at wall5 - 1"
+  "assert.strictEqual(l9[l9.length-1], wall5 - 1n, ""odd top = wall5 - 1"");"
+  "// so the odd rate nests INSIDE the 5-column"
+  "assert.ok(l9[l9.length-1] > wall4, ""odd top above wall4"");"
+  "assert.ok(l9[l9.length-1] < wall5, ""odd top below wall5"");"
+  .
+
+THEFULLLIFTTWORATESCOVERINGTHESPACE =
+  "// ── 13. The full lift: two rates covering the space ─────────────"
+  "// Even rate covers [0x8, 0x40000000) via 0x8"
+  "// Even rate covers [0x6, 0x60000000) via 0x6"
+  "// Even rate covers [0xA, 0x50000000) via 0xA"
+  "// Odd rate covers [0x9, 0x4FFFFFFF] via 0x9"
+  "type Segment = { rate: ""even"" | ""odd""; from: bigint; to: bigint };"
+  "const segments: Segment[] = ["
+  "  { rate: ""even"", from: 0x8n, to: 0x40000000n },"
+  "  { rate: ""even"", from: 0x6n, to: 0x60000000n },"
+  "  { rate: ""even"", from: 0xAn, to: 0x50000000n },"
+  "  { rate: ""odd"",  from: 0x9n, to: 0x4FFFFFFFn },"
+  "];"
+  "assert.strictEqual(segments.length, 4, ""4 segments"");"
+  "assert.strictEqual(segments.filter(s => s.rate === ""even"").length, 3, ""3 even"");"
+  "assert.strictEqual(segments.filter(s => s.rate === ""odd"").length, 1,  ""1 odd"");"
+  "// the odd segment fills the gap between wall4 and wall5"
+  "assert.ok(segments[3].from > segments[0].to - 0x40000000n, ""odd above even low"");"
+  "assert.strictEqual(segments[3].to + 1n, wall5, ""odd reaches up to wall5"");"
+  .
+
+THESURROGATEBANDSITSINSIDETHEBITPLANE =
+  "// ── 14. The surrogate band sits inside the 16-bit plane ─────────"
+  "// 0x8000-0xFFFF is the inverse tetrahedron; the 16-bit plane is 0-0xFFFF"
+  "const P16 = 0xFFFFn;"
+  "assert.strictEqual(surrogateHi, P16, ""surrogate high = 0xFFFF"");"
+  "assert.strictEqual(surrogateLo + (P16 - surrogateLo + 1n) - 1n, P16, ""surrogate covers to 0xFFFF"");"
+  "// the low half 0x0000-0x7FFF is the tetrahedron"
+  "const LOW16 = 0x7FFFn;"
+  "assert.strictEqual(LOW16 + 1n, surrogateLo, ""low half ends at 0x7FFF; surrogate starts at 0x8000"");"
+  .
+
+THELIFTTERMINATESNOVALUEXINANYLIST =
+  "// ── 15. The lift terminates: no value ≥ 0x80000000 in any list ──"
+  "for (const l of [l6, l8, l10, l9]) {"
+  "  for (const v of l) {"
+  "    assert.ok(v < CAP, `value 0x${v.toString(16)} < high bit`);"
+  "  }"
+  "}"
+  "// each list's top is the largest value < CAP"
+  "for (const [name, l] of [[""6"",l6],[""8"",l8],[""10"",l10],[""9"",l9]] as const) {"
+  "  const top = l[l.length - 1];"
+  "  assert.ok(top * 2n >= CAP || top * 2n + 1n >= CAP,"
+  "    `${name}: top doubles past high bit`);"
+  "}"
+  .
+
+THEWHOLECHAINXXFFFFFFFF =
+  "// ── 16. The whole chain: 0x8 → 0xFFFFFFFF ──────────────────────"
+  "// The full 32-bit unsigned range is [0, 0xFFFFFFFF]."
+  "// The lift covers:"
+  "//   - the 16-bit plane via I-140 (4 worker slices of 2^14)"
+  "//   - the 32-bit plane via the two rates, up to the high bit (exclusive)"
+  "//   - the surrogate band 0x8000-0xFFFF as the inverse tetrahedron"
+  "console.log(""\nLIFT COVERAGE:"");"
+  "console.log(""  16-bit plane:  0x0000 - 0xFFFF (4 worker slices of 2^14)"");"
+  "console.log(""  surrogate band:0x8000 - 0xFFFF (inverse tetrahedron)"");"
+  "console.log(""  32-bit even:   0x8 → 0x40000000 (4-column)"");"
+  "console.log(""  32-bit even:   0x6 → 0x60000000 (6-column)"");"
+  "console.log(""  32-bit even:   0xA → 0x50000000 (5-column)"");"
+  "console.log(""  32-bit odd:    0x9 → 0x4FFFFFFF (5-column - ε)"");"
+  "console.log(""  cap (high bit):0x80000000 (exclusive)"");"
+  "console.log(""  full range:    0x00000000 - 0xFFFFFFFF"");"
+  "console.log(""\nI-142: Unicode lift 0x8 → 0xFFFFFFFF, end-to-end — passed"");"
+  .

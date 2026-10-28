@@ -1,0 +1,100 @@
+RECORD = HEAD THEEXTENDEDMODULUSSET BRIDGESTHETWORATES EVENLIFTFROM THREEWALLS THERATEOFFSETPATTERN THERUN THESLICESTAYSEXCEPTIONAL .
+
+HEAD =
+  "// i131.ts — I-131: adding 6; walls at 4, 5, 6"
+  "import assert from ""node:assert"";"
+  .
+
+THEEXTENDEDMODULUSSET =
+  "// ── 1. The extended modulus set ──────────────────────────────────"
+  "const moduli = [6, 8, 9, 10, 11];"
+  "const evenRate = moduli.filter(n => n % 2 === 0);"
+  "const oddRate  = moduli.filter(n => n % 2 === 1);"
+  "assert.deepStrictEqual(evenRate, [6, 8, 10], ""even rate = {6,8,10}"");"
+  "assert.deepStrictEqual(oddRate,  [9, 11],    ""odd rate = {9,11}"");"
+  "assert.strictEqual(5, 5, ""5 is the exception (below the set)"");"
+  .
+
+BRIDGESTHETWORATES =
+  "// ── 2. 6 bridges the two rates ───────────────────────────────────"
+  "const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);"
+  "assert.strictEqual(gcd(6, 10), 2, ""6 shares 2 with the even rate"");"
+  "assert.strictEqual(gcd(6, 9),  3, ""6 shares 3 with the odd rate"");"
+  "assert.strictEqual(6, 2 * 3,    ""6 = 2 × 3"");"
+  .
+
+EVENLIFTFROM =
+  "// ── 3. Even lift from 6 ──────────────────────────────────────────"
+  "function liftEvenCapped(base: bigint, cap: bigint): bigint[] {"
+  "  const out = [base];"
+  "  while (out[out.length - 1] * 2n <= cap) out.push(out[out.length - 1] * 2n);"
+  "  return out;"
+  "}"
+  "function liftOddCapped(base: bigint, cap: bigint): bigint[] {"
+  "  const out = [base];"
+  "  while (out[out.length - 1] * 2n + 1n <= cap) out.push(out[out.length - 1] * 2n + 1n);"
+  "  return out;"
+  "}"
+  "const CAP = 0x7FFFFFFFn;  // the 32-bit high bit"
+  "const l6  = liftEvenCapped(0x6n, CAP);"
+  "const l8  = liftEvenCapped(0x8n, CAP);"
+  "const l10 = liftEvenCapped(0xAn, CAP);"
+  "const l9  = liftOddCapped (0x9n, CAP);"
+  "console.log(""6 top: "", ""0x"" + l6 [l6 .length-1].toString(16));"
+  "console.log(""8 top: "", ""0x"" + l8 [l8 .length-1].toString(16));"
+  "console.log(""10 top:"", ""0x"" + l10[l10.length-1].toString(16));"
+  "console.log(""9 top: "", ""0x"" + l9 [l9 .length-1].toString(16));"
+  "assert.strictEqual(l6 [l6 .length-1], 0x60000000n, ""6 -> 6-column"");"
+  "assert.strictEqual(l8 [l8 .length-1], 0x40000000n, ""8 -> 4-column"");"
+  "assert.strictEqual(l10[l10.length-1], 0x50000000n, ""10 -> 5-column"");"
+  "assert.strictEqual(l9 [l9 .length-1], 0x4FFFFFFFn, ""9 -> 5-column - 1"");"
+  .
+
+THREEWALLS =
+  "// ── 5. Three walls: 4, 5, 6 ──────────────────────────────────────"
+  "const wall4 = 0x40000000n;"
+  "const wall5 = 0x50000000n;"
+  "const wall6 = 0x60000000n;"
+  "assert.ok(wall4 < wall5 && wall5 < wall6, ""walls ascending 4 < 5 < 6"");"
+  "assert.strictEqual(wall5 - wall4, 0x10000000n, ""step 0x10000000 between walls"");"
+  "assert.strictEqual(wall6 - wall5, 0x10000000n, ""step 0x10000000 between walls"");"
+  "// the walls are consecutive columns"
+  "assert.strictEqual(wall4 >> 28n, 4n, ""wall 4"");"
+  "assert.strictEqual(wall5 >> 28n, 5n, ""wall 5"");"
+  "assert.strictEqual(wall6 >> 28n, 6n, ""wall 6"");"
+  .
+
+THERATEOFFSETPATTERN =
+  "// ── 6. The 0,2,1 rate-offset pattern ─────────────────────────────"
+  "// Read 0,2,1 as: offset 0 (even), multiplier 2, offset 1 (odd)"
+  "const sel = [0, 2, 1];"
+  "assert.strictEqual(sel[0], 0, ""selector[0] = 0 (even offset)"");"
+  "assert.strictEqual(sel[1], 2, ""selector[1] = 2 (multiplier)"");"
+  "assert.strictEqual(sel[2], 1, ""selector[2] = 1 (odd offset)"");"
+  "// the even and odd lifts use these offsets"
+  "const evenOffset = 0n, oddOffset = 1n, multiplier = 2n;"
+  "assert.strictEqual(6n * 2n + evenOffset, 12n, ""even step from 6"");"
+  "assert.strictEqual(9n * 2n + oddOffset, 19n,  ""odd step from 9"");"
+  .
+
+THERUN =
+  "// ── 7. The 9, 10, 11 run ─────────────────────────────────────────"
+  "const run = [9, 10, 11];"
+  "assert.deepStrictEqual(run.map(n => n - 9), [0, 1, 2], ""9,10,11 run"");"
+  "// factorizations"
+  "assert.strictEqual(9, 3 * 3,   ""9 = 3²"");"
+  "assert.strictEqual(10, 2 * 5,  ""10 = 2 × 5"");"
+  "assert.strictEqual(11, 11,     ""11 = prime"");"
+  "// adding 6 gives a four-run: 6, 9, 10, 11 doesn't, but 6, 8, 9, 10, 11 does"
+  "assert.deepStrictEqual([6, 8, 9, 10, 11].sort((a,b) => a-b), [6, 8, 9, 10, 11],"
+  "  ""extended set"");"
+  .
+
+THESLICESTAYSEXCEPTIONAL =
+  "// ── 8. The 5-slice stays exceptional ─────────────────────────────"
+  "const mod = (a: bigint, m: bigint) => ((a % m) + m) % m;"
+  "for (const m of [6n, 8n, 9n, 10n, 11n]) {"
+  "  assert.strictEqual(mod(5n, m), 5n, `5 mod ${m} = 5 (still constant)`);"
+  "}"
+  "console.log(""I-131: adding 6; walls at 4/5/6; 0,2,1 offset pattern — passed"");"
+  .

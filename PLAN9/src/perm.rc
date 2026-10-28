@@ -1,0 +1,10 @@
+#!/bin/rc
+# perm.rc - inside Plan 9: the configurations and indices of each word (zperm).
+rfork e
+w=/tmp/zp2
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zperm.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c zperm.c && 8l -o $w/zperm zperm.8 || exit compile
+$w/zperm IS OF IF GOD WORD && echo 'perm.rc: every count as stated'

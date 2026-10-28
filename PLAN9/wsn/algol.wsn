@@ -1,0 +1,1 @@
+RESERVED = "ARRAY" | "BEGIN" | "BOOLEAN" | "COMMENT" | "DO" | "ELSE" | "END" | "FALSE" | "FOR" | "GOTO" | "IF" | "INTEGER" | "LABEL" | "OWN" | "PROCEDURE" | "REAL" | "STEP" | "STRING" | "SWITCH" | "THEN" | "TRUE" | "UNTIL" | "VALUE" | "WHILE" .

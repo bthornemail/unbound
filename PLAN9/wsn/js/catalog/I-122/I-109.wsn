@@ -1,0 +1,16 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-109 → I-141: shared zero (derived)"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-109"", ""two chains, shared zero (derived)"", () => {"
+  "  const xor = (...xs: number[]) => xs.reduce((a, b) => a ^ b, 0);"
+  "  const chainA = [0,1,2,3,4,5,6,7];"
+  "  assert.strictEqual(xor(...chainA), 0);"
+  "  assert.strictEqual(xor(1, 2, 3), 0);"
+  "  assert.strictEqual(10 % 10, 0);"
+  "  assert.strictEqual(9 % 9, 0);"
+  "  assert.strictEqual(11 % 11, 0);"
+  "}, ""point/line/duality"");"
+  .

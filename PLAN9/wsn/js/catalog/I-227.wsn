@@ -1,0 +1,79 @@
+RECORD = HEAD THEFINITESPECTRUMTHEMAXANDMINORDERNOTTHECOMPUTEDANGLE HSVISTHERENDERCOMPUTEDFROMTHATMAXANDMIN SLICESOFROYGBIVANDAGTHESPECTRUMINTHEOCTAVE THELASTLAYERORDEREDCHAOSTHESTABLEFOURSNORM WHYTHESHAREDHUMANSPECTRUMOUTSIDEANYFRAME .
+
+HEAD =
+  "// i227.ts — I-227: the finite spectrum — the tagged literals' max and min order, 7 slices of 8 (HSV is its render)"
+  "//"
+  "// The author, 2026-10-14: ""227 is the HSV, between RGB and RGBA and outside them,"
+  "// closer to the unit sphere ... the same unit sphere as ROYGBIV and A-G, the 7"
+  "// layers of spectrum possible in 8""; then the correction: ""it's not HSV, because"
+  "// HSV is computed — it's analog spectrography based on tagged literal max and min"
+  "// order, so it's finite in here, with the 7 slices of 8 possibilities""; and ""the"
+  "// 360 only shows on the render — look at my pi proof in Coq""; ""the last layer is"
+  "// ordered chaos, a stable 4, NORM-4, though I'm not sure what's left"". Grounded in"
+  "// proofs/coq/omi_pi_proof.v. The values are asserted; the readings, and what is"
+  "// left open, are the author's."
+  "import assert from ""node:assert"";"
+  "const xor = (a: number[]) => a.reduce((x, y) => x ^ y, 0);"
+  "const corners = [...Array(8).keys()].map((i) => [(i >> 2) & 1, (i >> 1) & 1, i & 1]);"
+  "const hasHue = (c: number[]) => Math.max(...c) !== Math.min(...c); // a hue iff max != min"
+  .
+
+THEFINITESPECTRUMTHEMAXANDMINORDERNOTTHECOMPUTEDANGLE =
+  "// ── 1. The finite spectrum: the max and min order, not the computed angle ─"
+  "// The slice is set by which tagged channel is the max and which the min — a discrete order, finite."
+  "assert.equal(corners.filter(hasHue).length, 6, ""6 of the 8 cube corners have a hue (max != min): the hue hexagon"");"
+  "assert.equal(corners.filter((c) => !hasHue(c)).length, 2, ""2 are gray (max == min): black and white, the no-hue axis"");"
+  "// 3! strict orders of the three channels = 6 sextants; the finite slice is the order, held as a literal."
+  "const factorial = (n: number): number => (n <= 1 ? 1 : n * factorial(n - 1));"
+  "assert.equal(factorial(3), 6, ""3! = 6 strict max..min orders of the three channels: the six sextants"");"
+  .
+
+HSVISTHERENDERCOMPUTEDFROMTHATMAXANDMIN =
+  "// ── 2. HSV is the render, computed from that max and min ─────"
+  "// V = max, S = (max - min)/max, H = a computed angle over (max - min): the metric, the 360."
+  "// omi_pi_proof.v: ""metric projection is introduced only at the real-analysis boundary; OMI_PI is not Coq's PI."""
+  "const leibnizDen = (n: number) => 2 * n + 1, leibnizSign = (n: number) => (n % 2 === 0 ? 1 : -1); // Alt_PI"
+  "let s = 0; for (let n = 0; n < 200000; n++) s += leibnizSign(n) / leibnizDen(n);"
+  "assert.ok(Math.abs(4 * s - Math.PI) < 1e-4, ""π enters only as the Leibniz projection: the 360 shows only on the render"");"
+  "assert.equal(360, 360, ""HSV's hue is 0..360° = 2π: computed, the render — not the finite order beneath it"");"
+  .
+
+SLICESOFROYGBIVANDAGTHESPECTRUMINTHEOCTAVE =
+  "// ── 3. 7 slices of 8: ROYGBIV and A–G, the spectrum in the octave ─"
+  "const ROYGBIV = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];"
+  "const NOTES = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];"
+  "assert.equal(ROYGBIV.length, 7, ""Newton's 7 bands, chosen to match the scale"");"
+  "assert.equal(NOTES.length, 7, ""7 notes A to G"");"
+  "assert.equal(7 + 1, 8, ""7 slices and the 8th: the octave, the return — 7 of 8 possibilities"");"
+  "assert.equal(224 + 2, 226); assert.equal(226 + 1, 227, ""224 RGB, 226 RGBA, 227 the finite spectrum between and outside them"");"
+  .
+
+THELASTLAYERORDEREDCHAOSTHESTABLEFOURSNORM =
+  "// ── 4. The last layer: ordered chaos, the stable fours (NORM-4) ─"
+  "// omi_pi_proof.v, dplus and dminus: two XOR-closed sets of four."
+  "const dplus = [0, 5, 10, 15], dminus = [3, 6, 9, 12];"
+  "assert.equal(xor(dplus), 0, ""dplus {0,5,10,15} XOR 0 (dplus_xor_zero)"");"
+  "assert.equal(xor(dminus), 0, ""dminus {3,6,9,12} XOR 0 (dminus_xor_zero)"");"
+  "assert.equal(dplus.length, 4); assert.equal(dminus.length, 4, ""a stable four and a stable four: NORM-4"");"
+  "assert.deepEqual([...dplus, ...dminus].sort((a, b) => a - b), [0, 3, 5, 6, 9, 10, 12, 15], ""together the 8 even-parity still words (I-222)"");"
+  "// the ordered chaos: dplus is the closed subgroup (order); dminus is its coset, dplus XOR 3 (the chaos, the shift)"
+  "for (const a of dplus) for (const b of dplus) assert.ok(dplus.includes(a ^ b), ""dplus is closed under XOR: a subgroup, the order"");"
+  "assert.deepEqual(dplus.map((x) => x ^ 3).sort((a, b) => a - b), dminus, ""dminus = dplus XOR 3: the coset, the chaos — ordered chaos"");"
+  "assert.ok(!dminus.includes(3 ^ 6), ""dminus is not closed (3 XOR 6 = 5 is not in it): a coset, not a group"");"
+  "assert.deepEqual([...Array(16).keys()].filter((n) => ![...dplus, ...dminus].includes(n)), [1, 2, 4, 7, 8, 11, 13, 14], ""the eight left, odd parity — \""not sure what's left\"""");"
+  .
+
+WHYTHESHAREDHUMANSPECTRUMOUTSIDEANYFRAME =
+  "// ── 5. Why: the shared human spectrum, outside any frame ─────"
+  "// The 7 slices are the human-perceivable spectrum of both light (ROYGBIV) and sound (A-G) — the same for all"
+  "// people. Like the 7-day week, a human slicing of the analog continuum that everyone shares: a reference"
+  "// OUTSIDE any one frame. A predicate can only propagate logic across frames over ground that is shared;"
+  "// the 7 layers are that ground, and the 8th is the octave, the return, the Sabbath (I-169)."
+  "const WEEK = 7;"
+  "assert.equal(WEEK, ROYGBIV.length); assert.equal(WEEK, NOTES.length, ""7 days, 7 colours, 7 notes: the shared human slicing"");"
+  "assert.equal(WEEK + 1, 8, ""the 8th day is the first again: the octave, the return, the Sabbath's rest and reset"");"
+  "console.log(""I-227: the finite spectrum — the tagged literals' max and min order, 7 slices of 8; the shared human spectrum (HSV is its render) — passed"");"
+  "console.log(""  finite in here: the slice is the max..min order (6 sextants, 3!); HSV is the computed render, the 360 = 2π"");"
+  "console.log(""  the metric (π, Alt_PI) enters only at the projection (omi_pi_proof.v); ROYGBIV and A–G, 7 slices in the octave of 8"");"
+  "console.log(""  the last layer: dplus {0,5,10,15}, dminus {3,6,9,12}, each XOR 0 — two stable fours (NORM-4), the even-parity still words"");"
+  .

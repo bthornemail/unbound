@@ -1,0 +1,120 @@
+RECORD = HEAD THEPROMPTANDUNAMEBYTES ALLPROMPTBYTESAREINTHEBLOCKORCONTROL THEATOMICSBUFFEROVERTHEPROMPT INDICES MODREDUCTIONSOFTHEINDICES THECOMPAREEXCHANGECYCLEATTHOSEINDICES THEEHINGENANCOERCESTOINDEX THEUNICODECONTROLPLANEBANDSOFTHEPROMPT UNAMEOUTPUTISPUREPRINTABLEASCII THERANGEINTHEMODFRAME .
+
+HEAD =
+  "// promptTest.ts — I-128: prompt characters + Atomics cycle + mod-12 chain"
+  "import assert from ""node:assert"";"
+  "import * as os from ""node:os"";"
+  .
+
+THEPROMPTANDUNAMEBYTES =
+  "// ── 1. The prompt and uname bytes ────────────────────────────────"
+  "const prompt = ""main@TOSHIBA-PORTEGE-Z30t-C:~/Programs/boxedPINE/src$ "";"
+  "const uname  = os.type() + "" "" + os.release() + "" "" + os.arch();"
+  "const bytes  = Buffer.from(prompt, ""utf8"");"
+  "console.log(""prompt:"", JSON.stringify(prompt));"
+  "console.log(""uname: "", uname);"
+  "console.log(""prompt bytes:"", bytes.length, ""first 16:"", [...bytes.slice(0,16)]);"
+  .
+
+ALLPROMPTBYTESAREINTHEBLOCKORCONTROL =
+  "// ── 2. All prompt bytes are in the 36-block or control ───────────"
+  "const is36  = (c: number) => (0x30 <= c && c <= 0x39) || (0x41 <= c && c <= 0x5A);"
+  "const isCtl = (c: number) => c >= 0x00 && c <= 0x1F;"
+  "const isPrt = (c: number) => c >= 0x20 && c <= 0x7E;"
+  "for (const b of bytes) {"
+  "  assert.ok(is36(b) || isCtl(b) || isPrt(b) || b === 0x2F || b === 0x3A"
+  "         || b === 0x2D || b === 0x40 || b === 0x5F || b === 0x7E || b === 0x24"
+  "         || b === 0x20,"
+  "    `byte 0x${b.toString(16)} is in a known band`);"
+  "}"
+  .
+
+THEATOMICSBUFFEROVERTHEPROMPT =
+  "// ── 3. The Atomics buffer over the prompt ────────────────────────"
+  "// Pad to 256 bytes so indices 60/128/64 are in range."
+  "const buf = Buffer.alloc(256);"
+  "bytes.copy(buf, 0);"
+  "// Uint8Array view: byte index == element index"
+  "const view = new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);"
+  .
+
+INDICES =
+  "// ── 4. Indices 60, 128, 64 ───────────────────────────────────────"
+  "const I60 = 60, I128 = 128, I64 = 64;"
+  "console.log(""byte at 60: "", buf[I60], JSON.stringify(String.fromCharCode(buf[I60])));"
+  "console.log(""byte at 128:"", buf[I128], JSON.stringify(String.fromCharCode(buf[I128])));"
+  "console.log(""byte at 64: "", buf[I64], JSON.stringify(String.fromCharCode(buf[I64])));"
+  .
+
+MODREDUCTIONSOFTHEINDICES =
+  "// ── 5. mod-12 reductions of the indices ──────────────────────────"
+  "const m12 = (n: number) => ((n % 12) + 12) % 12;"
+  "assert.strictEqual(m12(60),  0, ""60 mod 12 = 0"");"
+  "assert.strictEqual(m12(128), 8, ""128 mod 12 = 8"");"
+  "assert.strictEqual(m12(64),  4, ""64 mod 12 = 4"");"
+  "console.log(""mod-12 chain:"", m12(60), m12(128), m12(64));"
+  .
+
+THECOMPAREEXCHANGECYCLEATTHOSEINDICES =
+  "// ── 6. The compare-exchange cycle at those indices ───────────────"
+  "// Set expected values, then run the cycle."
+  "const b60  = buf[I60];"
+  "const b128 = buf[I128];"
+  "const b64  = buf[I64];"
+  "// cycle: (60, expect ?, replace ?) — define expected as current, replace with next"
+  "const r1 = Atomics.compareExchange(view, I60, b60, b128);"
+  "assert.strictEqual(r1, b60, ""swap 1 read index 60"");"
+  "assert.strictEqual(buf[I60], b128, ""swap 1 wrote index 60"");"
+  "const r2 = Atomics.compareExchange(view, I128, b128, b64);"
+  "assert.strictEqual(r2, b128, ""swap 2 read index 128"");"
+  "assert.strictEqual(buf[I128], b64, ""swap 2 wrote index 128"");"
+  "const r3 = Atomics.compareExchange(view, I64, b64, b60);"
+  "assert.strictEqual(r3, b64, ""swap 3 read index 64"");"
+  "assert.strictEqual(buf[I64], b60, ""swap 3 wrote index 64"");"
+  "// after the full cycle, the three bytes have rotated"
+  "assert.strictEqual(buf[I60],  b128, ""final: 60 holds old 128"");"
+  "assert.strictEqual(buf[I128], b64,  ""final: 128 holds old 64"");"
+  "assert.strictEqual(buf[I64],  b60,  ""final: 64 holds old 60"");"
+  .
+
+THEEHINGENANCOERCESTOINDEX =
+  "// ── 7. The E % 0 hinge: NaN coerces to index 0 ───────────────────"
+  "const nan = 0 % 0;"
+  "assert.ok(Number.isNaN(nan), ""E % 0 = NaN"");"
+  "const r0 = Atomics.compareExchange(view, nan as any, buf[0], buf[0]);"
+  "assert.strictEqual(r0, buf[0], ""E % 0 lands at index 0"");"
+  .
+
+THEUNICODECONTROLPLANEBANDSOFTHEPROMPT =
+  "// ── 8. The Unicode / control-plane bands of the prompt ───────────"
+  "// The prompt uses C0 escape (0x1B) only if colorized."
+  "// Test: an ANSI-colored prompt starts with ESC [ ..."
+  "const colored = ""\x1b[32mmain\x1b[0m$ "";"
+  "const cbytes  = Buffer.from(colored, ""utf8"");"
+  "assert.strictEqual(cbytes[0], 0x1B, ""ESC is C0 control 0x1B"");"
+  "assert.strictEqual(cbytes[1], 0x5B, ""'[' after ESC"");"
+  "assert.ok(cbytes.some(b => b === 0x1B), ""prompt has control codes"");"
+  .
+
+UNAMEOUTPUTISPUREPRINTABLEASCII =
+  "// ── 9. uname output is pure printable ASCII ──────────────────────"
+  "const ubytes = Buffer.from(uname, ""utf8"");"
+  "for (const b of ubytes) {"
+  "  assert.ok(b >= 0x20 && b <= 0x7E, `uname byte 0x${b.toString(16)} printable`);"
+  "}"
+  .
+
+THERANGEINTHEMODFRAME =
+  "// ── 10. The 0..64..128 range in the mod 0..12 frame ──────────────"
+  "const chain = [0, 64, 128];"
+  "const reduced = chain.map(m12);"
+  "console.log(""0/64/128 mod 12:"", reduced);"
+  "assert.deepStrictEqual(reduced, [0, 4, 8], ""chain 0/64/128 -> 0/4/8"");"
+  "// note: 60/128/64 -> 0/8/4 ; 0/64/128 -> 0/4/8 — same set, different order"
+  "assert.deepStrictEqual("
+  "  [...reduced].sort((a,b) => a-b),"
+  "  [0, 4, 8],"
+  "  ""the mod-12 set {0,4,8}"""
+  ");"
+  "console.log(""I-128: prompt chars + Atomics cycle + mod-12 chain — passed"");"
+  .

@@ -1,0 +1,44 @@
+HOPFPROJECTION = CHECKED .
+
+CHECKED = COQ SCOPE HOPFPROJECTIONOWNER HOPFPROJECTIONPROOF HOPFPROJECTIONR HOPFPROJECTIONNORM HOPFPROJECTIONNORMUNFOLDS .
+
+COQ =
+  "From Coq Require Import QArith.QArith."
+  .
+
+SCOPE =
+  "Open Scope Q_scope."
+  .
+
+HOPFPROJECTIONOWNER =
+  "Definition hopf_projection13_owner : Prop := True."
+  .
+
+HOPFPROJECTIONPROOF =
+  "Definition hopf_projection13_proof : hopf_projection13_owner := I."
+  .
+
+HOPFPROJECTIONR =
+  "Record hopf_projection13_r4 := {"
+  "  hopf13_x0 : Q;"
+  "  hopf13_x1 : Q;"
+  "  hopf13_x2 : Q;"
+  "  hopf13_x3 : Q"
+  "}."
+  .
+
+HOPFPROJECTIONNORM =
+  "Definition hopf_projection13_norm4 (p : hopf_projection13_r4) : Q :="
+  "  hopf13_x0 p * hopf13_x0 p + hopf13_x1 p * hopf13_x1 p +"
+  "  hopf13_x2 p * hopf13_x2 p + hopf13_x3 p * hopf13_x3 p."
+  .
+
+HOPFPROJECTIONNORMUNFOLDS =
+  "Theorem hopf_projection13_norm4_unfolds : forall p,"
+  "  hopf_projection13_norm4 p =="
+  "    hopf13_x0 p * hopf13_x0 p + hopf13_x1 p * hopf13_x1 p +"
+  "    hopf13_x2 p * hopf13_x2 p + hopf13_x3 p * hopf13_x3 p."
+  "Proof."
+  "  intros p; reflexivity."
+  "Qed."
+  .

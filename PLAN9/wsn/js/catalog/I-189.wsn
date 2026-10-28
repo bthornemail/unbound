@@ -1,0 +1,70 @@
+RECORD = HEAD ANDARETHEFIRSTNUMBERSWITHTWOCUBESUMS ISTHETRIPLETSPRODUCT THECUBESUMSSPLITITINTOTHETRIPLET ADIFFERENCEOFSQUARESMEASURESTHEGAP .
+
+HEAD =
+  "// i189.ts — I-189: 1729 = 7 x 13 x 19, the first sexy set after the exceptional one, and its cubes split it"
+  "//"
+  "// The author, 2026-10-13, pasted Wikipedia's ""Sum of two cubes"" (and"
+  "// ""Difference of two squares""), which ends: ""19 is the total of the digits in"
+  "// 1729; 19 reversed is 91; 19 x 91 is 1729"". Found here: 1729 is the product"
+  "// of (7, 13, 19), the first sexy set after the exceptional one (I-183); 91 is"
+  "// 7 x 13. And a^3 + b^3 = (a + b)(a^2 - ab + b^2) splits each by its cube"
+  "// sums: 1729 = 1^3 + 12^3 gives 13 x 133, 1729 = 9^3 + 10^3 gives 19 x 91, and"
+  "// 91 = 3^3 + 4^3 gives 7 x 13. Each a + b is a member of the triplet."
+  "// And, the author: ""that's the measurement of the two prime gap"": a difference"
+  "// of squares measures a gap. For primes p < q, pq = m^2 - h^2 with m the midpoint"
+  "// and h half the gap; the triplet's two gaps of 6 read as 3 and 3, both together"
+  "// as 6, and 1729 = 19 x 91 = 55^2 - 36^2, with 36 = 6^2."
+  "import assert from ""node:assert"";"
+  "/** Every way to write n as a^3 + b^3 with a <= b, positive (or, with negatives, any integers in range). */"
+  "function cubeSums(n: number, negatives: boolean): [number, number][] {"
+  "  const out: [number, number][] = [];"
+  "  for (let a = negatives ? -60 : 1; a <= 60; a++) for (let b = Math.max(a, negatives ? -60 : 1); b <= 60; b++) if (a ** 3 + b ** 3 === n) out.push([a, b]);"
+  "  return out;"
+  "}"
+  .
+
+ANDARETHEFIRSTNUMBERSWITHTWOCUBESUMS =
+  "// ── 1. 1729 and 91 are the first numbers with two cube sums ─"
+  "let ta = 0, cab = 0;"
+  "for (let n = 1; !ta; n++) if (cubeSums(n, false).length >= 2) ta = n;"
+  "for (let n = 1; !cab; n++) if (cubeSums(n, true).length >= 2) cab = n;"
+  "assert.strictEqual(ta, 1729, ""Ta(2) = 1729: the first sum of two positive cubes in two ways"");"
+  "assert.strictEqual(cab, 91, ""Cabtaxi(2) = 91: the first with negatives or zero allowed"");"
+  "assert.deepStrictEqual(cubeSums(1729, false), [[1, 12], [9, 10]], ""1729 = 1^3 + 12^3 = 9^3 + 10^3"");"
+  "assert.deepStrictEqual(cubeSums(91, true), [[-5, 6], [3, 4]], ""91 = 6^3 - 5^3 = 3^3 + 4^3"");"
+  .
+
+ISTHETRIPLETSPRODUCT =
+  "// ── 2. 1729 is the triplet's product ────────────────────────"
+  "assert.strictEqual(7 * 13 * 19, 1729, ""1729 = 7 x 13 x 19, the sexy set (7, 13, 19) of I-183"");"
+  "assert.strictEqual(7 * 13, 91, ""91 = 7 x 13"");"
+  "assert.strictEqual(19 * 91, 1729, ""19 x 91 = 1729"");"
+  "assert.strictEqual([...""1729""].reduce((s, d) => s + Number(d), 0), 19, ""1729's digits sum to 19"");"
+  "assert.strictEqual(Number([...""19""].reverse().join("""")), 91, ""19 reversed is 91"");"
+  .
+
+THECUBESUMSSPLITITINTOTHETRIPLET =
+  "// ── 3. The cube sums split it into the triplet ──────────────"
+  "const split = (a: number, b: number) => [a + b, a * a - a * b + b * b];"
+  "assert.deepStrictEqual(split(1, 12), [13, 133], ""1^3 + 12^3 = 13 x 133 (133 = 7 x 19)"");"
+  "assert.deepStrictEqual(split(9, 10), [19, 91], ""9^3 + 10^3 = 19 x 91 (91 = 7 x 13)"");"
+  "assert.deepStrictEqual(split(3, 4), [7, 13], ""3^3 + 4^3 = 7 x 13"");"
+  "for (const [a, b] of [[1, 12], [9, 10], [3, 4]]) assert.ok([7, 13, 19].includes(a! + b!), `a + b = ${a! + b!} is in the triplet`);"
+  .
+
+ADIFFERENCEOFSQUARESMEASURESTHEGAP =
+  "// ── 4. A difference of squares measures the gap ─────────────"
+  "// pq = ((p + q)/2)^2 - ((q - p)/2)^2: the second square is half the gap, squared."
+  "const measure = (p: number, q: number) => ({ mid: (p + q) / 2, half: (q - p) / 2 });"
+  "for (const [p, q] of [[7, 13], [13, 19], [7, 19]] as const) {"
+  "  const { mid, half } = measure(p, q);"
+  "  assert.strictEqual(mid ** 2 - half ** 2, p * q, `${p} x ${q} = ${mid}^2 - ${half}^2`);"
+  "}"
+  "assert.deepStrictEqual([measure(7, 13).half, measure(13, 19).half, measure(7, 19).half], [3, 3, 6], ""the two gaps of 6 measure as 3 and 3; both together, 12, as 6"");"
+  "assert.deepStrictEqual(measure(19, 91), { mid: 55, half: 36 }, ""19 x 91 = 55^2 - 36^2"");"
+  "assert.strictEqual(36, 6 ** 2, ""and 36 = 6^2: the gap, squared"");"
+  "console.log(""I-189: 1729 = 7 x 13 x 19 — passed"");"
+  "console.log(""  1729 (two positive cube sums) and 91 (two with negatives) are the products of the first sexy set after the exceptional one"");"
+  "console.log(""  pq = m^2 - h^2 measures half the gap: 3, 3 and 6 in the triplet; 1729 = 55^2 - 36^2, 36 = 6^2"");"
+  "console.log(""  a^3 + b^3 = (a + b)(a^2 - ab + b^2): 1^3 + 12^3 -> 13, 9^3 + 10^3 -> 19, 3^3 + 4^3 -> 7"");"
+  .

@@ -1,0 +1,33 @@
+EROOTS = CHECKED .
+
+CHECKED = COQ SCOPE EROOTSOWNER EROOTSPROOF EROOTSINTEGRALTOTAL EROOTSLOCALCLOCK EROOTSCLOCKMATCHESTOTAL .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+EROOTSOWNER =
+  "Definition e8_roots11_owner : Prop := True."
+  .
+
+EROOTSPROOF =
+  "Definition e8_roots11_proof : e8_roots11_owner := I."
+  .
+
+EROOTSINTEGRALTOTAL =
+  "Definition e8_roots11_integral_total : N := 240."
+  .
+
+EROOTSLOCALCLOCK =
+  "Definition e8_roots11_local240_clock : N := 240."
+  .
+
+EROOTSCLOCKMATCHESTOTAL =
+  "Theorem e8_roots11_clock_matches_total :"
+  "  e8_roots11_local240_clock = e8_roots11_integral_total."
+  "Proof. vm_compute; reflexivity. Qed."
+  .

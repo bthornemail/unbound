@@ -1,0 +1,11 @@
+#!/bin/rc
+# proofs.rc - inside Plan 9: compile the ported I-series checks and run them.
+rfork e
+w=/tmp/zq
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+cd $w/unbound/PLAN9/proofs
+for(f in *.c) 8c $f || exit compile
+8l -o $w/proof *.8 || exit link
+$w/proof

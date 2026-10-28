@@ -1,0 +1,27 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-130: two rates; 5-slice; Unicode lift"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-130"", ""two rates + 5-slice + Unicode lift"", () => {"
+  "  const mod = (a: bigint, m: bigint) => ((a % m) + m) % m;"
+  "  for (const m of [8n,9n,10n,11n]) assert.strictEqual(mod(5n, m), 5n);"
+  "  function liftEven(start: bigint, steps: number): bigint[] {"
+  "    const out = [start];"
+  "    for (let i = 1; i < steps; i++) out.push(out[i-1] * 2n);"
+  "    return out;"
+  "  }"
+  "  function liftOdd(start: bigint, steps: number): bigint[] {"
+  "    const out = [start];"
+  "    for (let i = 1; i < steps; i++) out.push(out[i-1] * 2n + 1n);"
+  "    return out;"
+  "  }"
+  "  const l6 = liftEven(0x6n, 29);"
+  "  const l8 = liftEven(0x8n, 29);"
+  "  const l10 = liftEven(0xAn, 29);"
+  "  const l9 = liftOdd(0x9n, 29);"
+  "  assert.strictEqual(l8[l8.length-1], 0x80000000n);"
+  "  assert.strictEqual(l9[l9.length-1], 0x9FFFFFFFn);"
+  "}, ""point/line/duality"");"
+  .

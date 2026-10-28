@@ -1,0 +1,22 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-142: Unicode lift 0x8 → 0xFFFFFFFF"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-142"", ""Unicode lift 0x8 → 0xFFFFFFFF, end-to-end"", () => {"
+  "  const CAP = 0x80000000n;"
+  "  function liftEvenCapped(base: bigint, cap: bigint): bigint[] {"
+  "    const out = [base];"
+  "    while (out[out.length - 1] * 2n < cap) out.push(out[out.length - 1] * 2n);"
+  "    return out;"
+  "  }"
+  "  const l8 = liftEvenCapped(0x8n, CAP);"
+  "  assert.strictEqual(l8[l8.length-1], 0x40000000n);"
+  "  assert.strictEqual(0xFFFFFFFFn, 4294967295n);"
+  "  assert.strictEqual(0xFFFFFFFFn + 1n, 0x100000000n);"
+  "  const surrogateLo = 0x8000n;"
+  "  const surrogateHi = 0xFFFFn;"
+  "  assert.strictEqual(surrogateHi - surrogateLo + 1n, 0x8000n);"
+  "}, ""point/line/duality"");"
+  .

@@ -1,0 +1,32 @@
+FANOINCIDENCE = CHECKED .
+
+CHECKED = COQ SCOPE FANOINCIDENCEOWNER FANOINCIDENCEPROOF FANOINCIDENCEFLAG FANOINCIDENCEEQUALFLAGZERO .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+FANOINCIDENCEOWNER =
+  "Definition fano_incidence02_owner : Prop := True."
+  .
+
+FANOINCIDENCEPROOF =
+  "Definition fano_incidence02_proof : fano_incidence02_owner := I."
+  .
+
+FANOINCIDENCEFLAG =
+  "Definition fano_incidence02_flag (point line : N) : N :="
+  "  N.land (N.lxor point line) 0x7."
+  .
+
+FANOINCIDENCEEQUALFLAGZERO =
+  "Theorem fano_incidence02_equal_flag_zero :"
+  "  fano_incidence02_flag 5 5 = 0."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

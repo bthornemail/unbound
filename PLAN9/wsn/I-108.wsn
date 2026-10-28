@@ -1,0 +1,13 @@
+RECORD     = ID CLAIM BODY SHAPE .
+ID         = "I-108" .
+CLAIM      = "head = modulus, tail = prime" .
+BODY       = MOD XOR ATOMS ATOMSARE XORCLOSES SUMIS ONESCLOSE TAIL .
+MOD        = "mod(a, m) = ((a % m) + m) % m" .
+XOR        = "xor(...xs) = xs.reduce((a, b) => a ^ b, 0)" .
+ATOMS      = "atoms = [8, 9, 10, 11].map(m => mod(m, 8))" .
+ATOMSARE   = "atoms = [0, 1, 2, 3]" .
+XORCLOSES  = "xor(...atoms) = 0" .
+SUMIS      = "atoms.reduce((a, b) => a + b, 0) = 6" .
+ONESCLOSE  = "xor(1, 1, 1, 1) = 0" .
+TAIL       = "3960 = 8 * 9 * 5 * 11" .
+SHAPE      = "point/line/duality" .

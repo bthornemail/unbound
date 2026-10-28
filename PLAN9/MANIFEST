@@ -1,0 +1,117 @@
+HTML/Browser-side Three.js with MQTT Controller.html
+HTML/Catastrophic Backtracking.html
+HTML/Cryptocurrency 5-Simplex Visualization.html
+HTML/Cryptocurrency Fano Plane Cycle Visualization.html
+HTML/Fano Constants.html
+HTML/GENESIS 3D Repo Visualizer.html
+HTML/God Mirror Embeddable Widget.html
+HTML/Media Spectrum DevTools.html
+HTML/Mobile Security Camera App.html
+HTML/OMI-IMO DOM Protocol Bootstrap.html
+HTML/Philosophical Constellation Visualization.html
+HTML/Reading I-229.html
+HTML/Recursive Consensus Universe.html
+HTML/Semantic Universe Visualization.html
+HTML/Term Treemap.html
+HTML/Tetrahedral Consciousness Universe - Interactive Browser Demo (1).html
+HTML/Tetrahedral Consciousness Universe - Interactive Browser Demo.html
+HTML/The 60-in-64 Clock.html
+HTML/The 7-Day God Mirror - Protocol Edition.html
+HTML/The Light Garden.html
+HTML/The Reality Compiler - Interactive Multiverse.html
+HTML/UBHP Harmonic Signature Demo.html
+HTML/Zero-Graph Harmonic Client.html
+HTML/codepoints-book.html
+HTML/epistemic-observability-engine.html
+HTML/index.html
+HTML/media-spectrum-4bit-xor-adder-1.html
+HTML/media-spectrum-4bit-xor-adder-2.html
+HTML/media-spectrum-4bit-xor-adder.html
+HTML/omi-dom-stack-full.html
+HTML/slide_ruler.html
+HTML/wesiri.html
+JS/agent-commons.js
+MERMAID/AI Agent Framework Diagram.mmd
+MERMAID/Abstract Layer and Protocol Implementation.mmd
+MERMAID/Complete TMHG System Structure.mmd
+MERMAID/Entity Identity and Context System.mmd
+MERMAID/Entity Layer System with Vector Space.mmd
+MERMAID/HDNode Content Architecture with Logic Gates.mmd
+MERMAID/P2P System Architecture Overview.mmd
+MERMAID/Relative Dimensional Geometry (n ± k).mmd
+MERMAID/Simplified AI Agent Framework.mmd
+MERMAID/TMHG System Hierarchy.mmd
+SH/check-16bit-buffer.sh
+SH/check-http11-status.sh
+SH/check-reference-index.sh
+SH/check-web.sh
+SH/check-xor-xnor.sh
+SH/tetra-mask.sh
+SVG/Difference_DNA_RNA-EN.svg
+SVG/Four_bit_adder_with_carry_lookahead.svg
+SVG/visual-proofs.svg
+TS/I-222.ts
+TS/atomic.ts
+TSX/README.md
+TSX/components.json
+TSX/eslint.config.js
+TSX/index.html
+TSX/package-lock.json
+TSX/package.json
+TSX/public/favicon.svg
+TSX/public/icons.svg
+TSX/src/App.css
+TSX/src/App.tsx
+TSX/src/assets/hero.png
+TSX/src/assets/react.svg
+TSX/src/assets/vite.svg
+TSX/src/components/ui/alert.tsx
+TSX/src/components/ui/button.tsx
+TSX/src/components/ui/card.tsx
+TSX/src/components/ui/scroll-area.tsx
+TSX/src/gallery/ExampleView.tsx
+TSX/src/gallery/GalleryHome.tsx
+TSX/src/gallery/examples.ts
+TSX/src/index.css
+TSX/src/lib/llm.ts
+TSX/src/lib/utils.ts
+TSX/src/main.tsx
+TSX/src/styles/globals.css
+TSX/src/templates/Atomic ALU Surface.tsx
+TSX/src/templates/Atomic Incidence Monitor.tsx
+TSX/src/templates/Atomic Incidence Surface.tsx
+TSX/src/templates/Atomic Tape Reader.tsx
+TSX/src/templates/Atomic Wallis Surface.tsx
+TSX/src/templates/Basic Incidents Graph.tsx
+TSX/src/templates/Feature Map Runtime.tsx
+TSX/src/templates/Feature Map Runtime.v2.tsx
+TSX/src/templates/Feature Map Runtime.v3.tsx
+TSX/src/templates/GENESIS Protocol Explorer.tsx
+TSX/src/templates/Geometric Hypergraph AI System.tsx
+TSX/src/templates/Harmonic Closure Editor.tsx
+TSX/src/templates/I Ching 256 Centroid.tsx
+TSX/src/templates/Incidence Hypergraph Visualization.tsx
+TSX/src/templates/NFT Upload Demo.tsx
+TSX/src/templates/Ollama Chat Interface Component.tsx
+TSX/src/templates/Omi-World Builder.tsx
+TSX/src/templates/Omicron Evaluator_ Polyform Truth Surface.tsx
+TSX/src/templates/Omnitron Multi-Axis Analyzer.tsx
+TSX/src/templates/P2P Marketplace Web App.tsx
+TSX/src/templates/Polyhedral Spin Explorer.tsx
+TSX/src/templates/React Swipe Container (TypeScript).tsx
+TSX/src/templates/SCGNN VM - Stateless Sacred Geometry Neural Network Virtual Mach.tsx
+TSX/src/templates/Semantic Merkle Tree Visualization.tsx
+TSX/src/templates/Semantic Merkle Tree Visualization.v2.tsx
+TSX/src/templates/Semantic Mnemonic Editor.tsx
+TSX/src/templates/Semantic Raycasting Through Platonic Space.tsx
+TSX/src/templates/Spectral Integration Closure.tsx
+TSX/src/templates/Tetrahedral Graph Visualization.tsx
+TSX/src/templates/UBHP Core Functions Demo.tsx
+TSX/src/templates/Unified Projective Workbench.tsx
+TSX/src/templates/Unified Projective Workbench.v2.tsx
+TSX/src/templates/WebAuthn Wallet QR Code App.tsx
+TSX/tsconfig.app.json
+TSX/tsconfig.json
+TSX/tsconfig.node.json
+TSX/tsconfig.tsbuildinfo
+TSX/vite.config.ts

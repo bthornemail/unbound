@@ -1,0 +1,37 @@
+EROOTS = CHECKED .
+
+CHECKED = COQ SCOPE EROOTSOWNER EROOTSPROOF EROOTSTOTAL EROOTSTYPE EROOTSTYPEA EROOTSSPLITSUMSTOTOTAL .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+EROOTSOWNER =
+  "Definition e8_roots_owner : Prop := True."
+  .
+
+EROOTSPROOF =
+  "Definition e8_roots_proof : e8_roots_owner := I."
+  .
+
+EROOTSTOTAL =
+  "Definition e8_roots_total : N := 240."
+  .
+
+EROOTSTYPE =
+  "Definition e8_roots_type1 : N := 112."
+  .
+
+EROOTSTYPEA =
+  "Definition e8_roots_type2 : N := 128."
+  .
+
+EROOTSSPLITSUMSTOTOTAL =
+  "Theorem e8_roots_split_sums_to_total :"
+  "  e8_roots_type1 + e8_roots_type2 = e8_roots_total."
+  "Proof. vm_compute; reflexivity. Qed."
+  .

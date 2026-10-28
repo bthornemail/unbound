@@ -1,0 +1,32 @@
+ICOSIANUNITS = CHECKED .
+
+CHECKED = COQ SCOPE ICOSIANUNITSOWNER ICOSIANUNITSPROOF ICOSIANUNITSNORM ICOSIANUNITSBASISNORMONE .
+
+COQ =
+  "From Coq Require Import QArith.QArith."
+  .
+
+SCOPE =
+  "Open Scope Q_scope."
+  .
+
+ICOSIANUNITSOWNER =
+  "Definition icosian_units_owner : Prop := True."
+  .
+
+ICOSIANUNITSPROOF =
+  "Definition icosian_units_proof : icosian_units_owner := I."
+  .
+
+ICOSIANUNITSNORM =
+  "Definition icosian_units_norm4 (a b c d : Q) : Q :="
+  "  a * a + b * b + c * c + d * d."
+  .
+
+ICOSIANUNITSBASISNORMONE =
+  "Theorem icosian_units_basis_norm_one :"
+  "  icosian_units_norm4 1 0 0 0 == 1."
+  "Proof."
+  "  vm_compute; reflexivity."
+  "Qed."
+  .

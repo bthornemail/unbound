@@ -1,0 +1,114 @@
+ATOMICKERNELDEFINESREPLAY = CHECKED .
+
+CHECKED = IMPORT IMPORTA LISTNOTATIONS SCOPE MASK ROTL ROTR REPEATBYTEDNAT CONSTANTOFWIDTH DELTA REPLAYLOOP REPLAY VNEXTDELTADETERMINISTIC VNEXTREPLAYDETERMINISTIC VNEXTREPLAYLOOPLEN VNEXTREPLAYLEN .
+
+IMPORT =
+  "Require Import Coq.NArith.NArith."
+  .
+
+IMPORTA =
+  "Require Import Coq.Lists.List."
+  .
+
+LISTNOTATIONS =
+  "Import ListNotations."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  "(*"
+  "  Canonical atomic kernel: masked rotate/XOR delta with replay structure."
+  "  This is the sole active implementation of the atomic transition."
+  "*)"
+  .
+
+MASK =
+  "Definition mask (n x : N) : N := N.land x (N.pred (N.pow 2 n))."
+  .
+
+ROTL =
+  "Definition rotl (n x k : N) : N :="
+  "  let k' := N.modulo k n in"
+  "  mask n (N.lor (N.shiftl x k') (N.shiftr x (n - k')))."
+  .
+
+ROTR =
+  "Definition rotr (n x k : N) : N :="
+  "  let k' := N.modulo k n in"
+  "  mask n (N.lor (N.shiftr x k') (N.shiftl x (n - k')))."
+  .
+
+REPEATBYTEDNAT =
+  "Fixpoint repeat_byte_1d_nat (m : nat) : N :="
+  "  match m with"
+  "  | O => 0"
+  "  | S m' => N.lor (N.shiftl (repeat_byte_1d_nat m') 8) 29"
+  "  end."
+  .
+
+CONSTANTOFWIDTH =
+  "Definition constant_of_width (n : N) : N :="
+  "  repeat_byte_1d_nat (N.to_nat (N.div n 8))."
+  .
+
+DELTA =
+  "Definition delta (n x : N) : N :="
+  "  mask n"
+  "    (N.lxor"
+  "      (N.lxor (N.lxor (rotl n x 1) (rotl n x 3)) (rotr n x 2))"
+  "      (constant_of_width n))."
+  .
+
+REPLAYLOOP =
+  "Fixpoint replay_loop (steps : nat) (n : N) (x : N) : list N :="
+  "  match steps with"
+  "  | O => []"
+  "  | S k => x :: replay_loop k n (delta n x)"
+  "  end."
+  .
+
+REPLAY =
+  "Definition replay (n : N) (seed : N) (steps : nat) : list N :="
+  "  replay_loop steps n (mask n seed)."
+  .
+
+VNEXTDELTADETERMINISTIC =
+  "Theorem vnext_delta_deterministic :"
+  "  forall n x y, x = y -> delta n x = delta n y."
+  "Proof."
+  "  intros n x y Hxy; now rewrite Hxy."
+  "Qed."
+  .
+
+VNEXTREPLAYDETERMINISTIC =
+  "Theorem vnext_replay_deterministic :"
+  "  forall n steps seed1 seed2,"
+  "    seed1 = seed2 -> replay n seed1 steps = replay n seed2 steps."
+  "Proof."
+  "  intros n steps seed1 seed2 Hseed."
+  "  now rewrite Hseed."
+  "Qed."
+  .
+
+VNEXTREPLAYLOOPLEN =
+  "Theorem vnext_replay_loop_len :"
+  "  forall n steps x,"
+  "    length (replay_loop steps n x) = steps."
+  "Proof."
+  "  intros n steps."
+  "  induction steps as [|k IH]."
+  "  - intro x. simpl. reflexivity."
+  "  - intro x. simpl. rewrite IH. reflexivity."
+  "Qed."
+  .
+
+VNEXTREPLAYLEN =
+  "Theorem vnext_replay_len :"
+  "  forall n steps seed,"
+  "    length (replay n seed steps) = steps."
+  "Proof."
+  "  intros n steps seed."
+  "  unfold replay."
+  "  apply vnext_replay_loop_len."
+  "Qed."
+  .

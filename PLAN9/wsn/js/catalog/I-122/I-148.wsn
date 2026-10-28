@@ -1,0 +1,18 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-148: PINEboxed SPO + swap axes"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-148"", ""PINEboxed SPO + swap axes anchored at 0n, 0u"", () => {"
+  "  const swap16 = (x: number) => ((x & 0xFF) << 8) | ((x >> 8) & 0xFF);"
+  "  const swap32 = (x: number) => {"
+  "    x = ((x & 0xFFFF) << 16) | ((x >>> 16) & 0xFFFF);"
+  "    return ((x & 0xFF00FF00) >>> 8) | ((x & 0x00FF00FF) << 8);"
+  "  };"
+  "  assert.strictEqual(swap16(swap16(0x1234)), 0x1234);"
+  "  assert.strictEqual(swap32(swap32(0x12345678)), 0x12345678);"
+  "  assert.strictEqual(3 * 2, 6);"
+  "  assert.strictEqual(8 + 12 + 6, 26);"
+  "}, ""head/value/tail"");"
+  .

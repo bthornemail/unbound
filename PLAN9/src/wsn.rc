@@ -1,0 +1,16 @@
+#!/bin/rc
+# wsn.rc - inside Plan 9: read every PLAN9/wsn/*.wsn with zwsn and write
+# the answers to the output disk as a tar.
+rfork e
+src=/dev/sd01/data
+dst=/dev/sd02/data
+w=/tmp/zw
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf $src} || exit tar
+cd $w/unbound/PLAN9/src
+8c zwsn.c && 8l -o $w/zwsn zwsn.8 || exit compile
+cd $w/unbound/PLAN9
+$w/zwsn wsn/*.wsn >$w/zout/wsn.txt
+@{cd $w && tar cf $dst zout} || exit tar
+cat $w/zout/wsn.txt

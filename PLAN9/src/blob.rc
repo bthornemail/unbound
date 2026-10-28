@@ -1,0 +1,14 @@
+#!/bin/rc
+# blob.rc - inside Plan 9: Leningrad Genesis 1 punched into 65,536-bit cards
+# (zblob), with each verse's code points in Aegean numerals beside them (zcodex0).
+rfork e
+w=/tmp/zb2
+rm -rf $w
+mkdir -p $w/unbound $w/zout/cards
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zblob.c PLAN9/src/zcodex0.c PLAN9/in/gen1.txt} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(c in zblob zcodex0) { 8c $c.c && 8l -o $w/$c $c.8 || exit compile }
+$w/zblob $p/in/gen1.txt $w/zout/cards || exit zblob
+$w/zcodex0 <$p/in/gen1.txt >$w/zout/gen1.codex
+@{cd $w && tar cf /dev/sd02/data zout} || exit tar

@@ -1,0 +1,71 @@
+RECORD = HEAD THELEADFOUNDBYLOOKINGTHEFIRSTBITS THEFILEDTESTTHEHELDOUTBITS THECHANCESASFILED .
+
+HEAD =
+  "// i221.ts — I-221: the filed test — the held-out bits of 13 hashes against DEADBEEF: the null holds"
+  "//"
+  "// The author, 2026-10-14: ""I want to try other hashing or encryption algorithms so"
+  "// we can compare and contrast""; then, of the first 32 bits of the commit literal's"
+  "// 13 other hashes summing to 170 bits from DEADBEEF: ""these are the numbers we use"
+  "// in number pairs for closure"" (170 = 0xAA); ""can you file the test"". The test was"
+  "// filed in SRC-14 and committed (5ecc2ee) before it was run: on the second 32 bits,"
+  "// held out, A: the sum is at most 190 (chance 4.3 in 100); B: exactly 170 (chance"
+  "// 1 in 27,072); the null: near 208. The sum came out 224: A and B do not hold, the"
+  "// null does. The 170 was luck in the bits that were looked at. The values are"
+  "// measured; the readings are the author's."
+  "import assert from ""node:assert"";"
+  "import { createHash } from ""node:crypto"";"
+  "const LITERAL = ["
+  "  ""tree 0b1bb566ae7a37c4d526bf7054edd27ff83a3f64"","
+  "  ""parent 162a7bf3bf66a6c8fa22624749cf2d7321eadcb4"","
+  "  ""author Brian Thorne <bthornemail@gmail.com> 1792027040 -0700"","
+  "  ""committer Brian Thorne <bthornemail@gmail.com> 1792027040 -0700"","
+  "  """","
+  "  ""Track proofs: the author's records I-201 to I-218 move from src/ into the catalogue"","
+  "  """","
+  "  ""The 18 records leave src/ (their history stays in git) for"","
+  "  ""proofs/js/catalog, where npm test runs them and proofs/js-docs lists"","
+  "  ""them. i206, i214 and i215 now assert what they printed. The broken"","
+  "  ""copies i210.mjs, i210.cjs and the author's angela files are untouched."","
+  "  """","
+  "  ""Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"","
+  "].join(""\n"") + ""\n"";"
+  "/** A commit's name: the hash of ""commit"", its length, a NUL, and its literal. */"
+  "const BYTES = new TextEncoder().encode(`commit 628\0${LITERAL}`);"
+  "const ALGORITHMS = [""md5"", ""ripemd160"", ""sha224"", ""sha256"", ""sha384"", ""sha512"", ""sha512-256"", ""sha3-256"", ""sha3-512"", ""blake2s256"", ""blake2b512"", ""sm3""];"
+  "const digests = ALGORITHMS.map((a) => createHash(a).update(BYTES).digest());"
+  "digests.push(createHash(""shake256"", { outputLength: 32 }).update(BYTES).digest());"
+  "const popcount = (x: number) => { let n = 0; x >>>= 0; while (x) { n += x & 1; x >>>= 1; } return n; };"
+  "const fromDeadbeef = (offset: number) => digests.map((d) => popcount(d.readUInt32BE(offset) ^ 0xdeadbeef));"
+  "const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);"
+  .
+
+THELEADFOUNDBYLOOKINGTHEFIRSTBITS =
+  "// ── The lead, found by looking: the first 32 bits ────────────"
+  "assert.equal(createHash(""sha1"").update(BYTES).digest(""hex""), ""de88bc2d5dcd01eb615f20741dc9fc4f018196bb"", ""the literal is the commit's (I-220)"");"
+  "assert.deepEqual(fromDeadbeef(0), [13, 12, 13, 10, 17, 12, 8, 15, 12, 11, 17, 17, 13]);"
+  "assert.equal(sum(fromDeadbeef(0)), 170, ""170 = 0xAA bits of 416 from DEADBEEF, where chance gives 208 ± 10"");"
+  "assert.equal(170, 0b10101010, ""the alternating bit pair, the author's reading"");"
+  .
+
+THEFILEDTESTTHEHELDOUTBITS =
+  "// ── The filed test: the held-out 32 bits ─────────────────────"
+  "assert.deepEqual(fromDeadbeef(4), [14, 20, 18, 18, 16, 18, 17, 18, 20, 17, 18, 13, 17]);"
+  "const heldOut = sum(fromDeadbeef(4));"
+  "assert.equal(heldOut, 224, ""the held-out bits: 224, farther from DEADBEEF than chance's 208"");"
+  "assert.ok(!(heldOut <= 190), ""A does not hold: the closeness is not in the literal"");"
+  "assert.ok(heldOut !== 170, ""B does not hold: 0xAA does not come again"");"
+  "assert.ok(Math.abs(heldOut - 208) <= 2 * 10.2, ""the null holds: within two spreads of chance"");"
+  .
+
+THECHANCESASFILED =
+  "// ── The chances, as filed ────────────────────────────────────"
+  "const n = 416, lf = [0];"
+  "for (let i = 1; i <= n; i++) lf[i] = lf[i - 1]! + Math.log(i);"
+  "const P = (k: number) => Math.exp(lf[n]! - lf[k]! - lf[n - k]! - n * Math.log(2));"
+  "assert.equal(Math.round(1 / P(170)), 27072, ""exactly 170: 1 in 27,072"");"
+  "assert.equal([...Array(191).keys()].reduce((s, k) => s + P(k), 0).toFixed(3), ""0.043"", ""at most 190: 4.3 in 100"");"
+  "console.log(""I-221: the filed test — the held-out bits of 13 hashes against DEADBEEF: the null holds — passed"");"
+  "console.log(""  found by looking, bytes 0-3: 170 = 0xAA bits from DEADBEEF (chance 208 ± 10)"");"
+  "console.log(""  filed before the run (5ecc2ee), bytes 4-7: 224; A (<= 190) and B (= 170) do not hold"");"
+  "console.log(""  the 170 was luck in the bits looked at; the literal is the record, its names follow it"");"
+  .

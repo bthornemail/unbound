@@ -1,0 +1,18 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-111: faces are the reverse view"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-111"", ""faces are the reverse view; no seam"", () => {"
+  "  const NIBBLE = [0,1,2,3,4,5,6,7];"
+  "  const V = [0x0, 0x1];"
+  "  const E = [0x2,0x3,0x4,0x5,0x6,0x7];"
+  "  assert.strictEqual(V.length, 2);"
+  "  assert.strictEqual(E.length, 6);"
+  "  assert.deepStrictEqual([...V, ...E].sort(), NIBBLE);"
+  "  const faces = [];"
+  "  for (const r of NIBBLE) for (const c of NIBBLE) faces.push([r, c]);"
+  "  assert.strictEqual(faces.length, 64);"
+  "}, ""point/line/duality"");"
+  .

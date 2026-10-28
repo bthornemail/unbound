@@ -1,0 +1,17 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-149: DOMMatrix over IPv4"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-149"", ""DOMMatrix over IPv4; WebXR observer; MIDI channel"", () => {"
+  "  assert.strictEqual(4 * 4, 16);"
+  "  assert.strictEqual(2 ** 4, 16);"
+  "  const ip = ""192.168.1.1"".split(""."").map(Number);"
+  "  assert.strictEqual(ip.length, 4);"
+  "  const pose = new Float32Array(16);"
+  "  assert.strictEqual(pose.length, 16);"
+  "  const midi = new Uint8Array([0x90, 0x3C, 0x7F]);"
+  "  assert.strictEqual(midi.length, 3);"
+  "}, ""point/line/duality"");"
+  .

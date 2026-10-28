@@ -1,0 +1,17 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-115: 0n vertex, 0u reference"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-115"", ""0n vertex, 0u reference; swap permutes order"", () => {"
+  "  let threw = false;"
+  "  try { 17n + 17; } catch (e) { threw = e instanceof TypeError; }"
+  "  assert.ok(threw);"
+  "  assert.strictEqual(String.fromCodePoint(0x003C), ""<"");"
+  "  assert.strictEqual(0x003C, 60);"
+  "  const swap16 = (x: number) => ((x & 0xFF) << 8) | ((x >> 8) & 0xFF);"
+  "  assert.strictEqual(swap16(0x003C), 0x3C00);"
+  "  assert.strictEqual(60, 60);"
+  "}, ""head/value/tail"");"
+  .

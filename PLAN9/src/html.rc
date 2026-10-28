@@ -1,0 +1,24 @@
+#!/bin/rc
+# html.rc - inside Plan 9: unpack unbound from the input disk, read every
+# .html in its MANIFEST through libhtml with zhtml, and write what libhtml
+# made of each (its item list) to the output disk as a tar.
+rfork e
+ifs='
+'
+src=/dev/sd01/data
+dst=/dev/sd02/data
+w=/tmp/zh
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf $src} || exit tar
+cd $w/unbound/PLAN9/src
+8c zhtml.c && 8l -o $w/zhtml zhtml.8 || exit compile
+cd $w/unbound
+n=0
+for(f in `{grep '\.html$' PLAN9/MANIFEST}){
+	mkdir -p $w/zout/`{basename -d $f}
+	$w/zhtml $f >$w/zout/$f.items >[2=1]
+	n=`{echo $n + 1 | hoc}
+}
+@{cd $w && tar cf $dst zout} || exit tar
+echo html.rc: $n templates read by libhtml, written to $dst

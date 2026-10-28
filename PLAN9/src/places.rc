@@ -1,0 +1,10 @@
+#!/bin/rc
+# places.rc - inside Plan 9: the Aegean places Genesis 1 writes (zplaces).
+rfork e
+w=/tmp/zpl
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zplaces.c PLAN9/in/gen1.txt} || exit tar
+cd $w/unbound/PLAN9/src
+8c zplaces.c && 8l -o $w/zplaces zplaces.8 || exit compile
+$w/zplaces <$w/unbound/PLAN9/in/gen1.txt

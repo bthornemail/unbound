@@ -1,0 +1,44 @@
+GOLDENQUATERNION = CHECKED .
+
+CHECKED = COQ SCOPE GOLDENQUATERNIONOWNER GOLDENQUATERNIONPROOF GOLDENQUATERNIONA GOLDENQUATERNIONNORM GOLDENQUATERNIONNORMUNFOLDS .
+
+COQ =
+  "From Coq Require Import QArith.QArith."
+  .
+
+SCOPE =
+  "Open Scope Q_scope."
+  .
+
+GOLDENQUATERNIONOWNER =
+  "Definition golden_quaternion_owner : Prop := True."
+  .
+
+GOLDENQUATERNIONPROOF =
+  "Definition golden_quaternion_proof : golden_quaternion_owner := I."
+  .
+
+GOLDENQUATERNIONA =
+  "Record golden_quaternion := {"
+  "  golden_q0 : Q;"
+  "  golden_q1 : Q;"
+  "  golden_q2 : Q;"
+  "  golden_q3 : Q"
+  "}."
+  .
+
+GOLDENQUATERNIONNORM =
+  "Definition golden_quaternion_norm (q : golden_quaternion) : Q :="
+  "  golden_q0 q * golden_q0 q + golden_q1 q * golden_q1 q +"
+  "  golden_q2 q * golden_q2 q + golden_q3 q * golden_q3 q."
+  .
+
+GOLDENQUATERNIONNORMUNFOLDS =
+  "Theorem golden_quaternion_norm_unfolds : forall q,"
+  "  golden_quaternion_norm q =="
+  "    golden_q0 q * golden_q0 q + golden_q1 q * golden_q1 q +"
+  "    golden_q2 q * golden_q2 q + golden_q3 q * golden_q3 q."
+  "Proof."
+  "  intros q; reflexivity."
+  "Qed."
+  .

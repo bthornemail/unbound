@@ -1,0 +1,16 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-143: prompt sigils as two privilege frames"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-143"", ""prompt sigils as two privilege frames"", () => {"
+  "  const root = 16n ** 19n;"
+  "  const user = 16n ** 21n;"
+  "  assert.strictEqual(root, 2n ** 76n);"
+  "  assert.strictEqual(user, 2n ** 84n);"
+  "  assert.strictEqual(user / root, 256n);"
+  "  const unicodeMax = 0x10FFFFn;"
+  "  assert.strictEqual(unicodeMax.toString(2).length, 21);"
+  "}, ""head/value/tail"");"
+  .

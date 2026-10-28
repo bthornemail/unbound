@@ -1,0 +1,20 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-133b: base-36 gap delineation"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-133b"", ""delineating :; <=>? {|}~ via 59/60, 127, 63"", () => {"
+  "  const m36 = (n: number) => n % 36;"
+  "  assert.strictEqual(m36(63) - m36(127), 8);"
+  "  const groups = {"
+  "    colon:   [0x3A, 0x3B],"
+  "    compare: [0x3C, 0x3D, 0x3E, 0x3F],"
+  "    brace:   [0x7B, 0x7C, 0x7D, 0x7E],"
+  "  };"
+  "  assert.strictEqual(groups.colon.length, 2);"
+  "  assert.strictEqual(groups.compare.length, 4);"
+  "  assert.strictEqual(groups.brace.length, 4);"
+  "  assert.strictEqual(groups.colon.length + groups.compare.length, 6);"
+  "}, ""point/line/duality"");"
+  .

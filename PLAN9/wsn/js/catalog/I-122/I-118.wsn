@@ -1,0 +1,17 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-118: decimal = derivative, scientific = exception"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-118"", ""decimal = derivative, scientific = exception"", () => {"
+  "  const x = 123.456;"
+  "  const fracPart = x - Math.trunc(x);"
+  "  assert.ok(fracPart > 0 && fracPart < 1);"
+  "  const h = 1e-6;"
+  "  assert.ok(Math.abs(((x + h) - x) / h - 1) < 1e-3);"
+  "  assert.ok((1e21).toExponential().includes(""e""));"
+  "  assert.ok((1e-21).toExponential().includes(""e""));"
+  "  assert.strictEqual((1e21).toString(), ""1e+21"");"
+  "}, ""catch-at-0"");"
+  .

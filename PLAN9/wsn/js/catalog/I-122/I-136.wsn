@@ -1,0 +1,21 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-136: all catches converge at 0"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-136"", ""all catches converge at 0"", () => {"
+  "  const classify = (e: unknown): string =>"
+  "    e instanceof TypeError  ? ""space""   :"
+  "    e instanceof RangeError ? ""range""   :"
+  "    e instanceof EvalError  ? ""code""    : ""default"";"
+  "  assert.strictEqual(classify(new TypeError(""x"")),  ""space"");"
+  "  assert.strictEqual(classify(new RangeError(""x"")), ""range"");"
+  "  assert.strictEqual(classify(new EvalError(""x"")),  ""code"");"
+  "  assert.strictEqual(classify(new Error(""x"")),      ""default"");"
+  "  const interchange = [0, 2, 1];"
+  "  assert.strictEqual(interchange[0], 0);"
+  "  assert.strictEqual(interchange[1], 2);"
+  "  assert.strictEqual(interchange[2], 1);"
+  "}, ""catch-at-0"");"
+  .

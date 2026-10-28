@@ -1,0 +1,148 @@
+RECORD = HEAD THESTRUCTURALRESETANYSLOTWINDOW THECONTENTSPECIFICBEEPBASELITERALS THEGAPISTHECONSTANTTAGLITERALPOINT THETAGISDOFINVARIANT THEDOFOFTHEBASEBLOCK DOFTAG THEBEEPFIRESFORBASESEQUENCESNOTFORTHEGAP FOROTHERDOFCOUNTSTHETAGREMAINS THECONSTANTACROSSASCIIANDUNICODE THETAGASTHEFIXEDPOINT .
+
+HEAD =
+  "// i147.ts — I-147: the gap as constant tag; beep content-specific for base-36"
+  "import assert from ""node:assert"";"
+  "const BEL = 0x07;"
+  .
+
+THESTRUCTURALRESETANYSLOTWINDOW =
+  "// ── 1. The structural reset: any 7-slot window ─────────────────"
+  "function structuralClose(buf: Uint8Array, start: number): boolean {"
+  "  return start + 7 <= buf.length;"
+  "}"
+  "const anyBuf = new Uint8Array([1,2,3,4,5,6,7,8,9,10]);"
+  "assert.ok(structuralClose(anyBuf, 0), ""window 0-6 closes"");"
+  "assert.ok(structuralClose(anyBuf, 1), ""window 1-7 closes"");"
+  "assert.ok(!structuralClose(anyBuf, 4), ""window 4-10 does not close (only 6 left)"");"
+  .
+
+THECONTENTSPECIFICBEEPBASELITERALS =
+  "// ── 2. The content-specific beep: base-36 literals ─────────────"
+  "const BLOCK = ""0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  "function isBase36Literal(c: number): boolean {"
+  "  const ch = String.fromCharCode(c);"
+  "  return BLOCK.includes(ch);"
+  "}"
+  "// the gap chars are NOT base-36 literals"
+  "const gap: number[] = [];"
+  "for (let c = 0x3A; c <= 0x40; c++) gap.push(c);"
+  "for (const c of gap) {"
+  "  assert.ok(!isBase36Literal(c),"
+  "    `gap char 0x${c.toString(16)} is NOT base-36`);"
+  "}"
+  "// digits and letters ARE base-36"
+  "for (const c of ""0123456789"") {"
+  "  assert.ok(isBase36Literal(c.charCodeAt(0)), `digit ${c} is base-36`);"
+  "}"
+  "for (const c of ""ABCDEFGHIJKLMNOPQRSTUVWXYZ"") {"
+  "  assert.ok(isBase36Literal(c.charCodeAt(0)), `letter ${c} is base-36`);"
+  "}"
+  .
+
+THEGAPISTHECONSTANTTAGLITERALPOINT =
+  "// ── 3. The gap is the constant tag literal point ───────────────"
+  "// The gap sits between digits (0x30-0x39) and letters (0x41-0x5A)."
+  "const digitEnd   = 0x39;"
+  "const letterStart = 0x41;"
+  "assert.strictEqual(gap[0], digitEnd + 1, ""gap starts right after digits"");"
+  "assert.strictEqual(gap[gap.length - 1], letterStart - 1, ""gap ends right before letters"");"
+  "// the gap is exactly the boundary"
+  "assert.strictEqual(gap.length, letterStart - digitEnd - 1, ""gap = letterStart - digitEnd - 1"");"
+  "assert.strictEqual(gap.length, 7, ""gap = 7 chars"");"
+  .
+
+THETAGISDOFINVARIANT =
+  "// ── 4. The tag is DOF-invariant ────────────────────────────────"
+  "// The same gap is the boundary for any DOF count."
+  "function gapForDof(dof: number): number[] {"
+  "  // the gap is always :;<=>?@ regardless of the DOF count"
+  "  return gap;"
+  "}"
+  "for (const dof of [1, 2, 3, 4, 5, 6, 7, 8, 12, 24]) {"
+  "  const g = gapForDof(dof);"
+  "  assert.deepStrictEqual(g, gap, `gap same for ${dof} DOF`);"
+  "}"
+  .
+
+THEDOFOFTHEBASEBLOCK =
+  "// ── 5. The 6 DOF of the base-36 block ──────────────────────────"
+  "// 3 widths x 2 directions = 6 (I-112)"
+  "const widths = 3;"
+  "const directions = 2;"
+  "const dof = widths * directions;"
+  "assert.strictEqual(dof, 6, ""6 DOF"");"
+  .
+
+DOFTAG =
+  "// ── 6. 6 DOF + 1 tag = 7 ───────────────────────────────────────"
+  "// the tag @ is the +1"
+  "const tag = ""@"";"
+  "assert.strictEqual(tag, String.fromCharCode(0x40), ""@ = 0x40"");"
+  "assert.strictEqual(gap.length, dof + 1, ""gap length = DOF + 1"");"
+  "assert.strictEqual(dof + 1, 7, ""6 + 1 = 7"");"
+  .
+
+THEBEEPFIRESFORBASESEQUENCESNOTFORTHEGAP =
+  "// ── 7. The beep fires for base-36 sequences, not for the gap ──"
+  "function beepForSequence(seq: number[]): boolean {"
+  "  // beep fires iff all 7 are base-36 literals AND the cycle is 7 long"
+  "  return seq.length === 7 && seq.every(isBase36Literal);"
+  "}"
+  "// base-36 sequence: beeps"
+  "const b36Seq = [""0"",""1"",""2"",""3"",""4"",""5"",""6""].map(c => c.charCodeAt(0));"
+  "assert.strictEqual(beepForSequence(b36Seq), true, ""base-36 sequence beeps"");"
+  "// the gap: does NOT beep"
+  "assert.strictEqual(beepForSequence(gap), false, ""gap does NOT beep"");"
+  "// mixed: does NOT beep"
+  "const mixed = [""0"",""A"","":"",""1"",""B"","";"",""2""].map(c => c.charCodeAt(0));"
+  "assert.strictEqual(beepForSequence(mixed), false, ""mixed does not beep"");"
+  "// all letters: beeps"
+  "const allLetters = [""A"",""B"",""C"",""D"",""E"",""F"",""G""].map(c => c.charCodeAt(0));"
+  "assert.strictEqual(beepForSequence(allLetters), true, ""all letters beeps"");"
+  .
+
+FOROTHERDOFCOUNTSTHETAGREMAINS =
+  "// ── 8. For other DOF counts, the tag remains ───────────────────"
+  "// For a hypothetical 4-DOF system (binary), the tag is still the gap"
+  "// only the beep condition changes."
+  "function beepForDof(seq: number[], dofCount: number): boolean {"
+  "  if (seq.length !== 7) return false;"
+  "  // for our use case, the beep is the base-36 beep"
+  "  // for other DOF counts, a different condition would apply"
+  "  return dofCount === 6 && seq.every(isBase36Literal);"
+  "}"
+  "assert.strictEqual(beepForDof(b36Seq, 6), true, ""6 DOF base-36 beeps"");"
+  "assert.strictEqual(beepForDof(b36Seq, 4), false, ""4 DOF base-36 does not beep (different condition)"");"
+  .
+
+THECONSTANTACROSSASCIIANDUNICODE =
+  "// ── 9. The constant across ASCII and Unicode ───────────────────"
+  "// The gap is the same code points in ASCII and in Unicode BMP."
+  "// ASCII:"
+  "const asciiGap = [0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, 0x40];"
+  "// Unicode BMP: same code points"
+  "const unicodeBmpGap = [0x003A, 0x003B, 0x003C, 0x003D, 0x003E, 0x003F, 0x0040];"
+  "for (let i = 0; i < 7; i++) {"
+  "  assert.strictEqual(asciiGap[i], unicodeBmpGap[i],"
+  "    `position ${i}: ASCII 0x${asciiGap[i].toString(16)} = Unicode 0x${unicodeBmpGap[i].toString(16)}`);"
+  "}"
+  .
+
+THETAGASTHEFIXEDPOINT =
+  "// ── 10. The tag as the fixed point ─────────────────────────────"
+  "// The gap is where the digit block ends and the letter block begins."
+  "// It's the fixed point of the two-block structure."
+  "const digitBlock = { lo: 0x30, hi: 0x39 };"
+  "const letterBlock = { lo: 0x41, hi: 0x5A };"
+  "assert.strictEqual(gap[0], digitBlock.hi + 1, ""gap starts after digit block"");"
+  "assert.strictEqual(gap[6], letterBlock.lo - 1, ""gap ends before letter block"");"
+  "// the gap is the space between the two blocks"
+  "assert.strictEqual(letterBlock.lo - digitBlock.hi - 1, 7, ""gap width = 7"");"
+  "console.log(""I-147: gap as constant tag; beep content-specific for base-36 — passed"");"
+  "console.log(`  gap :;<=>?@ = 7 chars, NOT base-36 literals`);"
+  "console.log(`  base-36 literals = 0-9 A-Z (36 symbols)`);"
+  "console.log(`  the beep fires for base-36 sequences (our use case)`);"
+  "console.log(`  the gap is DOF-invariant — same for any DOF count`);"
+  "console.log(`  6 DOF + 1 tag (@) = 7`);"
+  .

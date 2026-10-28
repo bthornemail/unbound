@@ -1,0 +1,56 @@
+RECORD = HEAD EVERYDRAWOFTHREEFROMMEETSATICKETINTWOANDTHETWOREBUILDTHETICKET WHYTWOOFANYTHREESHAREAPLANEANYTWOPOINTSSHAREEXACTLYONELINE .
+
+HEAD =
+  "// i191.ts — I-191: the Fano lottery: 14 tickets, and two of any three rebuild the third"
+  "//"
+  "// The author, 2026-10-13: ""it's for rebuilding, based on the Fano lottery and"
+  "// trigintaduonion triples, so always 14 logic steps away"", then MathWorld's Fano"
+  "// plane: the Transylvania lottery draws three numbers from 1-14; label one Fano"
+  "// plane 1-7 and another 8-14 and play their 14 lines, and some ticket matches two"
+  "// of the three (of any three numbers two are in one plane, and every two points"
+  "// of a plane are on exactly one line). And on that line the two give the third"
+  "// by XOR: the rebuild. The same holds one size up with two PG(3, 2) and with two"
+  "// PG(4, 2), the trigintaduonion triples (I-187)."
+  "import assert from ""node:assert"";"
+  "/** Two copies of PG(k - 1, 2): points 1..m and m+1..2m (m = 2^k - 1); the tickets are their lines. */"
+  "function planes(k: number) {"
+  "  const m = 2 ** k - 1, tickets: number[][] = [];"
+  "  for (let a = 1; a <= m; a++) for (let b = a + 1; b <= m; b++) if ((a ^ b) > b) for (const off of [0, m]) tickets.push([a + off, b + off, (a ^ b) + off]);"
+  "  return { m, tickets };"
+  "}"
+  "/** Rebuild: the third number on the ticket through two matched numbers, by XOR within their plane. */"
+  "const rebuild = (m: number, x: number, y: number) => { const off = x > m ? m : 0; return ((x - off) ^ (y - off)) + off; };"
+  .
+
+EVERYDRAWOFTHREEFROMMEETSATICKETINTWOANDTHETWOREBUILDTHETICKET =
+  "// ── 1. Every draw of three from 1-14 meets a ticket in two, and the two rebuild the ticket ─"
+  "for (const [k, numbers, tickets, draws] of [[3, 14, 14, 364], [4, 30, 70, 4060], [5, 62, 310, 37820]] as const) {"
+  "  const { m, tickets: T } = planes(k);"
+  "  assert.strictEqual(2 * m, numbers, `${numbers} numbers`);"
+  "  assert.strictEqual(T.length, tickets, `${tickets} tickets: the lines of two PG(${k - 1}, 2)`);"
+  "  let n = 0;"
+  "  for (let x = 1; x <= 2 * m; x++) for (let y = x + 1; y <= 2 * m; y++) for (let z = y + 1; z <= 2 * m; z++) {"
+  "    n++;"
+  "    const draw = [x, y, z];"
+  "    const hit = T.find((t) => t.filter((v) => draw.includes(v)).length >= 2);"
+  "    assert.ok(hit, `draw {${draw}} meets a ticket in two numbers`);"
+  "    const [p, q] = hit!.filter((v) => draw.includes(v));"
+  "    const third = hit!.find((v) => v !== p && v !== q)!;"
+  "    assert.strictEqual(rebuild(m, p!, q!), third, `{${draw}}: ${p} and ${q} rebuild ${third} by XOR`);"
+  "  }"
+  "  assert.strictEqual(n, draws, `all ${draws} draws`);"
+  "}"
+  .
+
+WHYTWOOFANYTHREESHAREAPLANEANYTWOPOINTSSHAREEXACTLYONELINE =
+  "// ── 2. Why: two of any three share a plane; any two points share exactly one line ─"
+  "const { m, tickets } = planes(3);"
+  "for (let a = 1; a <= 2 * m; a++) for (let b = a + 1; b <= 2 * m; b++) {"
+  "  const same = (a <= m) === (b <= m);"
+  "  assert.strictEqual(tickets.filter((t) => t.includes(a) && t.includes(b)).length, same ? 1 : 0, `${a}, ${b}: ${same ? ""one line"" : ""no line""}`);"
+  "}"
+  "assert.strictEqual(tickets.length, 14, ""14 tickets: the 7 lines of each plane"");"
+  "console.log(""I-191: the Fano lottery — passed"");"
+  "console.log(""  14 tickets (two Fano planes on 1-7 and 8-14) meet every one of the 364 draws in two numbers"");"
+  "console.log(""  and on that ticket the two rebuild the third by XOR; so too 70 tickets for 1-30, and 310 for 1-62 (the trigintaduonion triples)"");"
+  .

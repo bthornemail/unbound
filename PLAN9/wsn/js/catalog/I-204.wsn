@@ -1,0 +1,74 @@
+RECORD = HEAD THEBOOTSEQUENCE THEPOWERS THECORRECTION THEUNITS THEPARITYHEADER THEREADINGSTHEAUTHORS .
+
+HEAD =
+  "// i204.ts — I-204: how to instantiate — the boot exchange and the 16-powers"
+  "//"
+  "// The author, 2026-10-14: ""the 19.4.4 is the read of the last state at boot"
+  "// because we do atomics compare and exchange of (TERM, 60, 127, 63) on"
+  "// boot""; ""the full 16^20 of a two 16^10 ... conjoined by a two 16^4 of self"
+  "// or separate 16^5 with the required 16^4 of 65536 bits""; ""a 16 is 32-bytes"
+  "// or bits I let you decide""; ""it also maybe a discrepancy from me confusing"
+  "// super user and user""."
+  "import assert from ""node:assert"";"
+  .
+
+THEBOOTSEQUENCE =
+  "// ── 1. The boot sequence ─────────────────────────────────────"
+  "// Read the last state; then Atomics.compareExchange(TERM, 60, 127, 63)."
+  "const READ = 127, WRITE = 63, INDEX = 60;"
+  "assert.equal(READ ^ WRITE, 0x40, ""read and write differ by one escape bit"");"
+  .
+
+THEPOWERS =
+  "// ── 2. The powers ────────────────────────────────────────────"
+  "assert.equal(16 ** 20, 2 ** 80);"
+  "assert.equal(16 ** 10, 2 ** 40);"
+  "assert.equal(16 ** 5,  2 ** 20);"
+  "assert.equal(16 ** 4,  2 ** 16);"
+  "assert.equal(16 ** 4,  65536, ""16^4 = 65536"");"
+  "assert.equal(16 ** 2,  256,   ""16^2 = 256"");"
+  "// Two 16^4 and one 16^2 compose to 16^10 (exponents add)."
+  "assert.equal(16 ** 4 * 16 ** 4 * 16 ** 2, 16 ** 10);"
+  "// Two 16^10 compose to 16^20."
+  "assert.equal(16 ** 10 * 16 ** 10, 16 ** 20);"
+  .
+
+THECORRECTION =
+  "// ── 3. The correction ────────────────────────────────────────"
+  "// The ""required 16^2 of 65536"" is 16^4, not 16^2."
+  "assert.equal(16 ** 4, 65536);"
+  "assert.notEqual(16 ** 2, 65536, ""16^2 is 256, not 65536"");"
+  .
+
+THEUNITS =
+  "// ── 4. The units ─────────────────────────────────────────────"
+  "// A ""16"" is 16 bits = 2 bytes."
+  "assert.equal(16 / 8, 2, ""16 bits = 2 bytes"");"
+  "assert.equal(16 * 8, 128, ""16 bytes = 128 bits"");"
+  "// A 32-byte frame is 256 bits."
+  "assert.equal(32 * 8, 256, ""32 bytes = 256 bits"");"
+  "// 16 pairs of 16 bits = 256 bits = 32 bytes."
+  "assert.equal(16 * 16, 256);"
+  "// 128-byte buffer = 4 frames of 32 bytes."
+  "assert.equal(128 / 32, 4);"
+  .
+
+THEPARITYHEADER =
+  "// ── 5. The parity header ─────────────────────────────────────"
+  "// A 16-unit header is 8 pairs."
+  "assert.equal(16 / 2, 8, ""16 units = 8 pairs"");"
+  "// 8 pairs of 5-bit = 40 bits = 16^10."
+  "assert.equal(8 * 5, 40);"
+  "assert.equal(2 ** 40, 16 ** 10);"
+  "// 8 pairs of 5-byte = 320 bits = 40 bytes."
+  "assert.equal(8 * 40, 320);"
+  "assert.equal(320 / 8, 40, ""320 bits = 40 bytes"");"
+  .
+
+THEREADINGSTHEAUTHORS =
+  "// ── 6. The readings (the author's) ───────────────────────────"
+  "// - The boot reads the last state (19.4.4) before the exchange."
+  "// - The last state is the superuser's (system's), UID 0."
+  "// - 20 at positions 1, 2, 3; sealed at 4; the pair 20 5."
+  "// These are held as the author's readings, not asserted."
+  .

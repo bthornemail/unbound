@@ -1,0 +1,14 @@
+#!/bin/rc
+# REV2: rev is its own inverse (B-REV2.sh), against Plan 9's rev (rev.c)
+rfork e
+ifs='
+'
+fn fail { echo 'FAIL(REV2):' $* >[1=2]; exit fail }
+# assert: rev reverses a line (abc -> cba)
+if(! ~ `{echo -n abc | $bin/rev} cba) fail 'rev abc != cba'
+# assert: rev applied twice is the identity, for several byte strings
+for(s in a Hello 'The Light Garden' 0123456789 '<text>payload</text>'){
+	got=`{echo -n $s | $bin/rev | $bin/rev}
+	if(! ~ $got $s) fail 'rev|rev changed ['$s'] -> ['$got']'
+}
+echo 'REV2: rev is its own inverse - passed'

@@ -1,0 +1,170 @@
+AUTHORITYPIPELINEPRESERVESDECISION = CHECKED .
+
+CHECKED = HEAD COQ LISTNOTATIONS IMPORT IMPORTA IMPORTB SCOPE VALIDATIONDECISION FRAMEDRELATION OMNICRONFRAMEVALID TETRAGRAMMATRONVALIDATE VALIDATEDRELATION TETRAGRAMMATRONDECIDE INTERPOLATEDRELATION METATRONINTERPOLATE OMNICRONFRAMINGDOESNOTDECIDE TETRAGRAMMATRONISDECISIONSOURCE METATRONINTERPOLATIONPRESERVESDECISION METATRONCANNOTMAKEUNLAWFULLAWFUL CANONICALNULLFRAME CANONICALNULLFRAMEISLAWFUL MALFORMEDNULLFRAME MALFORMEDFRAMEISUNLAWFUL OPENWITNESSFRAME NONCLOSINGWITNESSESAREUNLAWFUL .
+
+HEAD =
+  "(**"
+  "  Typed authority boundary for framing, validation, and interpolation."
+  "  Omnicron supplies a frame. Tetragrammatron computes the decision."
+  "  Metatron may interpolate addresses while preserving that decision."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import NArith List Bool."
+  .
+
+LISTNOTATIONS =
+  "Import ListNotations."
+  .
+
+IMPORT =
+  "Require Import EarnedControlBandsEncode."
+  .
+
+IMPORTA =
+  "Require Import DiagonalGaugeCloses."
+  .
+
+IMPORTB =
+  "Require Import NullRingCloses."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+VALIDATIONDECISION =
+  "Inductive ValidationDecision : Type :="
+  "| Lawful"
+  "| Unlawful."
+  .
+
+FRAMEDRELATION =
+  "Record FramedRelation : Type := mkFramedRelation {"
+  "  relation_envelope : list N;"
+  "  relation_witnesses : list N;"
+  "  relation_gauge : N"
+  "}."
+  .
+
+OMNICRONFRAMEVALID =
+  "Definition omnicron_frame_valid (frame : FramedRelation) : bool :="
+  "  valid_omnicron_envelope (relation_envelope frame)."
+  .
+
+TETRAGRAMMATRONVALIDATE =
+  "Definition tetragrammatron_validate (frame : FramedRelation)"
+  "  : ValidationDecision :="
+  "  if andb"
+  "       (omnicron_frame_valid frame)"
+  "       (andb"
+  "          (diagonal_closure_ready dplus_closure)"
+  "          (andb"
+  "             (diagonal_closure_ready dminus_closure)"
+  "             (N.eqb (xor_reduce (relation_witnesses frame)) 0)))"
+  "  then Lawful"
+  "  else Unlawful."
+  .
+
+VALIDATEDRELATION =
+  "Record ValidatedRelation : Type := mkValidatedRelation {"
+  "  validated_frame : FramedRelation;"
+  "  validation_decision : ValidationDecision"
+  "}."
+  .
+
+TETRAGRAMMATRONDECIDE =
+  "Definition tetragrammatron_decide (frame : FramedRelation)"
+  "  : ValidatedRelation :="
+  "  mkValidatedRelation frame (tetragrammatron_validate frame)."
+  .
+
+INTERPOLATEDRELATION =
+  "Record InterpolatedRelation : Type := mkInterpolatedRelation {"
+  "  interpolated_source : N;"
+  "  interpolated_destination : N;"
+  "  interpolated_decision : ValidationDecision"
+  "}."
+  .
+
+METATRONINTERPOLATE =
+  "Definition metatron_interpolate"
+  "  (source destination : N) (validated : ValidatedRelation)"
+  "  : InterpolatedRelation :="
+  "  mkInterpolatedRelation source destination"
+  "    (validation_decision validated)."
+  .
+
+OMNICRONFRAMINGDOESNOTDECIDE =
+  "Theorem omnicron_framing_does_not_decide :"
+  "  forall frame,"
+  "    omnicron_frame_valid frame ="
+  "    valid_omnicron_envelope (relation_envelope frame)."
+  "Proof. reflexivity. Qed."
+  .
+
+TETRAGRAMMATRONISDECISIONSOURCE =
+  "Theorem tetragrammatron_is_decision_source :"
+  "  forall frame,"
+  "    validation_decision (tetragrammatron_decide frame) ="
+  "    tetragrammatron_validate frame."
+  "Proof. reflexivity. Qed."
+  .
+
+METATRONINTERPOLATIONPRESERVESDECISION =
+  "Theorem metatron_interpolation_preserves_decision :"
+  "  forall source destination validated,"
+  "    interpolated_decision"
+  "      (metatron_interpolate source destination validated) ="
+  "    validation_decision validated."
+  "Proof. reflexivity. Qed."
+  .
+
+METATRONCANNOTMAKEUNLAWFULLAWFUL =
+  "Theorem metatron_cannot_make_unlawful_lawful :"
+  "  forall source destination frame,"
+  "    tetragrammatron_validate frame = Unlawful ->"
+  "    interpolated_decision"
+  "      (metatron_interpolate source destination"
+  "        (tetragrammatron_decide frame)) = Unlawful."
+  "Proof."
+  "  intros source destination frame H."
+  "  unfold metatron_interpolate, tetragrammatron_decide; simpl."
+  "  exact H."
+  "Qed."
+  .
+
+CANONICALNULLFRAME =
+  "Definition canonical_null_frame : FramedRelation :="
+  "  mkFramedRelation canonical_omnicron_envelope byte_ring_witnesses 255."
+  .
+
+CANONICALNULLFRAMEISLAWFUL =
+  "Theorem canonical_null_frame_is_lawful :"
+  "  tetragrammatron_validate canonical_null_frame = Lawful."
+  "Proof. vm_compute; reflexivity. Qed."
+  .
+
+MALFORMEDNULLFRAME =
+  "Definition malformed_null_frame : FramedRelation :="
+  "  mkFramedRelation [255; 0; 28; 29; 30; 31; 31; 255]"
+  "    byte_ring_witnesses 255."
+  .
+
+MALFORMEDFRAMEISUNLAWFUL =
+  "Theorem malformed_frame_is_unlawful :"
+  "  tetragrammatron_validate malformed_null_frame = Unlawful."
+  "Proof. vm_compute; reflexivity. Qed."
+  .
+
+OPENWITNESSFRAME =
+  "Definition open_witness_frame : FramedRelation :="
+  "  mkFramedRelation canonical_omnicron_envelope [32; 95; 128] 255."
+  .
+
+NONCLOSINGWITNESSESAREUNLAWFUL =
+  "Theorem nonclosing_witnesses_are_unlawful :"
+  "  tetragrammatron_validate open_witness_frame = Unlawful."
+  "Proof. vm_compute; reflexivity. Qed."
+  .

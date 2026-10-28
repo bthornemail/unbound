@@ -1,0 +1,15 @@
+#!/bin/rc
+# TRUNC: redirection truncates the file before the command runs (B-TRUNC.sh)
+rfork e
+fn fail { echo 'FAIL(TRUNC):' $* >[1=2]; exit fail }
+d=/tmp/bb.$pid; mkdir -p $d
+echo 'OLD CONTENT' > $d/f
+# assert: a command with no output (echo -n, in place of sh's :), so > F leaves F empty
+echo -n > $d/f
+if(! ~ `{wc -c < $d/f} 0) fail '> did not truncate F to empty'
+# assert: > replaces the content wholesale
+echo OLD > $d/f
+echo NEW > $d/f
+if(! ~ `{cat $d/f} NEW) fail '> did not replace the content'
+rm -rf $d
+echo 'TRUNC: > truncates before the command runs, and replaces - passed'

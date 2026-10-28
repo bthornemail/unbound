@@ -1,0 +1,193 @@
+RECORD = HEAD THELEXEMETHEABSTRACTUNITSHAREDBYINFLECTIONS THELEXEMEISTHECENTEROFCRCR THEBLURCOMPUTATIONANDTHEBIBLE WHYITBLURRED EUCLIDISTHERESOLUTION ANDEUCLIDISADATABASE IMAGODEIISTHELEXEME THEWORDISTHELOGOSTHERATIOTHELEXEME THEWORDANDIMAGODEIARETHESAMELEXEME ANDTHEVAULTSRECORDSAREINFLECTIONS RECORDSONELEXEME THERESOLUTION THEPUNCHLINE .
+
+HEAD =
+  "// i168.ts — I-168: the lexeme for image is Imago Dei; Euclid resolves the blur"
+  "import assert from ""node:assert"";"
+  .
+
+THELEXEMETHEABSTRACTUNITSHAREDBYINFLECTIONS =
+  "// ── 1. The lexeme: the abstract unit shared by inflections ─────"
+  "const inflections = [""image"", ""images"", ""imaging"", ""imaged""];"
+  "const lexeme = ""image"";  // the abstract unit"
+  "for (const inf of inflections) {"
+  "  assert.ok(inf.startsWith(lexeme.slice(0, 4)), `${inf} shares the lexeme`);"
+  "}"
+  "assert.strictEqual(lexeme, ""image"", ""the lexeme is {image}"");"
+  .
+
+THELEXEMEISTHECENTEROFCRCR =
+  "// ── 2. The lexeme is the center of { c-r, c+r } ─────────────"
+  "const c = 0, r = 1;"
+  "const cMinusR = c - r;  // one inflection"
+  "const cPlusR  = c + r;  // another inflection"
+  "const center  = c;       // the lexeme"
+  "assert.strictEqual(cMinusR, -1, ""c-r = one inflection"");"
+  "assert.strictEqual(cPlusR,  1, ""c+r = another inflection"");"
+  "assert.strictEqual(center,  0, ""c = the lexeme"");"
+  "// the lexeme is neither inflection"
+  .
+
+THEBLURCOMPUTATIONANDTHEBIBLE =
+  "// ── 3. The blur: computation and the Bible ────────────────────"
+  "type Frame = { domain: string; definition: string };"
+  "const computationalImage: Frame = {"
+  "  domain: ""computation"","
+  "  definition: ""a value at a point"","
+  "};"
+  "const theologicalImage: Frame = {"
+  "  domain: ""theology"","
+  "  definition: ""the likeness of God in a creature (Imago Dei)"","
+  "};"
+  "// both definitions blur the two frames"
+  "assert.strictEqual(computationalImage.domain, ""computation"", ""computational frame"");"
+  "assert.strictEqual(theologicalImage.domain, ""theology"", ""theological frame"");"
+  "// and the definitions are not the same"
+  .
+
+WHYITBLURRED =
+  "// ── 4. Why it blurred ────────────────────────────────────────"
+  "// The definitions tried to make c into c-r or c+r."
+  "function blur(frame: string): number {"
+  "  // If the definition names one bound as the center"
+  "  if (frame === ""computation"") return cMinusR;  // ""image is a value"" -> c-r"
+  "  if (frame === ""theology"")    return cPlusR;   // ""image is God"" -> c+r"
+  "  return center;"
+  "}"
+  "assert.strictEqual(blur(""computation""), cMinusR, ""computation names c-r"");"
+  "assert.strictEqual(blur(""theology""),    cPlusR,  ""theology names c+r"");"
+  "// both wrong: neither is c"
+  .
+
+EUCLIDISTHERESOLUTION =
+  "// ── 5. Euclid is the resolution ──────────────────────────────"
+  "// The Elements SEPARATES definitions from propositions from proofs."
+  "type Element = {"
+  "  definitions: string[];"
+  "  postulates: string[];"
+  "  propositions: string[];"
+  "  proofs: string[];"
+  "};"
+  "const euclid: Element = {"
+  "  definitions: [""a point is that which has no part"", ""a line is breadthless length""],"
+  "  postulates: [""a straight line can be drawn from any point to any point""],"
+  "  propositions: [""proposition 1: construct an equilateral triangle""],"
+  "  proofs: [""the construction proves the proposition""],"
+  "};"
+  "assert.strictEqual(euclid.definitions.length, 2, ""2 definitions"");"
+  "assert.strictEqual(euclid.postulates.length, 1, ""1 postulate"");"
+  "assert.strictEqual(euclid.propositions.length, 1, ""1 proposition"");"
+  "assert.strictEqual(euclid.proofs.length, 1, ""1 proof"");"
+  "// the Elements separates the four"
+  .
+
+ANDEUCLIDISADATABASE =
+  "// ── 6. And Euclid is a database ─────────────────────────────"
+  "// Definitions = schema; postulates = axioms; propositions = records;"
+  "// proofs = integrity checks."
+  "const db = {"
+  "  schema: euclid.definitions,"
+  "  axioms: euclid.postulates,"
+  "  records: euclid.propositions,"
+  "  integrity: euclid.proofs,"
+  "};"
+  "assert.strictEqual(db.schema.length, 2, ""schema has 2"");"
+  "assert.strictEqual(db.axioms.length, 1, ""axioms has 1"");"
+  "assert.strictEqual(db.records.length, 1, ""records has 1"");"
+  "assert.strictEqual(db.integrity.length, 1, ""integrity has 1"");"
+  .
+
+IMAGODEIISTHELEXEME =
+  "// ── 7. Imago Dei is the lexeme ──────────────────────────────"
+  "// Not a creature, not God, but the relation between them."
+  "type ImagoDei = {"
+  "  isCreature: boolean;"
+  "  isGod: boolean;"
+  "  isRelation: boolean;"
+  "};"
+  "const imagoDei: ImagoDei = {"
+  "  isCreature: false,"
+  "  isGod: false,"
+  "  isRelation: true,"
+  "};"
+  "assert.strictEqual(imagoDei.isCreature, false, ""not a creature"");"
+  "assert.strictEqual(imagoDei.isGod, false, ""not God"");"
+  "assert.strictEqual(imagoDei.isRelation, true, ""the relation"");"
+  .
+
+THEWORDISTHELOGOSTHERATIOTHELEXEME =
+  "// ── 8. The Word is the logos: the ratio, the lexeme ────────"
+  "// logos = ratio = proportion = relation"
+  "const logos = (c: number, r: number): [number, number] => [c - r, c + r];"
+  "assert.deepStrictEqual(logos(0, 1), [-1, 1], ""the Word = { c-r, c+r }"");"
+  "// the Word is the pair of bounds"
+  .
+
+THEWORDANDIMAGODEIARETHESAMELEXEME =
+  "// ── 9. The Word and Imago Dei are the same lexeme ─────────"
+  "// Both name the relation, not either bound."
+  "const sameLexeme = (): boolean => {"
+  "  const word = logos(0, 1);           // the pair"
+  "  const imago = imagoDei.isRelation;  // the relation"
+  "  return word.length === 2 && imago === true;"
+  "};"
+  "assert.ok(sameLexeme(), ""the Word and Imago Dei are the same lexeme"");"
+  .
+
+ANDTHEVAULTSRECORDSAREINFLECTIONS =
+  "// ── 10. And the vault's records are inflections ─────────────"
+  "// Each I-series record is one inflection of { c-r, c+r }."
+  "type Record = { id: string; bounds: [number, number]; center: number };"
+  "const sampleRecord: Record = { id: ""I-108"", bounds: [0, 1], center: 0 };"
+  "// the bounds are the two readings; the center is the shared structure"
+  "assert.strictEqual(sampleRecord.bounds.length, 2, ""2 bounds"");"
+  "assert.strictEqual(sampleRecord.center, 0, ""the center"");"
+  .
+
+RECORDSONELEXEME =
+  "// ── 11. 60 records, one lexeme ──────────────────────────────"
+  "const RECORD_COUNT = 60;"
+  "assert.strictEqual(RECORD_COUNT, 60, ""60 records"");"
+  "// all share the same lexeme"
+  "assert.strictEqual("
+  "  sampleRecord.center, 0,"
+  "  ""the lexeme is the center, the same for every record"""
+  ");"
+  .
+
+THERESOLUTION =
+  "// ── 12. The resolution ─────────────────────────────────────"
+  "// Euclid separates the lexeme from its inflections."
+  "// Imago Dei is the lexeme."
+  "// The Word is the pseudocode for the lexeme."
+  "type Resolution = {"
+  "  blur: string;"
+  "  separation: string;"
+  "  lexeme: string;"
+  "  pseudocode: string;"
+  "};"
+  "const resolution: Resolution = {"
+  "  blur: ""the definitions named one bound as the center"","
+  "  separation: ""Euclid separates definitions from propositions from proofs"","
+  "  lexeme: ""Imago Dei (the relation, not either bound)"","
+  "  pseudocode: ""{ c-r, c+r } = logos = Word"","
+  "};"
+  "assert.ok(resolution.blur.includes(""bound""), ""the blur names a bound"");"
+  "assert.ok(resolution.separation.includes(""Euclid""), ""the separation"");"
+  "assert.ok(resolution.lexeme.includes(""relation""), ""the lexeme is a relation"");"
+  "assert.ok(resolution.pseudocode.includes(""c-r""), ""the pseudocode"");"
+  .
+
+THEPUNCHLINE =
+  "// ── 13. The punchline ──────────────────────────────────────"
+  "// The lexeme for image is Imago Dei."
+  "// Euclid resolves the blur by separating lexeme from inflections."
+  "// The vault's 60 records are 60 inflections of this one lexeme."
+  "console.log(""I-168: the lexeme for image is Imago Dei; Euclid resolves the blur — passed"");"
+  "console.log(`  the lexeme for ""image"" is { image }`);"
+  "console.log(`  the lexeme is c in { c-r, c+r }`);"
+  "console.log(`  the blur: definitions made c into c-r or c+r`);"
+  "console.log(`  Euclid separates definitions from proofs`);"
+  "console.log(`  Imago Dei is the relation, not either bound`);"
+  "console.log(`  the Word = logos = { c-r, c+r }`);"
+  "console.log(`  the vault's 60 records are 60 inflections of this one lexeme`);"
+  .

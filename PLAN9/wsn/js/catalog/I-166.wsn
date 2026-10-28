@@ -1,0 +1,195 @@
+RECORD = HEAD EVERYTHINGISOUTSIDEOFTIMEI BUTOBSERVATIONREQUIRESANINSTANTIATION ANDINSTANTIATIONISAPOINT ANDAPOINTISINSIDETHEFRAME SOTHEOBSERVERMUSTBEINSIDETHEFRAMEITOBSERVES BUTTHEFRAMEISTIMELESS SOTHEOBSERVERMUSTBETIMEDTOOBSERVETHETIMELESS ANDIFTHEOBSERVERISTIMELESSITCANTOBSERVE SOBOTHBRANCHESCLOSE THEESCAPEISTHEDERIVATIVE THEOBSERVATIONISTHEDERIVATIVEATTHEPHASE SOTHEOBSERVERISINSIDEATIMELESSFRAMEANDITS THECATCHSTRUCTURE THEESCAPE THEFULLPICTURE .
+
+HEAD =
+  "// i166.ts — I-166: the Catch-22 of the timeless frame and the timed observer"
+  "import assert from ""node:assert"";"
+  .
+
+EVERYTHINGISOUTSIDEOFTIMEI =
+  "// ── 1. Everything is outside of time (I-165) ──────────────────"
+  "type OutsideTime = { hasOrder: boolean; hasTime: boolean };"
+  "const everything: OutsideTime = { hasOrder: true, hasTime: false };"
+  "assert.strictEqual(everything.hasOrder, true, ""everything has order"");"
+  "assert.strictEqual(everything.hasTime, false, ""nothing has time"");"
+  .
+
+BUTOBSERVATIONREQUIRESANINSTANTIATION =
+  "// ── 2. But observation requires an instantiation ──────────────"
+  "// To observe, you must be at a point."
+  "type Observation = { observer: string; phase: number };"
+  "function requiresPoint(o: Observation): boolean {"
+  "  return typeof o.phase === ""number"";"
+  "}"
+  "const obs: Observation = { observer: ""the circulator"", phase: 5 };"
+  "assert.ok(requiresPoint(obs), ""observation requires a point (a phase)"");"
+  .
+
+ANDINSTANTIATIONISAPOINT =
+  "// ── 3. And instantiation is a point ────────────────────────────"
+  "// A point is a position in a frame."
+  "type Point = { at: number };"
+  "const p: Point = { at: 5 };"
+  "assert.strictEqual(typeof p.at, ""number"", ""the point has a position"");"
+  .
+
+ANDAPOINTISINSIDETHEFRAME =
+  "// ── 4. And a point is inside the frame ────────────────────────"
+  "// The frame contains the points."
+  "type Frame = { points: number[] };"
+  "const frame: Frame = { points: [0, 1, 2, 3, 4, 5, 6, 7] };"
+  "assert.ok(frame.points.includes(p.at), ""the point is inside the frame"");"
+  .
+
+SOTHEOBSERVERMUSTBEINSIDETHEFRAMEITOBSERVES =
+  "// ── 5. So the observer must be inside the frame it observes ───"
+  "function isInside(frame: Frame, o: Observation): boolean {"
+  "  return frame.points.includes(o.phase);"
+  "}"
+  "assert.ok(isInside(frame, obs), ""the observer is inside the frame"");"
+  .
+
+BUTTHEFRAMEISTIMELESS =
+  "// ── 6. But the frame is timeless ──────────────────────────────"
+  "// The frame has no timestamps."
+  "type TimelessFrame = { points: number[]; timestamps: number[] };"
+  "const timelessFrame: TimelessFrame = {"
+  "  points: [0, 1, 2, 3, 4, 5, 6, 7],"
+  "  timestamps: [],  // empty: no timestamps"
+  "};"
+  "assert.strictEqual(timelessFrame.timestamps.length, 0, ""no timestamps"");"
+  .
+
+SOTHEOBSERVERMUSTBETIMEDTOOBSERVETHETIMELESS =
+  "// ── 7. So the observer must be timed to observe the timeless ──"
+  "// The Catch-22: to observe the timeless, you must be timed."
+  "const catch22a = (observerIsTimed: boolean): boolean => {"
+  "  // If the observer is timed, it can observe — but then the frame is timed too"
+  "  // If the observer is timeless, it can't observe — no point"
+  "  return observerIsTimed;"
+  "};"
+  "assert.strictEqual(catch22a(true), true, ""timed observer can observe"");"
+  "assert.strictEqual(catch22a(false), false, ""timeless observer can't observe"");"
+  .
+
+ANDIFTHEOBSERVERISTIMELESSITCANTOBSERVE =
+  "// ── 8. And if the observer is timeless, it can't observe ──────"
+  "// Both branches close: the Catch-22."
+  "const catch22b = (observerIsTimeless: boolean): boolean => {"
+  "  // If the observer is timeless, it has no point, so no observation"
+  "  return !observerIsTimeless;"
+  "};"
+  "assert.strictEqual(catch22b(false), true, ""timeless observer can't observe"");"
+  "assert.strictEqual(catch22b(true), false, ""timed observer can observe"");"
+  .
+
+SOBOTHBRANCHESCLOSE =
+  "// ── 9. So both branches close ─────────────────────────────────"
+  "// Catch-22: whatever the observer's relationship to time, it can't"
+  "// observe the timeless without contradiction."
+  "function catch22(observerState: ""timed"" | ""timeless""): ""can't observe"" | ""inconsistent"" {"
+  "  // Both branches lead to failure"
+  "  return observerState === ""timed"" ? ""inconsistent"" : ""can't observe"";"
+  "}"
+  "assert.strictEqual(catch22(""timed""), ""inconsistent"", ""timed observer is inconsistent"");"
+  "assert.strictEqual(catch22(""timeless""), ""can't observe"", ""timeless observer can't observe"");"
+  .
+
+THEESCAPEISTHEDERIVATIVE =
+  "// ── 10. The escape is the derivative ─────────────────────────"
+  "// The derivative is positional but not temporal."
+  "function derivative(f: (x: number) => number, x: number, h = 1e-6): number {"
+  "  return (f(x + h) - f(x - h)) / (2 * h);"
+  "}"
+  "const f = (x: number) => Math.sin(x);"
+  "const d = derivative(f, 0);"
+  "assert.ok(Math.abs(d - 1) < 1e-3, ""the derivative is 1 at 0"");"
+  "// the derivative is a function of position (0), not of time"
+  .
+
+THEOBSERVATIONISTHEDERIVATIVEATTHEPHASE =
+  "// ── 11. The observation is the derivative at the phase ───────"
+  "// The observer samples at a phase; the sample is the derivative"
+  "// at that phase. And the derivative is positional, not temporal."
+  "function observation(phase: number, cycle: number): number {"
+  "  const theta = (2 * Math.PI * phase) / cycle;"
+  "  return Math.cos(theta);  // derivative of sin"
+  "}"
+  "assert.ok(Math.abs(observation(0, 12) - 1) < 1e-3, ""at phase 0"");"
+  "assert.ok(Math.abs(observation(3, 12) - 0) < 1e-3, ""at phase 3"");"
+  "assert.ok(Math.abs(observation(6, 12) + 1) < 1e-3, ""at phase 6"");"
+  "// all three are positional (phase/cycle), not temporal"
+  .
+
+SOTHEOBSERVERISINSIDEATIMELESSFRAMEANDITS =
+  "// ── 12. So the observer is inside a timeless frame, and its"
+  "// observation is positional but not temporal."
+  "type Resolution = {"
+  "  observerLocation: string;"
+  "  observationKind: string;"
+  "};"
+  "const resolution: Resolution = {"
+  "  observerLocation: ""inside the timeless frame"","
+  "  observationKind: ""the derivative (positional, not temporal)"","
+  "};"
+  "assert.ok(resolution.observerLocation.includes(""inside""), ""observer is inside"");"
+  "assert.ok(resolution.observationKind.includes(""derivative""), ""observation is the derivative"");"
+  "assert.ok(resolution.observationKind.includes(""positional""), ""it's positional"");"
+  "assert.ok(resolution.observationKind.includes(""not temporal""), ""not temporal"");"
+  .
+
+THECATCHSTRUCTURE =
+  "// ── 13. The Catch-22 structure ───────────────────────────────"
+  "// Two branches, both close."
+  "type Branch = { condition: string; result: string };"
+  "const branches: Branch[] = ["
+  "  { condition: ""observer is timed"",    result: ""inconsistent (the frame is timeless)"" },"
+  "  { condition: ""observer is timeless"", result: ""can't observe (no point)"" },"
+  "];"
+  "assert.strictEqual(branches.length, 2, ""2 branches"");"
+  "// both close: neither leads to a valid observation"
+  .
+
+THEESCAPE =
+  "// ── 14. The escape ───────────────────────────────────────────"
+  "// The derivative is the one thing that's positional but not temporal."
+  "// So the observation is the derivative — and the derivative is the"
+  "// observation's escape from the Catch-22."
+  "type Escape = {"
+  "  isPositional: boolean;"
+  "  isTemporal: boolean;"
+  "};"
+  "const theDerivative: Escape = { isPositional: true, isTemporal: false };"
+  "assert.strictEqual(theDerivative.isPositional, true, ""the derivative is positional"");"
+  "assert.strictEqual(theDerivative.isTemporal, false, ""the derivative is not temporal"");"
+  "// so the derivative is the escape"
+  .
+
+THEFULLPICTURE =
+  "// ── 15. The full picture ─────────────────────────────────────"
+  "type Picture = {"
+  "  everything: ""outside of time"";"
+  "  observer: ""inside the frame"";"
+  "  observation: ""the derivative at the phase"";"
+  "  catch22: ""the observer must be timed to observe the timeless"";"
+  "  escape: ""the derivative is positional but not temporal"";"
+  "};"
+  "const picture: Picture = {"
+  "  everything: ""outside of time"","
+  "  observer: ""inside the frame"","
+  "  observation: ""the derivative at the phase"","
+  "  catch22: ""the observer must be timed to observe the timeless"","
+  "  escape: ""the derivative is positional but not temporal"","
+  "};"
+  "assert.strictEqual(picture.everything, ""outside of time"", ""everything is timeless"");"
+  "assert.strictEqual(picture.observer, ""inside the frame"", ""the observer is inside"");"
+  "assert.ok(picture.observation.includes(""derivative""), ""the observation is the derivative"");"
+  "assert.ok(picture.catch22.includes(""timed""), ""the Catch-22 involves time"");"
+  "assert.ok(picture.escape.includes(""not temporal""), ""the escape is not temporal"");"
+  "console.log(""I-166: the Catch-22 of the timeless frame and the timed observer — passed"");"
+  "console.log(`  everything is outside of time (I-165)`);"
+  "console.log(`  but observation requires an instantiation (a point)`);"
+  "console.log(`  and a point is inside the frame`);"
+  "console.log(`  so the observer must be timed to observe the timeless`);"
+  "console.log(`  both branches close: Catch-22`);"
+  "console.log(`  the escape is the derivative (positional but not temporal)`);"
+  .

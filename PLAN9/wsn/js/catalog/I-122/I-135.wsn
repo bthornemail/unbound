@@ -1,0 +1,14 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-135: Proxy/Reflect/Catch/Template"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-135"", ""Proxy/Reflect/Catch/Template pattern"", () => {"
+  "  const swap16 = (x: number) => ((x & 0xFF) << 8) | ((x >> 8) & 0xFF);"
+  "  assert.strictEqual(swap16(0xFEFF), 0xFFFE);"
+  "  const traps = [""get"",""set"",""has"",""deleteProperty"",""ownKeys"",""apply"",""construct""];"
+  "  for (const t of traps) assert.ok(t in Reflect);"
+  "  assert.ok(new TypeError(""x"") instanceof Error);"
+  "}, ""catch-at-0"");"
+  .

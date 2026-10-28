@@ -1,0 +1,38 @@
+RECORD = HEAD ALLFIVEARETAGSANDALLENDOS PAIRWISEXOR AZSUMSANDXOR .
+
+HEAD =
+  "// i215.ts — I-215: the OS family — THEOS, LOGOS, PATHOS, NOMOS, ETHOS"
+  "//"
+  "// The author, 2026-10-14. Was a script that printed its values; now each value is asserted."
+  "// Shorter words are padded with the space (the null predicate), aligned from the left."
+  "import assert from ""node:assert"";"
+  "const xor = (a: string, b: string) => { const n = Math.max(a.length, b.length), A = a.padEnd(n, "" ""), B = b.padEnd(n, "" ""); return [...A].map((c, i) => c.charCodeAt(0) ^ B.charCodeAt(i)); };"
+  "const words = [""THEOS"", ""LOGOS"", ""PATHOS"", ""NOMOS"", ""ETHOS""];"
+  .
+
+ALLFIVEARETAGSANDALLENDOS =
+  "// ── 1. All five are tags, and all end OS ─────────────────────"
+  "for (const w of words) { assert.ok(/^[A-Z0-9]{1,8}$/.test(w), `${w} is a tag`); assert.equal(w.slice(-2), ""OS"", `${w} ends OS`); }"
+  .
+
+PAIRWISEXOR =
+  "// ── 2. Pairwise XOR ──────────────────────────────────────────"
+  "const table: Record<string, number[]> = {"
+  "  ""THEOS LOGOS"": [0x18, 0x07, 0x02, 0x00, 0x00], ""THEOS PATHOS"": [0x04, 0x09, 0x11, 0x07, 0x1c, 0x73], ""THEOS NOMOS"": [0x1a, 0x07, 0x08, 0x00, 0x00], ""THEOS ETHOS"": [0x11, 0x1c, 0x0d, 0x00, 0x00],"
+  "  ""LOGOS PATHOS"": [0x1c, 0x0e, 0x13, 0x07, 0x1c, 0x73], ""LOGOS NOMOS"": [0x02, 0x00, 0x0a, 0x00, 0x00], ""LOGOS ETHOS"": [0x09, 0x1b, 0x0f, 0x00, 0x00],"
+  "  ""PATHOS NOMOS"": [0x1e, 0x0e, 0x19, 0x07, 0x1c, 0x73], ""PATHOS ETHOS"": [0x15, 0x15, 0x1c, 0x07, 0x1c, 0x73], ""NOMOS ETHOS"": [0x0b, 0x1b, 0x05, 0x00, 0x00],"
+  "};"
+  "for (const [k, v] of Object.entries(table)) { const [a, b] = k.split("" ""); assert.deepEqual(xor(a!, b!), v, `${a} ^ ${b}`); }"
+  "// the five-letter words meet on their OS: two nulls at the end; PATHOS, one longer, misaligns it"
+  "for (const [k, v] of Object.entries(table)) { const fives = !k.includes(""PATHOS""); assert.equal(fives, v.slice(-2).every((x) => x === 0), `${k}: ${fives ? ""the OS cancels"" : ""PATHOS shifts the OS by one""}`); }"
+  "assert.deepEqual(xor(""LOGOS"", ""NOMOS""), [0x02, 0x00, 0x0a, 0x00, 0x00], ""LOGOS and NOMOS differ in two letters (L/N, G/M): word and law, a line feed apart"");"
+  .
+
+AZSUMSANDXOR =
+  "// ── 3. A1Z26 sums and XOR ────────────────────────────────────"
+  "const az = (w: string) => [...w].map((c) => c.charCodeAt(0) - 64);"
+  "assert.deepEqual(words.map((w) => az(w).reduce((s, x) => s + x, 0)), [67, 68, 79, 76, 67], ""A1Z26 sums"");"
+  "assert.deepEqual(words.map((w) => az(w).reduce((s, x) => s ^ x, 0)), [5, 24, 17, 16, 5], ""A1Z26 XORs"");"
+  "assert.equal(az(""THEOS"").reduce((s, x) => s + x, 0), az(""ETHOS"").reduce((s, x) => s + x, 0), ""THEOS and ETHOS: the same letters, the same sum and XOR (anagrams)"");"
+  "console.log(""I-215: the OS family — THEOS, LOGOS, PATHOS, NOMOS, ETHOS — passed"");"
+  .

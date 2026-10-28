@@ -1,0 +1,2 @@
+TEMPLATE = "GOD" [ " " SLOT ] " " "WORD" .
+SLOT     = "IS" | "OF" .

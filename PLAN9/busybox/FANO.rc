@@ -1,0 +1,4 @@
+#!/bin/rc
+# FANO (B-FANO.sh): runs fano.c, compiled by busybox.rc
+rfork e
+$bin/fano || exit fail

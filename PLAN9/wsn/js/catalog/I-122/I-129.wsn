@@ -1,0 +1,19 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-129: 60^n hex-digit descent"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-129"", ""60^n hex-digit descent + prompt sigils + 64-blocks"", () => {"
+  "  const orbit = Array.from({ length: 20 }, (_, i) => 60 ^ (64 + i));"
+  "  const nibbles = orbit.map(c => c & 0xF);"
+  "  assert.deepStrictEqual("
+  "    nibbles,"
+  "    [0xC,0xD,0xE,0xF, 0x8,0x9,0xA,0xB, 0x4,0x5,0x6,0x7,"
+  "     0x0,0x1,0x2,0x3, 0xC,0xD,0xE,0xF]"
+  "  );"
+  "  const sixteen = Array.from({ length: 16 }, (_, i) => 0x30 + i);"
+  "  assert.strictEqual(sixteen.map(c => String.fromCharCode(c)).join(""""),"
+  "    ""0123456789:;<=>?"");"
+  "}, ""point/line/duality"");"
+  .

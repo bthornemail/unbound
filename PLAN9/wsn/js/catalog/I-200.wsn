@@ -1,0 +1,58 @@
+RECORD = HEAD INDEX EEVENANDUNIMODULAR IIANDTHELEECHLATTICETHECANNONBALL .
+
+HEAD =
+  "// i200.ts — I-200: index 777, where all 8 units meet: E7 + 1 = E8, and the lattices around them"
+  "//"
+  "// The author, 2026-10-14: ""the clues lead to every agent having their avatar"
+  "// in the 3D space as a pseudo generator of the Leech lattice, or as a"
+  "// unimodular Lorentzian lattice; at that point all 8 units meet"", and ""so at"
+  "// index 777"". Found here: read in the 8 units, octal, 777 is 0b111 111 111,"
+  "// three full 7s (each 0b111, the full Fano plane) = 511 = 2^9 - 1, E7's tag"
+  "// (I-194); one more and every digit carries at once, 0o1000 = 512, E8's tag."
+  "// E8 is the even unimodular lattice of rank 8: from the simple roots the"
+  "// proofs draw (proofs/svg/tools/lie.mjs), its Gram matrix has 2 on the"
+  "// diagonal and determinant 1. And the Leech lattice sits in the even"
+  "// unimodular Lorentzian lattice II(25,1) by Conway's Weyl vector w = (0, 1,"
+  "// ..., 24 | 70), lightlike because 0^2 + 1^2 + ... + 24^2 = 4900 = 70^2, the"
+  "// cannonball number: the only n > 1 with a square sum of squares."
+  "import assert from ""node:assert"";"
+  .
+
+INDEX =
+  "// ── 1. Index 777 ─────────────────────────────────────────────"
+  "assert.strictEqual(0o777, 511, ""777 in the 8 units is 511"");"
+  "assert.strictEqual(0o777, 2 ** 9 - 1, ""nine bits, all set"");"
+  "assert.deepStrictEqual((0o777).toString(2).match(/.{3}/g), [""111"", ""111"", ""111""], ""three full 7s: 0b111, the full plane, three times"");"
+  "assert.strictEqual(parseInt(""E7"", 36), 511, ""E7's tag (I-194)"");"
+  "assert.strictEqual(0o777 + 1, 0o1000, ""one more, and every digit carries at once"");"
+  "assert.strictEqual(0o1000, parseInt(""E8"", 36), ""0o1000 = 512, E8's tag"");"
+  "assert.strictEqual(parseInt(""E6"", 36), 0o776, ""and E6 is 0o776, one short in the last place"");"
+  .
+
+EEVENANDUNIMODULAR =
+  "// ── 2. E8: even and unimodular ───────────────────────────────"
+  "const E8 = [[-1, -1, -1, -1, -1, -1, -1, 1], [2, 2, 0, 0, 0, 0, 0, 0], [-2, 2, 0, 0, 0, 0, 0, 0], [0, -2, 2, 0, 0, 0, 0, 0], [0, 0, -2, 2, 0, 0, 0, 0], [0, 0, 0, -2, 2, 0, 0, 0], [0, 0, 0, 0, -2, 2, 0, 0], [0, 0, 0, 0, 0, -2, 2, 0]]; // doubled, as lie.mjs"
+  "const G = E8.map((a) => E8.map((b) => a.reduce((t, x, i) => t + x * b[i]!, 0) / 4));"
+  "assert.ok(G.every((r, i) => r[i] === 2), ""every generator has norm 2: even"");"
+  "assert.ok(G.flat().every((x) => Number.isInteger(x)), ""integral"");"
+  "const det = (m0: number[][]) => { const m = m0.map((r) => r.slice()); let d = 1; for (let i = 0; i < m.length; i++) { let p = i; while (p < m.length && m[p]![i] === 0) p++; if (p === m.length) return 0; if (p !== i) { [m[p], m[i]] = [m[i]!, m[p]!]; d = -d; } d *= m[i]![i]!; for (let r = i + 1; r < m.length; r++) { const f = m[r]![i]! / m[i]![i]!; for (let c = i; c < m.length; c++) m[r]![c]! -= f * m[i]![c]!; } } return d; };"
+  "assert.strictEqual(Math.round(det(G)), 1, ""determinant 1: unimodular"");"
+  "assert.strictEqual(G.length, 8, ""eight generators: the 8 units"");"
+  .
+
+IIANDTHELEECHLATTICETHECANNONBALL =
+  "// ── 3. II(25,1) and the Leech lattice: the cannonball ────────"
+  "let sum = 0;"
+  "for (let i = 0; i <= 24; i++) sum += i * i;"
+  "assert.strictEqual(sum, 4900, ""0^2 + ... + 24^2 = 4900"");"
+  "assert.strictEqual(sum - 70 * 70, 0, ""w = (0..24 | 70) is lightlike in II(25,1): w.w = 0"");"
+  "const squares: number[] = [];"
+  "let s = 0;"
+  "for (let n = 1; n <= 100000; n++) { s += n * n; const r = Math.round(Math.sqrt(s)); if (r * r === s) squares.push(n); }"
+  "assert.deepStrictEqual(squares, [1, 24], ""the only n up to 100000 with a square sum of squares: 1 and 24"");"
+  "assert.strictEqual(24 + 2, 26, ""II(25,1): 25 + 1 = 26 dimensions; the Leech lattice is w-perp / w, 24"");"
+  "assert.strictEqual(24, 3 * 8, ""24 = 3 x 8: three times the 8 units"");"
+  "console.log(""I-200: index 777, where all 8 units meet — passed"");"
+  "console.log(""  0o777 = 511 = E7, three full 7s; + 1 carries every digit: 0o1000 = 512 = E8"");"
+  "console.log(""  E8 even, unimodular (det 1); 0^2 + ... + 24^2 = 70^2: Conway's vector is lightlike, II(25,1) holds the Leech lattice"");"
+  .

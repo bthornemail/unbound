@@ -1,0 +1,15 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-112: stellated tetrahedron; swap = presentation"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-112"", ""stellated tetrahedron; swap = presentation"", () => {"
+  "  const V = 4, E = 6, F = 4;"
+  "  assert.strictEqual(V - E + F, 2);"
+  "  assert.strictEqual(0x8000 ^ 0x0000, 0x8000);"
+  "  const swap16 = (x: number) => ((x & 0xFF) << 8) | ((x >> 8) & 0xFF);"
+  "  assert.strictEqual(swap16(0x1234), 0x3412);"
+  "  assert.strictEqual(3 * 2, 6);"
+  "}, ""point/line/duality"");"
+  .

@@ -1,0 +1,18 @@
+#!/bin/rc
+# NOFIX: the self-append loop has no fixed point (B-NOFIX.sh)
+rfork e
+fn fail { echo 'FAIL(NOFIX):' $* >[1=2]; exit fail }
+d=/tmp/bb.$pid; mkdir -p $d
+echo -n A > $d/a; echo -n B > $d/b; echo -n seed > $d/f
+inc=`{echo `{wc -c < $d/a} + `{wc -c < $d/b} | hoc}
+fn step { cat $d/f > $d/snap; cat $d/a $d/snap $d/b > $d/f }
+s0=`{wc -c < $d/f}
+step; s1=`{wc -c < $d/f}
+step; s2=`{wc -c < $d/f}
+step; s3=`{wc -c < $d/f}
+# assert: each step grows by the same positive constant inc = |A|+|B| (no fixed point)
+if(! ~ `{echo $s1 - $s0 - $inc | hoc} 0 || ! ~ `{echo $s2 - $s1 - $inc | hoc} 0 || ! ~ `{echo $s3 - $s2 - $inc | hoc} 0) fail increment not constant '(sizes' $s0 $s1 $s2 $s3, inc'='$inc')'
+# assert: strictly increasing - the sequence never settles
+if(! ~ `{echo $s0 $s1 $s2 $s3 | awk '{print ($2 > $1 && $3 > $2 && $4 > $3)}'} 1) fail sequence settled
+rm -rf $d
+echo 'NOFIX: the self-append loop has no fixed point - passed'

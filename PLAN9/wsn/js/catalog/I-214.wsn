@@ -1,0 +1,37 @@
+RECORD = HEAD THEOSANDLOGOS HOTHEOSTHEARTICLEASTHEMARK THEYEARPAIRS .
+
+HEAD =
+  "// i214.ts — I-214: THEOS and LOGOS, HO THEOS, and the year pairs"
+  "//"
+  "// The author, 2026-10-14. Was a script that printed its values; now each value is asserted, so a"
+  "// different number fails. The readings are the author's."
+  "import assert from ""node:assert"";"
+  "const bytes = (s: string) => [...s].map((c) => c.charCodeAt(0));"
+  "const xor = (a: string, b: string) => bytes(a).map((v, i) => v ^ b.charCodeAt(i));"
+  .
+
+THEOSANDLOGOS =
+  "// ── 1. THEOS and LOGOS ───────────────────────────────────────"
+  "assert.deepEqual(bytes(""THEOS""), [0x54, 0x48, 0x45, 0x4f, 0x53]);"
+  "assert.deepEqual(bytes(""LOGOS""), [0x4c, 0x4f, 0x47, 0x4f, 0x53]);"
+  "assert.deepEqual(xor(""THEOS"", ""LOGOS""), [0x18, 0x07, 0x02, 0x00, 0x00], ""THEOS ^ LOGOS = 18 07 02 00 00: the shared OS cancels"");"
+  "assert.deepEqual(xor(""THEOS"", ""THEOS""), [0, 0, 0, 0, 0], ""THEOS with itself: null"");"
+  .
+
+HOTHEOSTHEARTICLEASTHEMARK =
+  "// ── 2. HO THEOS: the article as the mark ─────────────────────"
+  "assert.equal(""HOTHEOS"".length, 7);"
+  "assert.ok(/^[A-Z0-9]{1,8}$/.test(""HOTHEOS""), ""HO THEOS, joined, is a tag (7)"");"
+  "assert.ok(!/^[A-Z0-9]{1,8}$/.test(""HO THEOS""), ""with the space, two tags: a command pair"");"
+  .
+
+THEYEARPAIRS =
+  "// ── 3. The year pairs ────────────────────────────────────────"
+  "const years = [1808, 1822, 1829, 1863, 1864, 1867, 1879, 1885, 1911, 1924, 1935, 1955, 1956, 1958, 1962, 1966, 1970, 1975, 1978, 1985, 1993, 1998, 2017];"
+  "const pairs = years.map((y) => [Math.floor(y / 100), y % 100]);"
+  "assert.equal(years.length, 23);"
+  "assert.deepEqual(pairs[0], [18, 8]);"
+  "assert.deepEqual(pairs.at(-1), [20, 17], ""2017 as (20, 17)"");"
+  "assert.equal(new Set(pairs.map((p) => p.join("",""))).size, years.length, ""every pair is unique: no two events share a (century, year)"");"
+  "console.log(""I-214: THEOS and LOGOS, HO THEOS, and the year pairs — passed"");"
+  .

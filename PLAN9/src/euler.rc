@@ -1,0 +1,16 @@
+#!/bin/rc
+# euler.rc - inside Plan 9: the public-domain EULER compiler's grammar
+# (in/euler.grm, section 4.1 of Christopher's EULER) to _CODEX[1] in WSN
+# (tcll2wsn) and _CODEX[0] in braille and Aegean (zcodex0), read by zwsn.
+rfork e
+w=/tmp/ze
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(c in tcll2wsn zcodex0 zwsn) { 8c $c.c && 8l -o $w/$c $c.8 || exit compile }
+$w/tcll2wsn $p/in/euler.grm >$w/zout/euler.wsn || exit tcll2wsn
+$w/zcodex0 <$p/in/euler.grm >$w/zout/euler || exit zcodex0
+$w/zwsn $w/zout/euler.wsn | sed 's,^'$w'/zout/,,'
+@{cd $w && tar cf /dev/sd02/data zout} || exit tar

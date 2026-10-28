@@ -1,0 +1,243 @@
+OMINOSECDEDCELL = CHECKED .
+
+CHECKED = HEAD COQ COQA COQB SCOPE BITAT BITN LOGOS NOMOS FS PATHOS GS RS US OMINO COMPUTEDOMINO OVERALLMISMATCH SLOGOS SNOMOS SPATHOS SYNDROME SYNDROMENONZERO SYNDROMEZERO INTERIORMASK OMINOMASK CORRECTABLEBITINDEX CORRECTIONBITMASK CORRECTEDWORD DOUBLEERROR RESULTCODE BITNBOUND SYNDROMEBOUND RESULTCODEBOUND PRISTINERESULTCODE INTERIORSINGLERESULTCODE OMINOSINGLERESULTCODE DOUBLEERRORRESULTCODE .
+
+HEAD =
+  "(*"
+  "  OminoSECDEDCell.v -- canonical [8,4,4] streaming cell."
+  "  Executable bit order:"
+  "    [LOGOS NOMOS FS PATHOS GS RS US OMINO]"
+  "  OMINO is bit 7: the complete-cell balance hinge."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import Bool.Bool."
+  .
+
+COQA =
+  "From Coq Require Import NArith.NArith."
+  .
+
+COQB =
+  "From Coq Require Import micromega.Lia."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+BITAT =
+  "Definition bit_at (word index : N) : bool :="
+  "  N.testbit word index."
+  .
+
+BITN =
+  "Definition bitN (b : bool) : N :="
+  "  if b then 1 else 0."
+  .
+
+LOGOS =
+  "Definition LOGOS (word : N) : bool := bit_at word 0."
+  .
+
+NOMOS =
+  "Definition NOMOS (word : N) : bool := bit_at word 1."
+  .
+
+FS =
+  "Definition FS (word : N) : bool := bit_at word 2."
+  .
+
+PATHOS =
+  "Definition PATHOS (word : N) : bool := bit_at word 3."
+  .
+
+GS =
+  "Definition GS (word : N) : bool := bit_at word 4."
+  .
+
+RS =
+  "Definition RS (word : N) : bool := bit_at word 5."
+  .
+
+US =
+  "Definition US (word : N) : bool := bit_at word 6."
+  .
+
+OMINO =
+  "Definition OMINO (word : N) : bool := bit_at word 7."
+  .
+
+COMPUTEDOMINO =
+  "Definition computed_omino (word : N) : bool :="
+  "  xorb (LOGOS word)"
+  "  (xorb (NOMOS word)"
+  "  (xorb (FS word)"
+  "  (xorb (PATHOS word)"
+  "  (xorb (GS word)"
+  "  (xorb (RS word) (US word))))))."
+  .
+
+OVERALLMISMATCH =
+  "Definition overall_mismatch (word : N) : bool :="
+  "  xorb (OMINO word) (computed_omino word)."
+  .
+
+SLOGOS =
+  "Definition sLOGOS (word : N) : bool :="
+  "  xorb (LOGOS word) (xorb (FS word) (xorb (GS word) (US word)))."
+  .
+
+SNOMOS =
+  "Definition sNOMOS (word : N) : bool :="
+  "  xorb (NOMOS word) (xorb (FS word) (xorb (RS word) (US word)))."
+  .
+
+SPATHOS =
+  "Definition sPATHOS (word : N) : bool :="
+  "  xorb (PATHOS word) (xorb (GS word) (xorb (RS word) (US word)))."
+  .
+
+SYNDROME =
+  "Definition syndrome (word : N) : N :="
+  "  bitN (sLOGOS word) +"
+  "  N.shiftl (bitN (sNOMOS word)) 1 +"
+  "  N.shiftl (bitN (sPATHOS word)) 2."
+  .
+
+SYNDROMENONZERO =
+  "Definition syndrome_nonzero (word : N) : bool :="
+  "  negb (N.eqb (syndrome word) 0)."
+  .
+
+SYNDROMEZERO =
+  "Definition syndrome_zero (word : N) : bool :="
+  "  N.eqb (syndrome word) 0."
+  .
+
+INTERIORMASK =
+  "Definition interior_mask (word : N) : bool :="
+  "  andb (overall_mismatch word) (syndrome_nonzero word)."
+  .
+
+OMINOMASK =
+  "Definition omino_mask (word : N) : bool :="
+  "  andb (overall_mismatch word) (syndrome_zero word)."
+  .
+
+CORRECTABLEBITINDEX =
+  "Definition correctable_bit_index (word : N) : N :="
+  "  let s := syndrome word in"
+  "  if N.eqb s 0 then 7 else N.pred s."
+  .
+
+CORRECTIONBITMASK =
+  "Definition correction_bitmask (word : N) : N :="
+  "  if overall_mismatch word"
+  "  then N.shiftl 1 (correctable_bit_index word)"
+  "  else 0."
+  .
+
+CORRECTEDWORD =
+  "Definition corrected_word (word : N) : N :="
+  "  N.lxor word (correction_bitmask word)."
+  .
+
+DOUBLEERROR =
+  "Definition double_error (word : N) : bool :="
+  "  andb (syndrome_nonzero word) (negb (overall_mismatch word))."
+  .
+
+RESULTCODE =
+  "Definition result_code (word : N) : N :="
+  "  match syndrome_zero word, overall_mismatch word with"
+  "  | true, false => 0"
+  "  | false, true => 1"
+  "  | true, true => 2"
+  "  | false, false => 3"
+  "  end."
+  .
+
+BITNBOUND =
+  "Theorem bitN_bound : forall b, bitN b <= 1."
+  "Proof. intro b; destruct b; unfold bitN; lia. Qed."
+  .
+
+SYNDROMEBOUND =
+  "Theorem syndrome_bound : forall word, syndrome word <= 7."
+  "Proof."
+  "  intro word."
+  "  unfold syndrome."
+  "  destruct (sLOGOS word);"
+  "  destruct (sNOMOS word);"
+  "  destruct (sPATHOS word);"
+  "  unfold bitN; cbn; lia."
+  "Qed."
+  .
+
+RESULTCODEBOUND =
+  "Theorem result_code_bound : forall word, result_code word <= 3."
+  "Proof."
+  "  intro word."
+  "  unfold result_code."
+  "  destruct (syndrome_zero word), (overall_mismatch word);"
+  "    lia."
+  "Qed."
+  .
+
+PRISTINERESULTCODE =
+  "Theorem pristine_result_code :"
+  "  forall word,"
+  "    syndrome word = 0 ->"
+  "    overall_mismatch word = false ->"
+  "    result_code word = 0."
+  "Proof."
+  "  intros word Hs Ho."
+  "  unfold result_code, syndrome_zero."
+  "  rewrite Hs, Ho."
+  "  reflexivity."
+  "Qed."
+  .
+
+INTERIORSINGLERESULTCODE =
+  "Theorem interior_single_result_code :"
+  "  forall word,"
+  "    syndrome word <> 0 ->"
+  "    overall_mismatch word = true ->"
+  "    result_code word = 1."
+  "Proof."
+  "  intros word Hs Ho."
+  "  unfold result_code, syndrome_zero."
+  "  rewrite Ho."
+  "  destruct (N.eqb_spec (syndrome word) 0); [contradiction|reflexivity]."
+  "Qed."
+  .
+
+OMINOSINGLERESULTCODE =
+  "Theorem omino_single_result_code :"
+  "  forall word,"
+  "    syndrome word = 0 ->"
+  "    overall_mismatch word = true ->"
+  "    result_code word = 2."
+  "Proof."
+  "  intros word Hs Ho."
+  "  unfold result_code, syndrome_zero."
+  "  rewrite Hs, Ho."
+  "  reflexivity."
+  "Qed."
+  .
+
+DOUBLEERRORRESULTCODE =
+  "Theorem double_error_result_code :"
+  "  forall word,"
+  "    syndrome word <> 0 ->"
+  "    overall_mismatch word = false ->"
+  "    result_code word = 3."
+  "Proof."
+  "  intros word Hs Ho."
+  "  unfold result_code, syndrome_zero."
+  "  rewrite Ho."
+  "  destruct (N.eqb_spec (syndrome word) 0); [contradiction|reflexivity]."
+  "Qed."
+  .

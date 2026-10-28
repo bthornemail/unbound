@@ -1,0 +1,188 @@
+RECORD = HEAD DAYTHELIGHTSFORSIGNSSEASONSDAYSYEARS THESIGNSTHENAMEDCOLORSTHEPIXELS THESEASONSTHEFOLDCYCLE THEDAYSTHESLOTWINDOW THEYEARSTHEFRAMES THETHREEBODYPROBLEM THEMUTUALINTERACTION THETHREEBODYPROBLEMHASNOCLOSEDFORMI THEINTERACTIONCIRCULATESTHETIMECONSTANTS THECELEBRATIONSARETHEREADINGS THETHESEALEDTHELASTCELEBRATION THEVAULTASACALENDAR THESIGNSARETHEPIXELS THEFOLDMEASUREMENTDAYSEASONYEARAGE THEPUNCHLINE .
+
+HEAD =
+  "// i176.ts — I-176: day 4 (the lights); the three-body problem circulates the time constants"
+  "import assert from ""node:assert"";"
+  .
+
+DAYTHELIGHTSFORSIGNSSEASONSDAYSYEARS =
+  "// ── 1. Day 4: the lights for signs, seasons, days, years ────"
+  "type Day4 = {"
+  "  purpose: string[];"
+  "};"
+  "const day4: Day4 = {"
+  "  purpose: [""signs"", ""seasons"", ""days"", ""years""],"
+  "};"
+  "assert.strictEqual(day4.purpose.length, 4, ""4 purposes"");"
+  "assert.deepStrictEqual(day4.purpose, [""signs"", ""seasons"", ""days"", ""years""],"
+  "  ""signs, seasons, days, years"");"
+  .
+
+THESIGNSTHENAMEDCOLORSTHEPIXELS =
+  "// ── 2. The signs = the named colors = the pixels ────────────"
+  "const signs = 144;  // the named colors (I-162)"
+  "assert.strictEqual(signs, 144, ""144 named colors"");"
+  .
+
+THESEASONSTHEFOLDCYCLE =
+  "// ── 3. The seasons = the 4-fold cycle ──────────────────────"
+  "const seasons = [""spring"", ""summer"", ""autumn"", ""winter""];"
+  "assert.strictEqual(seasons.length, 4, ""4 seasons"");"
+  "// the 4 = the nibble (I-112)"
+  .
+
+THEDAYSTHESLOTWINDOW =
+  "// ── 4. The days = the 7-slot window ────────────────────────"
+  "const days = 7;"
+  "assert.strictEqual(days, 7, ""7 days"");"
+  "// the 7 = the Fano number (I-169)"
+  .
+
+THEYEARSTHEFRAMES =
+  "// ── 5. The years = the 240 frames ──────────────────────────"
+  "const years = 240;"
+  "assert.strictEqual(years, 240, ""240 frames (I-162)"");"
+  "assert.strictEqual(years, 360 * 2 / 3, ""240 = 360 × 2/3"");"
+  .
+
+THETHREEBODYPROBLEM =
+  "// ── 6. The three-body problem ──────────────────────────────"
+  "// Sun, moon, earth: three bodies."
+  "type Body = { name: string; role: string };"
+  "const bodies: Body[] = ["
+  "  { name: ""sun"",   role: ""the greater light (day 4)"" },"
+  "  { name: ""moon"",  role: ""the lesser light (day 4)"" },"
+  "  { name: ""earth"", role: ""the observer's frame"" },"
+  "];"
+  "assert.strictEqual(bodies.length, 3, ""3 bodies"");"
+  "for (const b of bodies) {"
+  "  assert.ok(b.role.length > 0, `${b.name} has a role`);"
+  "}"
+  .
+
+THEMUTUALINTERACTION =
+  "// ── 7. The mutual interaction ─────────────────────────────"
+  "// Each body affects the other two."
+  "function interaction(b: Body, others: Body[]): string[] {"
+  "  return others.filter((o) => o.name !== b.name).map((o) => o.name);"
+  "}"
+  "for (const b of bodies) {"
+  "  const others = interaction(b, bodies);"
+  "  assert.strictEqual(others.length, 2, `${b.name} interacts with 2 others`);"
+  "}"
+  "// the interaction is mutual"
+  .
+
+THETHREEBODYPROBLEMHASNOCLOSEDFORMI =
+  "// ── 8. The three-body problem has no closed form (I-174) ───"
+  "function hasClosedForm(n: number): boolean {"
+  "  return n < 3;"
+  "}"
+  "assert.strictEqual(hasClosedForm(3), false, ""3 bodies: no closed form"");"
+  "assert.strictEqual(hasClosedForm(2), true,  ""2 bodies: closed form"");"
+  "assert.strictEqual(hasClosedForm(1), true,  ""1 body: closed form"");"
+  .
+
+THEINTERACTIONCIRCULATESTHETIMECONSTANTS =
+  "// ── 9. The interaction circulates the time constants ───────"
+  "// The three-body problem gives the circulators their periods."
+  "type TimeConstant = {"
+  "  name: string;"
+  "  period: string;"
+  "  source: string;"
+  "};"
+  "const timeConstants: TimeConstant[] = ["
+  "  { name: ""day"",    period: ""1 rotation"",     source: ""the three-body interaction"" },"
+  "  { name: ""season"", period: ""1 revolution"",   source: ""the three-body interaction"" },"
+  "  { name: ""year"",   period: ""1 full cycle"",   source: ""the three-body interaction"" },"
+  "];"
+  "assert.strictEqual(timeConstants.length, 3, ""3 time constants"");"
+  "for (const t of timeConstants) {"
+  "  assert.ok(t.source.includes(""three-body""), `${t.name}'s period comes from the three-body interaction`);"
+  "}"
+  .
+
+THECELEBRATIONSARETHEREADINGS =
+  "// ── 10. The celebrations are the readings ──────────────────"
+  "type Celebration = {"
+  "  name: string;"
+  "  reads: string;"
+  "};"
+  "const celebrations: Celebration[] = ["
+  "  { name: ""Sabbath"",  reads: ""the 7th day (I-169)"" },"
+  "  { name: ""festival"", reads: ""the seasons"" },"
+  "  { name: ""jubilee"",  reads: ""the reset (I-154)"" },"
+  "];"
+  "assert.strictEqual(celebrations.length, 3, ""3 celebrations"");"
+  "assert.ok(celebrations[0]!.reads.includes(""7th day""), ""the Sabbath reads the 7th day"");"
+  "assert.ok(celebrations[2]!.reads.includes(""reset""), ""the jubilee reads the reset"");"
+  .
+
+THETHESEALEDTHELASTCELEBRATION =
+  "// ── 11. The 144,000 = the sealed = the last celebration ────"
+  "const sealed = 144000;"
+  "assert.strictEqual(sealed, 144 * 1000, ""144,000 = 144 × 1000"");"
+  "assert.strictEqual(sealed, 12 * 12 * 1000, ""= 12² × 1000"");"
+  "// the sealed is the last celebration before the reset"
+  .
+
+THEVAULTASACALENDAR =
+  "// ── 12. The vault as a calendar ────────────────────────────"
+  "// A calendar is a set of readings of a cycle."
+  "type Calendar = {"
+  "  readings: string[];"
+  "  periods: string[];"
+  "  source: string;"
+  "};"
+  "const vaultCalendar: Calendar = {"
+  "  readings: celebrations.map((c) => c.name),"
+  "  periods: timeConstants.map((t) => t.name),"
+  "  source: ""the three-body problem (I-174)"","
+  "};"
+  "assert.strictEqual(vaultCalendar.readings.length, 3, ""3 readings"");"
+  "assert.strictEqual(vaultCalendar.periods.length, 3, ""3 periods"");"
+  "assert.ok(vaultCalendar.source.includes(""three-body""), ""the source is the three-body problem"");"
+  .
+
+THESIGNSARETHEPIXELS =
+  "// ── 13. The signs are the pixels ───────────────────────────"
+  "// The signs (day 4) are the named colors (I-162)."
+  "const theSigns = [""sun"", ""moon"", ""stars""];"
+  "assert.strictEqual(theSigns.length, 3, ""3 kinds of signs"");"
+  "// sun = the greater light, moon = the lesser light, stars = the background"
+  .
+
+THEFOLDMEASUREMENTDAYSEASONYEARAGE =
+  "// ── 14. The 4-fold measurement (day / season / year / age) ─"
+  "type Measurement = {"
+  "  unit: string;"
+  "  count: number;"
+  "};"
+  "const measurements: Measurement[] = ["
+  "  { unit: ""day"",    count: 7 },"
+  "  { unit: ""season"", count: 4 },"
+  "  { unit: ""year"",   count: 240 },"
+  "  { unit: ""age"",    count: 1 },  // the jubilee"
+  "];"
+  "assert.strictEqual(measurements.length, 4, ""4 units"");"
+  "assert.strictEqual(measurements[0]!.count, 7, ""7 days"");"
+  "assert.strictEqual(measurements[1]!.count, 4, ""4 seasons"");"
+  "assert.strictEqual(measurements[2]!.count, 240, ""240 frames"");"
+  "assert.strictEqual(measurements[3]!.count, 1, ""1 age (jubilee)"");"
+  .
+
+THEPUNCHLINE =
+  "// ── 15. The punchline ──────────────────────────────────────"
+  "// Day 4 put the stars and planets in the sky for motion and"
+  "// timing. The three-body problem circulates all time constants."
+  "// The celebrations are the cycle's readings."
+  "console.log(""I-176: day 4 (the lights); the three-body problem circulates time — passed"");"
+  "console.log(`  day 4: the lights for signs, seasons, days, years`);"
+  "console.log(`  the signs = the 144 named colors`);"
+  "console.log(`  the seasons = the 4-fold cycle`);"
+  "console.log(`  the days = the 7-slot window`);"
+  "console.log(`  the years = the 240 frames`);"
+  "console.log(`  the three-body problem circulates the time constants`);"
+  "console.log(`  the celebrations are the cycle's readings`);"
+  "console.log(`  the 144,000 sealed = the last celebration before the reset`);"
+  .

@@ -1,0 +1,38 @@
+OMINOAXIOMATICSOVEREIGNTY = CHECKED .
+
+CHECKED = COQ SCOPE OMINOAXIOMATICSOVEREIGNTYOWNER OMINOAXIOMATICSOVEREIGNTYPROOF OMINOACTIVETARGETCOUNT OMINOARCHIVEPROMOTEDCOUNT OMINOBRIDGEMODULECOUNT OMINOAXIOMATICSOVEREIGNTYCOUNTDECOMPOSITION .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+OMINOAXIOMATICSOVEREIGNTYOWNER =
+  "Definition omino_axiomatic_sovereignty_owner : Prop := True."
+  .
+
+OMINOAXIOMATICSOVEREIGNTYPROOF =
+  "Definition omino_axiomatic_sovereignty_proof : omino_axiomatic_sovereignty_owner := I."
+  .
+
+OMINOACTIVETARGETCOUNT =
+  "Definition omino_active_target_count : N := 64."
+  .
+
+OMINOARCHIVEPROMOTEDCOUNT =
+  "Definition omino_archive_promoted_count : N := 38."
+  .
+
+OMINOBRIDGEMODULECOUNT =
+  "Definition omino_bridge_module_count : N := 3."
+  .
+
+OMINOAXIOMATICSOVEREIGNTYCOUNTDECOMPOSITION =
+  "Theorem omino_axiomatic_sovereignty_count_decomposition :"
+  "  23 + omino_archive_promoted_count + omino_bridge_module_count ="
+  "  omino_active_target_count."
+  "Proof. vm_compute; reflexivity. Qed."
+  .

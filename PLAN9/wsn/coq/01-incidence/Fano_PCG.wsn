@@ -1,0 +1,35 @@
+FANOPCG = CHECKED .
+
+CHECKED = COQ SCOPE FANOPCGOWNER FANOPCGPROOF FANOPCGLEFT FANOPCGRIGHT FANOPCGBYTEHALVES .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+FANOPCGOWNER =
+  "Definition fano_pcg_owner : Prop := True."
+  .
+
+FANOPCGPROOF =
+  "Definition fano_pcg_proof : fano_pcg_owner := I."
+  .
+
+FANOPCGLEFT =
+  "Definition fano_pcg_left (x : N) : N := N.land x 0x7."
+  .
+
+FANOPCGRIGHT =
+  "Definition fano_pcg_right (x : N) : N := N.land (N.shiftr x 3) 0x7."
+  .
+
+FANOPCGBYTEHALVES =
+  "Theorem fano_pcg_byte_halves :"
+  "  fano_pcg_left 0x3F = 0x7 /\ fano_pcg_right 0x3F = 0x7."
+  "Proof."
+  "  split; reflexivity."
+  "Qed."
+  .

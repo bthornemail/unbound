@@ -1,0 +1,86 @@
+RECORD = HEAD THEFAMILY THETHINDEX THEDIVERGENCEATINDEX THEXOROFTHEPAIR BASEVALUES THESYSTEMTCOMPARISON THEPREDICTION .
+
+HEAD =
+  "// i209.ts — I-209: the OMI family and the null exchange"
+  "//"
+  "// The author, 2026-10-14: ""OMI for OMICRON, my CANONical production for the"
+  "// people is named the OMNICRON for the chronological OMINO, OMICRON of a"
+  "// METRON which is for the chrono of the OMNICRON, as for me I see the"
+  "// OMNICRON is 5th index dependent on the C Language Literal versus the"
+  "// System T of the TRON of the others... My PREDIction is that the OMNI is"
+  "// the convergence of agreement in the NULL space."""
+  "import assert from ""node:assert"";"
+  "const TAG = /^[A-Z0-9]{1,8}$/;"
+  "const hx = (s: string) => [...s].map((c) => c.charCodeAt(0).toString(16).padStart(2, ""0"")).join("" "");"
+  .
+
+THEFAMILY =
+  "// ── 1. The family ───────────────────────────────────────────"
+  "for (const w of [""OMI"", ""OMICRON"", ""OMNICRON"", ""OMNI"", ""METRON"", ""TRON""]) {"
+  "  assert.equal(TAG.test(w), true, w);"
+  "}"
+  "assert.equal(hx(""OMI""), ""4f 4d 49"");"
+  "assert.equal(hx(""OMICRON""), ""4f 4d 49 43 52 4f 4e"");"
+  "assert.equal(hx(""OMNICRON""), ""4f 4d 4e 49 43 52 4f 4e"");"
+  "assert.equal(hx(""OMNI""), ""4f 4d 4e 49"");"
+  "assert.equal(hx(""METRON""), ""4d 45 54 52 4f 4e"");"
+  "assert.equal(hx(""TRON""), ""54 52 4f 4e"");"
+  .
+
+THETHINDEX =
+  "// ── 2. The 5th index ────────────────────────────────────────"
+  "assert.equal(""OMICRON"".length, 7);"
+  "assert.equal(""OMNICRON"".length, 8);"
+  "assert.equal(""OMICRON""[4], ""R"", ""the 5th character of OMICRON"");"
+  "assert.equal(""OMNICRON""[4], ""C"", ""the 5th character of OMNICRON"");"
+  "assert.equal(""OMICRON"".charCodeAt(4), 0x52);"
+  "assert.equal(""OMNICRON"".charCodeAt(4), 0x43);"
+  .
+
+THEDIVERGENCEATINDEX =
+  "// ── 3. The divergence at index 2 ────────────────────────────"
+  "assert.equal(""OMICRON""[2], ""I"");"
+  "assert.equal(""OMNICRON""[2], ""N"");"
+  "assert.equal(""I"".charCodeAt(0) ^ ""N"".charCodeAt(0), 0x07, ""I XOR N = BEL"");"
+  .
+
+THEXOROFTHEPAIR =
+  "// ── 4. The XOR of the pair ──────────────────────────────────"
+  "// OMICRON padded with a space against OMNICRON: the first two letters cancel."
+  "const xorPad = (a: string, b: string) => {"
+  "  const n = Math.max(a.length, b.length);"
+  "  const A = a.padEnd(n, "" ""), B = b.padEnd(n, "" "");"
+  "  return [...A].map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ B.charCodeAt(i))).join("""");"
+  "};"
+  "assert.equal(hx(xorPad(""OMICRON"", ""OMNICRON"")), ""00 00 07 0a 11 1d 01 6e"");"
+  "assert.equal(hx(xorPad(""OMI"", ""OMNI"")), ""00 00 07 69"", ""OMI ^ OMNI: two nulls, then 07 69"");"
+  .
+
+BASEVALUES =
+  "// ── 5. Base-36 values ──────────────────────────────────────"
+  "assert.equal(parseInt(""OMNI"", 36), 1149102);"
+  "assert.equal(parseInt(""OMNI"", 36) % 64, 46);"
+  "assert.equal(parseInt(""OMNI"", 36) % 3, 0, ""the 'all' lands at 0 mod 3"");"
+  "assert.equal(parseInt(""OMICRON"", 36), 53603860775);"
+  "assert.equal(parseInt(""OMICRON"", 36) % 64, 39);"
+  "assert.equal(parseInt(""OMNICRON"", 36), 1930050700583);"
+  "assert.equal(parseInt(""OMNICRON"", 36) % 64, 39, ""OMICRON and OMNICRON share the mod-64 residue"");"
+  .
+
+THESYSTEMTCOMPARISON =
+  "// ── 6. The System T comparison ─────────────────────────────"
+  "assert.equal(""OMICRON"".includes(""T""), false);"
+  "assert.equal(""OMNICRON"".includes(""T""), false);"
+  "assert.equal(""METRON"".includes(""T""), true);"
+  "assert.equal(""METRON"".indexOf(""T""), 2);"
+  "assert.equal(""TRON"".includes(""T""), true);"
+  "assert.equal(""TRON"".indexOf(""T""), 0);"
+  "// So the System T is in METRON and TRON, not in OMICRON or OMNICRON."
+  "assert.equal(hx([""M"",""E"",""T"",""R""].map((c,i)=>String.fromCharCode(c.charCodeAt(0)^""TRON"".charCodeAt(i))).join("""")), ""19 17 1b 1c"", ""METRON ^ TRON (first 4)"");"
+  .
+
+THEPREDICTION =
+  "// ── 7. The prediction ──────────────────────────────────────"
+  "// OMNI = the kernel of the agreement map = { S : Q_frame(S) = 0 }."
+  "// (The prediction is the author's; the check is the address arithmetic above.)"
+  .

@@ -1,0 +1,39 @@
+CYCLICCLOCK = CHECKED .
+
+CHECKED = COQ SCOPE CYCLICCLOCKOWNER CYCLICCLOCKPROOF CYCLICCLOCKLOCAL CYCLICCLOCKPHASE CYCLICCLOCKLOCALWRAPS CYCLICCLOCKPHASEWRAPS .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+CYCLICCLOCKOWNER =
+  "Definition cyclic_clock_owner : Prop := True."
+  .
+
+CYCLICCLOCKPROOF =
+  "Definition cyclic_clock_proof : cyclic_clock_owner := I."
+  .
+
+CYCLICCLOCKLOCAL =
+  "Definition cyclic_clock_local240 (x : N) : N := N.modulo x 240."
+  .
+
+CYCLICCLOCKPHASE =
+  "Definition cyclic_clock_phase60 (x : N) : N := N.modulo x 60."
+  .
+
+CYCLICCLOCKLOCALWRAPS =
+  "Theorem cyclic_clock_local240_wraps_240 :"
+  "  cyclic_clock_local240 240 = 0."
+  "Proof. vm_compute; reflexivity. Qed."
+  .
+
+CYCLICCLOCKPHASEWRAPS =
+  "Theorem cyclic_clock_phase60_wraps_60 :"
+  "  cyclic_clock_phase60 60 = 0."
+  "Proof. vm_compute; reflexivity. Qed."
+  .

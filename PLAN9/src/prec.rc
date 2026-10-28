@@ -1,0 +1,16 @@
+#!/bin/rc
+# prec.rc - inside Plan 9: the Wirth-Weber precedence relations over every
+# PLAN9/wsn file, with prec.awk, written to the output disk as a tar.
+rfork e
+ifs='
+'
+src=/dev/sd01/data
+dst=/dev/sd02/data
+w=/tmp/zp
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf $src} || exit tar
+cd $w/unbound/PLAN9/wsn
+awk -f ../src/prec.awk `{cat LIST} >$w/zout/prec.tsv || exit awk
+@{cd $w && tar cf $dst zout} || exit tar
+echo prec.rc: `{wc -l <$w/zout/prec.tsv} relations

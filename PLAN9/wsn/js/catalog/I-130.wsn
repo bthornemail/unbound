@@ -1,0 +1,127 @@
+RECORD = HEAD THETWORATES THESLICEINVARIANTUNDERALLFOURMODULI THEUNICODELIFTEVENRATE THEUNICODELIFTODDRATE THETWORATESCONVERGEATTHEHIGHBIT THETWORATESCONVERGEATADJACENTCOLUMNSAND THELIFTUPTOBITS THESLICEREMAINSCONSTANTTHROUGHTHELIFT THEEXCEPTIONALPOSITIONISOUTSIDETHESPAN .
+
+HEAD =
+  "// i130.ts — I-130: two rates + 5-slice + Unicode lift"
+  "import assert from ""node:assert"";"
+  "const mod = (a: bigint, m: bigint) => ((a % m) + m) % m;"
+  .
+
+THETWORATES =
+  "// ── 1. The two rates ─────────────────────────────────────────────"
+  "const evenRate = [8, 10];"
+  "const oddRate  = [9, 11];"
+  "assert.strictEqual(evenRate[1] - evenRate[0], 2, ""even rate step +2"");"
+  "assert.strictEqual(oddRate[1]  - oddRate[0],  2, ""odd rate step +2"");"
+  "// even rate: both share factor 2"
+  "assert.ok(evenRate.every(n => n % 2 === 0), ""even rate all even"");"
+  "// odd rate: both odd"
+  "assert.ok(oddRate.every(n => n % 2 === 1), ""odd rate all odd"");"
+  "// the two rates interleave to {8,9,10,11}"
+  "const interleaved = [8, 9, 10, 11];"
+  "assert.deepStrictEqual("
+  "  interleaved.filter(n => n % 2 === 0), evenRate,"
+  "  ""evens = {8,10}"""
+  ");"
+  "assert.deepStrictEqual("
+  "  interleaved.filter(n => n % 2 === 1), oddRate,"
+  "  ""odds = {9,11}"""
+  ");"
+  .
+
+THESLICEINVARIANTUNDERALLFOURMODULI =
+  "// ── 2. The 5-slice: invariant under all four moduli ──────────────"
+  "const five = 5n;"
+  "for (const m of [8n, 9n, 10n, 11n]) {"
+  "  assert.strictEqual(mod(five, m), 5n, `5 mod ${m} = 5`);"
+  "}"
+  "// and for the rates too"
+  "for (const m of [10n, 11n]) {"
+  "  assert.strictEqual(mod(five, m), 5n, `5 mod ${m} = 5`);"
+  "}"
+  "console.log(""5-slice: constant 5 in every frame"");"
+  .
+
+THEUNICODELIFTEVENRATE =
+  "// ── 3. The Unicode lift: even rate ───────────────────────────────"
+  "function liftEven(start: bigint, steps: number): bigint[] {"
+  "  const out: bigint[] = [start];"
+  "  for (let i = 1; i < steps; i++) out.push(out[i-1] * 2n);"
+  "  return out;"
+  "}"
+  "const evenLift = liftEven(0x8n, 28);"
+  "console.log(""even lift (first 8):"", evenLift.slice(0, 8).map(b => ""0x"" + b.toString(16)));"
+  "console.log(""even lift (last 3): "", evenLift.slice(-3).map(b => ""0x"" + b.toString(16)));"
+  .
+
+THEUNICODELIFTODDRATE =
+  "// ── 4. The Unicode lift: odd rate ────────────────────────────────"
+  "function liftOdd(start: bigint, steps: number): bigint[] {"
+  "  const out: bigint[] = [start];"
+  "  for (let i = 1; i < steps; i++) out.push(out[i-1] * 2n + 1n);"
+  "  return out;"
+  "}"
+  "const oddLift = liftOdd(0x9n, 28);"
+  "console.log(""odd lift (first 8):"", oddLift.slice(0, 8).map(b => ""0x"" + b.toString(16)));"
+  "console.log(""odd lift (last 3): "", oddLift.slice(-3).map(b => ""0x"" + b.toString(16)));"
+  .
+
+THETWORATESCONVERGEATTHEHIGHBIT =
+  "// ── 5. The two rates converge at the high bit ────────────────────"
+  "// The even rate hits 0x80000000 at step 28 (8 * 2^27 = 2^30, * 2 = 2^31)"
+  "// Actually 0x8 * 2^27 = 2^3 * 2^27 = 2^30 = 0x40000000; step 28 = 2^31"
+  .
+
+THETWORATESCONVERGEATADJACENTCOLUMNSAND =
+  "// ── 5. The two rates converge at adjacent columns (4 and 5) ─────"
+  "const evenTop = evenLift[evenLift.length - 1];"
+  "const oddTop  = oddLift[oddLift.length - 1];"
+  "console.log(""even top:"", ""0x"" + evenTop.toString(16));"
+  "console.log(""odd top: "", ""0x"" + oddTop.toString(16));"
+  "// even top = 0x40000000 (the 4-column)"
+  "assert.strictEqual(evenTop, 0x40000000n, ""even top = 0x40000000 (4-column)"");"
+  "// odd top = 0x4FFFFFFF (the 5-column minus 1)"
+  "assert.strictEqual(oddTop, 0x4FFFFFFFn, ""odd top = 0x4FFFFFFF (5-column - 1)"");"
+  "// the difference is the full lower 28 bits"
+  "const diff = oddTop - evenTop;"
+  "assert.strictEqual(diff, 0x0FFFFFFFn, ""difference = 0x0FFFFFFF"");"
+  "assert.strictEqual(diff, (1n << 28n) - 1n, ""= 2^28 - 1"");"
+  "assert.strictEqual(diff, 268435455n, ""= 268435455"");"
+  "// the odd top sits just below the 5-column boundary"
+  "assert.strictEqual(oddTop + 1n, 0x50000000n, ""odd top + 1 = 5-column"");"
+  "assert.ok(oddTop < 0x50000000n, ""odd top below 5-column"");"
+  "assert.ok(oddTop >= 0x40000000n, ""odd top at or above 4-column"");"
+  .
+
+THELIFTUPTOBITS =
+  "// ── 6. The lift up to 32 bits ────────────────────────────────────"
+  "// To reach 0x80000000, need one more step"
+  "const evenFull = [...evenLift, evenTop * 2n];"
+  "const oddFull  = [...oddLift,  oddTop  * 2n];"
+  "const evenMax  = evenFull[evenFull.length - 1];"
+  "const oddMax   = oddFull[oddFull.length - 1];"
+  "console.log(""even max:"", ""0x"" + evenMax.toString(16));"
+  "console.log(""odd max: "", ""0x"" + oddMax.toString(16));"
+  "assert.ok(evenMax <= 0xFFFFFFFFn, ""even max within 32 bits"");"
+  "assert.ok(oddMax  <= 0xFFFFFFFFn, ""odd max within 32 bits"");"
+  .
+
+THESLICEREMAINSCONSTANTTHROUGHTHELIFT =
+  "// ── 7. The 5-slice remains constant through the lift ─────────────"
+  "for (const m of [8n, 9n, 10n, 11n]) {"
+  "  assert.strictEqual(mod(5n, m), 5n, ""5-slice constant after lift"");"
+  "}"
+  .
+
+THEEXCEPTIONALPOSITIONISOUTSIDETHESPAN =
+  "// ── 8. The exceptional position: 5 is outside the {8..11} span ───"
+  "assert.ok(5 < 8, ""5 below the span"");"
+  "// 5 is coprime to 8 and 9; shares factor with 10 (5|10); coprime to 11"
+  "const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);"
+  "assert.strictEqual(gcd(5, 8),  1, ""gcd(5,8)  = 1"");"
+  "assert.strictEqual(gcd(5, 9),  1, ""gcd(5,9)  = 1"");"
+  "assert.strictEqual(gcd(5, 10), 5, ""gcd(5,10) = 5"");"
+  "assert.strictEqual(gcd(5, 11), 1, ""gcd(5,11) = 1"");"
+  "// the one non-coprime pair (5, 10) is the even-rate partner"
+  "assert.strictEqual(gcd(5, 10), 5, ""5 divides the even rate's upper modulus"");"
+  "console.log(""I-130: two rates + 5-slice + Unicode lift — passed"");"
+  .

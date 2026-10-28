@@ -1,0 +1,36 @@
+#!/bin/rc
+# distrib.rc - inside Plan 9: the four files on four 9P servers (ramfs), their
+# parity on a fifth; take one server down, rebuild its file from the parity
+# and the other three (zsync), and compare with the original.
+rfork ne
+w=/tmp/zd
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zsync.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c zsync.c && 8l -o $w/zsync zsync.8 || exit compile
+term=('GOD IS WORD' 'GOD OF WORD' 'WORD IS GOD' 'WORD OF GOD')
+for(i in 0 1 2 3 parity){
+	rm -f /srv/vtx$i
+	mkdir -p /n/vtx$i
+	ramfs -S vtx$i -m /n/vtx$i || exit ramfs
+}
+i=0
+for(t in $term){
+	echo -n $t > /n/vtx$i/file
+	i=`{echo $i + 1 | hoc}
+}
+$w/zsync /n/vtxparity/P /n/vtx0/file /n/vtx1/file /n/vtx2/file /n/vtx3/file
+echo distrib.rc: four vertices and P on five 9P servers: `{ls /srv | grep vtx}
+for(lost in 0 1 2 3){
+	cp /n/vtx$lost/file $w/original
+	unmount /n/vtx$lost
+	rm -f /srv/vtx$lost
+	ramfs -S vtx$lost -m /n/vtx$lost
+	others=()
+	for(k in 0 1 2 3) if(! ~ $k $lost) others=($others /n/vtx$k/file)
+	$w/zsync /n/vtx$lost/file /n/vtxparity/P $others
+	if(cmp -s /n/vtx$lost/file $w/original) echo distrib.rc: vertex $lost lost and rebuilt from P and the other three: '"'`{cat /n/vtx$lost/file}'"'
+	if not echo distrib.rc: FAIL vertex $lost not rebuilt
+}
+for(i in 0 1 2 3 parity){ unmount /n/vtx$i; rm -f /srv/vtx$i }

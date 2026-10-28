@@ -1,0 +1,28 @@
+#!/bin/rc
+# figures.rc - inside Plan 9: each figure in PLAN9/in/figures, from each
+# witness that holds it, rendered by zrender against each zeroth, to the output disk as
+# <path>/codices.wsn (each codex index, XOR and XNOR against each zeroth)
+# and <path>/codex.wsn (each codex index in braille and Aegean), in Wirth
+# syntax notation, each read by zwsn.
+rfork e
+ifs='
+'
+src=/dev/sd01/data
+dst=/dev/sd02/data
+w=/tmp/zf
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf $src} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zrender.c && 8l -o $w/zrender zrender.8 || exit compile
+8c zwsn.c && 8l -o $w/zwsn zwsn.8 || exit compile
+d=$p/in/figures
+for(f in `{cd $d && ls | grep '\.txt$' | sed 's/\.txt$//'}){
+	cpath=`{cat $d/^$f^.path}
+	name=`{cat $d/^$f^.name}
+	mkdir -p $w/zout/$cpath
+	$w/zrender $name $d/^$f^.txt $p/in/zeroth.txt $w/zout/$cpath || exit zrender
+	$w/zwsn $w/zout/$cpath/codices.wsn $w/zout/$cpath/codex.wsn | sed 's,^'$w'/zout/,,'
+}
+@{cd $w && tar cf $dst zout} || exit tar

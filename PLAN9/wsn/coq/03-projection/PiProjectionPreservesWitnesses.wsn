@@ -1,0 +1,535 @@
+PIPROJECTIONPRESERVESWITNESSES = CHECKED .
+
+CHECKED = HEAD COQ COQA COQB COQC COQD SCOPE IMPORT IMPORTA IMPORTB OMIPI OMIPIPHASEEVEN OMIPISIGN OMIPIDEN BQFBRIDGEDENOMINATORMATCHESPROJECTION BQFBRIDGECARRIESPROJECTIONSCHEDULE OMIPITERMFROMINCIDENCE POLYBIUSPHASESIGNMATCHESOMIPISIGN OMIPITERMFROMPOLYBIUS OMIPITERMFROMPOLYBIUSMATCHESINCIDENCE OMIPITERMFROMDIAGONALRACE OMIPITERMFROMDIAGONALRACEMATCHESPOLYBIUS OMIPITERMFROMDIAGONALACCUMULATOR OMIPITERMFROMDIAGONALACCUMULATORMATCHESRACE OMIPISIGNMATCHESALTERNATION OMIPITERMMATCHESTGALT OMIPIPARTIAL OMIPIPARTIALFROMINCIDENCE OMIPIPARTIALFROMPOLYBIUS OMIPIPARTIALFROMDIAGONALRACE OMIPIPARTIALFROMDIAGONALACCUMULATOR OMIPILOWER OMIPIUPPER OMIPIPARTIALFROMINCIDENCEMATCHES OMIPIPARTIALFROMPOLYBIUSMATCHESINCIDENCE OMIPIPARTIALFROMDIAGONALRACEMATCHESPOLYBIUS OMIPIPARTIALFROMDIAGONALACCUMULATORMATCHESRACE OMIPIPROJECTIONSERIESCONVERGES OMIPIPROJECTIONINTERVALROUTE OMIPIPARTIALERRORBOUND OMIPIPARTIALERRORBOUNDEXPLICIT OMIPIEQUALSREALPI OMIPIINCIDENCEPROJECTIONSERIESCONVERGES OMIPIINCIDENCELIMIT OMIPIFROMINCIDENCE OMIPIFROMINCIDENCEEQUALSOMIPI OMIPIFROMINCIDENCEEQUALSPI OMIPIPOLYBIUSPROJECTIONSERIESCONVERGES OMIPIPOLYBIUSLIMIT OMIPIFROMPOLYBIUS OMIPIFROMPOLYBIUSEQUALSINCIDENCE OMIPIFROMPOLYBIUSEQUALSPI OMIPIDIAGONALRACEPROJECTIONSERIESCONVERGES OMIPIDIAGONALRACELIMIT OMIPIFROMDIAGONALRACE OMIPIFROMDIAGONALRACEEQUALSPOLYBIUS OMIPIFROMDIAGONALRACEEQUALSPI OMIPIDIAGONALACCUMULATORPROJECTIONSERIESCONVERGES OMIPIDIAGONALACCUMULATORLIMIT OMIPIFROMDIAGONALACCUMULATOR OMIPIFROMDIAGONALACCUMULATOREQUALSRACE OMIPIFROMDIAGONALACCUMULATOREQUALSPI OMIPIBOUNDS .
+
+HEAD =
+  "(*"
+  "  PiProjection.v -- incidence phase schedule projected to the Leibniz/Alt_PI"
+  "  series and real pi."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import Reals.Reals."
+  .
+
+COQA =
+  "From Coq Require Import NArith.NArith."
+  .
+
+COQB =
+  "From Coq Require Import Arith.PeanoNat."
+  .
+
+COQC =
+  "From Coq Require Import micromega.Lra."
+  .
+
+COQD =
+  "From Coq Require Import micromega.Lia."
+  .
+
+SCOPE =
+  "Open Scope R_scope."
+  .
+
+IMPORT =
+  "Require Import DiagonalGaugeCloses."
+  .
+
+IMPORTA =
+  "Require Import BQFBridgePreservesForms."
+  .
+
+IMPORTB =
+  "Require Import MetricProjectionPreservesBounds."
+  .
+
+OMIPI =
+  "Definition OMI_PI : R := Alt_PI."
+  .
+
+OMIPIPHASEEVEN =
+  "Definition omi_pi_phase_even (n : nat) : bool := Nat.even n."
+  .
+
+OMIPISIGN =
+  "Definition omi_pi_sign (n : nat) : R :="
+  "  if omi_pi_phase_even n then 1 else -1."
+  .
+
+OMIPIDEN =
+  "Definition omi_pi_den (n : nat) : R := INR (2 * n + 1)."
+  .
+
+BQFBRIDGEDENOMINATORMATCHESPROJECTION =
+  "Theorem bqf_bridge_denominator_matches_projection : forall n : nat,"
+  "  INR (N.to_nat (bridge_denominator (bqf_bridge_at n))) = omi_pi_den n."
+  "Proof."
+  "  intro n."
+  "  unfold bridge_denominator, bqf_bridge_at, projection_denominator_index, omi_pi_den."
+  "  simpl."
+  "  rewrite Nat2N.id."
+  "  reflexivity."
+  "Qed."
+  .
+
+BQFBRIDGECARRIESPROJECTIONSCHEDULE =
+  "Theorem bqf_bridge_carries_projection_schedule : forall n : nat,"
+  "  bridge_orbit (bqf_bridge_at n) = n /\"
+  "  bridge_phase (bqf_bridge_at n) = diagonal_accumulator_phase n /\"
+  "  INR (N.to_nat (bridge_denominator (bqf_bridge_at n))) = omi_pi_den n /\"
+  "  bridge_cross (bqf_bridge_at n) ="
+  "    (16 * (fano_selector n + 1) * (local240_selector n + 1))%N."
+  "Proof."
+  "  intro n."
+  "  split."
+  "  - reflexivity."
+  "  - split."
+  "    + apply bqf_bridge_phase_matches_accumulator."
+  "    + split."
+  "      * apply bqf_bridge_denominator_matches_projection."
+  "      * apply bqf_bridge_cross_is_16xy."
+  "Qed."
+  .
+
+OMIPITERMFROMINCIDENCE =
+  "Definition omi_pi_term_from_incidence (n : nat) : R :="
+  "  omi_pi_sign n / omi_pi_den n."
+  .
+
+POLYBIUSPHASESIGNMATCHESOMIPISIGN =
+  "Theorem polybius_phase_sign_matches_omi_pi_sign : forall n : nat,"
+  "  phase_to_sign (polybius_phase_at n) = omi_pi_sign n."
+  "Proof."
+  "  intro n."
+  "  rewrite diagonal_phase_schedule_even."
+  "  unfold omi_pi_sign, omi_pi_phase_even."
+  "  destruct (Nat.even n); reflexivity."
+  "Qed."
+  .
+
+OMIPITERMFROMPOLYBIUS =
+  "Definition omi_pi_term_from_polybius (n : nat) : R :="
+  "  phase_to_sign (polybius_phase_at n) / omi_pi_den n."
+  .
+
+OMIPITERMFROMPOLYBIUSMATCHESINCIDENCE =
+  "Theorem omi_pi_term_from_polybius_matches_incidence : forall n : nat,"
+  "  omi_pi_term_from_polybius n = omi_pi_term_from_incidence n."
+  "Proof."
+  "  intro n."
+  "  unfold omi_pi_term_from_polybius, omi_pi_term_from_incidence."
+  "  rewrite polybius_phase_sign_matches_omi_pi_sign."
+  "  reflexivity."
+  "Qed."
+  .
+
+OMIPITERMFROMDIAGONALRACE =
+  "Definition omi_pi_term_from_diagonal_race (n : nat) : R :="
+  "  phase_to_sign (diagonal_race_phase n) / omi_pi_den n."
+  .
+
+OMIPITERMFROMDIAGONALRACEMATCHESPOLYBIUS =
+  "Theorem omi_pi_term_from_diagonal_race_matches_polybius : forall n : nat,"
+  "  omi_pi_term_from_diagonal_race n = omi_pi_term_from_polybius n."
+  "Proof."
+  "  intro n."
+  "  unfold omi_pi_term_from_diagonal_race, omi_pi_term_from_polybius."
+  "  rewrite polybius_diagonal_race_forces_phase_schedule."
+  "  reflexivity."
+  "Qed."
+  .
+
+OMIPITERMFROMDIAGONALACCUMULATOR =
+  "Definition omi_pi_term_from_diagonal_accumulator (n : nat) : R :="
+  "  phase_to_sign (diagonal_accumulator_phase n) / omi_pi_den n."
+  .
+
+OMIPITERMFROMDIAGONALACCUMULATORMATCHESRACE =
+  "Theorem omi_pi_term_from_diagonal_accumulator_matches_race : forall n : nat,"
+  "  omi_pi_term_from_diagonal_accumulator n = omi_pi_term_from_diagonal_race n."
+  "Proof."
+  "  intro n."
+  "  unfold omi_pi_term_from_diagonal_accumulator, omi_pi_term_from_diagonal_race."
+  "  rewrite diagonal_accumulator_phase_matches_race."
+  "  reflexivity."
+  "Qed."
+  .
+
+OMIPISIGNMATCHESALTERNATION =
+  "Theorem omi_pi_sign_matches_alternation : forall n : nat,"
+  "  omi_pi_sign n = (-1) ^ n."
+  "Proof."
+  "  intro n."
+  "  induction n using nat_induction_by_two."
+  "  - vm_compute. reflexivity."
+  "  - unfold omi_pi_sign, omi_pi_phase_even."
+  "    simpl."
+  "    field."
+  "  - unfold omi_pi_sign, omi_pi_phase_even in *."
+  "    rewrite Nat.even_succ_succ."
+  "    rewrite IHn."
+  "    simpl."
+  "    ring."
+  "Qed."
+  .
+
+OMIPITERMMATCHESTGALT =
+  "Theorem omi_pi_term_matches_tg_alt : forall n : nat,"
+  "  omi_pi_term_from_incidence n = tg_alt PI_tg n."
+  "Proof."
+  "  intro n."
+  "  unfold omi_pi_term_from_incidence, omi_pi_den, tg_alt, PI_tg."
+  "  rewrite omi_pi_sign_matches_alternation."
+  "  field."
+  "  apply not_0_INR."
+  "  lia."
+  "Qed."
+  .
+
+OMIPIPARTIAL =
+  "Definition omi_pi_partial (n : nat) : R :="
+  "  4 * sum_f_R0 (tg_alt PI_tg) n."
+  .
+
+OMIPIPARTIALFROMINCIDENCE =
+  "Definition omi_pi_partial_from_incidence (n : nat) : R :="
+  "  4 * sum_f_R0 omi_pi_term_from_incidence n."
+  .
+
+OMIPIPARTIALFROMPOLYBIUS =
+  "Definition omi_pi_partial_from_polybius (n : nat) : R :="
+  "  4 * sum_f_R0 omi_pi_term_from_polybius n."
+  .
+
+OMIPIPARTIALFROMDIAGONALRACE =
+  "Definition omi_pi_partial_from_diagonal_race (n : nat) : R :="
+  "  4 * sum_f_R0 omi_pi_term_from_diagonal_race n."
+  .
+
+OMIPIPARTIALFROMDIAGONALACCUMULATOR =
+  "Definition omi_pi_partial_from_diagonal_accumulator (n : nat) : R :="
+  "  4 * sum_f_R0 omi_pi_term_from_diagonal_accumulator n."
+  .
+
+OMIPILOWER =
+  "Definition omi_pi_lower (n : nat) : R := omi_pi_partial (S (2 * n))."
+  .
+
+OMIPIUPPER =
+  "Definition omi_pi_upper (n : nat) : R := omi_pi_partial (2 * n)."
+  .
+
+OMIPIPARTIALFROMINCIDENCEMATCHES =
+  "Theorem omi_pi_partial_from_incidence_matches : forall n : nat,"
+  "  omi_pi_partial_from_incidence n = omi_pi_partial n."
+  "Proof."
+  "  intro n."
+  "  unfold omi_pi_partial_from_incidence, omi_pi_partial."
+  "  apply Rmult_eq_compat_l."
+  "  apply sum_eq."
+  "  intros k _."
+  "  apply omi_pi_term_matches_tg_alt."
+  "Qed."
+  .
+
+OMIPIPARTIALFROMPOLYBIUSMATCHESINCIDENCE =
+  "Theorem omi_pi_partial_from_polybius_matches_incidence : forall n : nat,"
+  "  omi_pi_partial_from_polybius n = omi_pi_partial_from_incidence n."
+  "Proof."
+  "  intro n."
+  "  unfold omi_pi_partial_from_polybius, omi_pi_partial_from_incidence."
+  "  apply Rmult_eq_compat_l."
+  "  apply sum_eq."
+  "  intros k _."
+  "  apply omi_pi_term_from_polybius_matches_incidence."
+  "Qed."
+  .
+
+OMIPIPARTIALFROMDIAGONALRACEMATCHESPOLYBIUS =
+  "Theorem omi_pi_partial_from_diagonal_race_matches_polybius : forall n : nat,"
+  "  omi_pi_partial_from_diagonal_race n = omi_pi_partial_from_polybius n."
+  "Proof."
+  "  intro n."
+  "  unfold omi_pi_partial_from_diagonal_race, omi_pi_partial_from_polybius."
+  "  apply Rmult_eq_compat_l."
+  "  apply sum_eq."
+  "  intros k _."
+  "  apply omi_pi_term_from_diagonal_race_matches_polybius."
+  "Qed."
+  .
+
+OMIPIPARTIALFROMDIAGONALACCUMULATORMATCHESRACE =
+  "Theorem omi_pi_partial_from_diagonal_accumulator_matches_race : forall n : nat,"
+  "  omi_pi_partial_from_diagonal_accumulator n = omi_pi_partial_from_diagonal_race n."
+  "Proof."
+  "  intro n."
+  "  unfold omi_pi_partial_from_diagonal_accumulator, omi_pi_partial_from_diagonal_race."
+  "  apply Rmult_eq_compat_l."
+  "  apply sum_eq."
+  "  intros k _."
+  "  apply omi_pi_term_from_diagonal_accumulator_matches_race."
+  "Qed."
+  .
+
+OMIPIPROJECTIONSERIESCONVERGES =
+  "Theorem omi_pi_projection_series_converges :"
+  "  Un_cv (fun n : nat => sum_f_R0 (tg_alt PI_tg) n) (OMI_PI / 4)."
+  "Proof."
+  "  unfold OMI_PI, Alt_PI."
+  "  destruct exist_PI as [l Hl]."
+  "  simpl."
+  "  replace (4 * l / 4) with l by field."
+  "  exact Hl."
+  "Qed."
+  .
+
+OMIPIPROJECTIONINTERVALROUTE =
+  "Theorem omi_pi_projection_interval_route : forall n : nat,"
+  "  omi_pi_lower n <= OMI_PI <= omi_pi_upper n."
+  "Proof."
+  "  intro n."
+  "  unfold omi_pi_lower, omi_pi_upper, omi_pi_partial, OMI_PI."
+  "  destruct (Alt_PI_ineq n) as [Hlo Hhi]."
+  "  split."
+  "  - replace Alt_PI with (4 * (Alt_PI / 4)) by field."
+  "    apply Rmult_le_compat_l; lra."
+  "  - replace Alt_PI with (4 * (Alt_PI / 4)) by field."
+  "    apply Rmult_le_compat_l; lra."
+  "Qed."
+  .
+
+OMIPIPARTIALERRORBOUND =
+  "Theorem omi_pi_partial_error_bound : forall n : nat,"
+  "  Rdist (omi_pi_partial n) OMI_PI <= 4 * PI_tg n."
+  "Proof."
+  "  intro n."
+  "  unfold omi_pi_partial."
+  "  replace OMI_PI with (4 * (OMI_PI / 4)) by field."
+  "  rewrite Rdist_mult_l."
+  "  replace (Rabs 4) with 4 by (rewrite Rabs_right; lra)."
+  "  apply Rmult_le_compat_l; [lra |]."
+  "  apply (Alt_first_term_bound PI_tg (OMI_PI / 4) n n)."
+  "  - exact PI_tg_decreasing."
+  "  - exact PI_tg_cv."
+  "  - exact omi_pi_projection_series_converges."
+  "  - apply le_n."
+  "Qed."
+  .
+
+OMIPIPARTIALERRORBOUNDEXPLICIT =
+  "Theorem omi_pi_partial_error_bound_explicit : forall n : nat,"
+  "  Rdist (omi_pi_partial n) OMI_PI <= 4 / INR (2 * n + 1)."
+  "Proof."
+  "  intro n."
+  "  eapply Rle_trans."
+  "  - apply omi_pi_partial_error_bound."
+  "  - unfold PI_tg."
+  "    right."
+  "    reflexivity."
+  "Qed."
+  .
+
+OMIPIEQUALSREALPI =
+  "Theorem OMI_PI_Equals_Real_PI : OMI_PI = PI."
+  "Proof."
+  "  unfold OMI_PI."
+  "  exact Alt_PI_eq."
+  "Qed."
+  .
+
+OMIPIINCIDENCEPROJECTIONSERIESCONVERGES =
+  "Theorem omi_pi_incidence_projection_series_converges :"
+  "  Un_cv (fun n : nat => sum_f_R0 omi_pi_term_from_incidence n) (OMI_PI / 4)."
+  "Proof."
+  "  eapply Un_cv_ext with"
+  "    (un := fun n : nat => sum_f_R0 (tg_alt PI_tg) n)."
+  "  - intro n."
+  "    symmetry."
+  "    apply sum_eq."
+  "    intros k _."
+  "    apply omi_pi_term_matches_tg_alt."
+  "  - apply omi_pi_projection_series_converges."
+  "Qed."
+  .
+
+OMIPIINCIDENCELIMIT =
+  "Definition omi_pi_incidence_limit : {l : R | Un_cv (fun n : nat => sum_f_R0 omi_pi_term_from_incidence n) l} :="
+  "  exist _ (OMI_PI / 4) omi_pi_incidence_projection_series_converges."
+  .
+
+OMIPIFROMINCIDENCE =
+  "Definition OMI_PI_from_incidence : R := 4 * proj1_sig omi_pi_incidence_limit."
+  .
+
+OMIPIFROMINCIDENCEEQUALSOMIPI =
+  "Theorem OMI_PI_from_incidence_equals_OMI_PI :"
+  "  OMI_PI_from_incidence = OMI_PI."
+  "Proof."
+  "  unfold OMI_PI_from_incidence, omi_pi_incidence_limit."
+  "  simpl."
+  "  field."
+  "Qed."
+  .
+
+OMIPIFROMINCIDENCEEQUALSPI =
+  "Theorem OMI_PI_from_incidence_equals_PI :"
+  "  OMI_PI_from_incidence = PI."
+  "Proof."
+  "  rewrite OMI_PI_from_incidence_equals_OMI_PI."
+  "  apply OMI_PI_Equals_Real_PI."
+  "Qed."
+  .
+
+OMIPIPOLYBIUSPROJECTIONSERIESCONVERGES =
+  "Theorem omi_pi_polybius_projection_series_converges :"
+  "  Un_cv (fun n : nat => sum_f_R0 omi_pi_term_from_polybius n) (OMI_PI / 4)."
+  "Proof."
+  "  eapply Un_cv_ext with"
+  "    (un := fun n : nat => sum_f_R0 omi_pi_term_from_incidence n)."
+  "  - intro n."
+  "    symmetry."
+  "    apply sum_eq."
+  "    intros k _."
+  "    apply omi_pi_term_from_polybius_matches_incidence."
+  "  - apply omi_pi_incidence_projection_series_converges."
+  "Qed."
+  .
+
+OMIPIPOLYBIUSLIMIT =
+  "Definition omi_pi_polybius_limit : {l : R | Un_cv (fun n : nat => sum_f_R0 omi_pi_term_from_polybius n) l} :="
+  "  exist _ (OMI_PI / 4) omi_pi_polybius_projection_series_converges."
+  .
+
+OMIPIFROMPOLYBIUS =
+  "Definition OMI_PI_from_polybius : R := 4 * proj1_sig omi_pi_polybius_limit."
+  .
+
+OMIPIFROMPOLYBIUSEQUALSINCIDENCE =
+  "Theorem OMI_PI_from_polybius_equals_incidence :"
+  "  OMI_PI_from_polybius = OMI_PI_from_incidence."
+  "Proof."
+  "  unfold OMI_PI_from_polybius, omi_pi_polybius_limit,"
+  "    OMI_PI_from_incidence, omi_pi_incidence_limit."
+  "  simpl."
+  "  field."
+  "Qed."
+  .
+
+OMIPIFROMPOLYBIUSEQUALSPI =
+  "Theorem OMI_PI_from_polybius_equals_PI :"
+  "  OMI_PI_from_polybius = PI."
+  "Proof."
+  "  rewrite OMI_PI_from_polybius_equals_incidence."
+  "  apply OMI_PI_from_incidence_equals_PI."
+  "Qed."
+  .
+
+OMIPIDIAGONALRACEPROJECTIONSERIESCONVERGES =
+  "Theorem omi_pi_diagonal_race_projection_series_converges :"
+  "  Un_cv (fun n : nat => sum_f_R0 omi_pi_term_from_diagonal_race n) (OMI_PI / 4)."
+  "Proof."
+  "  eapply Un_cv_ext with"
+  "    (un := fun n : nat => sum_f_R0 omi_pi_term_from_polybius n)."
+  "  - intro n."
+  "    symmetry."
+  "    apply sum_eq."
+  "    intros k _."
+  "    apply omi_pi_term_from_diagonal_race_matches_polybius."
+  "  - apply omi_pi_polybius_projection_series_converges."
+  "Qed."
+  .
+
+OMIPIDIAGONALRACELIMIT =
+  "Definition omi_pi_diagonal_race_limit :"
+  "  {l : R | Un_cv (fun n : nat => sum_f_R0 omi_pi_term_from_diagonal_race n) l} :="
+  "  exist _ (OMI_PI / 4) omi_pi_diagonal_race_projection_series_converges."
+  .
+
+OMIPIFROMDIAGONALRACE =
+  "Definition OMI_PI_from_diagonal_race : R :="
+  "  4 * proj1_sig omi_pi_diagonal_race_limit."
+  .
+
+OMIPIFROMDIAGONALRACEEQUALSPOLYBIUS =
+  "Theorem OMI_PI_from_diagonal_race_equals_polybius :"
+  "  OMI_PI_from_diagonal_race = OMI_PI_from_polybius."
+  "Proof."
+  "  unfold OMI_PI_from_diagonal_race, omi_pi_diagonal_race_limit,"
+  "    OMI_PI_from_polybius, omi_pi_polybius_limit."
+  "  simpl."
+  "  field."
+  "Qed."
+  .
+
+OMIPIFROMDIAGONALRACEEQUALSPI =
+  "Theorem OMI_PI_from_diagonal_race_equals_PI :"
+  "  OMI_PI_from_diagonal_race = PI."
+  "Proof."
+  "  rewrite OMI_PI_from_diagonal_race_equals_polybius."
+  "  apply OMI_PI_from_polybius_equals_PI."
+  "Qed."
+  .
+
+OMIPIDIAGONALACCUMULATORPROJECTIONSERIESCONVERGES =
+  "Theorem omi_pi_diagonal_accumulator_projection_series_converges :"
+  "  Un_cv (fun n : nat => sum_f_R0 omi_pi_term_from_diagonal_accumulator n) (OMI_PI / 4)."
+  "Proof."
+  "  eapply Un_cv_ext with"
+  "    (un := fun n : nat => sum_f_R0 omi_pi_term_from_diagonal_race n)."
+  "  - intro n."
+  "    symmetry."
+  "    apply sum_eq."
+  "    intros k _."
+  "    apply omi_pi_term_from_diagonal_accumulator_matches_race."
+  "  - apply omi_pi_diagonal_race_projection_series_converges."
+  "Qed."
+  .
+
+OMIPIDIAGONALACCUMULATORLIMIT =
+  "Definition omi_pi_diagonal_accumulator_limit :"
+  "  {l : R | Un_cv (fun n : nat => sum_f_R0 omi_pi_term_from_diagonal_accumulator n) l} :="
+  "  exist _ (OMI_PI / 4) omi_pi_diagonal_accumulator_projection_series_converges."
+  .
+
+OMIPIFROMDIAGONALACCUMULATOR =
+  "Definition OMI_PI_from_diagonal_accumulator : R :="
+  "  4 * proj1_sig omi_pi_diagonal_accumulator_limit."
+  .
+
+OMIPIFROMDIAGONALACCUMULATOREQUALSRACE =
+  "Theorem OMI_PI_from_diagonal_accumulator_equals_race :"
+  "  OMI_PI_from_diagonal_accumulator = OMI_PI_from_diagonal_race."
+  "Proof."
+  "  unfold OMI_PI_from_diagonal_accumulator, omi_pi_diagonal_accumulator_limit,"
+  "    OMI_PI_from_diagonal_race, omi_pi_diagonal_race_limit."
+  "  simpl."
+  "  field."
+  "Qed."
+  .
+
+OMIPIFROMDIAGONALACCUMULATOREQUALSPI =
+  "Theorem OMI_PI_from_diagonal_accumulator_equals_PI :"
+  "  OMI_PI_from_diagonal_accumulator = PI."
+  "Proof."
+  "  rewrite OMI_PI_from_diagonal_accumulator_equals_race."
+  "  apply OMI_PI_from_diagonal_race_equals_PI."
+  "Qed."
+  .
+
+OMIPIBOUNDS =
+  "Theorem omi_pi_bounds : 3 < OMI_PI < 4."
+  "Proof."
+  "  rewrite OMI_PI_Equals_Real_PI."
+  "  split."
+  "  - destruct (PI_ineq 3) as [Hlow _]."
+  "    apply (Rlt_le_trans _ (4 * sum_f_R0 (tg_alt PI_tg) 7) _)."
+  "    + unfold sum_f_R0, tg_alt, PI_tg; simpl; field_simplify; lra."
+  "    + apply (Rmult_le_compat_l (4 : R)) in Hlow; [field_simplify in Hlow; exact Hlow | lra]."
+  "  - destruct (PI_ineq 1) as [_ Hup]."
+  "    apply (Rle_lt_trans _ (4 * sum_f_R0 (tg_alt PI_tg) 2) _)."
+  "    + apply (Rmult_le_compat_l (4 : R)) in Hup; [field_simplify in Hup; exact Hup | lra]."
+  "    + unfold sum_f_R0, tg_alt, PI_tg; simpl; field_simplify; lra."
+  "Qed."
+  .

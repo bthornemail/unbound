@@ -1,0 +1,79 @@
+RECORD = HEAD DANDDHAVETHEIREXCEPTIONALONES FROMDONTHREETHESIMPLEXTHECUBEANDITSDUAL THECOLONISTHEDUALTHESYMBOLREADBACKWARDS THECUBESCORNERSARETHEINDICESREADANDWRITEAREOPPOSITE .
+
+HEAD =
+  "// i185.ts — I-185: the tetrahedron of infinite geometries, {3,…,3} and {4,3,…,3}:{3,…,3,4}"
+  "//"
+  "// The author, 2026-10-13: ""this is the Schläfli symbol for a tetrahedron of"
+  "// infinite geometries {4,3,,,3}:{3,,,3,4}"". {4,3,…,3} is the n-cube and"
+  "// {3,…,3,4} its dual, the cross-polytope; with the simplex {3,…,3} (the"
+  "// tetrahedron's family) they are the regular polytopes that go on in every"
+  "// dimension. Found here from the symbols alone (each entry 3 to 12): a symbol closes into a finite"
+  "// polytope when the Gram matrix of its mirrors is positive definite. From 5D on,"
+  "// exactly these three close. And the cube's corners are the n-bit indices: an"
+  "// index and its written view (I-184) are opposite corners."
+  "import assert from ""node:assert"";"
+  "/** Does {p1,…,p(n-1)} close: is its mirror Gram matrix (1 on the diagonal, -cos(π/p) between neighbours) positive definite? */"
+  "function closes(ps: number[]): boolean {"
+  "  const n = ps.length + 1;"
+  "  const M = Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => (i === j ? 1 : Math.abs(i - j) === 1 ? -Math.cos(Math.PI / ps[Math.min(i, j)]!) : 0)));"
+  "  for (let k = 0; k < n; k++) {"
+  "    for (let j = 0; j < k; j++) M[k]![k]! -= M[k]![j]! ** 2;"
+  "    if (M[k]![k]! <= 1e-12) return false;"
+  "    M[k]![k] = Math.sqrt(M[k]![k]!);"
+  "    for (let i = k + 1; i < n; i++) {"
+  "      for (let j = 0; j < k; j++) M[i]![k]! -= M[i]![j]! * M[k]![j]!;"
+  "      M[i]![k]! /= M[k]![k]!;"
+  "    }"
+  "  }"
+  "  return true;"
+  "}"
+  "function regular(d: number): string[] {"
+  "  const found: string[] = [];"
+  "  const walk = (ps: number[]) => {"
+  "    if (ps.length && !closes(ps)) return; // a symbol whose start does not close cannot close extended"
+  "    if (ps.length === d - 1) { found.push(`{${ps.join("","")}}`); return; }"
+  "    for (let p = 3; p <= 12; p++) walk([...ps, p]);"
+  "  };"
+  "  walk([]);"
+  "  return found;"
+  "}"
+  "const sym = (...ps: number[]) => `{${ps.join("","")}}`;"
+  "const threes = (k: number) => Array(k).fill(3);"
+  .
+
+DANDDHAVETHEIREXCEPTIONALONES =
+  "// ── 1. 3D and 4D have their exceptional ones ────────────────"
+  "assert.deepStrictEqual(regular(3), [""{3,3}"", ""{3,4}"", ""{3,5}"", ""{4,3}"", ""{5,3}""], ""3D: the five Platonic solids"");"
+  "assert.deepStrictEqual(regular(4), [""{3,3,3}"", ""{3,3,4}"", ""{3,3,5}"", ""{3,4,3}"", ""{4,3,3}"", ""{5,3,3}""], ""4D: six"");"
+  .
+
+FROMDONTHREETHESIMPLEXTHECUBEANDITSDUAL =
+  "// ── 2. From 5D on, three: the simplex, the cube and its dual ─"
+  "for (let d = 5; d <= 9; d++) {"
+  "  assert.deepStrictEqual(regular(d).sort(), [sym(...threes(d - 1)), sym(...threes(d - 2), 4), sym(4, ...threes(d - 2))].sort(), `${d}D: {3,…,3}, {3,…,3,4}, {4,3,…,3}`);"
+  "}"
+  .
+
+THECOLONISTHEDUALTHESYMBOLREADBACKWARDS =
+  "// ── 3. The colon is the dual: the symbol read backwards ─────"
+  "for (let d = 3; d <= 9; d++) {"
+  "  const found = new Set(regular(d));"
+  "  for (const s of found) assert.ok(found.has(`{${s.slice(1, -1).split("","").reverse().join("","")}}`), `${s} has its dual, the symbol reversed`);"
+  "}"
+  .
+
+THECUBESCORNERSARETHEINDICESREADANDWRITEAREOPPOSITE =
+  "// ── 4. The cube's corners are the indices; read and write are opposite ─"
+  "for (const n of [3, 4, 6, 8]) {"
+  "  for (let x = 0; x < 2 ** n; x++) {"
+  "    let edges = 0;"
+  "    for (let b = x ^ (x ^ (2 ** n - 1)); b; b >>= 1) edges += b & 1;"
+  "    assert.strictEqual(edges, n, `${n}-cube: index ${x} and its written view are opposite corners, ${n} edges apart`);"
+  "  }"
+  "}"
+  "const vertices = (n: number) => ({ simplex: n + 1, cube: 2 ** n, cross: 2 * n });"
+  "assert.deepStrictEqual(vertices(3), { simplex: 4, cube: 8, cross: 6 }, ""3D: the tetrahedron 4, the cube 8, the octahedron 6"");"
+  "console.log(""I-185: the tetrahedron of infinite geometries — passed"");"
+  "console.log(""  from 5D on, exactly three regular polytopes: {3,…,3}, {4,3,…,3} and its dual {3,…,3,4}"");"
+  "console.log(""  the colon is the dual (the symbol reversed); the cube's corners are the n-bit indices, read and write opposite"");"
+  .

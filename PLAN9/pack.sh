@@ -1,0 +1,117 @@
+#!/bin/sh
+
+# Pack the author's unbound files (tracked in git, no node_modules) and the
+# Plan 9 sources into run/in.tar, the guest's second disk, with a MANIFEST
+# of the files to compile; make a blank run/out.img, its third. The tar is
+# byte-for-byte reproducible: sorted names, one mtime, no owners.
+
+set -eu
+
+HERE=$(cd "$(dirname "$0")" && pwd)
+ROOT=$(cd "$HERE/.." && pwd)
+RUN=$HERE/run
+mkdir -p "$RUN"
+
+# boxedPINE's proofs/js, copied in for conversion (its commit recorded beside it)
+JS=${JS:-/home/main/Programs/boxedPINE/proofs/js}
+rm -rf "$RUN/js" && cp -r "$JS" "$RUN/js"
+git -C "$JS" rev-parse HEAD > "$RUN/js.commit"
+# ZIGUAROTH's _CATALOG YAML, copied in for conversion to Wirth syntax notation
+rm -rf "$RUN/catalog" && mkdir -p "$RUN/catalog"
+(cd /home/main/Programs/ZIGUAROTH/_CATALOG && find . -name '*.yaml' | cpio -pdm --quiet "$RUN/catalog" 2>/dev/null || tar cf - $(find . -name '*.yaml') | tar xf - -C "$RUN/catalog")
+
+(cd "$HERE/wsn" && find js unbound -type f -name '*.wsn' | LC_ALL=C sort > LIST)
+
+cd "$ROOT"
+git -c core.quotepath=off ls-files -- HTML JS MERMAID SH SVG TS TSX |
+    grep -v '/node_modules/' | LC_ALL=C sort > "$HERE/MANIFEST"
+LC_ALL=C sort > "$RUN/files" <<LIST
+$(cat "$HERE/MANIFEST")
+PLAN9/MANIFEST
+PLAN9/src/TYPES
+PLAN9/src/compile.rc
+PLAN9/src/html.rc
+PLAN9/src/zhtml.c
+PLAN9/src/trans.rc
+PLAN9/src/ztrans.c
+PLAN9/src/zdiff.c
+PLAN9/src/zspan.c
+PLAN9/in/span.txt
+PLAN9/in/codex.txt
+PLAN9/in/yahweh.txt
+PLAN9/in/yhwh.txt
+PLAN9/src/zbuf.c
+$(cd "$HERE" && ls wsn/*.wsn 2>/dev/null | sed 's|^|PLAN9/|')
+PLAN9/src/wsn.rc
+PLAN9/src/zwsn.c
+PLAN9/src/conv.rc
+PLAN9/src/wsn.awk
+PLAN9/src/back.awk
+PLAN9/src/split.awk
+PLAN9/src/prec.awk
+PLAN9/src/prec.rc
+PLAN9/src/manboy.c
+PLAN9/src/manboy.rc
+PLAN9/src/fill.awk
+PLAN9/src/zrender.c
+PLAN9/src/tcll2wsn.c
+PLAN9/src/zcodex0.c
+PLAN9/src/euler.rc
+PLAN9/src/four.rc
+PLAN9/src/ztetra.c
+PLAN9/src/tetra.rc
+PLAN9/src/zsync.c
+PLAN9/src/distrib.rc
+PLAN9/src/modal.rc
+PLAN9/src/zquery.c
+PLAN9/src/query.rc
+PLAN9/src/hello.c
+PLAN9/src/hello.rc
+PLAN9/src/zperm.c
+PLAN9/src/perm.rc
+PLAN9/src/zhand.c
+PLAN9/src/hand.rc
+PLAN9/src/zcodep.c
+PLAN9/src/codep.rc
+PLAN9/src/zblob.c
+PLAN9/src/blob.rc
+PLAN9/src/zplaces.c
+PLAN9/src/places.rc
+PLAN9/src/ztrie.c
+PLAN9/src/tries.rc
+$(cd "$HERE" && ls in/tries/*.paths | sed 's|^|PLAN9/|')
+PLAN9/in/gen1.txt
+PLAN9/src/template.rc
+PLAN9/in/template.txt
+PLAN9/in/algol.txt
+PLAN9/in/euler.grm
+PLAN9/src/yaml2wsn.awk
+PLAN9/src/catalog.rc
+PLAN9/src/htmlfs.c
+PLAN9/src/htmlfs.rc
+PLAN9/src/book.rc
+PLAN9/src/busybox.rc
+PLAN9/src/zlazy.c
+PLAN9/src/lazy.rc
+$(cd "$HERE" && ls busybox/*.rc busybox/*.c | sed 's|^|PLAN9/|')
+PLAN9/src/coq2wsn.awk
+$(cd "$HERE" && [ -d run/book/coq ] && find run/book/coq -type f -name '*.v' | LC_ALL=C sort | sed 's|^|PLAN9/|'; [ -f run/book/status ] && echo PLAN9/run/book/status)
+PLAN9/src/proofs.rc
+$(cd "$HERE" && ls proofs/*.c proofs/*.h | sed 's|^|PLAN9/|')
+$(cd "$HERE" && find run/catalog -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
+PLAN9/src/figures.rc
+PLAN9/in/zeroth.txt
+PLAN9/in/term.html
+$(cd "$HERE" && ls in/figures/* | sed 's|^|PLAN9/|')
+PLAN9/wsn/LIST
+$(cd "$HERE" && find wsn/js wsn/unbound -type f -name '*.wsn' | LC_ALL=C sort | sed 's|^|PLAN9/|')
+PLAN9/run/js.commit
+$(cd "$HERE" && find run/js -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
+LIST
+tar --create --file "$RUN/in.tar" --format=ustar --no-recursion \
+    --mtime=@0 --owner=0 --group=0 --numeric-owner --mode='a+r,u+w' \
+    --verbatim-files-from --files-from "$RUN/files"
+truncate -s 32M "$RUN/in.tar"   # one fixed size, so a running guest sees the whole tar
+truncate -s 0 "$RUN/out.img" 2>/dev/null || :   # in place: a running guest keeps the same file
+truncate -s 64M "$RUN/out.img"
+printf 'PASS: %s files in %s; %s blank\n' "$(wc -l < "$HERE/MANIFEST")" "$RUN/in.tar" "$RUN/out.img"

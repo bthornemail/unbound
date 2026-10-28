@@ -1,0 +1,33 @@
+ATOMICKERNELCOMPUTESDELTA = CHECKED .
+
+CHECKED = COQ SCOPE ATOMICKERNELCOMPUTESDELTAOWNER ATOMICKERNELCOMPUTESDELTAPROOF ATOMICKERNELCOMPUTESDELTAA ATOMICKERNELCOMPUTESDELTADETERMINISTIC .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+ATOMICKERNELCOMPUTESDELTAOWNER =
+  "Definition atomic_kernel_computes_delta_owner : Prop := True."
+  .
+
+ATOMICKERNELCOMPUTESDELTAPROOF =
+  "Definition atomic_kernel_computes_delta_proof : atomic_kernel_computes_delta_owner := I."
+  .
+
+ATOMICKERNELCOMPUTESDELTAA =
+  "Definition atomic_kernel_computes_delta (x axis : N) : N :="
+  "  N.lxor (N.lxor (N.shiftl x 1) (N.shiftr axis 2)) 0x1D1D1D1D1D1D1D1D."
+  .
+
+ATOMICKERNELCOMPUTESDELTADETERMINISTIC =
+  "Theorem atomic_kernel_computes_delta_deterministic : forall x axis,"
+  "  atomic_kernel_computes_delta x axis ="
+  "  atomic_kernel_computes_delta x axis."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

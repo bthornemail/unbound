@@ -1,0 +1,61 @@
+RECORD = HEAD ASFRAMESUBFRAMEINDEX INBASETHEADDRESSISJ JISTHECOORDINATESUMMINGTO THEEXCHANGEATOFTHEBYTESFOR INTHEVAULTSOWNTAGSISI .
+
+HEAD =
+  "// i188.ts — I-188: 19.4.4 → 44J → 5347 → (5, 3, 4, 7) → 19, and the exchange at 19 of 64"
+  "//"
+  "// The author, 2026-10-13: ""frame 4 sub frame 4 index 19 from the http is the"
+  "// 19 of the 64 from 0-63 bytes of the atomics compare and exchange 19, 128,"
+  "// 63"", with RFC 2616 (HTTP/1.1) section 19.4.4; then ""base 36 44J""; then ""the"
+  "// 5, 3, 4, 7 coordinate"". Read as a chain, it comes back to 19: the section's"
+  "// numbers as frame 4, sub-frame 4, index 19 are 44J in base 36 (J = 19); 44J"
+  "// is 5347, whose digits are the coordinate 5, 3, 4, 7, and they sum to 19."
+  "// (The root and user exponents, 16^19 and 16^21, are I-143.)"
+  "import assert from ""node:assert"";"
+  "const DIGITS = ""0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  .
+
+ASFRAMESUBFRAMEINDEX =
+  "// ── 1. 19.4.4 as (frame, sub-frame, index) ──────────────────"
+  "const [index, frame, subFrame] = ""19.4.4"".split(""."").map(Number) as [number, number, number];"
+  "assert.deepStrictEqual([frame, subFrame, index], [4, 4, 19], ""section 19.4.4: frame 4, sub-frame 4, index 19"");"
+  "assert.ok(index < 64, ""19 is one of the 64 bytes 0..63"");"
+  .
+
+INBASETHEADDRESSISJ =
+  "// ── 2. In base 36, the address is 44J ───────────────────────"
+  "const tag = DIGITS[frame]! + DIGITS[subFrame]! + DIGITS[index]!;"
+  "assert.strictEqual(tag, ""44J"", ""4, 4, J: J is the base-36 digit 19"");"
+  .
+
+JISTHECOORDINATESUMMINGTO =
+  "// ── 3. 44J is 5347: the coordinate 5, 3, 4, 7, summing to 19 ─"
+  "const value = parseInt(tag, 36);"
+  "assert.strictEqual(value, 4 * 36 ** 2 + 4 * 36 + 19, ""44J = 4 x 36^2 + 4 x 36 + 19"");"
+  "assert.strictEqual(value, 5347, ""= 5347"");"
+  "const coordinate = String(value).split("""").map(Number);"
+  "assert.deepStrictEqual(coordinate, [5, 3, 4, 7], ""its decimal digits are the coordinate 5, 3, 4, 7"");"
+  "assert.strictEqual(coordinate.reduce((s, d) => s + d, 0), 19, ""and they sum to 19: the chain closes on the index"");"
+  "assert.strictEqual(value % 36, 19, ""5347 mod 36 = 19, the last base-36 digit"");"
+  "assert.deepStrictEqual([value % 64, value % 256], [35, 227], ""but not mod 64 or 256: 35 and 227"");"
+  "for (let d = 2; d * d <= value; d++) assert.notStrictEqual(value % d, 0, `5347 is prime (not divisible by ${d})`);"
+  "assert.strictEqual(coordinate.reduce((p, d) => p * d, 1), 4 * 0x69, ""5 x 3 x 4 x 7 = 420 = 4 x 0x69, the organ's parity byte (3 x 5 x 7, I-102)"");"
+  .
+
+THEEXCHANGEATOFTHEBYTESFOR =
+  "// ── 4. The exchange at 19 of the 64 bytes: 128 for 63 ───────"
+  "const bytes = new Uint8Array(new SharedArrayBuffer(64));"
+  "bytes[19] = 128;"
+  "assert.strictEqual(Atomics.compareExchange(bytes, 19, 128, 63), 128, ""the exchange at 19 finds 128"");"
+  "assert.strictEqual(bytes[19], 63, ""and leaves 63"");"
+  "assert.strictEqual(Atomics.compareExchange(bytes, 19, 128, 63), 63, ""a second exchange finds 63, not 128, and does nothing"");"
+  "assert.strictEqual(bytes[19], 63, ""63 stays"");"
+  "assert.strictEqual(128 & 63, 0, ""128 (2^7, the 7-bit completion) and 63 (2^6 - 1, the 6-bit closure) share no bit"");"
+  .
+
+INTHEVAULTSOWNTAGSISI =
+  "// ── 5. In the vault's own tags, 44 is I-148 ─────────────────"
+  "assert.strictEqual(parseInt(""44"", 36), 148, ""the record tag 44 is I-148 (and 44J would read as I-148j)"");"
+  "console.log(""I-188: 19.4.4 -> 44J -> 5347 -> (5, 3, 4, 7) -> 19 — passed"");"
+  "console.log(""  frame 4, sub-frame 4, index 19 is 44J; 44J is 5347, prime, digits 5, 3, 4, 7, summing to 19"");"
+  "console.log(""  the exchange at 19 of 64 bytes takes 128 for 63 once; 128 and 63 share no bit"");"
+  .

@@ -1,0 +1,26 @@
+FILE = HEAD .
+
+HEAD =
+  "#!/bin/sh"
+  "# Validate a literal HTTP/1.1 status vocabulary. This is a syntax/template"
+  "# check only; status codes are not treated as authentication or trust proofs."
+  "set -eu"
+  "BUSYBOX=${BUSYBOX:-busybox}"
+  "ROOT=$(CDPATH= cd -- ""$(dirname ""$0"")/.."" && pwd)"
+  "DATA=${1:-$ROOT/tests/http11-status-literals.txt}"
+  "fail() {"
+  "    printf 'FAIL: HTTP/1.1 status literal: %s\n' ""$1"" >&2"
+  "    exit 1"
+  "}"
+  "if ""$BUSYBOX"" grep -Ev \"
+  "    '^AGENT_CONTENT_NEGOTIATION_(INFORMATIONAL|SUCCESS|REDIRECTION|CLIENT_ERROR|SERVER_ERROR) \[[0-9]{3}(,[0-9]{3})*\]$' \"
+  "    ""$DATA"" >/dev/null; then"
+  "    fail 'malformed or untagged array'"
+  "fi"
+  """$BUSYBOX"" grep -E '^AGENT_CONTENT_NEGOTIATION_INFORMATIONAL \[100,101\]$' ""$DATA"" >/dev/null || fail 'informational array'"
+  """$BUSYBOX"" grep -E '^AGENT_CONTENT_NEGOTIATION_SUCCESS \[200,201,202,203,204,205,206\]$' ""$DATA"" >/dev/null || fail 'success array'"
+  """$BUSYBOX"" grep -E '^AGENT_CONTENT_NEGOTIATION_REDIRECTION \[300,301,302,303,304,305,307\]$' ""$DATA"" >/dev/null || fail 'redirection array'"
+  """$BUSYBOX"" grep -E '^AGENT_CONTENT_NEGOTIATION_CLIENT_ERROR \[400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417\]$' ""$DATA"" >/dev/null || fail 'client-error array'"
+  """$BUSYBOX"" grep -E '^AGENT_CONTENT_NEGOTIATION_SERVER_ERROR \[500,501,502,503,504,505\]$' ""$DATA"" >/dev/null || fail 'server-error array'"
+  "printf 'PASS: HTTP/1.1 status literal arrays in %s\n' ""$DATA"""
+  .

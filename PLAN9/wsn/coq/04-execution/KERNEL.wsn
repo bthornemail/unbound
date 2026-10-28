@@ -1,0 +1,46 @@
+KERNEL = CHECKED .
+
+CHECKED = COQ SCOPE KERNELOWNER KERNELPROOF KERNELMASK KERNELDELTA KERNELMASKFULL KERNELDELTADETERMINISTIC .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+KERNELOWNER =
+  "Definition kernel_owner : Prop := True."
+  .
+
+KERNELPROOF =
+  "Definition kernel_proof : kernel_owner := I."
+  .
+
+KERNELMASK =
+  "Definition kernel_mask64 (x : N) : N := N.land x 0xFFFFFFFFFFFFFFFF."
+  .
+
+KERNELDELTA =
+  "Definition kernel_delta64 (x axis : N) : N :="
+  "  N.land (N.lxor (N.lxor (N.shiftl x 1) (N.shiftr axis 2)) 0x1D1D1D1D1D1D1D1D)"
+  "    0xFFFFFFFFFFFFFFFF."
+  .
+
+KERNELMASKFULL =
+  "Theorem kernel_mask64_full :"
+  "  kernel_mask64 0xFFFFFFFFFFFFFFFF = 0xFFFFFFFFFFFFFFFF."
+  "Proof. vm_compute; reflexivity. Qed."
+  .
+
+KERNELDELTADETERMINISTIC =
+  "Theorem kernel_delta64_deterministic :"
+  "  forall x y axis,"
+  "    x = y ->"
+  "    kernel_delta64 x axis = kernel_delta64 y axis."
+  "Proof."
+  "  intros x y axis Hxy."
+  "  now rewrite Hxy."
+  "Qed."
+  .

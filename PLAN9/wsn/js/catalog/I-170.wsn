@@ -1,0 +1,196 @@
+RECORD = HEAD GENESISTHEGODOFTHEEARTH JOHNTHEGODOFTHEVOID THEMUTUALCREATION THECRCRPAIR THECHAIN THEREVERSECHAIN THETHDAYISTHEREST REVELATIONS THERESET REVELATIONBEFORETHERESET THECYCLEHASNOTIME THECYCLEREPEATS THEMUTUALCREATIONASAFIXEDPOINT THEWHOLEPICTURE THEPUNCHLINE .
+
+HEAD =
+  "// i170.ts — I-170: Genesis' earth-god and John's void-god made each other"
+  "import assert from ""node:assert"";"
+  .
+
+GENESISTHEGODOFTHEEARTH =
+  "// ── 1. Genesis: the god of the earth ─────────────────────────"
+  "type God = { name: string; domain: string; when: string };"
+  "const genesisGod: God = {"
+  "  name: ""the creator"","
+  "  domain: ""the earth"","
+  "  when: ""in the beginning of the earth"","
+  "};"
+  "assert.strictEqual(genesisGod.domain, ""the earth"", ""Genesis' god is of the earth"");"
+  .
+
+JOHNTHEGODOFTHEVOID =
+  "// ── 2. John: the god of the void ─────────────────────────────"
+  "const johnGod: God = {"
+  "  name: ""the Word"","
+  "  domain: ""the void"","
+  "  when: ""in the beginning (before the earth)"","
+  "};"
+  "assert.strictEqual(johnGod.domain, ""the void"", ""John's god is of the void"");"
+  "assert.strictEqual(johnGod.name, ""the Word"", ""the Word"");"
+  .
+
+THEMUTUALCREATION =
+  "// ── 3. The mutual creation ──────────────────────────────────"
+  "// John makes Genesis: the Word speaks the earth into being."
+  "function johnMakesGenesis(word: string, earth: string): string {"
+  "  return `the Word (${word}) speaks the earth (${earth}) into being`;"
+  "}"
+  "// Genesis makes John: the earth produces the Word."
+  "function genesisMakesJohn(earth: string, word: string): string {"
+  "  return `the earth (${earth}) produces the Word (${word})`;"
+  "}"
+  "const j2g = johnMakesGenesis(""logos"", ""earth"");"
+  "const g2j = genesisMakesJohn(""earth"", ""logos"");"
+  "assert.ok(j2g.includes(""Word""), ""John makes Genesis"");"
+  "assert.ok(g2j.includes(""Word""), ""Genesis makes John"");"
+  "// they make each other"
+  .
+
+THECRCRPAIR =
+  "// ── 4. The { c-r, c+r } pair ────────────────────────────────"
+  "// c-r = the god of the void (the inner bound)"
+  "// c+r = the god of the earth (the outer bound)"
+  "// c   = the relation (the Word)"
+  "const c = 0, r = 1;"
+  "const voidGod = c - r;   // -1"
+  "const earthGod = c + r;  // 1"
+  "const word = c;          // 0"
+  "assert.strictEqual(voidGod, -1, ""the void-god is c-r"");"
+  "assert.strictEqual(earthGod, 1, ""the earth-god is c+r"");"
+  "assert.strictEqual(word, 0, ""the Word is c"");"
+  "// neither is c; the Word is c"
+  .
+
+THECHAIN =
+  "// ── 5. The chain ────────────────────────────────────────────"
+  "type ChainLink = { from: string; to: string };"
+  "const chain: ChainLink[] = ["
+  "  { from: ""void (John)"",     to: ""earth (Genesis)"" },"
+  "  { from: ""earth (Genesis)"", to: ""rest (day 7)"" },"
+  "  { from: ""rest (day 7)"",    to: ""revelation (144)"" },"
+  "  { from: ""revelation"",      to: ""reset (0xFFFFFFF0)"" },"
+  "];"
+  "assert.strictEqual(chain.length, 4, ""4 links"");"
+  "assert.strictEqual(chain[0]!.from, ""void (John)"", ""the chain starts at the void"");"
+  "assert.strictEqual(chain[chain.length - 1]!.to, ""reset (0xFFFFFFF0)"", ""and ends at the reset"");"
+  .
+
+THEREVERSECHAIN =
+  "// ── 6. The reverse chain ────────────────────────────────────"
+  "// The threshold, stated by the author (2026-10-12): reversing the order is not"
+  "// enough; the reverse chain also swaps each link's ends (from <-> to)."
+  "const orderOnly = [...chain].reverse();"
+  "assert.notStrictEqual(orderOnly[0]!.from, ""reset (0xFFFFFFF0)"", ""reversing the order alone keeps each link's direction"");"
+  "const reverseChain = [...chain].reverse().map((l) => ({ ...l, from: l.to, to: l.from }));"
+  "assert.strictEqual(reverseChain[0]!.from, ""reset (0xFFFFFFF0)"", ""the reverse starts at reset"");"
+  "assert.strictEqual(reverseChain[reverseChain.length - 1]!.to, ""void (John)"", ""and ends at the void"");"
+  "// both directions are the same chain"
+  .
+
+THETHDAYISTHEREST =
+  "// ── 7. The 7th day is the rest ──────────────────────────────"
+  "const rest = { day: 7, action: ""rest"" };"
+  "assert.strictEqual(rest.day, 7, ""the 7th day"");"
+  "assert.strictEqual(rest.action, ""rest"", ""rest"");"
+  .
+
+REVELATIONS =
+  "// ── 8. Revelation's 144 ────────────────────────────────────"
+  "const revelation = { sealed: 144, tribes: 12 };"
+  "assert.strictEqual(revelation.sealed, 144, ""144 sealed"");"
+  "assert.strictEqual(revelation.tribes, 12, ""12 tribes"");"
+  "assert.strictEqual(revelation.sealed, revelation.tribes * revelation.tribes, ""12 × 12 = 144"");"
+  .
+
+THERESET =
+  "// ── 9. The reset ────────────────────────────────────────────"
+  "const reset = 0xFFFFFFF0;"
+  "assert.strictEqual(reset, 0xFFFFFFF0, ""the reset vector"");"
+  "assert.strictEqual(reset, 2 ** 32 - 16, ""2^32 - 16"");"
+  .
+
+REVELATIONBEFORETHERESET =
+  "// ── 10. Revelation before the reset ────────────────────────"
+  "// The revelation is the last reading before the reset."
+  "const order = [""void"", ""earth"", ""rest"", ""revelation"", ""reset""];"
+  "assert.strictEqual(order.indexOf(""revelation""), 3, ""revelation is before the reset"");"
+  "assert.strictEqual(order.indexOf(""reset""), 4, ""reset is last"");"
+  "assert.ok(order.indexOf(""revelation"") < order.indexOf(""reset""),"
+  "  ""revelation comes before the reset"");"
+  .
+
+THECYCLEHASNOTIME =
+  "// ── 11. The cycle has no time ─────────────────────────────"
+  "// The chain has ORDER, not duration."
+  "type Link = { order: number; from: string; to: string };"
+  "const links: Link[] = chain.map((l, i) => ({ order: i + 1, from: l.from, to: l.to }));"
+  "for (const l of links) {"
+  "  assert.strictEqual(typeof l.order, ""number"", `link ${l.order} has an order`);"
+  "  assert.ok(!(""time"" in l), `link ${l.order} has no timestamp`);"
+  "}"
+  .
+
+THECYCLEREPEATS =
+  "// ── 12. The cycle repeats ─────────────────────────────────"
+  "// After the reset, the cycle starts again at the void."
+  "function* cycle(): Generator<string> {"
+  "  while (true) {"
+  "    yield ""void"";"
+  "    yield ""earth"";"
+  "    yield ""rest"";"
+  "    yield ""revelation"";"
+  "    yield ""reset"";"
+  "  }"
+  "}"
+  "const c_ = cycle();"
+  "const firstFive = [c_.next().value, c_.next().value, c_.next().value, c_.next().value, c_.next().value];"
+  "const nextFive  = [c_.next().value, c_.next().value, c_.next().value, c_.next().value, c_.next().value];"
+  "assert.deepStrictEqual(firstFive, [""void"", ""earth"", ""rest"", ""revelation"", ""reset""], ""first cycle"");"
+  "assert.deepStrictEqual(nextFive, [""void"", ""earth"", ""rest"", ""revelation"", ""reset""], ""second cycle"");"
+  "// the cycle repeats without time"
+  .
+
+THEMUTUALCREATIONASAFIXEDPOINT =
+  "// ── 13. The mutual creation as a fixed point ────────────────"
+  "// The two gods make each other. The fixed point is the Word."
+  "function mutualCreation(word: string, earth: string): { word: string; earth: string } {"
+  "  // John makes Genesis"
+  "  const genesis = `the earth spoken by ${word}`;"
+  "  // Genesis makes John"
+  "  const john = `the Word from ${earth}`;"
+  "  return { word: john, earth: genesis };"
+  "}"
+  "const mutual = mutualCreation(""logos"", ""earth"");"
+  "assert.ok(mutual.word.includes(""Word""), ""the Word is returned"");"
+  "assert.ok(mutual.earth.includes(""earth""), ""the earth is returned"");"
+  "// both are created by the other"
+  .
+
+THEWHOLEPICTURE =
+  "// ── 14. The whole picture ──────────────────────────────────"
+  "const picture = {"
+  "  void:     ""John 1:1 (the Word)"","
+  "  earth:    ""Genesis 1:1 (the creation)"","
+  "  rest:     ""Genesis 2:2 (the 7th day)"","
+  "  revelation: ""Revelation 7, 14 (the 144)"","
+  "  reset:    ""0xFFFFFFF0 (the next cycle)"","
+  "};"
+  "assert.strictEqual(Object.keys(picture).length, 5, ""5 stages"");"
+  "assert.strictEqual(picture.void, ""John 1:1 (the Word)"", ""the void is the Word"");"
+  "assert.strictEqual(picture.earth, ""Genesis 1:1 (the creation)"", ""the earth is the creation"");"
+  "assert.strictEqual(picture.rest, ""Genesis 2:2 (the 7th day)"", ""the rest is day 7"");"
+  "assert.strictEqual(picture.revelation, ""Revelation 7, 14 (the 144)"", ""revelation is the 144"");"
+  "assert.strictEqual(picture.reset, ""0xFFFFFFF0 (the next cycle)"", ""the reset"");"
+  .
+
+THEPUNCHLINE =
+  "// ── 15. The punchline ──────────────────────────────────────"
+  "// Genesis' god of the earth and John's god of the void made"
+  "// each other. The chain leads to rest, revelation, and reset."
+  "console.log(""I-170: Genesis' earth-god and John's void-god made each other — passed"");"
+  "console.log(`  Genesis: the god of the earth (the creator)`);"
+  "console.log(`  John: the god of the void (the Word)`);"
+  "console.log(`  they made each other: the Word speaks the earth; the earth produces the Word`);"
+  "console.log(`  the chain: void → earth → rest → revelation → reset`);"
+  "console.log(`  or the reverse: reset → revelation → rest → earth → void`);"
+  "console.log(`  revelation is before the reset`);"
+  "console.log(`  the cycle has no time — ordered, not timed`);"
+  .

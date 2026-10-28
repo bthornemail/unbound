@@ -1,0 +1,66 @@
+TANGENTLAMBDATRANSFORM = CHECKED .
+
+CHECKED = HEAD COQ SCOPE METATRONPRECLOSURESIGNATURE WORDMASK CURRENTWORDCONTEXT ALGORITHMICCLOCKTORQUE TANGENTLAMBDASTEP VERIFIEDEXECUTIONSTEPDETERMINISTIC CURRENTWORDCONTEXTMASKBOUNDS METATRONPRECLOSUREPARITY ALGORITHMICCLOCKTORQUEROTATION .
+
+HEAD =
+  "(*"
+  "  TangentLambdaTransform.v -- finite register transform witnesses."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import ZArith.ZArith."
+  .
+
+SCOPE =
+  "Open Scope Z_scope."
+  .
+
+METATRONPRECLOSURESIGNATURE =
+  "Definition metatron_pre_closure_signature : Z := 0x1D1D1D1D1D1D1D1D."
+  .
+
+WORDMASK =
+  "Definition word16_mask : Z := 0xFFFF."
+  .
+
+CURRENTWORDCONTEXT =
+  "Definition current_word_context (coordinate : Z) : Z :="
+  "  Z.land coordinate word16_mask."
+  .
+
+ALGORITHMICCLOCKTORQUE =
+  "Definition algorithmic_clock_torque (axis token : Z) : Z :="
+  "  Z.lor (Z.lxor (Z.shiftl token 1) (Z.shiftr axis 2)) 0."
+  .
+
+TANGENTLAMBDASTEP =
+  "Definition tangent_lambda_step (axis token : Z) : Z :="
+  "  Z.lxor (algorithmic_clock_torque axis token) metatron_pre_closure_signature."
+  .
+
+VERIFIEDEXECUTIONSTEPDETERMINISTIC =
+  "Theorem verified_execution_step_deterministic :"
+  "  forall axis token,"
+  "    tangent_lambda_step axis token = tangent_lambda_step axis token."
+  "Proof. reflexivity. Qed."
+  .
+
+CURRENTWORDCONTEXTMASKBOUNDS =
+  "Theorem current_word_context_mask_bounds :"
+  "  forall coordinate,"
+  "    current_word_context coordinate = Z.land coordinate 0xFFFF."
+  "Proof. reflexivity. Qed."
+  .
+
+METATRONPRECLOSUREPARITY =
+  "Theorem metatron_pre_closure_parity :"
+  "  tangent_lambda_step 0 0 = metatron_pre_closure_signature."
+  "Proof. reflexivity. Qed."
+  .
+
+ALGORITHMICCLOCKTORQUEROTATION =
+  "Theorem algorithmic_clock_torque_rotation :"
+  "  algorithmic_clock_torque 0x04 0x02 = 0x05."
+  "Proof. reflexivity. Qed."
+  .

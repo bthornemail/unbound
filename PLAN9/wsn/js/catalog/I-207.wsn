@@ -1,0 +1,118 @@
+RECORD = HEAD THENUMBER THEYEAR THETHREETAGS THETHINDEX THEHAMMINGZIP THEPAIRWISEZIPS THEYEARPAIRCOINCIDENCE THEOPENITEM THEREADINGTHEAUTHORS .
+
+HEAD =
+  "// i207.ts — I-207: the sources of I-206 — BRIAN, CODEX, DEEPSEEK, and the"
+  "// Hamming zip to the 5th index"
+  "//"
+  "// The author, 2026-10-14: ""19 75 of our 20 6 definition in 2026 sourced by"
+  "// BRIAN which is 20F6 without a literal source but you say 207 and that's"
+  "// more fitting. The + sign meant the hamming zipping up to the 5th index."
+  "// So BRIAN + CODEX + DEEPSEEK."""
+  "//"
+  "// Found here: the tag mask /A-Z0-9/ (rosetta TAG); the 5-character truncation"
+  "// (proofs I-196, the tap code); the 5th index (proofs I-203: hello, world;"
+  "// I-205: 20F5); the Hamming code (I-193: the Fano lines are the Hamming code)."
+  "import assert from ""node:assert"";"
+  "const TAG = /^[A-Z0-9]{1,8}$/;"
+  "const MASK5 = /^[A-Z0-9]{1,5}$/;"
+  "const hx = (s: string) => [...s].map((c) => c.charCodeAt(0).toString(16).padStart(2, ""0"")).join("" "");"
+  .
+
+THENUMBER =
+  "// ── 1. The number 207 ───────────────────────────────────────"
+  "// 207 = (20, 7), more fitting than 206 because it sources it."
+  "assert.equal(207, 200 + 7);"
+  "assert.equal(207, 20 * 10 + 7);"
+  "assert.equal(207 + 1, 208, ""the next record (I-208)"");"
+  "assert.equal(206 + 1, 207, ""one past 206"");"
+  .
+
+THEYEAR =
+  "// ── 2. The year 2026 ────────────────────────────────────────"
+  "// As the pair (20, 26): 20 XOR 26 = 0x0E = SO (shift out)."
+  "assert.equal(20 ^ 26, 0x0e);"
+  "assert.equal(0x0e, 14, ""shift out"");"
+  .
+
+THETHREETAGS =
+  "// ── 3. The three tags ───────────────────────────────────────"
+  "// BRIAN (5), CODEX (5), DEEPSEEK (8, at the mask edge; truncated to DEEPS)."
+  "assert.equal(TAG.test(""BRIAN""), true);"
+  "assert.equal(TAG.test(""CODEX""), true);"
+  "assert.equal(""DEEPSEEK"".length, 8);"
+  "assert.equal(TAG.test(""DEEPSEEK""), true, ""8 letters, exactly at the mask"");"
+  "assert.equal(""DEEPSEEK"".slice(0, 5), ""DEEPS"");"
+  "assert.equal(TAG.test(""DEEPS""), true);"
+  "assert.equal(MASK5.test(""BRIAN""), true);"
+  "assert.equal(MASK5.test(""CODEX""), true);"
+  "assert.equal(MASK5.test(""DEEPS""), true);"
+  "// DEEPSEEK fits the 8-mask but not the 5-mask (it's the tap-code truncation to DEEPS)."
+  "assert.equal(MASK5.test(""DEEPSEEK""), false);"
+  .
+
+THETHINDEX =
+  "// ── 4. The 5th index ────────────────────────────────────────"
+  "// BRIAN[4] = N = 0x4e, CODEX[4] = X = 0x58, DEEPS[4] = S = 0x53."
+  "assert.equal(""BRIAN""[4], ""N"");"
+  "assert.equal(""CODEX""[4], ""X"");"
+  "assert.equal(""DEEPS""[4], ""S"");"
+  "assert.equal(""BRIAN"".charCodeAt(4), 0x4e);"
+  "assert.equal(""CODEX"".charCodeAt(4), 0x58);"
+  "assert.equal(""DEEPS"".charCodeAt(4), 0x53);"
+  "// N XOR X XOR S = E."
+  "assert.equal(0x4e ^ 0x58 ^ 0x53, 0x45, ""N ^ X ^ S = E"");"
+  "assert.equal(0x45, ""E"".charCodeAt(0));"
+  .
+
+THEHAMMINGZIP =
+  "// ── 5. The Hamming zip ──────────────────────────────────────"
+  "// BRIAN XOR CODEX XOR DEEPS = 45 58 48 54 45 = ""EXHTE"", a valid tag."
+  "const zip3 = (a: string, b: string, c: string) => {"
+  "  const n = Math.max(a.length, b.length, c.length);"
+  "  const A = a.padEnd(n, "" ""), B = b.padEnd(n, "" ""), C = c.padEnd(n, "" "");"
+  "  return [...A].map((_, i) => String.fromCharCode(A.charCodeAt(i) ^ B.charCodeAt(i) ^ C.charCodeAt(i))).join("""");"
+  "};"
+  "const EXHTE = zip3(""BRIAN"", ""CODEX"", ""DEEPS"");"
+  "assert.equal(hx(EXHTE), ""45 58 48 54 45"");"
+  "assert.equal(EXHTE, ""EXHTE"");"
+  "assert.equal(TAG.test(EXHTE), true, ""the zip is a tag"");"
+  "// The XNOR (7-bit) is 3a 27 37 2b 3a, not a tag."
+  "const xnor7 = [...EXHTE].map((c) => String.fromCharCode(0x7f ^ c.charCodeAt(0))).join("""");"
+  "assert.equal(hx(xnor7), ""3a 27 37 2b 3a"");"
+  "assert.equal(TAG.test(xnor7), false, ""the XNOR is not a tag"");"
+  .
+
+THEPAIRWISEZIPS =
+  "// ── 6. The pairwise zips ────────────────────────────────────"
+  "const zip2 = (a: string, b: string) => {"
+  "  const n = Math.max(a.length, b.length);"
+  "  const A = a.padEnd(n, "" ""), B = b.padEnd(n, "" "");"
+  "  return [...A].map((_, i) => String.fromCharCode(A.charCodeAt(i) ^ B.charCodeAt(i))).join("""");"
+  "};"
+  "assert.equal(hx(zip2(""BRIAN"", ""CODEX"")), ""01 1d 0d 04 16"");"
+  "assert.equal(hx(zip2(""CODEX"", ""DEEPS"")), ""07 0a 01 15 0b"");"
+  "assert.equal(hx(zip2(""BRIAN"", ""DEEPS"")), ""06 17 0c 11 1d"");"
+  .
+
+THEYEARPAIRCOINCIDENCE =
+  "// ── 7. The year-pair coincidence ────────────────────────────"
+  "// 19 XOR 75 = 0x58 = X, the same letter as CODEX[4]."
+  "assert.equal(19 ^ 75, 0x58, ""19 ^ 75 = 0x58"");"
+  "assert.equal(0x58, ""X"".charCodeAt(0));"
+  "assert.equal(""CODEX"".charCodeAt(4), 0x58, ""and CODEX[4] is also 0x58"");"
+  .
+
+THEOPENITEM =
+  "// ── 8. The open item ────────────────────────────────────────"
+  "// BRIAN as base-36 is 12D805F, not 20F6."
+  "assert.equal(parseInt(""BRIAN"", 36), 19759199);"
+  "assert.equal(parseInt(""BRIAN"", 36).toString(16).toUpperCase(), ""12D805F"");"
+  "// The encoding that gives 20F6 is still to be named."
+  .
+
+THEREADINGTHEAUTHORS =
+  "// ── 9. The reading (the author's) ───────────────────────────"
+  "// - The three tags zip by the Hamming operator up to the 5th index."
+  "// - The result EXHTE is the definition's own address."
+  "// - Held as the author's reading, not asserted."
+  .

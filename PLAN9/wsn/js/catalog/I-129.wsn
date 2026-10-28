@@ -1,0 +1,131 @@
+RECORD = HEAD THEPROMPTSIGILSANDTHEIRADDRESSES THETWOBLOCKSXXFXXF NOVERTHECOMPARISONOPERATORS NOVERTHEBRACETILDEBLOCK THEFULLNORBITFORNIN THECODEBLOCKXXFLOWNIBBLES THECODESMOD THEGROUPANDITSNIBBLES THEDIGITGROUPDESCENTS THECROSSINGATXC ATOMICSCOMPAREEXCHANGEATONTHETWOBLOCKS .
+
+HEAD =
+  "// i129.ts — I-129: prompt sigils, 64-blocks, 60^n, mod-12"
+  "import assert from ""node:assert"";"
+  "const xor = (a: number, b: number) => a ^ b;"
+  .
+
+THEPROMPTSIGILSANDTHEIRADDRESSES =
+  "// ── 1. The prompt sigils and their addresses ─────────────────────"
+  "const sigils: Record<string, number> = {"
+  "  ""~"": 0x7E, ""."": 0x2E, ""/"": 0x2F,"
+  "  ""$"": 0x24, ""#"": 0x23, ""|"": 0x7C,"
+  "};"
+  "console.log(""sigils:"", sigils);"
+  .
+
+THETWOBLOCKSXXFXXF =
+  "// ── 2. The two 64-blocks: 0x00-0x3F, 0x40-0x7F ──────────────────"
+  "const LOW  = Array.from({length: 64}, (_, i) => i);        // 0..63"
+  "const HIGH = Array.from({length: 64}, (_, i) => i + 64);   // 64..127"
+  "assert.strictEqual(LOW.length, 64,  ""low block = 64"");"
+  "assert.strictEqual(HIGH.length, 64, ""high block = 64"");"
+  "assert.strictEqual(LOW[63], 63,  ""low ends at 63"");"
+  "assert.strictEqual(HIGH[63], 127, ""high ends at 127"");"
+  .
+
+NOVERTHECOMPARISONOPERATORS =
+  "// ── 3. 60 ^ n over 0..63 = the comparison operators ──────────────"
+  "const cmpOps = [0,1,2,3].map(n => 60 ^ n);"
+  "assert.deepStrictEqual(cmpOps, [60, 61, 62, 63], ""60^0..3 = 60..63"");"
+  "const cmpChars = cmpOps.map(c => String.fromCharCode(c));"
+  "assert.deepStrictEqual(cmpChars, [""<"", ""="", "">"", ""?""], ""<=>? block"");"
+  .
+
+NOVERTHEBRACETILDEBLOCK =
+  "// ── 4. 60 ^ n over 64..67 = the brace/tilde block ────────────────"
+  "const braceOps = [64,65,66,67].map(n => 60 ^ n);"
+  "assert.deepStrictEqual(braceOps, [124,125,126,127], ""60^64..67 = 124..127"");"
+  "const braceChars = braceOps.map(c => String.fromCharCode(c));"
+  "assert.deepStrictEqual(braceChars, [""|"", ""}"", ""~"", ""\x7f""], ""{|}~ block"");"
+  .
+
+THEFULLNORBITFORNIN =
+  "// ── 5. The full 60^n orbit for n in 64..83 ───────────────────────"
+  "const orbit = [];"
+  "for (let n = 64; n < 84; n++) orbit.push({ n, r: 60 ^ n, ch: String.fromCharCode(60 ^ n) });"
+  "console.log(""60^n orbit (n=64..83):"", orbit.map(o => o.ch).join(""""));"
+  .
+
+THECODEBLOCKXXFLOWNIBBLES =
+  "// ── 6. The 16-code block 0x30-0x3F, low nibbles ─────────────────"
+  "const sixteen = Array.from({length: 16}, (_, i) => 0x30 + i);"
+  "const nibbles = sixteen.map(c => c & 0xF);"
+  "assert.deepStrictEqual("
+  "  nibbles,"
+  "  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"
+  "  ""0x30-0x3F low nibbles"""
+  ");"
+  "// characters"
+  "const chars = sixteen.map(c => String.fromCharCode(c));"
+  "console.log(""0x30-0x3F:"", chars.join(""""));"
+  .
+
+THECODESMOD =
+  "// ── 7. The 16 codes mod 12 ───────────────────────────────────────"
+  "const m12 = (n: number) => ((n % 12) + 12) % 12;"
+  "const reduced = sixteen.map(m12);"
+  "assert.deepStrictEqual("
+  "  reduced,"
+  "  [0,1,2,3,4,5,6,7,8,9,10,11,0,1,2,3],"
+  "  ""0x30-0x3F mod 12 wraps the full ring"""
+  ");"
+  "// the mod-12 ring is 0..11, then wraps"
+  "assert.deepStrictEqual(reduced.slice(0, 12), [0,1,2,3,4,5,6,7,8,9,10,11],"
+  "  ""first 12 = full ring"");"
+  .
+
+THEGROUPANDITSNIBBLES =
+  "// ── 8. The :; group and its nibbles ──────────────────────────────"
+  "assert.strictEqual("":"".charCodeAt(0), 0x3A, ""':' = 0x3A"");"
+  "assert.strictEqual("";"".charCodeAt(0), 0x3B, ""';' = 0x3B"");"
+  "assert.strictEqual(0x3A & 0xF, 0xA, ""':' low nibble A"");"
+  "assert.strictEqual(0x3B & 0xF, 0xB, ""';' low nibble B"");"
+  "// mod 12"
+  "assert.strictEqual(m12(0x3A), 10, ""':' mod 12 = 10"");"
+  "assert.strictEqual(m12(0x3B), 11, ""';' mod 12 = 11"");"
+  .
+
+THEDIGITGROUPDESCENTS =
+  "// ── 9. The digit-group descents (9876, 5432, 1) ──────────────────"
+  "// within each 4-group, low nibbles are consecutive"
+  "const groups = [0,4,8,12].map(off =>"
+  "  [0,1,2,3].map(i => sixteen[off + i] & 0xF)"
+  ");"
+  "console.log(""nibble groups:"", groups);"
+  "assert.deepStrictEqual(groups, [[0,1,2,3],[4,5,6,7],[8,9,10,11],[12,13,14,15]],"
+  "  ""4 groups of 4 consecutive nibbles"");"
+  .
+
+THECROSSINGATXC =
+  "// ── 10. The crossing at 60 (0x3C) ────────────────────────────────"
+  "// 60 = 0x3C is the boundary: 60^0..3 = <=>? ; 60^64..67 = {|}~"
+  "assert.strictEqual(0x3C, 60, ""0x3C = 60"");"
+  "assert.strictEqual(60 ^ 0,  60, ""60^0 = 60 = '<'"");"
+  "assert.strictEqual(60 ^ 64, 124, ""60^64 = 124 = '|'"");"
+  "// the crossing: mod 12"
+  "assert.strictEqual(m12(60), 0, ""60 mod 12 = 0 (the ring's start)"");"
+  "assert.strictEqual(m12(124), 4, ""124 mod 12 = 4"");"
+  .
+
+ATOMICSCOMPAREEXCHANGEATONTHETWOBLOCKS =
+  "// ── 11. Atomics.compareExchange at 60 on the two blocks ──────────"
+  "{"
+  "  const buf = Buffer.alloc(256);"
+  "  // fill with two blocks"
+  "  for (let i = 0; i < 128; i++) buf[i] = i;"
+  "  const view = new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);"
+  "  // exchange at index 60 with a value from the low block"
+  "  const before60 = buf[60];"
+  "  const r1 = Atomics.compareExchange(view, 60, before60, 0x3C);"
+  "  assert.strictEqual(r1, before60, ""swap at 60 read"");"
+  "  assert.strictEqual(buf[60], 0x3C, ""swap at 60 wrote 0x3C"");"
+  "  // exchange at index 124 (60^64)"
+  "  const before124 = buf[124];"
+  "  const r2 = Atomics.compareExchange(view, 124, before124, 0x7C);"
+  "  assert.strictEqual(r2, before124, ""swap at 124 read"");"
+  "  assert.strictEqual(buf[124], 0x7C, ""swap at 124 wrote '|'"");"
+  "}"
+  "console.log(""I-129: prompt sigils + 64-blocks + 60^n + mod-12 — passed"");"
+  .

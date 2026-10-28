@@ -1,0 +1,35 @@
+EXTRACT = CHECKED .
+
+CHECKED = COQ COQA SCOPE EXTRACTOWNER EXTRACTPROOF EXTRACTTARGETWORD EXTRACTTARGETWORDFULL .
+
+COQ =
+  "From Coq Require Import Extraction."
+  .
+
+COQA =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+EXTRACTOWNER =
+  "Definition extract_owner : Prop := True."
+  .
+
+EXTRACTPROOF =
+  "Definition extract_proof : extract_owner := I."
+  .
+
+EXTRACTTARGETWORD =
+  "Definition extract_target_word (x : N) : N := N.land x 0xFFFFFFFFFFFFFFFF."
+  .
+
+EXTRACTTARGETWORDFULL =
+  "Theorem extract_target_word_full64 :"
+  "  extract_target_word 0xFFFFFFFFFFFFFFFF = 0xFFFFFFFFFFFFFFFF."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

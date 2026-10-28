@@ -1,0 +1,55 @@
+RECORD = HEAD THEEXCEPTIONALSETANDWHYITISTHEONLYONE THEFIRSTOTHERSETCLOSEDBY ISINTHESEXTUPLETBEFORETHELADDER ISNOTOFTHECLOSUREFORM .
+
+HEAD =
+  "// i183.ts — I-183: 19 closes the first sexy set after the exceptional one, on 5², before the 210 ladder"
+  "//"
+  "// The author, 2026-10-13: ""19 is the prime of the sexy prime before the"
+  "// 210n + m, related to the 5n or 5m. I'm not sure about that, but check sexy"
+  "// primes exceptional and the first other set."" The exceptional set is the"
+  "// quintuplet {5, 11, 17, 23, 29}, and the 210 ladder starts at 97 (SPEC-07"
+  "// I-104). Checked: the first sexy set without 5 is (7, 13, 19), and it stops"
+  "// at 19 because 19 + 6 = 25 = 5 x 5; 19 is in the one prime sextuplet before"
+  "// the ladder, {7, 11, 13, 17, 19, 23}; every later sextuplet starts at 97 mod 210."
+  "import assert from ""node:assert"";"
+  "const N = 1_100_000;"
+  "const composite = new Uint8Array(N);"
+  "for (let i = 2; i * i < N; i++) if (!composite[i]) for (let j = i * i; j < N; j += i) composite[j] = 1;"
+  "const prime = (n: number) => n > 1 && n < N && !composite[n];"
+  "/** The sexy chain from p: p, p + 6, p + 12, … while prime. */"
+  "const chain = (p: number) => { const c = [p]; while (prime(c[c.length - 1]! + 6)) c.push(c[c.length - 1]! + 6); return c; };"
+  .
+
+THEEXCEPTIONALSETANDWHYITISTHEONLYONE =
+  "// ── 1. The exceptional set, and why it is the only one ──────"
+  "assert.deepStrictEqual(chain(5), [5, 11, 17, 23, 29], ""the exceptional set: five primes, steps of 6, from 5"");"
+  "// 6 = 1 mod 5, so five steps of 6 meet every residue mod 5: a chain of five holds a multiple of 5."
+  "for (let p = 2; p < N - 30; p++) if (prime(p) && p !== 5) assert.ok(chain(p).length < 5, `no other chain of five (from ${p})`);"
+  .
+
+THEFIRSTOTHERSETCLOSEDBY =
+  "// ── 2. The first other set: (7, 13, 19), closed by 5² ───────"
+  "const starts: number[] = [];"
+  "for (let p = 2; p < 200; p++) if (prime(p) && !prime(p - 6) && chain(p).length >= 3) starts.push(p);"
+  "assert.deepStrictEqual(starts.slice(0, 2), [5, 7], ""after the exceptional set, the next sexy set of three or more starts at 7"");"
+  "assert.deepStrictEqual(chain(7), [7, 13, 19], ""(7, 13, 19)"");"
+  "assert.strictEqual(19 + 6, 5 * 5, ""it stops at 19 because 19 + 6 = 25 = 5 x 5"");"
+  .
+
+ISINTHESEXTUPLETBEFORETHELADDER =
+  "// ── 3. 19 is in the sextuplet before the 210 ladder ─────────"
+  "const SHAPE = [0, 4, 6, 10, 12, 16];"
+  "const sextuplets: number[] = [];"
+  "for (let p = 2; p < N - 16; p++) if (SHAPE.every((d) => prime(p + d))) sextuplets.push(p);"
+  "assert.deepStrictEqual(sextuplets.slice(0, 6), [7, 97, 16057, 19417, 43777, 1091257], ""the prime sextuplets start at 7, then 97, …"");"
+  "assert.deepStrictEqual(SHAPE.map((d) => 7 + d), [7, 11, 13, 17, 19, 23], ""the first is {7, 11, 13, 17, 19, 23}, with 19 in it"");"
+  "for (const p of sextuplets.slice(1)) assert.strictEqual(p % 210, 97, `every later one starts at 97 mod 210 (${p})`);"
+  "assert.notStrictEqual(7 % 210, 97, ""the first is before the ladder"");"
+  .
+
+ISNOTOFTHECLOSUREFORM =
+  "// ── 4. 19 is not of the closure form ────────────────────────"
+  "for (let k = 1; k < 8; k++) assert.ok(2 ** k - 1 !== 19 && 2 ** k !== 19, ""19 is neither 2^k - 1 nor 2^k"");"
+  "console.log(""I-183: 19 closes the first sexy set after the exceptional one, on 5², before the 210 ladder — passed"");"
+  "console.log(""  the exceptional set {5, 11, 17, 23, 29} is the only chain of five; the next set is (7, 13, 19), and 19 + 6 = 25 = 5²"");"
+  "console.log(""  19 is in the sextuplet {7, …, 23} before the ladder; every later one starts at 97 mod 210"");"
+  .

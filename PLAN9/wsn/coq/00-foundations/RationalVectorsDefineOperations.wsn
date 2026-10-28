@@ -1,0 +1,329 @@
+RATIONALVECTORSDEFINEOPERATIONS = CHECKED .
+
+CHECKED = HEAD COQ COQA COQB COQC COQD COQE COQF COQG COQH COQI COQJ VECTORNOTATIONS VEC VECEQ VEQ DOTN DOT NORMSQ VADD VNEG VSCALE QNUMQDENINJ QPLUSLEQ QPLUSREQ QPLUSASSOCEQ QPLUSCOMMEQ QMULTCOMMEQ QMULTLEQ QSQUARENONNEG QPLUSNONNEG DOTCOMM DOTADDL DOTSCALEL NORMSQNONNEG VADDCOMM VADDASSOC VADDNEGR VSCALEZERO VSCALEONE .
+
+HEAD =
+  "(*"
+  "  VecQ.v -- exact rational vectors with dot product, norm, and scaling."
+  "  This layer stays on exact Q arithmetic.  No reals or approximations."
+  "  Used as the base for E8 root system and Weyl reflection."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import QArith.QArith."
+  .
+
+COQA =
+  "From Coq Require Import QArith.Qreduction."
+  .
+
+COQB =
+  "From Coq Require Import QArith.Qminmax."
+  .
+
+COQC =
+  "From Coq Require Import QArith.Qpower."
+  .
+
+COQD =
+  "From Coq Require Import Vectors.VectorDef."
+  .
+
+COQE =
+  "From Coq Require Import Vectors.VectorSpec."
+  .
+
+COQF =
+  "From Coq Require Import Setoids.Setoid."
+  .
+
+COQG =
+  "From Coq Require Import micromega.Lia."
+  .
+
+COQH =
+  "From Coq Require Import Arith.Arith."
+  .
+
+COQI =
+  "From Coq Require Import ZArithRing."
+  .
+
+COQJ =
+  "From Coq Require Import micromega.Psatz."
+  .
+
+VECTORNOTATIONS =
+  "Import VectorNotations."
+  .
+
+VEC =
+  "Definition Vec (n : nat) : Type := Vector.t Q n."
+  .
+
+VECEQ =
+  "Lemma Vec0_eq (v : Vec 0) : v = []."
+  "Proof."
+  "  refine (Vector.case0 (fun v' => v' = []) _ v)."
+  "  reflexivity."
+  "Qed."
+  .
+
+VEQ =
+  "Fixpoint veq {n : nat} : Vec n -> Vec n -> Prop :="
+  "  match n with"
+  "  | O => fun _ _ => True"
+  "  | S n' =>"
+  "      fun v w =>"
+  "        Vector.hd v == Vector.hd w /\ veq (Vector.tl v) (Vector.tl w)"
+  "  end."
+  .
+
+DOTN =
+  "Fixpoint dotn (n : nat) : Vec n -> Vec n -> Q :="
+  "  match n with"
+  "  | O => fun _ _ => 0"
+  "  | S n' =>"
+  "      fun v w =>"
+  "        Qplus"
+  "          (Qmult (Vector.hd v) (Vector.hd w))"
+  "          (dotn n' (Vector.tl v) (Vector.tl w))"
+  "  end."
+  .
+
+DOT =
+  "Definition dot {n : nat} (v w : Vec n) : Q :="
+  "  dotn n v w."
+  .
+
+NORMSQ =
+  "Definition norm_sq {n : nat} (v : Vec n) : Q :="
+  "  dot v v."
+  .
+
+VADD =
+  "Definition vadd {n : nat} (v w : Vec n) : Vec n :="
+  "  Vector.map2 Qplus v w."
+  .
+
+VNEG =
+  "Definition vneg {n : nat} (v : Vec n) : Vec n :="
+  "  Vector.map Qopp v."
+  .
+
+VSCALE =
+  "Definition vscale {n : nat} (c : Q) (v : Vec n) : Vec n :="
+  "  Vector.map (Qmult c) v."
+  .
+
+QNUMQDENINJ =
+  "Lemma Qnum_Qden_inj n1 d1 n2 d2 : n1 = n2 -> d1 = d2 -> Qmake n1 d1 = Qmake n2 d2."
+  "Proof. intros; subst; reflexivity. Qed."
+  .
+
+QPLUSLEQ =
+  "Lemma Qplus_0_l_eq : forall a : Q, Qplus 0 a = a."
+  "Proof."
+  "  destruct a; unfold Qplus; simpl; rewrite Z.mul_1_r; reflexivity."
+  "Qed."
+  .
+
+QPLUSREQ =
+  "Lemma Qplus_0_r_eq : forall a : Q, Qplus a 0 = a."
+  "Proof."
+  "  destruct a; unfold Qplus; simpl; rewrite Z.mul_1_r, Z.add_0_r, Pos.mul_1_r; reflexivity."
+  "Qed."
+  .
+
+QPLUSASSOCEQ =
+  "Lemma Qplus_assoc_eq : forall a b c : Q, Qplus (Qplus a b) c = Qplus a (Qplus b c)."
+  "Proof."
+  "  destruct a as [na da], b as [nb db], c as [nc dc]; unfold Qplus; simpl."
+  "  f_equal; [nia | symmetry; apply Pos.mul_assoc]."
+  "Qed."
+  .
+
+QPLUSCOMMEQ =
+  "Lemma Qplus_comm_eq : forall a b : Q, Qplus a b = Qplus b a."
+  "Proof."
+  "  destruct a as [na da], b as [nb db]; unfold Qplus; simpl."
+  "  f_equal; [ring | apply Pos.mul_comm]."
+  "Qed."
+  .
+
+QMULTCOMMEQ =
+  "Lemma Qmult_comm_eq : forall a b : Q, Qmult a b = Qmult b a."
+  "Proof."
+  "  destruct a as [na da], b as [nb db]; unfold Qmult; simpl."
+  "  f_equal; [ring | apply Pos.mul_comm]."
+  "Qed."
+  .
+
+QMULTLEQ =
+  "Lemma Qmult_1_l_eq : forall a : Q, Qmult 1 a = a."
+  "Proof."
+  "  destruct a as [n d]; destruct n; reflexivity."
+  "Qed."
+  .
+
+QSQUARENONNEG =
+  "Lemma Qsquare_nonneg : forall a : Q, 0 <= a * a."
+  "Proof."
+  "  intro a."
+  "  change (0 <= a ^ 2)."
+  "  apply Qsqr_nonneg."
+  "Qed."
+  .
+
+QPLUSNONNEG =
+  "Lemma Qplus_nonneg : forall a b : Q, 0 <= a -> 0 <= b -> 0 <= a + b."
+  "Proof."
+  "  intros a b Ha Hb."
+  "  change (0 + 0 <= a + b)."
+  "  apply Qplus_le_compat; assumption."
+  "Qed."
+  .
+
+DOTCOMM =
+  "Theorem dot_comm : forall n (v w : Vec n), dot v w = dot w v."
+  "Proof."
+  "  unfold dot."
+  "  induction n; intros v w; simpl."
+  "  - reflexivity."
+  "  - rewrite (Qmult_comm_eq (Vector.hd v) (Vector.hd w))."
+  "    rewrite (IHn (Vector.tl v) (Vector.tl w))."
+  "    reflexivity."
+  "Qed."
+  .
+
+DOTADDL =
+  "Theorem dot_add_l : forall n (u v w : Vec n),"
+  "  dot (vadd u v) w == dot u w + dot v w."
+  "Proof."
+  "  intros n."
+  "  induction n as [| n IH]; intros u v w; unfold dot, vadd; simpl."
+  "  - reflexivity."
+  "  - rewrite (Vector.eta u)."
+  "    rewrite (Vector.eta v)."
+  "    rewrite (Vector.eta w)."
+  "    simpl."
+  "    rewrite IH."
+  "    unfold dot."
+  "    ring."
+  "Qed."
+  .
+
+DOTSCALEL =
+  "Theorem dot_scale_l : forall n (c : Q) (v w : Vec n),"
+  "  dot (vscale c v) w == c * dot v w."
+  "Proof."
+  "  intros n."
+  "  induction n as [| n IH]; intros c v w; unfold dot; simpl."
+  "  - ring."
+  "  - unfold vscale."
+  "    rewrite (Vector.eta v)."
+  "    rewrite (Vector.eta w)."
+  "    simpl."
+  "    fold (vscale c (Vector.tl v))."
+  "    rewrite IH."
+  "    unfold dot."
+  "    ring."
+  "Qed."
+  .
+
+NORMSQNONNEG =
+  "Theorem norm_sq_nonneg : forall n (v : Vec n),"
+  "  0 <= norm_sq v."
+  "Proof."
+  "  intros n."
+  "  induction n as [| n IH]; intros v; unfold norm_sq, dot; simpl."
+  "  - apply Qle_refl."
+  "  - apply Qplus_nonneg."
+  "    + apply Qsquare_nonneg."
+  "    + apply IH."
+  "Qed."
+  .
+
+VADDCOMM =
+  "Theorem vadd_comm : forall n (v w : Vec n), vadd v w = vadd w v."
+  "Proof."
+  "  intros n."
+  "  induction n as [| n IH]; intros v w; unfold vadd; simpl."
+  "  - rewrite (Vec0_eq v), (Vec0_eq w)."
+  "    reflexivity."
+  "  - rewrite (Vector.eta v)."
+  "    rewrite (Vector.eta w)."
+  "    simpl."
+  "    rewrite IH."
+  "    f_equal."
+  "    apply Qplus_comm_eq."
+  "Qed."
+  .
+
+VADDASSOC =
+  "Theorem vadd_assoc : forall n (u v w : Vec n),"
+  "  vadd (vadd u v) w = vadd u (vadd v w)."
+  "Proof."
+  "  intros n."
+  "  induction n as [| n IH]; intros u v w; unfold vadd; simpl."
+  "  - rewrite (Vec0_eq u), (Vec0_eq v), (Vec0_eq w)."
+  "    reflexivity."
+  "  - rewrite (Vector.eta u)."
+  "    rewrite (Vector.eta v)."
+  "    rewrite (Vector.eta w)."
+  "    simpl."
+  "    rewrite IH."
+  "    f_equal."
+  "    apply Qplus_assoc_eq."
+  "Qed."
+  .
+
+VADDNEGR =
+  "Theorem vadd_neg_r : forall n (v : Vec n), veq (vadd v (vneg v)) (Vector.const 0 n)."
+  "Proof."
+  "  intros n."
+  "  induction n as [| n IH]; intros v; simpl."
+  "  - exact I."
+  "  - unfold vadd, vneg."
+  "    rewrite (Vector.eta v)."
+  "    simpl."
+  "    split."
+  "    + apply Qplus_opp_r."
+  "    + fold (vneg (Vector.tl v))."
+  "      fold (vadd (Vector.tl v) (vneg (Vector.tl v)))."
+  "      apply IH."
+  "Qed."
+  .
+
+VSCALEZERO =
+  "Theorem vscale_zero : forall n (v : Vec n), veq (vscale 0 v) (Vector.const 0 n)."
+  "Proof."
+  "  intros n."
+  "  induction n as [| n IH]; intros v; simpl."
+  "  - exact I."
+  "  - unfold vscale."
+  "    rewrite (Vector.eta v)."
+  "    simpl."
+  "    split."
+  "    + apply Qmult_0_l."
+  "    + fold (vscale 0 (Vector.tl v))."
+  "      apply IH."
+  "Qed."
+  .
+
+VSCALEONE =
+  "Theorem vscale_one : forall n (v : Vec n), vscale 1 v = v."
+  "Proof."
+  "  intros n."
+  "  induction n as [| n IH]; intros v; unfold vscale; simpl."
+  "  - rewrite (Vec0_eq v)."
+  "    reflexivity."
+  "  - rewrite (Vector.eta v)."
+  "    simpl."
+  "    fold (vscale 1 (Vector.tl v))."
+  "    rewrite IH."
+  "    f_equal."
+  "    apply Qmult_1_l_eq."
+  "Qed."
+  .

@@ -1,0 +1,112 @@
+RECORD = HEAD SUBSTITUTIONSREPLACETHEBASEP SUPPLYINGVOWELSKEEPSTHEBASEP YAHISTHEHEADOFTHENAMEP JAHANDJEHOVAHTHEFOLDDECIDESP THETWOCODICESSAMELETTERSONEMARKAPARTP YAHINHEBREWISTHEHEADOFTHENAMEP THEEMPTYBASEHEADSNOTHINGBUTITSELF .
+
+HEAD =
+  "// i229.ts — I-229: YHWH and its renderings — which keep the literal and which replace it"
+  "//"
+  "// The author, 2026-10-24: ""there is a proof about jehovah and the lord and yah and jah and"
+  "// the difference in literal transmogrification"". No such record had been filed; the nearest"
+  "// was the divine-name audit in src/terms.mjs, which never tested Jehovah, Yah or Jah. This"
+  "// record files it, with its predictions stated here, before its checks:"
+  "//"
+  "//   P1  YHWH vs ADONAI, YHWH vs THE LORD ............ RAISE  (substitution: the base is replaced)"
+  "//   P2  YHWH vs YAHWEH ................................ MIRROR (same base, vowels supplied)"
+  "//   P3  YHWH vs YAH ................................... MIRROR (prefix: the first two letters)"
+  "//   P4  YHWH vs JAH, YHWH vs JEHOVAH .................. RAISE letter for letter; MIRROR only under"
+  "//       the declared transliteration fold J -> Y, V -> W (which leaves THE LORD a RAISE)"
+  "//   P5  Leningrad יְהוָה vs Aleppo-based MAM יְהֹוָה .. MIRROR on the consonants; the vowel layers"
+  "//       differ by exactly one mark, holam (U+05B9), the ""o"" of JEHOVAH"
+  "//   P6  Hebrew יָהּ (Exodus 15:2) vs יהוה ................ MIRROR (prefix)"
+  "//"
+  "// Hebrew forms, accents (te'amim) removed: Deuteronomy 29:1 in the Westminster Leningrad Codex"
+  "// (public domain) and in Miqra according to the Masorah (CC BY-SA, based on the Aleppo Codex),"
+  "// Exodus 15:2 in the Leningrad Codex, all via Sefaria. The relations are asserted; the readings"
+  "// (what a rendering means, whether a fold is fair) are the author's and stay open."
+  "import assert from ""node:assert"";"
+  "// The base is src/terms.mjs's consonant stream: upper case, A-Z only, the vowels A E I O U"
+  "// removed. (terms.mjs keeps the digits as a stream of their own; this record compares only"
+  "// the consonants, so here 0-9 fall away.)"
+  "const base = (s: string) => s.toUpperCase().replace(/[^A-Z]/g, """").replace(/[AEIOU]/g, """");"
+  "// The guard, as in terms.mjs: identical, or a NON-EMPTY verbatim head of the other. Corrected"
+  "// 2026-10-25: the first filing let the empty base count as a head, and the empty string heads"
+  "// every string, so a name with no consonants (IOU, 1234) mirrored everything. Section 7 checks it."
+  "const verdict = (a: string, b: string) => {"
+  "  if (a === b) return ""MIRROR"";"
+  "  const [short, long] = a.length <= b.length ? [a, b] : [b, a];"
+  "  return short.length > 0 && long.startsWith(short) ? ""MIRROR"" : ""RAISE"";"
+  "};"
+  "const fold = (s: string) => s.replace(/J/g, ""Y"").replace(/V/g, ""W""); // the declared transliteration fold"
+  "const N = ""YHWH"";"
+  .
+
+SUBSTITUTIONSREPLACETHEBASEP =
+  "// ── 1. Substitutions replace the base (P1) ─────────────────────"
+  "assert.equal(base(""ADONAI""), ""DN"", ""the base of ADONAI is DN"");"
+  "assert.equal(verdict(base(N), base(""ADONAI"")), ""RAISE"", ""Adonai, 'my Lord', replaces the four letters"");"
+  "assert.equal(base(""THE LORD""), ""THLRD"", ""the base of THE LORD is THLRD"");"
+  "assert.equal(verdict(base(N), base(""THE LORD"")), ""RAISE"", ""THE LORD translates the substitute, not the letters"");"
+  .
+
+SUPPLYINGVOWELSKEEPSTHEBASEP =
+  "// ── 2. Supplying vowels keeps the base (P2) ────────────────────"
+  "assert.equal(base(""YAHWEH""), ""YHWH"", ""the base of YAHWEH is YHWH"");"
+  "assert.equal(verdict(base(N), base(""YAHWEH"")), ""MIRROR"", ""Yahweh is YHWH with vowels supplied"");"
+  .
+
+YAHISTHEHEADOFTHENAMEP =
+  "// ── 3. Yah is the head of the Name (P3) ────────────────────────"
+  "assert.equal(base(""YAH""), ""YH"", ""the base of YAH is YH"");"
+  "assert.equal(verdict(base(N), base(""YAH"")), ""MIRROR"", ""Yah: the first two letters"");"
+  .
+
+JAHANDJEHOVAHTHEFOLDDECIDESP =
+  "// ── 4. Jah and Jehovah: the fold decides (P4) ──────────────────"
+  "assert.equal(base(""JEHOVAH""), ""JHVH"", ""the base of JEHOVAH is JHVH"");"
+  "assert.equal(base(""JAH""), ""JH"", ""the base of JAH is JH"");"
+  "assert.equal(verdict(base(N), base(""JEHOVAH"")), ""RAISE"", ""letter for letter, J and V are not Y and W"");"
+  "assert.equal(verdict(base(N), base(""JAH"")), ""RAISE"", ""nor is Jah Yah, letter for letter"");"
+  "assert.equal(fold(base(""JEHOVAH"")), ""YHWH"", ""the fold takes JHVH to YHWH"");"
+  "assert.equal(verdict(base(N), fold(base(""JEHOVAH""))), ""MIRROR"", ""under the fold, Jehovah is the four letters"");"
+  "assert.equal(verdict(base(N), fold(base(""JAH""))), ""MIRROR"", ""and Jah is Yah"");"
+  "assert.equal(verdict(base(N), fold(base(""THE LORD""))), ""RAISE"", ""the fold is narrow: it rescues no substitution"");"
+  .
+
+THETWOCODICESSAMELETTERSONEMARKAPARTP =
+  "// ── 5. The two codices: same letters, one mark apart (P5) ──────"
+  "const wlc = ""יְהוָה"";       // יְהוָה  Leningrad, Deut 29:1"
+  "const mam = ""יְהֹוָה""; // יְהֹוָה  MAM (Aleppo), Deut 29:1"
+  "const cons = (s: string) => [...s].filter((c) => c >= ""א"" && c <= ""ת"").join("""");"
+  "const marks = (s: string) => [...s].filter((c) => !(c >= ""א"" && c <= ""ת""));"
+  "assert.equal(cons(wlc), ""יהוה"", ""both are יהוה"");"
+  "assert.equal(cons(wlc), cons(mam), ""the consonant base is one literal: MIRROR"");"
+  "const extra = marks(mam).filter((m, i, a) => a.filter((x) => x === m).length > marks(wlc).filter((x) => x === m).length);"
+  "assert.deepEqual(extra, [""ֹ""], ""the vowel layers differ by exactly one mark: holam"");"
+  "assert.equal(marks(mam).length - marks(wlc).length, 1, ""MAM carries one mark more than Leningrad"");"
+  "// Read in order, MAM's marks are sheva, holam, qamatz; JEHOVAH's vowels are E, O, A. The"
+  "// declared reading sheva -> E, holam -> O, qamatz -> A makes them the same sequence; Leningrad's"
+  "// sheva, qamatz gives E, A, with no O to make ""-ho-""."
+  "const SOUND: Record<string, string> = { ""ְ"": ""E"", ""ֹ"": ""O"", ""ָ"": ""A"" };"
+  "assert.equal(marks(mam).map((m) => SOUND[m]).join(""""), ""EOA"", ""MAM's marks read E, O, A"");"
+  "assert.equal(""JEHOVAH"".replace(/[^AEIOU]/g, """"), ""EOA"", ""the vowels of JEHOVAH, in order"");"
+  "assert.equal(marks(wlc).map((m) => SOUND[m]).join(""""), ""EA"", ""Leningrad's pointing gives no O"");"
+  .
+
+YAHINHEBREWISTHEHEADOFTHENAMEP =
+  "// ── 6. Yah in Hebrew is the head of the Name (P6) ──────────────"
+  "const yah = ""יָהּ"";                   // יָהּ  Exodus 15:2, with mappiq in the he"
+  "assert.equal(cons(yah), ""יה"", ""the letters of יָהּ are יה"");"
+  "assert.ok(cons(wlc).startsWith(cons(yah)), ""יה is the head of יהוה: MIRROR (prefix)"");"
+  .
+
+THEEMPTYBASEHEADSNOTHINGBUTITSELF =
+  "// ── 7. The empty base heads nothing but itself ─────────────────"
+  "assert.equal(base(""IOU""), """", ""IOU has no consonants: its base is empty"");"
+  "assert.equal(base(""1234""), """", ""the digits fall away: the base of 1234 is empty"");"
+  "assert.equal(verdict(N, base(""IOU"")), ""RAISE"", ""an empty base does not mirror YHWH"");"
+  "assert.equal(verdict(N, base(""1234"")), ""RAISE"", ""nor does a base of digits only"");"
+  "assert.equal(verdict(base(""IOU""), base(""1234"")), ""MIRROR"", ""the empty base mirrors only the empty base"");"
+  "console.log(""I-229: YHWH and its renderings — which keep the literal and which replace it — passed"");"
+  "console.log(""  RAISE (replace the base): ADONAI (DN), THE LORD (THLRD)"");"
+  "console.log(""  MIRROR (keep the base): YAHWEH (YHWH), YAH (YH, a prefix)"");"
+  "console.log(""  JAH, JEHOVAH: RAISE letter for letter (JH, JHVH); MIRROR only under the declared fold J->Y, V->W"");"
+  "console.log(""  Leningrad יְהוָה and MAM יְהֹוָה: one consonant literal; one mark apart, holam, the O of JEHOVAH"");"
+  .

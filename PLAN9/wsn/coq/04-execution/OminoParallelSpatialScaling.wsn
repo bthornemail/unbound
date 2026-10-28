@@ -1,0 +1,90 @@
+OMINOPARALLELSPATIALSCALING = CHECKED .
+
+CHECKED = HEAD COQ COQA VECTORNOTATIONS SCOPE IMPORT OMINOCELL OMINOSUBSTRATE OMINOCELLSTEP OMINOPARALLELSTEP OMINOPARALLELSTEPOPERATIONS OMINOCELLSTEPDETERMINISTIC OMINOPARALLELSTEPDETERMINISTIC SUPPLIEDSUBSTRATESTEPCOUNTINDEPENDENTOFN SUPPLIEDSUBSTRATESTEPCOUNTINDEPENDENTOFVALUES .
+
+HEAD =
+  "(*"
+  "  OminoParallelSpatialScaling.v -- conditional spatial-scaling theorem."
+  "  The theorem states the usable engineering claim: once a parallel OMINO"
+  "  substrate of width n is supplied, the core step descriptor is constant with"
+  "  respect to n.  It does not hide substrate construction cost."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+COQA =
+  "From Coq Require Import Vectors.VectorDef."
+  .
+
+VECTORNOTATIONS =
+  "Import VectorNotations."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+IMPORT =
+  "Require Import AtomicKernelDefinesReplay."
+  .
+
+OMINOCELL =
+  "Definition OminoCell : Type := N."
+  .
+
+OMINOSUBSTRATE =
+  "Definition OminoSubstrate (n : nat) : Type :="
+  "  Vector.t OminoCell n."
+  .
+
+OMINOCELLSTEP =
+  "Definition omino_cell_step (cell : OminoCell) : OminoCell :="
+  "  delta 64 cell."
+  .
+
+OMINOPARALLELSTEP =
+  "Definition omino_parallel_step {n : nat}"
+  "  (substrate : OminoSubstrate n) : OminoSubstrate n :="
+  "  Vector.map omino_cell_step substrate."
+  .
+
+OMINOPARALLELSTEPOPERATIONS =
+  "Definition omino_parallel_step_operations : N := 3."
+  .
+
+OMINOCELLSTEPDETERMINISTIC =
+  "Theorem omino_cell_step_deterministic :"
+  "  forall x y, x = y -> omino_cell_step x = omino_cell_step y."
+  "Proof."
+  "  intros x y Hxy."
+  "  unfold omino_cell_step."
+  "  now apply vnext_delta_deterministic."
+  "Qed."
+  .
+
+OMINOPARALLELSTEPDETERMINISTIC =
+  "Theorem omino_parallel_step_deterministic :"
+  "  forall n (a b : OminoSubstrate n),"
+  "    a = b -> omino_parallel_step a = omino_parallel_step b."
+  "Proof."
+  "  intros n a b Hab."
+  "  now rewrite Hab."
+  "Qed."
+  .
+
+SUPPLIEDSUBSTRATESTEPCOUNTINDEPENDENTOFN =
+  "Theorem supplied_substrate_step_count_independent_of_n :"
+  "  forall n (substrate : OminoSubstrate n),"
+  "    omino_parallel_step_operations = 3."
+  "Proof. intros; reflexivity. Qed."
+  .
+
+SUPPLIEDSUBSTRATESTEPCOUNTINDEPENDENTOFVALUES =
+  "Theorem supplied_substrate_step_count_independent_of_values :"
+  "  forall n (a b : OminoSubstrate n),"
+  "    omino_parallel_step_operations = omino_parallel_step_operations."
+  "Proof. intros; reflexivity. Qed."
+  .

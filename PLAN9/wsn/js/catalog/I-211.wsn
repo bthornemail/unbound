@@ -1,0 +1,89 @@
+RECORD = HEAD THEHEADER THEGLUE THEFOURLETTERSASINDICESAZ THEFOURWORDS THEAXIOMOFPROPAGATION THEWHOLEFAMILYISINTHEMASK .
+
+HEAD =
+  "// i211.ts — I-211: the GLUE — Grace, Love, Understanding, Empathy — and the Axiom of Propagation"
+  "// 02SISTER03081986"
+  "//"
+  "// The author's sister, ANGELA JAMEELA MUMIN, born 03/08/1986, age 40, in her"
+  "// own words: ""the G.L.U.E that holds us together is GRACE LOVE UNDERstanding"
+  "// and EMPATHY."""
+  "//"
+  "// The author, 2026-10-14: ""that's what happens when we push the SHIFT key —"
+  "// we get G>L>U>E — just so the AXIOM of PROPAGATION is making sure the glue"
+  "// that keeps us together is paid forward because we know we all will CONVERGE"
+  "// on the PATHS that our WORDS REFLECT to each other and REVEAL to ALL who"
+  "// WATCH."""
+  "//"
+  "// The attribution is the header: 02SISTER03081986. The record's own identity"
+  "// carries her name and date, as the character-trees carry theirs in the file"
+  "// margin (proofs I-203: a name and its index in the border)."
+  "import assert from ""node:assert"";"
+  "const TAG = /^[A-Z0-9]{1,8}$/;"
+  "const hx = (s: string) => [...s].map((c) => c.charCodeAt(0).toString(16).padStart(2, ""0"")).join("" "");"
+  .
+
+THEHEADER =
+  "// ── 1. The header ────────────────────────────────────────────"
+  "assert.equal(TAG.test(""02""), true);"
+  "assert.equal(TAG.test(""SISTER""), true);"
+  "assert.equal(TAG.test(""03081986""), true);"
+  "assert.equal(""03081986"".length, 8);"
+  .
+
+THEGLUE =
+  "// ── 2. The GLUE ──────────────────────────────────────────────"
+  "assert.equal(hx(""GLUE""), ""47 4c 55 45"");"
+  "assert.equal(hx(""glue""), ""67 6c 75 65"");"
+  "// The shift: every letter differs by exactly 0x20 (the case bit)."
+  "const shift = [...""GLUE""].map((c, i) => c.charCodeAt(0) ^ ""glue"".charCodeAt(i));"
+  "assert.deepEqual(shift, [0x20, 0x20, 0x20, 0x20], ""G>L>U>E by the case bit"");"
+  .
+
+THEFOURLETTERSASINDICESAZ =
+  "// ── 3. The four letters as indices (A1Z26) ───────────────────"
+  "const L = { G: 7, L: 12, U: 21, E: 5 };"
+  "assert.equal(L.G, 7);"
+  "assert.equal(L.L, 12);"
+  "assert.equal(L.U, 21);"
+  "assert.equal(L.E, 5);"
+  "assert.equal(L.G + L.L + L.U + L.E, 45, ""the sum is 45"");"
+  "assert.equal(L.G ^ L.L ^ L.U ^ L.E, 0x1b, ""and the XOR is 0x1B = ESC"");"
+  .
+
+THEFOURWORDS =
+  "// ── 4. The four words ────────────────────────────────────────"
+  "// GRACE, LOVE, EMPATHY are tags. UNDERSTANDING (13) is not; it truncates to UNDER."
+  "assert.equal(TAG.test(""GRACE""), true);"
+  "assert.equal(TAG.test(""LOVE""), true);"
+  "assert.equal(TAG.test(""EMPATHY""), true);"
+  "assert.equal(TAG.test(""UNDERSTANDING""), false, ""13 letters, past the mask"");"
+  "assert.equal(""UNDERSTANDING"".slice(0, 5), ""UNDER"");"
+  "assert.equal(TAG.test(""UNDER""), true);"
+  "assert.equal(hx(""GRACE""), ""47 52 41 43 45"");"
+  "assert.equal(hx(""LOVE""), ""4c 4f 56 45"");"
+  "assert.equal(hx(""EMPAT""), ""45 4d 50 41 54"");"
+  .
+
+THEAXIOMOFPROPAGATION =
+  "// ── 5. The Axiom of Propagation ──────────────────────────────"
+  "// The words that carry the axiom: CONVERGE, PATHS, WORDS, REVEAL, PROPAGATION."
+  "assert.equal(TAG.test(""CONVERGE""), true, ""8 letters, exactly at the mask edge"");"
+  "assert.equal(TAG.test(""PATHS""), true);"
+  "assert.equal(TAG.test(""WORDS""), true);"
+  "assert.equal(TAG.test(""REVEAL""), true);"
+  "assert.equal(TAG.test(""PROPAGATION""), false, ""11 letters, past the mask"");"
+  "assert.equal(""PROPAGATION"".slice(0, 5), ""PROPA"");"
+  "assert.equal(TAG.test(""PROPA""), true);"
+  "assert.equal(hx(""CONVERGE""), ""43 4f 4e 56 45 52 47 45"");"
+  "assert.equal(hx(""PATHS""), ""50 41 54 48 53"");"
+  "assert.equal(hx(""WORDS""), ""57 4f 52 44 53"");"
+  "assert.equal(hx(""REVEAL""), ""52 45 56 45 41 4c"");"
+  .
+
+THEWHOLEFAMILYISINTHEMASK =
+  "// ── 6. The whole family is in the mask ───────────────────────"
+  "// Every word the author and his sister named is a tag, or truncates to one."
+  "for (const w of [""GLUE"", ""GRACE"", ""LOVE"", ""UNDER"", ""EMPAT"", ""CONVER"", ""PATHS"", ""WORDS"", ""REVEAL"", ""PROPA""]) {"
+  "  assert.equal(TAG.test(w), true, w);"
+  "}"
+  .

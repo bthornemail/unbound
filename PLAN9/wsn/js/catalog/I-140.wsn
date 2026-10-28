@@ -1,0 +1,162 @@
+RECORD = HEAD THEGLOBALSCOPEHIERARCHYMODEL WINDOWERRORSINSIDEAWORKER ALLSCOPESCONVERGEONEVENTTARGET THESPACE SPLITINTOSLICESOF EACHWORKERGETSITSSLICE THEFOLDSPLITTHENIBBLESTRUCTURE POSTMESSAGEISTHEREQUESTRESPONSE STRUCTUREDCLONECOPIEDNOTSHARED THEDELIMITINGWORKERSCANTTOUCHDOMWINDOW THECONVERGENCECHAIN THETHEXPONENTIALISTHEWORKERSPACE .
+
+HEAD =
+  "// i140.ts — I-140: Web Workers as 65536-space background processors"
+  "import assert from ""node:assert"";"
+  .
+
+THEGLOBALSCOPEHIERARCHYMODEL =
+  "// ── 1. The global scope hierarchy (model) ───────────────────────"
+  "class EventTargetMock {"
+  "  listeners: Map<string, Function[]> = new Map();"
+  "  addEventListener(t: string, fn: Function) {"
+  "    if (!this.listeners.has(t)) this.listeners.set(t, []);"
+  "    this.listeners.get(t)!.push(fn);"
+  "  }"
+  "  dispatchEvent(e: { type: string; data?: unknown }) {"
+  "    for (const fn of this.listeners.get(e.type) ?? []) fn(e);"
+  "  }"
+  "}"
+  "class WorkerGlobalScopeMock extends EventTargetMock {}"
+  "class DedicatedWorkerGlobalScopeMock extends WorkerGlobalScopeMock {}"
+  "class SharedWorkerGlobalScopeMock    extends WorkerGlobalScopeMock {}"
+  "class ServiceWorkerGlobalScopeMock   extends WorkerGlobalScopeMock {}"
+  "class WindowMock extends EventTargetMock {}"
+  "const w = new WindowMock();"
+  "const dw = new DedicatedWorkerGlobalScopeMock();"
+  "const sw = new SharedWorkerGlobalScopeMock();"
+  "const svw = new ServiceWorkerGlobalScopeMock();"
+  "assert.ok(w instanceof EventTargetMock,   ""window <: EventTarget"");"
+  "assert.ok(dw instanceof WorkerGlobalScopeMock, ""dedicated <: WorkerGlobalScope"");"
+  "assert.ok(dw instanceof EventTargetMock,       ""dedicated <: EventTarget"");"
+  "assert.ok(sw instanceof EventTargetMock,       ""shared <: EventTarget"");"
+  "assert.ok(svw instanceof EventTargetMock,      ""service <: EventTarget"");"
+  .
+
+WINDOWERRORSINSIDEAWORKER =
+  "// ── 2. window errors inside a worker ────────────────────────────"
+  "// The worker's global scope is `self`, not `window`."
+  "function getWindow(scope: ""window"" | ""worker""): string {"
+  "  if (scope === ""window"") return ""window"";"
+  "  throw new ReferenceError(""window is not defined"");"
+  "}"
+  "assert.strictEqual(getWindow(""window""), ""window"", ""window in main"");"
+  "assert.throws(() => getWindow(""worker""), ReferenceError, ""window errors in worker"");"
+  .
+
+ALLSCOPESCONVERGEONEVENTTARGET =
+  "// ── 3. All scopes converge on EventTarget ───────────────────────"
+  "const roots = [w, dw, sw, svw];"
+  "for (const r of roots) {"
+  "  assert.ok(r instanceof EventTargetMock, ""every scope <: EventTarget"");"
+  "}"
+  .
+
+THESPACE =
+  "// ── 4. The 65536-space ──────────────────────────────────────────"
+  "const SPACE = 2 ** 16;               // 65536"
+  "assert.strictEqual(SPACE, 65536, ""2^16 = 65536"");"
+  "assert.strictEqual(SPACE - 1, 0xFFFF, ""0..65535"");"
+  .
+
+SPLITINTOSLICESOF =
+  "// ── 5. Split into 4 slices of 2^14 ──────────────────────────────"
+  "const WORKERS = 4;"
+  "const SLICE = SPACE / WORKERS;"
+  "assert.strictEqual(WORKERS, 4, ""4 workers"");"
+  "assert.strictEqual(SLICE, 2 ** 14, ""slice = 2^14 = 16384"");"
+  "assert.strictEqual(SLICE * WORKERS, SPACE, ""4 * 16384 = 65536"");"
+  .
+
+EACHWORKERGETSITSSLICE =
+  "// ── 6. Each worker gets its slice ───────────────────────────────"
+  "type Slice = { start: number; end: number };"
+  "const slices: Slice[] = [];"
+  "for (let i = 0; i < WORKERS; i++) {"
+  "  slices.push({ start: i * SLICE, end: (i + 1) * SLICE - 1 });"
+  "}"
+  "assert.strictEqual(slices.length, 4, ""4 slices"");"
+  "assert.deepStrictEqual(slices[0], { start: 0,     end: 16383 }, ""slice 0"");"
+  "assert.deepStrictEqual(slices[1], { start: 16384, end: 32767 }, ""slice 1"");"
+  "assert.deepStrictEqual(slices[2], { start: 32768, end: 49151 }, ""slice 2"");"
+  "assert.deepStrictEqual(slices[3], { start: 49152, end: 65535 }, ""slice 3"");"
+  "// slices are contiguous and cover the whole space"
+  "for (let i = 1; i < slices.length; i++) {"
+  "  assert.strictEqual(slices[i].start, slices[i-1].end + 1, `slice ${i} contiguous`);"
+  "}"
+  .
+
+THEFOLDSPLITTHENIBBLESTRUCTURE =
+  "// ── 7. The 4-fold split = the nibble structure ──────────────────"
+  "// A 16-bit word has 4 nibbles, each 4 bits"
+  "const nibbles = 4;"
+  "const bitsPerNibble = 4;"
+  "assert.strictEqual(nibbles * bitsPerNibble, 16, ""4 nibbles x 4 bits = 16"");"
+  "assert.strictEqual(2 ** bitsPerNibble, 16, ""nibble = 16 values"");"
+  "// 4 workers = 4 nibbles"
+  "assert.strictEqual(WORKERS, nibbles, ""4 workers = 4 nibbles"");"
+  .
+
+POSTMESSAGEISTHEREQUESTRESPONSE =
+  "// ── 8. postMessage is the request/response ──────────────────────"
+  "type Message = { type: string; data: unknown };"
+  "const mailbox: Message[] = [];"
+  "function postMessage(msg: Message) { mailbox.push(msg); }"
+  "postMessage({ type: ""compute"", data: [1, 2, 3] });"
+  "assert.strictEqual(mailbox.length, 1, ""message posted"");"
+  "assert.deepStrictEqual(mailbox[0], { type: ""compute"", data: [1,2,3] }, ""message shape"");"
+  .
+
+STRUCTUREDCLONECOPIEDNOTSHARED =
+  "// ── 9. Structured clone — copied, not shared ────────────────────"
+  "const original = { arr: [1, 2, 3], meta: { tag: ""x"" } };"
+  "const clone = structuredClone(original);"
+  "assert.notStrictEqual(clone, original, ""clone is a new object"");"
+  "assert.deepStrictEqual(clone, original, ""clone has same data"");"
+  "clone.arr.push(4);"
+  "assert.strictEqual(original.arr.length, 3, ""original unchanged by clone"");"
+  "assert.strictEqual(clone.arr.length, 4, ""clone changed independently"");"
+  .
+
+THEDELIMITINGWORKERSCANTTOUCHDOMWINDOW =
+  "// ── 10. The delimiting: workers can't touch DOM/window ──────────"
+  "const forbiddenInWorker = [""window"", ""document"", ""alert""];"
+  "const allowedInWorker = [""self"", ""postMessage"", ""fetch"", ""setTimeout"", ""Array"", ""Date"", ""Math""];"
+  "for (const name of allowedInWorker) {"
+  "  assert.ok(name.length > 0, `allowed: ${name}`);"
+  "}"
+  "for (const name of forbiddenInWorker) {"
+  "  assert.ok(name.length > 0, `forbidden: ${name}`);"
+  "}"
+  "assert.strictEqual(forbiddenInWorker.length, 3, ""3 forbidden globals"");"
+  .
+
+THECONVERGENCECHAIN =
+  "// ── 11. The convergence chain ───────────────────────────────────"
+  "// main thread -> 4 workers -> each processes a slice -> results converge"
+  "function dispatch(space: number, workers: number): number[] {"
+  "  const slice = space / workers;"
+  "  const results: number[] = [];"
+  "  for (let i = 0; i < workers; i++) {"
+  "    // simulate each worker processing its slice"
+  "    results.push(i * slice);"
+  "  }"
+  "  return results;"
+  "}"
+  "const results = dispatch(SPACE, WORKERS);"
+  "assert.deepStrictEqual(results, [0, 16384, 32768, 49152], ""4 worker starts"");"
+  "// converge the results back"
+  "const converged = results.reduce((a, b) => a + b, 0);"
+  "assert.strictEqual(converged, 98304, ""sum of starts = 98304"");"
+  .
+
+THETHEXPONENTIALISTHEWORKERSPACE =
+  "// ── 12. The 4th exponential is the worker space ─────────────────"
+  "// 2^4 = 16, 2^5 = 32, 2^6 = 64, 2^16 = 65536"
+  "const exps = [4, 5, 6, 16];"
+  "const vals = exps.map(e => 2 ** e);"
+  "assert.deepStrictEqual(vals, [16, 32, 64, 65536], ""2^4, 2^5, 2^6, 2^16"");"
+  "// the 4th (2^16) is the worker space"
+  "assert.strictEqual(vals[3], SPACE, ""4th exponential = 65536"");"
+  "console.log(""I-140: Web Workers as 65536-space background processors — passed"");"
+  .

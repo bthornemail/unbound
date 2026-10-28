@@ -1,0 +1,97 @@
+RECORD = HEAD ONEDIALTHREESIZESP WHICHPERIODSCLOSEONTHEMASTERCLOCKP THEPRECESSIONASTHECOMPONENTCOMPUTESITP THEFULLCLOSUREP THEISTHEREASONP ONLYTHEFIVEBLOCKDIALISNOTAPOWEROFTWOP P THECALENDARCYCLESP .
+
+HEAD =
+  "// i230.ts — I-230: the sonar's 75 is the 60-in-64 dial with five blocks, and closes at 25,200 = 7 x 3 x 5 x 240"
+  "//"
+  "// The author, 2026-10-26, on SONAR_PERIOD = 75 in unbound's Atomic Incidence Surface (""5 channels"
+  "// * 15 lanes""): ""I need to have an overarching view of this variable because it's the full closure"
+  "// I was reaching and could not complete"", then ""I would like a proof and claim for this also""."
+  "// The claim, with its predictions stated here before the checks:"
+  "//"
+  "//   P1  60, 240 and 75 are the same dial: blocks of 16 slots, 15 carrying time (4, 16 and 5 blocks)"
+  "//   P2  60 closes on the 5040 clock; 75 does not, and 5040 mod 75 = 15, one channel exactly"
+  "//   P3  so the sonar precesses: each master cycle starts it one channel later, 0 1 2 3 4, then 0"
+  "//   P4  it closes at lcm(5040, 75) = 25,200 = 5 x 5040 = 7 x 3 x 5 x 240: a 5-part counter added"
+  "//       to the 60-in-64 stack (7 x 3 x 240 = 5040)"
+  "//   P5  the reason is the 5: 15 carries one 5; four channels keep one (60), five channels make two"
+  "//       (75 = 3 x 5^2), and 5040 = 7! has only one; the whole 80-slot dial (5 x 16) does close"
+  "//   P6  of the three dials only the five-block one is not a power of two (64, 256, but 80)"
+  "//   P7  525 = lcm(7, 75) = 7 x 75, the Fano period against the sonar (the component's % 525)"
+  "//   P8  25,200 closes the 4-, 28- and 400-year cycles of the calendar, and not the 19-year one"
+  "//"
+  "// The arithmetic is asserted. That the fifth channel is the hidden 5 of 5!, a time zone, or the"
+  "// 6000 years is the author's reading and stays open."
+  "import assert from ""node:assert"";"
+  "const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a);"
+  "const lcm = (a: number, b: number) => (a / gcd(a, b)) * b;"
+  "const fives = (n: number) => { let k = 0; while (n % 5 === 0) { n /= 5; k++; } return k; };"
+  "const MASTER = 5040, LANES = 15, SLOTS = 16, SONAR = 75;"
+  .
+
+ONEDIALTHREESIZESP =
+  "// ── 1. One dial, three sizes (P1) ──────────────────────────────"
+  "assert.equal(MASTER, 1 * 2 * 3 * 4 * 5 * 6 * 7, ""the master clock is 7! = 5040"");"
+  "for (const [blocks, used] of [[4, 60], [16, 240], [5, 75]])"
+  "  assert.equal(blocks * LANES, used, `${blocks} blocks of 15 time slots are ${used}`);"
+  "assert.equal(4 * SLOTS - 60, 4, ""the small dial holds back 4 of 64"");"
+  "assert.equal(16 * SLOTS - 240, 16, ""the large dial holds back 16 of 256"");"
+  "assert.equal(5 * SLOTS - SONAR, 5, ""the sonar's dial holds back 5 of 80"");"
+  .
+
+WHICHPERIODSCLOSEONTHEMASTERCLOCKP =
+  "// ── 2. Which periods close on the master clock (P2) ────────────"
+  "assert.equal(MASTER % 60, 0, ""60 closes: 5040 = 84 x 60"");"
+  "assert.notEqual(MASTER % SONAR, 0, ""75 does not divide 5040"");"
+  "assert.equal(MASTER % SONAR, LANES, ""5040 mod 75 = 15: the shift is one channel exactly"");"
+  .
+
+THEPRECESSIONASTHECOMPONENTCOMPUTESITP =
+  "// ── 3. The precession, as the component computes it (P3) ───────"
+  "// channel = floor((tick mod SONAR) / LANES), at the first tick of each master cycle"
+  "const startChannel = (cycle: number) => Math.floor(((cycle * MASTER) % SONAR) / LANES);"
+  "assert.deepEqual([0, 1, 2, 3, 4, 5].map(startChannel), [0, 1, 2, 3, 4, 0], ""each master cycle starts one channel later"");"
+  "const visits = [0, 0, 0, 0, 0];"
+  "for (let t = 0; t < lcm(MASTER, SONAR); t++) visits[Math.floor((t % SONAR) / LANES)]++;"
+  "assert.ok(visits.every((v) => v === visits[0]), ""over the full closure every channel gets the same number of ticks"");"
+  .
+
+THEFULLCLOSUREP =
+  "// ── 4. The full closure (P4) ───────────────────────────────────"
+  "assert.equal(lcm(MASTER, SONAR), 25200, ""lcm(5040, 75) = 25,200"");"
+  "assert.equal(25200, 5 * MASTER, ""five master cycles"");"
+  "assert.equal(7 * 3 * 240, MASTER, ""the 60-in-64 stack: 7 x 3 x 240 = 5040"");"
+  "assert.equal(7 * 3 * 5 * 240, 25200, ""the closure adds a 5-part counter: 7 x 3 x 5 x 240"");"
+  .
+
+THEISTHEREASONP =
+  "// ── 5. The 5 is the reason (P5) ────────────────────────────────"
+  "assert.equal(fives(LANES), 1, ""15 = 3 x 5 carries one 5"");"
+  "assert.equal(fives(60), 1, ""four channels keep one 5"");"
+  "assert.equal(fives(SONAR), 2, ""five channels make two: 75 = 3 x 5^2"");"
+  "assert.equal(fives(MASTER), 1, ""7! has one 5, from 5!"");"
+  "assert.equal(fives(25200), 2, ""the closure has 5^2"");"
+  "assert.equal(MASTER % (5 * SLOTS), 0, ""the whole 80-slot dial closes: 5040 = 63 x 80"");"
+  .
+
+ONLYTHEFIVEBLOCKDIALISNOTAPOWEROFTWOP =
+  "// ── 6. Only the five-block dial is not a power of two (P6) ──────"
+  "const pow2 = (n: number) => (n & (n - 1)) === 0;"
+  "assert.ok(pow2(4 * SLOTS) && pow2(16 * SLOTS), ""64 and 256 are powers of two"");"
+  "assert.ok(!pow2(5 * SLOTS), ""80 = 5 x 16 is not"");"
+  .
+
+P =
+  "// ── 7. 525 (P7) ────────────────────────────────────────────────"
+  "assert.equal(lcm(7, SONAR), 525, ""lcm(7, 75) = 525"");"
+  "assert.equal(525, 7 * SONAR, ""seven sonar periods"");"
+  .
+
+THECALENDARCYCLESP =
+  "// ── 8. The calendar cycles (P8) ────────────────────────────────"
+  "assert.deepEqual([4, 28, 400].map((y) => 25200 % y), [0, 0, 0], ""25,200 closes the 4-, 28- and 400-year cycles"");"
+  "assert.notEqual(25200 % 19, 0, ""and not the 19-year lunar cycle"");"
+  "console.log(""I-230: the sonar's 75 is the 60-in-64 dial with five blocks, and closes at 25,200 = 7 x 3 x 5 x 240 — passed"");"
+  "console.log(""  60 = 4 x 15, 240 = 16 x 15, 75 = 5 x 15; 5040 mod 75 = 15, one channel per master cycle"");"
+  "console.log(""  start channels 0 1 2 3 4 0; closure lcm(5040, 75) = 25,200 = 5 x 5040; 75 = 3 x 5^2 against 7!'s single 5"");"
+  "console.log(""  525 = 7 x 75; 25,200 closes the 4-, 28- and 400-year cycles, not the 19"");"
+  .

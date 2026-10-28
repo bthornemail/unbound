@@ -1,0 +1,59 @@
+RECORD = HEAD THEOFCODE ISTHEBOOT THETAPCODE THEUSABLESTREAM THEREADINGSTHEAUTHORS .
+
+HEAD =
+  "// i205.ts — I-205: the delineation rule — the 2-of-5 encoding, tap code to"
+  "// Morse, and the boot"
+  "//"
+  "// The author, 2026-10-14: ""the delineation rule is for i205 as 20 5 as the"
+  "// boot because the delineation rule is the 2 of 5 encoding process same as"
+  "// from tap code to morse and makes it a usable stream for the 20F5 or the"
+  "// 20 F5."""
+  "import assert from ""node:assert"";"
+  .
+
+THEOFCODE =
+  "// ── 1. The 2-of-5 code ───────────────────────────────────────"
+  "// Every symbol is 5 bits with exactly 2 set. C(5,2) = 10 valid codes."
+  "const popcount = (n: number) => n.toString(2).split(""1"").length - 1;"
+  "const valid25 = [...Array(32).keys()].filter((n) => popcount(n) === 2);"
+  "assert.equal(valid25.length, 10, ""C(5,2) = 10"");"
+  "assert.deepEqual(valid25, [3, 5, 6, 9, 10, 12, 17, 18, 20, 24]);"
+  "// 20 is one of them."
+  "assert.equal(popcount(20), 2, ""20 = 0b10100, two bits set"");"
+  "assert.equal(20, 0b10100);"
+  "assert.ok(valid25.includes(20));"
+  .
+
+ISTHEBOOT =
+  "// ── 2. 20 5 is the boot ──────────────────────────────────────"
+  "// The symbol 20 in a 5-bit frame."
+  "assert.equal(20, 0b10100);"
+  "assert.equal(5, 5);"
+  "// As a command pair: 20 and 5, two tags separated by a space."
+  "assert.equal(/^[A-Z0-9]{1,8}$/.test(""20""), true);"
+  "assert.equal(/^[A-Z0-9]{1,8}$/.test(""5""), true);"
+  .
+
+THETAPCODE =
+  "// ── 3. The tap code ──────────────────────────────────────────"
+  "// Each letter is a pair (row, column) in the 5x5 Polybius square."
+  "assert.equal(5 * 5, 25);"
+  .
+
+THEUSABLESTREAM =
+  "// ── 4. The usable stream ─────────────────────────────────────"
+  "// 20F5 is a tag; 20 F5 is a command pair."
+  "assert.equal(/^[A-Z0-9]{1,8}$/.test(""20F5""), true);"
+  "assert.equal(""20F5"".length, 4);"
+  "// 20F5 as hex = 0x20F5."
+  "assert.equal(parseInt(""20F5"", 16), 0x20f5);"
+  "assert.equal(0x20f5, 8437);"
+  .
+
+THEREADINGSTHEAUTHORS =
+  "// ── 5. The readings (the author's) ───────────────────────────"
+  "// - The delineation rule is the 2-of-5 encoding."
+  "// - It bridges tap code to Morse."
+  "// - It makes the boot (20 5) a usable stream (20F5 / 20 F5)."
+  "// These are held as the author's readings, not asserted."
+  .

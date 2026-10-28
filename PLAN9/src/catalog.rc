@@ -1,0 +1,21 @@
+#!/bin/rc
+# catalog.rc - inside Plan 9: every _CATALOG entry from YAML to Wirth syntax
+# notation with yaml2wsn.awk, each read by zwsn, written to the output disk.
+rfork e
+ifs='
+'
+w=/tmp/zk
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zwsn.c && 8l -o $w/zwsn zwsn.8 || exit compile
+cd $p/run/catalog
+for(f in `{du -a . | sed 's/^[0-9]*	//; s,^\./,,' | grep '\.yaml$'}){
+	o=$w/zout/`{echo $f | sed 's/\.yaml$/.wsn/'}
+	mkdir -p `{basename -d $o}
+	awk -f $p/src/yaml2wsn.awk $f >$o || echo catalog.rc: $f did not convert
+	$w/zwsn $o | sed 's,^'$w'/zout/,,'
+}
+@{cd $w && tar cf /dev/sd02/data zout} || exit tar

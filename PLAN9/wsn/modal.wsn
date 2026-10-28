@@ -1,0 +1,3 @@
+SLOT   = "IS" | "OF" .
+VERTEX = "GOD" " " SLOT " " "WORD" | "WORD" " " SLOT " " "GOD" .
+MODAL  = "GOD" [ " " SLOT ] " " "WORD" | "WORD" [ " " SLOT ] " " "GOD" .

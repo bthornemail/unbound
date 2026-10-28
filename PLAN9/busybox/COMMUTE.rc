@@ -1,0 +1,14 @@
+#!/bin/rc
+# COMMUTE: the encoding switch and the direction switch commute (B-COMMUTE.sh)
+rfork e
+ifs='
+'
+fn fail { echo 'FAIL(COMMUTE):' $* >[1=2]; exit fail }
+R=A-Za-z; T=N-ZA-Mn-za-m
+# assert: tr|rev == rev|tr for several strings
+for(s in 'Hello World' abcXYZ123 'The Light Garden'){
+	a=`{echo -n $s | tr $R $T | $bin/rev}
+	b=`{echo -n $s | $bin/rev | tr $R $T}
+	if(! ~ $a $b) fail 'tr|rev != rev|tr for ['$s']: ['$a'] vs ['$b']'
+}
+echo 'COMMUTE: the two switches commute - passed'

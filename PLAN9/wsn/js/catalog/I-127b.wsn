@@ -1,0 +1,27 @@
+RECORD = HEAD .
+
+HEAD =
+  "// i127b.ts — the octet of Atomics spaces"
+  "import assert from ""node:assert"";"
+  "const buf = Buffer.alloc(128);"
+  "const spaces: [string, any, any, any][] = ["
+  "  [""u8"",     new Uint8Array(buf.buffer,     0, 128), 0,  0 ],"
+  "  [""i8"",     new Int8Array(buf.buffer,      0, 128), 0,  0 ],"
+  "  [""u16"",    new Uint16Array(buf.buffer,    0,  64), 0,  0 ],"
+  "  [""i16"",    new Int16Array(buf.buffer,     0,  64), 0,  0 ],"
+  "  [""u32"",    new Uint32Array(buf.buffer,    0,  32), 0,  0 ],"
+  "  [""i32"",    new Int32Array(buf.buffer,     0,  32), 0,  0 ],"
+  "  [""big64"",  new BigInt64Array(buf.buffer,  0,  16), 0n, 0n],"
+  "  [""ubig64"", new BigUint64Array(buf.buffer, 0,  16), 0n, 0n],"
+  "];"
+  "assert.strictEqual(spaces.length, 8, ""octet of spaces"");"
+  "for (const [name, view, exp, repl] of spaces) {"
+  "  const r = Atomics.compareExchange(view, 0, exp, repl);"
+  "  assert.strictEqual(r, exp, `${name} works`);"
+  "}"
+  "// the octet decomposes as 4 widths x 2 signedness"
+  "const widths = [8, 16, 32, 64];"
+  "const signs  = [""u"", ""i""];"
+  "assert.strictEqual(widths.length * signs.length, 8, ""4 x 2 = 8"");"
+  "console.log(""I-127b: the octet of Atomics spaces — passed"");"
+  .

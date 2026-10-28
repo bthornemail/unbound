@@ -1,0 +1,51 @@
+POLYNOMIALS = CHECKED .
+
+CHECKED = COQ COQA LISTNOTATIONS SCOPE POLYNOMIALSOWNER POLYNOMIALSPROOF F POLYNOMIAL POLYZERO POLYX POLYNOMIALSPOLYXDEGREESHAPE .
+
+COQ =
+  "From Coq Require Import Lists.List."
+  .
+
+COQA =
+  "From Coq Require Import NArith.NArith."
+  .
+
+LISTNOTATIONS =
+  "Import ListNotations."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+POLYNOMIALSOWNER =
+  "Definition polynomials_owner : Prop := True."
+  .
+
+POLYNOMIALSPROOF =
+  "Definition polynomials_proof : polynomials_owner := I."
+  .
+
+F =
+  "Definition f2 := bool."
+  .
+
+POLYNOMIAL =
+  "Definition polynomial := list f2."
+  .
+
+POLYZERO =
+  "Definition poly_zero : polynomial := []."
+  .
+
+POLYX =
+  "Definition poly_x : polynomial := [false; true]."
+  .
+
+POLYNOMIALSPOLYXDEGREESHAPE =
+  "Theorem polynomials_poly_x_degree_shape :"
+  "  List.length poly_x = 2%nat."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

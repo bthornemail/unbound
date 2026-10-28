@@ -1,0 +1,11 @@
+#!/bin/rc
+# query.rc - inside Plan 9: the PL360 step (zquery) over one face of the
+# tetrahedron, GOD IS WORD, GOD OF WORD, WORD IS GOD.
+rfork e
+w=/tmp/zq2
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zquery.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c zquery.c && 8l -o $w/zquery zquery.8 || exit compile
+{ echo 'GOD IS WORD'; echo 'GOD OF WORD'; echo 'WORD IS GOD' } | $w/zquery

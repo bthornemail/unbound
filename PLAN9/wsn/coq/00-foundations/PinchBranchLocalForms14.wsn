@@ -1,0 +1,39 @@
+PINCHBRANCHLOCALFORMS = CHECKED .
+
+CHECKED = COQ SCOPE PINCHBRANCHLOCALFORMSOWNER PINCHBRANCHLOCALFORMSPROOF PINCHBRANCHLOCALFORMSLOW PINCHBRANCHLOCALFORMSHIGH PINCHBRANCHLOCALFORMSLOWFULL PINCHBRANCHLOCALFORMSHIGHFULL .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+PINCHBRANCHLOCALFORMSOWNER =
+  "Definition pinch_branch_local_forms14_owner : Prop := True."
+  .
+
+PINCHBRANCHLOCALFORMSPROOF =
+  "Definition pinch_branch_local_forms14_proof : pinch_branch_local_forms14_owner := I."
+  .
+
+PINCHBRANCHLOCALFORMSLOW =
+  "Definition pinch_branch_local_forms14_low (x : N) : N := N.land x 0x7F."
+  .
+
+PINCHBRANCHLOCALFORMSHIGH =
+  "Definition pinch_branch_local_forms14_high (x : N) : N := N.lxor (N.land x 0x7F) 0x80."
+  .
+
+PINCHBRANCHLOCALFORMSLOWFULL =
+  "Theorem pinch_branch_local_forms14_low_full :"
+  "  pinch_branch_local_forms14_low 0xFF = 0x7F."
+  "Proof. vm_compute; reflexivity. Qed."
+  .
+
+PINCHBRANCHLOCALFORMSHIGHFULL =
+  "Theorem pinch_branch_local_forms14_high_full :"
+  "  pinch_branch_local_forms14_high 0xFF = 0xFF."
+  "Proof. vm_compute; reflexivity. Qed."
+  .

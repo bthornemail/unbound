@@ -1,0 +1,17 @@
+#!/bin/rc
+# ROT2: rot13 (tr) is its own inverse (B-ROT2.sh)
+rfork e
+ifs='
+'
+fn fail { echo 'FAIL(ROT2):' $* >[1=2]; exit fail }
+R=A-Za-z; T=N-ZA-Mn-za-m
+# assert: rot13 of Hello is Uryyb
+if(! ~ `{echo -n Hello | tr $R $T} Uryyb) fail rot13 Hello
+# assert: rot13 leaves digits and punctuation unchanged (a1!z -> n1!m)
+if(! ~ `{echo -n 'a1!z' | tr $R $T} 'n1!m') fail rot13 'a1!z'
+# assert: rot13 applied twice is the identity
+for(s in Hello 'The Light Garden 2026' XyZ-abc){
+	got=`{echo -n $s | tr $R $T | tr $R $T}
+	if(! ~ $got $s) fail 'rot13|rot13 changed ['$s'] -> ['$got']'
+}
+echo 'ROT2: rot13 is its own inverse - passed'

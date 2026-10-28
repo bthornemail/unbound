@@ -1,0 +1,4 @@
+#!/bin/rc
+# WILSON (B-WILSON.sh): runs wilson.c, compiled by busybox.rc
+rfork e
+$bin/wilson || exit fail

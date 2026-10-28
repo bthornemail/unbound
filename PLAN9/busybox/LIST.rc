@@ -1,0 +1,14 @@
+#!/bin/rc
+# LIST: an applet's name is the leaf of its install path (B-LIST.sh), on
+# Plan 9's own /bin in place of busybox --list and --list-full
+rfork e
+fn fail { echo 'FAIL(LIST):' $* >[1=2]; exit fail }
+d=/tmp/bb.$pid; mkdir -p $d
+ls -p /bin > $d/names
+ls /bin > $d/paths
+# assert: the two listings have the same number of lines
+if(! ~ `{wc -l < $d/names} `{wc -l < $d/paths}) fail line counts differ
+# assert: stripping the directory from each path yields the names, line for line
+sed 's#.*/##' $d/paths | cmp -s /fd/0 $d/names || fail 'basename(paths) != names'
+rm -rf $d
+echo 'LIST: an applet''s name is the leaf of its install path - passed'

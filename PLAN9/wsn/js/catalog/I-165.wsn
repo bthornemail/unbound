@@ -1,0 +1,235 @@
+RECORD = HEAD EVERYTHINGISOUTSIDEOFTIME THESEEDISPRESENTATRESETNOTATATICK THEENGRAMISPRESEEDEDNOTDATED THECIRCULATORCYCLESWITHOUTAPERIOD THEFRAMESAREINDEXEDNOTTIMESTAMPED THEOBSERVERISACIRCULATOR THEINSTANTIATIONOFOBSERVATIONISTHESAMPLE THEDERIVATIVEISAFUNCTIONOFPOSITIONNOTTIME THEINSTANTIATIONOFOBSERVATIONTHEDERIVATIVE SAMEASISDOMMATRIX THEDERIVATIVEANDTHEINTERPOLATIONARETHESAME THEOBSERVERSTIMEOFINSTANTIATIONTHEDERIVATIVE EVERYTHINGISOUTSIDEOFTIMEA THEDERIVATIVEISTHETIMEOFINSTANTIATION THEPUNCHLINE .
+
+HEAD =
+  "// i165.ts — I-165: everything is outside of time; instantiation is the derivative"
+  "import assert from ""node:assert"";"
+  .
+
+EVERYTHINGISOUTSIDEOFTIME =
+  "// ── 1. Everything is outside of time ──────────────────────────"
+  "// The reset sequence is SEQUENCED, not timed."
+  "type Step = { order: number; name: string };"
+  "const sequence: Step[] = ["
+  "  { order: 1, name: ""POWER"" },"
+  "  { order: 2, name: ""RESET"" },"
+  "  { order: 3, name: ""BIOS"" },"
+  "  { order: 4, name: ""POST"" },"
+  "  { order: 5, name: ""READ_MBR"" },"
+  "  { order: 6, name: ""JUMP_MBR"" },"
+  "  { order: 7, name: ""BOOT_SECTOR"" },"
+  "  { order: 8, name: ""KERNEL"" },"
+  "  { order: 9, name: ""USER_CODE"" },"
+  "];"
+  "// the sequence has order, not time"
+  "for (const s of sequence) {"
+  "  assert.strictEqual(typeof s.order, ""number"", `${s.name} has an order`);"
+  "  assert.ok(!(""time"" in s), `${s.name} has no timestamp`);"
+  "}"
+  .
+
+THESEEDISPRESENTATRESETNOTATATICK =
+  "// ── 2. The seed is present at reset, not at a tick ───────────"
+  "const RESET_VECTOR = 0xFFFFFFF0;"
+  "const seedIsAtReset = (at_reset: boolean) => at_reset;"
+  "assert.strictEqual(seedIsAtReset(true), true, ""the seed is at reset"");"
+  "// no clock is involved"
+  .
+
+THEENGRAMISPRESEEDEDNOTDATED =
+  "// ── 3. The engram is preseeded, not dated ────────────────────"
+  "const engram = {"
+  "  seed: RESET_VECTOR,"
+  "  size: 2 ** 32,"
+  "  dated: false,"
+  "};"
+  "assert.strictEqual(engram.dated, false, ""the engram is not dated"");"
+  "assert.strictEqual(engram.seed, 0xFFFFFFF0, ""the seed is at reset"");"
+  .
+
+THECIRCULATORCYCLESWITHOUTAPERIOD =
+  "// ── 4. The circulator cycles without a period ────────────────"
+  "type Circulator = { cycle: number; position: number };"
+  "function step(c: Circulator): void {"
+  "  c.position = (c.position + 1) % c.cycle;"
+  "}"
+  "const c: Circulator = { cycle: 7, position: 0 };"
+  "const positions: number[] = [];"
+  "for (let i = 0; i < 15; i++) {"
+  "  positions.push(c.position);"
+  "  step(c);"
+  "}"
+  "assert.deepStrictEqual("
+  "  positions.slice(0, 7),"
+  "  [0, 1, 2, 3, 4, 5, 6],"
+  "  ""the cycle goes 0..6"""
+  ");"
+  "assert.deepStrictEqual("
+  "  positions.slice(7, 14),"
+  "  [0, 1, 2, 3, 4, 5, 6],"
+  "  ""then repeats"""
+  ");"
+  "// there's no period in seconds; the period is the cycle length"
+  .
+
+THEFRAMESAREINDEXEDNOTTIMESTAMPED =
+  "// ── 5. The frames are indexed, not timestamped ───────────────"
+  "const frames = Array.from({ length: 240 }, (_, i) => i);"
+  "assert.strictEqual(frames.length, 240, ""240 frames"");"
+  "assert.strictEqual(frames[0], 0, ""first frame"");"
+  "assert.strictEqual(frames[239], 239, ""last frame"");"
+  "// the frames are indexed, not timestamped"
+  .
+
+THEOBSERVERISACIRCULATOR =
+  "// ── 6. The observer is a circulator ──────────────────────────"
+  "// The observer samples the cycle at a phase."
+  "type Observer = { phase: number; cycle: number };"
+  "function observe(o: Observer): number {"
+  "  return (o.phase % o.cycle + o.cycle) % o.cycle;"
+  "}"
+  "const observer: Observer = { phase: 5, cycle: 12 };"
+  "assert.strictEqual(observe(observer), 5, ""the observer's sample is 5"");"
+  .
+
+THEINSTANTIATIONOFOBSERVATIONISTHESAMPLE =
+  "// ── 7. The instantiation of observation is the sample ────────"
+  "// The instantiation isn't a time; it's a phase."
+  "const instantiation = observe(observer);"
+  "assert.strictEqual(instantiation, 5, ""the instantiation is the sample"");"
+  "// no clock involved"
+  .
+
+THEDERIVATIVEISAFUNCTIONOFPOSITIONNOTTIME =
+  "// ── 8. The derivative is a function of position, not time ────"
+  "// The derivative of f at x: f'(x)"
+  "// It's the rate of change AT A POINT, independent of time."
+  "function derivative(f: (x: number) => number, x: number, h = 1e-6): number {"
+  "  return (f(x + h) - f(x - h)) / (2 * h);"
+  "}"
+  "const f = (x: number) => x * x;"
+  "assert.ok(Math.abs(derivative(f, 3) - 6) < 1e-3, ""f'(3) = 6"");"
+  "assert.ok(Math.abs(derivative(f, 5) - 10) < 1e-3, ""f'(5) = 10"");"
+  "// the derivative is a function of x, not t"
+  .
+
+THEINSTANTIATIONOFOBSERVATIONTHEDERIVATIVE =
+  "// ── 9. The instantiation of observation = the derivative ─────"
+  "// At the observer's phase, the rate of change is the derivative."
+  "function observationDerivative(phase: number): number {"
+  "  // The observation at the phase is the rate of change at that phase."
+  "  // Take the phase as the point, and the derivative of the"
+  "  // cycle's parameterization at that point."
+  "  return derivative((x) => Math.sin(x), phase);"
+  "}"
+  "// at phase 0, the derivative of sin is 1 (cos(0) = 1)"
+  "assert.ok(Math.abs(observationDerivative(0) - 1) < 1e-3, ""derivative at phase 0 is 1"");"
+  "// at phase π/2, the derivative is 0"
+  "assert.ok(Math.abs(observationDerivative(Math.PI / 2)) < 1e-3,"
+  "  ""derivative at phase π/2 is 0"");"
+  .
+
+SAMEASISDOMMATRIX =
+  "// ── 10. Same as I-149's DOMMatrix ───────────────────────────"
+  "// The DOMMatrix is the interpolation operator over IPv4 (I-149)."
+  "// Interpolation: the value at a point between known values."
+  "function interpolate(a: number, b: number, t: number): number {"
+  "  return a + (b - a) * t;"
+  "}"
+  "assert.strictEqual(interpolate(0, 10, 0.5), 5, ""interpolated midpoint"");"
+  "// the interpolation is a function of position (t), not time"
+  "assert.strictEqual(interpolate(0, 10, 0), 0, ""at t=0, the value is a"");"
+  "assert.strictEqual(interpolate(0, 10, 1), 10, ""at t=1, the value is b"");"
+  .
+
+THEDERIVATIVEANDTHEINTERPOLATIONARETHESAME =
+  "// ── 11. The derivative and the interpolation are the same ────"
+  "// Both are functions of position."
+  "// Interpolation: what's the value at t?"
+  "// Derivative: what's the rate at t?"
+  "// Both depend on t (position), not on wall-clock time."
+  "type Positional = { at: number; value: number };"
+  "const interpPoints: Positional[] = ["
+  "  { at: 0.0, value: 0 },"
+  "  { at: 0.5, value: 5 },"
+  "  { at: 1.0, value: 10 },"
+  "];"
+  "// the value at any position is interpolated"
+  "function valueAt(pts: Positional[], t: number): number {"
+  "  for (let i = 0; i < pts.length - 1; i++) {"
+  "    if (t >= pts[i]!.at && t <= pts[i + 1]!.at) {"
+  "      const dt = pts[i + 1]!.at - pts[i]!.at;"
+  "      const dv = pts[i + 1]!.value - pts[i]!.value;"
+  "      return pts[i]!.value + dv * ((t - pts[i]!.at) / dt);"
+  "    }"
+  "  }"
+  "  return NaN;"
+  "}"
+  "assert.strictEqual(valueAt(interpPoints, 0.25), 2.5, ""value at 0.25 is 2.5"");"
+  "assert.strictEqual(valueAt(interpPoints, 0.75), 7.5, ""value at 0.75 is 7.5"");"
+  .
+
+THEOBSERVERSTIMEOFINSTANTIATIONTHEDERIVATIVE =
+  "// ── 12. The observer's time of instantiation = the derivative ─"
+  "// The observer samples at a phase; the sample is the derivative"
+  "// at that phase. So the ""time of instantiation"" is the derivative."
+  "function timeOfInstantiation(phase: number, cycle: number): number {"
+  "  // The instantaneous rate at the phase"
+  "  const theta = (2 * Math.PI * phase) / cycle;"
+  "  return Math.cos(theta);  // derivative of sin"
+  "}"
+  "assert.ok(Math.abs(timeOfInstantiation(0, 12) - 1) < 1e-3,"
+  "  ""at phase 0, rate is 1"");"
+  "assert.ok(Math.abs(timeOfInstantiation(3, 12) - 0) < 1e-3,"
+  "  ""at phase 3 (quarter cycle), rate is 0"");"
+  "assert.ok(Math.abs(timeOfInstantiation(6, 12) + 1) < 1e-3,"
+  "  ""at phase 6 (half cycle), rate is -1"");"
+  .
+
+EVERYTHINGISOUTSIDEOFTIMEA =
+  "// ── 13. Everything is outside of time ───────────────────────"
+  "// The reset sequence has order, not timestamps."
+  "// The seed is at reset, not at a time."
+  "// The engram is preseeded, not dated."
+  "// The circulator cycles without a period."
+  "// The frames are indexed, not timestamped."
+  "// The observer samples at a phase, not at a time."
+  "// The derivative is a function of position, not time."
+  "type OutsideTime = {"
+  "  hasOrder: boolean;"
+  "  hasTime: boolean;"
+  "};"
+  "const everything: OutsideTime = { hasOrder: true, hasTime: false };"
+  "assert.strictEqual(everything.hasOrder, true, ""everything has order"");"
+  "assert.strictEqual(everything.hasTime, false, ""nothing has time"");"
+  .
+
+THEDERIVATIVEISTHETIMEOFINSTANTIATION =
+  "// ── 14. The derivative is the time of instantiation ─────────"
+  "// Not a clock time; a positional rate."
+  "type Instantiation = {"
+  "  observer: string;"
+  "  phase: number;"
+  "  derivative: number;"
+  "};"
+  "const inst: Instantiation = {"
+  "  observer: ""the circulator"","
+  "  phase: 0,"
+  "  derivative: timeOfInstantiation(0, 12),"
+  "};"
+  "assert.strictEqual(inst.observer, ""the circulator"", ""the observer is a circulator"");"
+  "assert.ok(Math.abs(inst.derivative - 1) < 1e-3, ""the derivative is 1 at phase 0"");"
+  .
+
+THEPUNCHLINE =
+  "// ── 15. The punchline ───────────────────────────────────────"
+  "// Everything is outside of time. The time of instantiation"
+  "// of observation by an observer-as-circulator is the derivative."
+  "console.log(""I-165: everything is outside of time; instantiation is the derivative — passed"");"
+  "console.log(`  the reset sequence is ordered, not timed`);"
+  "console.log(`  the seed is at reset, not at a clock tick`);"
+  "console.log(`  the engram is preseeded, not dated`);"
+  "console.log(`  the circulators cycle without a period`);"
+  "console.log(`  the frames are indexed, not timestamped`);"
+  "console.log(`  the observer samples at a phase`);"
+  "console.log(`  the time of instantiation is the derivative`);"
+  .

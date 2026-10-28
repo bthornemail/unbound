@@ -1,0 +1,111 @@
+RECORD = HEAD THEBASEBLOCK THEBLOCKSBOUNDARIES BOTHCANDIDATESETSFALLINTHEGAP THEBASEDDISTINCTION COMPARETHEMODREDUCTIONS WHICHONEDELINEATESTHEBOUNDARYTEST THEPATTERNTHATDOESDELINEATE THEATOMICSCALLSBOTHWAYS .
+
+HEAD =
+  "// i133.ts — I-133: base-36 delineation via 59/60, 127, 63"
+  "import assert from ""node:assert"";"
+  .
+
+THEBASEBLOCK =
+  "// ── 1. The base-36 block ─────────────────────────────────────────"
+  "const A = (c: number) => 0x41 <= c && c <= 0x5A;  // A-Z"
+  "const D = (c: number) => 0x30 <= c && c <= 0x39;  // 0-9"
+  "const is36 = (c: number) => A(c) || D(c);"
+  "let count = 0;"
+  "for (let c = 0; c < 128; c++) if (is36(c)) count++;"
+  "assert.strictEqual(count, 36, ""block has exactly 36 symbols"");"
+  .
+
+THEBLOCKSBOUNDARIES =
+  "// ── 2. The block's boundaries ────────────────────────────────────"
+  "// lower: 0x30 = 48 ('0')"
+  "// upper: 0x5A = 90 ('Z')"
+  "// gap:   0x3A-0x40 = 58-64 (':;<=>?@')"
+  "assert.strictEqual(0x30, 48, ""first symbol 0x30 = 48"");"
+  "assert.strictEqual(0x5A, 90, ""last symbol 0x5A = 90"");"
+  "assert.strictEqual(0x3A, 58, ""gap starts at 0x3A = 58"");"
+  "assert.strictEqual(0x40, 64, ""gap ends at 0x40 = 64"");"
+  "// 59 and 60 both fall IN the gap"
+  "assert.ok(0x3A <= 59 && 59 <= 0x40, ""59 (';') is in the gap"");"
+  "assert.ok(0x3A <= 60 && 60 <= 0x40, ""60 ('<') is in the gap"");"
+  "// neither 59 nor 60 is in the block"
+  "assert.ok(!is36(59), ""59 is not in the block"");"
+  "assert.ok(!is36(60), ""60 is not in the block"");"
+  "// 63 also in the gap"
+  "assert.ok(0x3A <= 63 && 63 <= 0x40, ""63 ('?') is in the gap"");"
+  "assert.ok(!is36(63), ""63 is not in the block"");"
+  "// 127 = DEL, not in the block"
+  "assert.ok(!is36(127), ""127 (DEL) is not in the block"");"
+  .
+
+BOTHCANDIDATESETSFALLINTHEGAP =
+  "// ── 3. Both candidate sets fall in the gap ──────────────────────"
+  "const setA = [59, 127, 63];"
+  "const setB = [60, 127, 63];"
+  "for (const v of setA) assert.ok(!is36(v), `A: ${v} outside block`);"
+  "for (const v of setB) assert.ok(!is36(v), `B: ${v} outside block`);"
+  .
+
+THEBASEDDISTINCTION =
+  "// ── 4. The 0/1-based distinction ────────────────────────────────"
+  "// 59 = last index before the gap (inclusive end of previous range)"
+  "// 60 = first index of the gap    (exclusive end / start of next)"
+  "assert.strictEqual(59 + 1, 60, ""59 and 60 are adjacent"");"
+  "assert.strictEqual(0x3B, 59, ""59 = 0x3B (';')"");"
+  "assert.strictEqual(0x3C, 60, ""60 = 0x3C ('<')"");"
+  .
+
+COMPARETHEMODREDUCTIONS =
+  "// ── 5. Compare the mod-36 reductions ────────────────────────────"
+  "const m36 = (n: number) => n % 36;"
+  "const A36 = setA.map(m36);"
+  "const B36 = setB.map(m36);"
+  "console.log(""A mod 36:"", A36, ""→"", A36.map(n => n < 10 ? n : String.fromCharCode(0x41 + n - 10)));"
+  "console.log(""B mod 36:"", B36, ""→"", B36.map(n => n < 10 ? n : String.fromCharCode(0x41 + n - 10)));"
+  "assert.notDeepStrictEqual(A36, B36, ""A and B differ mod 36"");"
+  .
+
+WHICHONEDELINEATESTHEBOUNDARYTEST =
+  "// ── 6. Which one delineates? The boundary test ──────────────────"
+  "// A ""delineation"" means: the triple brackets the block."
+  "// The block is 0x30–0x39 ∪ 0x41–0x5A."
+  "// A valid bracket must have one value below, one above, and one at a boundary."
+  "// Both A and B have {59 or 60} (inside the gap), 63 (inside the gap), 127 (above the block)."
+  "// Neither has a value below the block. So neither brackets."
+  "const belowBlock = [59, 60, 63, 127].filter(v => v < 0x30);"
+  "assert.strictEqual(belowBlock.length, 0, ""no values below the block"");"
+  "// To bracket, we'd need one < 0x30 and one > 0x5A."
+  "// 127 > 0x5A ✔ ; 59/60/63 are inside the gap (0x3A-0x40), not below."
+  .
+
+THEPATTERNTHATDOESDELINEATE =
+  "// ── 7. The pattern that DOES delineate ──────────────────────────"
+  "// The natural triple:"
+  "//   0x2F (47, '/')  — last before the block"
+  "//   0x3A (58, ':')  — first after the digits"
+  "//   0x40 (64, '@')  — last before the letters"
+  "//   0x5B (91, '[')  — first after the block"
+  "// The two boundaries with no gap-crossing are 47 and 91."
+  "assert.strictEqual(0x2F, 47, ""47 is just below the block"");"
+  "assert.strictEqual(0x5B, 91, ""91 is just above the block"");"
+  "assert.ok(!is36(47) && !is36(91), ""47 and 91 are outside the block"");"
+  .
+
+THEATOMICSCALLSBOTHWAYS =
+  "// ── 8. The Atomics calls both ways ──────────────────────────────"
+  "const buf = new Uint8Array(128);"
+  "buf.fill(127);  // fill with DEL"
+  "// Set A: index 59"
+  "buf[59] = 127;"
+  "const rA = Atomics.compareExchange(buf, 59, 127, 63);"
+  "assert.strictEqual(rA, 127, ""A: read 127 at index 59"");"
+  "assert.strictEqual(buf[59], 63, ""A: wrote 63 at index 59"");"
+  "// Set B: index 60"
+  "buf[60] = 127;"
+  "const rB = Atomics.compareExchange(buf, 60, 127, 63);"
+  "assert.strictEqual(rB, 127, ""B: read 127 at index 60"");"
+  "assert.strictEqual(buf[60], 63, ""B: wrote 63 at index 60"");"
+  "// both calls succeed independently"
+  "assert.strictEqual(buf[59], 63, ""A left 63 at 59"");"
+  "assert.strictEqual(buf[60], 63, ""B left 63 at 60"");"
+  "console.log(""I-133: base-36 delineation via 59/60, 127, 63 — passed"");"
+  .

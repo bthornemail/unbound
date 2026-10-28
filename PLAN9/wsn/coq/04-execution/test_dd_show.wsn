@@ -1,0 +1,31 @@
+TESTDDSHOW = CHECKED .
+
+CHECKED = COQ SCOPE TESTDDSHOWOWNER TESTDDSHOWPROOF TESTDDSHOWVALUE TESTDDSHOWVALUEISMETATRONWITNESS .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+TESTDDSHOWOWNER =
+  "Definition test_dd_show_owner : Prop := True."
+  .
+
+TESTDDSHOWPROOF =
+  "Definition test_dd_show_proof : test_dd_show_owner := I."
+  .
+
+TESTDDSHOWVALUE =
+  "Definition test_dd_show_value : N := 0x18."
+  .
+
+TESTDDSHOWVALUEISMETATRONWITNESS =
+  "Theorem test_dd_show_value_is_metatron_witness :"
+  "  test_dd_show_value = 0x18."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

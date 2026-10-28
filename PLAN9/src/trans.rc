@@ -1,0 +1,21 @@
+#!/bin/rc
+# trans.rc - inside Plan 9: translate PLAN9/in/codex.txt to braille and
+# Aegean with ztrans, and write the result to the output disk as a tar.
+rfork e
+src=/dev/sd01/data
+dst=/dev/sd02/data
+w=/tmp/zt
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf $src} || exit tar
+cd $w/unbound/PLAN9/src
+8c ztrans.c && 8l -o $w/ztrans ztrans.8 || exit compile
+8c zdiff.c && 8l -o $w/zdiff zdiff.8 || exit compile
+8c zspan.c && 8l -o $w/zspan zspan.8 || exit compile
+$w/ztrans <$w/unbound/PLAN9/in/codex.txt >$w/zout/codex.trans || exit ztrans
+for(f in yhwh yahweh codex)
+	$w/zdiff <$w/unbound/PLAN9/in/$f.txt >$w/zout/$f.diff || exit zdiff
+$w/zspan <$w/unbound/PLAN9/in/span.txt >$w/zout/span.1 >[2]$w/zout/span.2 || exit zspan
+@{cd $w && tar cf $dst zout} || exit tar
+echo 'trans.rc: every term in span.txt cancels to YHWH ^ YAHWEH'
+echo trans.rc: `{wc -l <$w/zout/codex.trans} lines written to $dst

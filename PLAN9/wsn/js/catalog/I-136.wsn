@@ -1,0 +1,151 @@
+RECORD = HEAD THETHREEERRORTYPESPLUSDEFAULT ALLFOURBRANCHFROMONECATCHVALUE THESTANDARDSTREAMSAREFDS THEINTERCHANGE ALLFOURLAYERSCONVERGEAT EVENTTARGETISTHEDOMROOT THECATCHISTHESAMESHAPEATEVERYLAYER THEERRORTAXONOMYFROMII ALLTHREECHANNELSREACHTHECATCHAT .
+
+HEAD =
+  "// i136.ts — I-136: all catches converge at 0"
+  "import assert from ""node:assert"";"
+  .
+
+THETHREEERRORTYPESPLUSDEFAULT =
+  "// ── 1. The three error types plus default ────────────────────────"
+  "const classify = (e: unknown): string =>"
+  "  e instanceof TypeError  ? ""space""   :"
+  "  e instanceof RangeError ? ""range""   :"
+  "  e instanceof EvalError  ? ""code""    :"
+  "                            ""default"";"
+  "assert.strictEqual(classify(new TypeError(""x"")),  ""space"");"
+  "assert.strictEqual(classify(new RangeError(""x"")), ""range"");"
+  "assert.strictEqual(classify(new EvalError(""x"")),  ""code"");"
+  "assert.strictEqual(classify(new Error(""x"")),      ""default"");"
+  .
+
+ALLFOURBRANCHFROMONECATCHVALUE =
+  "// ── 2. All four branch from one catch value ─────────────────────"
+  "{"
+  "  let caught: unknown = undefined;"
+  "  let branch = """";"
+  "  try {"
+  "    throw new RangeError(""out of range"");"
+  "  } catch (e) {"
+  "    caught = e;"
+  "    branch = classify(e);"
+  "  }"
+  "  assert.ok(caught instanceof RangeError, ""caught is the error"");"
+  "  assert.strictEqual(branch, ""range"", ""classified as range"");"
+  "}"
+  "// the catch value is the same object for every branch"
+  "{"
+  "  const errors: unknown[] = ["
+  "    new TypeError(""t""),"
+  "    new RangeError(""r""),"
+  "    new EvalError(""e""),"
+  "    new Error(""d""),"
+  "  ];"
+  "  const classified = errors.map(classify);"
+  "  assert.deepStrictEqual(classified, [""space"",""range"",""code"",""default""],"
+  "    ""all four classify"");"
+  "}"
+  .
+
+THESTANDARDSTREAMSAREFDS =
+  "// ── 3. The standard streams are fds 0, 1, 2 ─────────────────────"
+  "import { stdin, stdout, stderr } from ""node:process"";"
+  "assert.strictEqual(stdin.fd, 0,  ""stdin = fd 0 (catch)"");"
+  "assert.strictEqual(stdout.fd, 1, ""stdout = fd 1 (default)"");"
+  "assert.strictEqual(stderr.fd, 2, ""stderr = fd 2 (throw)"");"
+  .
+
+THEINTERCHANGE =
+  "// ── 4. The 0, 2, 1 interchange ──────────────────────────────────"
+  "const interchange = [0, 2, 1];"
+  "assert.strictEqual(interchange[0], 0, ""step 1: catch (stdin)"");"
+  "assert.strictEqual(interchange[1], 2, ""step 2: throw (stderr)"");"
+  "assert.strictEqual(interchange[2], 1, ""step 3: default (stdout)"");"
+  "assert.notDeepStrictEqual(interchange, [0, 1, 2], ""not natural order"");"
+  .
+
+ALLFOURLAYERSCONVERGEAT =
+  "// ── 5. All four layers converge at 0 ────────────────────────────"
+  "// Layer 1: JS catch"
+  "const jsCatch = 0;    // catch clause"
+  "// Layer 2: DOM EventTarget"
+  "// Every event target inherits from EventTarget"
+  "// Layer 3: OS stdin"
+  "const osCatch = 0;    // fd 0"
+  "// Layer 4: GED event register"
+  "// (hardware level; same shape)"
+  "assert.strictEqual(jsCatch, osCatch, ""JS catch == OS catch point"");"
+  "assert.strictEqual(osCatch, 0, ""converge at 0"");"
+  .
+
+EVENTTARGETISTHEDOMROOT =
+  "// ── 6. EventTarget is the DOM root ──────────────────────────────"
+  "// Model the inheritance (no browser needed)"
+  "class EventTargetMock {"
+  "  listeners: Map<string, Function[]> = new Map();"
+  "  addEventListener(type: string, fn: Function) {"
+  "    if (!this.listeners.has(type)) this.listeners.set(type, []);"
+  "    this.listeners.get(type)!.push(fn);"
+  "  }"
+  "  dispatchEvent(event: { type: string }) {"
+  "    for (const fn of this.listeners.get(event.type) ?? []) fn(event);"
+  "  }"
+  "}"
+  "class NodeMock extends EventTargetMock {}"
+  "class ElementMock extends NodeMock {}"
+  "const el = new ElementMock();"
+  "assert.ok(el instanceof EventTargetMock, ""Element <: EventTarget"");"
+  "assert.ok(el instanceof NodeMock,        ""Element <: Node"");"
+  "// events all land at the EventTarget root"
+  "let caught_event = false;"
+  "el.addEventListener(""click"", () => { caught_event = true; });"
+  "el.dispatchEvent({ type: ""click"" });"
+  "assert.ok(caught_event, ""event caught at EventTarget"");"
+  .
+
+THECATCHISTHESAMESHAPEATEVERYLAYER =
+  "// ── 7. The catch is the same shape at every layer ───────────────"
+  "const layers = {"
+  "  js:   { point: ""catch(e)"",       channel: ""throw"" },"
+  "  dom:  { point: ""addEventListener"", channel: ""dispatchEvent"" },"
+  "  os:   { point: ""stdin (fd 0)"",   channel: ""stderr (fd 2)"" },"
+  "  ged:  { point: ""GED register"",   channel: ""ACPI event"" },"
+  "};"
+  "for (const [name, l] of Object.entries(layers)) {"
+  "  assert.ok(l.point.length > 0 && l.channel.length > 0,"
+  "    `${name} has a catch point and a channel`);"
+  "}"
+  "assert.strictEqual(Object.keys(layers).length, 4, ""4 layers"");"
+  .
+
+THEERRORTAXONOMYFROMII =
+  "// ── 8. The error taxonomy from I-110/I-127 ──────────────────────"
+  "// TypeError -> wrong space"
+  "{"
+  "  let threw = false;"
+  "  try { Atomics.compareExchange(new Float64Array(4) as any, 0, 0, 0); }"
+  "  catch (e) { threw = e instanceof TypeError; }"
+  "  assert.ok(threw, ""space violation -> TypeError"");"
+  "}"
+  "// RangeError -> wrong range"
+  "{"
+  "  let threw = false;"
+  "  try { Atomics.compareExchange(new Int32Array(4), 999, 0, 0); }"
+  "  catch (e) { threw = e instanceof RangeError; }"
+  "  assert.ok(threw, ""range violation -> RangeError"");"
+  "}"
+  "// NaN -> no frame (arithmetic level, not an exception)"
+  "assert.ok(Number.isNaN(0 % 0), ""no frame -> NaN"");"
+  .
+
+ALLTHREECHANNELSREACHTHECATCHAT =
+  "// ── 9. All three channels reach the catch at 0 ──────────────────"
+  "// In a pipeline: stdin (0) -> process -> stdout (1) / stderr (2)"
+  "// Errors written to stderr (2) are caught at stdin (0) on the next read"
+  "const pipeline = { read: 0, write: 1, err: 2 };"
+  "assert.strictEqual(pipeline.read, 0, ""read from fd 0"");"
+  "assert.strictEqual(pipeline.write, 1, ""write to fd 1"");"
+  "assert.strictEqual(pipeline.err, 2, ""error to fd 2"");"
+  "// the catch point is the read channel"
+  "assert.strictEqual(pipeline.read, 0, ""catch at 0"");"
+  "console.log(""I-136: all catches converge at 0 — passed"");"
+  .

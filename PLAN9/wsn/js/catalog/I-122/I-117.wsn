@@ -1,0 +1,18 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-117: PINE box"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-117"", ""PINE box"", () => {"
+  "  const PINE = [""0P"", ""0I"", ""0N"", ""0E""];"
+  "  assert.strictEqual(PINE.length, 4);"
+  "  const seedOf = (m: string) => m[1] === ""N"" ? ""0n"" : m[1] === ""E"" ? ""0e"" : ""0u"";"
+  "  assert.strictEqual(seedOf(""0N""), ""0n"");"
+  "  assert.strictEqual(seedOf(""0E""), ""0e"");"
+  "  assert.strictEqual(seedOf(""0P""), ""0u"");"
+  "  assert.strictEqual(seedOf(""0I""), ""0u"");"
+  "  assert.strictEqual(0x1F - 0x00 + 1, 32);"
+  "  assert.strictEqual(0x9F - 0x80 + 1, 32);"
+  "}, ""point/line/duality"");"
+  .

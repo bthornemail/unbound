@@ -1,0 +1,35 @@
+AAL = CHECKED .
+
+CHECKED = COQ SCOPE AALOWNER AALPROOF AALOP AALWIDTH AALWIDTHPOSITIVE .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+AALOWNER =
+  "Definition aal_owner : Prop := True."
+  .
+
+AALPROOF =
+  "Definition aal_proof : aal_owner := I."
+  .
+
+AALOP =
+  "Inductive aal_op := AalXor | AalAnd | AalOr | AalShl | AalShr | AalRol | AalRor."
+  .
+
+AALWIDTH =
+  "Definition aal_width11 : N := 11."
+  .
+
+AALWIDTHPOSITIVE =
+  "Theorem aal_width11_positive :"
+  "  0 < aal_width11."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

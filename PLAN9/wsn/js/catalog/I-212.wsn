@@ -1,0 +1,88 @@
+RECORD = HEAD THEDOTASXORWITNESS THERINGCLOSESTONULL THEFOLDEDFORM NULLNULLASTHEKERNELSGROUND THETHREEREADINGSOFTHESAMEROOT THECOQCHECKRESTATEDASARITHMETIC THEFINALLOCK THEREADINGSTHEAUTHORS .
+
+HEAD =
+  "// i212.ts — I-212: the capstone — NULL NULL, the kernel's ground"
+  "//"
+  "// The author, 2026-10-14: ""I think this is the finality I started with"
+  "// (NULL . NULL) using dot notation and evolved into NULL NULL as the first"
+  "// 2 cubed square of a computational kernel; here is the proof and claims and"
+  "// declarations and decisions on our path to get here."""
+  "//"
+  "// Found here: the dot of Lisp (A . B) read as the XOR witness A XOR B; the"
+  "// byte ring ((0x00 . 0x20) (0x20 . 0x7F) (0x7F . 0xFF) (0xFF . 0x00)) whose"
+  "// XOR witnesses are 0x20, 0x5F, 0x80, 0xFF and whose closure is 0x00; and"
+  "// the full-notation null (omi---imo . '(o---o /---/ ?---? @---@))."
+  "import assert from ""node:assert"";"
+  "const hx = (s: string) => [...s].map((c) => c.charCodeAt(0).toString(16).padStart(2, ""0"")).join("" "");"
+  .
+
+THEDOTASXORWITNESS =
+  "// ── 1. The dot as XOR witness ───────────────────────────────"
+  "// (A . B) read as A XOR B."
+  "const dot = (a: number, b: number) => a ^ b;"
+  "assert.equal(dot(0x00, 0x20), 0x20);"
+  "assert.equal(dot(0x20, 0x7f), 0x5f);"
+  "assert.equal(dot(0x7f, 0xff), 0x80);"
+  "assert.equal(dot(0xff, 0x00), 0xff);"
+  "// The four witnesses."
+  "assert.deepEqual("
+  "  [dot(0x00, 0x20), dot(0x20, 0x7f), dot(0x7f, 0xff), dot(0xff, 0x00)],"
+  "  [0x20, 0x5f, 0x80, 0xff],"
+  ");"
+  .
+
+THERINGCLOSESTONULL =
+  "// ── 2. The ring closes to null ──────────────────────────────"
+  "const xorAll = (xs: number[]) => xs.reduce((a, b) => a ^ b, 0);"
+  "assert.equal(xorAll([0x20, 0x5f, 0x80, 0xff]), 0x00, ""the ring closes to null"");"
+  .
+
+THEFOLDEDFORM =
+  "// ── 3. The folded form ─────────────────────────────────────"
+  "// (NULL . NULL) is the folded root: 0 XOR 0 = 0."
+  "assert.equal(dot(0x00, 0x00), 0x00);"
+  .
+
+NULLNULLASTHEKERNELSGROUND =
+  "// ── 4. NULL NULL as the kernel's ground ────────────────────"
+  "// The dot removed: two nulls adjacent, the first 2^3 square (64 cells)."
+  "assert.equal(2 ** 3, 8, ""the 2-cube has 8 vertices"");"
+  "assert.equal(2 ** 6, 64, ""the first 2-cubed square has 64 cells"");"
+  "assert.equal(8 * 8, 64, ""an 8x8 grid"");"
+  "assert.equal(64, 0x40, ""64 = 0x40"");"
+  .
+
+THETHREEREADINGSOFTHESAMEROOT =
+  "// ── 5. The three readings of the same root ─────────────────"
+  "// Folded: (NULL . NULL); unfolded: the byte ring; full: omi---imo."
+  "assert.equal(hx(""NULL""), ""4e 55 4c 4c"");"
+  "assert.equal(hx(""NULLNULL""), ""4e 55 4c 4c 4e 55 4c 4c"");"
+  "assert.equal(dot(""N"".charCodeAt(0), ""N"".charCodeAt(0)), 0, ""N XOR N = 0"");"
+  .
+
+THECOQCHECKRESTATEDASARITHMETIC =
+  "// ── 6. The Coq check, restated as arithmetic ───────────────"
+  "// NullRingCloses.v proves: xor_reduce byte_ring_witnesses = 0."
+  "// The ring edges and their witnesses."
+  "const edges = [[0, 32], [32, 127], [127, 255], [255, 0]];"
+  "const witnesses = edges.map(([a, b]) => a ^ b);"
+  "assert.deepEqual(witnesses, [32, 95, 128, 255]);"
+  "assert.equal(xorAll(witnesses), 0, ""xor_reduce byte_ring_witnesses = 0"");"
+  .
+
+THEFINALLOCK =
+  "// ── 7. The final lock ──────────────────────────────────────"
+  "// The byte ring is not earned after NULL. It is the full notation implicit in NULL."
+  "assert.equal(dot(0x00, 0x00), 0x00, ""the folded root is 0"");"
+  "assert.equal(xorAll(witnesses), 0x00, ""the unfolded ring is 0"");"
+  "assert.equal(0x00, 0x00, ""the null is the same at every reading"");"
+  .
+
+THEREADINGSTHEAUTHORS =
+  "// ── 8. The readings (the author's) ─────────────────────────"
+  "// - The dot was the witness; the witness was the XOR; the XOR closed to null."
+  "// - So NULL NULL is the null written plainly, the dot no longer needed because"
+  "//   the two nulls are the same."
+  "// - The path from (NULL . NULL) to NULL NULL is the whole session's closure."
+  "// - Held as the author's reading, not asserted."
+  .

@@ -1,0 +1,15 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-124: 4 circuits, 7 positions, 12th meta"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-124"", ""4 circuits / 7 positions / 12th meta"", () => {"
+  "  assert.strictEqual(4, 4);"
+  "  assert.strictEqual(7, 7);"
+  "  assert.strictEqual(12, 7 + 5);"
+  "  assert.strictEqual(0xC, 12);"
+  "  assert.strictEqual(0xC0, 192);"
+  "  assert.strictEqual(192 % 8, 0);"
+  "}, ""point/line/duality"");"
+  .

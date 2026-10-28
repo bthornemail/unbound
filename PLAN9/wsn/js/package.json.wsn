@@ -1,0 +1,8 @@
+FILE = HEAD .
+
+HEAD =
+  "{"
+  "  ""type"": ""module"","
+  "  ""private"": true"
+  "}"
+  .

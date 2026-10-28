@@ -1,0 +1,31 @@
+#!/bin/rc
+# lazy.rc - inside Plan 9: compile zlazy and ask wsn/logic.wsn questions.
+# Each line is: production, sentence, the answer it must give.
+rfork e
+w=/tmp/zl
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zlazy.c && 8l -o $w/zlazy zlazy.8 || exit compile
+cd $p
+fail=0
+fn ask {
+	if($w/zlazy wsn/logic.wsn $1 $2) got=yes
+	if not got=no
+	if(! ~ $got $3){ echo 'lazy.rc: FAIL' $1 $2 'expected' $3; fail=1 }
+}
+ask XOR 011 yes
+ask XOR 010 no
+ask XNOR 111 yes
+ask FULLADDER 11101 no
+ask FULLADDER 11111 yes
+ask FULLADDER 01101 yes
+# 5 + 3 = 8 at width 4, least significant bit first, as (a b sum) triples
+ask ADD 110010100001 yes
+# 5 + 3 = 7 is not a sentence of ADD
+ask ADD 110010100000 no
+# 4 + 2 = 6: 4 = 0010, 2 = 0100, 6 = 0110 (lsb first)
+ask ADD 000011101000 yes
+if(~ $fail 0) echo 'lazy.rc: every answer as expected'

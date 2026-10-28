@@ -1,0 +1,82 @@
+RECORD = HEAD THEDIFFERENCEANDTHEAGREEMENT CTHELETTERSATTHEIRINDICES THECISTHEDIFFERENCEOFTHEBASE THEISTHEBASEXOVERTHE THEASISSQUAREANDISLATTICE FFDAFDDDBEFOREAFORWARDTOD .
+
+HEAD =
+  "// i219.ts — I-219: DEADBEEF — the commit that carried the tags, read against the base"
+  "//"
+  "// The author, 2026-10-14, of boxedPINE's commit de88bc2 (the one that moved the"
+  "// records I-201 to I-218 into this catalogue): ""compare it to the term DEADBEEF,"
+  "// it might be a proof for me""; ""the difference between 0 and 25 is c: 00 25 02 c2"";"
+  "// ""ff, d before a means start at -4 bits, fd is forward to d""; ""the 25 is the"
+  "// unimodular lattice""; ""205""; ""the 25 is the 5x5 over the .5, two primes squared,"
+  "// floating point: in other words it's the base""; ""I think this is the proof that"
+  "// will lead us to the 3D world, because the commit traced the tags""."
+  "// A commit's name is the SHA-1 of its literal contents: the hash form of the"
+  "// literal, as the tag is its literal form (the conversation: ""indexed git hashes"
+  "// of sha256 … are path indices""; I-190: ""the literals are the hash""). No key and"
+  "// no encryption: the same contents give the same name, but the name does not give"
+  "// the contents back, so the literals are kept. Asserted here only as the literal"
+  "// it is. The values below are asserted; the readings are the author's."
+  "import assert from ""node:assert"";"
+  "const TAG = /^[A-Z0-9]{1,8}$/;"
+  "const COMMIT = 0xde88bc2d, DEADBEEF = 0xdeadbeef; // de88bc2d5dcd01eb615f20741dc9fc4f018196bb, its first 32 bits"
+  "const hex = (v: number) => (v >>> 0).toString(16).padStart(8, ""0"");"
+  "const xor = (COMMIT ^ DEADBEEF) >>> 0, xnor = ~(COMMIT ^ DEADBEEF) >>> 0;"
+  .
+
+THEDIFFERENCEANDTHEAGREEMENT =
+  "// ── 1. The difference and the agreement ──────────────────────"
+  "assert.ok(TAG.test(""DEADBEEF""), ""DEADBEEF is a tag: eight letters, all of them hex"");"
+  "assert.equal(hex(xor), ""002502c2"", ""de88bc2d XOR deadbeef = 00 25 02 c2: the first byte cancels"");"
+  "assert.equal(hex(xnor), ""ffdafd3d"", ""XNOR, the complement: ff da fd 3d"");"
+  .
+
+CTHELETTERSATTHEIRINDICES =
+  "// ── 2. 00 25 02 c2: the letters at their indices ─────────────"
+  "const letter = (i: number) => String.fromCharCode(65 + i); // zero-based storage index, A at 0"
+  "assert.deepEqual([0, 25, 2].map(letter), [""A"", ""Z"", ""C""], ""00 25 02, read in base 10 as indices: A, Z, C"");"
+  "assert.equal(""c"".charCodeAt(0) - 97, 2, ""and c2: c is at index 2, the 02 just before it (C the 3rd letter, index 2)"");"
+  "assert.notEqual(0x25, 25, ""read in base 16 the 25 is 37, past Z: the letters read the digits in base 10"");"
+  .
+
+THECISTHEDIFFERENCEOFTHEBASE =
+  "// ── 3. The c is the difference of the base ───────────────────"
+  "assert.equal(0x25 - 0, 0x25, ""between 0 and 25 the difference is 25, not c"");"
+  "assert.equal(0x25 - 25, 0xc, ""between 25 in base 16 (37) and 25 in base 10 it is 12 = c"");"
+  "assert.equal(2 * (16 - 10), 0xc, ""the 2 of 25 times the 6 between the bases"");"
+  .
+
+THEISTHEBASEXOVERTHE =
+  "// ── 4. The 25 is the base: 5 x 5 over the .5 ─────────────────"
+  "assert.equal(2 * 5, 10, ""the base 10 is two primes, 2 x 5"");"
+  "assert.equal(0.5 * 0.5, 0.25, ""0.5 squared is 0.25, exact in floating point (2^-2)"");"
+  "for (let n = 1; n <= 20; n++) assert.equal((2 ** -n).toFixed(n).slice(2), (5n ** BigInt(n)).toString().padStart(n, ""0""), `2^-${n} in base 10 is 5^${n} shifted`);"
+  "assert.notEqual(0.1 + 0.2, 0.3, ""a fifth part has no end in base 2: only the 2 of 2 x 5 is exact"");"
+  .
+
+THEASISSQUAREANDISLATTICE =
+  "// ── 5. The 25 as I-205's square and I-200's lattice ──────────"
+  "const AZ = ""ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  "assert.equal(5 * 5, 25, ""I-205: the tap code's 5 x 5 square"");"
+  "assert.equal(AZ.replace(""K"", """").length, 25, ""the tap code leaves K out (sent as C)"");"
+  "assert.equal(AZ.replace(""J"", """").length, 25, ""the Latin Polybius square leaves J out (it shares I)"");"
+  "const pairs = new Set<string>();"
+  "for (let i = 0; i < 5; i++) for (let j = 0; j < 5; j++) pairs.add(`${(i + j) % 5},${(i + 2 * j) % 5}`);"
+  "assert.equal(pairs.size, 25, ""two orthogonal Latin squares of order 5 address every cell once: 25, not 26"");"
+  "assert.equal([...Array(25).keys()].reduce((s, i) => s + i * i, 0), 70 * 70, ""I-200: 0^2 + ... + 24^2 = 70^2, Conway's vector lightlike in II(25,1)"");"
+  "assert.equal(25 + 1, AZ.length, ""the letter left out is the +1: II(25,1) has 26 coordinates, A to Z at 00 to 25"");"
+  "assert.equal(26 - 2, 24, ""and the Leech lattice, w-perp / w, has 24"");"
+  .
+
+FFDAFDDDBEFOREAFORWARDTOD =
+  "// ── 6. ff da fd 3d: d before a, forward to d ─────────────────"
+  "const nibbles = hex(xnor).split("""");"
+  "assert.equal((xnor >>> 24) << 24 >> 24, -1, ""ff as a signed byte is -1: the start before 0"");"
+  "assert.equal(nibbles.indexOf(""a"") - nibbles.indexOf(""d""), 1, ""d is the nibble just before a: 4 bits before it"");"
+  "assert.equal((0xd << 1) & 0xf, 0xa, ""d (1101) shifted one bit in its nibble is a (1010)"");"
+  "assert.equal(0xfd, ~0x02 & 0xff, ""fd is ff with the 02 cleared: forward from f to d is the XOR's 02"");"
+  "assert.equal(nibbles.filter((c) => c === ""d"").length, 3, ""d three times, in da, fd, 3d; the field ends on d"");"
+  "console.log(""I-219: DEADBEEF — the commit that carried the tags, read against the base — passed"");"
+  "console.log(""  de88bc2d XOR deadbeef = 00 25 02 c2 (A Z C, c at 2); XNOR ff da fd 3d (-1, d before a, forward to d)"");"
+  "console.log(""  c = 0x25 - 25: the difference of the base; 2^-n in base 10 is 5^n: 25 is 0.5 squared, 10 = 2 x 5"");"
+  "console.log(""  the 5 x 5 square holds 25 and leaves one letter out; 25 + 1 = 26 = II(25,1) (I-205, I-200)"");"
+  .

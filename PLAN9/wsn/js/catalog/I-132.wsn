@@ -1,0 +1,99 @@
+RECORD = HEAD THELOWPOWERS THEUNICODEPLANE THEIDENTITY EVERYPOWEROFISAPOWEROFWITHEXPONENTDIVISIBLEBY THETWOPOWERSOFINTHESET THEGAPS THEHEXDIGITBOUNDARYALIGNMENT THECOMPLETECHAINFROMTO BYTEALIGNMENT THEUNICODEPLANEANCHORS .
+
+HEAD =
+  "// i132.ts — I-132: the exponent meeting"
+  "import assert from ""node:assert"";"
+  .
+
+THELOWPOWERS =
+  "// ── 1. The low powers ────────────────────────────────────────────"
+  "assert.strictEqual(2 ** 4, 16,    ""2^4 = 16 (hex base)"");"
+  "assert.strictEqual(2 ** 5, 32,    ""2^5 = 32 (C0 band)"");"
+  "assert.strictEqual(2 ** 6, 64,    ""2^6 = 64 (64-block)"");"
+  .
+
+THEUNICODEPLANE =
+  "// ── 2. The Unicode plane ─────────────────────────────────────────"
+  "assert.strictEqual(2 ** 16, 65536, ""2^16 = 65536 (BMP)"");"
+  "assert.strictEqual(2 ** 16 - 1, 0xFFFF, ""2^16 - 1 = 0xFFFF"");"
+  .
+
+THEIDENTITY =
+  "// ── 3. The 16^10 = 2^40 identity ────────────────────────────────"
+  "assert.strictEqual(16 ** 10, 2 ** 40, ""16^10 = 2^40"");"
+  "assert.strictEqual(2 ** 40, 1099511627776, ""2^40 = 1.1 trillion"");"
+  "assert.ok(2 ** 40 > 0xFFFFFFFF, ""2^40 is past 32 bits"");"
+  .
+
+EVERYPOWEROFISAPOWEROFWITHEXPONENTDIVISIBLEBY =
+  "// ── 4. Every power of 16 is a power of 2 with exponent divisible by 4 ─"
+  "for (let n = 0; n <= 10; n++) {"
+  "  const asPow2 = 16 ** n;"
+  "  const exp = Math.log2(asPow2);"
+  "  assert.strictEqual(exp, 4 * n, `16^${n} = 2^${4*n}`);"
+  "  assert.strictEqual(exp % 4, 0, `exponent ${exp} divisible by 4`);"
+  "}"
+  .
+
+THETWOPOWERSOFINTHESET =
+  "// ── 5. The two powers-of-16 in the set ──────────────────────────"
+  "assert.strictEqual(2 ** 16, 16 ** 4, ""2^16 = 16^4"");"
+  "assert.strictEqual(16 ** 10, 2 ** 40, ""16^10 = 2^40"");"
+  .
+
+THEGAPS =
+  "// ── 6. The gaps ──────────────────────────────────────────────────"
+  "const exponents = [4, 5, 6, 16, 40];"
+  "const gaps = exponents.slice(1).map((e, i) => e - exponents[i]);"
+  "assert.deepStrictEqual(gaps, [1, 1, 10, 24], ""exponent gaps: 1,1,10,24"");"
+  "// as ratios of the values"
+  "const ratios = exponents.slice(1).map((e, i) =>"
+  "  BigInt(2) ** BigInt(e) / BigInt(2) ** BigInt(exponents[i])"
+  ");"
+  "assert.deepStrictEqual("
+  "  ratios,"
+  "  [2n, 2n, 1024n, 16777216n],"
+  "  ""value ratios: 2, 2, 1024, 16M"""
+  ");"
+  "assert.strictEqual(2 ** 10, 1024,     ""2^10 = 1024 (KB)"");"
+  "assert.strictEqual(2 ** 24, 16777216, ""2^24 = 16M"");"
+  .
+
+THEHEXDIGITBOUNDARYALIGNMENT =
+  "// ── 7. The hex-digit boundary alignment ─────────────────────────"
+  "// A hex digit is 4 bits, so byte-nibble boundaries are every 4 exponents"
+  "const nibbleBoundaries = exponents.filter(e => e % 4 === 0);"
+  "assert.deepStrictEqual(nibbleBoundaries, [4, 16, 40],"
+  "  ""exponents divisible by 4: 4, 16, 40"");"
+  .
+
+THECOMPLETECHAINFROMTO =
+  "// ── 8. The complete chain from 2^4 to 2^40 ──────────────────────"
+  "// Powers of 2 at every exponent 4..40 (44 values)"
+  "const chain: bigint[] = [];"
+  "for (let e = 4; e <= 40; e++) chain.push(BigInt(2) ** BigInt(e));"
+  "assert.strictEqual(chain.length, 37, ""37 steps from 2^4 to 2^40"");"
+  "assert.strictEqual(chain[0], 16n, ""chain starts at 16"");"
+  "assert.strictEqual(chain[chain.length - 1], 2n ** 40n, ""chain ends at 2^40"");"
+  .
+
+BYTEALIGNMENT =
+  "// ── 9. Byte alignment ───────────────────────────────────────────"
+  "// 2^16 = 65536 bytes = 64 KiB"
+  "assert.strictEqual(2 ** 16 / 1024, 64, ""2^16 bytes = 64 KiB"");"
+  "assert.strictEqual(2 ** 40 / 2 ** 30, 1024, ""2^40 bytes = 1024 GiB"");"
+  "assert.strictEqual(2 ** 40, 1024 ** 4, ""2^40 = 1024^4 = 1 TiB (in 1024-base)"");"
+  .
+
+THEUNICODEPLANEANCHORS =
+  "// ── 10. The Unicode plane anchors ───────────────────────────────"
+  "const planes = ["
+  "  { name: ""BMP"",     start: 0x0000,   end: 0xFFFF,     exp: 16 },"
+  "  { name: ""SMP"",     start: 0x10000,  end: 0x1FFFF,    exp: 17 },"
+  "  { name: ""SIP"",     start: 0x20000,  end: 0x2FFFF,    exp: 18 },"
+  "];"
+  "for (const p of planes) {"
+  "  assert.strictEqual(p.end - p.start + 1, 2 ** 16, `${p.name} = 2^16 points`);"
+  "}"
+  "console.log(""I-132: exponent meeting (2^4, 2^5, 2^6, 2^16, 16^10) — passed"");"
+  .

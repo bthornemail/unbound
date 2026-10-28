@@ -1,0 +1,14 @@
+#!/bin/rc
+# CATID: cat is a byte identity (boxedPINE proofs/busybox/catalog/B-CATID.sh)
+rfork e
+fn fail { echo 'FAIL(CATID):' $* >[1=2]; exit fail }
+d=/tmp/bb.$pid; mkdir -p $d
+awk 'BEGIN { printf "alpha\nbeta\n%cz", 255 }' > $d/f
+# assert: cat < F equals F, byte for byte
+cat < $d/f | cmp -s /fd/0 $d/f || fail cat changed the bytes
+# assert: cat F F is exactly twice the size
+n=`{wc -c < $d/f}
+nn=`{cat $d/f $d/f | wc -c}
+if(! ~ `{echo $nn - 2 '*' $n | hoc} 0) fail 'cat F F != 2*|F|' '('$nn vs $n')'
+rm -rf $d
+echo 'CATID: cat is a byte identity - passed'

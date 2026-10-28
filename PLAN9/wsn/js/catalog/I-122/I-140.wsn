@@ -1,0 +1,17 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-140: Web Workers as 65536-space"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-140"", ""Web Workers as 65536-space background processors"", () => {"
+  "  const SPACE = 2 ** 16;"
+  "  assert.strictEqual(SPACE, 65536);"
+  "  assert.strictEqual(SPACE / 4, 2 ** 14);"
+  "  const slices = Array.from({ length: 4 }, (_, i) => ({"
+  "    start: i * 16384, end: (i + 1) * 16384 - 1,"
+  "  }));"
+  "  assert.deepStrictEqual(slices[0], { start: 0, end: 16383 });"
+  "  assert.deepStrictEqual(slices[3], { start: 49152, end: 65535 });"
+  "}, ""catch-at-0"");"
+  .

@@ -1,0 +1,19 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-127: error taxonomy + DOM inheritance"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-127"", ""error taxonomy (space/range/frame) + DOM"", () => {"
+  "  let threw = false, msg = """";"
+  "  try { Atomics.compareExchange(new Float64Array(4) as any, 0, 0, 0); }"
+  "  catch (e: any) { threw = e instanceof TypeError; msg = e.message; }"
+  "  assert.ok(threw);"
+  "  assert.ok(/integer typed array/.test(msg));"
+  "  let threwR = false;"
+  "  try { Atomics.compareExchange(new Int32Array(4), 999, 0, 0); }"
+  "  catch (e) { threwR = e instanceof RangeError; }"
+  "  assert.ok(threwR);"
+  "  assert.ok(Number.isNaN(0 % 0));"
+  "}, ""catch-at-0"");"
+  .

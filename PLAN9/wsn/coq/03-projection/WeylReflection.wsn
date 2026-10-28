@@ -1,0 +1,101 @@
+WEYLREFLECTION = CHECKED .
+
+CHECKED = COQ SCOPE WEYLREFLECTIONOWNER WEYLREFLECTIONPROOF WEYLREFLECTIONMASK WEYLREFLECTIONR WEYLREFLECTIONMASKFULL WEYLREFLECTIONLANDLXORDISTRIB WEYLREFLECTIONMASKIDEMPOTENT WEYLREFLECTIONMASKBOUND WEYLREFLECTIONRINVOLUTIVE WEYLREFLECTIONRMASKCOMMUTE .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+WEYLREFLECTIONOWNER =
+  "Definition weyl_reflection_owner : Prop := True."
+  .
+
+WEYLREFLECTIONPROOF =
+  "Definition weyl_reflection_proof : weyl_reflection_owner := I."
+  .
+
+WEYLREFLECTIONMASK =
+  "Definition weyl_reflection_mask16 (x : N) : N := N.land x 0xFFFF."
+  .
+
+WEYLREFLECTIONR =
+  "Definition weyl_reflection_r0 (x : N) : N := N.lxor x 0xAAAA."
+  .
+
+WEYLREFLECTIONMASKFULL =
+  "Theorem weyl_reflection_mask16_full :"
+  "  weyl_reflection_mask16 0xFFFFFFFF = 0xFFFF."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  "(* The mask and the involution of this module, discharged rather than"
+  "   asserted: masking is idempotent and bounded, and the involution is an"
+  "   involution that acts inside the 16-bit space. *)"
+  .
+
+WEYLREFLECTIONLANDLXORDISTRIB =
+  "Lemma weyl_reflection_land_lxor_distrib : forall a b c : N,"
+  "  N.land (N.lxor a b) c = N.lxor (N.land a c) (N.land b c)."
+  "Proof."
+  "  intros a b c."
+  "  apply N.bits_inj; intro n."
+  "  rewrite N.land_spec, N.lxor_spec, N.lxor_spec, !N.land_spec."
+  "  destruct (N.testbit a n), (N.testbit b n), (N.testbit c n); reflexivity."
+  "Qed."
+  .
+
+WEYLREFLECTIONMASKIDEMPOTENT =
+  "Theorem weyl_reflection_mask16_idempotent : forall x : N,"
+  "  weyl_reflection_mask16 (weyl_reflection_mask16 x) = weyl_reflection_mask16 x."
+  "Proof."
+  "  intro x."
+  "  unfold weyl_reflection_mask16."
+  "  rewrite <- N.land_assoc, N.land_diag."
+  "  reflexivity."
+  "Qed."
+  .
+
+WEYLREFLECTIONMASKBOUND =
+  "Theorem weyl_reflection_mask16_bound : forall x : N,"
+  "  weyl_reflection_mask16 x < 65536."
+  "Proof."
+  "  intro x."
+  "  unfold weyl_reflection_mask16."
+  "  assert (H : N.land x 0xFFFF = x mod 65536)."
+  "  { pose proof (N.land_ones x 16) as H0."
+  "    replace (N.ones 16) with 0xFFFF in H0 by (vm_compute; reflexivity)."
+  "    replace (2 ^ 16)%N with 65536 in H0 by (vm_compute; reflexivity)."
+  "    exact H0. }"
+  "  rewrite H."
+  "  apply N.mod_upper_bound."
+  "  discriminate."
+  "Qed."
+  .
+
+WEYLREFLECTIONRINVOLUTIVE =
+  "Theorem weyl_reflection_r0_involutive : forall x : N,"
+  "  weyl_reflection_r0 (weyl_reflection_r0 x) = x."
+  "Proof."
+  "  intro x."
+  "  unfold weyl_reflection_r0."
+  "  rewrite N.lxor_assoc, N.lxor_nilpotent, N.lxor_0_r."
+  "  reflexivity."
+  "Qed."
+  .
+
+WEYLREFLECTIONRMASKCOMMUTE =
+  "Theorem weyl_reflection_r0_mask16_commute : forall x : N,"
+  "  weyl_reflection_r0 (weyl_reflection_mask16 x) ="
+  "  weyl_reflection_mask16 (weyl_reflection_r0 x)."
+  "Proof."
+  "  intro x."
+  "  unfold weyl_reflection_r0, weyl_reflection_mask16."
+  "  rewrite weyl_reflection_land_lxor_distrib."
+  "  replace (N.land 0xAAAA 0xFFFF) with 0xAAAA by (vm_compute; reflexivity)."
+  "  reflexivity."
+  "Qed."
+  .

@@ -1,0 +1,41 @@
+GOLDENFIELD = CHECKED .
+
+CHECKED = COQ SCOPE GOLDENFIELDOWNER GOLDENFIELDPROOF GOLDENFIELDPAIR GOLDENFIELDADD GOLDENFIELDPAIRCOMPONENTS .
+
+COQ =
+  "From Coq Require Import QArith.QArith."
+  .
+
+SCOPE =
+  "Open Scope Q_scope."
+  .
+
+GOLDENFIELDOWNER =
+  "Definition golden_field06_owner : Prop := True."
+  .
+
+GOLDENFIELDPROOF =
+  "Definition golden_field06_proof : golden_field06_owner := I."
+  .
+
+GOLDENFIELDPAIR =
+  "Record golden_field06_pair := {"
+  "  golden_field06_a : Q;"
+  "  golden_field06_b : Q"
+  "}."
+  .
+
+GOLDENFIELDADD =
+  "Definition golden_field06_add (x y : golden_field06_pair) : golden_field06_pair :="
+  "  {| golden_field06_a := golden_field06_a x + golden_field06_a y;"
+  "     golden_field06_b := golden_field06_b x + golden_field06_b y |}."
+  .
+
+GOLDENFIELDPAIRCOMPONENTS =
+  "Theorem golden_field06_pair_components : forall a b,"
+  "  golden_field06_a {| golden_field06_a := a; golden_field06_b := b |} == a /\"
+  "  golden_field06_b {| golden_field06_a := a; golden_field06_b := b |} == b."
+  "Proof."
+  "  intros a b; split; reflexivity."
+  "Qed."
+  .

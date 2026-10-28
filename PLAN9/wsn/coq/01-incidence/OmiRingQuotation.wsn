@@ -1,0 +1,31 @@
+OMIRINGQUOTATION = CHECKED .
+
+CHECKED = COQ SCOPE OMIRINGQUOTATIONOWNER OMIRINGQUOTATIONPROOF OMIRINGQUOTATIONQUOTE OMIRINGQUOTATIONZEROWITNESS .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+OMIRINGQUOTATIONOWNER =
+  "Definition omi_ring_quotation_owner : Prop := True."
+  .
+
+OMIRINGQUOTATIONPROOF =
+  "Definition omi_ring_quotation_proof : omi_ring_quotation_owner := I."
+  .
+
+OMIRINGQUOTATIONQUOTE =
+  "Definition omi_ring_quotation_quote (x : N) : N := N.lxor x 0x18."
+  .
+
+OMIRINGQUOTATIONZEROWITNESS =
+  "Theorem omi_ring_quotation_zero_witness :"
+  "  omi_ring_quotation_quote 0 = 0x18."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

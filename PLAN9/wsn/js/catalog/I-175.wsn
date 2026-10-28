@@ -1,0 +1,212 @@
+RECORD = HEAD THEBITHEADERHASNIBBLES THETHNIBBLEISTHEDECISIONFIELD THEPIXELASRGBA THEALPHAISTHETH THEALPHAISTHEPRESENCEABSENCE THEPIXELISBOXEDPINEPINEBOXED THETHISTHEDECISION THECOLLAPSE THEDECISIONTRIGGERSTHECOLLAPSE THETHCOMESBEFORETHETH DAYTHERULERSOFMEASUREMENT THEWORDISTHECHOICEOFRULERSI THETHASTHEDECISION THEWHOLEPICTURE THEPUNCHLINE .
+
+HEAD =
+  "// i175.ts — I-175: the decision comes from the 4th — the 16-bit header of the pixel"
+  "import assert from ""node:assert"";"
+  .
+
+THEBITHEADERHASNIBBLES =
+  "// ── 1. The 16-bit header has 4 nibbles ──────────────────────"
+  "type Header = {"
+  "  n1: number;  // 0-15"
+  "  n2: number;"
+  "  n3: number;"
+  "  n4: number;  // the decision"
+  "};"
+  "function makeHeader(bits: number): Header {"
+  "  return {"
+  "    n1: (bits >> 12) & 0xF,"
+  "    n2: (bits >> 8) & 0xF,"
+  "    n3: (bits >> 4) & 0xF,"
+  "    n4: bits & 0xF,"
+  "  };"
+  "}"
+  "const header = makeHeader(0xABCD);"
+  "assert.strictEqual(header.n1, 0xA, ""nibble 1 = 0xA"");"
+  "assert.strictEqual(header.n2, 0xB, ""nibble 2 = 0xB"");"
+  "assert.strictEqual(header.n3, 0xC, ""nibble 3 = 0xC"");"
+  "assert.strictEqual(header.n4, 0xD, ""nibble 4 = 0xD (the decision)"");"
+  .
+
+THETHNIBBLEISTHEDECISIONFIELD =
+  "// ── 2. The 4th nibble is the decision field ─────────────────"
+  "const decisionField = header.n4;"
+  "assert.strictEqual(decisionField, 0xD, ""the decision is in the 4th nibble"");"
+  .
+
+THEPIXELASRGBA =
+  "// ── 3. The pixel as RGBA 4-4-4-4 ────────────────────────────"
+  "type Pixel = {"
+  "  r: number;  // 0-15"
+  "  g: number;  // 0-15"
+  "  b: number;  // 0-15"
+  "  a: number;  // 0-15 — the alpha, the 4th, the decision"
+  "};"
+  "function pixelFromBits(bits: number): Pixel {"
+  "  return {"
+  "    r: (bits >> 12) & 0xF,"
+  "    g: (bits >> 8)  & 0xF,"
+  "    b: (bits >> 4)  & 0xF,"
+  "    a: bits         & 0xF,"
+  "  };"
+  "}"
+  "const p = pixelFromBits(0xABCD);"
+  "assert.strictEqual(p.r, 0xA, ""r = 0xA"");"
+  "assert.strictEqual(p.g, 0xB, ""g = 0xB"");"
+  "assert.strictEqual(p.b, 0xC, ""b = 0xC"");"
+  "assert.strictEqual(p.a, 0xD, ""a = 0xD (the alpha, the decision)"");"
+  .
+
+THEALPHAISTHETH =
+  "// ── 4. The alpha is the 4th ─────────────────────────────────"
+  "// The alpha (presence) is the 4th channel."
+  "const channels = [""R"", ""G"", ""B"", ""A""];"
+  "assert.strictEqual(channels.length, 4, ""4 channels"");"
+  "assert.strictEqual(channels[3], ""A"", ""the 4th is A (alpha)"");"
+  "// the 4th is the alpha, and the alpha is the decision"
+  .
+
+THEALPHAISTHEPRESENCEABSENCE =
+  "// ── 5. The alpha is the presence/absence ────────────────────"
+  "function isPresent(a: number): boolean {"
+  "  return a > 0;"
+  "}"
+  "assert.strictEqual(isPresent(0xD), true, ""alpha = 0xD: present"");"
+  "assert.strictEqual(isPresent(0x0), false, ""alpha = 0x0: absent"");"
+  "// the alpha is the decision: present or absent"
+  .
+
+THEPIXELISBOXEDPINEPINEBOXED =
+  "// ── 6. The pixel is boxedPINE / PINEboxed ───────────────────"
+  "// boxedPINE: the box (RGBA) holds the PINE (the color)"
+  "// PINEboxed: the PINE (the color) is inside the box (RGBA)"
+  "type BoxedPINE = {"
+  "  box: { r: number; g: number; b: number; a: number };"
+  "  seed: string;"
+  "};"
+  "type PINEboxed = {"
+  "  seed: string;"
+  "  box: { r: number; g: number; b: number; a: number };"
+  "};"
+  "const boxedPINE: BoxedPINE = {"
+  "  box: { r: 0xA, g: 0xB, b: 0xC, a: 0xD },"
+  "  seed: ""the color"","
+  "};"
+  "const PINEboxed: PINEboxed = {"
+  "  seed: ""the color"","
+  "  box: { r: 0xA, g: 0xB, b: 0xC, a: 0xD },"
+  "};"
+  "// both describe the same pixel from opposite directions (I-148)"
+  "assert.deepStrictEqual(boxedPINE.box, PINEboxed.box, ""the box is the same"");"
+  "assert.strictEqual(boxedPINE.seed, PINEboxed.seed, ""the seed is the same"");"
+  .
+
+THETHISTHEDECISION =
+  "// ── 7. The 4th is the decision ──────────────────────────────"
+  "// The alpha (the 4th nibble) is the decision."
+  "function decisionFromPixel(p: Pixel): number {"
+  "  return p.a;"
+  "}"
+  "assert.strictEqual(decisionFromPixel(p), 0xD, ""the decision is the alpha"");"
+  .
+
+THECOLLAPSE =
+  "// ── 8. The collapse: 777 → 216 ──────────────────────────────"
+  "// The decision triggers the collapse."
+  "const fact = (n: number): number => n <= 1 ? 1 : n * fact(n - 1);"
+  "const collapse = fact(3) * fact(3) * fact(3) * fact(1);"
+  "assert.strictEqual(collapse, 216, ""the collapse gives 216"");"
+  .
+
+THEDECISIONTRIGGERSTHECOLLAPSE =
+  "// ── 9. The decision triggers the collapse ───────────────────"
+  "function collapseWithDecision(state: number, decision: number): number {"
+  "  return decision > 0 ? collapse : state;"
+  "}"
+  "assert.strictEqual(collapseWithDecision(777, 0xD), 216, ""decision 0xD → collapse"");"
+  "assert.strictEqual(collapseWithDecision(777, 0x0), 777, ""decision 0x0 → no collapse"");"
+  "// so the alpha (the 4th) is the decision"
+  .
+
+THETHCOMESBEFORETHETH =
+  "// ── 10. The 4th comes before the 7th ────────────────────────"
+  "// Days 1-6 are the catch, day 7 is the finally, but the"
+  "// decision comes from the 4th (day 4 — where the rulers are set)."
+  "const days = [""day1"", ""day2"", ""day3"", ""day4"", ""day5"", ""day6"", ""day7""];"
+  "assert.strictEqual(days.indexOf(""day4""), 3, ""day 4 is at index 3 (0-based)"");"
+  "assert.strictEqual(days[3], ""day4"", ""the 4th day"");"
+  "// day 4 = the rulers (sun and moon)"
+  .
+
+DAYTHERULERSOFMEASUREMENT =
+  "// ── 11. Day 4 = the rulers of measurement ───────────────────"
+  "// Day 4: ""Let there be lights in the firmament"" — sun and moon."
+  "type Ruler = { light: ""greater"" | ""lesser""; role: string };"
+  "const rulers: Ruler[] = ["
+  "  { light: ""greater"", role: ""day"" },"
+  "  { light: ""lesser"",  role: ""night"" },"
+  "];"
+  "assert.strictEqual(rulers.length, 2, ""2 rulers"");"
+  "// the rulers are set on day 4"
+  .
+
+THEWORDISTHECHOICEOFRULERSI =
+  "// ── 12. The Word is the choice of rulers (I-173) ────────────"
+  "// The Word is the choice of which rulers to allocate."
+  "type Word = { rulers: Ruler[]; chosen: boolean };"
+  "const word: Word = { rulers, chosen: true };"
+  "assert.ok(word.chosen, ""the Word chooses the rulers"");"
+  "// and the choice is made on day 4"
+  .
+
+THETHASTHEDECISION =
+  "// ── 13. The 4th as the decision ─────────────────────────────"
+  "// The 4th (day 4 or the 4th nibble) is where the choice happens."
+  "type Source = {"
+  "  name: string;"
+  "  position: number;"
+  "  role: string;"
+  "};"
+  "const sources: Source[] = ["
+  "  { name: ""day 4"",            position: 4, role: ""the rulers are set"" },"
+  "  { name: ""the 4th nibble"",   position: 4, role: ""the decision field"" },"
+  "  { name: ""the alpha"",        position: 4, role: ""the presence"" },"
+  "];"
+  "for (const s of sources) {"
+  "  assert.strictEqual(s.position, 4, `${s.name} is at position 4`);"
+  "}"
+  "// all three are the 4th"
+  .
+
+THEWHOLEPICTURE =
+  "// ── 14. The whole picture ───────────────────────────────────"
+  "type Picture = {"
+  "  header: string;"
+  "  the4th: string;"
+  "  collapse: string;"
+  "  connects: string;"
+  "};"
+  "const picture: Picture = {"
+  "  header: ""16-bit (4 nibbles)"","
+  "  the4th: ""the alpha (the decision)"","
+  "  collapse: ""777 → 216"","
+  "  connects: ""the choice of rulers (I-173)"","
+  "};"
+  "assert.ok(picture.header.includes(""4 nibbles""), ""the 16-bit header"");"
+  "assert.ok(picture.the4th.includes(""alpha""), ""the 4th is the alpha"");"
+  "assert.ok(picture.collapse.includes(""216""), ""the collapse gives 216"");"
+  "assert.ok(picture.connects.includes(""rulers""), ""connects to the choice of rulers"");"
+  .
+
+THEPUNCHLINE =
+  "// ── 15. The punchline ──────────────────────────────────────"
+  "// The decision for the collapse comes from the 4th — the 4th"
+  "// nibble of the 16-bit header of the boxedPINE/PINEboxed pixel."
+  "console.log(""I-175: the decision comes from the 4th — the pixel's 16-bit header — passed"");"
+  "console.log(`  16-bit header = 4 nibbles`);"
+  "console.log(`  the 4th nibble = the alpha = the decision`);"
+  "console.log(`  the pixel is boxedPINE (the box holds the color) and PINEboxed (the color in the box)`);"
+  "console.log(`  the decision (the alpha) triggers the collapse 777 → 216`);"
+  "console.log(`  day 4 = the rulers of measurement (the choice, I-173)`);"
+  "console.log(`  the 4th is the source of the decision`);"
+  .

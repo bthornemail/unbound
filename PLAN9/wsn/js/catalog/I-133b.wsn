@@ -1,0 +1,114 @@
+RECORD = HEAD THETHREEGROUPS THECHARACTERCHECKS THETWOCANDIDATEPATTERNS THEGROUPSEACHSETTOUCHES THEGROUPSIZES THEMODANCHORS THEATOMICSCALLS THETWOREADINGS .
+
+HEAD =
+  "// i133b.ts — I-133b: delineating :; <=>? {|}~"
+  "import assert from ""node:assert"";"
+  .
+
+THETHREEGROUPS =
+  "// ── 1. The three groups ──────────────────────────────────────────"
+  "const groups = {"
+  "  ""`:;`"":      [0x3A, 0x3B],"
+  "  ""`<=>?`"":    [0x3C, 0x3D, 0x3E, 0x3F],"
+  "  ""`{|}~`"":    [0x7B, 0x7C, 0x7D, 0x7E],"
+  "};"
+  "assert.deepStrictEqual(groups[""`:;`""],     [58, 59],          ""`:;` = 58-59"");"
+  "assert.deepStrictEqual(groups[""`<=>?`""],   [60, 61, 62, 63],  ""`<=>?` = 60-63"");"
+  "assert.deepStrictEqual(groups[""`{|}~`""],   [123, 124, 125, 126], ""`{|}~` = 123-126"");"
+  "// DEL is the sentinel just past {|}~"
+  "const DEL = 127;"
+  "assert.strictEqual(DEL, groups[""`{|}~`""][3] + 1, ""DEL = 126 + 1"");"
+  .
+
+THECHARACTERCHECKS =
+  "// ── 2. The character checks ──────────────────────────────────────"
+  "assert.strictEqual(String.fromCharCode(58), "":"", ""58 = :"");"
+  "assert.strictEqual(String.fromCharCode(59), "";"", ""59 = ;"");"
+  "assert.strictEqual(String.fromCharCode(60), ""<"", ""60 = <"");"
+  "assert.strictEqual(String.fromCharCode(63), ""?"", ""63 = ?"");"
+  "assert.strictEqual(String.fromCharCode(123), ""{"", ""123 = {"");"
+  "assert.strictEqual(String.fromCharCode(124), ""|"", ""124 = |"");"
+  "assert.strictEqual(String.fromCharCode(125), ""}"", ""125 = }"");"
+  "assert.strictEqual(String.fromCharCode(126), ""~"", ""126 = ~"");"
+  "assert.strictEqual(String.fromCharCode(127), ""\x7f"", ""127 = DEL"");"
+  .
+
+THETWOCANDIDATEPATTERNS =
+  "// ── 3. The two candidate patterns ────────────────────────────────"
+  "const A = [59, 127, 63];  // starts at `;` (last of :;)"
+  "const B = [60, 127, 63];  // starts at `<` (first of <=>?)"
+  "// A reads as: last-of-:; , past-{|}~ , last-of-<=>?"
+  "// B reads as: first-of-<=>? , past-{|}~ , last-of-<=>?"
+  "assert.strictEqual(A[0], 59, ""A starts at `;`"");"
+  "assert.strictEqual(B[0], 60, ""B starts at `<`"");"
+  "// both share 127 and 63"
+  "assert.strictEqual(A[1], B[1], ""both use 127 (DEL)"");"
+  "assert.strictEqual(A[2], B[2], ""both use 63 (`?`)"");"
+  .
+
+THEGROUPSEACHSETTOUCHES =
+  "// ── 4. The groups each set touches ──────────────────────────────"
+  "// A touches: 59 (:; end), 63 (<=>? end), 127 (past {|}~)"
+  "// B touches: 60 (<=>? start), 63 (<=>? end), 127 (past {|}~)"
+  "assert.strictEqual(59, groups[""`:;`""][1], ""A hits end of `:;`"");"
+  "assert.strictEqual(60, groups[""`<=>?`""][0], ""B hits start of `<=>?`"");"
+  "assert.strictEqual(63, groups[""`<=>?`""][3], ""both hit end of `<=>?`"");"
+  "assert.strictEqual(127, groups[""`{|}~`""][3] + 1, ""both hit past `{|}~`"");"
+  .
+
+THEGROUPSIZES =
+  "// ── 5. The group sizes ──────────────────────────────────────────"
+  "const sizes = {"
+  "  ""`:;`"":   groups[""`:;`""].length,"
+  "  ""`<=>?`"": groups[""`<=>?`""].length,"
+  "  ""`{|}~`"": groups[""`{|}~`""].length,"
+  "};"
+  "assert.deepStrictEqual(sizes, { ""`:;`"": 2, ""`<=>?`"": 4, ""`{|}~`"": 4 }, ""sizes 2,4,4"");"
+  "// :; + <=>? = 6 (sextuplet) ; {|}~ + DEL = 5 (constant column)"
+  "assert.strictEqual(sizes[""`:;`""] + sizes[""`<=>?`""], 6, ""2 + 4 = 6"");"
+  "assert.strictEqual(sizes[""`{|}~`""] + 1, 5, ""4 + 1 (DEL) = 5"");"
+  .
+
+THEMODANCHORS =
+  "// ── 6. The mod-36 anchors ────────────────────────────────────────"
+  "const m36 = (n: number) => n % 36;"
+  "const as36 = (n: number) => n < 10 ? String(n) : String.fromCharCode(0x41 + n - 10);"
+  "assert.strictEqual(as36(m36(59)),  ""N"", ""59 -> N"");"
+  "assert.strictEqual(as36(m36(60)),  ""O"", ""60 -> O"");"
+  "assert.strictEqual(as36(m36(63)),  ""R"", ""63 -> R"");"
+  "assert.strictEqual(as36(m36(127)), ""J"", ""127 -> J"");"
+  "// anchors J and R are 8 apart (the octet)"
+  "assert.strictEqual(m36(63) - m36(127), 8, ""R - J = 8 (octet)"");"
+  .
+
+THEATOMICSCALLS =
+  "// ── 7. The Atomics calls ─────────────────────────────────────────"
+  "{"
+  "  const buf = new Uint8Array(128);"
+  "  buf.fill(0);"
+  "  buf[59] = 0x7F; buf[60] = 0x7F; buf[63] = 0x7F;"
+  "  // Set A: exchange at index 59"
+  "  const rA = Atomics.compareExchange(buf, 59, 0x7F, 0x3F);"
+  "  assert.strictEqual(rA, 0x7F, ""A read at 59"");"
+  "  assert.strictEqual(buf[59], 0x3F, ""A wrote at 59"");"
+  "  // Set B: exchange at index 60"
+  "  const rB = Atomics.compareExchange(buf, 60, 0x7F, 0x3F);"
+  "  assert.strictEqual(rB, 0x7F, ""B read at 60"");"
+  "  assert.strictEqual(buf[60], 0x3F, ""B wrote at 60"");"
+  "  // both indices were 127, both became 63"
+  "  assert.strictEqual(buf[59], 0x3F, ""index 59 = ?"");"
+  "  assert.strictEqual(buf[60], 0x3F, ""index 60 = ?"");"
+  "  assert.strictEqual(buf[63], 0x7F, ""index 63 still DEL"");"
+  "}"
+  .
+
+THETWOREADINGS =
+  "// ── 8. The two readings ─────────────────────────────────────────"
+  "// A = inclusive reading: start at the LAST char of the previous group (:;)"
+  "// B = exclusive reading: start at the FIRST char of the group itself (<=>?)"
+  "// The two differ by exactly 1 (59 vs 60)"
+  "assert.strictEqual(B[0] - A[0], 1, ""B starts one after A"");"
+  "assert.strictEqual(0x3B, 59, ""0x3B = `;` (inclusive end)"");"
+  "assert.strictEqual(0x3C, 60, ""0x3C = `<` (exclusive start)"");"
+  "console.log(""I-133b: delineating :; <=>? {|}~ via 59/60, 127, 63 — passed"");"
+  .

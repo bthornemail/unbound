@@ -1,0 +1,11 @@
+BIT       = "0" | "1" .
+NOT       = "01" | "10" .
+XOR       = "000" | "011" | "101" | "110" .
+XNOR      = "001" | "010" | "100" | "111" .
+AND       = "000" | "010" | "100" | "111" .
+OR        = "000" | "011" | "101" | "111" .
+FULLADDER = "000" "00" | "001" "10" | "010" "10" | "011" "01"
+          | "100" "10" | "101" "01" | "110" "01" | "111" "11" .
+ADD       = CARRYZERO .
+CARRYZERO = [ "000" CARRYZERO | "011" CARRYZERO | "101" CARRYZERO | "110" CARRYONE ] .
+CARRYONE  = "001" CARRYZERO | "010" CARRYONE | "100" CARRYONE | "111" CARRYONE .

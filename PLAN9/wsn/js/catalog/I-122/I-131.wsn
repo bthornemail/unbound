@@ -1,0 +1,28 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-131: walls at 4/5/6; 0,2,1 offset"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-131"", ""adding 6; walls at 4/5/6; 0,2,1 offset"", () => {"
+  "  const CAP = 0x80000000n;"
+  "  function liftEvenCapped(base: bigint, cap: bigint): bigint[] {"
+  "    const out = [base];"
+  "    while (out[out.length - 1] * 2n < cap) out.push(out[out.length - 1] * 2n);"
+  "    return out;"
+  "  }"
+  "  function liftOddCapped(base: bigint, cap: bigint): bigint[] {"
+  "    const out = [base];"
+  "    while (out[out.length - 1] * 2n + 1n < cap) out.push(out[out.length - 1] * 2n + 1n);"
+  "    return out;"
+  "  }"
+  "  const l6  = liftEvenCapped(0x6n, CAP);"
+  "  const l8  = liftEvenCapped(0x8n, CAP);"
+  "  const l10 = liftEvenCapped(0xAn, CAP);"
+  "  const l9  = liftOddCapped (0x9n, CAP);"
+  "  assert.strictEqual(l6[l6.length-1], 0x60000000n);"
+  "  assert.strictEqual(l8[l8.length-1], 0x40000000n);"
+  "  assert.strictEqual(l10[l10.length-1], 0x50000000n);"
+  "  assert.strictEqual(l9[l9.length-1], 0x4FFFFFFFn);"
+  "}, ""point/line/duality"");"
+  .

@@ -1,0 +1,22 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-141: the shared zero is derived"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-141"", ""the shared zero is derived, not axiomatic"", () => {"
+  "  const xor = (...xs: number[]) => xs.reduce((a, b) => a ^ b, 0);"
+  "  assert.strictEqual(xor(0, 1, 2, 3), 0);"
+  "  assert.strictEqual(xor(1, 2, 3, 4, 5, 6, 7), 0);"
+  "  const fact = (n: number): number => n <= 1 ? 1 : n * fact(n - 1);"
+  "  for (let k = 1; k <= 8; k++) assert.strictEqual(fact(8) % k, 0);"
+  "  // XOR closure threshold at n >= 2"
+  "  function xorRange(lo: number, hi: number): number {"
+  "    let x = 0;"
+  "    for (let i = lo; i <= hi; i++) x ^= i;"
+  "    return x;"
+  "  }"
+  "  for (let n = 2; n <= 8; n++) assert.strictEqual(xorRange(0, 2 ** n - 1), 0);"
+  "  assert.strictEqual(xorRange(0, 1), 1);  // n = 1 case"
+  "}, ""point/line/duality"");"
+  .

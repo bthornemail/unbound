@@ -1,0 +1,45 @@
+POLYHEDRALVERTEXINCIDENCE = CHECKED .
+
+CHECKED = HEAD COQ SCOPE BALANCEDMOD TANGENTBLOCKLAYOUTBALANCED REGULARBLOCKLAYOUTBALANCED STELLATEDBLOCKLAYOUTBALANCED TRIAKISBLOCKLAYOUTBALANCED .
+
+HEAD =
+  "(*"
+  "  PolyhedralVertexIncidence.v -- modulo-4 balance of named vertex blocks."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+BALANCEDMOD =
+  "Definition balanced_mod4 (count : N) : Prop := count mod 4 = 0."
+  .
+
+TANGENTBLOCKLAYOUTBALANCED =
+  "Theorem tangent_block_layout_balanced :"
+  "  balanced_mod4 4."
+  "Proof. reflexivity. Qed."
+  .
+
+REGULARBLOCKLAYOUTBALANCED =
+  "Theorem regular_block_layout_balanced :"
+  "  balanced_mod4 8."
+  "Proof. reflexivity. Qed."
+  .
+
+STELLATEDBLOCKLAYOUTBALANCED =
+  "Theorem stellated_block_layout_balanced :"
+  "  balanced_mod4 12."
+  "Proof. reflexivity. Qed."
+  .
+
+TRIAKISBLOCKLAYOUTBALANCED =
+  "Theorem triakis_block_layout_balanced :"
+  "  balanced_mod4 16."
+  "Proof. reflexivity. Qed."
+  .

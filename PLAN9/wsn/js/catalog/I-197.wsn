@@ -1,0 +1,45 @@
+RECORD = HEAD KISMULTIPLICATIONBYAPLUSC AANDNOSMALLERPOWER EIGHTSTEPSRETURNEVERYWORDFOREVERYCONSTANT .
+
+HEAD =
+  "// i197.ts — I-197: polytron is a polynomial automaton"
+  "//"
+  "// The author, 2026-10-13: ""I have a full metacompiler modem in polytron; the"
+  "// polytron is a polynomial automaton"". Found here: the delta law is a"
+  "// polynomial. A 16-bit word is a polynomial over GF(2) modulo x^16 + 1 (bit i"
+  "// the coefficient of x^i); a left rotation by n is multiplication by x^n, a"
+  "// right rotation by 2 is x^14. So K(p, C) = rotl(p,1) ^ rotl(p,3) ^ rotr(p,2) ^ C"
+  "// is p times A = x + x^3 + x^14, plus C: an affine polynomial automaton. And A^8"
+  "// = 1 with 1 + A + ... + A^7 = 0, so 8 steps of K return every word for every"
+  "// C; with 0x1D none returns sooner (I-195)."
+  "import assert from ""node:assert"";"
+  "const rotl = (x: number, n: number) => ((x << n) | (x >>> (16 - n))) & 0xffff;"
+  "const rotr = (x: number, n: number) => ((x >>> n) | (x << (16 - n))) & 0xffff;"
+  "const K = (p: number, c: number) => rotl(p, 1) ^ rotl(p, 3) ^ rotr(p, 2) ^ c;"
+  "/** product of two polynomials over GF(2), modulo x^16 + 1 */"
+  "const mul = (a: number, b: number) => { let r = 0; for (let i = 0; i < 16; i++) if ((b >> i) & 1) r ^= rotl(a, i); return r; };"
+  "const A = (1 << 1) | (1 << 3) | (1 << 14);"
+  .
+
+KISMULTIPLICATIONBYAPLUSC =
+  "// ── 1. K is multiplication by A, plus C ──────────────────────"
+  "for (const c of [0x1d, 0x1d1d]) for (let p = 0; p < 0x10000; p++) assert.strictEqual(K(p, c), mul(A, p) ^ c, `K(0x${p.toString(16)}, 0x${c.toString(16)})`);"
+  .
+
+AANDNOSMALLERPOWER =
+  "// ── 2. A^8 = 1, and no smaller power ─────────────────────────"
+  "const powers: number[] = [];"
+  "for (let k = 1, q = A; k <= 8; k++, q = mul(q, A)) powers.push(q);"
+  "assert.strictEqual(powers[7], 1, ""A^8 = 1"");"
+  "assert.ok(powers.slice(0, 7).every((q) => q !== 1), ""A^1 .. A^7 are not 1"");"
+  .
+
+EIGHTSTEPSRETURNEVERYWORDFOREVERYCONSTANT =
+  "// ── 3. Eight steps return every word, for every constant ─────"
+  "let sum = 0;"
+  "for (let k = 0, q = 1; k < 8; k++, q = mul(q, A)) sum ^= q;"
+  "assert.strictEqual(sum, 0, ""1 + A + ... + A^7 = 0, so K^8(p) = A^8 p + (1 + ... + A^7) C = p"");"
+  "for (const c of [0x0000, 0x001d, 0x1d1d, 0xffff]) assert.strictEqual([...Array(8)].reduce((p) => K(p, c), 0x4242), 0x4242, `8 steps from 0x4242 with C = 0x${c.toString(16)}`);"
+  "console.log(""I-197: polytron is a polynomial automaton — passed"");"
+  "console.log(""  K(p, C) = (x + x^3 + x^14) p + C over GF(2)[x]/(x^16 + 1)"");"
+  "console.log(""  A^8 = 1 and 1 + A + ... + A^7 = 0: eight steps return every word for every C"");"
+  .

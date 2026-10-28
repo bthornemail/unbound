@@ -1,0 +1,46 @@
+RECORD = HEAD THETRIPLESWHOSEXORISNULL ASTEINERTRIPLESYSTEMS THEVAULTSLINEMASKSARETHESETRIPLES .
+
+HEAD =
+  "// i198.ts — I-198: the Steiner triples are the knowledge triples: S ⊕ P ⊕ O = 0"
+  "//"
+  "// The author, 2026-10-13: ""the three hyphens were the null subject object"
+  "// predicate, because the omi---imo is the frame omi-ip6-ip8-imo; then remove"
+  "// the frame, it's s-p-o""; the null ""we found to be the space character 0x20"";"
+  "// and ""Steiner triplets and knowledge triples had me rooted to s-p-o"". Found"
+  "// here: the Fano plane is the Steiner triple system of order 7, S(2,3,7), and"
+  "// with its points named 1 to 7 (3 bits), its seven lines are exactly the"
+  "// triples whose XOR is 0: any two of subject, predicate, object name the third"
+  "// (o = s ⊕ p), and the three together are null. The seven line masks of the"
+  "// vault's 16-index (I-101, I-193; the Commons icons), point n at bit n-1, are"
+  "// these seven triples, all of them."
+  "import assert from ""node:assert"";"
+  .
+
+THETRIPLESWHOSEXORISNULL =
+  "// ── 1. The triples whose XOR is null ─────────────────────────"
+  "const triples: number[][] = [];"
+  "for (let s = 1; s < 8; s++) for (let p = s + 1; p < 8; p++) { const o = s ^ p; if (o > p) triples.push([s, p, o]); }"
+  "assert.deepStrictEqual(triples, [[1, 2, 3], [1, 4, 5], [1, 6, 7], [2, 4, 6], [2, 5, 7], [3, 4, 7], [3, 5, 6]], ""seven triples s < p < o with s ⊕ p ⊕ o = 0"");"
+  .
+
+ASTEINERTRIPLESYSTEMS =
+  "// ── 2. A Steiner triple system S(2,3,7) ──────────────────────"
+  "for (let a = 1; a < 8; a++) for (let b = a + 1; b < 8; b++) {"
+  "  const on = triples.filter((t) => t.includes(a) && t.includes(b));"
+  "  assert.strictEqual(on.length, 1, `points ${a} and ${b} lie on exactly one triple`);"
+  "  assert.ok(on[0]!.includes(a ^ b), `and its third point is ${a} ⊕ ${b}`);"
+  "}"
+  "for (let a = 1; a < 8; a++) assert.strictEqual(triples.filter((t) => t.includes(a)).length, 3, `point ${a} on three triples`);"
+  "assert.strictEqual(7 % 6, 1, ""an S(2,3,n) exists only when n is 1 or 3 mod 6: 7 is 1"");"
+  .
+
+THEVAULTSLINEMASKSARETHESETRIPLES =
+  "// ── 3. The vault's line masks are these triples ──────────────"
+  "const LINES = [0x34, 0x61, 0x52, 0x07, 0x4c, 0x19, 0x2a]; // MASK16[8..14]"
+  "const points = (m: number) => [0, 1, 2, 3, 4, 5, 6].filter((i) => (m >> i) & 1).map((i) => i + 1);"
+  "for (const m of LINES) assert.strictEqual(points(m).reduce((x, y) => x ^ y, 0), 0, `mask 0x${m.toString(16)}: S ⊕ P ⊕ O = 0`);"
+  "assert.deepStrictEqual(LINES.map(points).sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!), triples, ""the seven masks are the seven triples"");"
+  "console.log(""I-198: the Steiner triples are the knowledge triples: S ⊕ P ⊕ O = 0 — passed"");"
+  "console.log(""  the Fano plane S(2,3,7): seven triples, any two points on exactly one, the third their XOR"");"
+  "console.log(""  the vault's seven line masks, point n at bit n-1, are exactly these triples"");"
+  .

@@ -1,0 +1,31 @@
+OMIRINGSTEP = CHECKED .
+
+CHECKED = COQ SCOPE OMIRINGSTEPOWNER OMIRINGSTEPPROOF OMIRINGSTEPSTEP OMIRINGSTEPZEROWITNESS .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+OMIRINGSTEPOWNER =
+  "Definition omi_ring_step09_owner : Prop := True."
+  .
+
+OMIRINGSTEPPROOF =
+  "Definition omi_ring_step09_proof : omi_ring_step09_owner := I."
+  .
+
+OMIRINGSTEPSTEP =
+  "Definition omi_ring_step09_step (x : N) : N := N.lxor x 0x18."
+  .
+
+OMIRINGSTEPZEROWITNESS =
+  "Theorem omi_ring_step09_zero_witness :"
+  "  omi_ring_step09_step 0 = 0x18."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

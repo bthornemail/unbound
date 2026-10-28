@@ -1,0 +1,17 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-134: base-36 tag literal taxonomy"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-134"", ""base-36 tag literal taxonomy"", () => {"
+  "  assert.strictEqual(0x5F, 95);"
+  "  assert.strictEqual(0x60, 96);"
+  "  assert.strictEqual(0x61, 97);"
+  "  for (const [u, l] of [[""A"",""a""], [""Z"",""z""]]) {"
+  "    assert.strictEqual(l.charCodeAt(0) - u.charCodeAt(0), 0x20);"
+  "  }"
+  "  assert.strictEqual(0x1B, 27);"
+  "  assert.strictEqual(0xFEFF, 65279);"
+  "}, ""point/line/duality"");"
+  .

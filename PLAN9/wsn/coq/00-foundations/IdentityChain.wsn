@@ -1,0 +1,37 @@
+IDENTITYCHAIN = CHECKED .
+
+CHECKED = COQ SCOPE IDENTITYCHAINOWNER IDENTITYCHAINPROOF IDENTITYCHAINTWOSQUARE IDENTITYCHAINFOURSQUARE IDENTITYCHAINFOURSQUAREUNFOLDS .
+
+COQ =
+  "From Coq Require Import QArith.QArith."
+  .
+
+SCOPE =
+  "Open Scope Q_scope."
+  .
+
+IDENTITYCHAINOWNER =
+  "Definition identity_chain_owner : Prop := True."
+  .
+
+IDENTITYCHAINPROOF =
+  "Definition identity_chain_proof : identity_chain_owner := I."
+  .
+
+IDENTITYCHAINTWOSQUARE =
+  "Definition identity_chain_two_square (a b : Q) : Q := a * a + b * b."
+  .
+
+IDENTITYCHAINFOURSQUARE =
+  "Definition identity_chain_four_square (a b c d : Q) : Q :="
+  "  a * a + b * b + c * c + d * d."
+  .
+
+IDENTITYCHAINFOURSQUAREUNFOLDS =
+  "Theorem identity_chain_four_square_unfolds : forall a b c d,"
+  "  identity_chain_four_square a b c d =="
+  "    a * a + b * b + c * c + d * d."
+  "Proof."
+  "  intros a b c d; reflexivity."
+  "Qed."
+  .

@@ -1,0 +1,19 @@
+#!/bin/rc
+# htmlfs.rc - inside Plan 9: serve unbound/HTML through htmlfs at /n/html,
+# list the tree, and copy it to the output disk as a tar.
+rfork ne
+ifs='
+'
+w=/tmp/zh
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c htmlfs.c && 8l -o $w/htmlfs htmlfs.8 || exit compile
+cd $w/unbound
+$w/htmlfs -m /n/html `{grep '^HTML/.*\.html$' $p/MANIFEST} || exit htmlfs
+ls /n/html | sed 3q
+echo htmlfs.rc: `{ls /n/html | wc -l} pages served at /n/html
+@{cd /n && tar cf $w/html.tar html} && cp $w/html.tar /dev/sd02/data
+unmount /n/html

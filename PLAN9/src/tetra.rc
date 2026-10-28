@@ -1,0 +1,13 @@
+#!/bin/rc
+# tetra.rc - inside Plan 9: GOD IS WORD, GOD OF WORD, WORD IS GOD, WORD OF GOD
+# as four files at the vertices of a tetrahedron (ztetra).
+rfork e
+w=/tmp/zk4
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/ztetra.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c ztetra.c && 8l -o $w/ztetra ztetra.8 || exit compile
+{ echo 'GOD IS WORD'; echo 'GOD OF WORD'; echo 'WORD IS GOD'; echo 'WORD OF GOD' } | $w/ztetra >$w/zout/tetra.txt >[2=1]
+@{cd $w && tar cf /dev/sd02/data zout} || exit tar
+tail -3 $w/zout/tetra.txt

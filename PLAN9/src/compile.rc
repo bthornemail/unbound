@@ -1,0 +1,28 @@
+#!/bin/rc
+# compile.rc - inside Plan 9: unpack unbound from the input disk, frame every
+# file in its MANIFEST as a buffer with zbuf, and write the buffers to the
+# output disk as a tar. The disks are the second and third SCSI units.
+rfork e
+ifs='
+'
+src=/dev/sd01/data
+dst=/dev/sd02/data
+w=/tmp/zc
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf $src} || exit tar
+cd $w/unbound/PLAN9/src
+8c zbuf.c && 8l -o $w/zbuf zbuf.8 || exit compile
+cd $w/unbound
+n=0
+for(f in `{cat PLAN9/MANIFEST}){
+	ext=`{echo $f | sed 's/.*\.//'}
+	type=`{awk -F'	' '$1 == "'$ext'" { print $2 }' PLAN9/src/TYPES}
+	if(~ $#type 0) type=application/octet-stream
+	dir=`{basename -d $f}
+	mkdir -p $w/zout/$dir
+	$w/zbuf unbound/$f $type 'unbound/'^`{echo $f | sed 's,/.*,,'}^', compiled in Plan 9 by zbuf' <$f >$w/zout/$f.mime || exit zbuf
+	n=`{echo $n + 1 | hoc}
+}
+@{cd $w && tar cf $dst zout} || exit tar
+echo compile.rc: $n buffers written to $dst

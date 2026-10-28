@@ -1,0 +1,46 @@
+OMINOARCHIVEPROMOTIONREGISTRY = CHECKED .
+
+CHECKED = COQ SCOPE OMINOARCHIVEPROMOTIONREGISTRYOWNER OMINOARCHIVEPROMOTIONREGISTRYPROOF OMINOARCHIVEPROMOTIONREGISTRYACTIVE OMINOARCHIVEPROMOTIONREGISTRYEXISTING OMINOARCHIVEPROMOTIONREGISTRYPROMOTED OMINOARCHIVEPROMOTIONREGISTRYBRIDGES OMINOARCHIVEPROMOTIONREGISTRYDECOMPOSITION .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+OMINOARCHIVEPROMOTIONREGISTRYOWNER =
+  "Definition omino_archive_promotion_registry_owner : Prop := True."
+  .
+
+OMINOARCHIVEPROMOTIONREGISTRYPROOF =
+  "Definition omino_archive_promotion_registry_proof : omino_archive_promotion_registry_owner := I."
+  .
+
+OMINOARCHIVEPROMOTIONREGISTRYACTIVE =
+  "Definition omino_archive_promotion_registry_active : N := 64."
+  .
+
+OMINOARCHIVEPROMOTIONREGISTRYEXISTING =
+  "Definition omino_archive_promotion_registry_existing : N := 23."
+  .
+
+OMINOARCHIVEPROMOTIONREGISTRYPROMOTED =
+  "Definition omino_archive_promotion_registry_promoted : N := 38."
+  .
+
+OMINOARCHIVEPROMOTIONREGISTRYBRIDGES =
+  "Definition omino_archive_promotion_registry_bridges : N := 3."
+  .
+
+OMINOARCHIVEPROMOTIONREGISTRYDECOMPOSITION =
+  "Theorem omino_archive_promotion_registry_decomposition :"
+  "  omino_archive_promotion_registry_existing +"
+  "  omino_archive_promotion_registry_promoted +"
+  "  omino_archive_promotion_registry_bridges ="
+  "  omino_archive_promotion_registry_active."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

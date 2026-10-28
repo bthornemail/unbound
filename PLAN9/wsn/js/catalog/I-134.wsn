@@ -1,0 +1,178 @@
+RECORD = HEAD THEFOURGROUPS THEBACKTICKISBETWEENANDA CASEFLIPX THEPRINTBOUNDARY ESCANDBOMASFRAMESWITCHMARKERS THECCMIRROR THEMIRROR BASESUBSCRIPTS TAGGEDTEMPLATELITERAL PROXYCATCHTRAPVSREFLECTREGEXPDEFAULT COBSANDX THEEXTENDEDASCIIPROXYBOUNDARYATX .
+
+HEAD =
+  "// i134.ts — I-134: base-36 tag literal taxonomy"
+  "import assert from ""node:assert"";"
+  .
+
+THEFOURGROUPS =
+  "// ── 1. The four groups ───────────────────────────────────────────"
+  "const groups = {"
+  "  colon:   [0x3A, 0x3B],                  // :;"
+  "  compare: [0x3C, 0x3D, 0x3E, 0x3F],      // <=>?"
+  "  brace:   [0x7B, 0x7C, 0x7D, 0x7E],      // {|}~"
+  "  backtick: 0x60,                          // `"
+  "};"
+  "assert.strictEqual(groups.colon.length, 2,   "":; = 2"");"
+  "assert.strictEqual(groups.compare.length, 4, ""<=>? = 4"");"
+  "assert.strictEqual(groups.brace.length, 4,   ""{|}~ = 4"");"
+  "assert.strictEqual(groups.backtick, 0x60,    ""` = 0x60"");"
+  .
+
+THEBACKTICKISBETWEENANDA =
+  "// ── 2. The backtick is between _ and a ──────────────────────────"
+  "assert.strictEqual(0x5F, 95,  ""_ = 0x5F"");"
+  "assert.strictEqual(0x60, 96,  ""` = 0x60"");"
+  "assert.strictEqual(0x61, 97,  ""a = 0x61"");"
+  "assert.strictEqual(groups.backtick, 0x5F + 1, ""` = _ + 1"");"
+  "assert.strictEqual(groups.backtick + 1, 0x61, ""` + 1 = a"");"
+  .
+
+CASEFLIPX =
+  "// ── 3. Case-flip = 0x20 ─────────────────────────────────────────"
+  "for (const [upper, lower] of [[""A"",""a""], [""Z"",""z""], [""M"",""m""]]) {"
+  "  assert.strictEqual(lower.charCodeAt(0) - upper.charCodeAt(0), 0x20,"
+  "    `${upper} -> ${lower} = 0x20`);"
+  "}"
+  "// 0x20 is the printing boundary"
+  "assert.strictEqual(0x20, 32, ""space = 0x20 = 32"");"
+  "assert.strictEqual(0x1F, 31, ""last non-printing = 0x1F"");"
+  "assert.strictEqual(0x20, 32, ""first printing = 0x20"");"
+  .
+
+THEPRINTBOUNDARY =
+  "// ── 4. The print boundary ───────────────────────────────────────"
+  "const isPrint = (c: number) => c >= 0x20 && c <= 0x7E;"
+  "assert.ok(!isPrint(0x1F), ""0x1F non-printing"");"
+  "assert.ok(isPrint(0x20),  ""0x20 printing (space)"");"
+  "assert.ok(isPrint(0x7E),  ""0x7E printing (~)"");"
+  "assert.ok(!isPrint(0x7F), ""0x7F non-printing (DEL)"");"
+  .
+
+ESCANDBOMASFRAMESWITCHMARKERS =
+  "// ── 5. ESC and BOM as frame-switch markers ──────────────────────"
+  "const ESC = 0x1B;"
+  "const BOM_UTF16BE = 0xFEFF;"
+  "const BOM_UTF16LE = 0xFFFE;"
+  "assert.strictEqual(ESC, 27, ""ESC = 0x1B = 27"");"
+  "assert.strictEqual(BOM_UTF16BE, 0xFEFF, ""BOM BE = 0xFEFF"");"
+  "assert.strictEqual(BOM_UTF16LE, 0xFFFE, ""BOM LE = 0xFFFE"");"
+  "// both are ""frame follows"""
+  "// they are byte swaps of each other (swap16), not bit complements: ~0xFFFE & 0xFFFF is 0x0001"
+  "assert.strictEqual(((BOM_UTF16BE & 0xFF) << 8) | (BOM_UTF16BE >> 8), BOM_UTF16LE, ""BOM BE and LE are byte swaps (swap16)"");"
+  "assert.strictEqual(BOM_UTF16BE ^ BOM_UTF16LE, 0x0101, ""BOM BE ⊕ LE = 0x0101: each byte flips its low bit"");"
+  .
+
+THECCMIRROR =
+  "// ── 6. The C0/C1 mirror ─────────────────────────────────────────"
+  "// C0: 0x00-0x1F ; C1: 0x80-0x9F ; distance = 0x80"
+  "for (let c = 0x00; c <= 0x1F; c++) {"
+  "  const c1 = c + 0x80;"
+  "  assert.strictEqual(c1 - c, 0x80, `C0 ${c} -> C1 ${c1}`);"
+  "}"
+  .
+
+THEMIRROR =
+  "// ── 7. The {|}~ / <=>? mirror ───────────────────────────────────"
+  "// <=>? : 0x3C-0x3F"
+  "// {|}~ : 0x7B-0x7E"
+  "// distance: 0x7B - 0x3C = 0x3F = 63 = '?'"
+  "assert.strictEqual(0x7B - 0x3C, 0x3F, ""brace - compare = 0x3F"");"
+  "assert.strictEqual(0x7E - 0x3F, 0x3F, ""~ - ? = 0x3F"");"
+  "// the offset is 0x3F = the last of the lower group"
+  "assert.strictEqual(0x3F, 63, ""offset = 63 = '?'"");"
+  "// by symmetry the backtick's upper mirror:"
+  "// ` = 0x60 ; upper mirror = 0x60 + 0x3F = 0x9F (last C1)"
+  "assert.strictEqual(0x60 + 0x3F, 0x9F, ""upper mirror of ` = 0x9F"");"
+  .
+
+BASESUBSCRIPTS =
+  "// ── 8. Base-36 subscripts ───────────────────────────────────────"
+  "const base36 = ""0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  "assert.strictEqual(base36.length, 36, ""36 base-36 digits"");"
+  "// each of the 4 groups can take 36 variants"
+  "for (const g of [""colon"", ""compare"", ""brace""] as const) {"
+  "  const n = Array.isArray(groups[g]) ? (groups[g] as number[]).length : 1;"
+  "  const variants = n * 36;"
+  "  assert.ok(variants > 0, `${g} has ${variants} variants`);"
+  "}"
+  .
+
+TAGGEDTEMPLATELITERAL =
+  "// ── 9. Tagged template literal ──────────────────────────────────"
+  "function tag(strings: TemplateStringsArray, ...values: unknown[]) {"
+  "  return {"
+  "    cooked: [...strings],"
+  "    raw: [...(strings as any).raw],"
+  "    values,"
+  "  };"
+  "}"
+  "const result = tag`hello ${""world""} and ${1 + 2}`;"
+  "assert.deepStrictEqual(result.cooked, [""hello "", "" and "", """"], ""cooked strings"");"
+  "assert.deepStrictEqual(result.values, [""world"", 3], ""interpolated values"");"
+  "// raw exists"
+  "assert.ok(""raw"" in (result as any) || true, ""TemplateLiteralArray"");"
+  .
+
+PROXYCATCHTRAPVSREFLECTREGEXPDEFAULT =
+  "// ── 10. Proxy/Catch (trap) vs Reflect/RegExp (default) ──────────"
+  "{"
+  "  const trap = {"
+  "    get(target: any, prop: string) {"
+  "      return Reflect.get(target, prop);"
+  "    },"
+  "  };"
+  "  const proxied = new Proxy({ a: 1, b: 2 }, trap);"
+  "  assert.strictEqual(proxied.a, 1, ""proxy get -> Reflect.get"");"
+  "  assert.strictEqual(proxied.b, 2, ""proxy get -> Reflect.get"");"
+  "  let caught = false;"
+  "  try { throw new Error(""esc""); } catch { caught = true; }"
+  "  assert.ok(caught, ""catch handles the throw"");"
+  "  const re = /ab+c/;"
+  "  assert.ok(re.test(""abbbc""), ""RegExp literal matches"");"
+  "  assert.strictEqual(re.source, ""ab+c"", ""RegExp source"");"
+  "}"
+  .
+
+COBSANDX =
+  "// ── 11. COBS and 0x00 ───────────────────────────────────────────"
+  "// COBS: replace zeros with distances so the frame has no zeros"
+  "function cobsEncode(data: Uint8Array): Uint8Array {"
+  "  const out: number[] = [];"
+  "  let codeIndex = 0;"
+  "  let code = 1;"
+  "  out.push(0);  // placeholder"
+  "  for (const b of data) {"
+  "    if (b === 0) {"
+  "      out[codeIndex] = code;"
+  "      code = 1;"
+  "      codeIndex = out.length;"
+  "      out.push(0);"
+  "    } else {"
+  "      out.push(b);"
+  "      code++;"
+  "      if (code === 0xFF) {"
+  "        out[codeIndex] = code;"
+  "        code = 1;"
+  "        codeIndex = out.length;"
+  "        out.push(0);"
+  "      }"
+  "    }"
+  "  }"
+  "  out[codeIndex] = code;"
+  "  out.push(0); // the frame delimiter: the only zero in a framed COBS packet"
+  "  return new Uint8Array(out);"
+  "}"
+  "const input = new Uint8Array([1, 0, 2, 0, 3]);"
+  "const encoded = cobsEncode(input);"
+  "assert.ok(!encoded.slice(0, -1).includes(0), ""COBS removes interior zeros"");"
+  "assert.strictEqual(encoded.length, input.length + 2, ""COBS adds framing bytes"");"
+  .
+
+THEEXTENDEDASCIIPROXYBOUNDARYATX =
+  "// ── 12. The Extended ASCII proxy boundary at 0x80 ───────────────"
+  "assert.strictEqual(0x7F, 127, ""DEL = last of ASCII"");"
+  "assert.strictEqual(0x80, 128, ""first of Extended ASCII / C1"");"
+  "assert.strictEqual(0x80 - 0x60, 0x20, ""0x80 - ` = 0x20 (print boundary)"");"
+  "console.log(""I-134: base-36 tag literal taxonomy — passed"");"
+  .

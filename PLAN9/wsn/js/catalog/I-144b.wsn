@@ -1,0 +1,169 @@
+RECORD = HEAD THELITERALBLOCKUPPERCASEONLY DIRECTINDEXINGNOCONVERSIONFUNCTIONS THEBLOCKISTHEBASEALPHABET EVERYSTANDARDRADIXDIGITISINTHEBLOCK THEBLOCKCONTAINSTHEBLOCKOFASCII THEGAPINASCIIBETWEENDIGITSANDLETTERS THEBASESUBCONTEXTIGNORESPREFIXSYNTAX THEBASEBLOCKASASELFDELINEATINGALPHABET THECONTRASTWHATTHEPREENCODEDVERSIONGETSWRONG THEBLOCKASTHEBASESUBCONTEXT .
+
+HEAD =
+  "// i144b.ts — I-144b: base-36 as a literal /A-Z0-9/ block"
+  "import assert from ""node:assert"";"
+  .
+
+THELITERALBLOCKUPPERCASEONLY =
+  "// ── 1. The literal block: uppercase only ────────────────────────"
+  "// This is the /A-Z0-9/ sub-context — no lowercase, no conversion."
+  "const BLOCK = ""0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  "assert.strictEqual(BLOCK.length, 36, ""36 symbols"");"
+  "// Every character is uppercase A-Z or digit 0-9"
+  "for (const c of BLOCK) {"
+  "  const isUpper = c >= ""A"" && c <= ""Z"";"
+  "  const isDigit = c >= ""0"" && c <= ""9"";"
+  "  assert.ok(isUpper || isDigit, `'${c}' is in /A-Z0-9/`);"
+  "}"
+  "// No lowercase"
+  "for (const c of BLOCK) {"
+  "  assert.ok(!(c >= ""a"" && c <= ""z""), `'${c}' is not lowercase`);"
+  "}"
+  .
+
+DIRECTINDEXINGNOCONVERSIONFUNCTIONS =
+  "// ── 2. Direct indexing (no conversion functions) ────────────────"
+  "// value -> symbol"
+  "assert.strictEqual(BLOCK[0],  ""0"", ""0 -> '0'"");"
+  "assert.strictEqual(BLOCK[9],  ""9"", ""9 -> '9'"");"
+  "assert.strictEqual(BLOCK[10], ""A"", ""10 -> 'A'"");"
+  "assert.strictEqual(BLOCK[19], ""J"", ""19 -> 'J'"");"
+  "assert.strictEqual(BLOCK[23], ""N"", ""23 -> 'N'"");"
+  "assert.strictEqual(BLOCK[24], ""O"", ""24 -> 'O'"");"
+  "assert.strictEqual(BLOCK[27], ""R"", ""27 -> 'R'"");"
+  "assert.strictEqual(BLOCK[31], ""V"", ""31 -> 'V'"");"
+  "assert.strictEqual(BLOCK[35], ""Z"", ""35 -> 'Z'"");"
+  "// symbol -> value"
+  "assert.strictEqual(BLOCK.indexOf(""0""), 0,  ""'0' -> 0"");"
+  "assert.strictEqual(BLOCK.indexOf(""9""), 9,  ""'9' -> 9"");"
+  "assert.strictEqual(BLOCK.indexOf(""A""), 10, ""'A' -> 10"");"
+  "assert.strictEqual(BLOCK.indexOf(""J""), 19, ""'J' -> 19"");"
+  "assert.strictEqual(BLOCK.indexOf(""V""), 31, ""'V' -> 31"");"
+  "assert.strictEqual(BLOCK.indexOf(""Z""), 35, ""'Z' -> 35"");"
+  .
+
+THEBLOCKISTHEBASEALPHABET =
+  "// ── 3. The block IS the base-36 alphabet ────────────────────────"
+  "// No need for toString(36) or parseInt(x, 36) — the block is direct."
+  "// value -> symbol via BLOCK[v]"
+  "function toBase36(v: number): string {"
+  "  if (v === 0) return ""0"";"
+  "  let s = """";"
+  "  while (v > 0) {"
+  "    s = BLOCK[v % 36] + s;"
+  "    v = Math.floor(v / 36);"
+  "  }"
+  "  return s;"
+  "}"
+  "function fromBase36(s: string): number {"
+  "  let v = 0;"
+  "  for (const c of s) {"
+  "    const d = BLOCK.indexOf(c);"
+  "    if (d < 0) throw new Error(`not in /A-Z0-9/: '${c}'`);"
+  "    v = v * 36 + d;"
+  "  }"
+  "  return v;"
+  "}"
+  "assert.strictEqual(toBase36(0),   ""0"", ""0"");"
+  "assert.strictEqual(toBase36(9),   ""9"", ""9"");"
+  "assert.strictEqual(toBase36(10),  ""A"", ""10 -> A"");"
+  "assert.strictEqual(toBase36(31),  ""V"", ""31 -> V"");"
+  "assert.strictEqual(toBase36(35),  ""Z"", ""35 -> Z"");"
+  "assert.strictEqual(toBase36(36),  ""10"", ""36 -> 10"");"
+  "assert.strictEqual(toBase36(255), ""73"", ""255 -> 73"");"
+  "// round-trip"
+  "for (let v = 0; v < 200; v++) {"
+  "  assert.strictEqual(fromBase36(toBase36(v)), v, `round-trip ${v}`);"
+  "}"
+  .
+
+EVERYSTANDARDRADIXDIGITISINTHEBLOCK =
+  "// ── 4. Every standard-radix digit is in the block ───────────────"
+  "const hexDigits = ""0123456789ABCDEF"";"
+  "const decDigits = ""0123456789"";"
+  "const octDigits = ""01234567"";"
+  "const binDigits = ""01"";"
+  "for (const c of hexDigits) assert.ok(BLOCK.includes(c), `hex ${c} in block`);"
+  "for (const c of decDigits) assert.ok(BLOCK.includes(c), `dec ${c} in block`);"
+  "for (const c of octDigits) assert.ok(BLOCK.includes(c), `oct ${c} in block`);"
+  "for (const c of binDigits) assert.ok(BLOCK.includes(c), `bin ${c} in block`);"
+  .
+
+THEBLOCKCONTAINSTHEBLOCKOFASCII =
+  "// ── 5. The block contains the 36-block of ASCII ─────────────────"
+  "// 0-9 = 0x30-0x39 ; A-Z = 0x41-0x5A"
+  "for (let c = 0x30; c <= 0x39; c++) {"
+  "  assert.ok(BLOCK.includes(String.fromCharCode(c)), `0x${c.toString(16)} in block`);"
+  "}"
+  "for (let c = 0x41; c <= 0x5A; c++) {"
+  "  assert.ok(BLOCK.includes(String.fromCharCode(c)), `0x${c.toString(16)} in block`);"
+  "}"
+  "// total count = 10 + 26 = 36"
+  "assert.strictEqual(10 + 26, 36, ""10 digits + 26 letters = 36"");"
+  .
+
+THEGAPINASCIIBETWEENDIGITSANDLETTERS =
+  "// ── 6. The gap in ASCII between digits and letters ──────────────"
+  "// 0x30-0x39 (digits), 0x3A-0x40 (gap), 0x41-0x5A (letters)"
+  "assert.strictEqual(0x3A - 0x39, 1, ""digit gap starts at 0x3A"");"
+  "assert.strictEqual(0x41 - 0x40, 1, ""letter gap ends at 0x41"");"
+  "// the gap is 0x3A-0x40 = 7 characters"
+  "const gap = 0x40 - 0x3A + 1;"
+  "assert.strictEqual(gap, 7, ""7-character gap"");"
+  "// the gap characters (not in the block)"
+  "const gapChars = [];"
+  "for (let c = 0x3A; c <= 0x40; c++) gapChars.push(String.fromCharCode(c));"
+  "assert.deepStrictEqual(gapChars, ["":"","";"",""<"",""="","">"",""?"",""@""], ""gap = :;<=>?@"");"
+  .
+
+THEBASESUBCONTEXTIGNORESPREFIXSYNTAX =
+  "// ── 7. The base-36 sub-context ignores prefix syntax ────────────"
+  "// Standard prefixes are parser hints. The block reads directly."
+  "const prefixExamples = ["
+  "  { src: ""0x1F"",  val: 31 },"
+  "  { src: ""0b11111"", val: 31 },"
+  "  { src: ""0o37"",  val: 31 },"
+  "  { src: ""31"",    val: 31 },"
+  "];"
+  "for (const { src, val } of prefixExamples) {"
+  "  // the value 31 in base-36 is BLOCK[31] = ""V"""
+  "  assert.strictEqual(BLOCK[val], ""V"", `${src} (${val}) -> ""V""`);"
+  "}"
+  "// so ""V"" is the cover-free reading of all four"
+  .
+
+THEBASEBLOCKASASELFDELINEATINGALPHABET =
+  "// ── 8. The base-36 block as a self-delineating alphabet ─────────"
+  "// The block has no lowercase, no punctuation, no whitespace."
+  "for (const c of BLOCK) {"
+  "  const code = c.charCodeAt(0);"
+  "  const isDigit = code >= 0x30 && code <= 0x39;"
+  "  const isUpper = code >= 0x41 && code <= 0x5A;"
+  "  assert.ok(isDigit || isUpper, `'${c}' (0x${code.toString(16)}) in /A-Z0-9/`);"
+  "}"
+  .
+
+THECONTRASTWHATTHEPREENCODEDVERSIONGETSWRONG =
+  "// ── 9. The contrast: what the pre-encoded version gets wrong ────"
+  "// toString(36) gives lowercase. The literal /A-Z0-9/ is uppercase only."
+  "assert.strictEqual((31).toString(36), ""v"", ""toString(36) gives lowercase 'v'"");"
+  "assert.strictEqual(BLOCK[31], ""V"", ""the literal block gives uppercase 'V'"");"
+  "assert.notStrictEqual((31).toString(36), BLOCK[31],"
+  "  ""toString(36) ≠ the literal block (case difference)"");"
+  "// the block is case-insensitive in reading, but uppercase in display"
+  "assert.strictEqual((31).toString(36).toUpperCase(), BLOCK[31],"
+  "  ""uppercased toString(36) = the block"");"
+  .
+
+THEBLOCKASTHEBASESUBCONTEXT =
+  "// ── 10. The block as the base-36 sub-context ────────────────────"
+  "// The uncovering: the block is already the superset of every standard radix."
+  "// The block IS the sub-context."
+  "console.log(""I-144b: base-36 as literal /A-Z0-9/ block — passed"");"
+  "console.log(`  block: ${BLOCK}`);"
+  "console.log(`  value 31: block[31] = '${BLOCK[31]}'`);"
+  "console.log(`  digits: 0-9 (10) + letters A-Z (26) = ${10+26}`);"
+  "console.log(`  gap: 0x3A-0x40 = "":;<=>?@"" (7 chars, not in block)`);"
+  "console.log(`  no lowercase, no conversion functions — direct indexing`);"
+  .

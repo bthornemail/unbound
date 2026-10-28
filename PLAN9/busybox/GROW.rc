@@ -1,0 +1,17 @@
+#!/bin/rc
+# GROW: append extends the file (B-GROW.sh)
+rfork e
+fn fail { echo 'FAIL(GROW):' $* >[1=2]; exit fail }
+d=/tmp/bb.$pid; mkdir -p $d
+echo -n AAAA > $d/f
+b0=`{wc -c < $d/f}
+echo -n BBB >> $d/f
+b1=`{wc -c < $d/f}
+# assert: the content is A followed by B
+if(! ~ `{cat $d/f} AAAABBB) fail append did not yield A+B
+# assert: the file grew by exactly |B| = 3
+if(! ~ `{echo $b1 - $b0 | hoc} 3) fail append size wrong '(b0='$b0 b1'='$b1')'
+# assert: strictly larger than before
+if(! ~ `{echo $b1 '>' $b0 | hoc} 1) fail append did not grow the file
+rm -rf $d
+echo 'GROW: append extends the file by the bytes appended - passed'

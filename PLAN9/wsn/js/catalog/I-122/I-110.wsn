@@ -1,0 +1,19 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-110: the cover is the uncovering (corrected)"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-110"", ""cover = uncovering; NaN/RangeError/TypeError split"", () => {"
+  "  let apiThrew = false;"
+  "  try { new Uint8Array(-1); } catch (e) { apiThrew = e instanceof RangeError; }"
+  "  assert.ok(apiThrew);"
+  "  assert.ok(Number.isNaN(1 % 0));"
+  "  assert.strictEqual(1 / 0, Infinity);"
+  "  let typeThrew = false;"
+  "  try { 17n + 17; } catch (e) { typeThrew = e instanceof TypeError; }"
+  "  assert.ok(typeThrew);"
+  "  assert.strictEqual(17n + 17n, 34n);"
+  "  assert.strictEqual(0x17n, 23n);"
+  "}, ""catch-at-0"");"
+  .

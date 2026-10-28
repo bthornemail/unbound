@@ -1,0 +1,49 @@
+RECORD = HEAD WHICHCANDIDATESARETAGSANDTHEIRFIRSTFIVE THENAMEINBYTESANDITSPARTSAGAINSTEACHOTHER THEBIRTHDATEASINDEXPAIRS THERECORDSOWNNUMBER .
+
+HEAD =
+  "// i206.ts — I-206: the author's name as tags, the birth date as index pairs, and the 42"
+  "//"
+  "// The author, 2026-10-14 (from i206.mjs, which printed its values; each value is now asserted, so a"
+  "// different number fails). The readings are the author's."
+  "import assert from ""node:assert"";"
+  "const TAG = /^[A-Z0-9]{1,8}$/, tag5 = (s: string) => s.slice(0, 5);"
+  "const bytes = (s: string) => [...s].map((c) => c.charCodeAt(0));"
+  "const xor = (...ws: string[]) => { const n = Math.max(...ws.map((w) => w.length)); return [...Array(n).keys()].map((i) => ws.reduce((x, w) => x ^ (i < w.length ? w.charCodeAt(i) : 0x20), 0)); };"
+  .
+
+WHICHCANDIDATESARETAGSANDTHEIRFIRSTFIVE =
+  "// ── 1. Which candidates are tags, and their first five ───────"
+  "const tags = [""BRIAN"", ""JAMES"", ""THORNE"", ""BRIANJAM"", ""THORN"", ""INGLEWOO"", ""CALIFORN"", ""CALIF"", ""AMERICA"", ""AMERIC"", ""USA"", ""42"", ""1984"", ""0729"", ""19840729"", ""I206"", ""MODULUS"", ""MODULO"", ""THREE""];"
+  "for (const t of tags) assert.ok(TAG.test(t), `${t} is a tag`);"
+  "for (const t of [""INGLEWOOD"", ""CALIFORNIA"", ""I-206""]) assert.ok(!TAG.test(t), `${t} is not (too long, or the hyphen)`);"
+  "assert.deepEqual([""THORNE"", ""INGLEWOOD"", ""CALIFORNIA"", ""AMERICA"", ""19840729"", ""MODULUS""].map(tag5), [""THORN"", ""INGLE"", ""CALIF"", ""AMERI"", ""19840"", ""MODUL""], ""the first five"");"
+  .
+
+THENAMEINBYTESANDITSPARTSAGAINSTEACHOTHER =
+  "// ── 2. The name in bytes, and its parts against each other ──"
+  "assert.deepEqual(bytes(""BRIAN""), [0x42, 0x52, 0x49, 0x41, 0x4e]);"
+  "assert.deepEqual(bytes(""JAMES""), [0x4a, 0x41, 0x4d, 0x45, 0x53]);"
+  "assert.deepEqual(bytes(""THORNE""), [0x54, 0x48, 0x4f, 0x52, 0x4e, 0x45]);"
+  "assert.deepEqual(xor(""BRIAN"", ""JAMES""), [0x08, 0x13, 0x04, 0x04, 0x1d]);"
+  "assert.deepEqual(xor(""JAMES"", ""THORNE""), [0x1e, 0x09, 0x02, 0x17, 0x1d, 0x65]);"
+  "assert.deepEqual(xor(""BRIAN"", ""THORNE""), [0x16, 0x1a, 0x06, 0x13, 0x00, 0x65], ""BRIAN and THORNE share their N at index 4"");"
+  "assert.deepEqual(xor(""BRIAN"", ""JAMES"", ""THORNE""), [0x5c, 0x5b, 0x4b, 0x56, 0x53, 0x45]);"
+  "assert.deepEqual(xor(""INGLE"", ""CALIF""), [0x0a, 0x0f, 0x0b, 0x05, 0x03]);"
+  .
+
+THEBIRTHDATEASINDEXPAIRS =
+  "// ── 3. The birth date as index pairs ─────────────────────────"
+  "assert.deepEqual([19 ^ 84, 7 ^ 29, (19 ^ 84) ^ (7 ^ 29)], [71, 26, 93], ""(19, 84) and (07, 29): 71 = 0x47, 26 = 0x1A, together 93"");"
+  "assert.deepEqual([1984 % 3, 7 % 3, 29 % 3, 2026 % 3], [1, 1, 2, 1]);"
+  "assert.equal(2026 - 1984, 42, ""2026 - 1984 = 42"");"
+  "assert.equal(42 % 3, 0, ""a multiple of 3: 1984 and 2026 share their residue"");"
+  "assert.equal(60 ^ 22, 42, ""and 42 is the frame of the exchange's reset (60 XOR 22)"");"
+  "assert.equal((42).toString(2), ""101010"");"
+  .
+
+THERECORDSOWNNUMBER =
+  "// ── 4. The record's own number ───────────────────────────────"
+  "assert.equal(parseInt(""I206"", 36), 842406);"
+  "assert.equal((206).toString(36).toUpperCase(), ""5Q"", ""206 in base 36"");"
+  "console.log(""I-206: the author's name as tags, the birth date as index pairs, and the 42 — passed"");"
+  .

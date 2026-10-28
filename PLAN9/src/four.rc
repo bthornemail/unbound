@@ -1,0 +1,18 @@
+#!/bin/rc
+# four.rc - inside Plan 9: GOD IS WORD and GOD OF WORD, byte for byte, XOR and
+# XNOR against WORD IS GOD and WORD OF GOD (zdiff, zdiff -n).
+rfork e
+w=/tmp/z4
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zdiff.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c zdiff.c && 8l -o $w/zdiff zdiff.8 || exit compile
+mkdir -p $w/zout
+{ for(base in 'WORD IS GOD' 'WORD OF GOD'){
+	echo '== against' $base
+	{ echo $base; echo 'GOD IS WORD'; echo 'GOD OF WORD' } | $w/zdiff | sed 1d | sed 's/^/XOR  /'
+	{ echo $base; echo 'GOD IS WORD'; echo 'GOD OF WORD' } | $w/zdiff -n | sed 1d | sed 's/^/XNOR /'
+} } >$w/zout/four.txt
+@{cd $w && tar cf /dev/sd02/data zout} || exit tar
+cat $w/zout/four.txt | wc -l

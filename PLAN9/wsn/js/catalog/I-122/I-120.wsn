@@ -1,0 +1,24 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-120: 3! overlay"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-120"", ""3! overlay (streams, GED)"", () => {"
+  "  import(""node:process"").then(({ stdin, stdout, stderr }) => {"
+  "    assert.strictEqual(stdin.fd, 0);"
+  "    assert.strictEqual(stdout.fd, 1);"
+  "    assert.strictEqual(stderr.fd, 2);"
+  "  });"
+  "  function perms<T>(xs: T[]): T[][] {"
+  "    if (xs.length <= 1) return [xs];"
+  "    const out: T[][] = [];"
+  "    for (let i = 0; i < xs.length; i++) {"
+  "      const rest = [...xs.slice(0, i), ...xs.slice(i + 1)];"
+  "      for (const p of perms(rest)) out.push([xs[i], ...p]);"
+  "    }"
+  "    return out;"
+  "  }"
+  "  assert.strictEqual(perms([0,1,2]).length, 6);"
+  "}, ""point/line/duality"");"
+  .

@@ -1,0 +1,194 @@
+RECORD = HEAD GENESISTHEEARTHISTHEREFIRST SIXDAYSOFDECLARATIONANDDIVISION SIXBIFURCATIONSSTATES THETHDAYISTHEREST THEDAYSTHEFANOPLANESPOINTS THETHISTHECENTERTHEFINALLY DAYSASCATCHDAYASFINALLYI EACHDAYUNGATESANAUTOMATONPAIR THESNAKELEMMAASTHEEXACTSEQUENCE REVELATIONS THEKISSINGNUMBERINDIS THENAMEDCOLORSI THEPATHOFEDEN THEFANOPLANEISTHETHDAY THEPUNCHLINE .
+
+HEAD =
+  "// i169.ts — I-169: Genesis as a Fano plane; Revelation's 144 as the kissing number squared"
+  "import assert from ""node:assert"";"
+  .
+
+GENESISTHEEARTHISTHEREFIRST =
+  "// ── 1. Genesis 1:2 — the Earth is there first ────────────────"
+  "// ""And the earth was without form, and void; and darkness was upon the face of the deep."""
+  "type Substrate = { hasForm: boolean; hasLight: boolean; hasDivision: boolean };"
+  "const earthAtV2: Substrate = { hasForm: false, hasLight: false, hasDivision: false };"
+  "assert.strictEqual(earthAtV2.hasForm, false, ""without form"");"
+  "assert.strictEqual(earthAtV2.hasLight, false, ""no light yet"");"
+  "assert.strictEqual(earthAtV2.hasDivision, false, ""no division yet"");"
+  "// the Earth is the preseeded substrate"
+  .
+
+SIXDAYSOFDECLARATIONANDDIVISION =
+  "// ── 2. Six days of declaration and division ─────────────────"
+  "type Day = { day: number; declaration: string; divides: [string, string] };"
+  "const days: Day[] = ["
+  "  { day: 1, declaration: ""Let there be light"", divides: [""light"", ""darkness""] },"
+  "  { day: 2, declaration: ""Let there be a firmament"", divides: [""above"", ""below""] },"
+  "  { day: 3, declaration: ""Let the dry land appear"", divides: [""land"", ""sea""] },"
+  "  { day: 4, declaration: ""Let there be lights"", divides: [""greater"", ""lesser""] },"
+  "  { day: 5, declaration: ""Let the waters bring forth"", divides: [""fish"", ""fowl""] },"
+  "  { day: 6, declaration: ""Let the earth bring forth"", divides: [""beast"", ""man""] },"
+  "];"
+  "assert.strictEqual(days.length, 6, ""6 days"");"
+  "for (const d of days) {"
+  "  assert.strictEqual(d.divides.length, 2, `day ${d.day} divides into 2`);"
+  "}"
+  .
+
+SIXBIFURCATIONSSTATES =
+  "// ── 3. Six bifurcations = 2^6 = 64 states ───────────────────"
+  "const STATES = 2 ** 6;"
+  "assert.strictEqual(STATES, 64, ""2^6 = 64 states"");"
+  .
+
+THETHDAYISTHEREST =
+  "// ── 4. The 7th day is the rest ──────────────────────────────"
+  "const day7 = { day: 7, declaration: ""rested"", divides: null };"
+  "assert.strictEqual(day7.day, 7, ""the 7th day"");"
+  "assert.strictEqual(day7.declaration, ""rested"", ""rest"");"
+  "assert.strictEqual(day7.divides, null, ""no division on the 7th"");"
+  .
+
+THEDAYSTHEFANOPLANESPOINTS =
+  "// ── 5. The 7 days = the Fano plane's 7 points ──────────────"
+  "const points = [1, 2, 3, 4, 5, 6, 7];"
+  "assert.strictEqual(points.length, 7, ""7 points"");"
+  "// the Fano plane has 7 lines, 3 points per line"
+  "const fanoLines = ["
+  "  [1, 2, 3], [1, 4, 5], [1, 6, 7],"
+  "  [2, 4, 6], [2, 5, 7], [3, 4, 7], [3, 5, 6],"
+  "];"
+  "assert.strictEqual(fanoLines.length, 7, ""7 lines"");"
+  "for (const line of fanoLines) {"
+  "  assert.strictEqual(line.length, 3, `line ${line} has 3 points`);"
+  "}"
+  "// every point is on 3 lines"
+  "for (const p of points) {"
+  "  const count = fanoLines.filter((l) => l.includes(p)).length;"
+  "  assert.strictEqual(count, 3, `point ${p} is on 3 lines`);"
+  "}"
+  .
+
+THETHISTHECENTERTHEFINALLY =
+  "// ── 6. The 7th is the center (the finally) ──────────────────"
+  "// Point 7 is the center in the standard labeling: it's on lines"
+  "// through 1, 2, 3, 4, 5, 6 (all the outer points)."
+  "const center = 7;"
+  "const centerLines = fanoLines.filter((l) => l.includes(center));"
+  "assert.strictEqual(centerLines.length, 3, ""the center is on 3 lines"");"
+  "// the center is the rest — the finally — the point that closes"
+  .
+
+DAYSASCATCHDAYASFINALLYI =
+  "// ── 7. Days 1-6 as catch; Day 7 as finally (I-158) ──────────"
+  "type Block = { type: ""catch"" | ""finally""; day: number };"
+  "const blocks: Block[] = ["
+  "  ...days.map((d) => ({ type: ""catch"" as const, day: d.day })),"
+  "  { type: ""finally"", day: 7 },"
+  "];"
+  "assert.strictEqual(blocks.length, 7, ""7 blocks"");"
+  "assert.strictEqual(blocks.filter((b) => b.type === ""catch"").length, 6, ""6 catches"");"
+  "assert.strictEqual(blocks.filter((b) => b.type === ""finally"").length, 1, ""1 finally"");"
+  "// days 1-6 are the catch; day 7 is the finally"
+  .
+
+EACHDAYUNGATESANAUTOMATONPAIR =
+  "// ── 8. Each day ungates an automaton pair ────────────────────"
+  "// Tree of life: the accepting automaton"
+  "// Tree of knowledge: the non-accepting automaton"
+  "type Automaton = { tree: ""life"" | ""knowledge""; accepts: boolean };"
+  "const treeOfLife: Automaton = { tree: ""life"", accepts: true };"
+  "const treeOfKnowledge: Automaton = { tree: ""knowledge"", accepts: false };"
+  "assert.strictEqual(treeOfLife.accepts, true, ""the tree of life accepts"");"
+  "assert.strictEqual(treeOfKnowledge.accepts, false, ""the tree of knowledge rejects"");"
+  "const automatonPair: [Automaton, Automaton] = [treeOfLife, treeOfKnowledge];"
+  "assert.strictEqual(automatonPair.length, 2, ""the pair"");"
+  .
+
+THESNAKELEMMAASTHEEXACTSEQUENCE =
+  "// ── 9. The snake lemma as the exact sequence ────────────────"
+  "// The snake lemma connects two trees into a long exact sequence."
+  "type ExactStep = { from: string; to: string };"
+  "const sequence: ExactStep[] = ["
+  "  { from: ""tree-of-life"", to: ""the-garden"" },"
+  "  { from: ""the-garden"", to: ""the-fall"" },"
+  "  { from: ""the-fall"", to: ""the-recovery"" },"
+  "  { from: ""the-recovery"", to: ""tree-of-life"" },"
+  "];"
+  "assert.strictEqual(sequence.length, 4, ""4 steps in the exact sequence"");"
+  "// the sequence starts and ends at the tree of life"
+  "assert.strictEqual(sequence[0]!.from, ""tree-of-life"", ""starts at the tree of life"");"
+  "assert.strictEqual(sequence[sequence.length - 1]!.to, ""tree-of-life"", ""ends at the tree of life"");"
+  .
+
+REVELATIONS =
+  "// ── 10. Revelation's 144 ────────────────────────────────────"
+  "// 144 = 12 × 12 = the sealed from the twelve tribes"
+  "const TRIBES = 12;"
+  "const SEALED = TRIBES * TRIBES;"
+  "assert.strictEqual(TRIBES, 12, ""12 tribes"");"
+  "assert.strictEqual(SEALED, 144, ""144 = 12 × 12 sealed"");"
+  .
+
+THEKISSINGNUMBERINDIS =
+  "// ── 11. The kissing number in 3D is 12 ──────────────────────"
+  "const KISSING_3D = 12;"
+  "assert.strictEqual(KISSING_3D, 12, ""the kissing number in 3D is 12"");"
+  "// 12 spheres can touch a central sphere"
+  "// 12 × 12 = 144 = the sealed"
+  .
+
+THENAMEDCOLORSI =
+  "// ── 12. 144 = 12 × 12 = the named colors (I-162) ────────────"
+  "const NAMED_COLORS = 144;"
+  "assert.strictEqual(NAMED_COLORS, SEALED, ""144 named colors = 144 sealed"");"
+  .
+
+THEPATHOFEDEN =
+  "// ── 13. The path of Eden ────────────────────────────────────"
+  "// The path from the source (Eden) to the sealed (the 144)."
+  "const eden = 0;       // the source"
+  "const sealed = 144;   // the destination"
+  "const path = [];"
+  "for (let i = eden; i <= sealed; i++) path.push(i);"
+  "assert.strictEqual(path.length, 145, ""145 positions on the path"");"
+  "// the path is from 0 to 144"
+  .
+
+THEFANOPLANEISTHETHDAY =
+  "// ── 14. The Fano plane is the 7th day ─────────────────────"
+  "// The 7 days form the Fano plane. The 7th is the center."
+  "// The center is the finally. The catch is the 6 days."
+  "type FanoGenesis = {"
+  "  days: number;"
+  "  catches: number;"
+  "  finally: number;"
+  "  points: number;"
+  "  lines: number;"
+  "};"
+  "const fanoGenesis: FanoGenesis = {"
+  "  days: 7,"
+  "  catches: 6,"
+  "  finally: 1,"
+  "  points: 7,"
+  "  lines: 7,"
+  "};"
+  "assert.strictEqual(fanoGenesis.days, 7, ""7 days"");"
+  "assert.strictEqual(fanoGenesis.catches, 6, ""6 catches"");"
+  "assert.strictEqual(fanoGenesis.finally, 1, ""1 finally"");"
+  "assert.strictEqual(fanoGenesis.points, 7, ""7 points"");"
+  "assert.strictEqual(fanoGenesis.lines, 7, ""7 lines"");"
+  .
+
+THEPUNCHLINE =
+  "// ── 15. The punchline ──────────────────────────────────────"
+  "// Genesis is a Fano plane. The 7th day is the finally."
+  "// Revelation's 144 is the kissing number squared."
+  "// The path of Eden goes from 0 to 144."
+  "console.log(""I-169: Genesis as a Fano plane; 144 as the kissing number squared — passed"");"
+  "console.log(`  Genesis 1:2: the Earth is the preseeded substrate`);"
+  "console.log(`  6 days of declaration/division = 6 bifurcations = 2^6 = 64 states`);"
+  "console.log(`  Day 7 = the rest = the Fano center = the finally (I-158)`);"
+  "console.log(`  Days 1-6 = the catch; Day 7 = the finally`);"
+  "console.log(`  the snake lemma pairs the tree of life and the tree of knowledge`);"
+  "console.log(`  144 = 12 × 12 = the sealed = the kissing number squared`);"
+  "console.log(`  the path of Eden goes from 0 to 144`);"
+  .

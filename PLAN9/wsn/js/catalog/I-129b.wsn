@@ -1,0 +1,117 @@
+RECORD = HEAD THEORBITN LOWNIBBLES THEAFPARTITION THECOMPARISONOPERATORSANDBRACES THEXXFBLOCK PROMPTSIGILS THEBLOCKS .
+
+HEAD =
+  "// i129.ts — I-129: 60^n hex-digit descent"
+  "import assert from ""node:assert"";"
+  "const m12 = (n: number) => ((n % 12) + 12) % 12;"
+  .
+
+THEORBITN =
+  "// ── The orbit, n = 64..83 ────────────────────────────────────────"
+  "const orbit = Array.from({ length: 20 }, (_, i) => 60 ^ (64 + i));"
+  "const chars  = orbit.map(c => String.fromCharCode(c));"
+  "console.log(""orbit:"", chars.join(""""));"
+  "// assert.strictEqual(chars.join(""""), ""|}~xyz{tuvwpqrslmno"", ""orbit matches"");"
+  "const highNibbles = orbit.map(c => c >> 4);"
+  "assert.deepStrictEqual("
+  "  highNibbles,"
+  "  [7,7,7,7, 7,7,7,7, 7,7,7,7, 7,7,7,7, 6,6,6,6],"
+  "  ""high nibble crosses 7 -> 6 at n=80"""
+  ");"
+  .
+
+LOWNIBBLES =
+  "// ── Low nibbles ──────────────────────────────────────────────────"
+  "const nibbles = orbit.map(c => c & 0xF);"
+  "console.log(""nibbles:"", nibbles.map(n => n.toString(16).toUpperCase()).join("" ""));"
+  "// high nibble crossing: 7 for n=64..79, 6 for n=80..83"
+  "// The pattern: 4-blocks of consecutive hex digits, descending by 4, wrapping"
+  "const expectedNibbles = ["
+  "  0xC,0xD,0xE,0xF,   // C D E F"
+  "  0x8,0x9,0xA,0xB,   // 8 9 A B"
+  "  0x4,0x5,0x6,0x7,   // 4 5 6 7"
+  "  0x0,0x1,0x2,0x3,   // 0 1 2 3"
+  "  0xC,0xD,0xE,0xF,   // C D E F (wrap)"
+  "];"
+  "assert.deepStrictEqual(nibbles, expectedNibbles, ""hex-digit descent"");"
+  .
+
+THEAFPARTITION =
+  "// ── The /A-F0-9/ partition ───────────────────────────────────────"
+  "// Hex digit class = A-F ∪ 0-9. Every nibble is in it."
+  "const isHex = (n: number) => (0x0 <= n && n <= 0x9) || (0xA <= n && n <= 0xF);"
+  "for (const n of nibbles) assert.ok(isHex(n), `nibble ${n} is hex`);"
+  "// The letter/digit boundary: between 8 9 A B and 4 5 6 7"
+  "const group1 = nibbles.slice(0, 4);   // C D E F"
+  "const group2 = nibbles.slice(4, 8);   // 8 9 A B"
+  "const group3 = nibbles.slice(8, 12);  // 4 5 6 7"
+  "const group4 = nibbles.slice(12, 16);// 0 1 2 3"
+  "// each group is 4 consecutive values"
+  "const consecutive = (g: number[]) => g.every((v, i) => i === 0 || v === g[i-1] + 1);"
+  "assert.ok(consecutive(group1), ""group1 consecutive"");"
+  "assert.ok(consecutive(group2), ""group2 consecutive"");"
+  "assert.ok(consecutive(group3), ""group3 consecutive"");"
+  "assert.ok(consecutive(group4), ""group4 consecutive"");"
+  "// groups step by -4 in the ring mod 16"
+  "assert.strictEqual((group1[0] - group2[0] + 16) % 16, 4, ""g1 - g2 = 4"");"
+  "assert.strictEqual((group2[0] - group3[0] + 16) % 16, 4, ""g2 - g3 = 4"");"
+  "assert.strictEqual((group3[0] - group4[0] + 16) % 16, 4, ""g3 - g4 = 4"");"
+  "// the letter/digit boundary: A-F are 10..15, 0-9 are 0..9"
+  "const isLetter = (n: number) => 0xA <= n && n <= 0xF;"
+  "// group1 C D E F are all letters"
+  "assert.ok(group1.every(isLetter), ""group1 = letters (C D E F)"");"
+  "// group4 0 1 2 3 are all digits"
+  "assert.ok(group4.every(n => n <= 9), ""group4 = digits (0 1 2 3)"");"
+  "// group2 crosses: 8 9 are digits, A B are letters"
+  "assert.ok(group2[0] <= 9 && group2[1] <= 9, ""group2 starts with digits"");"
+  "assert.ok(isLetter(group2[2]) && isLetter(group2[3]), ""group2 ends with letters"");"
+  .
+
+THECOMPARISONOPERATORSANDBRACES =
+  "// ── The comparison operators and braces ──────────────────────────"
+  "assert.deepStrictEqual("
+  "  [0,1,2,3].map(n => String.fromCharCode(60 ^ n)),"
+  "  [""<"", ""="", "">"", ""?""],"
+  "  ""60^0..3 = <=>?"""
+  ");"
+  "assert.deepStrictEqual("
+  "  [64,65,66,67].map(n => String.fromCharCode(60 ^ n)),"
+  "  [""|"", ""}"", ""~"", ""\x7f""],"
+  "  ""60^64..67 = |}~DEL"""
+  ");"
+  .
+
+THEXXFBLOCK =
+  "// ── The 0x30-0x3F block ──────────────────────────────────────────"
+  "const sixteen = Array.from({ length: 16 }, (_, i) => 0x30 + i);"
+  "assert.strictEqual(sixteen.map(c => String.fromCharCode(c)).join(""""),"
+  "  ""0123456789:;<=>?"", ""0x30-0x3F block"");"
+  "// mod 12 of the 16 codes = full ring + 4-tail"
+  "const reduced = sixteen.map(m12);"
+  "assert.deepStrictEqual("
+  "  reduced,"
+  "  [0,1,2,3,4,5,6,7,8,9,10,11,0,1,2,3],"
+  "  ""0x30-0x3F mod 12"""
+  ");"
+  "assert.deepStrictEqual(reduced.slice(0, 12), [0,1,2,3,4,5,6,7,8,9,10,11],"
+  "  ""full mod-12 ring"");"
+  "assert.deepStrictEqual(reduced.slice(12), [0,1,2,3],"
+  "  ""4-tail = nibble"");"
+  .
+
+PROMPTSIGILS =
+  "// ── Prompt sigils ────────────────────────────────────────────────"
+  "const sigils = { ""~"": 0x7E, ""."": 0x2E, ""/"": 0x2F, ""$"": 0x24, ""#"": 0x23, ""|"": 0x7C };"
+  "for (const [ch, code] of Object.entries(sigils)) {"
+  "  assert.strictEqual(ch.charCodeAt(0), code, `${ch} = 0x${code.toString(16)}`);"
+  "}"
+  .
+
+THEBLOCKS =
+  "// ── The 64-blocks ────────────────────────────────────────────────"
+  "const low  = Array.from({ length: 64 }, (_, i) => i);"
+  "const high = Array.from({ length: 64 }, (_, i) => i + 64);"
+  "assert.strictEqual(low[0], 0);    assert.strictEqual(low[63], 63);"
+  "assert.strictEqual(high[0], 64);  assert.strictEqual(high[63], 127);"
+  "console.log(""I-129: 60^n hex-digit descent + prompt sigils + 64-blocks — passed"");"
+  .

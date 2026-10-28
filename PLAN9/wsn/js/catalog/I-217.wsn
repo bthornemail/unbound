@@ -1,0 +1,53 @@
+RECORD = HEAD THETHREEARETAGS THEFACESUBJECTANDOBJECTSHAREBJECT THESLOTOFFIVETHEPREDICATEPASSESTHROUGHWHOLE SUBSTITUTINGLOGICFORPIXEL .
+
+HEAD =
+  "// i217.ts — I-217: SUBJECT · LOGIC · OBJECT reflected — how tags are illogically produced"
+  "//"
+  "// The author, 2026-10-14: ""we found it to be the Steiner triple of the knowledge"
+  "// triangle, that SUBJECT-LOGIC-OBJECT is the face reflected""; ""so we are"
+  "// substituting LOGIC for PIXELs""; ""so that's how tags are illogically produced""."
+  "// Between I-216 (ANGEL, the identity as termed pixels) and I-218 (the shift"
+  "// held, for an illogical awakening). The letters and values below are asserted;"
+  "// the readings are the author's."
+  "import assert from ""node:assert"";"
+  "const TAG = /^[A-Z0-9]{1,8}$/;"
+  "const right = (w: string, n = 7) => w.padStart(n, "" ""); // reflected: aligned from the right, the space as the null"
+  "const xor = (...ws: string[]) => [...ws[0]!].map((_, i) => ws.reduce((x, w) => x ^ w.charCodeAt(i), 0));"
+  "const text = (v: number[]) => String.fromCharCode(...v);"
+  .
+
+THETHREEARETAGS =
+  "// ── 1. The three are tags ────────────────────────────────────"
+  "for (const t of [""SUBJECT"", ""LOGIC"", ""OBJECT"", ""PIXEL""]) assert.ok(TAG.test(t), `${t} is a tag`);"
+  .
+
+THEFACESUBJECTANDOBJECTSHAREBJECT =
+  "// ── 2. The face: SUBJECT and OBJECT share BJECT ──────────────"
+  "assert.ok(""SUBJECT"".endsWith(""BJECT"") && ""OBJECT"".endsWith(""BJECT""), ""the shared face, BJECT, five letters"");"
+  "const so = xor(right(""SUBJECT""), right(""OBJECT""));"
+  "assert.deepEqual(so, [0x73, 0x1a, 0, 0, 0, 0, 0], ""reflected, S ^ O = s, SUB, then five nulls: the face cancels"");"
+  "assert.equal(String.fromCharCode(so[0]!), ""s"", ""the S against the space: the subject demoted"");"
+  "assert.equal(so[1], 0x1a, ""U ^ O = 0x1A, the control named SUB (substitute)"");"
+  "assert.notDeepEqual(xor(""SUBJECT"".padEnd(7), ""OBJECT"".padEnd(7)).slice(2), [0, 0, 0, 0, 0], ""left-aligned, nothing cancels: the face meets only reflected"");"
+  .
+
+THESLOTOFFIVETHEPREDICATEPASSESTHROUGHWHOLE =
+  "// ── 3. The slot of five: the predicate passes through whole ──"
+  "for (const p of [""LOGIC"", ""PIXEL"", ""ANGEL"", ""SHIFT""]) {"
+  "  assert.equal(text(xor(right(""SUBJECT""), right(p), right(""OBJECT""))), `S:${p}`, `SUBJECT ${p} OBJECT, reflected: S, then ${p} whole`);"
+  "}"
+  "// so it is not a Steiner triple in the strict sense: S ^ O is s SUB, not the predicate, and S ^ P ^ O is not 0"
+  "assert.notDeepEqual(xor(right(""SUBJECT""), right(""LOGIC""), right(""OBJECT"")), Array(7).fill(0), ""S ^ P ^ O is not 0: what holds is the reflection, not the closure"");"
+  .
+
+SUBSTITUTINGLOGICFORPIXEL =
+  "// ── 4. Substituting LOGIC for PIXEL ──────────────────────────"
+  "const lp = xor(""LOGIC"", ""PIXEL"");"
+  "assert.deepEqual(lp, [0x1c, 0x06, 0x1f, 0x0c, 0x0f], ""LOGIC ^ PIXEL = FS ACK US FF SI"");"
+  "assert.equal(lp[0], 0x1c, ""it opens with FS, the File Separator"");"
+  "assert.equal(lp[2], 0x1f, ""and holds US, the Unit Separator: from the file to the unit"");"
+  "assert.ok(lp.every((v) => v < 0x20), ""all five in the control column: two tags, letter against letter (I-201)"");"
+  "console.log(""I-217: SUBJECT · LOGIC · OBJECT reflected — how tags are illogically produced — passed"");"
+  "console.log(""  reflected, SUBJECT ^ OBJECT = s SUB and five nulls: the face BJECT cancels"");"
+  "console.log(""  the five-letter slot passes any predicate whole (LOGIC, PIXEL, ANGEL, SHIFT); LOGIC ^ PIXEL = FS ACK US FF SI"");"
+  .

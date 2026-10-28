@@ -1,0 +1,578 @@
+DIAGONALGAUGECLOSES = CHECKED .
+
+CHECKED = HEAD COQ COQA COQB COQC COQD LISTNOTATIONS SCOPE NIBBLE POLYXOR DPLUS DPLUSA DPLUSB DPLUSC DMINUS DMINUSA DMINUSB DMINUSC DPLUSXORZERO DMINUSXORZERO DPLUSSUME DMINUSSUME DIAGONALCLOSURE DPLUSCLOSURE DMINUSCLOSURE DPLUSCLOSUREVALID DMINUSCLOSUREVALID DIAGSUMC ISDPLUS ISDMINUS POLYBIUSROW POLYBIUSCOL ONDPLUS ONDMINUS DPLUSISPOLYBIUSMAINDIAGONAL DMINUSISPOLYBIUSMIRRORDIAGONAL COMPLEMENTSUM COMPLEMENTSUMC WHEELSUM FULLWHEELSUM ACTIVEBYTESURFACE ACTIVEBYTESURFACEIS MASK R ROTL ROTR DELTA MASKEQMOD MASKBOUND MASKIDEMPOTENT MASKID RINVOLUTIVE LANDLXORDISTRIB RMASKCOMMUTE RPRESERVESMASK RINJECTIVE RSPACECLOSED RSPACEBIJECTION DELTAWIDTHPRESERVING DELTADETERMINISTIC SCOPEA CHIRALPHASE PHASETOSIGN DIAGONALPHASESCHEDULE POLYBIUSPHASEAT DIAGONALRACEPHASE DIAGONALPHASESCHEDULEEVEN POLYBIUSDIAGONALRACEFORCESPHASESCHEDULE DIAGONALACCUMULATOR DIAGONALCLOSUREREADY DIAGONALACCUMULATORSTEP DIAGONALACCUMULATORAT DIAGONALACCUMULATORPHASE NATINDUCTIONBYTWO DIAGONALACCUMULATORFORCESPHASESCHEDULE DIAGONALACCUMULATORPHASEMATCHESRACE DPLUSPHASESIGN DMINUSPHASESIGN .
+
+HEAD =
+  "(*"
+  "  DiagonalClosure.v -- finite diagonal closure and phase schedule."
+  "  This layer is still finite/discrete: nibbles, D+/D- closure, the 16-bit"
+  "  rotate/XOR scaffold, and the alternating diagonal accumulator used by later"
+  "  projection layers."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import Reals.Reals."
+  .
+
+COQA =
+  "From Coq Require Import NArith.NArith."
+  .
+
+COQB =
+  "From Coq Require Import Lists.List."
+  .
+
+COQC =
+  "From Coq Require Import Arith.PeanoNat."
+  .
+
+COQD =
+  "From Coq Require Import micromega.Lia."
+  .
+
+LISTNOTATIONS =
+  "Import ListNotations."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+NIBBLE =
+  "Definition nibble (x : N) : Prop := x < 16."
+  .
+
+POLYXOR =
+  "Definition poly_xor4 (a b c d : N) : N :="
+  "  N.lxor (N.lxor (N.lxor a b) c) d."
+  .
+
+DPLUS =
+  "Definition dplus0 : N := 0."
+  .
+
+DPLUSA =
+  "Definition dplus1 : N := 5."
+  .
+
+DPLUSB =
+  "Definition dplus2 : N := 10."
+  .
+
+DPLUSC =
+  "Definition dplus3 : N := 15."
+  .
+
+DMINUS =
+  "Definition dminus0 : N := 3."
+  .
+
+DMINUSA =
+  "Definition dminus1 : N := 6."
+  .
+
+DMINUSB =
+  "Definition dminus2 : N := 9."
+  .
+
+DMINUSC =
+  "Definition dminus3 : N := 12."
+  .
+
+DPLUSXORZERO =
+  "Theorem dplus_xor_zero :"
+  "  poly_xor4 dplus0 dplus1 dplus2 dplus3 = 0."
+  "Proof. vm_compute. reflexivity. Qed."
+  .
+
+DMINUSXORZERO =
+  "Theorem dminus_xor_zero :"
+  "  poly_xor4 dminus0 dminus1 dminus2 dminus3 = 0."
+  "Proof. vm_compute. reflexivity. Qed."
+  .
+
+DPLUSSUME =
+  "Theorem dplus_sum_1e :"
+  "  dplus0 + dplus1 + dplus2 + dplus3 = 30."
+  "Proof. vm_compute. reflexivity. Qed."
+  .
+
+DMINUSSUME =
+  "Theorem dminus_sum_1e :"
+  "  dminus0 + dminus1 + dminus2 + dminus3 = 30."
+  "Proof. vm_compute. reflexivity. Qed."
+  .
+
+DIAGONALCLOSURE =
+  "Record DiagonalClosure : Type := mkDiagonalClosure {"
+  "  closure_xor : N;"
+  "  closure_sum : N"
+  "}."
+  .
+
+DPLUSCLOSURE =
+  "Definition dplus_closure : DiagonalClosure :="
+  "  mkDiagonalClosure (poly_xor4 dplus0 dplus1 dplus2 dplus3)"
+  "                    (dplus0 + dplus1 + dplus2 + dplus3)."
+  .
+
+DMINUSCLOSURE =
+  "Definition dminus_closure : DiagonalClosure :="
+  "  mkDiagonalClosure (poly_xor4 dminus0 dminus1 dminus2 dminus3)"
+  "                    (dminus0 + dminus1 + dminus2 + dminus3)."
+  .
+
+DPLUSCLOSUREVALID =
+  "Theorem dplus_closure_valid :"
+  "  closure_xor dplus_closure = 0 /\ closure_sum dplus_closure = 30."
+  "Proof. vm_compute. auto. Qed."
+  .
+
+DMINUSCLOSUREVALID =
+  "Theorem dminus_closure_valid :"
+  "  closure_xor dminus_closure = 0 /\ closure_sum dminus_closure = 30."
+  "Proof. vm_compute. auto. Qed."
+  .
+
+DIAGSUMC =
+  "Theorem diag_sum_3c :"
+  "  dplus0 + dplus1 + dplus2 + dplus3 +"
+  "  (dminus0 + dminus1 + dminus2 + dminus3) = 60."
+  "Proof. vm_compute. reflexivity. Qed."
+  .
+
+ISDPLUS =
+  "Definition is_dplus (x : N) : bool :="
+  "  (x =? dplus0) || (x =? dplus1) || (x =? dplus2) || (x =? dplus3)."
+  .
+
+ISDMINUS =
+  "Definition is_dminus (x : N) : bool :="
+  "  (x =? dminus0) || (x =? dminus1) || (x =? dminus2) || (x =? dminus3)."
+  .
+
+POLYBIUSROW =
+  "Definition polybius_row (x : N) : N := x / 4."
+  .
+
+POLYBIUSCOL =
+  "Definition polybius_col (x : N) : N := x mod 4."
+  .
+
+ONDPLUS =
+  "Definition on_dplus (x : N) : bool :="
+  "  polybius_row x =? polybius_col x."
+  .
+
+ONDMINUS =
+  "Definition on_dminus (x : N) : bool :="
+  "  polybius_row x + polybius_col x =? 3."
+  .
+
+DPLUSISPOLYBIUSMAINDIAGONAL =
+  "Theorem dplus_is_polybius_main_diagonal :"
+  "  on_dplus 0 = true /\"
+  "  on_dplus 5 = true /\"
+  "  on_dplus 10 = true /\"
+  "  on_dplus 15 = true."
+  "Proof. vm_compute; repeat split. Qed."
+  .
+
+DMINUSISPOLYBIUSMIRRORDIAGONAL =
+  "Theorem dminus_is_polybius_mirror_diagonal :"
+  "  on_dminus 3 = true /\"
+  "  on_dminus 6 = true /\"
+  "  on_dminus 9 = true /\"
+  "  on_dminus 12 = true."
+  "Proof. vm_compute; repeat split. Qed."
+  .
+
+COMPLEMENTSUM =
+  "Definition complement_sum : N :="
+  "  fold_left"
+  "    (fun acc x => if orb (is_dplus x) (is_dminus x) then acc else acc + x)"
+  "    [0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10; 11; 12; 13; 14; 15]"
+  "    0."
+  .
+
+COMPLEMENTSUMC =
+  "Theorem complement_sum_3c : complement_sum = 60."
+  "Proof. vm_compute. reflexivity. Qed."
+  .
+
+WHEELSUM =
+  "Definition wheel_sum : N :="
+  "  fold_left N.add [0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10; 11; 12; 13; 14; 15] 0."
+  .
+
+FULLWHEELSUM =
+  "Theorem full_wheel_sum_78 : wheel_sum = 120."
+  "Proof. vm_compute. reflexivity. Qed."
+  .
+
+ACTIVEBYTESURFACE =
+  "Definition active_byte_surface : N := 15 * 16."
+  .
+
+ACTIVEBYTESURFACEIS =
+  "Theorem active_byte_surface_is_240 :"
+  "  active_byte_surface = 240."
+  "Proof. reflexivity. Qed."
+  "(* The 16-bit mask and the r0 involution are the canonical pair of the"
+  "   registry (see SKILLS.md).  mask16 keeps the low sixteen bits of a word;"
+  "   r0 flips the alternating low bits.  Every law below is discharged. *)"
+  .
+
+MASK =
+  "Definition mask16 (x : N) : N := N.land x 0xFFFF."
+  .
+
+R =
+  "Definition r0 (x : N) : N := N.lxor x 0xAAAA."
+  .
+
+ROTL =
+  "Definition rotl16 (x k : N) : N :="
+  "  mask16 (N.shiftl (mask16 x) k + N.shiftr (mask16 x) (16 - k))."
+  .
+
+ROTR =
+  "Definition rotr16 (x k : N) : N :="
+  "  mask16 (N.shiftr (mask16 x) k + N.shiftl (mask16 x) (16 - k))."
+  .
+
+DELTA =
+  "Definition delta16 (x c : N) : N :="
+  "  mask16 (N.lxor (N.lxor (N.lxor (rotl16 x 1) (rotl16 x 3)) (rotr16 x 2)) c)."
+  "(* the bitmask form and the modulo form are the same function *)"
+  .
+
+MASKEQMOD =
+  "Theorem mask16_eq_mod : forall x : N, mask16 x = x mod 65536."
+  "Proof."
+  "  intro x."
+  "  pose proof (N.land_ones x 16) as H."
+  "  replace (N.ones 16) with 0xFFFF in H by (vm_compute; reflexivity)."
+  "  replace (2 ^ 16)%N with 65536 in H by (vm_compute; reflexivity)."
+  "  exact H."
+  "Qed."
+  .
+
+MASKBOUND =
+  "Theorem mask16_bound : forall x : N, mask16 x < 65536."
+  "Proof."
+  "  intro x."
+  "  rewrite mask16_eq_mod."
+  "  apply N.mod_upper_bound."
+  "  discriminate."
+  "Qed."
+  "(* masking is idempotent *)"
+  .
+
+MASKIDEMPOTENT =
+  "Theorem mask16_idempotent : forall x : N, mask16 (mask16 x) = mask16 x."
+  "Proof."
+  "  intro x."
+  "  unfold mask16."
+  "  rewrite <- N.land_assoc, N.land_diag."
+  "  reflexivity."
+  "Qed."
+  "(* the mask is the identity on the 16-bit space *)"
+  .
+
+MASKID =
+  "Theorem mask16_id : forall y : N, y < 65536 -> mask16 y = y."
+  "Proof."
+  "  intros y Hy."
+  "  rewrite mask16_eq_mod."
+  "  apply N.mod_small. exact Hy."
+  "Qed."
+  "(* r0 is an involution *)"
+  .
+
+RINVOLUTIVE =
+  "Theorem r0_involutive : forall x : N, r0 (r0 x) = x."
+  "Proof."
+  "  intro x."
+  "  unfold r0."
+  "  rewrite N.lxor_assoc, N.lxor_nilpotent, N.lxor_0_r."
+  "  reflexivity."
+  "Qed."
+  "(* bitwise land distributes over lxor *)"
+  .
+
+LANDLXORDISTRIB =
+  "Lemma land_lxor_distrib : forall a b c : N,"
+  "  N.land (N.lxor a b) c = N.lxor (N.land a c) (N.land b c)."
+  "Proof."
+  "  intros a b c."
+  "  apply N.bits_inj; intro n."
+  "  rewrite N.land_spec, N.lxor_spec, N.lxor_spec, !N.land_spec."
+  "  destruct (N.testbit a n), (N.testbit b n), (N.testbit c n); reflexivity."
+  "Qed."
+  "(* the involution acts inside the 16-bit space *)"
+  .
+
+RMASKCOMMUTE =
+  "Theorem r0_mask16_commute : forall x : N, r0 (mask16 x) = mask16 (r0 x)."
+  "Proof."
+  "  intro x."
+  "  unfold r0, mask16."
+  "  rewrite land_lxor_distrib."
+  "  replace (N.land 0xAAAA 0xFFFF) with 0xAAAA by (vm_compute; reflexivity)."
+  "  reflexivity."
+  "Qed."
+  .
+
+RPRESERVESMASK =
+  "Theorem r0_preserves_mask16 : forall x : N,"
+  "  mask16 x < 65536 -> r0 (mask16 x) < 65536."
+  "Proof."
+  "  intros x Hx."
+  "  rewrite r0_mask16_commute."
+  "  apply mask16_bound."
+  "Qed."
+  "(* the involution is injective *)"
+  .
+
+RINJECTIVE =
+  "Theorem r0_injective : forall x y : N, r0 x = r0 y -> x = y."
+  "Proof."
+  "  intros x y H."
+  "  apply (f_equal r0) in H."
+  "  rewrite r0_involutive, r0_involutive in H."
+  "  exact H."
+  "Qed."
+  "(* the involution keeps 16-bit words inside the 16-bit space *)"
+  .
+
+RSPACECLOSED =
+  "Theorem r0_space_closed : forall y : N, y < 65536 -> r0 y < 65536."
+  "Proof."
+  "  intros y Hy."
+  "  assert (H : r0 y = r0 (mask16 y))."
+  "  { rewrite (mask16_id y Hy). reflexivity. }"
+  "  rewrite H, r0_mask16_commute."
+  "  apply mask16_bound."
+  "Qed."
+  "(* the involution is a permutation of the 16-bit space *)"
+  .
+
+RSPACEBIJECTION =
+  "Theorem r0_space_bijection : forall y : N, y < 65536 ->"
+  "  exists x : N, x < 65536 /\ r0 x = y."
+  "Proof."
+  "  intros y Hy."
+  "  exists (r0 y)."
+  "  split."
+  "  - apply r0_space_closed. exact Hy."
+  "  - rewrite r0_involutive. reflexivity."
+  "Qed."
+  .
+
+DELTAWIDTHPRESERVING =
+  "Theorem delta16_width_preserving : forall x c : N, delta16 x c < 65536."
+  "Proof."
+  "  intros x c."
+  "  unfold delta16."
+  "  apply mask16_bound."
+  "Qed."
+  .
+
+DELTADETERMINISTIC =
+  "Theorem delta16_deterministic : forall x c : N, delta16 x c = delta16 x c."
+  "Proof. reflexivity. Qed."
+  .
+
+SCOPEA =
+  "Open Scope R_scope."
+  .
+
+CHIRALPHASE =
+  "Inductive ChiralPhase : Type :="
+  "| DPlusPhase"
+  "| DMinusPhase"
+  "| BalancedPhase"
+  "| IncompletePhase."
+  .
+
+PHASETOSIGN =
+  "Definition phase_to_sign (p : ChiralPhase) : R :="
+  "  match p with"
+  "  | DPlusPhase => 1"
+  "  | DMinusPhase => -1"
+  "  | BalancedPhase => 0"
+  "  | IncompletePhase => 0"
+  "  end."
+  .
+
+DIAGONALPHASESCHEDULE =
+  "Definition diagonal_phase_schedule : list ChiralPhase :="
+  "  [DPlusPhase; DMinusPhase]."
+  .
+
+POLYBIUSPHASEAT =
+  "Definition polybius_phase_at (n : nat) : ChiralPhase :="
+  "  nth (n mod 2)%nat diagonal_phase_schedule BalancedPhase."
+  .
+
+DIAGONALRACEPHASE =
+  "Definition diagonal_race_phase (n : nat) : ChiralPhase :="
+  "  match polybius_phase_at n with"
+  "  | DPlusPhase =>"
+  "      if andb (closure_xor dplus_closure =? 0) (closure_sum dplus_closure =? 30)"
+  "      then DPlusPhase else IncompletePhase"
+  "  | DMinusPhase =>"
+  "      if andb (closure_xor dminus_closure =? 0) (closure_sum dminus_closure =? 30)"
+  "      then DMinusPhase else IncompletePhase"
+  "  | BalancedPhase => BalancedPhase"
+  "  | IncompletePhase => IncompletePhase"
+  "  end."
+  .
+
+DIAGONALPHASESCHEDULEEVEN =
+  "Theorem diagonal_phase_schedule_even : forall n : nat,"
+  "  polybius_phase_at n = if Nat.even n then DPlusPhase else DMinusPhase."
+  "Proof."
+  "  intro n."
+  "  unfold polybius_phase_at, diagonal_phase_schedule."
+  "  destruct (Nat.even n) eqn:He."
+  "  - destruct (n mod 2)%nat eqn:Hm."
+  "    + reflexivity."
+  "    + assert (n0 = 0%nat) by"
+  "        (assert (S n0 < 2)%nat by (rewrite <- Hm; apply Nat.mod_upper_bound; lia); lia)."
+  "      subst n0."
+  "      exfalso."
+  "      apply Nat.even_spec in He."
+  "      destruct He as [k Hk]."
+  "      assert ((n mod 2) = 0)%nat."
+  "        subst n."
+  "        rewrite Nat.mul_comm."
+  "        apply Nat.Div0.mod_mul."
+  "      lia."
+  "  - destruct (n mod 2)%nat eqn:Hm."
+  "    + exfalso."
+  "      assert (Nat.Even n)."
+  "        apply Nat.Lcm0.mod_divide in Hm."
+  "        destruct Hm as [k Hk]."
+  "        exists k."
+  "        rewrite Nat.mul_comm."
+  "        exact Hk."
+  "      apply Nat.even_spec in H."
+  "      rewrite H in He."
+  "      discriminate."
+  "    + assert (n0 = 0%nat) by"
+  "        (assert (S n0 < 2)%nat by (rewrite <- Hm; apply Nat.mod_upper_bound; lia); lia)."
+  "      subst n0."
+  "      reflexivity."
+  "Qed."
+  .
+
+POLYBIUSDIAGONALRACEFORCESPHASESCHEDULE =
+  "Theorem polybius_diagonal_race_forces_phase_schedule : forall n : nat,"
+  "  diagonal_race_phase n = polybius_phase_at n."
+  "Proof."
+  "  intro n."
+  "  unfold diagonal_race_phase."
+  "  destruct (polybius_phase_at n); vm_compute; reflexivity."
+  "Qed."
+  .
+
+DIAGONALACCUMULATOR =
+  "Record DiagonalAccumulator : Type := mkDiagonalAccumulator {"
+  "  accumulator_phase : ChiralPhase"
+  "}."
+  .
+
+DIAGONALCLOSUREREADY =
+  "Definition diagonal_closure_ready (c : DiagonalClosure) : bool :="
+  "  andb (N.eqb (closure_xor c) 0) (N.eqb (closure_sum c) 30)."
+  .
+
+DIAGONALACCUMULATORSTEP =
+  "Definition diagonal_accumulator_step (a : DiagonalAccumulator) : DiagonalAccumulator :="
+  "  match accumulator_phase a with"
+  "  | DPlusPhase =>"
+  "      if diagonal_closure_ready dplus_closure"
+  "      then mkDiagonalAccumulator DMinusPhase"
+  "      else mkDiagonalAccumulator IncompletePhase"
+  "  | DMinusPhase =>"
+  "      if diagonal_closure_ready dminus_closure"
+  "      then mkDiagonalAccumulator DPlusPhase"
+  "      else mkDiagonalAccumulator IncompletePhase"
+  "  | BalancedPhase => mkDiagonalAccumulator BalancedPhase"
+  "  | IncompletePhase => mkDiagonalAccumulator IncompletePhase"
+  "  end."
+  .
+
+DIAGONALACCUMULATORAT =
+  "Definition diagonal_accumulator_at (n : nat) : DiagonalAccumulator :="
+  "  Nat.iter n diagonal_accumulator_step (mkDiagonalAccumulator DPlusPhase)."
+  .
+
+DIAGONALACCUMULATORPHASE =
+  "Definition diagonal_accumulator_phase (n : nat) : ChiralPhase :="
+  "  accumulator_phase (diagonal_accumulator_at n)."
+  .
+
+NATINDUCTIONBYTWO =
+  "Lemma nat_induction_by_two :"
+  "  forall P : nat -> Prop,"
+  "    P 0%nat ->"
+  "    P 1%nat ->"
+  "    (forall n : nat, P n -> P (S (S n))) ->"
+  "    forall n : nat, P n."
+  "Proof."
+  "  intros P H0 H1 Hstep n."
+  "  assert (P n /\ P (S n)) as [H _]."
+  "  - induction n as [| n [IHn IHSn]]."
+  "    + split; assumption."
+  "    + split; [exact IHSn | apply Hstep; exact IHn]."
+  "  - exact H."
+  "Qed."
+  .
+
+DIAGONALACCUMULATORFORCESPHASESCHEDULE =
+  "Theorem diagonal_accumulator_forces_phase_schedule : forall n : nat,"
+  "  diagonal_accumulator_phase n = polybius_phase_at n."
+  "Proof."
+  "  intro n."
+  "  induction n using nat_induction_by_two."
+  "  - vm_compute. reflexivity."
+  "  - vm_compute. reflexivity."
+  "  - unfold diagonal_accumulator_phase, diagonal_accumulator_at in *."
+  "    change (Nat.iter (S (S n)) diagonal_accumulator_step (mkDiagonalAccumulator DPlusPhase))"
+  "      with (diagonal_accumulator_step"
+  "              (diagonal_accumulator_step"
+  "                (Nat.iter n diagonal_accumulator_step (mkDiagonalAccumulator DPlusPhase))))."
+  "    destruct (Nat.iter n diagonal_accumulator_step (mkDiagonalAccumulator DPlusPhase)) as [p]."
+  "    simpl in IHn."
+  "    rewrite IHn."
+  "    rewrite diagonal_phase_schedule_even."
+  "    rewrite diagonal_phase_schedule_even."
+  "    rewrite Nat.even_succ_succ."
+  "    destruct (Nat.even n); vm_compute; reflexivity."
+  "Qed."
+  .
+
+DIAGONALACCUMULATORPHASEMATCHESRACE =
+  "Theorem diagonal_accumulator_phase_matches_race : forall n : nat,"
+  "  diagonal_accumulator_phase n = diagonal_race_phase n."
+  "Proof."
+  "  intro n."
+  "  rewrite diagonal_accumulator_forces_phase_schedule."
+  "  rewrite polybius_diagonal_race_forces_phase_schedule."
+  "  reflexivity."
+  "Qed."
+  .
+
+DPLUSPHASESIGN =
+  "Theorem dplus_phase_sign : phase_to_sign DPlusPhase = 1."
+  "Proof. reflexivity. Qed."
+  .
+
+DMINUSPHASESIGN =
+  "Theorem dminus_phase_sign : phase_to_sign DMinusPhase = -1."
+  "Proof. reflexivity. Qed."
+  .

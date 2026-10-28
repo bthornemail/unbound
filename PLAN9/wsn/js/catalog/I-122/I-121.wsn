@@ -1,0 +1,16 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-121: nibble-pair root"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-121"", ""nibble-pair root; (index, value)"", () => {"
+  "  const ged = { index: 0x910, value: 0x01 };"
+  "  assert.strictEqual(typeof ged.index, ""number"");"
+  "  assert.strictEqual(typeof ged.value, ""number"");"
+  "  assert.strictEqual(0x0, 0);"
+  "  assert.strictEqual(0x00, 0);"
+  "  assert.strictEqual(0x0, 0x00);"
+  "  assert.strictEqual(0x1F - 0x00 + 1, 32);"
+  "}, ""point/line/duality"");"
+  .

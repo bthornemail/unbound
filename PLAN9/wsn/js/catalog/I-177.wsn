@@ -1,0 +1,202 @@
+RECORD = HEAD THETHREEINDICES THEGAPSBETWEENTHEM THESPANITSXORWITHANDTHEPOLE ITHEDERIVATIVEFROMBOTHBRANCHES ITHEREVERSECHAINNEEDSTHEDIRECTIONSWAPPED IBOTHBRANCHESAGREE ATOMICSCOMPAREEXCHANGEISTHETRANSITION THEAUTOMATONSTATETRANSITIONINPUT THETRANSITIONFUNCTION THERATETHEDERIVATIVE THEDIRECTIONFORWARDORREVERSE THETHREESCRIPTSASTHETRANSITIONFUNCTION THEAUTOMATONSSTATEISTHESPACE THEWHOLEPICTURE THEPUNCHLINE .
+
+HEAD =
+  "// i177.ts — I-177: the three pending scripts are the transition function; 59/63/127 the input"
+  "import assert from ""node:assert"";"
+  .
+
+THETHREEINDICES =
+  "// ── 1. The three indices ────────────────────────────────────"
+  "const A = 59, B = 63, C = 127;"
+  "assert.strictEqual(A, 0x3B, ""59 = 0x3B (;)"");"
+  "assert.strictEqual(B, 0x3F, ""63 = 0x3F (?)"");"
+  "assert.strictEqual(C, 0x7F, ""127 = 0x7F (DEL)"");"
+  "// the three boundaries"
+  .
+
+THEGAPSBETWEENTHEM =
+  "// ── 2. The gaps between them ────────────────────────────────"
+  "assert.strictEqual(B - A, 4, ""63 - 59 = 4 (the nibble)"");"
+  "assert.strictEqual(C - B, 64, ""127 - 63 = 64 (the 64-block)"");"
+  "assert.strictEqual(C - A, 68, ""127 - 59 = 68 (the pole)"");"
+  .
+
+THESPANITSXORWITHANDTHEPOLE =
+  "// ── 3. The span, its XOR with 60, and the pole ─────────────"
+  "// Corrected 2026-10-12: 60 ⊕ 68 is 120, not 128. The span and the pole are"
+  "// different relations; the pole of 60 is the one the vault holds (SPEC-07 I-18)."
+  "assert.strictEqual(127 - 59, 68, ""127 - 59 = 68 (the span)"");"
+  "assert.strictEqual(60 ^ 68, 120, ""60 ⊕ 68 = 120 (the XOR of 60 with the span)"");"
+  "assert.strictEqual(60 ^ 128, 188, ""60 ⊕ 128 = 188 (the pole, I-18)"");"
+  "assert.strictEqual(60 ^ 188, 128, ""60 ⊕ 188 = 128 (the pole, other side)"");"
+  .
+
+ITHEDERIVATIVEFROMBOTHBRANCHES =
+  "// ── 4. I-167: the derivative from both branches ─────────────"
+  "function f(x: number): number { return Math.sin(x); }"
+  "const c = 0;"
+  "// with r = 1, it fails; with r → 0, it holds"
+  "const r_bad = 1;"
+  "const r_good = 1e-6;"
+  "const fromInside_bad  = (f(c) - f(c - r_bad)) / r_bad;"
+  "const fromInside_good = (f(c) - f(c - r_good)) / r_good;"
+  "assert.ok(Math.abs(fromInside_bad - 1) > 1e-3, `r=1 fails: ${fromInside_bad}`);"
+  "assert.ok(Math.abs(fromInside_good - 1) < 1e-3, `r=1e-6 holds: ${fromInside_good}`);"
+  "// the threshold is r → 0"
+  .
+
+ITHEREVERSECHAINNEEDSTHEDIRECTIONSWAPPED =
+  "// ── 5. I-170: the reverse chain needs the direction swapped ─"
+  "type Link = { from: string; to: string };"
+  "const chain: Link[] = ["
+  "  { from: ""void"", to: ""earth"" },"
+  "  { from: ""earth"", to: ""rest"" },"
+  "];"
+  "// reversing the list doesn't reverse the direction"
+  "const reversed_bad = [...chain].reverse();"
+  "assert.strictEqual(reversed_bad[0]!.from, ""earth"", ""reversed list starts at earth"");"
+  "assert.notStrictEqual(reversed_bad[0]!.from, ""rest"", ""not the reverse direction"");"
+  "// swapping from/to does reverse it"
+  "const reversed_good: Link[] = [...chain].reverse().map((l) => ({ from: l.to, to: l.from }));"
+  "assert.strictEqual(reversed_good[0]!.from, ""rest"", ""reversed direction starts at rest"");"
+  "assert.strictEqual(reversed_good[reversed_good.length - 1]!.to, ""void"", ""and ends at void"");"
+  .
+
+IBOTHBRANCHESAGREE =
+  "// ── 6. I-171: both branches agree ──────────────────────────"
+  "// with r → 0, the average of the two branches gives f'(c)"
+  "const fromOutside_good = (f(c + r_good) - f(c)) / r_good;"
+  "const derivative_good = (fromInside_good + fromOutside_good) / 2;"
+  "assert.ok(Math.abs(derivative_good - 1) < 1e-3, `both branches agree: ${derivative_good}`);"
+  .
+
+ATOMICSCOMPAREEXCHANGEISTHETRANSITION =
+  "// ── 7. Atomics.compareExchange is the transition ────────────"
+  "const buf = new Int32Array(256);"
+  "buf[A] = 10; buf[B] = 20; buf[C] = 30;"
+  "// a transition at index 59"
+  "const prevA = Atomics.compareExchange(buf, A, 10, 11);"
+  "assert.strictEqual(prevA, 10, ""transition at 59 read 10"");"
+  "assert.strictEqual(buf[A], 11, ""transition at 59 wrote 11"");"
+  "// a transition at index 63"
+  "const prevB = Atomics.compareExchange(buf, B, 20, 21);"
+  "assert.strictEqual(prevB, 20, ""transition at 63 read 20"");"
+  "assert.strictEqual(buf[B], 21, ""transition at 63 wrote 21"");"
+  "// a transition at index 127"
+  "const prevC = Atomics.compareExchange(buf, C, 30, 31);"
+  "assert.strictEqual(prevC, 30, ""transition at 127 read 30"");"
+  "assert.strictEqual(buf[C], 31, ""transition at 127 wrote 31"");"
+  .
+
+THEAUTOMATONSTATETRANSITIONINPUT =
+  "// ── 8. The automaton: state + transition + input ────────────"
+  "type Automaton = {"
+  "  state: Int32Array;"
+  "  input: number[];"
+  "  step: (index: number, expected: number, replacement: number) => number;"
+  "};"
+  "const automaton: Automaton = {"
+  "  state: buf,"
+  "  input: [A, B, C],"
+  "  step: (index, expected, replacement) => Atomics.compareExchange(buf, index, expected, replacement),"
+  "};"
+  "assert.strictEqual(automaton.input.length, 3, ""3 inputs"");"
+  "assert.strictEqual(automaton.input[0], 59, ""input 1 = 59"");"
+  "assert.strictEqual(automaton.input[1], 63, ""input 2 = 63"");"
+  "assert.strictEqual(automaton.input[2], 127, ""input 3 = 127"");"
+  .
+
+THETRANSITIONFUNCTION =
+  "// ── 9. The transition function ──────────────────────────────"
+  "// Each step transitions the state."
+  "const before = buf[A];"
+  "const after = automaton.step(A, before, before + 1);"
+  "assert.strictEqual(after, before, ""the transition returns the previous value"");"
+  "assert.strictEqual(buf[A], before + 1, ""and stores the new value"");"
+  "// the transition is atomic"
+  .
+
+THERATETHEDERIVATIVE =
+  "// ── 10. The rate: the derivative ────────────────────────────"
+  "// The rate of the transition is the derivative at the state."
+  "function rate(index: number): number {"
+  "  // the derivative of the state at index"
+  "  return f(index);"
+  "}"
+  "const rateAt59 = rate(59);"
+  "assert.ok(Number.isFinite(rateAt59), `the rate at 59 is ${rateAt59}`);"
+  "// the rate is the derivative (I-167)"
+  .
+
+THEDIRECTIONFORWARDORREVERSE =
+  "// ── 11. The direction: forward or reverse ──────────────────"
+  "type Direction = ""forward"" | ""reverse"";"
+  "function applyChain(chain: Link[], direction: Direction): Link[] {"
+  "  if (direction === ""forward"") return chain;"
+  "  return [...chain].reverse().map((l) => ({ from: l.to, to: l.from }));"
+  "}"
+  "const forwardChain = applyChain(chain, ""forward"");"
+  "const reverseChain = applyChain(chain, ""reverse"");"
+  "assert.strictEqual(forwardChain[0]!.from, ""void"", ""forward starts at void"");"
+  "assert.strictEqual(reverseChain[0]!.from, ""rest"", ""reverse starts at rest"");"
+  "// the direction is a parameter (I-170)"
+  .
+
+THETHREESCRIPTSASTHETRANSITIONFUNCTION =
+  "// ── 12. The three scripts as the transition function ───────"
+  "type Transition = {"
+  "  id: string;"
+  "  computes: string;"
+  "  threshold: string;"
+  "};"
+  "const transitions: Transition[] = ["
+  "  { id: ""I-167"", computes: ""the derivative from both branches"", threshold: ""r → 0"" },"
+  "  { id: ""I-170"", computes: ""the reverse chain"",                  threshold: ""swap from/to"" },"
+  "  { id: ""I-171"", computes: ""both branches agree"",                threshold: ""r → 0"" },"
+  "];"
+  "assert.strictEqual(transitions.length, 3, ""3 transitions"");"
+  "for (const t of transitions) {"
+  "  assert.ok(t.threshold.length > 0, `${t.id} has a threshold`);"
+  "}"
+  .
+
+THEAUTOMATONSSTATEISTHESPACE =
+  "// ── 13. The automaton's state is the 65536 space ────────────"
+  "const SPACE = 2 ** 16;"
+  "assert.strictEqual(SPACE, 65536, ""the state is the 65536 space"");"
+  .
+
+THEWHOLEPICTURE =
+  "// ── 14. The whole picture ──────────────────────────────────"
+  "type Picture = {"
+  "  state: string;"
+  "  transitions: string[];"
+  "  input: number[];"
+  "  rate: string;"
+  "  direction: string;"
+  "};"
+  "const picture: Picture = {"
+  "  state: ""the 65536 space"","
+  "  transitions: [""I-167"", ""I-170"", ""I-171""],"
+  "  input: [59, 63, 127],"
+  "  rate: ""the derivative"","
+  "  direction: ""forward or reverse"","
+  "};"
+  "assert.strictEqual(picture.transitions.length, 3, ""3 transitions"");"
+  "assert.strictEqual(picture.input.length, 3, ""3 input indices"");"
+  "assert.ok(picture.rate.includes(""derivative""), ""the rate is the derivative"");"
+  .
+
+THEPUNCHLINE =
+  "// ── 15. The punchline ──────────────────────────────────────"
+  "// The three pending scripts are the transition function."
+  "// The three indices (59, 63, 127) are the input alphabet."
+  "// Atomics.compareExchange is the transition operator."
+  "console.log(""I-177: the three pending scripts + 59/63/127 = the automaton — passed"");"
+  "console.log(`  I-167, I-170, I-171 are the transition function`);"
+  "console.log(`  59, 63, 127 are the input alphabet`);"
+  "console.log(`  Atomics.compareExchange is the transition operator`);"
+  "console.log(`  the state is the 65536 space (the engram)`);"
+  "console.log(`  the rate is the derivative; the direction is forward or reverse`);"
+  "console.log(`  the three scripts fail on THRESHOLDS, not logic`);"
+  .

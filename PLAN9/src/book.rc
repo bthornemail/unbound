@@ -1,0 +1,35 @@
+#!/bin/rc
+# book.rc - inside Plan 9: every module of the Coq proof book (and the dev-docs
+# omi_pi_proof.v) to Wirth syntax notation with coq2wsn.awk, each marked where
+# coqc broke (run/book/status), read back against its source and read by zwsn,
+# and written to the output disk as a tar.
+rfork e
+ifs='
+'
+w=/tmp/zb
+rm -rf $w
+mkdir -p $w/unbound $w/zout/wsn/coq
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zwsn.c && 8l -o $w/zwsn zwsn.8 || exit compile
+cd $p/run/book/coq
+fail=0
+for(l in `{cat $p/run/book/status}){
+	m=`{echo $l | awk -F'	' '{print $1}'}
+	f=`{echo $l | awk -F'	' '{print $2}'}
+	b=`{echo $l | awk -F'	' '$3 == "fail" {print $4} $3 == "ok" {print 0}'}
+	if(! ~ $f -){
+		o=$w/zout/wsn/coq/^`{echo $f | sed 's/\.v$//'}^.wsn
+		mkdir -p `{basename -d $o}
+		awk -v 'top='`{echo $m | tr a-z A-Z | sed 's/[^A-Z]//g'} -v 'breakline='$b -f $p/src/coq2wsn.awk $f >$o
+		awk -f $p/src/back.awk $o >$w/back
+		awk '!/^[ 	]*$/' $f >$w/want
+		if(! cmp -s $w/back $w/want){ echo book.rc: $f does not read back; fail=1 }
+		echo $o >>$w/list
+	}
+}
+$w/zwsn `{cat $w/list} | sed 's,^'$w'/zout/,,' >$w/zout/zwsn.txt
+@{cd $w && tar cf /dev/sd02/data zout} || exit tar
+echo book.rc: `{wc -l <$w/list} modules to Wirth syntax notation, `{grep -c ' productions$' $w/zout/zwsn.txt} read by zwsn
+if(~ $fail 1) echo book.rc: some modules did not read back

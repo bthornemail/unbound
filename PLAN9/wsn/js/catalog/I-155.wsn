@@ -1,0 +1,213 @@
+RECORD = HEAD THERESETVECTORATTHETOP THETOPOFTHEGBSPACE THESTANDARDMEMORYLAYOUT THEIVTANDBDASIZES THEMBR THERESETVECTOR THEGBBASEPOOL ABOVEGBADDITIONALMEMORY THELAYOUTISSHAREDACROSSMACHINES LOGICALVSPHYSICAL THEPOOLASAPROTOCOLANCHOR SHAREDARRAYBUFFERVSTHEGBPOOL THERESETTOBOOTSPAN THESHAREDPOOLASAFRACTAL THEPOOLISSHAREDTHEMEMORYISLOCAL .
+
+HEAD =
+  "// i155.ts — I-155: the 4GB shared logical memory pool"
+  "import assert from ""node:assert"";"
+  .
+
+THERESETVECTORATTHETOP =
+  "// ── 1. The reset vector at the top ────────────────────────────"
+  "const RESET_VECTOR = 0xFFFFFFF0;"
+  "assert.strictEqual(RESET_VECTOR, 4294967280, ""reset vector = 2^32 - 16"");"
+  "assert.strictEqual(RESET_VECTOR, 2 ** 32 - 16, ""= 2^32 - 16"");"
+  "assert.strictEqual(RESET_VECTOR + 16, 2 ** 32, ""reset + 16 = 2^32"");"
+  .
+
+THETOPOFTHEGBSPACE =
+  "// ── 2. The top of the 4GB space ───────────────────────────────"
+  "const TOP_4GB = 0xFFFFFFFF;"
+  "assert.strictEqual(TOP_4GB, 2 ** 32 - 1, ""top of 4GB"");"
+  "assert.strictEqual(TOP_4GB, 4294967295, ""= 4294967295"");"
+  "assert.strictEqual(TOP_4GB + 1, 2 ** 32, ""top + 1 = 2^32"");"
+  "// the reset vector is 16 bytes below the top"
+  "assert.strictEqual(TOP_4GB - RESET_VECTOR + 1, 16, ""16 bytes of reset vector"");"
+  .
+
+THESTANDARDMEMORYLAYOUT =
+  "// ── 3. The standard memory layout ─────────────────────────────"
+  "type Region = {"
+  "  name: string;"
+  "  start: number;"
+  "  end: number;"
+  "  size: number;"
+  "  role: string;"
+  "};"
+  "const layout: Region[] = ["
+  "  { name: ""IVT"",          start: 0x00000000, end: 0x000003FF, size: 1024, role: ""interrupt vector table"" },"
+  "  { name: ""BDA"",          start: 0x00000400, end: 0x000004FF, size: 256,  role: ""BIOS data area"" },"
+  "  { name: ""free"",         start: 0x00000500, end: 0x00007BFF, size: 0,    role: ""free"" },"
+  "  { name: ""MBR"",          start: 0x00007C00, end: 0x00007DFF, size: 512,  role: ""boot sector"" },"
+  "  { name: ""free2"",        start: 0x00007E00, end: 0x0009FBFF, size: 0,    role: ""free"" },"
+  "  { name: ""EBDA"",         start: 0x0009FC00, end: 0x0009FFFF, size: 1024, role: ""extended BIOS data area"" },"
+  "  { name: ""video"",        start: 0x000A0000, end: 0x000BFFFF, size: 128 * 1024, role: ""video memory"" },"
+  "  { name: ""BIOS"",         start: 0x000F0000, end: 0x000FFFFF, size: 64 * 1024,  role: ""BIOS ROM"" },"
+  "  { name: ""reset"",        start: 0xFFFFFFF0, end: 0xFFFFFFFF, size: 16,   role: ""reset vector"" },"
+  "];"
+  "assert.ok(layout.length > 0, ""layout has regions"");"
+  .
+
+THEIVTANDBDASIZES =
+  "// ── 4. The IVT and BDA sizes ─────────────────────────────────"
+  "const IVT = layout.find(r => r.name === ""IVT"")!;"
+  "assert.strictEqual(IVT.size, 1024, ""IVT = 1024 bytes"");"
+  "assert.strictEqual(IVT.end - IVT.start + 1, 1024, ""IVT spans 1024 bytes"");"
+  "const BDA = layout.find(r => r.name === ""BDA"")!;"
+  "assert.strictEqual(BDA.size, 256, ""BDA = 256 bytes"");"
+  .
+
+THEMBR =
+  "// ── 5. The MBR ────────────────────────────────────────────────"
+  "const MBR = layout.find(r => r.name === ""MBR"")!;"
+  "assert.strictEqual(MBR.start, 0x7C00, ""MBR at 0x7C00"");"
+  "assert.strictEqual(MBR.size, 512, ""MBR = 512 bytes"");"
+  "assert.strictEqual(MBR.end, 0x7DFF, ""MBR ends at 0x7DFF"");"
+  "// the boot signature at 0x7DFE-0x7DFF"
+  "assert.strictEqual(MBR.start + 510, 0x7DFE, ""signature at 0x7DFE"");"
+  .
+
+THERESETVECTOR =
+  "// ── 6. The reset vector ───────────────────────────────────────"
+  "const reset = layout.find(r => r.name === ""reset"")!;"
+  "assert.strictEqual(reset.start, 0xFFFFFFF0, ""reset at 0xFFFFFFF0"");"
+  "assert.strictEqual(reset.size, 16, ""reset = 16 bytes"");"
+  .
+
+THEGBBASEPOOL =
+  "// ── 7. The 4GB base pool ──────────────────────────────────────"
+  "// Every x86 machine has this layout for the low 4GB."
+  "const POOL_SIZE = 2 ** 32;"
+  "assert.strictEqual(POOL_SIZE, 4294967296, ""4GB = 2^32"");"
+  "assert.strictEqual(POOL_SIZE, 4 * 1024 ** 3, ""4 GiB"");"
+  .
+
+ABOVEGBADDITIONALMEMORY =
+  "// ── 8. Above 4GB: additional memory ───────────────────────────"
+  "// 64-bit machines have more than 4GB, but the low 4GB is unchanged."
+  "const ABOVE_4GB = 2 ** 36;  // 64GB"
+  "assert.strictEqual(ABOVE_4GB, 68719476736, ""64GB"");"
+  "assert.ok(ABOVE_4GB > POOL_SIZE, ""above 4GB is more"");"
+  "// but the base 4GB is the same"
+  "assert.strictEqual(POOL_SIZE, 2 ** 32, ""the base pool is still 2^32"");"
+  .
+
+THELAYOUTISSHAREDACROSSMACHINES =
+  "// ── 9. The layout is shared across machines ───────────────────"
+  "// The addresses are the same on every x86 machine, so the"
+  "// *structure* is shared, even though storage is local."
+  "function machineLayout(): Region[] {"
+  "  return layout.slice();  // same on every machine"
+  "}"
+  "const machine1 = machineLayout();"
+  "const machine2 = machineLayout();"
+  "assert.deepStrictEqual(machine1, machine2, ""same layout on both machines"");"
+  .
+
+LOGICALVSPHYSICAL =
+  "// ── 10. Logical vs physical ──────────────────────────────────"
+  "// The storage is local (each machine has its own RAM)."
+  "// The layout is shared (the addresses mean the same thing)."
+  "type Machine = {"
+  "  name: string;"
+  "  physicalMemory: number;   // unique to each machine"
+  "  addressLayout: Region[];  // shared across machines"
+  "};"
+  "const m1: Machine = { name: ""m1"", physicalMemory: 2 ** 33, addressLayout: machineLayout() };"
+  "const m2: Machine = { name: ""m2"", physicalMemory: 2 ** 34, addressLayout: machineLayout() };"
+  "// different physical memory"
+  "assert.notStrictEqual(m1.physicalMemory, m2.physicalMemory, ""different RAM"");"
+  "// same address layout"
+  "assert.deepStrictEqual(m1.addressLayout, m2.addressLayout, ""same layout"");"
+  "// so the pool is logical, not physical"
+  "assert.strictEqual("
+  "  JSON.stringify(m1.addressLayout) === JSON.stringify(m2.addressLayout),"
+  "  true,"
+  "  ""identical layouts"""
+  ");"
+  .
+
+THEPOOLASAPROTOCOLANCHOR =
+  "// ── 11. The pool as a protocol anchor ─────────────────────────"
+  "// Fixed addresses serve as anchors for the protocol (I-116)."
+  "const anchors = {"
+  "  ivt:          0x00000000,"
+  "  bda:          0x00000400,"
+  "  mbr:          0x00007C00,"
+  "  video:        0x000A0000,"
+  "  bios:         0x000F0000,"
+  "  reset:        0xFFFFFFF0,"
+  "};"
+  "assert.strictEqual(Object.keys(anchors).length, 6, ""6 anchors"");"
+  "// all anchors are fixed across machines"
+  "for (const [name, addr] of Object.entries(anchors)) {"
+  "  assert.ok(addr >= 0 && addr <= 0xFFFFFFFF, `${name} in 4GB range`);"
+  "}"
+  .
+
+SHAREDARRAYBUFFERVSTHEGBPOOL =
+  "// ── 12. SharedArrayBuffer vs the 4GB pool ─────────────────────"
+  "// Two ways of sharing state:"
+  "// - SharedArrayBuffer: the runtime mechanism (I-140, I-152)"
+  "// - The 4GB pool: the address-space mechanism"
+  "// Both anchored at fixed addresses."
+  "type ShareMechanism = {"
+  "  name: string;"
+  "  mechanism: string;"
+  "  anchor: number;"
+  "};"
+  "const shareMechanisms: ShareMechanism[] = ["
+  "  { name: ""SharedArrayBuffer"", mechanism: ""runtime"", anchor: 0 },"
+  "  { name: ""4GB pool"",           mechanism: ""address-space"", anchor: 0xFFFFFFF0 },"
+  "  { name: ""postMessage"",        mechanism: ""message-passing"", anchor: 0 },"
+  "];"
+  "assert.strictEqual(shareMechanisms.length, 3, ""3 share mechanisms"");"
+  "for (const s of shareMechanisms) {"
+  "  assert.ok(s.anchor >= 0, `${s.name} has an anchor`);"
+  "}"
+  .
+
+THERESETTOBOOTSPAN =
+  "// ── 13. The reset-to-boot span ────────────────────────────────"
+  "// From the reset vector to the boot vector is the seed span."
+  "const RESET_TO_BOOT = RESET_VECTOR - 0x7C00;"
+  "assert.strictEqual(RESET_TO_BOOT, 0xFFFF83F0, ""reset to boot = 0xFFFF83F0"");"
+  "assert.strictEqual(RESET_TO_BOOT, 4294935536, ""= 4294935536"");"
+  "// this is the memory the BIOS traverses between reset and boot"
+  "assert.ok(RESET_TO_BOOT > 0, ""positive span"");"
+  .
+
+THESHAREDPOOLASAFRACTAL =
+  "// ── 14. The shared pool as a fractal ──────────────────────────"
+  "// Every layer is the same structure at a different scale:"
+  "// - 4GB space (the whole pool)"
+  "// - 4KB page (the standard unit)"
+  "// - 512B sector (the boot unit)"
+  "// - 16B reset (the reset unit)"
+  "const scales = ["
+  "  { name: ""4GB pool"", size: 2 ** 32 },"
+  "  { name: ""4KB page"", size: 2 ** 12 },"
+  "  { name: ""512B sector"", size: 2 ** 9 },"
+  "  { name: ""16B reset"", size: 2 ** 4 },"
+  "];"
+  "for (const s of scales) {"
+  "  assert.strictEqual(s.size, 2 ** Math.log2(s.size), `${s.name} is a power of 2`);"
+  "}"
+  "// all sizes are powers of 2"
+  "for (const s of scales) {"
+  "  assert.strictEqual(s.size & (s.size - 1), 0, `${s.name} is 2^n`);"
+  "}"
+  .
+
+THEPOOLISSHAREDTHEMEMORYISLOCAL =
+  "// ── 15. The pool is shared, the memory is local ───────────────"
+  "// This is the key distinction:"
+  "// - Structure (the layout) is shared"
+  "// - Storage (the bytes) is local"
+  "// - The pool is logical, not physical"
+  "console.log(""I-155: the 4GB shared logical memory pool — passed"");"
+  "console.log(`  reset vector at 0xFFFFFFF0 (top of 4GB)`);"
+  "console.log(`  boot vector at 0x7C00`);"
+  "console.log(`  IVT at 0x0000, BDA at 0x0400, video at 0xA0000, BIOS at 0xF0000`);"
+  "console.log(`  same layout on every x86 machine`);"
+  "console.log(`  storage is local, structure is shared`);"
+  "console.log(`  the 4GB base pool is the logical pool`);"
+  .

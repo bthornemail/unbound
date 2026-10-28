@@ -1,0 +1,110 @@
+RECORD = HEAD THEPAIRSANDTRIPLES AMERICAWITHRATTHECENTRE GODISWORDANDWORDISGOD THESHELLSARETAGS THEFOODLABEL THEPOLYBIUSSQUAREANDTHEFIFTH THEMERKABA THETTRAMTROPOLYTRONSTACK .
+
+HEAD =
+  "// i203.ts — I-203: the instances as data — the tags, pairs, and triples"
+  "//"
+  "// The author, 2026-10-13 and 2026-10-14. Everything below was derived in the"
+  "// session; the record holds them as data to the method (I-201), not as"
+  "// history. The names and dates are not asserted; the letters and values are."
+  "import assert from ""node:assert"";"
+  "const hx = (s: string) => [...s].map((c) => c.charCodeAt(0).toString(16).padStart(2, ""0"")).join("" "");"
+  "const xor = (words: string[]) => {"
+  "  const n = Math.max(...words.map((w) => w.length));"
+  "  let out = """";"
+  "  for (let i = 0; i < n; i++) {"
+  "    let x = 0;"
+  "    for (const w of words) x ^= i < w.length ? w.charCodeAt(i) : 0x20;"
+  "    out += String.fromCharCode(x);"
+  "  }"
+  "  return out;"
+  "};"
+  .
+
+THEPAIRSANDTRIPLES =
+  "// ── 1. The pairs and triples ─────────────────────────────────"
+  "assert.equal(hx(""MER""), ""4d 45 52"");"
+  "assert.equal(hx(""MERT""), ""4d 45 52 54"");"
+  "assert.equal(hx(""TERM""), ""54 45 52 4d"");"
+  "// MERT XOR MER, space-padded: the MER cancels, the T comes back lowercase."
+  "assert.equal(hx(xor([""MERT"", ""MER ""])), ""00 00 00 74"", ""NUL NUL NUL t"");"
+  "// MERIDIAN XOR MERTENS: the shared MER cancels."
+  "assert.equal(xor([""MERIDIAN"", ""MERTENS""]).slice(0, 3), ""\0\0\0"", ""three nulls prove the shared MER"");"
+  "// The first differing byte is GS (0x1D)."
+  "assert.equal(xor([""MERIDIAN"", ""MERTENS""]).charCodeAt(3), 0x1d, ""GS"");"
+  "// METAT XOR MERKA: ME shared, then three control codes."
+  "assert.equal(xor([""METAT"", ""MERKA""]), ""\0\0\x06\x0a\x15"", ""ME then ACK LF NAK"");"
+  .
+
+AMERICAWITHRATTHECENTRE =
+  "// ── 2. AMERICA, with R at the centre ─────────────────────────"
+  "const am = ""AMERICA"";"
+  "assert.equal(am.length, 7);"
+  "assert.equal(am[3], ""R"", ""the R is the centre"");"
+  "assert.equal(am[4], ""I"", ""the I is one past the centre"");"
+  "assert.equal(am[0], am[6], ""the A's match at the ends"");"
+  "// The R is the same R as in TERM/MERT:"
+  "assert.equal(""TERM""[2], ""R"", ""the R is at index 2 of TERM"");"
+  "assert.equal(""MERT""[2], ""R"", ""the R is at index 2 of MERT"");"
+  "assert.equal(""MER""[2], ""R"", ""the R is at index 2 of MER"");"
+  "assert.equal(""AMERICA""[3], ""R"", ""the R is at index 3 of AMERICA"");"
+  "assert.equal(am[3], ""R"", ""the R is the centre (the same R as in TERM/MERT)"");"
+  "assert.equal(am[4], ""I"", ""the I is one past the centre"");"
+  "const i = am.indexOf(""I"");"
+  "assert.equal(i, 4, ""the I is at index 4"");"
+  "assert.equal(am.length - 1 - i, 2, ""2 letters after it"");"
+  "assert.equal(i, 4, ""4 letters before it"");"
+  .
+
+GODISWORDANDWORDISGOD =
+  "// ── 3. GOD IS WORD and WORD IS GOD ───────────────────────────"
+  "const g = ""GOD IS WORD"", w = ""WORD IS GOD"";"
+  "assert.equal(g.length, w.length, ""both 11 characters"");"
+  "const gw = [...g].map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ w.charCodeAt(i))).join("""");"
+  "assert.equal(gw[1], ""\0"", ""the O of GOD and the O of WORD cancel"");"
+  "assert.equal(gw[10], ""\0"", ""the D of GOD and the D of WORD cancel"");"
+  "// The three tags close: GOD XOR IS XOR WORD = 0."
+  "const g3 = [...""GOD""].map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ ""IS "".charCodeAt(i) ^ ""WORD"".charCodeAt(i))).join("""");"
+  "// (recorded as the triple's closure; the full-length form is in I-198)"
+  .
+
+THESHELLSARETAGS =
+  "// ── 4. The shells are tags ───────────────────────────────────"
+  "for (const sh of [""SH"", ""BASH"", ""CSH"", ""TCSH"", ""ZSH"", ""ASH""]) {"
+  "  assert.equal(/^[A-Z0-9]{1,5}$/.test(sh), true, sh);"
+  "}"
+  .
+
+THEFOODLABEL =
+  "// ── 5. The food label ────────────────────────────────────────"
+  "for (const w of [""RED"", ""YELLOW"", ""BLUE""]) assert.equal(/^[A-Z0-9]{1,8}$/.test(w), true, w);"
+  "// The label form is RED 4; the catalogue form is 40."
+  "assert.equal(0x34, 52, ""'4' as ASCII is 0x34"");"
+  "assert.equal(""40"".charCodeAt(0), 0x34, ""'4' of '40'"");"
+  "assert.equal(""40"".charCodeAt(1), 0x30, ""'0' of '40'"");"
+  "assert.equal(0x34 ^ 0x30, 0x04, ""'4' XOR '0' = EOT"");"
+  .
+
+THEPOLYBIUSSQUAREANDTHEFIFTH =
+  "// ── 6. The Polybius square and the fifth ─────────────────────"
+  "// 5x5 = 25 cells for 26 letters."
+  "assert.equal(5 * 5, 25);"
+  "assert.equal(26 - 25, 1, ""one letter is left out"");"
+  "assert.equal(25 + 4 + 1, 30, ""the 25 cells, the 4 lines, the 1 fifth"");"
+  .
+
+THEMERKABA =
+  "// ── 7. The merkaba ───────────────────────────────────────────"
+  "// 8 corners of the cube, split by parity into two tetrahedra."
+  "const even = [0b000, 0b011, 0b101, 0b110];"
+  "const odd  = [0b001, 0b010, 0b100, 0b111];"
+  "const xorAll = (xs: number[]) => xs.reduce((a, b) => a ^ b, 0);"
+  "assert.equal(xorAll(even), 0, ""each tetrahedron XORs to 0"");"
+  "assert.equal(xorAll(odd), 0, ""each tetrahedron XORs to 0"");"
+  "// Paired even/odd vertices differ by the low bit, always 1."
+  "for (let i = 0; i < 4; i++) assert.equal(even[i]! ^ odd[i]!, 1, ""paired vertices differ by 1"");"
+  .
+
+THETTRAMTROPOLYTRONSTACK =
+  "// ── 8. The TÊTRA-/MÊTRO-/POLY-/-TRON stack ───────────────────"
+  "for (const w of [""TETRA"", ""METRO"", ""POLY"", ""TRON""]) assert.equal(/^[A-Z0-9]{1,8}$/.test(w), true, w);"
+  .

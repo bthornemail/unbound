@@ -1,0 +1,15 @@
+#!/bin/rc
+# busybox.rc - inside Plan 9: compile the C tools the busybox ports need
+# (rev, svgswitch, fano, wilson, tetra) and run every port.
+rfork e
+w=/tmp/zy
+rm -rf $w
+mkdir -p $w/unbound $w/bin
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+cd $w/unbound/PLAN9/busybox
+for(c in rev svgswitch fano wilson tetra){
+	8c $c.c && 8l -o $w/bin/$c $c.8 || exit compile
+}
+bin=$w/bin
+for(t in CATID COMMUTE FANO FRAME GROW LIST NOFIX REV2 ROT2 TETRA TRUNC WILSON)
+	rc $t.rc >[2=1]

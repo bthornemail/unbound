@@ -1,0 +1,60 @@
+RECORD = HEAD THEMACHINEISX THETABLESFORGBBYARITHMETIC THETABLESFORGBMEASURED MBREALHOLDSTHEGB .
+
+HEAD =
+  "// i180.ts — I-180: x86 initializes a virtual 4 GB; 64 MB real holds it, and its tables are 8 MB"
+  "//"
+  "// The author, 2026-10-12: ""64MB has 4GB worth of virtual memory"", ""16 bits has"
+  "// 8MB""; asked what was meant, ""x86 initializes a virtual 4gb"", and yes, the 8 MB"
+  "// is the tables that map it. x86 addresses are 32 bits wide (2^32 bytes, 4 GB),"
+  "// the space is virtual (I-179), and the machine maps it in 4 KB pages through"
+  "// tables of 8-byte entries: one 4 KB table holds 512 entries and maps 2 MB, so"
+  "// the 4 GB takes 2048 tables, 8 MB. This check makes the kernel build every one"
+  "// of them, by touching one byte in each 2 MB, and reads their size back."
+  "import assert from ""node:assert"";"
+  "import * as os from ""node:os"";"
+  "import { readFileSync } from ""node:fs"";"
+  "const SPACE = 2 ** 32;           // 4 GB: the 32-bit address space"
+  "const PAGE = 4096;               // the page (getconf PAGESIZE)"
+  "const ENTRY = 8;                 // one table entry, in bytes"
+  "const SPAN = (PAGE / ENTRY) * PAGE; // what one table maps: 512 pages, 2 MB"
+  "const kB = (key: string) => Number(new RegExp(`^${key}:\\s+(\\d+) kB`, ""m"").exec(readFileSync(""/proc/self/status"", ""utf8""))![1]);"
+  .
+
+THEMACHINEISX =
+  "// ── 1. The machine is x86 ────────────────────────────────────"
+  "assert.ok(os.arch() === ""x64"" || os.arch() === ""ia32"", `measured on x86 (this is ${os.arch()})`);"
+  .
+
+THETABLESFORGBBYARITHMETIC =
+  "// ── 2. The tables for 4 GB, by arithmetic ────────────────────"
+  "assert.strictEqual(SPAN, 2 ** 21, ""one table maps 512 pages of 4 KB, 2 MB"");"
+  "assert.strictEqual(SPACE / SPAN, 2048, ""4 GB takes 2048 tables"");"
+  "assert.strictEqual((SPACE / PAGE) * ENTRY, 8 * 2 ** 20, ""2^20 pages of 8-byte entries: 8 MB"");"
+  "assert.strictEqual(SPACE / (8 * 2 ** 20), 512, ""4 GB over its 8 MB of tables: 512 to 1"");"
+  .
+
+THETABLESFORGBMEASURED =
+  "// ── 3. The tables for 4 GB, measured ─────────────────────────"
+  "const rss0 = kB(""VmRSS"");"
+  "const memory = new Uint8Array(SPACE);"
+  "const pte0 = kB(""VmPTE"");"
+  "for (let a = 0; a < SPACE; a += SPAN) memory[a] = 1; // one byte in each 2 MB: every table is built"
+  "const tables = kB(""VmPTE"") - pte0;"
+  "const grew = kB(""VmRSS"") - rss0;"
+  "assert.ok(tables >= 8192 && tables < 8192 + 64, `the tables grew by ${tables} kB: 8192 kB of last-level tables, and the few above them`);"
+  .
+
+MBREALHOLDSTHEGB =
+  "// ── 4. 64 MB real holds the 4 GB ─────────────────────────────"
+  "// Every 2 MB of the 4 GB is mapped, and resident memory grew by the touched"
+  "// pages (2048 x 4 KB, 8 MB), not by the space. Run under a 64 MB cap"
+  "// (systemd-run --user --scope -p MemoryMax=64M -p MemorySwapMax=0), this"
+  "// check holds; touching 128 MB under the same cap is killed."
+  "assert.ok(grew < 64 * 1024, `resident memory grew by ${(grew / 1024).toFixed(1)} MB, under 64 MB, with all 4 GB mapped`);"
+  "let seen = 0;"
+  "for (let a = PAGE; a < SPACE; a += SPAN) seen |= memory[a]!;"
+  "assert.strictEqual(seen, 0, ""the rest of each 2 MB still reads 0"");"
+  "console.log(""I-180: x86 initializes a virtual 4 GB; 64 MB real holds it, and its tables are 8 MB — passed"");"
+  "console.log(`  2048 tables of 4 KB map 2^32 bytes: ${tables} kB measured, 8192 kB by arithmetic`);"
+  "console.log(`  resident memory grew by ${(grew / 1024).toFixed(1)} MB`);"
+  .

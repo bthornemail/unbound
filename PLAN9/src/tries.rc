@@ -1,0 +1,33 @@
+#!/bin/rc
+# tries.rc - inside Plan 9: each ZIGUAROTH underscore folder's paths as a WSN
+# Patricia trie (ztrie), read by zwsn; zlazy asked that every leaf path is a
+# sentence and that a path not on disk is not.
+rfork e
+ifs='
+'
+w=/tmp/ztr
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(c in ztrie zwsn zlazy) { 8c $c.c && 8l -o $w/$c $c.8 || exit compile }
+fail=0
+for(f in `{cd $p/in/tries && ls}){
+	d=`{echo $f | sed 's/\.paths$//'}
+	name=`{echo $d | sed 's/[^A-Za-z]//g' | tr a-z A-Z}
+	$w/ztrie $name <$p/in/tries/$f >$w/zout/$d.wsn || exit ztrie
+	$w/zwsn $w/zout/$d.wsn | sed 's,^'$w'/zout/,,'
+	# every leaf: a path that is not a prefix of another path
+	n=0
+	for(l in `{cat $p/in/tries/$f}){
+		if(! grep -s '^'^$l^'/' $p/in/tries/$f){
+			if(! $w/zlazy $w/zout/$d.wsn $name $l >/dev/null){ echo tries.rc: $d: $l is not a sentence; fail=1 }
+			n=`{echo $n + 1 | hoc}
+		}
+	}
+	if($w/zlazy $w/zout/$d.wsn $name 'NOT/ON/DISK' >/dev/null){ echo tries.rc: $d accepts a path not on disk; fail=1 }
+	echo tries.rc: $d: $n leaves, each a sentence
+}
+@{cd $w && tar cf /dev/sd02/data zout} || exit tar
+if(~ $fail 0) echo 'tries.rc: every leaf of every folder is a sentence of its trie, and NOT/ON/DISK is none'

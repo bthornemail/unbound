@@ -1,0 +1,133 @@
+RECORD = HEAD THENODESPACE THEGLOBALSPACE THETHREEPROMPTEXPONENTS THEUNICODECODEPOINTMAXISBITS THEFOLDKKK ROOTISCLOSERTO THEANDPROMPTSEMANTICS THESPACEANDITSRELATIONTOTHEPROMPTSPACE THEFOLDSINEACH THESUPERUSERUSERASYMMETRY .
+
+HEAD =
+  "// i143.ts — I-143: prompt sigils as the two privilege frames"
+  "import assert from ""node:assert"";"
+  .
+
+THENODESPACE =
+  "// ── 1. The node space 65536 = 2^16 ──────────────────────────────"
+  "const NODE = 65536n;"
+  "assert.strictEqual(NODE, 2n ** 16n, ""node = 2^16"");"
+  "assert.strictEqual(NODE, 16n ** 4n,  ""node = 16^4"");"
+  .
+
+THEGLOBALSPACE =
+  "// ── 2. The global space 65536^4 = 2^64 ──────────────────────────"
+  "const GLOBAL = NODE ** 4n;"
+  "assert.strictEqual(GLOBAL, 2n ** 64n, ""global = 2^64"");"
+  "assert.strictEqual(GLOBAL, 16n ** 16n, ""global = 16^16"");"
+  .
+
+THETHREEPROMPTEXPONENTS =
+  "// ── 3. The three prompt exponents ───────────────────────────────"
+  "const rootExp   = 19n;"
+  "const midExp    = 20n;"
+  "const userExp   = 21n;"
+  "const root = 16n ** rootExp;"
+  "const mid  = 16n ** midExp;"
+  "const user = 16n ** userExp;"
+  "assert.strictEqual(root, 2n ** 76n, ""16^19 = 2^76"");"
+  "assert.strictEqual(mid,  2n ** 80n, ""16^20 = 2^80"");"
+  "assert.strictEqual(user, 2n ** 84n, ""16^21 = 2^84"");"
+  "// spacing: 16x each step"
+  "assert.strictEqual(mid / root, 16n, ""16^20 / 16^19 = 16"");"
+  "assert.strictEqual(user / mid, 16n, ""16^21 / 16^20 = 16"");"
+  "assert.strictEqual(user / root, 256n, ""16^21 / 16^19 = 256 = 16^2"");"
+  .
+
+THEUNICODECODEPOINTMAXISBITS =
+  "// ── 4. The Unicode codepoint max is 21 bits ─────────────────────"
+  "const UNICODE_MAX = 0x10FFFFn;"
+  "const unicodeBits = UNICODE_MAX.toString(2).length;"
+  "assert.strictEqual(unicodeBits, 21, ""0x10FFFF is 21 bits"");"
+  "assert.strictEqual(UNICODE_MAX, 1114111n, ""0x10FFFF = 1114111"");"
+  "// the 21 matches the user exponent"
+  "assert.strictEqual(unicodeBits, Number(userExp), ""Unicode max = user exponent"");"
+  .
+
+THEFOLDKKK =
+  "// ── 5. The fold 10^k -> 16^k = 2^(4k) ──────────────────────────"
+  "function foldTo16(k: number): bigint {"
+  "  return 16n ** BigInt(k);"
+  "}"
+  "function foldTo2(k: number): bigint {"
+  "  return 2n ** BigInt(4 * k);"
+  "}"
+  "for (let k = 0; k <= 20; k++) {"
+  "  assert.strictEqual(foldTo16(k), foldTo2(k), `16^${k} = 2^${4*k}`);"
+  "}"
+  "// the fold is 10 -> 16 (decimal digit count -> hex digit count)"
+  "assert.strictEqual(foldTo16(20), 2n ** 80n, ""16^20 = 2^80"");"
+  .
+
+ROOTISCLOSERTO =
+  "// ── 6. Root is closer to 0 ──────────────────────────────────────"
+  "// root (16^19) is the smallest, closest to the catch-at-0"
+  "assert.ok(root < mid && mid < user, ""root < mid < user"");"
+  "// the catch-at-0 is at index 0 (I-136)"
+  "const catchAt = 0n;"
+  "assert.ok(catchAt < root, ""catch is below root"");"
+  "// so root is the outer frame, user is the inner frame"
+  "const outerFrame = root;"
+  "const innerFrame = user;"
+  "assert.strictEqual(outerFrame, 2n ** 76n, ""outer = root = 2^76"");"
+  "assert.strictEqual(innerFrame, 2n ** 84n, ""inner = user = 2^84"");"
+  .
+
+THEANDPROMPTSEMANTICS =
+  "// ── 7. The # and $ prompt semantics ────────────────────────────"
+  "const prompts = {"
+  "  ""#"": { name: ""root"",      exp: 19n, bits: 76n },"
+  "  ""$"": { name: ""user"",      exp: 21n, bits: 84n },"
+  "};"
+  "assert.strictEqual(prompts[""#""].name, ""root"");"
+  "assert.strictEqual(prompts[""$""].name, ""user"");"
+  "assert.strictEqual(prompts[""#""].bits, 76n);"
+  "assert.strictEqual(prompts[""$""].bits, 84n);"
+  "// the offset between them is 2 exponents = 8 bits"
+  "assert.strictEqual(prompts[""$""].bits - prompts[""#""].bits, 8n, ""offset = 8 bits"");"
+  .
+
+THESPACEANDITSRELATIONTOTHEPROMPTSPACE =
+  "// ── 8. The 65536^4 space and its relation to the prompt space ──"
+  "// 65536^4 = 16^16 = 2^64"
+  "assert.strictEqual(GLOBAL, 16n ** 16n, ""global = 16^16"");"
+  "// the prompt exponents (19, 20, 21) are above 16"
+  "assert.ok(rootExp > 16n, ""root exp > 16 (global exp)"");"
+  "assert.ok(userExp > 16n, ""user exp > 16"");"
+  "// so the prompts are ""above"" the 64-bit global space"
+  "const promptOffset = rootExp - 16n;"
+  "assert.strictEqual(promptOffset, 3n, ""root is 3 exponents above global"");"
+  .
+
+THEFOLDSINEACH =
+  "// ── 9. The 10-folds-16 in each ──────────────────────────────────"
+  "// Each exponent level folds 10 decimal digits to 16 hex digits."
+  "// The fold count: 20 levels from 10^0 to 10^20 -> 16^0 to 16^20."
+  "const folds = 20;"
+  "assert.strictEqual(folds, 20, ""20 folds"");"
+  "// after 20 folds, we reach 16^20"
+  "assert.strictEqual(16n ** BigInt(folds), 2n ** 80n, ""20 folds -> 2^80"");"
+  .
+
+THESUPERUSERUSERASYMMETRY =
+  "// ── 10. The superuser/user asymmetry ────────────────────────────"
+  "// Root (#) is at 16^19, user ($) is at 16^21."
+  "// Root is closer to 0 (the catch). User is deeper."
+  "// That's the privilege asymmetry: root has the shortest reach to closure."
+  "const distanceToCatch = {"
+  "  root: root,"
+  "  user: user,"
+  "};"
+  "assert.ok(distanceToCatch.root < distanceToCatch.user,"
+  "  ""root is closer to 0 than user"");"
+  "// ratio: user is 256x further from the catch than root"
+  "assert.strictEqual(distanceToCatch.user / distanceToCatch.root, 256n,"
+  "  ""user is 256x further from the catch"");"
+  "console.log(""I-143: prompt sigils as two privilege frames — passed"");"
+  "console.log(""  # = 16^19 = 2^76  (root, closer to 0)"");"
+  "console.log(""  $ = 16^21 = 2^84  (user, deeper)"");"
+  "console.log(""  mid = 16^20 = 2^80 (the middle exponent)"");"
+  "console.log(""  Unicode max 0x10FFFF = 21 bits = user exponent"");"
+  .

@@ -1,0 +1,82 @@
+RECORD = HEAD THEPALETTEISTHECUBE THEMODESCLIMB THECAPACITYREPRODUCEDFROMTABLE SECTION .
+
+HEAD =
+  "// i224.ts — I-224: JabCode — the palette is the cube, the modes climb 2 → 8 → 256, and one symbol holds 65,536"
+  "//"
+  "// The author, 2026-10-14: ""a code that was missing, which can be only one if we"
+  "// need it, is the JABcode, and really that would be the best single one""; ""the"
+  "// JabCode can hold a full 65,536 resolution""; ""they are telling us about super"
+  "// user mode, but we have to look for the principle, not the words"". From the"
+  "// specification in omi-files/omi-tetragrammatron/dev-docs/archive"
+  "// (BSI TR-03137, JAB Code): Table 3 (the 8-colour palette), Table 5 (the colour"
+  "// modes), §3.4.1.1 (the mode field in two colours, the metadata in eight),"
+  "// §3.4.4 (the reserved modules), Table 1 and §4.4.1 (the capacity). The values"
+  "// below are asserted; the readings are the author's."
+  "import assert from ""node:assert"";"
+  .
+
+THEPALETTEISTHECUBE =
+  "// ── 1. The palette is the cube ───────────────────────────────"
+  "// Table 3: index 0..7 = Black Blue Green Cyan Red Magenta Yellow White, in RGB bit order."
+  "const PALETTE = [""Black"", ""Blue"", ""Green"", ""Cyan"", ""Red"", ""Magenta"", ""Yellow"", ""White""];"
+  "const rgb = (i: number) => [(i >> 2) & 1, (i >> 1) & 1, i & 1];"
+  "assert.deepEqual(rgb(4), [1, 0, 0], ""Red is 100""); assert.deepEqual(rgb(3), [0, 1, 1], ""Cyan is 011""); assert.deepEqual(rgb(6), [1, 1, 0], ""Yellow is 110"");"
+  "// the seven colour mixes that close to Black are the Fano lines"
+  "const lines: string[][] = [];"
+  "for (let a = 1; a < 8; a++) for (let b = a + 1; b < 8; b++) if ((a ^ b) > b) lines.push([a, b, a ^ b].map((i) => PALETTE[i]!));"
+  "assert.equal(lines.length, 7, ""seven lines, each a XOR b XOR c = Black"");"
+  "assert.ok(lines.some((l) => l.join() === ""Green,Red,Yellow"") && lines.some((l) => l.join() === ""Cyan,Magenta,Yellow""), ""Red + Green = Yellow; Cyan + Magenta + Yellow = Black"");"
+  "// the two tetrahedra of the alternation (I-222) are the two colour families"
+  "const even = [0, 3, 5, 6], parity = (i: number) => (i ^ (i >> 1) ^ (i >> 2)) & 1;"
+  "assert.deepEqual([...Array(8).keys()].filter((i) => parity(i) === 0), even);"
+  "assert.deepEqual(even.map((i) => PALETTE[i]), [""Black"", ""Cyan"", ""Magenta"", ""Yellow""], ""even: Black and the subtractive primaries"");"
+  "assert.deepEqual([1, 2, 4, 7].map((i) => PALETTE[i]), [""Blue"", ""Green"", ""Red"", ""White""], ""odd: the additive primaries and White"");"
+  "// §3.4.1.1: the mode field is two colours, Black/White (Blue/Yellow in mode 1): complements"
+  "assert.equal(0 ^ 7, 7); assert.equal(1 ^ 6, 7, ""Blue XOR Yellow = White: each two-colour pair is a complement"");"
+  .
+
+THEMODESCLIMB =
+  "// ── 2. The modes climb: 2 → 8 → 256 ──────────────────────────"
+  "// Table 5: Nc, 3 bits; mode m has 2^(m+1) colours, mode 0 reserved."
+  "const colours = (m: number) => 2 ** (m + 1);"
+  "assert.deepEqual([1, 2, 3, 4, 5, 6, 7].map(colours), [4, 8, 16, 32, 64, 128, 256]);"
+  "const bitsPerModule = (n: number) => Math.log2(n);"
+  "// Nc is read in two colours, the rest of the metadata in the first eight, the data in all of them:"
+  "assert.deepEqual([2, 8, colours(7)].map(bitsPerModule), [1, 3, 8], ""1 bit, then 3, then 8 per module: every mode is reached through the lower ones"");"
+  "assert.equal(3 * bitsPerModule(2), 3, ""the 3 bits of Nc take 3 two-colour modules"");"
+  "// §3.4.4: reserved, at most 80 metadata modules (two colours) and 128 for the two palettes, 208 in a primary symbol"
+  "assert.equal(80 + 128, 208); assert.equal(Math.min(64, 256) * 2, 128, ""two embedded palettes of at most 64 colours"");"
+  .
+
+THECAPACITYREPRODUCEDFROMTABLE =
+  "// ── 3. The capacity, reproduced from Table 1 ─────────────────"
+  "// Default level (wc = 4, wr = 7): K = C·wc/wr check bits, Pn = C − K. The table follows the ceiling;"
+  "// §4.4.1 writes the floor, which puts every row one bit over."
+  "const net = (modules: number, n: number, round: (x: number) => number) => { const C = modules * bitsPerModule(n); return C - round((C * 4) / 7); };"
+  "const TABLE1 = [ // side 145: data modules and Pn, primary and secondary, at 4 and 8 colours"
+  "  { modules: 20940, n: 4, pn: 17948 }, { modules: 20942, n: 8, pn: 26925 },"
+  "  { modules: 21007, n: 4, pn: 18006 }, { modules: 21000, n: 8, pn: 27000 },"
+  "];"
+  "for (const r of TABLE1) {"
+  "  assert.equal(net(r.modules, r.n, Math.ceil), r.pn, `${r.modules} modules at ${r.n} colours: ${r.pn} bits`);"
+  "  if (net(r.modules, r.n, Math.floor) !== r.pn) assert.equal(net(r.modules, r.n, Math.floor), r.pn + 1, ""the floor of §4.4.1 gives one bit more"");"
+  "}"
+  "assert.equal(145 * 145, 21025, ""the largest symbol, Side-Version 32: 145 × 145 modules"");"
+  .
+
+SECTION =
+  "// ── 4. 65,536 ────────────────────────────────────────────────"
+  "const FULL = 2 ** 16;"
+  "assert.ok(26925 < FULL && 26925 + 27000 < FULL, ""at 8 colours one primary, or a primary and one docked secondary, holds less"");"
+  "assert.ok(26925 + 2 * 27000 >= FULL, ""a primary and two docked secondaries hold it: 80,925 bits"");"
+  "// at 256 colours the palettes take 128 modules where 8 colours took 16; the metadata stays in eight colours"
+  "const modules256 = 20942 - (128 - 16);"
+  "assert.equal(modules256, 20830);"
+  "assert.equal(net(modules256, 256, Math.ceil), 71417, ""one 145 × 145 primary at 256 colours: 71,417 bits"");"
+  "assert.ok(net(modules256, 256, Math.ceil) >= FULL, ""one symbol holds the full 65,536 (the pair mask, one bit a pair)"");"
+  "assert.ok(FULL > 21025 * 3, ""and only by colour: 65,536 bits are more than 21,025 modules carry at 8 colours raw"");"
+  "console.log(""I-224: JabCode — the palette is the cube, the modes climb 2 → 8 → 256, and one symbol holds 65,536 — passed"");"
+  "console.log(""  Table 3: index = RGB bits; the seven mixes closing to Black are the Fano lines; even Black Cyan Magenta Yellow, odd Blue Green Red White"");"
+  "console.log(""  Nc in 2 colours, metadata in 8, data up to 256: 1, 3, 8 bits a module, each mode through the lower"");"
+  "console.log(""  Table 1 reproduced (with the ceiling); 65,536 bits: three docked symbols at 8 colours, or one at 256 (71,417)"");"
+  .

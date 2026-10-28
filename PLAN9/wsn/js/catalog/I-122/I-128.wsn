@@ -1,0 +1,21 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-128: prompt characters + Atomics cycle"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-128"", ""prompt characters + Atomics cycle + mod-12 orbits"", () => {"
+  "  const prompt = ""main@TOSHIBA-PORTEGE-Z30t-C:~/Programs/boxedPINE/src$ "";"
+  "  const buf = Buffer.alloc(256);"
+  "  Buffer.from(prompt).copy(buf, 0);"
+  "  const view = new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);"
+  "  const IA = 10, IB = 20, IC = 30;"
+  "  const bA = buf[IA], bB = buf[IB], bC = buf[IC];"
+  "  Atomics.compareExchange(view, IA, bA, bB);"
+  "  Atomics.compareExchange(view, IB, bB, bC);"
+  "  Atomics.compareExchange(view, IC, bC, bA);"
+  "  assert.strictEqual(buf[IA], bB);"
+  "  assert.strictEqual(buf[IB], bC);"
+  "  assert.strictEqual(buf[IC], bA);"
+  "}, ""catch-at-0"");"
+  .

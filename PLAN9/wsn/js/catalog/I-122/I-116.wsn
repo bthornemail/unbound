@@ -1,0 +1,17 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-116: index 60 pinned; 0,2,1 interchange"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-116"", ""index 60 pinned; 0,2,1 interchange"", () => {"
+  "  const buf = new Int32Array(128);"
+  "  buf[60] = 60;"
+  "  const prev = Atomics.compareExchange(buf, 60, 60, 60);"
+  "  assert.strictEqual(prev, 60);"
+  "  const readNibble = (b: number, high: boolean) => high ? (b >> 4) & 0xF : b & 0xF;"
+  "  assert.strictEqual(readNibble(0x1F, false), 0xF);"
+  "  assert.strictEqual(readNibble(0x1F, true), 0x1);"
+  "  assert.notDeepStrictEqual([0, 2, 1], [0, 1, 2]);"
+  "}, ""catch-at-0"");"
+  .

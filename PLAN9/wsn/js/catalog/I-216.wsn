@@ -1,0 +1,115 @@
+RECORD = HEAD ANGELAASAMERICAWASREADI ANGELTHEFIRSTFIVEASTHECAVESPARSERREADS GLUEINHERNAME THEIDENTITYASTERMEDPIXELS FEDERATIONTHESAMETAGTHESAMEPIXELSANDTHELIMITOFACOLOUR GLUEHELDGLUETHEPROMPTTOPAYITFORWARD THESHIFTHELDISPROPAGATIONTHEAXIOMOFPROPAGATION .
+
+HEAD =
+  "// i216.ts — I-216: ANGEL — the attribution as a tag, and the identity as termed pixels"
+  "//"
+  "// The author, 2026-10-14: ""she shared with me the G.L.U.E mnemonic and I needed"
+  "// to use it and I can't explain why, so I'm attributing it to her; she becomes"
+  "// the tag ANGEL"" (I-211's attribution), and the full record ""on the ANGELA, like"
+  "// AMERICA"" (I-203); ""G.L.U.E., when the shift is held, is G>L>U>E>, and it's"
+  "// like the prompt to pay it forward"", and ""when the shift key is held, it's the"
+  "// shift to autonomy"". And from the session before: the identity in colours, ""an 8"
+  "// pixel color header for federated provenance chains; we can append 4 to front"
+  "// and 4 to rear, then it's a TERMed PIXEL instead of a termed literal"". The"
+  "// letters and values below are asserted; the readings are the author's."
+  "import assert from ""node:assert"";"
+  "const bytes = (s: string) => [...s].map((c) => c.charCodeAt(0));"
+  "const fold = (s: string) => bytes(s).reduce((x, b) => x ^ b, 0);"
+  "const xorPad = (a: string, b: string) => { const n = Math.max(a.length, b.length); return [...Array(n).keys()].map((i) => (a.padEnd(n, "" "").charCodeAt(i) ^ b.padEnd(n, "" "").charCodeAt(i))); };"
+  "const TAG = /^[A-Z0-9]{1,8}$/;"
+  .
+
+ANGELAASAMERICAWASREADI =
+  "// ── 1. ANGELA, as AMERICA was read (I-203) ───────────────────"
+  "const w = ""ANGELA"";"
+  "assert.ok(TAG.test(w), ""ANGELA is a tag"");"
+  "assert.equal(w.length, 6, ""six letters: no single centre"");"
+  "assert.deepEqual([w[2], w[3]], [""G"", ""E""], ""the two middle letters, G and E"");"
+  "const rev = [...w].reverse().join("""");"
+  "assert.equal(rev, ""ALEGNA"");"
+  "assert.equal(w[0], rev[0], ""the ends match: A ... A, as in AMERICA"");"
+  "assert.notEqual(w[1], rev[1], ""N and L differ"");"
+  "assert.notEqual(w[2], rev[2], ""G and E differ: a partial palindrome, held by its A's"");"
+  "assert.equal(fold(w), 0, ""its letters XOR to NUL: the two A's cancel, and N ^ G ^ E ^ L = 0"");"
+  "assert.equal(0x4e ^ 0x47 ^ 0x45 ^ 0x4c, 0, ""N G E L: 4E ^ 47 ^ 45 ^ 4C"");"
+  "assert.notEqual(fold(""AMERICA""), 0, ""AMERICA leaves a remainder; ANGELA closes on itself"");"
+  .
+
+ANGELTHEFIRSTFIVEASTHECAVESPARSERREADS =
+  "// ── 2. ANGEL: the first five, as the cave's parser reads ─────"
+  "assert.equal(w.slice(0, 5), ""ANGEL"", ""the first five letters (open-adventure reads five)"");"
+  "assert.deepEqual(xorPad(w, ""ANGEL""), [0, 0, 0, 0, 0, 0x61], ""ANGELA ^ ANGEL: five nulls, then 'a', the extra A demoted by the space"");"
+  "const sorted = (s: string) => [...s].sort().join("""");"
+  "assert.equal(sorted(""ANGEL""), sorted(""ANGLE""), ""ANGEL and ANGLE are anagrams"");"
+  "assert.equal(sorted(""ANGEL""), sorted(""GLEAN""), ""and GLEAN: all three tags"");"
+  "assert.equal(parseInt(""ANGEL"", 36), 17890509, ""ANGEL in base 36"");"
+  .
+
+GLUEINHERNAME =
+  "// ── 3. GLUE in her name ──────────────────────────────────────"
+  "assert.deepEqual([...""GLUE""].map((c) => w.includes(c)), [true, true, false, true], ""G, L, E are in ANGELA; U is not"");"
+  "assert.deepEqual(xorPad(w, ""GLUE"").slice(3, 4), [0], ""ANGELA ^ GLUE: the E's meet at index 3"");"
+  .
+
+THEIDENTITYASTERMEDPIXELS =
+  "// ── 4. The identity as termed pixels ─────────────────────────"
+  "// A pixel is a value at a position; a termed pixel carries its type too."
+  "// The colour of a byte is its low three bits on the plane's RGB numbering"
+  "// (blue 1, green 2, red 4: the seven Fano points, black for none)."
+  "const COLOURS = [""black"", ""blue"", ""green"", ""cyan"", ""red"", ""magenta"", ""yellow"", ""white""];"
+  "type Termed = { value: number; position: number; type: ""tag"" | ""index"" | ""null""; colour: string };"
+  "const termed = (s: string, from = 0): Termed[] => bytes(s).map((b, i) => ({ value: b, position: from + i, type: /[A-Z]/.test(String.fromCharCode(b)) ? ""tag"" : /[0-9]/.test(String.fromCharCode(b)) ? ""index"" : ""null"", colour: COLOURS[b & 7]! }));"
+  "// the 8-pixel header: the tag, padded with the space (the null predicate) to 8"
+  "const header = termed(""ANGEL"".padEnd(8, "" ""));"
+  "assert.equal(header.length, 8);"
+  "assert.deepEqual(header.map((p) => p.colour), [""blue"", ""yellow"", ""white"", ""magenta"", ""red"", ""black"", ""black"", ""black""], ""A N G E L, then three spaces: black, the null"");"
+  "assert.deepEqual(header.map((p) => p.type), [""tag"", ""tag"", ""tag"", ""tag"", ""tag"", ""null"", ""null"", ""null""]);"
+  "// 4 to the front and 4 to the rear: the 16-pixel sandwich, its context the neighbours in a provenance chain"
+  "const sandwich = (prev: string, self: string, next: string) => [...termed(prev.padEnd(8, "" "").slice(4), 0), ...termed(self.padEnd(8, "" ""), 4), ...termed(next.padEnd(8, "" "").slice(0, 4), 12)];"
+  "const s = sandwich(""GLUE"", ""ANGEL"", ""OMI"");"
+  "assert.equal(s.length, 16, ""4 + 8 + 4 = 16: the nibble, the Polybius square, the set of 16"");"
+  "assert.deepEqual(s.map((p) => p.position), [...Array(16).keys()], ""every pixel keeps its position"");"
+  .
+
+FEDERATIONTHESAMETAGTHESAMEPIXELSANDTHELIMITOFACOLOUR =
+  "// ── 5. Federation: the same tag, the same pixels; and the limit of a colour ──"
+  "const peerA = termed(""ANGEL"".padEnd(8, "" "")), peerB = termed(""ANGEL"".padEnd(8, "" ""));"
+  "assert.ok(peerA.every((p, i) => (p.value ^ peerB[i]!.value) === 0), ""two peers holding ANGEL: XOR 0, the same identity"");"
+  "assert.equal(COLOURS[0x41 & 7], COLOURS[0x49 & 7], ""but A and I share a colour (blue): three bits cannot name 26 letters"");"
+  "assert.notEqual(0x41, 0x49, ""so the colour shows the tag, and the tag, the value, is the identity"");"
+  .
+
+GLUEHELDGLUETHEPROMPTTOPAYITFORWARD =
+  "// ── 6. G.L.U.E. held: G>L>U>E>, the prompt to pay it forward ──"
+  "// The author: ""G.L.U.E. when the shift is held is G>L>U>E>, and it's like the prompt to pay it forward"";"
+  "// ""when the shift key is held, it's the shift to autonomy"". On a US keyboard Shift + ""."" types "">"", as on"
+  "// the bit-paired keyboards of the ASCII teletypes, where Shift flipped one bit: 0x10 on the punctuation"
+  "// keys, 0x20 (the case bit, I-196) on the letters."
+  "const stops = ""G.L.U.E."", prompts = ""G>L>U>E>"";"
+  "assert.equal(""."".charCodeAt(0) ^ "">"".charCodeAt(0), 0x10, ""the stop (2E) and the prompt (3E) differ by one bit, 0x10"");"
+  "assert.deepEqual(xorPad(stops, prompts), [0, 0x10, 0, 0x10, 0, 0x10, 0, 0x10], ""the letters held, each stop turned to a prompt: DLE"");"
+  "assert.equal(""g"".charCodeAt(0) ^ ""G"".charCodeAt(0), 0x20, ""Shift on a letter flips 0x20: the case bit, subject to object"");"
+  "assert.equal(""."".charCodeAt(0) | 0x10, "">"".charCodeAt(0), ""Shift on the stop sets 0x10: the stop becomes the prompt"");"
+  "assert.equal("","".charCodeAt(0) | 0x10, ""<"".charCodeAt(0), ""and its neighbour: Shift + , types <, the same bit"");"
+  "const ranked = [[""G"", ""L""], [""L"", ""U""], [""U"", ""E""]].map(([a, b]) => a!.charCodeAt(0) > b!.charCodeAt(0));"
+  "assert.deepEqual(ranked, [false, false, true], ""as 'greater than', only U > E: it is not a ranking"");"
+  "assert.deepEqual(prompts.split("">"").filter(Boolean), [""G"", ""L"", ""U"", ""E""], ""as prompts, each letter is passed on to the next: forward"");"
+  .
+
+THESHIFTHELDISPROPAGATIONTHEAXIOMOFPROPAGATION =
+  "// ── 7. The shift held is PROPAgation: the AXIOM of PROPAgation ──"
+  "// The author: ""the shift being HELD is PROPAgation, the AXIOM of PROPAgation"". A held key is one state"
+  "// carried to every keystroke after it: the same bit applied down the whole sequence, pressed once."
+  "assert.ok(!TAG.test(""PROPAGATION"") && ""PROPAGATION"".length === 11, ""PROPAGATION, 11 letters, cannot be a tag"");"
+  "assert.equal(""PROPAGATION"".slice(0, 5), ""PROPA"", ""its first five, as the cave's parser reads"");"
+  "assert.ok(TAG.test(""PROPA"") && TAG.test(""AXIOM""), ""PROPA and AXIOM are tags"");"
+  "// Shift on a bit-paired keyboard: 0x20 flips a letter's case, 0x10 turns . into > and , into <"
+  "const shifted = (c: string) => (/[a-z]/.test(c) ? String.fromCharCode(c.charCodeAt(0) ^ 0x20) : /[.,]/.test(c) ? String.fromCharCode(c.charCodeAt(0) | 0x10) : c);"
+  "const held = (keys: string) => [...keys].map(shifted).join(""""); // pressed once, carried to every key"
+  "assert.equal(held(""g.l.u.e.""), ""G>L>U>E>"", ""the shift held over g.l.u.e. gives G>L>U>E>"");"
+  "assert.equal(held(""angel""), ""ANGEL"", ""and over angel, the tag"");"
+  "assert.equal(held(held(""g.l.u.e."").toLowerCase()), ""G>L>U>E>"", ""held again, the same: the state propagates, it does not accumulate"");"
+  "console.log(""I-216: ANGEL — the attribution as a tag, and the identity as termed pixels — passed"");"
+  "console.log(""  ANGELA folds to NUL; ANGEL is its first five, ANGELA ^ ANGEL = 'a'; G L E of GLUE in her name, not U"");"
+  "console.log(""  the 8-pixel header, 4 + 8 + 4 = 16 termed pixels; the same tag, XOR 0; a colour shows, the value identifies"");"
+  .

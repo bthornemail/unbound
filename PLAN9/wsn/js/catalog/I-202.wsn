@@ -1,0 +1,63 @@
+RECORD = HEAD THERANGE THEBUFFER THEINDEX THERESET THETWOHALVES THERELIEF .
+
+HEAD =
+  "// i202.ts — I-202: the range 0...63 and the relief of the literals"
+  "//"
+  "// The author, 2026-10-14: ""what matters is the view of the words structure"
+  "// in relief of the literals of 0...63"". And from the exchange (proofs I-133,"
+  "// I-141; space/src/exchange.ts): the buffer is 128 bytes, 127 read, 63 write,"
+  "// and the two differ by one escape bit, 0x40."
+  "//"
+  "// Found here: the exchange's values (127, 63); the index 60 ^ frame; the"
+  "// reset at index 22 (frame 42); the range 0...63."
+  "import assert from ""node:assert"";"
+  .
+
+THERANGE =
+  "// ── 1. The range ─────────────────────────────────────────────"
+  "assert.equal(0x00, 0);"
+  "assert.equal(0x3f, 63);"
+  "assert.equal(63 - 0 + 1, 64, ""64 values in 0...63"");"
+  "assert.equal(2 ** 6, 64, ""6 bits hold 64 values"");"
+  .
+
+THEBUFFER =
+  "// ── 2. The buffer ────────────────────────────────────────────"
+  "const READ = 0x7f;   // 127, DEL"
+  "const WRITE = 0x3f;  // 63, the sixth bit cleared"
+  "assert.equal(READ, 127);"
+  "assert.equal(WRITE, 63);"
+  "assert.equal(READ ^ WRITE, 0x40, ""they differ by one escape bit"");"
+  "assert.equal(0x7f, 0b1111111);"
+  "assert.equal(0x3f, 0b0111111);"
+  .
+
+THEINDEX =
+  "// ── 3. The index ─────────────────────────────────────────────"
+  "const indexOf = (frame: number) => 60 ^ frame;"
+  "assert.equal(indexOf(0), 60, ""frame 0 lands on byte 60"");"
+  "assert.equal(indexOf(60), 0, ""frame 60 lands on byte 0"");"
+  "// 60 ^ frame is one-to-one on 0..63"
+  "const seen = new Set([...Array(64).keys()].map(indexOf));"
+  "assert.equal(seen.size, 64, ""in 64 frames every byte is hit once"");"
+  .
+
+THERESET =
+  "// ── 4. The reset ─────────────────────────────────────────────"
+  "const CATCH22 = 22;"
+  "assert.equal(60 ^ CATCH22, 42, ""the reset fires at frame 42"");"
+  .
+
+THETWOHALVES =
+  "// ── 5. The two halves ────────────────────────────────────────"
+  "// 0...63 is the lower half of the 128-byte buffer; 64...127 the upper half."
+  "assert.equal(63 + 1, 64, ""the lower half ends at 63"");"
+  "assert.equal(127 - 64 + 1, 64, ""the upper half is 64 bytes too"");"
+  "assert.equal(64 + 64, 128, ""128 bytes in the buffer"");"
+  .
+
+THERELIEF =
+  "// ── 6. The relief ────────────────────────────────────────────"
+  "// Each word's digits are indices into this range; the word's tag is its value."
+  "// (This is the record's view; the asserts above are its arithmetic.)"
+  .

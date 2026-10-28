@@ -1,0 +1,18 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-147: gap as constant tag; beep content-specific"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-147"", ""gap as constant tag; beep content-specific for base-36"", () => {"
+  "  const gap: number[] = [];"
+  "  for (let c = 0x3A; c <= 0x40; c++) gap.push(c);"
+  "  for (const c of gap) {"
+  "    assert.ok(!BLOCK.includes(String.fromCharCode(c)));"
+  "  }"
+  "  for (const c of ""0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"") {"
+  "    assert.ok(BLOCK.includes(c));"
+  "  }"
+  "  assert.strictEqual(gap.length, 7);"
+  "}, ""point/line/duality"");"
+  .

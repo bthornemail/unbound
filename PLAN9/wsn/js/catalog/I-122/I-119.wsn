@@ -1,0 +1,17 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-119: globalThis node; base-36 overlay"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-119"", ""globalThis node; base-36 overlay"", () => {"
+  "  assert.strictEqual(typeof globalThis, ""object"");"
+  "  assert.strictEqual(globalThis, globalThis.globalThis);"
+  "  const A = (c: number) => 0x41 <= c && c <= 0x5A;"
+  "  const D = (c: number) => 0x30 <= c && c <= 0x39;"
+  "  const is36 = (c: number) => A(c) || D(c);"
+  "  let count = 0;"
+  "  for (let c = 0; c < 128; c++) if (is36(c)) count++;"
+  "  assert.strictEqual(count, 36);"
+  "}, ""point/line/duality"");"
+  .

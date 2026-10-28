@@ -1,0 +1,39 @@
+GAUGETABLE = CHECKED .
+
+CHECKED = COQ SCOPE GAUGETABLEOWNER GAUGETABLEPROOF GAUGETABLESLOT GAUGETABLEWITNESS GAUGETABLESLOTFULLNIBBLE GAUGETABLEWITNESSISTWENTYFOUR .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+GAUGETABLEOWNER =
+  "Definition gauge_table05_owner : Prop := True."
+  .
+
+GAUGETABLEPROOF =
+  "Definition gauge_table05_proof : gauge_table05_owner := I."
+  .
+
+GAUGETABLESLOT =
+  "Definition gauge_table05_slot (x : N) : N := N.land x 0x0F."
+  .
+
+GAUGETABLEWITNESS =
+  "Definition gauge_table05_witness : N := 0x18."
+  .
+
+GAUGETABLESLOTFULLNIBBLE =
+  "Theorem gauge_table05_slot_full_nibble :"
+  "  gauge_table05_slot 0xFF = 0x0F."
+  "Proof. vm_compute; reflexivity. Qed."
+  .
+
+GAUGETABLEWITNESSISTWENTYFOUR =
+  "Theorem gauge_table05_witness_is_twenty_four :"
+  "  gauge_table05_witness = 24."
+  "Proof. vm_compute; reflexivity. Qed."
+  .

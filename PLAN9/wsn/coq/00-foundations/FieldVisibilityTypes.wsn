@@ -1,0 +1,66 @@
+FIELDVISIBILITYTYPES = CHECKED .
+
+CHECKED = HEAD COQ SCOPE BYTEPLANEBOUND CHARTINDEX CHARTPOSITION BYTEPLANEMAXBOUNDS CHARTINDEXBOUNDEDEIGHT CHARTPOSITIONBOUNDEDTHIRTYTWO FIELDVISIBILITYCHARTPARTITIONCOUNT .
+
+HEAD =
+  "(*"
+  "  FieldVisibilityTypes.v -- bounded byte plane and 32-position chart types."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+BYTEPLANEBOUND =
+  "Definition byte_plane_bound : N := 256."
+  .
+
+CHARTINDEX =
+  "Definition chart_index (position : N) : N := (position mod byte_plane_bound) / 32."
+  .
+
+CHARTPOSITION =
+  "Definition chart_position (position : N) : N := position mod 32."
+  .
+
+BYTEPLANEMAXBOUNDS =
+  "Theorem byte_plane_max_bounds :"
+  "  0xFF < byte_plane_bound."
+  "Proof. reflexivity. Qed."
+  .
+
+CHARTINDEXBOUNDEDEIGHT =
+  "Theorem chart_index_bounded_eight :"
+  "  forall position, chart_index position < 8."
+  "Proof."
+  "  intro position."
+  "  unfold chart_index, byte_plane_bound."
+  "  apply N.div_lt_upper_bound."
+  "  - discriminate."
+  "  - rewrite N.mul_comm."
+  "    apply N.mod_lt."
+  "    discriminate."
+  "Qed."
+  .
+
+CHARTPOSITIONBOUNDEDTHIRTYTWO =
+  "Theorem chart_position_bounded_thirty_two :"
+  "  forall position, chart_position position < 32."
+  "Proof."
+  "  intro position."
+  "  unfold chart_position."
+  "  apply N.mod_lt."
+  "  discriminate."
+  "Qed."
+  .
+
+FIELDVISIBILITYCHARTPARTITIONCOUNT =
+  "Theorem field_visibility_chart_partition_count :"
+  "  byte_plane_bound / 32 = 8."
+  "Proof. reflexivity. Qed."
+  .

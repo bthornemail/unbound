@@ -1,0 +1,31 @@
+OMIRINGICOSIAN = CHECKED .
+
+CHECKED = COQ SCOPE OMIRINGICOSIANOWNER OMIRINGICOSIANPROOF OMIRINGICOSIANSELECTOR OMIRINGICOSIANSELECTORFULLNIBBLE .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+OMIRINGICOSIANOWNER =
+  "Definition omi_ring_icosian_owner : Prop := True."
+  .
+
+OMIRINGICOSIANPROOF =
+  "Definition omi_ring_icosian_proof : omi_ring_icosian_owner := I."
+  .
+
+OMIRINGICOSIANSELECTOR =
+  "Definition omi_ring_icosian_selector (x : N) : N := N.land x 0x0F."
+  .
+
+OMIRINGICOSIANSELECTORFULLNIBBLE =
+  "Theorem omi_ring_icosian_selector_full_nibble :"
+  "  omi_ring_icosian_selector 0xFF = 0x0F."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

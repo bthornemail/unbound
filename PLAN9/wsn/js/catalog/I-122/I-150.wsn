@@ -1,0 +1,16 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-150: 144 web workers, HSV of codepoints"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-150"", ""144 web workers, HSV of codepoints"", () => {"
+  "  const scopes = [""Window"",""DedicatedWorkerGlobalScope"",""SharedWorkerGlobalScope"",""ServiceWorkerGlobalScope""];"
+  "  assert.strictEqual(scopes.length, 4);"
+  "  assert.strictEqual(BLOCK.length, 36);"
+  "  assert.strictEqual(scopes.length * BLOCK.length, 144);"
+  "  assert.strictEqual(12 * 12, 144);"
+  "  assert.strictEqual(256 ** 4, 2 ** 32);"
+  "  assert.strictEqual(256 ** 4, 4294967296);"
+  "}, ""point/line/duality"");"
+  .

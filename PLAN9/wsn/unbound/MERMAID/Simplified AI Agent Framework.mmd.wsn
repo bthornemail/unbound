@@ -1,0 +1,19 @@
+FILE = HEAD .
+
+HEAD =
+  "graph TD"
+  "    subgraph ""AI Agent"""
+  "        Sense[1. Sense<br>What's happening?] --> Think[2. Think<br>What should I do?]"
+  "        Think --> Act[3. Act<br>Do it!]"
+  "        Act --> Learn[4. Learn<br>How did it go?]"
+  "        Learn --> Sense"
+  "    end"
+  "    World[World / Environment] --> Sense"
+  "    Act --> World"
+  "    style World fill:#f9f,stroke:#333"
+  "    style Sense fill:#aef,stroke:#333"
+  "    style Think fill:#fda,stroke:#333"
+  "    style Act fill:#afa,stroke:#333"
+  "    style Learn fill:#faa,stroke:#333"
+  "    style AI Agent fill:#fff,stroke:#333"
+  .

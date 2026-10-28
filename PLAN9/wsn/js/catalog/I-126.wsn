@@ -1,0 +1,133 @@
+RECORD = HEAD IBYTEINDEXINGXXFWINDOW IDECLAREDENDIANNESS INATIVESWAPSTHEDOFI IVALUEINVARIANTUNDERSWAP INOATOMICSONBUFFERUSEATYPEDARRAYVIEW ITHECYCLEONBUFFER IECOERCESTOINDEXSAMEASI IBASEOVERLAYONBUFFERBYTES .
+
+HEAD =
+  "// bufferTest.ts — I-126: Node Buffer equivalents of I-108…I-125"
+  "import assert from ""node:assert"";"
+  .
+
+IBYTEINDEXINGXXFWINDOW =
+  "// ── I-126.1: byte indexing (0x00..0x1F window) ───────────────────"
+  "{"
+  "  const buf = Buffer.alloc(128);"
+  "  buf[60] = 0x3C;                    // byte 60, not word 60"
+  "  assert.strictEqual(buf[60], 60, ""I-126 byte index 60"");"
+  "  assert.strictEqual(buf.length, 128, ""I-126 128 bytes"");"
+  "  // the nibble window 0x0-0x1 must lift to a byte to read"
+  "  const byteAt = 0x00;               // holds nibbles 0x0 and 0x1"
+  "  const high = (buf[byteAt] >> 4) & 0xF;"
+  "  const low  = buf[byteAt] & 0xF;"
+  "  assert.strictEqual(high, 0, ""I-126 high nibble of byte 0"");"
+  "  assert.strictEqual(low,  0, ""I-126 low nibble of byte 0"");"
+  "}"
+  .
+
+IDECLAREDENDIANNESS =
+  "// ── I-126.2: declared endianness ─────────────────────────────────"
+  "{"
+  "  const buf = Buffer.alloc(4);"
+  "  buf.writeUInt32BE(0x12345678, 0);"
+  "  assert.strictEqual(buf[0], 0x12, ""I-126 BE first byte = 0x12"");"
+  "  assert.strictEqual(buf[3], 0x78, ""I-126 BE last byte = 0x78"");"
+  "  buf.writeUInt32LE(0x12345678, 0);"
+  "  assert.strictEqual(buf[0], 0x78, ""I-126 LE first byte = 0x78"");"
+  "  assert.strictEqual(buf[3], 0x12, ""I-126 LE last byte = 0x12"");"
+  "  // same value, two declared directions"
+  "  assert.strictEqual(buf.readUInt32LE(0), 0x12345678, ""I-126 LE reads back"");"
+  "  assert.strictEqual(buf.readUInt32BE(0), 0x78563412, ""I-126 BE reads swapped"");"
+  "}"
+  .
+
+INATIVESWAPSTHEDOFI =
+  "// ── I-126.3: native swaps = the 6 DOF (I-115) ────────────────────"
+  "{"
+  "  const b16 = Buffer.from([0x12, 0x34]);"
+  "  b16.swap16();"
+  "  assert.deepStrictEqual([...b16], [0x34, 0x12], ""I-126 swap16"");"
+  "  const b32 = Buffer.from([0x12,0x34,0x56,0x78]);"
+  "  b32.swap32();"
+  "  assert.deepStrictEqual([...b32], [0x78,0x56,0x34,0x12], ""I-126 swap32"");"
+  "  const b64 = Buffer.from([0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08]);"
+  "  b64.swap64();"
+  "  assert.deepStrictEqual([...b64], [0x08,0x07,0x06,0x05,0x04,0x03,0x02,0x01],"
+  "    ""I-126 swap64"");"
+  "  // 3 widths × 2 directions = 6 presentations"
+  "  assert.strictEqual(3 * 2, 6, ""I-126 6 DOF"");"
+  "}"
+  .
+
+IVALUEINVARIANTUNDERSWAP =
+  "// ── I-126.4: value invariant under swap ──────────────────────────"
+  "{"
+  "  const buf = Buffer.alloc(4);"
+  "  buf.writeUInt32LE(60, 0);"
+  "  const before = buf.readUInt32LE(0);"
+  "  buf.swap32();"
+  "  const after = buf.readUInt32BE(0);          // BE after LE-swap = same value"
+  "  assert.strictEqual(before, 60, ""I-126 value before swap"");"
+  "  assert.strictEqual(after, 60, ""I-126 value after swap (direction adjusted)"");"
+  "}"
+  .
+
+INOATOMICSONBUFFERUSEATYPEDARRAYVIEW =
+  "// ── I-126.5: no Atomics on Buffer; use a TypedArray view ─────────"
+  "{"
+  "  const buf = Buffer.alloc(128);"
+  "  // buf[60] = 60;"
+  "  // Atomics.compareExchange(buf, 60, 60, 64);  // <-- throws: buf is not a TypedArray"
+  "  // assert.throws(() => Atomics.compareExchange(buf as any, 60, 60, 64));"
+  "  // the correct path: a view over the same memory"
+  "  const view = new Int32Array(buf.buffer, buf.byteOffset, buf.byteLength / 4);"
+  "  view[15] = 60;                              // byte 60 = word 15"
+  "  const prev = Atomics.compareExchange(view, 15, 60, 64);"
+  "  assert.strictEqual(prev, 60, ""I-126 compareExchange on view"");"
+  "  assert.strictEqual(view[15], 64, ""I-126 wrote through view"");"
+  "  assert.strictEqual(buf[60], 64, ""I-126 buffer sees the write"");"
+  "  assert.strictEqual(buf[61], 0,  ""I-126 next byte untouched"");"
+  "}"
+  .
+
+ITHECYCLEONBUFFER =
+  "// ── I-126.6: the 60/128/64 cycle on Buffer ───────────────────────"
+  "{"
+  "  const buf = Buffer.alloc(256);"
+  "  const view = new Int32Array(buf.buffer, 0, 64);"
+  "  // word indices: 60/4 = 15, 128/4 = 32, 64/4 = 16"
+  "  view[15] = 128; view[32] = 64; view[16] = 60;"
+  "  const a = Atomics.compareExchange(view, 15, 128, 64);"
+  "  const b = Atomics.compareExchange(view, 32, 64,  60);"
+  "  const c = Atomics.compareExchange(view, 16, 60,  128);"
+  "  assert.strictEqual(a, 128, ""I-126 cycle read 1"");"
+  "  assert.strictEqual(b, 64,  ""I-126 cycle read 2"");"
+  "  assert.strictEqual(c, 60,  ""I-126 cycle read 3"");"
+  "}"
+  .
+
+IECOERCESTOINDEXSAMEASI =
+  "// ── I-126.7: E % 0 coerces to index 0 (same as I-125) ────────────"
+  "{"
+  "  const buf = Buffer.alloc(16);"
+  "  const view = new Int32Array(buf.buffer, 0, 4);"
+  "  const bad = 0 % 0;                          // NaN"
+  "  assert.ok(Number.isNaN(bad), ""I-126 E % 0 = NaN"");"
+  "  view[0] = 2;"
+  "  const r = Atomics.compareExchange(view, bad as any, 2, 1);"
+  "  assert.strictEqual(r, 2, ""I-126 NaN coerces to index 0"");"
+  "  assert.strictEqual(view[0], 1, ""I-126 wrote index 0"");"
+  "}"
+  .
+
+IBASEOVERLAYONBUFFERBYTES =
+  "// ── I-126.8: base-36 overlay on Buffer bytes ─────────────────────"
+  "{"
+  "  const buf = Buffer.from(""PINE"");"
+  "  const codes = [...buf];"
+  "  const is36 = (c: number) =>"
+  "    (0x30 <= c && c <= 0x39) || (0x41 <= c && c <= 0x5A);"
+  "  assert.ok(codes.every(is36), ""I-126 PINE bytes are in the 36-block"");"
+  "  assert.strictEqual(buf.toString(""hex""), ""50494e45"", ""I-126 hex read"");"
+  "  assert.strictEqual("
+  "    Buffer.from(""50494e45"", ""hex"").toString(), ""PINE"", ""I-126 hex decode"""
+  "  );"
+  "}"
+  "console.log(""I-126: Node Buffer — byte indexing, endianness, swaps, view-Atomics — passed"");"
+  .

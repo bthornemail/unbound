@@ -1,0 +1,19 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-123: S3 at four scales"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-123"", ""S3 at four scales; XOR/Fano/byte"", () => {"
+  "  const scales = {"
+  "    transistor: [""gate"", ""source"", ""drain""],"
+  "    streams: [0, 1, 2],"
+  "    readings: [""fwd"", ""row"", ""diag""],"
+  "    swaps: [16, 32, 64],"
+  "  };"
+  "  for (const xs of Object.values(scales)) assert.strictEqual(xs.length, 3);"
+  "  const FANO = 7, GF2_3 = 8;"
+  "  assert.strictEqual(GF2_3 - 1, FANO);"
+  "  assert.strictEqual(1 ^ 2 ^ 3, 0);"
+  "}, ""point/line/duality"");"
+  .

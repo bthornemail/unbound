@@ -1,0 +1,57 @@
+RECORD = HEAD THELINESTHEIRCOMPLEMENTSANDTHETWOCONSTANTSCODEWORDS ALINEARCODEDISTANCETHEHAMMINGCODE PERFECTOVERTHEASCIITABLEBALLSOF THECODEWORDSASCHARACTERS .
+
+HEAD =
+  "// i193.ts — I-193: the Fano lines are the Hamming code, and it tiles the ASCII table"
+  "//"
+  "// The author, 2026-10-13: ""I can see it in the logical structure of the ASCII"
+  "// table to the Hamming code ... it's a ziptie, but atomics compare-and-exchange"
+  "// zipper"". Found here: the seven Fano lines of the 16-index (the masks the"
+  "// Commons icons read as, I-101, proofs/svg), with their seven complements, the"
+  "// empty plane and the full one, are the sixteen codewords of the Hamming (7,4)"
+  "// code: closed under XOR, every two at least three bits apart. And the code is"
+  "// perfect over 7 bits: the 128 ASCII codes split into 16 balls of 8, each code"
+  "// within one bit of exactly one codeword. Among the codewords: NUL, BEL (the"
+  "// line 1-3-2), '*' (the line 2-6-4) and DEL. (The separator gap 0x3A-0x40"
+  "// holds none of them.)"
+  "import assert from ""node:assert"";"
+  "const MASK16 = [0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x34, 0x61, 0x52, 0x07, 0x4c, 0x19, 0x2a, 0x7f];"
+  "const lines = MASK16.slice(8, 15);"
+  "const weight = (v: number) => { let c = 0; for (; v; v >>= 1) c += v & 1; return c; };"
+  .
+
+THELINESTHEIRCOMPLEMENTSANDTHETWOCONSTANTSCODEWORDS =
+  "// ── 1. The lines, their complements and the two constants: 16 codewords ─"
+  "const code = [...new Set([0, ...lines, ...lines.map((l) => l ^ 0x7f), 0x7f])].sort((a, b) => a - b);"
+  "assert.strictEqual(code.length, 16, ""16 codewords"");"
+  "assert.deepStrictEqual(code.map(weight).sort(), [0, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 7], ""weights: 0, seven lines of 3, seven complements of 4, 7"");"
+  .
+
+ALINEARCODEDISTANCETHEHAMMINGCODE =
+  "// ── 2. A linear code, distance 3: the Hamming (7,4) code ─────"
+  "for (const a of code) for (const b of code) assert.ok(code.includes(a ^ b), `closed under XOR: ${a} ^ ${b}`);"
+  "let dmin = 8;"
+  "for (const a of code) for (const b of code) if (a !== b) dmin = Math.min(dmin, weight(a ^ b));"
+  "assert.strictEqual(dmin, 3, ""every two codewords at least 3 bits apart: one flipped bit is corrected"");"
+  "assert.strictEqual(2 ** 4, code.length, ""4 data bits: 2^4 codewords in 7 bits"");"
+  .
+
+PERFECTOVERTHEASCIITABLEBALLSOF =
+  "// ── 3. Perfect over the ASCII table: 16 balls of 8 = 128 ─────"
+  "const ball = new Map<number, number>();"
+  "for (let x = 0; x < 128; x++) {"
+  "  const near = code.filter((c) => weight(c ^ x) <= 1);"
+  "  assert.strictEqual(near.length, 1, `ASCII 0x${x.toString(16)} is within one bit of exactly one codeword`);"
+  "  ball.set(near[0]!, (ball.get(near[0]!) ?? 0) + 1);"
+  "}"
+  "assert.deepStrictEqual([...ball.values()], Array(16).fill(8), ""16 balls of 8: 1 codeword and its 7 one-bit neighbours"");"
+  .
+
+THECODEWORDSASCHARACTERS =
+  "// ── 4. The codewords as characters ───────────────────────────"
+  "assert.deepStrictEqual(code, [0x00, 0x07, 0x19, 0x1e, 0x2a, 0x2d, 0x33, 0x34, 0x4b, 0x4c, 0x52, 0x55, 0x61, 0x66, 0x78, 0x7f], ""NUL, BEL, ^Y, RS, *, -, 3, 4, K, L, R, U, a, f, x, DEL"");"
+  "assert.ok(code.includes(0x07) && code.includes(0x2a), ""BEL is the line 1-3-2, '*' the line 2-6-4"");"
+  "assert.ok(!code.some((c) => c >= 0x3a && c <= 0x40), ""none in the separator gap 0x3A-0x40"");"
+  "console.log(""I-193: the Fano lines are the Hamming (7,4) code — passed"");"
+  "console.log(""  lines + complements + 0 + 0x7F: 16 codewords, linear, distance 3"");"
+  "console.log(""  the 128 ASCII codes are 16 balls of 8: every code within one bit of exactly one codeword"");"
+  .

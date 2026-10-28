@@ -1,0 +1,778 @@
+DELTAHASEXACTPERIODEIGHT = CHECKED .
+
+CHECKED = HEAD COQ SCOPE WORD WORDEXT WORDBIT EVALCOEFFN EVALCOEFF EVALCOEFFNLXOR EVALCOEFFLXOR AFFINEFORM FORMXOR FORMXORA EVALFORM EVALFORMXOR EVALFORMXORA AFFINEWORD EVALAFFINEWORD INPUTFORMS CONSTANTD CONSTANT CONSTANTFORM AFFINEDELTA WORDDELTA EVALAFFINEDELTA AFFINEITER WORDITER EVALAFFINEITER EVALINPUTFORMS WORDXOR SELECTEDDIFFERENCE ZEROWORD WORDXORSELF WORDBITZERO EVALCOEFFZERO SELECTEDDIFFERENCESELF CERTIFICATEIMPLIESNOFIXEDPOINT AFFINEITERDIDENTITY DELTADITERIDENTITY PERIODDCERTIFICATE PERIODDCERTIFICATEA PERIODDCERTIFICATEB PERIODDCERTIFICATEC PERIODDCERTIFICATED PERIODDCERTIFICATEE PERIODDCERTIFICATEF DELTADNOPERIOD DELTADNOPERIODA DELTADNOPERIODB DELTADNOPERIODC DELTADNOPERIODD DELTADNOPERIODE DELTADNOPERIODF DELTADHASEXACTPERIOD AFFINEITERIDENTITY DELTAITERIDENTITY PERIODCERTIFICATE PERIODCERTIFICATEA PERIODCERTIFICATEB PERIODCERTIFICATEC PERIODCERTIFICATED PERIODCERTIFICATEE PERIODCERTIFICATEF DELTANOPERIOD DELTANOPERIODA DELTANOPERIODB DELTANOPERIODC DELTANOPERIODD DELTANOPERIODE DELTANOPERIODF DELTAHASEXACTPERIOD .
+
+HEAD =
+  "(**"
+  "  Exact-period proof for the concrete 16-bit affine delta law."
+  "  Bit zero is the least-significant bit. For output bit i:"
+  "    rotl(x,1)[i] = x[i-1]"
+  "    rotl(x,3)[i] = x[i-3]"
+  "    rotr(x,2)[i] = x[i+2]"
+  "  with indices reduced modulo 16. The proof uses affine Boolean forms rather"
+  "  than enumerating 65,536 states. Coq checks the composed forms and a"
+  "  contradiction certificate for each forbidden shorter period."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import Bool.Bool NArith btauto.Btauto."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+WORD =
+  "Record Word16 : Type := mkWord16 {"
+  "  w0 : bool;  w1 : bool;  w2 : bool;  w3 : bool;"
+  "  w4 : bool;  w5 : bool;  w6 : bool;  w7 : bool;"
+  "  w8 : bool;  w9 : bool;  w10 : bool; w11 : bool;"
+  "  w12 : bool; w13 : bool; w14 : bool; w15 : bool"
+  "}."
+  .
+
+WORDEXT =
+  "Lemma word16_ext :"
+  "  forall a b,"
+  "    w0 a = w0 b -> w1 a = w1 b -> w2 a = w2 b ->"
+  "    w3 a = w3 b -> w4 a = w4 b -> w5 a = w5 b ->"
+  "    w6 a = w6 b -> w7 a = w7 b -> w8 a = w8 b ->"
+  "    w9 a = w9 b -> w10 a = w10 b -> w11 a = w11 b ->"
+  "    w12 a = w12 b -> w13 a = w13 b -> w14 a = w14 b ->"
+  "    w15 a = w15 b -> a = b."
+  "Proof."
+  "  intros [] [] H0 H1 H2 H3 H4 H5 H6 H7 H8 H9 H10 H11 H12 H13 H14 H15."
+  "  cbn in *; subst; reflexivity."
+  "Qed."
+  .
+
+WORDBIT =
+  "Definition word_bit (x : Word16) (i : nat) : bool :="
+  "  match i with"
+  "  | 0%nat => w0 x   | 1%nat => w1 x   | 2%nat => w2 x   | 3%nat => w3 x"
+  "  | 4%nat => w4 x   | 5%nat => w5 x   | 6%nat => w6 x   | 7%nat => w7 x"
+  "  | 8%nat => w8 x   | 9%nat => w9 x   | 10%nat => w10 x | 11%nat => w11 x"
+  "  | 12%nat => w12 x | 13%nat => w13 x | 14%nat => w14 x | 15%nat => w15 x"
+  "  | _ => false"
+  "  end."
+  .
+
+EVALCOEFFN =
+  "Fixpoint eval_coeff_n (fuel : nat) (coefficients : N) (x : Word16) : bool :="
+  "  match fuel with"
+  "  | O => false"
+  "  | S n =>"
+  "      xorb"
+  "        (andb (N.testbit coefficients (N.of_nat n)) (word_bit x n))"
+  "        (eval_coeff_n n coefficients x)"
+  "  end."
+  .
+
+EVALCOEFF =
+  "Definition eval_coeff (coefficients : N) (x : Word16) : bool :="
+  "  eval_coeff_n 16 coefficients x."
+  .
+
+EVALCOEFFNLXOR =
+  "Lemma eval_coeff_n_lxor :"
+  "  forall n m1 m2 x,"
+  "    eval_coeff_n n (N.lxor m1 m2) x ="
+  "    xorb (eval_coeff_n n m1 x) (eval_coeff_n n m2 x)."
+  "Proof."
+  "  induction n; intros."
+  "  - reflexivity."
+  "  - cbn. rewrite N.lxor_spec, IHn. btauto."
+  "Qed."
+  .
+
+EVALCOEFFLXOR =
+  "Lemma eval_coeff_lxor :"
+  "  forall m1 m2 x,"
+  "    eval_coeff (N.lxor m1 m2) x ="
+  "    xorb (eval_coeff m1 x) (eval_coeff m2 x)."
+  "Proof. apply eval_coeff_n_lxor. Qed."
+  .
+
+AFFINEFORM =
+  "Record AffineForm : Type := mkAffineForm {"
+  "  form_coefficients : N;"
+  "  form_bias : bool"
+  "}."
+  .
+
+FORMXOR =
+  "Definition form_xor (f g : AffineForm) : AffineForm :="
+  "  mkAffineForm"
+  "    (N.lxor (form_coefficients f) (form_coefficients g))"
+  "    (xorb (form_bias f) (form_bias g))."
+  .
+
+FORMXORA =
+  "Definition form_xor4 (a b c d : AffineForm) : AffineForm :="
+  "  form_xor (form_xor (form_xor a b) c) d."
+  .
+
+EVALFORM =
+  "Definition eval_form (f : AffineForm) (x : Word16) : bool :="
+  "  xorb (eval_coeff (form_coefficients f) x) (form_bias f)."
+  .
+
+EVALFORMXOR =
+  "Lemma eval_form_xor :"
+  "  forall f g x,"
+  "    eval_form (form_xor f g) x ="
+  "    xorb (eval_form f x) (eval_form g x)."
+  "Proof."
+  "  intros [m b] [n d] x."
+  "  change"
+  "    (xorb (eval_coeff (N.lxor m n) x) (xorb b d) ="
+  "     xorb (xorb (eval_coeff m x) b) (xorb (eval_coeff n x) d))."
+  "  rewrite eval_coeff_lxor."
+  "  btauto."
+  "Qed."
+  .
+
+EVALFORMXORA =
+  "Lemma eval_form_xor4 :"
+  "  forall a b c d x,"
+  "    eval_form (form_xor4 a b c d) x ="
+  "    xorb (xorb (xorb (eval_form a x) (eval_form b x))"
+  "      (eval_form c x)) (eval_form d x)."
+  "Proof."
+  "  intros; unfold form_xor4; repeat rewrite eval_form_xor; btauto."
+  "Qed."
+  .
+
+AFFINEWORD =
+  "Record AffineWord16 : Type := mkAffineWord16 {"
+  "  a0 : AffineForm;  a1 : AffineForm;  a2 : AffineForm;  a3 : AffineForm;"
+  "  a4 : AffineForm;  a5 : AffineForm;  a6 : AffineForm;  a7 : AffineForm;"
+  "  a8 : AffineForm;  a9 : AffineForm;  a10 : AffineForm; a11 : AffineForm;"
+  "  a12 : AffineForm; a13 : AffineForm; a14 : AffineForm; a15 : AffineForm"
+  "}."
+  .
+
+EVALAFFINEWORD =
+  "Definition eval_affine_word (a : AffineWord16) (x : Word16) : Word16 :="
+  "  mkWord16"
+  "    (eval_form (a0 a) x)  (eval_form (a1 a) x)"
+  "    (eval_form (a2 a) x)  (eval_form (a3 a) x)"
+  "    (eval_form (a4 a) x)  (eval_form (a5 a) x)"
+  "    (eval_form (a6 a) x)  (eval_form (a7 a) x)"
+  "    (eval_form (a8 a) x)  (eval_form (a9 a) x)"
+  "    (eval_form (a10 a) x) (eval_form (a11 a) x)"
+  "    (eval_form (a12 a) x) (eval_form (a13 a) x)"
+  "    (eval_form (a14 a) x) (eval_form (a15 a) x)."
+  .
+
+INPUTFORMS =
+  "Definition input_forms : AffineWord16 :="
+  "  mkAffineWord16"
+  "    (mkAffineForm 1 false)     (mkAffineForm 2 false)"
+  "    (mkAffineForm 4 false)     (mkAffineForm 8 false)"
+  "    (mkAffineForm 16 false)    (mkAffineForm 32 false)"
+  "    (mkAffineForm 64 false)    (mkAffineForm 128 false)"
+  "    (mkAffineForm 256 false)   (mkAffineForm 512 false)"
+  "    (mkAffineForm 1024 false)  (mkAffineForm 2048 false)"
+  "    (mkAffineForm 4096 false)  (mkAffineForm 8192 false)"
+  "    (mkAffineForm 16384 false) (mkAffineForm 32768 false)."
+  .
+
+CONSTANTD =
+  "Definition constant_001d : Word16 :="
+  "  mkWord16 true false true true true false false false"
+  "    false false false false false false false false."
+  .
+
+CONSTANT =
+  "Definition constant_1337 : Word16 :="
+  "  mkWord16 true true true false true true false false"
+  "    true true false false true false false false."
+  .
+
+CONSTANTFORM =
+  "Definition constant_form (b : bool) : AffineForm := mkAffineForm 0 b."
+  .
+
+AFFINEDELTA =
+  "Definition affine_delta (c : Word16) (x : AffineWord16) : AffineWord16 :="
+  "  mkAffineWord16"
+  "    (form_xor4 (a15 x) (a13 x) (a2 x) (constant_form (w0 c)))"
+  "    (form_xor4 (a0 x) (a14 x) (a3 x) (constant_form (w1 c)))"
+  "    (form_xor4 (a1 x) (a15 x) (a4 x) (constant_form (w2 c)))"
+  "    (form_xor4 (a2 x) (a0 x) (a5 x) (constant_form (w3 c)))"
+  "    (form_xor4 (a3 x) (a1 x) (a6 x) (constant_form (w4 c)))"
+  "    (form_xor4 (a4 x) (a2 x) (a7 x) (constant_form (w5 c)))"
+  "    (form_xor4 (a5 x) (a3 x) (a8 x) (constant_form (w6 c)))"
+  "    (form_xor4 (a6 x) (a4 x) (a9 x) (constant_form (w7 c)))"
+  "    (form_xor4 (a7 x) (a5 x) (a10 x) (constant_form (w8 c)))"
+  "    (form_xor4 (a8 x) (a6 x) (a11 x) (constant_form (w9 c)))"
+  "    (form_xor4 (a9 x) (a7 x) (a12 x) (constant_form (w10 c)))"
+  "    (form_xor4 (a10 x) (a8 x) (a13 x) (constant_form (w11 c)))"
+  "    (form_xor4 (a11 x) (a9 x) (a14 x) (constant_form (w12 c)))"
+  "    (form_xor4 (a12 x) (a10 x) (a15 x) (constant_form (w13 c)))"
+  "    (form_xor4 (a13 x) (a11 x) (a0 x) (constant_form (w14 c)))"
+  "    (form_xor4 (a14 x) (a12 x) (a1 x) (constant_form (w15 c)))."
+  .
+
+WORDDELTA =
+  "Definition word_delta (c x : Word16) : Word16 :="
+  "  mkWord16"
+  "    (xorb (xorb (xorb (w15 x) (w13 x)) (w2 x)) (w0 c))"
+  "    (xorb (xorb (xorb (w0 x) (w14 x)) (w3 x)) (w1 c))"
+  "    (xorb (xorb (xorb (w1 x) (w15 x)) (w4 x)) (w2 c))"
+  "    (xorb (xorb (xorb (w2 x) (w0 x)) (w5 x)) (w3 c))"
+  "    (xorb (xorb (xorb (w3 x) (w1 x)) (w6 x)) (w4 c))"
+  "    (xorb (xorb (xorb (w4 x) (w2 x)) (w7 x)) (w5 c))"
+  "    (xorb (xorb (xorb (w5 x) (w3 x)) (w8 x)) (w6 c))"
+  "    (xorb (xorb (xorb (w6 x) (w4 x)) (w9 x)) (w7 c))"
+  "    (xorb (xorb (xorb (w7 x) (w5 x)) (w10 x)) (w8 c))"
+  "    (xorb (xorb (xorb (w8 x) (w6 x)) (w11 x)) (w9 c))"
+  "    (xorb (xorb (xorb (w9 x) (w7 x)) (w12 x)) (w10 c))"
+  "    (xorb (xorb (xorb (w10 x) (w8 x)) (w13 x)) (w11 c))"
+  "    (xorb (xorb (xorb (w11 x) (w9 x)) (w14 x)) (w12 c))"
+  "    (xorb (xorb (xorb (w12 x) (w10 x)) (w15 x)) (w13 c))"
+  "    (xorb (xorb (xorb (w13 x) (w11 x)) (w0 x)) (w14 c))"
+  "    (xorb (xorb (xorb (w14 x) (w12 x)) (w1 x)) (w15 c))."
+  .
+
+EVALAFFINEDELTA =
+  "Lemma eval_affine_delta :"
+  "  forall c a x,"
+  "    eval_affine_word (affine_delta c a) x ="
+  "    word_delta c (eval_affine_word a x)."
+  "Proof."
+  "  intros c a x; apply word16_ext."
+  "  - change"
+  "      (eval_form (form_xor4 (a15 a) (a13 a) (a2 a)"
+  "        (constant_form (w0 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a15 a) x) (eval_form (a13 a) x))"
+  "         (eval_form (a2 a) x)) (w0 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a0 a) (a14 a) (a3 a)"
+  "        (constant_form (w1 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a0 a) x) (eval_form (a14 a) x))"
+  "         (eval_form (a3 a) x)) (w1 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a1 a) (a15 a) (a4 a)"
+  "        (constant_form (w2 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a1 a) x) (eval_form (a15 a) x))"
+  "         (eval_form (a4 a) x)) (w2 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a2 a) (a0 a) (a5 a)"
+  "        (constant_form (w3 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a2 a) x) (eval_form (a0 a) x))"
+  "         (eval_form (a5 a) x)) (w3 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a3 a) (a1 a) (a6 a)"
+  "        (constant_form (w4 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a3 a) x) (eval_form (a1 a) x))"
+  "         (eval_form (a6 a) x)) (w4 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a4 a) (a2 a) (a7 a)"
+  "        (constant_form (w5 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a4 a) x) (eval_form (a2 a) x))"
+  "         (eval_form (a7 a) x)) (w5 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a5 a) (a3 a) (a8 a)"
+  "        (constant_form (w6 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a5 a) x) (eval_form (a3 a) x))"
+  "         (eval_form (a8 a) x)) (w6 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a6 a) (a4 a) (a9 a)"
+  "        (constant_form (w7 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a6 a) x) (eval_form (a4 a) x))"
+  "         (eval_form (a9 a) x)) (w7 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a7 a) (a5 a) (a10 a)"
+  "        (constant_form (w8 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a7 a) x) (eval_form (a5 a) x))"
+  "         (eval_form (a10 a) x)) (w8 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a8 a) (a6 a) (a11 a)"
+  "        (constant_form (w9 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a8 a) x) (eval_form (a6 a) x))"
+  "         (eval_form (a11 a) x)) (w9 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a9 a) (a7 a) (a12 a)"
+  "        (constant_form (w10 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a9 a) x) (eval_form (a7 a) x))"
+  "         (eval_form (a12 a) x)) (w10 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a10 a) (a8 a) (a13 a)"
+  "        (constant_form (w11 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a10 a) x) (eval_form (a8 a) x))"
+  "         (eval_form (a13 a) x)) (w11 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a11 a) (a9 a) (a14 a)"
+  "        (constant_form (w12 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a11 a) x) (eval_form (a9 a) x))"
+  "         (eval_form (a14 a) x)) (w12 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a12 a) (a10 a) (a15 a)"
+  "        (constant_form (w13 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a12 a) x) (eval_form (a10 a) x))"
+  "         (eval_form (a15 a) x)) (w13 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a13 a) (a11 a) (a0 a)"
+  "        (constant_form (w14 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a13 a) x) (eval_form (a11 a) x))"
+  "         (eval_form (a0 a) x)) (w14 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "  - change"
+  "      (eval_form (form_xor4 (a14 a) (a12 a) (a1 a)"
+  "        (constant_form (w15 c))) x ="
+  "       xorb (xorb (xorb (eval_form (a14 a) x) (eval_form (a12 a) x))"
+  "         (eval_form (a1 a) x)) (w15 c))."
+  "    rewrite eval_form_xor4. unfold constant_form, eval_form; cbn. reflexivity."
+  "Qed."
+  .
+
+AFFINEITER =
+  "Fixpoint affine_iter (n : nat) (c : Word16) (a : AffineWord16)"
+  "  : AffineWord16 :="
+  "  match n with"
+  "  | O => a"
+  "  | S k => affine_iter k c (affine_delta c a)"
+  "  end."
+  .
+
+WORDITER =
+  "Fixpoint word_iter (n : nat) (c x : Word16) : Word16 :="
+  "  match n with"
+  "  | O => x"
+  "  | S k => word_iter k c (word_delta c x)"
+  "  end."
+  .
+
+EVALAFFINEITER =
+  "Lemma eval_affine_iter :"
+  "  forall n c a x,"
+  "    eval_affine_word (affine_iter n c a) x ="
+  "    word_iter n c (eval_affine_word a x)."
+  "Proof."
+  "  induction n; intros."
+  "  - reflexivity."
+  "  - cbn. rewrite IHn, eval_affine_delta. reflexivity."
+  "Qed."
+  .
+
+EVALINPUTFORMS =
+  "Lemma eval_input_forms :"
+  "  forall x, eval_affine_word input_forms x = x."
+  "Proof."
+  "  intros []; apply word16_ext; vm_compute; btauto."
+  "Qed."
+  .
+
+WORDXOR =
+  "Definition word_xor (x y : Word16) : Word16 :="
+  "  mkWord16"
+  "    (xorb (w0 x) (w0 y))   (xorb (w1 x) (w1 y))"
+  "    (xorb (w2 x) (w2 y))   (xorb (w3 x) (w3 y))"
+  "    (xorb (w4 x) (w4 y))   (xorb (w5 x) (w5 y))"
+  "    (xorb (w6 x) (w6 y))   (xorb (w7 x) (w7 y))"
+  "    (xorb (w8 x) (w8 y))   (xorb (w9 x) (w9 y))"
+  "    (xorb (w10 x) (w10 y)) (xorb (w11 x) (w11 y))"
+  "    (xorb (w12 x) (w12 y)) (xorb (w13 x) (w13 y))"
+  "    (xorb (w14 x) (w14 y)) (xorb (w15 x) (w15 y))."
+  .
+
+SELECTEDDIFFERENCE =
+  "Definition selected_difference (selector : N) (x y : Word16) : bool :="
+  "  eval_coeff selector (word_xor x y)."
+  .
+
+ZEROWORD =
+  "Definition zero_word : Word16 :="
+  "  mkWord16 false false false false false false false false"
+  "    false false false false false false false false."
+  .
+
+WORDXORSELF =
+  "Lemma word_xor_self :"
+  "  forall x, word_xor x x = zero_word."
+  "Proof."
+  "  intros []; apply word16_ext;"
+  "    cbn [word_xor zero_word w0 w1 w2 w3 w4 w5 w6 w7"
+  "      w8 w9 w10 w11 w12 w13 w14 w15]; btauto."
+  "Qed."
+  .
+
+WORDBITZERO =
+  "Lemma word_bit_zero :"
+  "  forall n, word_bit zero_word n = false."
+  "Proof."
+  "  intro n; do 16 (destruct n; [reflexivity|]); reflexivity."
+  "Qed."
+  .
+
+EVALCOEFFZERO =
+  "Lemma eval_coeff_zero :"
+  "  forall n selector, eval_coeff_n n selector zero_word = false."
+  "Proof."
+  "  induction n; intro selector."
+  "  - reflexivity."
+  "  - simpl eval_coeff_n. rewrite word_bit_zero, IHn. btauto."
+  "Qed."
+  .
+
+SELECTEDDIFFERENCESELF =
+  "Lemma selected_difference_self :"
+  "  forall selector x, selected_difference selector x x = false."
+  "Proof."
+  "  intros; unfold selected_difference, eval_coeff."
+  "  rewrite word_xor_self."
+  "  apply eval_coeff_zero."
+  "Qed."
+  .
+
+CERTIFICATEIMPLIESNOFIXEDPOINT =
+  "Lemma certificate_implies_no_fixed_point :"
+  "  forall c k selector,"
+  "    (forall x,"
+  "      selected_difference selector"
+  "        (eval_affine_word (affine_iter k c input_forms) x) x = true) ->"
+  "    forall x, word_iter k c x <> x."
+  "Proof."
+  "  intros c k selector Hcertificate x Heq."
+  "  assert (E : eval_affine_word (affine_iter k c input_forms) x = x)."
+  "  { rewrite eval_affine_iter, eval_input_forms. exact Heq. }"
+  "  specialize (Hcertificate x)."
+  "  rewrite E, selected_difference_self in Hcertificate."
+  "  discriminate."
+  "Qed."
+  .
+
+AFFINEITERDIDENTITY =
+  "Lemma affine_iter8_001d_identity :"
+  "  affine_iter 8 constant_001d input_forms = input_forms."
+  "Proof. vm_compute; reflexivity. Qed."
+  .
+
+DELTADITERIDENTITY =
+  "Theorem delta16_001d_iter8_identity :"
+  "  forall x, word_iter 8 constant_001d x = x."
+  "Proof."
+  "  intro x."
+  "  pose proof (eval_affine_iter 8 constant_001d input_forms x) as H."
+  "  rewrite affine_iter8_001d_identity in H."
+  "  repeat rewrite eval_input_forms in H."
+  "  symmetry; exact H."
+  "Qed."
+  .
+
+PERIODDCERTIFICATE =
+  "Lemma period1_001d_certificate :"
+  "  forall x,"
+  "    selected_difference 21845"
+  "      (eval_affine_word (affine_iter 1 constant_001d input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODDCERTIFICATEA =
+  "Lemma period2_001d_certificate :"
+  "  forall x,"
+  "    selected_difference 2570"
+  "      (eval_affine_word (affine_iter 2 constant_001d input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODDCERTIFICATEB =
+  "Lemma period3_001d_certificate :"
+  "  forall x,"
+  "    selected_difference 21845"
+  "      (eval_affine_word (affine_iter 3 constant_001d input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODDCERTIFICATEC =
+  "Lemma period4_001d_certificate :"
+  "  forall x,"
+  "    selected_difference 34"
+  "      (eval_affine_word (affine_iter 4 constant_001d input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODDCERTIFICATED =
+  "Lemma period5_001d_certificate :"
+  "  forall x,"
+  "    selected_difference 21845"
+  "      (eval_affine_word (affine_iter 5 constant_001d input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODDCERTIFICATEE =
+  "Lemma period6_001d_certificate :"
+  "  forall x,"
+  "    selected_difference 2570"
+  "      (eval_affine_word (affine_iter 6 constant_001d input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODDCERTIFICATEF =
+  "Lemma period7_001d_certificate :"
+  "  forall x,"
+  "    selected_difference 21845"
+  "      (eval_affine_word (affine_iter 7 constant_001d input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+DELTADNOPERIOD =
+  "Theorem delta16_001d_no_period1 :"
+  "  forall x, word_iter 1 constant_001d x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_001d 1 21845)."
+  "  exact period1_001d_certificate."
+  "Qed."
+  .
+
+DELTADNOPERIODA =
+  "Theorem delta16_001d_no_period2 :"
+  "  forall x, word_iter 2 constant_001d x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_001d 2 2570)."
+  "  exact period2_001d_certificate."
+  "Qed."
+  .
+
+DELTADNOPERIODB =
+  "Theorem delta16_001d_no_period3 :"
+  "  forall x, word_iter 3 constant_001d x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_001d 3 21845)."
+  "  exact period3_001d_certificate."
+  "Qed."
+  .
+
+DELTADNOPERIODC =
+  "Theorem delta16_001d_no_period4 :"
+  "  forall x, word_iter 4 constant_001d x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_001d 4 34)."
+  "  exact period4_001d_certificate."
+  "Qed."
+  .
+
+DELTADNOPERIODD =
+  "Theorem delta16_001d_no_period5 :"
+  "  forall x, word_iter 5 constant_001d x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_001d 5 21845)."
+  "  exact period5_001d_certificate."
+  "Qed."
+  .
+
+DELTADNOPERIODE =
+  "Theorem delta16_001d_no_period6 :"
+  "  forall x, word_iter 6 constant_001d x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_001d 6 2570)."
+  "  exact period6_001d_certificate."
+  "Qed."
+  .
+
+DELTADNOPERIODF =
+  "Theorem delta16_001d_no_period7 :"
+  "  forall x, word_iter 7 constant_001d x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_001d 7 21845)."
+  "  exact period7_001d_certificate."
+  "Qed."
+  .
+
+DELTADHASEXACTPERIOD =
+  "Theorem delta16_001d_has_exact_period_8 :"
+  "  forall x,"
+  "    word_iter 8 constant_001d x = x /\"
+  "    forall k : nat,"
+  "      k = 1%nat \/ k = 2%nat \/ k = 3%nat \/ k = 4%nat \/"
+  "      k = 5%nat \/ k = 6%nat \/ k = 7%nat ->"
+  "      word_iter k constant_001d x <> x."
+  "Proof."
+  "  intro x; split."
+  "  - apply delta16_001d_iter8_identity."
+  "  - intros k [-> | [-> | [-> | [-> | [-> | [-> | ->]]]]]]."
+  "    + apply delta16_001d_no_period1."
+  "    + apply delta16_001d_no_period2."
+  "    + apply delta16_001d_no_period3."
+  "    + apply delta16_001d_no_period4."
+  "    + apply delta16_001d_no_period5."
+  "    + apply delta16_001d_no_period6."
+  "    + apply delta16_001d_no_period7."
+  "Qed."
+  .
+
+AFFINEITERIDENTITY =
+  "Lemma affine_iter8_1337_identity :"
+  "  affine_iter 8 constant_1337 input_forms = input_forms."
+  "Proof. vm_compute; reflexivity. Qed."
+  .
+
+DELTAITERIDENTITY =
+  "Theorem delta16_1337_iter8_identity :"
+  "  forall x, word_iter 8 constant_1337 x = x."
+  "Proof."
+  "  intro x."
+  "  pose proof (eval_affine_iter 8 constant_1337 input_forms x) as H."
+  "  rewrite affine_iter8_1337_identity in H."
+  "  repeat rewrite eval_input_forms in H."
+  "  symmetry; exact H."
+  "Qed."
+  .
+
+PERIODCERTIFICATE =
+  "Lemma period1_1337_certificate :"
+  "  forall x,"
+  "    selected_difference 13107"
+  "      (eval_affine_word (affine_iter 1 constant_1337 input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODCERTIFICATEA =
+  "Lemma period2_1337_certificate :"
+  "  forall x,"
+  "    selected_difference 1285"
+  "      (eval_affine_word (affine_iter 2 constant_1337 input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODCERTIFICATEB =
+  "Lemma period3_1337_certificate :"
+  "  forall x,"
+  "    selected_difference 13107"
+  "      (eval_affine_word (affine_iter 3 constant_1337 input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODCERTIFICATEC =
+  "Lemma period4_1337_certificate :"
+  "  forall x,"
+  "    selected_difference 17"
+  "      (eval_affine_word (affine_iter 4 constant_1337 input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODCERTIFICATED =
+  "Lemma period5_1337_certificate :"
+  "  forall x,"
+  "    selected_difference 13107"
+  "      (eval_affine_word (affine_iter 5 constant_1337 input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODCERTIFICATEE =
+  "Lemma period6_1337_certificate :"
+  "  forall x,"
+  "    selected_difference 1285"
+  "      (eval_affine_word (affine_iter 6 constant_1337 input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+PERIODCERTIFICATEF =
+  "Lemma period7_1337_certificate :"
+  "  forall x,"
+  "    selected_difference 13107"
+  "      (eval_affine_word (affine_iter 7 constant_1337 input_forms) x) x = true."
+  "Proof. intros []; vm_compute; btauto. Qed."
+  .
+
+DELTANOPERIOD =
+  "Theorem delta16_1337_no_period1 :"
+  "  forall x, word_iter 1 constant_1337 x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_1337 1 13107)."
+  "  exact period1_1337_certificate."
+  "Qed."
+  .
+
+DELTANOPERIODA =
+  "Theorem delta16_1337_no_period2 :"
+  "  forall x, word_iter 2 constant_1337 x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_1337 2 1285)."
+  "  exact period2_1337_certificate."
+  "Qed."
+  .
+
+DELTANOPERIODB =
+  "Theorem delta16_1337_no_period3 :"
+  "  forall x, word_iter 3 constant_1337 x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_1337 3 13107)."
+  "  exact period3_1337_certificate."
+  "Qed."
+  .
+
+DELTANOPERIODC =
+  "Theorem delta16_1337_no_period4 :"
+  "  forall x, word_iter 4 constant_1337 x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_1337 4 17)."
+  "  exact period4_1337_certificate."
+  "Qed."
+  .
+
+DELTANOPERIODD =
+  "Theorem delta16_1337_no_period5 :"
+  "  forall x, word_iter 5 constant_1337 x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_1337 5 13107)."
+  "  exact period5_1337_certificate."
+  "Qed."
+  .
+
+DELTANOPERIODE =
+  "Theorem delta16_1337_no_period6 :"
+  "  forall x, word_iter 6 constant_1337 x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_1337 6 1285)."
+  "  exact period6_1337_certificate."
+  "Qed."
+  .
+
+DELTANOPERIODF =
+  "Theorem delta16_1337_no_period7 :"
+  "  forall x, word_iter 7 constant_1337 x <> x."
+  "Proof."
+  "  apply (certificate_implies_no_fixed_point constant_1337 7 13107)."
+  "  exact period7_1337_certificate."
+  "Qed."
+  .
+
+DELTAHASEXACTPERIOD =
+  "Theorem delta16_1337_has_exact_period_8 :"
+  "  forall x,"
+  "    word_iter 8 constant_1337 x = x /\"
+  "    forall k : nat,"
+  "      k = 1%nat \/ k = 2%nat \/ k = 3%nat \/ k = 4%nat \/"
+  "      k = 5%nat \/ k = 6%nat \/ k = 7%nat ->"
+  "      word_iter k constant_1337 x <> x."
+  "Proof."
+  "  intro x; split."
+  "  - apply delta16_1337_iter8_identity."
+  "  - intros k [-> | [-> | [-> | [-> | [-> | [-> | ->]]]]]]."
+  "    + apply delta16_1337_no_period1."
+  "    + apply delta16_1337_no_period2."
+  "    + apply delta16_1337_no_period3."
+  "    + apply delta16_1337_no_period4."
+  "    + apply delta16_1337_no_period5."
+  "    + apply delta16_1337_no_period6."
+  "    + apply delta16_1337_no_period7."
+  "Qed."
+  .

@@ -1,0 +1,106 @@
+RECORD = HEAD SHAWRITTENOUT THECOMMITSLITERALGITCATFILECOMMITDEBC PREDICTEDFROMTHELITERAL NOTPREDICTEDWITHOUTIT DEPICTEDBYSEARCH ANDWHATISNOT .
+
+HEAD =
+  "// i220.ts — I-220: the commit predicted and depicted — its name is the hash form of its literal"
+  "//"
+  "// The author, 2026-10-14: ""can we prove the commit was predictable, in I-220, in"
+  "// predicting and depicting hashes"", after I-219 read de88bc2 against DEADBEEF."
+  "// SHA-1 below is written out: 80 rounds of rotations, XOR, AND and addition"
+  "// over the literal's bytes, the same kind of word arithmetic as the delta law's"
+  "// rotl ⊕ rotr (I-197). Three things are asserted, and one is not:"
+  "//   1. predicted from the literal: the commit's 628 bytes give de88bc2d…, always;"
+  "//   2. not predicted without it: one second later the name shares nothing;"
+  "//   3. depicted by search: a nonce in the message gives a chosen prefix;"
+  "//   and what is not: that de could be known before the literal was fixed."
+  "// The values are measured; the readings are the author's."
+  "import assert from ""node:assert"";"
+  .
+
+SHAWRITTENOUT =
+  "// ── SHA-1, written out ───────────────────────────────────────"
+  "const rotl = (x: number, n: number) => ((x << n) | (x >>> (32 - n))) >>> 0;"
+  "function sha1(bytes: Uint8Array): string {"
+  "  const len = bytes.length, words = ((len + 8) >> 6) + 1, m = new Uint32Array(words * 16);"
+  "  for (let i = 0; i < len; i++) m[i >> 2]! |= bytes[i]! << (24 - (i % 4) * 8);"
+  "  m[len >> 2]! |= 0x80 << (24 - (len % 4) * 8);"
+  "  m[words * 16 - 1] = len * 8;"
+  "  let h0 = 0x67452301, h1 = 0xefcdab89, h2 = 0x98badcfe, h3 = 0x10325476, h4 = 0xc3d2e1f0;"
+  "  const w = new Uint32Array(80);"
+  "  for (let b = 0; b < words * 16; b += 16) {"
+  "    for (let t = 0; t < 80; t++) w[t] = t < 16 ? m[b + t]! : rotl(w[t - 3]! ^ w[t - 8]! ^ w[t - 14]! ^ w[t - 16]!, 1);"
+  "    let a = h0, bb = h1, c = h2, d = h3, e = h4;"
+  "    for (let t = 0; t < 80; t++) {"
+  "      const f = t < 20 ? (bb & c) | (~bb & d) : t < 40 ? bb ^ c ^ d : t < 60 ? (bb & c) | (bb & d) | (c & d) : bb ^ c ^ d;"
+  "      const k = t < 20 ? 0x5a827999 : t < 40 ? 0x6ed9eba1 : t < 60 ? 0x8f1bbcdc : 0xca62c1d6;"
+  "      const next = (rotl(a, 5) + f + e + k + w[t]!) >>> 0;"
+  "      e = d; d = c; c = rotl(bb, 30); bb = a; a = next;"
+  "    }"
+  "    h0 = (h0 + a) >>> 0; h1 = (h1 + bb) >>> 0; h2 = (h2 + c) >>> 0; h3 = (h3 + d) >>> 0; h4 = (h4 + e) >>> 0;"
+  "  }"
+  "  return [h0, h1, h2, h3, h4].map((x) => x.toString(16).padStart(8, ""0"")).join("""");"
+  "}"
+  "const utf8 = (s: string) => new TextEncoder().encode(s);"
+  "assert.equal(sha1(utf8(""abc"")), ""a9993e364706816aba3e25717850c26c9cd0d89d"", ""SHA-1 of abc, the standard's own example"");"
+  .
+
+THECOMMITSLITERALGITCATFILECOMMITDEBC =
+  "// ── The commit's literal: git cat-file commit de88bc2 ────────"
+  "const LITERAL = ["
+  "  ""tree 0b1bb566ae7a37c4d526bf7054edd27ff83a3f64"","
+  "  ""parent 162a7bf3bf66a6c8fa22624749cf2d7321eadcb4"","
+  "  ""author Brian Thorne <bthornemail@gmail.com> 1792027040 -0700"","
+  "  ""committer Brian Thorne <bthornemail@gmail.com> 1792027040 -0700"","
+  "  """","
+  "  ""Track proofs: the author's records I-201 to I-218 move from src/ into the catalogue"","
+  "  """","
+  "  ""The 18 records leave src/ (their history stays in git) for"","
+  "  ""proofs/js/catalog, where npm test runs them and proofs/js-docs lists"","
+  "  ""them. i206, i214 and i215 now assert what they printed. The broken"","
+  "  ""copies i210.mjs, i210.cjs and the author's angela files are untouched."","
+  "  """","
+  "  ""Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"","
+  "].join(""\n"") + ""\n"";"
+  "/** A commit's name: the hash of ""commit"", its length, a NUL, and its literal. */"
+  "const nameOf = (literal: string) => sha1(utf8(`commit ${utf8(literal).length}\0${literal}`));"
+  "const NAME = ""de88bc2d5dcd01eb615f20741dc9fc4f018196bb"";"
+  "const SECOND = 1792027040; // 2026-10-14 18:17:20 −0700, in the author and committer lines"
+  .
+
+PREDICTEDFROMTHELITERAL =
+  "// ── 1. Predicted from the literal ────────────────────────────"
+  "assert.equal(utf8(LITERAL).length, 628, ""the literal is 628 bytes"");"
+  "assert.equal(nameOf(LITERAL), NAME, ""the literal gives de88bc2d…: the name is its hash form, reproduced by anyone holding it"");"
+  "assert.equal(nameOf(LITERAL), nameOf(LITERAL), ""and always the same: no key, no secret, no encryption"");"
+  .
+
+NOTPREDICTEDWITHOUTIT =
+  "// ── 2. Not predicted without it ──────────────────────────────"
+  "const at = (second: number) => LITERAL.replaceAll(String(SECOND), String(second));"
+  "const later = nameOf(at(SECOND + 1));"
+  "assert.equal(later, ""2989c530b18c35bb3bd5c6ad93929f87f3a829f4"", ""one second later, another name"");"
+  "const differ = (a: string, b: string) => { let n = 0; for (let i = 0; i < 40; i += 8) { let x = (parseInt(a.slice(i, i + 8), 16) ^ parseInt(b.slice(i, i + 8), 16)) >>> 0; while (x) { n += x & 1; x >>>= 1; } } return n; };"
+  "assert.equal(differ(NAME, later), 82, ""82 of 160 bits differ: about half, as for any two unrelated names"");"
+  "const de = [...Array(121).keys()].map((i) => i - 60).filter((d) => nameOf(at(SECOND + d)).startsWith(""de""));"
+  "assert.deepEqual(de, [0], ""of the 121 seconds a minute either side, only the commit's own gives de: luck (about 121/256 expected), not design"");"
+  .
+
+DEPICTEDBYSEARCH =
+  "// ── 3. Depicted by search ────────────────────────────────────"
+  "let nonce = 0;"
+  "while (!nameOf(LITERAL + `nonce ${nonce}\n`).startsWith(""dead"")) nonce++;"
+  "assert.equal(nonce, 28821, ""a line nonce 28821 added to the message gives a name beginning dead"");"
+  "assert.equal(nameOf(LITERAL + `nonce ${nonce}\n`).slice(0, 8), ""dead7c44"");"
+  "assert.equal(16 ** 4, 65536, ""a 4-digit prefix takes about 16^4 = 65,536 tries; all 8 of DEADBEEF about 16^8 = 2^32"");"
+  .
+
+ANDWHATISNOT =
+  "// ── And what is not ──────────────────────────────────────────"
+  "// No rule turns a literal into its name faster than computing it: the name is"
+  "// predicted by computing, and depicted by computing many; before the 628 bytes"
+  "// were fixed (the tree, the parent, the second, the message), de88bc2d was not"
+  "// known to anyone. The literal is the record; the name follows it."
+  "console.log(""I-220: the commit predicted and depicted — its name is the hash form of its literal — passed"");"
+  "console.log(""  predicted: the 628-byte literal gives de88bc2d5dcd…, as any holder of it computes"");"
+  "console.log(""  not without it: one second later 2989c530…, 82 of 160 bits; only the commit's own second gives de"");"
+  "console.log(""  depicted: nonce 28821 gives dead7c44…; DEADBEEF whole would take about 2^32 tries"");"
+  .

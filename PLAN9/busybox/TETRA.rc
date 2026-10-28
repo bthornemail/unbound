@@ -1,0 +1,4 @@
+#!/bin/rc
+# TETRA (B-TETRA.sh): runs tetra.c, compiled by busybox.rc
+rfork e
+$bin/tetra || exit fail

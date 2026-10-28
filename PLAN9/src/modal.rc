@@ -1,0 +1,22 @@
+#!/bin/rc
+# modal.rc - inside Plan 9: the four literals as a grammar (wsn/modal.wsn),
+# asked of zlazy: what VERTEX and MODAL hold, and what they do not.
+rfork e
+w=/tmp/zm2
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zlazy.c && 8l -o $w/zlazy zlazy.8 || exit compile
+cd $p
+fail=0
+fn ask {
+	if($w/zlazy wsn/modal.wsn $1 $2 >/dev/null) got=yes
+	if not got=no
+	if(! ~ $got $3){ echo 'modal.rc: FAIL' $1 '"'$2'"' expected $3; fail=1 }
+}
+for(s in 'GOD IS WORD' 'GOD OF WORD' 'WORD IS GOD' 'WORD OF GOD'){ ask VERTEX $s yes; ask MODAL $s yes }
+for(s in 'GOD WORD' 'WORD GOD'){ ask VERTEX $s no; ask MODAL $s yes }
+for(s in 'GOD IS OF WORD' 'GOD IS GOD' 'WORD IS WORD' 'GOD ? WORD' 'IS GOD WORD'){ ask VERTEX $s no; ask MODAL $s no }
+if(~ $fail 0) echo 'modal.rc: VERTEX holds the four files, MODAL the four and the two unseen, and nothing else asked'

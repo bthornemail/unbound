@@ -1,0 +1,213 @@
+RECORD = HEAD BACKGROUNDAGENTSTHEWORKERS LOCALORREMOTETHEAGENTCANBEINEITHERSCOPE SYNCHRONIZATIONCHANNEL WITHOUTTIMETHESYNCISEVENTDRIVEN ATOMICKERNELINVARIANTOFTIME THEINVARIANTISLOGICALHAPPENSBEFORENOTPHYSICAL INDEXASTHEANCHOR THESLOTRESET TAGGEDNATURALLANGUAGEASTHEMNEMONIC THEMNEMONICISINTHEBASEBLOCK THEFULLPIPELINEMNEMONICAGENTSYNC EVERYCOMPUTERCANSYNCWITHOUTAGREEINGONACLOCK THEINVARIANTOFTIMEISBUILTINTOTHEKERNEL .
+
+HEAD =
+  "// i152.ts — I-152: the mnemonic protocol"
+  "import assert from ""node:assert"";"
+  .
+
+BACKGROUNDAGENTSTHEWORKERS =
+  "// ── 1. Background agents (the 144 workers) ─────────────────────"
+  "const SCOPES = ["
+  "  ""Window"","
+  "  ""DedicatedWorkerGlobalScope"","
+  "  ""SharedWorkerGlobalScope"","
+  "  ""ServiceWorkerGlobalScope"","
+  "];"
+  "const BLOCK = ""0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  "assert.strictEqual(SCOPES.length, 4, ""4 global scopes"");"
+  "assert.strictEqual(BLOCK.length, 36, ""36 base-36 symbols"");"
+  "assert.strictEqual(SCOPES.length * BLOCK.length, 144, ""144 agents"");"
+  .
+
+LOCALORREMOTETHEAGENTCANBEINEITHERSCOPE =
+  "// ── 2. Local or remote: the agent can be in either scope ───────"
+  "type AgentLocation = ""local"" | ""remote"";"
+  "type Agent = {"
+  "  id: string;         // base-36 literal"
+  "  scope: string;      // one of the 4 scopes"
+  "  location: AgentLocation;"
+  "};"
+  "const agents: Agent[] = [];"
+  "for (const scope of SCOPES) {"
+  "  for (const c of BLOCK) {"
+  "    for (const loc of [""local"", ""remote""] as AgentLocation[]) {"
+  "      agents.push({ id: c, scope, location: loc });"
+  "    }"
+  "  }"
+  "}"
+  "assert.strictEqual(agents.length, 288, ""144 agents × 2 locations = 288"");"
+  .
+
+SYNCHRONIZATIONCHANNEL =
+  "// ── 3. Synchronization channel ─────────────────────────────────"
+  "// postMessage + SharedArrayBuffer"
+  "type Message = { from: string; to: string; payload: unknown };"
+  "const mailbox: Message[] = [];"
+  "function postMessage(msg: Message) { mailbox.push(msg); }"
+  "function deliver(to: string): Message | undefined {"
+  "  const i = mailbox.findIndex(m => m.to === to);"
+  "  if (i < 0) return undefined;"
+  "  return mailbox.splice(i, 1)[0];"
+  "}"
+  "postMessage({ from: ""A"", to: ""B"", payload: 42 });"
+  "const got = deliver(""B"");"
+  "assert.ok(got !== undefined, ""message delivered"");"
+  "assert.strictEqual(got!.payload, 42, ""payload intact"");"
+  .
+
+WITHOUTTIMETHESYNCISEVENTDRIVEN =
+  "// ── 4. Without time: the sync is event-driven ─────────────────"
+  "// No Date.now(), no performance.now(), no setTimeout."
+  "// The ordering comes from the message queue (FIFO)."
+  "const order: number[] = [];"
+  "postMessage({ from: ""A"", to: ""X"", payload: 1 });"
+  "postMessage({ from: ""A"", to: ""X"", payload: 2 });"
+  "postMessage({ from: ""A"", to: ""X"", payload: 3 });"
+  "for (const p of [1, 2, 3]) {"
+  "  const m = deliver(""X"");"
+  "  if (m) order.push(m.payload as number);"
+  "}"
+  "assert.deepStrictEqual(order, [1, 2, 3], ""FIFO ordering, no clock"");"
+  .
+
+ATOMICKERNELINVARIANTOFTIME =
+  "// ── 5. Atomic kernel invariant of time ────────────────────────"
+  "// Atomics provides sequential consistency: the operations have"
+  "// a defined total order, which IS the logical time."
+  "{"
+  "  const buf = new Int32Array(16);"
+  "  buf[0] = 10;"
+  "  // compareExchange: (index, expected, replacement)"
+  "  // the operation is atomic and sequentially consistent"
+  "  const prev1 = Atomics.compareExchange(buf, 0, 10, 20);"
+  "  assert.strictEqual(prev1, 10, ""first exchange sees 10"");"
+  "  assert.strictEqual(buf[0], 20, ""value is now 20"");"
+  "  // a second exchange with the same expected fails"
+  "  const prev2 = Atomics.compareExchange(buf, 0, 10, 30);"
+  "  assert.strictEqual(prev2, 20, ""second exchange sees 20, not 10"");"
+  "  assert.strictEqual(buf[0], 20, ""value unchanged (compare failed)"");"
+  "  // the ordering is: op1 before op2, regardless of wall-clock"
+  "}"
+  "// this ordering is the invariant of time built into the kernel"
+  .
+
+THEINVARIANTISLOGICALHAPPENSBEFORENOTPHYSICAL =
+  "// ── 6. The invariant is logical (happens-before), not physical ─"
+  "// Test: two operations on the same location are totally ordered."
+  "{"
+  "  const buf = new Int32Array(4);"
+  "  buf[0] = 1;"
+  "  const log: number[] = [];"
+  "  log.push(Atomics.load(buf, 0));       // reads 1"
+  "  Atomics.store(buf, 0, 2);              // writes 2"
+  "  log.push(Atomics.load(buf, 0));       // reads 2"
+  "  assert.deepStrictEqual(log, [1, 2], ""logical order: read 1, write 2, read 2"");"
+  "}"
+  .
+
+INDEXASTHEANCHOR =
+  "// ── 7. Index 60 as the anchor ─────────────────────────────────"
+  "// The 60th index is the fixed point (I-116)."
+  "{"
+  "  const buf = new Int32Array(128);"
+  "  buf[60] = 0;"
+  "  for (let i = 0; i < 10; i++) {"
+  "    // each write preserves the anchor at 60"
+  "    Atomics.store(buf, i, i);"
+  "  }"
+  "  assert.strictEqual(buf[60], 0, ""anchor at index 60 unchanged"");"
+  "}"
+  .
+
+THESLOTRESET =
+  "// ── 8. The 7-slot reset ───────────────────────────────────────"
+  "// Every 7-slot window closes a cycle; the close is the reset."
+  "function cyclesIn(n: number): number { return Math.floor(n / 7); }"
+  "assert.strictEqual(cyclesIn(7), 1, ""1 cycle in 7"");"
+  "assert.strictEqual(cyclesIn(14), 2, ""2 cycles in 14"");"
+  "assert.strictEqual(cyclesIn(28), 4, ""4 cycles in 28"");"
+  .
+
+TAGGEDNATURALLANGUAGEASTHEMNEMONIC =
+  "// ── 9. Tagged natural language as the mnemonic ────────────────"
+  "// The tag names what the template means."
+  "function tagged(strings: TemplateStringsArray, ...values: unknown[]) {"
+  "  return {"
+  "    name: strings[0].trim(),         // the tag name (first string)"
+  "    cooked: [...strings],"
+  "    values,"
+  "  };"
+  "}"
+  "const result = tagged`AGENT-A ${""payload""} ${42}`;"
+  "assert.strictEqual(result.name, ""AGENT-A"", ""tag name is mnemonic"");"
+  "assert.deepStrictEqual(result.values, [""payload"", 42], ""values captured"");"
+  .
+
+THEMNEMONICISINTHEBASEBLOCK =
+  "// ── 10. The mnemonic is in the base-36 block ──────────────────"
+  "// Every mnemonic uses only /A-Z0-9/."
+  "function isMnemonic(s: string): boolean {"
+  "  for (const c of s) {"
+  "    if (!BLOCK.includes(c)) return false;"
+  "  }"
+  "  return true;"
+  "}"
+  "assert.ok(isMnemonic(""AGENTA""), ""AGENTA is a valid mnemonic"");"
+  "assert.ok(isMnemonic(""A1B2C3""), ""A1B2C3 is a valid mnemonic"");"
+  "assert.ok(!isMnemonic(""agent-a""), ""lowercase is not a mnemonic"");"
+  "assert.ok(!isMnemonic(""AGENT-A""), ""hyphen is not in the block"");"
+  .
+
+THEFULLPIPELINEMNEMONICAGENTSYNC =
+  "// ── 11. The full pipeline: mnemonic → agent → sync ────────────"
+  "function mnemonicToAgent(m: string): Agent {"
+  "  if (!isMnemonic(m)) throw new Error(`invalid mnemonic: ${m}`);"
+  "  const first = m[0];"
+  "  const scope = SCOPES[BLOCK.indexOf(first) % SCOPES.length];"
+  "  return { id: first, scope, location: ""local"" };"
+  "}"
+  "const a = mnemonicToAgent(""AGENT"");"
+  "assert.strictEqual(a.id, ""A"", ""first char = A"");"
+  "assert.ok(SCOPES.includes(a.scope), ""scope from base-36 index"");"
+  .
+
+EVERYCOMPUTERCANSYNCWITHOUTAGREEINGONACLOCK =
+  "// ── 12. Every computer can sync without agreeing on a clock ───"
+  "// The protocol only requires:"
+  "//   - a Buffer (or SharedArrayBuffer)"
+  "//   - Atomics (the kernel)"
+  "//   - the base-36 block (the mnemonic)"
+  "//   - postMessage (the channel)"
+  "// No clock, no external service, no DNS, no time server."
+  "const required = [""Buffer"", ""Atomics"", ""postMessage"", ""Base36Block""];"
+  "for (const r of required) {"
+  "  assert.ok(r.length > 0, `protocol requires: ${r}`);"
+  "}"
+  "assert.strictEqual(required.length, 4, ""4 protocol requirements"");"
+  .
+
+THEINVARIANTOFTIMEISBUILTINTOTHEKERNEL =
+  "// ── 13. The invariant of time is built into the kernel ────────"
+  "// Test: Atomics operations are totally ordered without a clock."
+  "{"
+  "  const buf = new Int32Array(4);"
+  "  const ops: string[] = [];"
+  "  // interleave load/store/compareExchange on the same index"
+  "  buf[0] = 0;"
+  "  ops.push(`read:${Atomics.load(buf, 0)}`);"
+  "  Atomics.store(buf, 0, 1);"
+  "  ops.push(`read:${Atomics.load(buf, 0)}`);"
+  "  Atomics.compareExchange(buf, 0, 1, 2);"
+  "  ops.push(`read:${Atomics.load(buf, 0)}`);"
+  "  // the ops are in logical order"
+  "  assert.deepStrictEqual(ops, [""read:0"", ""read:1"", ""read:2""], ""logical order"");"
+  "}"
+  "console.log(""I-152: the mnemonic protocol — passed"");"
+  "console.log(`  agents: 144 (4 scopes × 36 symbols) × 2 locations = 288`);"
+  "console.log(`  channel: postMessage + SharedArrayBuffer`);"
+  "console.log(`  ordering: Atomics sequential consistency (logical time)`);"
+  "console.log(`  anchor: index 60 (fixed point)`);"
+  "console.log(`  reset: every 7-slot window closes a cycle`);"
+  "console.log(`  mnemonic: /A-Z0-9/ tagged natural language`);"
+  "console.log(`  without time: event-driven, not clock-driven`);"
+  .

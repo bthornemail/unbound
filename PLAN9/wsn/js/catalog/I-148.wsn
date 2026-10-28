@@ -1,0 +1,191 @@
+RECORD = HEAD THEHTTPSPOTRIPLE PINEBOXEDBOXEDPINEASTHETWODIRECTIONS THESWAPAXESRUBIKSCUBEROTATIONAXES THEAXESDIRECTIONSDOF THERUBIKSCUBEMAPPING THEANCHORSNUX THEDOFMAPTOTHEFACES THEINTERPRETATIONISTHEONLYCHANGE THEROTATIONOFINTERPRETATION THEINTERPRETATIONISTHESAMESTRUCTUREREADDIFFERENTLY PINEBOXEDBOXEDPINEASTHETWODIRECTIONSOFTHESPO .
+
+HEAD =
+  "// i148.ts — I-148: PINEboxed SPO + swap axes anchored at 0n, 0u"
+  "import assert from ""node:assert"";"
+  .
+
+THEHTTPSPOTRIPLE =
+  "// ── 1. The HTTP/1.1 SPO triple ─────────────────────────────────"
+  "type SPO = {"
+  "  subject: string;    // Content-Location"
+  "  predicate: string;  // Location"
+  "  object: string;     // ETag"
+  "};"
+  "const response: SPO = {"
+  "  subject: ""Content-Location: /original/path"","
+  "  predicate: ""Location: /new/path"","
+  "  object: ""ETag: \""v1\"""","
+  "};"
+  "assert.ok(response.subject.startsWith(""Content-Location""), ""subject = Content-Location"");"
+  "assert.ok(response.predicate.startsWith(""Location""),      ""predicate = Location"");"
+  "assert.ok(response.object.startsWith(""ETag""),             ""object = ETag"");"
+  .
+
+PINEBOXEDBOXEDPINEASTHETWODIRECTIONS =
+  "// ── 2. PINEboxed / boxedPINE as the two directions ─────────────"
+  "function PINEboxed(spo: SPO): string {"
+  "  return `(${spo.subject} → ${spo.predicate} → ${spo.object})`;"
+  "}"
+  "function boxedPINE(spo: SPO): string {"
+  "  return `box(${spo.subject} ∧ ${spo.predicate} ∧ ${spo.object})`;"
+  "}"
+  "const pb = PINEboxed(response);"
+  "const bp = boxedPINE(response);"
+  "assert.ok(pb.includes(""Content-Location""), ""PINEboxed has the subject"");"
+  "assert.ok(bp.includes(""box""), ""boxedPINE has the modal box"");"
+  .
+
+THESWAPAXESRUBIKSCUBEROTATIONAXES =
+  "// ── 3. The 3 swap axes (Rubik's cube rotation axes) ────────────"
+  "function swap16(x: number): number {"
+  "  return ((x & 0xFF) << 8) | ((x >> 8) & 0xFF);"
+  "}"
+  "function swap32(x: number): number {"
+  "  x = ((x & 0xFFFF) << 16) | ((x >>> 16) & 0xFFFF);"
+  "  return ((x & 0xFF00FF00) >>> 8) | ((x & 0x00FF00FF) << 8);"
+  "}"
+  "function swap64(x: bigint): bigint {"
+  "  x = ((x & 0xFFFFFFFFn) << 32n) | ((x >> 32n) & 0xFFFFFFFFn);"
+  "  x = ((x & 0xFFFF0000FFFF0000n) >> 16n) | ((x & 0x0000FFFF0000FFFFn) << 16n);"
+  "  x = ((x & 0xFF00FF00FF00FF00n) >> 8n)  | ((x & 0x00FF00FF00FF00FFn) << 8n);"
+  "  return x;"
+  "}"
+  "// each swap is an involution (rotating twice = identity)"
+  "assert.strictEqual(swap16(swap16(0x1234)), 0x1234, ""swap16 involution"");"
+  "assert.strictEqual(swap32(swap32(0x12345678)), 0x12345678, ""swap32 involution"");"
+  "assert.strictEqual(swap64(swap64(0x0123456789ABCDEFn)), 0x0123456789ABCDEFn, ""swap64 involution"");"
+  .
+
+THEAXESDIRECTIONSDOF =
+  "// ── 4. The 3 axes × 2 directions = 6 DOF ───────────────────────"
+  "type Axis = { width: 16 | 32 | 64; dir: ""forward"" | ""inverse"" };"
+  "const axes: Axis[] = [];"
+  "for (const width of [16, 32, 64] as const) {"
+  "  axes.push({ width, dir: ""forward"" });"
+  "  axes.push({ width, dir: ""inverse"" });"
+  "}"
+  "assert.strictEqual(axes.length, 6, ""3 axes x 2 directions = 6"");"
+  "assert.strictEqual(axes.filter(a => a.dir === ""forward"").length, 3, ""3 forward"");"
+  "assert.strictEqual(axes.filter(a => a.dir === ""inverse"").length, 3, ""3 inverse"");"
+  .
+
+THERUBIKSCUBEMAPPING =
+  "// ── 5. The Rubik's cube mapping ────────────────────────────────"
+  "// 3 axes x 2 directions = 6 face rotations"
+  "// 8 corners + 12 edges + 6 centers = 26 visible cubes"
+  "assert.strictEqual(3, 3, ""3 axes"");"
+  "assert.strictEqual(6, 6, ""6 faces"");"
+  "assert.strictEqual(8 + 12 + 6, 26, ""8 corners + 12 edges + 6 centers = 26"");"
+  .
+
+THEANCHORSNUX =
+  "// ── 6. The anchors: 0n, 0u, 0x ─────────────────────────────────"
+  "// 0n = BigInt vertex (the corner)"
+  "const vertex = 0n;"
+  "assert.strictEqual(typeof vertex, ""bigint"", ""0n is BigInt"");"
+  "assert.strictEqual(vertex, 0n, ""0n = 0"");"
+  "// 0u = Unicode reference (the edge)"
+  "const reference = ""\u0000"";"
+  "assert.strictEqual(reference, ""\u0000"", ""0u references U+0000"");"
+  "assert.strictEqual(reference.codePointAt(0), 0, ""U+0000 = 0"");"
+  "// 0x = hex radix (the center)"
+  "const center = 0x0;"
+  "assert.strictEqual(center, 0, ""0x0 = 0"");"
+  "// all three anchors converge at 0"
+  "assert.strictEqual(Number(vertex), 0, ""vertex -> 0"");"
+  "assert.strictEqual(reference.codePointAt(0), 0, ""reference -> 0"");"
+  "assert.strictEqual(center, 0, ""center -> 0"");"
+  .
+
+THEDOFMAPTOTHEFACES =
+  "// ── 7. The 6 DOF map to the 6 faces ────────────────────────────"
+  "// 3 axes x 2 directions = 6 rotations"
+  "// front/back, up/down, left/right"
+  "const faces = [""front"",""back"",""up"",""down"",""left"",""right""];"
+  "assert.strictEqual(faces.length, 6, ""6 faces"");"
+  "// the face pairs correspond to the 3 axes"
+  "const facePairs = ["
+  "  [""front"", ""back""],"
+  "  [""up"", ""down""],"
+  "  [""left"", ""right""],"
+  "];"
+  "assert.strictEqual(facePairs.length, 3, ""3 pairs = 3 axes"");"
+  "for (const [a, b] of facePairs) {"
+  "  assert.strictEqual(faces.includes(a), true, `${a} is a face`);"
+  "  assert.strictEqual(faces.includes(b), true, `${b} is a face`);"
+  "}"
+  .
+
+THEINTERPRETATIONISTHEONLYCHANGE =
+  "// ── 8. The interpretation is the only change ───────────────────"
+  "// The structure (PINEboxed / boxedPINE / SPO / swap / anchors)"
+  "// is fixed. Only the interpretation can be changed."
+  "type Interpretation = {"
+  "  subject: string;"
+  "  predicate: string;"
+  "  object: string;"
+  "  anchor: ""0n"" | ""0u"" | ""0x"";"
+  "};"
+  "const interpretations: Interpretation[] = ["
+  "  { subject: ""A"", predicate: ""→"", object: ""B"", anchor: ""0n"" },"
+  "  { subject: ""B"", predicate: ""→"", object: ""C"", anchor: ""0u"" },"
+  "  { subject: ""C"", predicate: ""→"", object: ""A"", anchor: ""0x"" },"
+  "];"
+  "for (const interp of interpretations) {"
+  "  assert.ok(interp.subject.length > 0, ""has subject"");"
+  "  assert.ok(interp.predicate.length > 0, ""has predicate"");"
+  "  assert.ok(interp.object.length > 0, ""has object"");"
+  "  assert.ok([""0n"",""0u"",""0x""].includes(interp.anchor), ""has valid anchor"");"
+  "}"
+  .
+
+THEROTATIONOFINTERPRETATION =
+  "// ── 9. The rotation of interpretation ──────────────────────────"
+  "// Rotating the interpretation is the same as rotating the cube."
+  "// Each rotation preserves the structure."
+  "const interpCycle = [""0n"", ""0u"", ""0x""];"
+  "for (let i = 0; i < 3; i++) {"
+  "  const rot = interpCycle.slice(i).concat(interpCycle.slice(0, i));"
+  "  assert.strictEqual(rot.length, 3, `rotation ${i} has 3 elements`);"
+  "}"
+  "assert.deepStrictEqual("
+  "  [0,1,2].map(i => interpCycle.slice(i).concat(interpCycle.slice(0, i))),"
+  "  [[""0n"",""0u"",""0x""],[""0u"",""0x"",""0n""],[""0x"",""0n"",""0u""]],"
+  "  ""3 rotations of the anchor triple"""
+  ");"
+  .
+
+THEINTERPRETATIONISTHESAMESTRUCTUREREADDIFFERENTLY =
+  "// ── 10. The interpretation is the same structure read differently"
+  "// Same bytes, different reading. This is the only change."
+  "const bytes = new Uint8Array([0x41, 0x42, 0x43, 0x44]);"
+  "// interpretation 1: read as ASCII"
+  "assert.strictEqual(String.fromCharCode(...bytes), ""ABCD"", ""interpretation: ASCII"");"
+  "// interpretation 2: read as hex (via toString on each byte)"
+  "assert.strictEqual("
+  "  [...bytes].map(b => b.toString(16).toUpperCase().padStart(2, ""0"")).join(""""),"
+  "  ""41424344"","
+  "  ""interpretation: hex"""
+  ");"
+  "// same bytes, different readings — the structure is unchanged"
+  .
+
+PINEBOXEDBOXEDPINEASTHETWODIRECTIONSOFTHESPO =
+  "// ── 11. PINEboxed / boxedPINE as the two directions of the SPO ─"
+  "// PINEboxed = (S → P → O)"
+  "// boxedPINE = box(S ∧ P ∧ O)"
+  "// the two are dual: the reading direction flips"
+  "function forward(spo: SPO): string { return PINEboxed(spo); }"
+  "function backward(spo: SPO): string { return boxedPINE(spo); }"
+  "// the two readings have the same content"
+  "assert.ok(forward(response).includes(""Content-Location""), ""forward has subject"");"
+  "assert.ok(backward(response).includes(""Content-Location""), ""backward has subject"");"
+  "assert.ok(forward(response).includes(""ETag""), ""forward has object"");"
+  "assert.ok(backward(response).includes(""ETag""), ""backward has object"");"
+  "console.log(""I-148: PINEboxed SPO + swap axes anchored at 0n, 0u — passed"");"
+  "console.log(`  SPO triple: subject=Content-Location, predicate=Location, object=ETag`);"
+  "console.log(`  6 DOF: 3 swap axes x 2 directions`);"
+  "console.log(`  anchors: 0n (corner), 0u (edge), 0x (center)`);"
+  "console.log(`  interpretation is the only change — the structure is fixed`);"
+  .

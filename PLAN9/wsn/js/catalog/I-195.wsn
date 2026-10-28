@@ -1,0 +1,56 @@
+RECORD = HEAD THEGNOMONASTETRAGNOMONANIMPRINTSIT EIGHTFRAMESEVERYWHEREEVERYSTATEHASPERIOD THEATOMICKERNELSCONSTANTTURNSUNEVENLY .
+
+HEAD =
+  "// i195.ts — I-195: the gnomon, the animation of the logical clock"
+  "//"
+  "// The author, 2026-10-13, running omi-files/polytron/tetra-gnomon-anim: ""omg it"
+  "// was here this whole time""; it is the animation of the logical clock (the"
+  "// author: ""it's the animation, not heartbeat""). Found here: polytron's"
+  "// K(p,C) = rotl(p,1) ^ rotl(p,3) ^ rotr(p,2) ^ C with its constitutional constant 0x1D is the vault's delta"
+  "// law, and the gnomon it animates is one of its cycles: from 0x4242, eight"
+  "// steps, each step's SID the next step's state, the eighth SID the seed again."
+  "// Every one of the 65,536 states turns the same: period 8, none shorter, so"
+  "// the clock's animation has eight frames wherever it starts. With the atomic"
+  "// kernel's 0x1D1D it does not: there, some states turn in 4, some in 2, and 8"
+  "// never move."
+  "import assert from ""node:assert"";"
+  "const rotl = (x: number, n: number) => ((x << n) | (x >>> (16 - n))) & 0xffff;"
+  "const rotr = (x: number, n: number) => ((x >>> n) | (x << (16 - n))) & 0xffff;"
+  "const K = (p: number, c: number) => rotl(p, 1) ^ rotl(p, 3) ^ rotr(p, 2) ^ c;"
+  "const hex = (v: number) => ""0x"" + v.toString(16).toUpperCase().padStart(4, ""0"");"
+  .
+
+THEGNOMONASTETRAGNOMONANIMPRINTSIT =
+  "// ── 1. The gnomon, as tetra-gnomon-anim prints it ────────────"
+  "const printed = [0x4242, 0x061b, 0xfd75, 0x6e04, 0xb7b7, 0x3f22, 0x0880, 0x573d];"
+  "let state = 0x4242;"
+  "for (let step = 0; step < 8; step++) {"
+  "  assert.strictEqual(state, printed[step], `step ${step}: state ${hex(printed[step]!)}`);"
+  "  const sid = K(state, 0x1d);"
+  "  assert.strictEqual(sid, printed[(step + 1) % 8], `step ${step}: SID ${hex(sid)} is the next state`);"
+  "  state = sid;"
+  "}"
+  "assert.strictEqual(state, 0x4242, ""the eighth SID is the seed: the animation closes"");"
+  .
+
+EIGHTFRAMESEVERYWHEREEVERYSTATEHASPERIOD =
+  "// ── 2. Eight frames everywhere: every state has period 8 ───────"
+  "const periods = (c: number) => {"
+  "  const count = new Map<number, number>();"
+  "  for (let x = 0; x < 0x10000; x++) {"
+  "    let w = K(x, c), n = 1;"
+  "    while (w !== x) { w = K(w, c); n++; }"
+  "    count.set(n, (count.get(n) ?? 0) + 1);"
+  "  }"
+  "  return Object.fromEntries([...count].sort((a, b) => a[0] - b[0]));"
+  "};"
+  "assert.deepStrictEqual(periods(0x1d), { 8: 65536 }, ""under 0x1D all 65,536 states return after exactly 8 steps"");"
+  .
+
+THEATOMICKERNELSCONSTANTTURNSUNEVENLY =
+  "// ── 3. The atomic kernel's constant turns unevenly ───────────"
+  "assert.deepStrictEqual(periods(0x1d1d), { 1: 8, 2: 56, 4: 4032, 8: 61440 }, ""under 0x1D1D: 8 fixed, 56 of period 2, 4,032 of period 4, 61,440 of period 8"");"
+  "console.log(""I-195: the gnomon, the animation of the logical clock — passed"");"
+  "console.log(""  polytron's K with 0x1D: from 0x4242, 8 steps, each SID the next state, the eighth the seed"");"
+  "console.log(""  every one of the 65,536 states has period 8; under 0x1D1D, 8 never move"");"
+  .

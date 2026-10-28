@@ -1,0 +1,221 @@
+RECORD = HEAD XHAMMINGWEIGHT XISTHECASEFLIPDIFFERENCE XISTHEPRINTCONTROLBOUNDARY THEGAPISCHARACTERS THEGAPCHARACTERSASHAMMINGPOSITIONS THEFANOPLANESTRUCTURE THEHAMMINGCODEASTHEFANOPLANE HAMMINGDISTANCEANDTHEFANOPROJECTION THEFANOPROJECTIONOFANYBUFFER THEHAMMINGPREFIXBITFORXXFBITFORXXF BTHEGAPSTRADDLESTHEXXBOUNDARY EVERYBUFFERGAPPEDORNOTHASTHESTRUCTURE THEHAMMINGPREFIXONTHEBASEBLOCK .
+
+HEAD =
+  "// i145.ts — I-145: 0x20 as the Hamming prefix; Fano projection"
+  "import assert from ""node:assert"";"
+  .
+
+XHAMMINGWEIGHT =
+  "// ── 1. 0x20 = Hamming weight 1 ─────────────────────────────────"
+  "const SPACE = 0x20;"
+  "function hammingWeight(n: number): number {"
+  "  let w = 0;"
+  "  while (n) { w += n & 1; n >>= 1; }"
+  "  return w;"
+  "}"
+  "assert.strictEqual(hammingWeight(SPACE), 1, ""0x20 has Hamming weight 1"");"
+  "assert.strictEqual(SPACE.toString(2), ""100000"", ""0x20 = 0b100000"");"
+  "assert.strictEqual(SPACE, 32, ""0x20 = 32"");"
+  "assert.strictEqual(Math.log2(SPACE), 5, ""0x20 = 2^5 (bit 5)"");"
+  .
+
+XISTHECASEFLIPDIFFERENCE =
+  "// ── 2. 0x20 is the case-flip difference ────────────────────────"
+  "assert.strictEqual(""a"".charCodeAt(0) - ""A"".charCodeAt(0), 0x20, ""A -> a = 0x20"");"
+  "assert.strictEqual(""z"".charCodeAt(0) - ""Z"".charCodeAt(0), 0x20, ""Z -> z = 0x20"");"
+  .
+
+XISTHEPRINTCONTROLBOUNDARY =
+  "// ── 3. 0x20 is the print/control boundary ─────────────────────"
+  "const isPrint = (c: number) => c >= 0x20 && c <= 0x7E;"
+  "assert.ok(!isPrint(0x1F), ""0x1F not printable"");"
+  "assert.ok(isPrint(0x20),  ""0x20 printable (space)"");"
+  "assert.ok(isPrint(0x7E),  ""0x7E printable"");"
+  .
+
+THEGAPISCHARACTERS =
+  "// ── 4. The gap :;<=>?@ is 7 characters ────────────────────────"
+  "const gap: number[] = [];"
+  "for (let c = 0x3A; c <= 0x40; c++) gap.push(c);"
+  "assert.strictEqual(gap.length, 7, ""gap = 7 characters"");"
+  "const gapChars = gap.map(c => String.fromCharCode(c));"
+  "assert.deepStrictEqual(gapChars, ["":"","";"",""<"",""="","">"",""?"",""@""], ""gap chars"");"
+  .
+
+THEGAPCHARACTERSASHAMMINGPOSITIONS =
+  "// ── 5. The 7 gap characters as Hamming (7,4) positions ────────"
+  "// position 1, 2, 4 = parity (powers of 2)"
+  "// position 3, 5, 6, 7 = data"
+  "type HammingPos = { pos: number; char: string; code: number; role: ""parity"" | ""data"" };"
+  "const hamming: HammingPos[] = gapChars.map((ch, i) => {"
+  "  const pos = i + 1;"
+  "  const isPow2 = (pos & (pos - 1)) === 0;"
+  "  return {"
+  "    pos,"
+  "    char: ch,"
+  "    code: gap[i],"
+  "    role: isPow2 ? ""parity"" : ""data"","
+  "  };"
+  "});"
+  "assert.deepStrictEqual("
+  "  hamming.map(h => h.role),"
+  "  [""parity"", ""parity"", ""data"", ""parity"", ""data"", ""data"", ""data""],"
+  "  ""1,2,4 parity; 3,5,6,7 data"""
+  ");"
+  "// the parity positions are 1, 2, 4"
+  "const parityPos = hamming.filter(h => h.role === ""parity"").map(h => h.pos);"
+  "assert.deepStrictEqual(parityPos, [1, 2, 4], ""parity positions"");"
+  .
+
+THEFANOPLANESTRUCTURE =
+  "// ── 6. The Fano plane structure ───────────────────────────────"
+  "// 7 points, 7 lines, each line has 3 points"
+  "const FANO_POINTS = 7;"
+  "const FANO_LINES = 7;"
+  "const POINTS_PER_LINE = 3;"
+  "assert.strictEqual(FANO_POINTS, 7, ""7 Fano points"");"
+  "assert.strictEqual(FANO_LINES, 7, ""7 Fano lines"");"
+  "assert.strictEqual(POINTS_PER_LINE, 3, ""3 points per line"");"
+  "// the 7 lines of the Fano plane (standard labeling)"
+  "const fanoLines = ["
+  "  [1, 2, 3], [1, 4, 5], [1, 6, 7],"
+  "  [2, 4, 6], [2, 5, 7], [3, 4, 7], [3, 5, 6],"
+  "];"
+  "assert.strictEqual(fanoLines.length, 7, ""7 lines"");"
+  "for (const line of fanoLines) {"
+  "  assert.strictEqual(line.length, 3, `line ${line} has 3 points`);"
+  "}"
+  "// every point appears in exactly 3 lines"
+  "for (let p = 1; p <= 7; p++) {"
+  "  const inLines = fanoLines.filter(l => l.includes(p));"
+  "  assert.strictEqual(inLines.length, 3, `point ${p} in 3 lines`);"
+  "}"
+  "// any two points share exactly one line"
+  "for (let a = 1; a <= 7; a++) {"
+  "  for (let b = a + 1; b <= 7; b++) {"
+  "    const shared = fanoLines.filter(l => l.includes(a) && l.includes(b));"
+  "    assert.strictEqual(shared.length, 1, `points ${a},${b} share 1 line`);"
+  "  }"
+  "}"
+  .
+
+THEHAMMINGCODEASTHEFANOPLANE =
+  "// ── 7. The Hamming (7,4) code as the Fano plane ───────────────"
+  "// Data bits D1-D4 at positions 3,5,6,7"
+  "// Parity bits P1,P2,P4 at positions 1,2,4"
+  "// Each parity covers a set of positions:"
+  "//   P1 covers 1,3,5,7"
+  "//   P2 covers 2,3,6,7"
+  "//   P4 covers 4,5,6,7"
+  "const parityCoverage = {"
+  "  P1: [1, 3, 5, 7],  // :, <, >, @"
+  "  P2: [2, 3, 6, 7],  // ;, <, ?, @"
+  "  P4: [4, 5, 6, 7],  // =, >, ?, @"
+  "};"
+  "for (const [name, positions] of Object.entries(parityCoverage)) {"
+  "  assert.strictEqual(positions.length, 4, `${name} covers 4 positions`);"
+  "  assert.ok(positions.includes(7), `${name} includes position 7`);"
+  "}"
+  "// P1, P2, P4 as Fano ""lines"" through position 7"
+  "// (the Hamming structure overlaps with the Fano structure)"
+  .
+
+HAMMINGDISTANCEANDTHEFANOPROJECTION =
+  "// ── 8. Hamming distance and the Fano projection ───────────────"
+  "function hammingDistance(a: number, b: number): number {"
+  "  return hammingWeight(a ^ b);"
+  "}"
+  "assert.strictEqual(hammingDistance(0x41, 0x61), 1, ""A vs a: 1 bit apart"");"
+  "assert.strictEqual(hammingDistance(0x20, 0x00), 1, ""space vs NUL: 1 bit apart"");"
+  "assert.strictEqual(hammingDistance(0x00, 0x1F), 5, ""NUL vs 0x1F: 5 bits"");"
+  .
+
+THEFANOPROJECTIONOFANYBUFFER =
+  "// ── 9. The Fano projection of any buffer ──────────────────────"
+  "// Take 7 consecutive bytes, reduce to a Fano point (1-7)."
+  "function fanoProject(buf: Uint8Array, start: number): number {"
+  "  // XOR the 7 bytes; the low 3 bits give the Fano point (0-7)"
+  "  let x = 0;"
+  "  for (let i = 0; i < 7; i++) x ^= buf[start + i];"
+  "  return (x % 7) + 1;  // 1-7"
+  "}"
+  "// any 7-byte window projects to a Fano point"
+  "const testBuf = new Uint8Array([0x3A,0x3B,0x3C,0x3D,0x3E,0x3F,0x40]);"
+  "const p = fanoProject(testBuf, 0);"
+  "assert.ok(p >= 1 && p <= 7, ""projection gives 1-7"");"
+  .
+
+THEHAMMINGPREFIXBITFORXXFBITFORXXF =
+  "// ── 10. The Hamming prefix: bit 5 for 0x20-0x3F, bit 6 for 0x40-0x5F ─"
+  "// 0x20-0x3F: bit 5 set, bit 6 clear"
+  "for (let c = 0x20; c <= 0x3F; c++) {"
+  "  assert.strictEqual((c & 0x20), 0x20, `0x${c.toString(16)} has bit 5 set`);"
+  "  assert.strictEqual((c & 0x40), 0,    `0x${c.toString(16)} has bit 6 clear`);"
+  "}"
+  "// 0x40-0x5F: bit 6 set, bit 5 clear"
+  "for (let c = 0x40; c <= 0x5F; c++) {"
+  "  assert.strictEqual((c & 0x40), 0x40, `0x${c.toString(16)} has bit 6 set`);"
+  "  assert.strictEqual((c & 0x20), 0,    `0x${c.toString(16)} has bit 5 clear`);"
+  "}"
+  "// 0x60-0x7F: both bits set"
+  "for (let c = 0x60; c <= 0x7F; c++) {"
+  "  assert.strictEqual((c & 0x20), 0x20, `0x${c.toString(16)} has bit 5 set`);"
+  "  assert.strictEqual((c & 0x40), 0x40, `0x${c.toString(16)} has bit 6 set`);"
+  "}"
+  .
+
+BTHEGAPSTRADDLESTHEXXBOUNDARY =
+  "// ── 10b. The gap straddles the 0x20/0x40 boundary ────────────────"
+  "// gap = :;<=>?@ = 0x3A-0x40"
+  "// 0x3A-0x3F: bit 5 set (6 chars)"
+  "// 0x40:      bit 6 set (1 char)"
+  "const gapLow = gap.filter(c => c <= 0x3F);"
+  "const gapHigh = gap.filter(c => c === 0x40);"
+  "assert.strictEqual(gapLow.length, 6, ""6 chars in the bit-5 region"");"
+  "assert.strictEqual(gapHigh.length, 1, ""1 char in the bit-6 region"");"
+  "assert.strictEqual(gapLow.length + gapHigh.length, 7, ""6 + 1 = 7"");"
+  "// the high char is position 7 (@)"
+  "assert.strictEqual(String.fromCharCode(gapHigh[0]), ""@"", ""position 7 = @"");"
+  .
+
+EVERYBUFFERGAPPEDORNOTHASTHESTRUCTURE =
+  "// ── 11. Every buffer (gapped or not) has the 7-structure ──────"
+  "// The gap is 7 chars. Any 7 consecutive bytes can be projected."
+  "// Test: project multiple 7-byte windows of the same buffer."
+  "const windows: number[] = [];"
+  "const longBuf = new Uint8Array(28);"
+  "for (let i = 0; i < 28; i++) longBuf[i] = (i * 7) & 0xFF;"
+  "for (let start = 0; start <= 21; start++) {"
+  "  windows.push(fanoProject(longBuf, start));"
+  "}"
+  "assert.strictEqual(windows.length, 22, ""22 windows of 7 bytes in 28"");"
+  "for (const w of windows) {"
+  "  assert.ok(w >= 1 && w <= 7, `window projects to ${w} in 1-7`);"
+  "}"
+  .
+
+THEHAMMINGPREFIXONTHEBASEBLOCK =
+  "// ── 12. The Hamming prefix on the base-36 block ───────────────"
+  "// The base-36 block is 0x30-0x39 and 0x41-0x5A."
+  "// Both ranges have bit 5 set in their lower halves:"
+  "//   0x30-0x39 (bit 5 and 4 set: 0x30 = 0b110000)"
+  "//   0x41-0x5A (bit 6 set, bit 5 clear: 0x41 = 0b1000001)"
+  "const block36 = ""0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  "for (const c of block36) {"
+  "  const code = c.charCodeAt(0);"
+  "  const bit6 = (code & 0x40) !== 0;"
+  "  const bit5 = (code & 0x20) !== 0;"
+  "  // digits: bit 6 = 0, bit 5 = 1"
+  "  // letters: bit 6 = 1, bit 5 = 0"
+  "  if (code <= 0x39) {"
+  "    assert.ok(!bit6 && bit5, `digit ${c}: bit6=0, bit5=1`);"
+  "  } else {"
+  "    assert.ok(bit6 && !bit5, `letter ${c}: bit6=1, bit5=0`);"
+  "  }"
+  "}"
+  "console.log(""I-145: 0x20 as the Hamming prefix; Fano projection — passed"");"
+  "console.log(`  0x20 = 2^5, Hamming weight 1`);"
+  "console.log(`  gap :;<=>?@ = 7 chars = Fano number`);"
+  "console.log(`  Hamming (7,4): parity at 1,2,4 (:;=), data at 3,5,6,7 (< >?@)`);"
+  "console.log(`  every 7-byte window projects to a Fano point (1-7)`);"
+  .

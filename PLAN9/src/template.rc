@@ -1,0 +1,35 @@
+#!/bin/rc
+# template.rc - inside Plan 9: ask zlazy whether GOD [ IS | OF ] WORD holds the
+# sentences it should and no others; check the ALGOL words; render both to
+# _CODEX[0] with zcodex0 and read both .wsn with zwsn.
+rfork e
+ifs='
+'
+w=/tmp/zt
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(c in zlazy zwsn zcodex0) { 8c $c.c && 8l -o $w/$c $c.8 || exit compile }
+cd $p
+fail=0
+fn ask {
+	if($w/zlazy $1 $2 $3) got=yes
+	if not got=no
+	if(! ~ $got $4){ echo 'template.rc: FAIL' $2 '"'$3'"' expected $4; fail=1 }
+}
+ask wsn/template.wsn TEMPLATE 'GOD WORD' yes
+ask wsn/template.wsn TEMPLATE 'GOD IS WORD' yes
+ask wsn/template.wsn TEMPLATE 'GOD OF WORD' yes
+ask wsn/template.wsn TEMPLATE 'GOD IS OF WORD' no
+ask wsn/template.wsn TEMPLATE 'GOD ? WORD' no
+ask wsn/template.wsn TEMPLATE 'WORD IS GOD' no
+for(x in `{cat in/algol.txt}) ask wsn/algol.wsn RESERVED $x yes
+ask wsn/algol.wsn RESERVED GO no
+ask wsn/algol.wsn RESERVED begin no
+$w/zcodex0 <in/template.txt >$w/zout/word
+$w/zcodex0 <in/algol.txt >$w/zout/algol
+$w/zwsn wsn/template.wsn wsn/algol.wsn
+@{cd $w && tar cf /dev/sd02/data zout} || exit tar
+if(~ $fail 0) echo 'template.rc: every answer as expected'

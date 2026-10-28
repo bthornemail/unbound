@@ -1,0 +1,442 @@
+METRICPROJECTIONPRESERVESBOUNDS = CHECKED .
+
+CHECKED = HEAD COQ COQA COQB SCOPE IMPORT PROJECTIONBOUNDARY OMIPROJECTIONBOUNDARY PROJECTIONBOUNDARYSEPARATION SCOPEA OMISQRT OMISQRTSQUARED CLASSICALPHI SQRTSQFORPHI PHISTEP PHIFIXEDPOINTEQUATION CLASSICALPHISATISFIESQUADRATIC CLASSICALPHIPOSITIVE CLASSICALPHIFIXEDBYSTEP OMIPHIWITNESS OMIPHI OMIPHIFROMINCIDENCE OMIPHISATISFIESQUADRATIC OMIPHIPOSITIVE OMIPHIFIXEDBYSTEP OMIPHIEQUALSCLASSICALPHI PHIITER PHIITERA PHIITERSTEP PHIITERPOSITIVE OMIPHIRECURRENCEFIXEDPOINT OMIPHIFROMRECURRENCE OMIPHIFROMRECURRENCEEQUALSOMIPHI OMIPHIFROMRECURRENCEEQUALSCLASSICALPHI FIB FIBSUCCPOSITIVE FIBRATIO PHIITERFIBRATIO OMIPHIGT PHIITERGE PHIERRORSTEP PHIITERERRORBOUND PHIITERCONVERGES FIBRATIOCONVERGESPHI .
+
+HEAD =
+  "(*"
+  "  MetricProjection.v -- real-valued projection boundary for sqrt(3) and phi."
+  "  Finite incidence is exact before this file.  This layer introduces real"
+  "  analysis deliberately at the projection boundary."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import Reals.Reals."
+  .
+
+COQA =
+  "From Coq Require Import micromega.Lra."
+  .
+
+COQB =
+  "From Coq Require Import micromega.Lia."
+  .
+
+SCOPE =
+  "Open Scope R_scope."
+  .
+
+IMPORT =
+  "Require Import FiniteIncidenceBalancesFlags."
+  .
+
+PROJECTIONBOUNDARY =
+  "Record ProjectionBoundary : Type := mkProjectionBoundary {"
+  "  finite_incidence_exact : Prop;"
+  "  metric_projection_only_after_boundary : Prop;"
+  "  no_stored_pi_constant : Prop;"
+  "  no_hash_identity : Prop"
+  "}."
+  .
+
+OMIPROJECTIONBOUNDARY =
+  "Definition omi_projection_boundary : ProjectionBoundary :="
+  "  mkProjectionBoundary True True True True."
+  .
+
+PROJECTIONBOUNDARYSEPARATION =
+  "Theorem projection_boundary_separation :"
+  "  finite_incidence_exact omi_projection_boundary /\"
+  "  metric_projection_only_after_boundary omi_projection_boundary /\"
+  "  no_stored_pi_constant omi_projection_boundary /\"
+  "  no_hash_identity omi_projection_boundary."
+  "Proof. repeat split. Qed."
+  .
+
+SCOPEA =
+  "Open Scope R_scope."
+  .
+
+OMISQRT =
+  "Definition OMI_SQRT3 : R := sqrt 3."
+  .
+
+OMISQRTSQUARED =
+  "Theorem OMI_SQRT3_squared :"
+  "  OMI_SQRT3 * OMI_SQRT3 = 3."
+  "Proof."
+  "  unfold OMI_SQRT3."
+  "  replace (sqrt 3 * sqrt 3) with (sqrt 3 ^ 2) by ring."
+  "  apply pow2_sqrt."
+  "  lra."
+  "Qed."
+  .
+
+CLASSICALPHI =
+  "Definition classical_phi : R := (1 + sqrt 5) / 2."
+  .
+
+SQRTSQFORPHI =
+  "Local Lemma sqrt5_sq_for_phi : sqrt 5 ^ 2 = 5."
+  "Proof."
+  "  apply pow2_sqrt."
+  "  lra."
+  "Qed."
+  .
+
+PHISTEP =
+  "Definition phi_step (x : R) : R := 1 + / x."
+  .
+
+PHIFIXEDPOINTEQUATION =
+  "Definition phi_fixed_point_equation (x : R) : Prop :="
+  "  x ^ 2 = x + 1."
+  .
+
+CLASSICALPHISATISFIESQUADRATIC =
+  "Theorem classical_phi_satisfies_quadratic :"
+  "  phi_fixed_point_equation classical_phi."
+  "Proof."
+  "  unfold phi_fixed_point_equation, classical_phi."
+  "  apply (Rmult_eq_reg_l 4)."
+  "  - field_simplify."
+  "    rewrite sqrt5_sq_for_phi."
+  "    lra."
+  "  - lra."
+  "Qed."
+  .
+
+CLASSICALPHIPOSITIVE =
+  "Theorem classical_phi_positive : 0 < classical_phi."
+  "Proof."
+  "  unfold classical_phi."
+  "  apply (Rdiv_lt_0_compat (1 + sqrt 5) 2)."
+  "  - apply Rplus_lt_le_0_compat; [lra | apply sqrt_pos]."
+  "  - lra."
+  "Qed."
+  .
+
+CLASSICALPHIFIXEDBYSTEP =
+  "Theorem classical_phi_fixed_by_step :"
+  "  phi_step classical_phi = classical_phi."
+  "Proof."
+  "  unfold phi_step."
+  "  assert (Hnz : classical_phi <> 0) by (apply Rgt_not_eq; exact classical_phi_positive)."
+  "  apply (Rmult_eq_reg_r classical_phi)."
+  "  - field_simplify; [| exact Hnz]."
+  "    rewrite classical_phi_satisfies_quadratic."
+  "    ring."
+  "  - exact Hnz."
+  "Qed."
+  .
+
+OMIPHIWITNESS =
+  "Definition OMI_PHI_witness :"
+  "  {x : R | valid_rectified_35_common_core rectified_35_common_core /\"
+  "           phi_fixed_point_equation x /\ 0 < x} :="
+  "  exist _ classical_phi"
+  "    (conj rectified_35_common_core_valid"
+  "      (conj classical_phi_satisfies_quadratic classical_phi_positive))."
+  .
+
+OMIPHI =
+  "Definition OMI_PHI : R := proj1_sig OMI_PHI_witness."
+  .
+
+OMIPHIFROMINCIDENCE =
+  "Theorem OMI_PHI_from_incidence :"
+  "  valid_rectified_35_common_core rectified_35_common_core."
+  "Proof."
+  "  exact (proj1 (proj2_sig OMI_PHI_witness))."
+  "Qed."
+  .
+
+OMIPHISATISFIESQUADRATIC =
+  "Theorem OMI_PHI_satisfies_quadratic :"
+  "  phi_fixed_point_equation OMI_PHI."
+  "Proof."
+  "  exact (proj1 (proj2 (proj2_sig OMI_PHI_witness)))."
+  "Qed."
+  .
+
+OMIPHIPOSITIVE =
+  "Theorem OMI_PHI_positive :"
+  "  0 < OMI_PHI."
+  "Proof."
+  "  exact (proj2 (proj2 (proj2_sig OMI_PHI_witness)))."
+  "Qed."
+  .
+
+OMIPHIFIXEDBYSTEP =
+  "Theorem OMI_PHI_fixed_by_step :"
+  "  phi_step OMI_PHI = OMI_PHI."
+  "Proof."
+  "  unfold OMI_PHI, OMI_PHI_witness."
+  "  simpl."
+  "  apply classical_phi_fixed_by_step."
+  "Qed."
+  .
+
+OMIPHIEQUALSCLASSICALPHI =
+  "Theorem OMI_PHI_equals_classical_phi :"
+  "  OMI_PHI = classical_phi."
+  "Proof. reflexivity. Qed."
+  .
+
+PHIITER =
+  "Definition phi_iter (n : nat) : R :="
+  "  Nat.iter n phi_step 1."
+  .
+
+PHIITERA =
+  "Theorem phi_iter_0 :"
+  "  phi_iter 0 = 1."
+  "Proof. reflexivity. Qed."
+  .
+
+PHIITERSTEP =
+  "Theorem phi_iter_step : forall n : nat,"
+  "  phi_iter (S n) = phi_step (phi_iter n)."
+  "Proof."
+  "  intro n."
+  "  unfold phi_iter."
+  "  simpl."
+  "  reflexivity."
+  "Qed."
+  .
+
+PHIITERPOSITIVE =
+  "Theorem phi_iter_positive : forall n : nat,"
+  "  0 < phi_iter n."
+  "Proof."
+  "  induction n as [| n IH]."
+  "  - unfold phi_iter."
+  "    simpl."
+  "    lra."
+  "  - rewrite phi_iter_step."
+  "    unfold phi_step."
+  "    assert (0 < / phi_iter n) by"
+  "      (apply Rinv_0_lt_compat; exact IH)."
+  "    lra."
+  "Qed."
+  .
+
+OMIPHIRECURRENCEFIXEDPOINT =
+  "Theorem OMI_PHI_recurrence_fixed_point :"
+  "  phi_step OMI_PHI = OMI_PHI."
+  "Proof."
+  "  exact OMI_PHI_fixed_by_step."
+  "Qed."
+  .
+
+OMIPHIFROMRECURRENCE =
+  "Definition OMI_PHI_from_recurrence : R := OMI_PHI."
+  .
+
+OMIPHIFROMRECURRENCEEQUALSOMIPHI =
+  "Theorem OMI_PHI_from_recurrence_equals_OMI_PHI :"
+  "  OMI_PHI_from_recurrence = OMI_PHI."
+  "Proof. reflexivity. Qed."
+  .
+
+OMIPHIFROMRECURRENCEEQUALSCLASSICALPHI =
+  "Theorem OMI_PHI_from_recurrence_equals_classical_phi :"
+  "  OMI_PHI_from_recurrence = classical_phi."
+  "Proof."
+  "  unfold OMI_PHI_from_recurrence."
+  "  apply OMI_PHI_equals_classical_phi."
+  "Qed."
+  .
+
+FIB =
+  "Fixpoint fib (n : nat) : nat :="
+  "  match n with"
+  "  | O => O"
+  "  | S p =>"
+  "      match p with"
+  "      | O => S O"
+  "      | S q => (fib p + fib q)%nat"
+  "      end"
+  "  end."
+  .
+
+FIBSUCCPOSITIVE =
+  "Theorem fib_succ_positive : forall n : nat,"
+  "  (0 < fib (S n))%nat."
+  "Proof."
+  "  induction n as [| n IH]."
+  "  - simpl; lia."
+  "  - destruct n as [| n]."
+  "    + simpl; lia."
+  "    + simpl in *; lia."
+  "Qed."
+  .
+
+FIBRATIO =
+  "Definition fib_ratio (n : nat) : R :="
+  "  INR (fib (S (S n))) / INR (fib (S n))."
+  .
+
+PHIITERFIBRATIO =
+  "Theorem phi_iter_fib_ratio : forall n : nat,"
+  "  phi_iter n = fib_ratio n."
+  "Proof."
+  "  induction n as [| n IH]."
+  "  - unfold phi_iter, fib_ratio."
+  "    simpl."
+  "    field."
+  "  - rewrite phi_iter_step, IH."
+  "    unfold phi_step, fib_ratio."
+  "    change (fib (S (S (S n)))) with (fib (S (S n)) + fib (S n))%nat."
+  "    rewrite plus_INR."
+  "    set (a := INR (fib (S (S n))))."
+  "    set (b := INR (fib (S n)))."
+  "    assert (Ha : a <> 0)."
+  "    { subst a. apply not_0_INR. pose proof (fib_succ_positive (S n)). lia. }"
+  "    assert (Hb : b <> 0)."
+  "    { subst b. apply not_0_INR. pose proof (fib_succ_positive n). lia. }"
+  "    field; split; assumption."
+  "Qed."
+  .
+
+OMIPHIGT =
+  "Theorem OMI_PHI_gt_1 :"
+  "  1 < OMI_PHI."
+  "Proof."
+  "  unfold OMI_PHI, OMI_PHI_witness, classical_phi."
+  "  simpl."
+  "  apply (Rmult_lt_reg_r 2)."
+  "  - lra."
+  "  - field_simplify."
+  "    assert (Hs : 1 < sqrt 5)."
+  "    { replace 1 with (sqrt 1) by (rewrite sqrt_1; reflexivity)."
+  "      apply sqrt_lt_1; lra. }"
+  "    lra."
+  "Qed."
+  .
+
+PHIITERGE =
+  "Theorem phi_iter_ge_1 : forall n : nat,"
+  "  1 <= phi_iter n."
+  "Proof."
+  "  induction n as [| n IH]."
+  "  - unfold phi_iter."
+  "    simpl."
+  "    lra."
+  "  - rewrite phi_iter_step."
+  "    unfold phi_step."
+  "    assert (0 <= / phi_iter n)."
+  "    { apply Rlt_le. apply Rinv_0_lt_compat. lra. }"
+  "    lra."
+  "Qed."
+  .
+
+PHIERRORSTEP =
+  "Theorem phi_error_step : forall n : nat,"
+  "  Rabs (phi_iter (S n) - OMI_PHI) <="
+  "  Rabs (phi_iter n - OMI_PHI) * / OMI_PHI."
+  "Proof."
+  "  intro n."
+  "  assert (Hxpos : 0 < phi_iter n) by apply phi_iter_positive."
+  "  assert (Hpgt : 1 < OMI_PHI) by apply OMI_PHI_gt_1."
+  "  assert (Hppos : 0 < OMI_PHI) by lra."
+  "  assert (Hxge : 1 <= phi_iter n) by apply phi_iter_ge_1."
+  "  assert (Hprodpos : 0 < phi_iter n * OMI_PHI) by nra."
+  "  replace (phi_iter (S n) - OMI_PHI) with"
+  "    (1 + / phi_iter n - (1 + / OMI_PHI))."
+  "  2:{"
+  "    rewrite phi_iter_step."
+  "    unfold phi_step."
+  "    assert (Hphi : OMI_PHI = 1 + / OMI_PHI)."
+  "    { symmetry. exact OMI_PHI_fixed_by_step. }"
+  "    lra."
+  "  }"
+  "  replace (1 + / phi_iter n - (1 + / OMI_PHI)) with"
+  "    (-(phi_iter n - OMI_PHI) / (phi_iter n * OMI_PHI))."
+  "  2:{ field; lra. }"
+  "  unfold Rdiv."
+  "  rewrite Rabs_mult."
+  "  rewrite Rabs_Ropp."
+  "  rewrite Rabs_inv."
+  "  assert (Hden : Rabs (phi_iter n * OMI_PHI) = phi_iter n * OMI_PHI)."
+  "  { apply Rabs_right. left; exact Hprodpos. }"
+  "  rewrite Hden."
+  "  apply Rmult_le_compat_l."
+  "  - apply Rabs_pos."
+  "  - apply Rinv_le_contravar."
+  "    + nra."
+  "    + nra."
+  "Qed."
+  .
+
+PHIITERERRORBOUND =
+  "Theorem phi_iter_error_bound : forall n : nat,"
+  "  Rdist (phi_iter n) OMI_PHI <="
+  "  Rdist (phi_iter 0) OMI_PHI * (/ OMI_PHI) ^ n."
+  "Proof."
+  "  induction n as [| n IH]."
+  "  - simpl."
+  "    right."
+  "    ring."
+  "  - replace ((/ OMI_PHI) ^ S n) with"
+  "      (/ OMI_PHI * (/ OMI_PHI) ^ n) by (simpl; ring)."
+  "    unfold Rdist in *."
+  "    eapply Rle_trans."
+  "    + apply phi_error_step."
+  "    + replace (Rabs (phi_iter 0 - OMI_PHI) *"
+  "        (/ OMI_PHI * (/ OMI_PHI) ^ n)) with"
+  "        ((Rabs (phi_iter 0 - OMI_PHI) * (/ OMI_PHI) ^ n) *"
+  "          / OMI_PHI) by ring."
+  "      apply Rmult_le_compat_r."
+  "      * left. apply Rinv_0_lt_compat."
+  "        apply Rlt_trans with (r2 := 1); [lra | apply OMI_PHI_gt_1]."
+  "      * exact IH."
+  "Qed."
+  .
+
+PHIITERCONVERGES =
+  "Theorem phi_iter_converges :"
+  "  Un_cv phi_iter OMI_PHI."
+  "Proof."
+  "  unfold Un_cv."
+  "  intros eps Heps."
+  "  set (c := Rdist (phi_iter 0) OMI_PHI)."
+  "  assert (Hpgt : 1 < OMI_PHI) by apply OMI_PHI_gt_1."
+  "  assert (Hpinv_abs : Rabs (/ OMI_PHI) < 1)."
+  "  { rewrite Rabs_right."
+  "    - replace 1 with (/ 1) by field."
+  "      apply (Rinv_1_lt_contravar 1 OMI_PHI); lra."
+  "    - left. apply Rinv_0_lt_compat. lra. }"
+  "  assert (Hcpos : 0 < c)."
+  "  { unfold c, Rdist, phi_iter."
+  "    simpl."
+  "    rewrite Rabs_left1; lra. }"
+  "  destruct (pow_lt_1_zero (/ OMI_PHI) Hpinv_abs (eps / c)) as [N HN]."
+  "  { apply Rdiv_lt_0_compat; lra. }"
+  "  exists N."
+  "  intros n Hn."
+  "  eapply Rle_lt_trans."
+  "  - apply phi_iter_error_bound."
+  "  - assert (Hpow : Rabs ((/ OMI_PHI) ^ n) < eps / c) by"
+  "      apply (HN n Hn)."
+  "    rewrite Rabs_right in Hpow."
+  "    + change (c * (/ OMI_PHI) ^ n < eps)."
+  "      assert (Hmul : c * (/ OMI_PHI) ^ n < c * (eps / c))."
+  "      { apply Rmult_lt_compat_l; [exact Hcpos | exact Hpow]. }"
+  "      replace (c * (eps / c)) with eps in Hmul."
+  "      * exact Hmul."
+  "      * field. lra."
+  "    + left. apply pow_lt. apply Rinv_0_lt_compat. lra."
+  "Qed."
+  .
+
+FIBRATIOCONVERGESPHI =
+  "Theorem fib_ratio_converges_phi :"
+  "  Un_cv fib_ratio OMI_PHI."
+  "Proof."
+  "  eapply Un_cv_ext with (un := phi_iter)."
+  "  - intro n."
+  "    apply phi_iter_fib_ratio."
+  "  - apply phi_iter_converges."
+  "Qed."
+  .

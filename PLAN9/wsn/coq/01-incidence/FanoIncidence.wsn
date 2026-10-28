@@ -1,0 +1,35 @@
+FANOINCIDENCE = CHECKED .
+
+CHECKED = COQ SCOPE FANOINCIDENCEOWNER FANOINCIDENCEPROOF FANOINCIDENCEPOINT FANOINCIDENCELINE FANOINCIDENCESAMPLECOORDINATES .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+FANOINCIDENCEOWNER =
+  "Definition fano_incidence_owner : Prop := True."
+  .
+
+FANOINCIDENCEPROOF =
+  "Definition fano_incidence_proof : fano_incidence_owner := I."
+  .
+
+FANOINCIDENCEPOINT =
+  "Definition fano_incidence_point (x : N) : N := N.modulo x 7."
+  .
+
+FANOINCIDENCELINE =
+  "Definition fano_incidence_line (x : N) : N := N.modulo (N.shiftr x 1) 7."
+  .
+
+FANOINCIDENCESAMPLECOORDINATES =
+  "Theorem fano_incidence_sample_coordinates :"
+  "  fano_incidence_point 8 = 1 /\ fano_incidence_line 8 = 4."
+  "Proof."
+  "  split; reflexivity."
+  "Qed."
+  .

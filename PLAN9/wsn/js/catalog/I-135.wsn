@@ -1,0 +1,141 @@
+RECORD = HEAD BOMBYTESWAPCORRECTEDFROMI THEERRORTAXONOMY CONDITIONALCATCH PROXYTRAPSANDREFLECTMETHODSCORRESPOND PROXYFORWARDSTOREFLECT INVARIANTVIOLATIONTYPEERROR REFLECTAPPLYASTAGINVOCATION THEFULLCHAIN REGEXPVIAREFLECT REVOCABLEPROXY .
+
+HEAD =
+  "// i135.ts — I-135: Proxy/Reflect/Catch/Template"
+  "import assert from ""node:assert"";"
+  .
+
+BOMBYTESWAPCORRECTEDFROMI =
+  "// ── 1. BOM byte-swap (corrected from I-134) ─────────────────────"
+  "const swap16 = (x: number) => ((x & 0xFF) << 8) | ((x >> 8) & 0xFF);"
+  "const BOM_BE = 0xFEFF;"
+  "const BOM_LE = 0xFFFE;"
+  "assert.strictEqual(swap16(BOM_BE), BOM_LE, ""BOM BE byte-swapped = LE"");"
+  "assert.strictEqual(swap16(BOM_LE), BOM_BE, ""BOM LE byte-swapped = BE"");"
+  .
+
+THEERRORTAXONOMY =
+  "// ── 2. The error taxonomy ───────────────────────────────────────"
+  "assert.ok(new TypeError(""x"") instanceof TypeError, ""TypeError"");"
+  "assert.ok(new RangeError(""x"") instanceof RangeError, ""RangeError"");"
+  "assert.ok(new EvalError(""x"") instanceof EvalError, ""EvalError"");"
+  "// all three derive from Error"
+  "assert.ok(new TypeError(""x"") instanceof Error, ""TypeError <: Error"");"
+  "assert.ok(new RangeError(""x"") instanceof Error, ""RangeError <: Error"");"
+  "assert.ok(new EvalError(""x"") instanceof Error, ""EvalError <: Error"");"
+  .
+
+CONDITIONALCATCH =
+  "// ── 3. Conditional catch ────────────────────────────────────────"
+  "function classify(e: Error): string {"
+  "  if (e instanceof TypeError) return ""space"";"
+  "  if (e instanceof RangeError) return ""range"";"
+  "  if (e instanceof EvalError)  return ""code"";"
+  "  return ""default"";"
+  "}"
+  "assert.strictEqual(classify(new TypeError(""x"")),  ""space"",   ""TypeError -> space"");"
+  "assert.strictEqual(classify(new RangeError(""x"")), ""range"",   ""RangeError -> range"");"
+  "assert.strictEqual(classify(new EvalError(""x"")),  ""code"",    ""EvalError -> code"");"
+  "assert.strictEqual(classify(new Error(""x"")),      ""default"", ""Error -> default"");"
+  .
+
+PROXYTRAPSANDREFLECTMETHODSCORRESPOND =
+  "// ── 4. Proxy traps and Reflect methods correspond ───────────────"
+  "const traps = ["
+  "  ""get"", ""set"", ""has"", ""deleteProperty"", ""ownKeys"","
+  "  ""apply"", ""construct"", ""defineProperty"", ""getPrototypeOf"","
+  "];"
+  "for (const trap of traps) {"
+  "  assert.ok(trap in Reflect, `Reflect.${trap} exists for Proxy trap`);"
+  "}"
+  "assert.strictEqual(Reflect.has(Object, ""assign""), true, ""Reflect.has works"");"
+  "assert.strictEqual(Reflect.has(Object, ""bogus""), false, ""Reflect.has false"");"
+  .
+
+PROXYFORWARDSTOREFLECT =
+  "// ── 5. Proxy forwards to Reflect ────────────────────────────────"
+  "{"
+  "  const target = { a: 1, b: 2 };"
+  "  const handler = {"
+  "    get(t: any, p: string, r: any) { return Reflect.get(t, p, r); },"
+  "    has(t: any, p: string)         { return Reflect.has(t, p); },"
+  "  };"
+  "  const p = new Proxy(target, handler);"
+  "  assert.strictEqual(p.a, 1, ""proxy get"");"
+  "  assert.strictEqual(""b"" in p, true, ""proxy has"");"
+  "}"
+  .
+
+INVARIANTVIOLATIONTYPEERROR =
+  "// ── 6. Invariant violation -> TypeError ─────────────────────────"
+  "{"
+  "  const target = Object.freeze({ a: 1 });"
+  "  const handler = {"
+  "    get(t: any, p: string) {"
+  "      // invariant: cannot return different value for non-configurable"
+  "      if (p === ""a"") return 999;"
+  "      return Reflect.get(t, p);"
+  "    },"
+  "  };"
+  "  const p = new Proxy(target, handler);"
+  "  let threw = false;"
+  "  try { p.a; } catch (e) { threw = e instanceof TypeError; }"
+  "  assert.ok(threw, ""invariant violation throws TypeError"");"
+  "}"
+  .
+
+REFLECTAPPLYASTAGINVOCATION =
+  "// ── 7. Reflect.apply as tag invocation ──────────────────────────"
+  "function tag(strings: TemplateStringsArray, ...values: unknown[]) {"
+  "  return {"
+  "    raw: [...(strings as any).raw ?? [...strings]],"
+  "    cooked: [...strings],"
+  "    values,"
+  "    length: strings.length,"
+  "  };"
+  "}"
+  "// the ""prompt query"" form: build the TemplateLiteralArray manually"
+  "const arr = [""hello "", "" and "", """"];"
+  "(arr as any).raw = [""hello "", "" and "", """"];"
+  "const result = Reflect.apply(tag, undefined, [arr, ""world"", 3]);"
+  "assert.deepStrictEqual(result.cooked, [""hello "", "" and "", """"], ""cooked"");"
+  "assert.deepStrictEqual(result.values, [""world"", 3],             ""values"");"
+  "assert.strictEqual(result.length, 3,                            ""strings.length"");"
+  "assert.deepStrictEqual(result.raw, [""hello "", "" and "", """"],     ""strings.raw"");"
+  .
+
+THEFULLCHAIN =
+  "// ── 8. The full chain ───────────────────────────────────────────"
+  "// template literal -> tag -> TemplateLiteralArray -> Reflect.apply -> Proxy"
+  "{"
+  "  const raw = [""a"", ""b""];"
+  "  (raw as any).raw = [""a"", ""b""];"
+  "  const queried = Reflect.apply(tag, undefined, [raw, 1]);"
+  "  const wrapped = new Proxy(queried, {"
+  "    get(t: any, p: string) {"
+  "      if (p === ""first"") return t.cooked[0];"
+  "      return Reflect.get(t, p);"
+  "    },"
+  "  });"
+  "  assert.strictEqual(wrapped.first, ""a"", ""proxy over tag result"");"
+  "}"
+  .
+
+REGEXPVIAREFLECT =
+  "// ── 9. RegExp via Reflect ───────────────────────────────────────"
+  "const m = Reflect.apply(RegExp.prototype.exec, /ab+/, [""confabulation""]);"
+  "assert.ok(m !== null && m.index === 4, ""Reflect.apply(exec, /ab+/, ...)"");"
+  .
+
+REVOCABLEPROXY =
+  "// ── 10. Revocable proxy ─────────────────────────────────────────"
+  "{"
+  "  const rev = Proxy.revocable({}, { get: () => ""[[trap]]"" });"
+  "  assert.strictEqual(rev.proxy.foo, ""[[trap]]"", ""before revoke"");"
+  "  rev.revoke();"
+  "  let threw = false;"
+  "  try { rev.proxy.foo; } catch (e) { threw = e instanceof TypeError; }"
+  "  assert.ok(threw, ""after revoke -> TypeError"");"
+  "}"
+  "console.log(""I-135: Proxy/Reflect/Catch/Template pattern — passed"");"
+  .

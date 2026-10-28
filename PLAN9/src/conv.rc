@@ -1,0 +1,63 @@
+#!/bin/rc
+# conv.rc - inside Plan 9: every file of boxedPINE's proofs/js to Wirth syntax
+# notation with wsn.awk (I-122's records split out first with split.awk, and
+# written under catalog/I-122/, since I-123 to I-151 are also checks of their own),
+# and unbound's SVG, SH, MERMAID, JS and HTML (from MANIFEST), each read back
+# against its source with back.awk and read by zwsn, and the
+# .wsn files written to the output disk as a tar.
+rfork e
+ifs='
+'
+src=/dev/sd01/data
+dst=/dev/sd02/data
+w=/tmp/zc
+rm -rf $w
+mkdir -p $w/unbound $w/zout/wsn $w/split
+@{cd $w/unbound && tar xf $src} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zwsn.c && 8l -o $w/zwsn zwsn.8 || exit compile
+cd $p/run/js
+awk -v 'out='$w/split -f $p/src/split.awk catalog/I-122.ts
+fail=0
+n=0
+fn one {
+	# one source $1, written as $2 with top production $3
+	mkdir -p `{basename -d $2}
+	awk -v 'top='$3 -f $p/src/wsn.awk $1 >$2
+	echo $2 >>$w/list
+	awk -f $p/src/back.awk $2 >$w/back
+	awk '!/^[ 	]*$/' $1 >$w/want
+	if(! cmp -s $w/back $w/want){
+		echo conv.rc: $1 does not read back
+		fail=1
+	}
+	n=`{echo $n + 1 | hoc}
+}
+for(f in `{du -a . | awk '{print $2}' | sed 's,^\./,,'}){
+	if(test -f $f){
+		switch($f){
+		case catalog/I-122.ts
+			;
+		case catalog/*.ts
+			one $f $w/zout/wsn/js/`{echo $f | sed 's/\.ts$//'}^.wsn RECORD
+		case *
+			one $f $w/zout/wsn/js/$f.wsn FILE
+		}
+	}
+}
+for(f in `{ls $w/split}){
+	if(~ `{basename $f} I-122.ts)
+		one $f $w/zout/wsn/js/catalog/I-122.wsn RECORD
+	if not
+		one $f $w/zout/wsn/js/catalog/I-122/`{basename $f .ts}^.wsn RECORD
+}
+cd $w/unbound
+for(f in `{grep '^(SVG|SH|MERMAID|JS|HTML)/' $p/MANIFEST})
+	one $f $w/zout/wsn/unbound/$f.wsn FILE
+cd $w/zout
+$w/zwsn `{cat $w/list} | sed 's,^'$w'/zout/,,' >$w/zout/zwsn.txt
+grep -v ' productions$' $w/zout/zwsn.txt >[2]/dev/null
+@{cd $w && tar cf $dst zout} || exit tar
+echo conv.rc: $n files to Wirth syntax notation, `{grep -c ' productions$' $w/zout/zwsn.txt} read by zwsn
+if(~ $fail 1) echo conv.rc: some files did not read back

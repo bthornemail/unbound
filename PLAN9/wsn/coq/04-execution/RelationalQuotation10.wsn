@@ -1,0 +1,31 @@
+RELATIONALQUOTATION = CHECKED .
+
+CHECKED = COQ SCOPE RELATIONALQUOTATIONOWNER RELATIONALQUOTATIONPROOF RELATIONALQUOTATIONQUOTE RELATIONALQUOTATIONZERORELATIONWITNESS .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+RELATIONALQUOTATIONOWNER =
+  "Definition relational_quotation10_owner : Prop := True."
+  .
+
+RELATIONALQUOTATIONPROOF =
+  "Definition relational_quotation10_proof : relational_quotation10_owner := I."
+  .
+
+RELATIONALQUOTATIONQUOTE =
+  "Definition relational_quotation10_quote (x : N) : N := N.lxor x 0x1E."
+  .
+
+RELATIONALQUOTATIONZERORELATIONWITNESS =
+  "Theorem relational_quotation10_zero_relation_witness :"
+  "  relational_quotation10_quote 0 = 0x1E."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

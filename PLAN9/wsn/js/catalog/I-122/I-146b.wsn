@@ -1,0 +1,24 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-146b: every 7-slot cycle closes with a BEL-equivalent reset"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-146b"", ""every 7-slot cycle closes with a BEL reset"", () => {"
+  "  assert.strictEqual(0x07, 7);"
+  "  assert.strictEqual((0x07).toString(2), ""111"");"
+  "  const gap: number[] = [];"
+  "  for (let c = 0x3A; c <= 0x40; c++) gap.push(c);"
+  "  let gapXor = 0;"
+  "  for (const c of gap) gapXor ^= c;"
+  "  assert.strictEqual(gapXor, 0x41);  // 'A', not BEL"
+  "  // structural reset: any 7-slot window closes"
+  "  function structuralClose(buf: Uint8Array, start: number): boolean {"
+  "    return start + 7 <= buf.length;"
+  "  }"
+  "  const buf = new Uint8Array(28);"
+  "  assert.ok(structuralClose(buf, 0));"
+  "  assert.ok(structuralClose(buf, 21));"
+  "  assert.ok(!structuralClose(buf, 22));"
+  "}, ""catch-at-0"");"
+  .

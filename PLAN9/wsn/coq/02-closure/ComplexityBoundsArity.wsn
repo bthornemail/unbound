@@ -1,0 +1,244 @@
+COMPLEXITYBOUNDSARITY = CHECKED .
+
+CHECKED = COQ CHOOSE CHOOSEN CHOOSES CHOOSESS CHOOSEGT CHOOSENA SUMCHOOSEUPTO SUMCHOOSESUCCUPTO SUMCHOOSEALL SUMCHOOSEUPTOGEONE SUMCHOOSEUPTOSUCC SUMCHOOSESUCCUPTOEXPAND SUMCHOOSESUCCUPTOALL SUMCHOOSEALLSUCC SUMCHOOSEALLEQPOW CHOOSEA CHOOSEB CHOOSESUCC CHOOSESUCCA CHOOSELESQ CHOOSELECUBE ARITYPRINCIPLESUMMARY .
+
+COQ =
+  "From Coq Require Import"
+  "  Arith.PeanoNat"
+  "  Lia"
+  "  Psatz."
+  "(*"
+  "  Complexity “seal” for the Pascal-diagonal / arity principle."
+  "  - n = candidate interaction set size in scope"
+  "  - 2^n = full subset enumeration (exponential)"
+  "  - choose n k = fixed-arity (Pascal diagonal) enumeration (polynomial in n for fixed k)"
+  "*)"
+  .
+
+CHOOSE =
+  "Fixpoint choose (n k : nat) : nat :="
+  "  match n, k with"
+  "  | _, 0 => 1"
+  "  | 0, S _ => 0"
+  "  | S n', S k' => choose n' k' + choose n' (S k')"
+  "  end."
+  .
+
+CHOOSEN =
+  "Lemma choose_n_0 : forall n, choose n 0 = 1."
+  "Proof. intro n; destruct n; reflexivity. Qed."
+  .
+
+CHOOSES =
+  "Lemma choose_0_S : forall k, choose 0 (S k) = 0."
+  "Proof. intro k; reflexivity. Qed."
+  .
+
+CHOOSESS =
+  "Lemma choose_S_S : forall n k, choose (S n) (S k) = choose n k + choose n (S k)."
+  "Proof. intros n k; reflexivity. Qed."
+  .
+
+CHOOSEGT =
+  "Lemma choose_gt : forall n k, n < k -> choose n k = 0."
+  "Proof."
+  "  induction n as [|n IH]; intros k Hlt."
+  "  - destruct k; [lia|reflexivity]."
+  "  - destruct k as [|k]."
+  "    + lia."
+  "    + simpl."
+  "      apply Nat.succ_lt_mono in Hlt."
+  "      rewrite (IH k Hlt)."
+  "      rewrite (IH (S k)); [lia|lia]."
+  "Qed."
+  .
+
+CHOOSENA =
+  "Lemma choose_n_1 : forall n, choose n 1 = n."
+  "Proof."
+  "  induction n as [|n IH]."
+  "  - reflexivity."
+  "  - simpl. rewrite choose_n_0, IH. lia."
+  "Qed."
+  .
+
+SUMCHOOSEUPTO =
+  "Fixpoint sum_choose_upto (n m : nat) : nat :="
+  "  match m with"
+  "  | 0 => choose n 0"
+  "  | S m' => sum_choose_upto n m' + choose n (S m')"
+  "  end."
+  .
+
+SUMCHOOSESUCCUPTO =
+  "Fixpoint sum_choose_succ_upto (n m : nat) : nat :="
+  "  match m with"
+  "  | 0 => choose n 1"
+  "  | S m' => sum_choose_succ_upto n m' + choose n (S (S m'))"
+  "  end."
+  .
+
+SUMCHOOSEALL =
+  "Definition sum_choose_all (n : nat) : nat := sum_choose_upto n n."
+  .
+
+SUMCHOOSEUPTOGEONE =
+  "Lemma sum_choose_upto_ge_one :"
+  "  forall n m, 1 <= sum_choose_upto n m."
+  "Proof."
+  "  intros n m."
+  "  induction m; simpl."
+  "  - rewrite choose_n_0; lia."
+  "  - lia."
+  "Qed."
+  .
+
+SUMCHOOSEUPTOSUCC =
+  "Lemma sum_choose_upto_succ :"
+  "  forall n m, sum_choose_upto n (S m) = choose n 0 + sum_choose_succ_upto n m."
+  "Proof."
+  "  intros n m."
+  "  induction m as [|m IH]."
+  "  - simpl. rewrite choose_n_0. lia."
+  "  - simpl (sum_choose_upto n (S (S m)))."
+  "    simpl (sum_choose_succ_upto n (S m))."
+  "    change"
+  "      (sum_choose_upto n (S m) + choose n (S (S m)) ="
+  "       choose n 0 +"
+  "       (sum_choose_succ_upto n m + choose n (S (S m))))."
+  "    rewrite IH."
+  "    lia."
+  "Qed."
+  .
+
+SUMCHOOSESUCCUPTOEXPAND =
+  "Lemma sum_choose_succ_upto_expand :"
+  "  forall n m, sum_choose_succ_upto (S n) m = sum_choose_upto n m + sum_choose_succ_upto n m."
+  "Proof."
+  "  intros n m."
+  "  induction m as [|m IH]."
+  "  - simpl."
+  "    rewrite !choose_n_1."
+  "    rewrite choose_n_0."
+  "    lia."
+  "  - simpl."
+  "    rewrite IH."
+  "    lia."
+  "Qed."
+  .
+
+SUMCHOOSESUCCUPTOALL =
+  "Lemma sum_choose_succ_upto_all :"
+  "  forall n, sum_choose_succ_upto n n = sum_choose_all n - 1."
+  "Proof."
+  "  intro n."
+  "  unfold sum_choose_all."
+  "  pose proof (sum_choose_upto_succ n n) as Hsucc."
+  "  (* eliminate the out-of-range term choose n (n+1) *)"
+  "  assert (Hext : sum_choose_upto n (S n) = sum_choose_upto n n)."
+  "  { simpl. rewrite (choose_gt n (S n)); lia. }"
+  "  rewrite Hext in Hsucc."
+  "  rewrite choose_n_0 in Hsucc."
+  "  (* Hsucc: sum_choose_upto n n = 1 + sum_choose_succ_upto n n *)"
+  "  rewrite Hsucc."
+  "  lia."
+  "Qed."
+  .
+
+SUMCHOOSEALLSUCC =
+  "Lemma sum_choose_all_succ :"
+  "  forall n, sum_choose_all (S n) = 2 * sum_choose_all n."
+  "Proof."
+  "  intro n."
+  "  unfold sum_choose_all."
+  "  rewrite sum_choose_upto_succ."
+  "  rewrite sum_choose_succ_upto_expand."
+  "  rewrite sum_choose_succ_upto_all."
+  "  rewrite choose_n_0."
+  "  unfold sum_choose_all."
+  "  pose proof (sum_choose_upto_ge_one n n)."
+  "  nia."
+  "Qed."
+  .
+
+SUMCHOOSEALLEQPOW =
+  "Theorem sum_choose_all_eq_pow2 :"
+  "  forall n, sum_choose_all n = 2 ^ n."
+  "Proof."
+  "  induction n as [|n IH]."
+  "  - reflexivity."
+  "  - rewrite sum_choose_all_succ."
+  "    rewrite IH."
+  "    rewrite (Nat.pow_succ_r 2 n); [|lia]."
+  "    nia."
+  "Qed."
+  .
+
+CHOOSEA =
+  "Definition choose2 (n : nat) : nat := choose n 2."
+  .
+
+CHOOSEB =
+  "Definition choose3 (n : nat) : nat := choose n 3."
+  .
+
+CHOOSESUCC =
+  "Lemma choose2_succ :"
+  "  forall n, choose2 (S n) = n + choose2 n."
+  "Proof."
+  "  intro n."
+  "  unfold choose2."
+  "  change 2 with (S (S 0))."
+  "  rewrite choose_S_S."
+  "  rewrite choose_n_1."
+  "  lia."
+  "Qed."
+  .
+
+CHOOSESUCCA =
+  "Lemma choose3_succ :"
+  "  forall n, choose3 (S n) = choose2 n + choose3 n."
+  "Proof."
+  "  intro n."
+  "  unfold choose3, choose2."
+  "  change 3 with (S (S (S 0)))."
+  "  rewrite choose_S_S."
+  "  reflexivity."
+  "Qed."
+  .
+
+CHOOSELESQ =
+  "Theorem choose2_le_sq :"
+  "  forall n, choose2 n <= n * n."
+  "Proof."
+  "  induction n as [|n IH]."
+  "  - reflexivity."
+  "  - rewrite choose2_succ."
+  "    nia."
+  "Qed."
+  .
+
+CHOOSELECUBE =
+  "Theorem choose3_le_cube :"
+  "  forall n, choose3 n <= n * n * n."
+  "Proof."
+  "  induction n as [|n IH]."
+  "  - reflexivity."
+  "  - rewrite choose3_succ."
+  "    pose proof (choose2_le_sq n) as H2."
+  "    nia."
+  "Qed."
+  .
+
+ARITYPRINCIPLESUMMARY =
+  "Theorem arity_principle_summary :"
+  "  (forall n, sum_choose_all n = 2 ^ n) /\"
+  "  (forall n, choose2 n <= n * n) /\"
+  "  (forall n, choose3 n <= n * n * n)."
+  "Proof."
+  "  repeat split."
+  "  - exact sum_choose_all_eq_pow2."
+  "  - exact choose2_le_sq."
+  "  - exact choose3_le_cube."
+  "Qed."
+  .

@@ -1,0 +1,14 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-114: prefix = index length"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-114"", ""prefix = index length, not value"", () => {"
+  "  assert.strictEqual(0b11, 3);"
+  "  assert.strictEqual(0o17, 15);"
+  "  assert.strictEqual(0x1F, 31);"
+  "  assert.strictEqual(typeof 0n, ""bigint"");"
+  "  assert.strictEqual(2 + 2, 4);"
+  "}, ""point/line/duality"");"
+  .

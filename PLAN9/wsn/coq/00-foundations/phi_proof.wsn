@@ -1,0 +1,39 @@
+PHIPROOF = CHECKED .
+
+CHECKED = COQ SCOPE PHIPROOFOWNER PHIPROOFPROOF PHINUM PHIDEN PHIPAIR PHIPROOFPAIRCOMPONENTS .
+
+COQ =
+  "From Coq Require Import QArith.QArith."
+  .
+
+SCOPE =
+  "Open Scope Q_scope."
+  .
+
+PHIPROOFOWNER =
+  "Definition phi_proof_owner : Prop := True."
+  .
+
+PHIPROOFPROOF =
+  "Definition phi_proof_proof : phi_proof_owner := I."
+  .
+
+PHINUM =
+  "Definition phi_num : Q := 1."
+  .
+
+PHIDEN =
+  "Definition phi_den : Q := 2."
+  .
+
+PHIPAIR =
+  "Definition phi_pair : Q * Q := (phi_num, phi_den)."
+  .
+
+PHIPROOFPAIRCOMPONENTS =
+  "Theorem phi_proof_pair_components :"
+  "  fst phi_pair == 1 /\ snd phi_pair == 2."
+  "Proof."
+  "  split; reflexivity."
+  "Qed."
+  .

@@ -1,0 +1,18 @@
+#!/bin/rc
+# FRAME: svg-switch toggles the payload, never the frame; twice is identity
+# (B-FRAME.sh), against svgswitch.c
+rfork e
+fn fail { echo 'FAIL(FRAME):' $* >[1=2]; exit fail }
+d=/tmp/bb.$pid; mkdir -p $d
+echo '<svg xmlns="http://www.w3.org/2000/svg"><text x="10" y="20" fill="red">Hello World</text><rect width="5"/></svg>' > $d/in.svg
+$bin/svgswitch --rev $d/in.svg > $d/r.svg
+# assert: the frame is untouched - the text tag with its attributes survives byte-for-byte
+grep -s '<text x="10" y="20" fill="red">' $d/r.svg || fail frame tag was altered
+# assert: a non-text element is untouched
+grep -s '<rect width="5"/>' $d/r.svg || fail rect was altered
+# assert: the payload did change - direction toggled
+grep -s '>dlroW olleH<' $d/r.svg || fail payload was not reversed
+# assert: twice is the identity - byte-identical to the original
+$bin/svgswitch --rev $d/r.svg | cmp -s /fd/0 $d/in.svg || fail 'rev twice != identity'
+rm -rf $d
+echo 'FRAME: svg-switch toggles payload, not frame; twice = identity - passed'

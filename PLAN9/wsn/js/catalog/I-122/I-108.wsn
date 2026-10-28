@@ -1,0 +1,17 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-108: head = modulus, tail = prime"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-108"", ""head = modulus, tail = prime"", () => {"
+  "  const mod = (a: number, m: number) => ((a % m) + m) % m;"
+  "  const xor = (...xs: number[]) => xs.reduce((a, b) => a ^ b, 0);"
+  "  const atoms = [8, 9, 10, 11].map(m => mod(m, 8));"
+  "  assert.deepStrictEqual(atoms, [0, 1, 2, 3]);"
+  "  assert.strictEqual(xor(...atoms), 0);"
+  "  assert.strictEqual(atoms.reduce((a, b) => a + b, 0), 6);"
+  "  assert.strictEqual(xor(1, 1, 1, 1), 0);"
+  "  assert.strictEqual(3960, 8 * 9 * 5 * 11);"
+  "}, ""point/line/duality"");"
+  .

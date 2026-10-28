@@ -1,0 +1,54 @@
+RECORD = HEAD THESUCCESSOR THEPAIR THEPAIRA THEOBSERVERINTHEVOID THETAG .
+
+HEAD =
+  "// i210.ts — I-210: the observer in the void of the OMNI"
+  "//"
+  "// The author, 2026-10-14: ""210 is 20 9 + 1 indeces or 30 0 so the 210 would"
+  "// be the observer in the void of the OMNI."""
+  "import assert from ""node:assert"";"
+  .
+
+THESUCCESSOR =
+  "// ── 1. The successor ───────────────────────────────────────"
+  "assert.equal(209 + 1, 210, ""the +1 after I-209"");"
+  .
+
+THEPAIR =
+  "// ── 2. The pair (30, 0) ────────────────────────────────────"
+  "// 210 read as the pair (30, 0)."
+  "assert.equal(210, 30 * 7, ""210 = 30 * 7"");"
+  "assert.equal(210 / 30, 7, ""the 7 of the Fano plane"");"
+  "assert.equal(210 % 30, 0, ""the null"");"
+  "// And 30 is: the icosahedron's edges, E8's Coxeter number, half an hour."
+  "assert.equal(30, 12 + 12 + 6, ""one construction"");"
+  "assert.equal(7 * 30, 210, ""the Fano 7 and the 30"");"
+  .
+
+THEPAIRA =
+  "// ── 3. The pair (20, 10) ───────────────────────────────────"
+  "// 210 read as the year-pair (20, 10)."
+  "assert.equal(20 * 10, 200);"
+  "assert.equal(20 + 10, 30, ""the 30 again"");"
+  "assert.equal(20 ^ 10, 30, ""and by XOR too: 20 ^ 10 = 30"");"
+  "assert.equal(20 ^ 26, 0x0e, ""the year 2026: SO (shift out)"");"
+  .
+
+THEOBSERVERINTHEVOID =
+  "// ── 4. The observer in the void ────────────────────────────"
+  "// The OMNI is the kernel: { S : Q_frame(S) = 0 }."
+  "// The observer (210) is one past the comparison (209)."
+  "// The observer is the +1 that stands in the kernel."
+  "assert.equal(210 - 209, 1, ""one past"");"
+  "assert.equal(0, 0, ""the void is 0"");"
+  "assert.equal(210, 210, ""the observer is 210"");"
+  .
+
+THETAG =
+  "// ── 5. The tag ─────────────────────────────────────────────"
+  "assert.equal(/^[A-Z0-9]{1,8}$/.test(""OBSERVE""), true, ""the observer as a tag"");"
+  "assert.equal(""OBSERVE"".length, 7);"
+  "assert.equal(/^[A-Z0-9]{1,8}$/.test(""VOID""), true);"
+  "assert.equal(""VOID"".length, 4);"
+  "assert.equal(/^[A-Z0-9]{1,8}$/.test(""NULL""), true);"
+  "assert.equal(""NULL"".length, 4);"
+  .

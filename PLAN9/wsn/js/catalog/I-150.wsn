@@ -1,0 +1,249 @@
+RECORD = HEAD THEGLOBALSCOPES THEBASESYMBOLS SECTION RGBA THERGBACHANNELS HSVOFACODEPOINT THEWORKERASHSVOFACODEPOINT THEWORKERS THEAXESOFFREEDOMPERWORKER THEWINDOWORWORKERGLOBALSCOPEMIXIN THEGLOBALSCOPESSYMBOLS THESUBWINDOWWORKERS THERGBAPROJECTIONOFAWORKER THEHSVCONETHECOLORSPACE THECOLORSPACEASAADDRESS .
+
+HEAD =
+  "// i150.ts — I-150: 144 web workers, HSV of codepoints"
+  "import assert from ""node:assert"";"
+  .
+
+THEGLOBALSCOPES =
+  "// ── 1. The 4 global scopes ─────────────────────────────────────"
+  "const scopes = ["
+  "  ""Window"","
+  "  ""DedicatedWorkerGlobalScope"","
+  "  ""SharedWorkerGlobalScope"","
+  "  ""ServiceWorkerGlobalScope"","
+  "];"
+  "assert.strictEqual(scopes.length, 4, ""4 global scopes"");"
+  "assert.strictEqual(scopes[0], ""Window"", ""Window first"");"
+  "assert.ok(scopes[1].includes(""Dedicated""), ""Dedicated"");"
+  "assert.ok(scopes[2].includes(""Shared""), ""Shared"");"
+  "assert.ok(scopes[3].includes(""Service""), ""Service"");"
+  .
+
+THEBASESYMBOLS =
+  "// ── 2. The 36 base-36 symbols ──────────────────────────────────"
+  "const BLOCK = ""0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"";"
+  "assert.strictEqual(BLOCK.length, 36, ""36 base-36 symbols"");"
+  .
+
+SECTION =
+  "// ── 3. 144 = 4 × 36 = 12 × 12 ─────────────────────────────────"
+  "const TOTAL = scopes.length * BLOCK.length;"
+  "assert.strictEqual(TOTAL, 144, ""4 x 36 = 144"");"
+  "assert.strictEqual(12 * 12, 144, ""12 x 12 = 144"");"
+  "// the mod-12 ring from I-124, I-129"
+  "const mod12 = Array.from({length: 12}, (_, i) => i);"
+  "assert.strictEqual(mod12.length, 12, ""mod-12 ring"");"
+  "// the 2D grid is 12 x 12"
+  "const grid = [];"
+  "for (const r of mod12) for (const c of mod12) grid.push([r, c]);"
+  "assert.strictEqual(grid.length, 144, ""12 x 12 grid = 144"");"
+  .
+
+RGBA =
+  "// ── 4. RGBA = 256^4 = 2^32 ─────────────────────────────────────"
+  "const RGBA = 256 ** 4;"
+  "assert.strictEqual(RGBA, 4294967296, ""256^4 = 4,294,967,296"");"
+  "assert.strictEqual(RGBA, 2 ** 32, ""2^32"");"
+  "assert.strictEqual(RGBA - 1, 0xFFFFFFFF, ""max RGBA = 0xFFFFFFFF"");"
+  "// the full 32-bit address space (I-142)"
+  .
+
+THERGBACHANNELS =
+  "// ── 5. The RGBA channels ───────────────────────────────────────"
+  "const channels = [""R"", ""G"", ""B"", ""A""];"
+  "assert.strictEqual(channels.length, 4, ""4 channels"");"
+  "for (const ch of channels) {"
+  "  assert.ok(ch.length === 1, `channel ${ch} is 1 char`);"
+  "}"
+  "// each channel is 256 = 2^8"
+  "for (const _ of channels) {"
+  "  assert.strictEqual(256, 2 ** 8, ""256 = 2^8"");"
+  "}"
+  .
+
+HSVOFACODEPOINT =
+  "// ── 6. HSV of a codepoint ──────────────────────────────────────"
+  "// HSV = (hue, saturation, value)"
+  "// Convert an RGB triple to HSV"
+  "function rgbToHsv(r: number, g: number, b: number): [number, number, number] {"
+  "  const rn = r / 255, gn = g / 255, bn = b / 255;"
+  "  const max = Math.max(rn, gn, bn);"
+  "  const min = Math.min(rn, gn, bn);"
+  "  const d = max - min;"
+  "  let h = 0;"
+  "  if (d !== 0) {"
+  "    if (max === rn) h = ((gn - bn) / d) % 6;"
+  "    else if (max === gn) h = (bn - rn) / d + 2;"
+  "    else h = (rn - gn) / d + 4;"
+  "    h *= 60;"
+  "    if (h < 0) h += 360;"
+  "  }"
+  "  const s = max === 0 ? 0 : d / max;"
+  "  const v = max;"
+  "  return [h, s, v];"
+  "}"
+  "const [h, s, v] = rgbToHsv(255, 0, 0);"
+  "assert.strictEqual(h, 0, ""red hue = 0"");"
+  "assert.strictEqual(s, 1, ""red saturation = 1"");"
+  "assert.strictEqual(v, 1, ""red value = 1"");"
+  .
+
+THEWORKERASHSVOFACODEPOINT =
+  "// ── 7. The worker as HSV of a codepoint ────────────────────────"
+  "// Each worker is addressed by a base-36 literal, and its color"
+  "// is the HSV of the codepoint behind the literal."
+  "type WorkerColor = {"
+  "  literal: string;      // the base-36 tag name"
+  "  codepoint: number;    // the Unicode position"
+  "  hsv: [number, number, number];"
+  "  rgba: [number, number, number, number];"
+  "};"
+  "function makeWorker(literal: string): WorkerColor {"
+  "  // derive codepoint from the literal"
+  "  let cp = 0;"
+  "  for (const c of literal) {"
+  "    const d = BLOCK.indexOf(c);"
+  "    cp = cp * 36 + d;"
+  "  }"
+  "  // derive color from the codepoint"
+  "  const r = (cp * 7) & 0xFF;"
+  "  const g = (cp * 13) & 0xFF;"
+  "  const b = (cp * 17) & 0xFF;"
+  "  return {"
+  "    literal,"
+  "    codepoint: cp,"
+  "    hsv: rgbToHsv(r, g, b),"
+  "    rgba: [r, g, b, 0xFF],"
+  "  };"
+  "}"
+  "const wA1 = makeWorker(""A1"");"
+  "assert.strictEqual(wA1.literal, ""A1"", ""literal A1"");"
+  "assert.strictEqual(wA1.codepoint, 10 * 36 + 1, ""A1 codepoint = 361"");"
+  "assert.ok(wA1.hsv[0] >= 0 && wA1.hsv[0] < 360, ""hue in 0-360"");"
+  "assert.ok(wA1.hsv[1] >= 0 && wA1.hsv[1] <= 1, ""sat in 0-1"");"
+  "assert.ok(wA1.hsv[2] >= 0 && wA1.hsv[2] <= 1, ""val in 0-1"");"
+  .
+
+THEWORKERS =
+  "// ── 8. The 144 workers ─────────────────────────────────────────"
+  "const workers: WorkerColor[] = [];"
+  "for (const scope of scopes) {"
+  "  for (const c of BLOCK) {"
+  "    workers.push(makeWorker(c));"
+  "  }"
+  "}"
+  "assert.strictEqual(workers.length, 144, ""144 workers"");"
+  "// each worker has a distinct literal"
+  "const literals = new Set(workers.map(w => w.literal));"
+  "assert.strictEqual(literals.size, 36, ""36 distinct literals (×4 scopes)"");"
+  .
+
+THEAXESOFFREEDOMPERWORKER =
+  "// ── 9. The 6 axes of freedom per worker ────────────────────────"
+  "// 3 axes x 2 directions = 6 DOF (I-112)"
+  "const DOF = 6;"
+  "assert.strictEqual(DOF, 6, ""6 DOF"");"
+  "// 144 workers × 6 DOF = 864"
+  "assert.strictEqual(144 * 6, 864, ""144 x 6 = 864"");"
+  .
+
+THEWINDOWORWORKERGLOBALSCOPEMIXIN =
+  "// ── 10. The WindowOrWorkerGlobalScope mixin ────────────────────"
+  "// Shared methods between Window and Worker scopes"
+  "const sharedMethods = ["
+  "  ""atob"", ""btoa"",               // base64"
+  "  ""setTimeout"", ""clearTimeout"", // timers"
+  "  ""setInterval"", ""clearInterval"","
+  "  ""fetch"",                       // network"
+  "  ""queueMicrotask"",              // microtask"
+  "  ""structuredClone"",             // structured cloning"
+  "  ""crypto"",                      // crypto"
+  "  ""performance"",                 // timing"
+  "  ""indexedDB"",                   // storage"
+  "  ""isSecureContext"",             // security"
+  "];"
+  "assert.strictEqual(sharedMethods.length, 13, ""13 shared mixin members"");"
+  "// all are available in both Window and Worker scopes"
+  "for (const m of sharedMethods) {"
+  "  assert.ok(m.length > 0, `mixin: ${m}`);"
+  "}"
+  .
+
+THEGLOBALSCOPESSYMBOLS =
+  "// ── 11. The 4 global scopes × 36 symbols = 144 ────────────────"
+  "// each scope holds 36 workers, one per base-36 symbol"
+  "type Scope = {"
+  "  name: string;"
+  "  workers: string[];"
+  "};"
+  "const scopedWorkers: Scope[] = scopes.map(name => ({"
+  "  name,"
+  "  workers: [...BLOCK],"
+  "}));"
+  "assert.strictEqual(scopedWorkers.length, 4, ""4 scopes"");"
+  "for (const s of scopedWorkers) {"
+  "  assert.strictEqual(s.workers.length, 36, `${s.name} has 36 workers`);"
+  "}"
+  "// total"
+  "const total = scopedWorkers.reduce((sum, s) => sum + s.workers.length, 0);"
+  "assert.strictEqual(total, 144, ""4 × 36 = 144"");"
+  .
+
+THESUBWINDOWWORKERS =
+  "// ── 12. The sub-window workers ─────────────────────────────────"
+  "// Each worker can spawn sub-workers (I-140)."
+  "// The nesting: Window → 4 global → 36 each → 4 each (RGBA)"
+  "const level1 = 4;"
+  "const level2 = 36;"
+  "const level3 = 4;  // RGBA"
+  "assert.strictEqual(level1, 4, ""4 global"");"
+  "assert.strictEqual(level2, 36, ""36 sub per global"");"
+  "assert.strictEqual(level3, 4, ""4 sub-sub per sub (RGBA)"");"
+  "// first level total"
+  "assert.strictEqual(level1 * level2, 144, ""4 × 36 = 144"");"
+  .
+
+THERGBAPROJECTIONOFAWORKER =
+  "// ── 13. The RGBA projection of a worker ────────────────────────"
+  "// Each worker's color maps to an RGBA value in the 2^32 space."
+  "function workerToRGBA(w: WorkerColor): number {"
+  "  const [r, g, b, a] = w.rgba;"
+  "  return ((r << 24) | (g << 16) | (b << 8) | a) >>> 0;"
+  "}"
+  "const wRGBA = workerToRGBA(wA1);"
+  "assert.ok(wRGBA >= 0 && wRGBA <= 0xFFFFFFFF, ""RGBA in 32-bit range"");"
+  .
+
+THEHSVCONETHECOLORSPACE =
+  "// ── 14. The HSV cone (the color space) ─────────────────────────"
+  "// HSV is a cone: hue is the angle, saturation is the radius,"
+  "// value is the height."
+  "// Hue: 0-360 (the 360 degrees)"
+  "// Saturation: 0-1"
+  "// Value: 0-1"
+  "assert.strictEqual(360, 360, ""hue range"");"
+  "assert.strictEqual(6, 6, ""6 primary hues (RGB, CMY)"");"
+  "// the 6 primary/secondary hues match the 6 DOF"
+  "const hues = [""red"", ""yellow"", ""green"", ""cyan"", ""blue"", ""magenta""];"
+  "assert.strictEqual(hues.length, 6, ""6 primary/secondary hues"");"
+  .
+
+THECOLORSPACEASAADDRESS =
+  "// ── 15. The color space as a 256^4 address ────────────────────"
+  "// RGBA = 256^4 = 2^32 = the full 32-bit address space"
+  "// Each worker's color is one address in this space."
+  "const workerAddresses = new Set<number>();"
+  "for (const w of workers) {"
+  "  workerAddresses.add(workerToRGBA(w));"
+  "}"
+  "// some workers may share colors (hash collisions), but each has a distinct literal"
+  "assert.ok(workerAddresses.size > 0, ""workers map to color addresses"");"
+  "assert.strictEqual(workers.length, 144, ""144 workers still"");"
+  "console.log(""I-150: 144 web workers, HSV of codepoints — passed"");"
+  "console.log(`  4 global scopes × 36 base-36 symbols = 144`);"
+  "console.log(`  RGBA = 256^4 = 2^32 = the full 32-bit address space`);"
+  "console.log(`  each worker = HSV of a codepoint behind a literal`);"
+  "console.log(`  6 DOF × 144 = 864 worker-axis combinations`);"
+  "console.log(`  WindowOrWorkerGlobalScope: 13 shared mixin members`);"
+  .

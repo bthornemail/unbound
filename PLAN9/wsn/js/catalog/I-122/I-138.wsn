@@ -1,0 +1,21 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-138: HTTP/1.1 three-reference index"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-138"", ""HTTP/1.1 three-reference index"", () => {"
+  "  const m = /^bytes (\d+)-(\d+)\/(\d+|\*)$/.exec(""bytes 500-999/1234"");"
+  "  assert.ok(m !== null);"
+  "  assert.strictEqual(Number(m![1]), 500);"
+  "  assert.strictEqual(Number(m![2]), 999);"
+  "  assert.strictEqual(Number(m![3]), 1234);"
+  "  const errors: Record<number, string> = {"
+  "    400: ""space"", 404: ""frame"", 416: ""range"", 500: ""code"","
+  "  };"
+  "  assert.strictEqual(errors[400], ""space"");"
+  "  assert.strictEqual(errors[404], ""frame"");"
+  "  assert.strictEqual(errors[416], ""range"");"
+  "  assert.strictEqual(errors[500], ""code"");"
+  "}, ""head/value/tail"");"
+  .

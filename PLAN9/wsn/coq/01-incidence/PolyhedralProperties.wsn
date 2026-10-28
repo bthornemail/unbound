@@ -1,0 +1,45 @@
+POLYHEDRALPROPERTIES = CHECKED .
+
+CHECKED = HEAD COQ IMPORT SCOPE NORMZEROISOLATESGRAPH NORMONEISOLATESBIGRAPH NORMTWOISOLATESMULTIGRAPH NORMFOURISOLATESHYPERGRAPH .
+
+HEAD =
+  "(*"
+  "  PolyhedralProperties.v -- discrete norm witnesses for jurisdiction envelopes."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+IMPORT =
+  "Require Import PolyhedralJurisdictions."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+NORMZEROISOLATESGRAPH =
+  "Theorem norm_zero_isolates_graph :"
+  "  polyhedral_norm TangentTetrahedron = 0."
+  "Proof. reflexivity. Qed."
+  .
+
+NORMONEISOLATESBIGRAPH =
+  "Theorem norm_one_isolates_bigraph :"
+  "  polyhedral_norm RegularTetrahedron = 1."
+  "Proof. reflexivity. Qed."
+  .
+
+NORMTWOISOLATESMULTIGRAPH =
+  "Theorem norm_two_isolates_multigraph :"
+  "  polyhedral_norm StellatedTetrahedron = 2."
+  "Proof. reflexivity. Qed."
+  .
+
+NORMFOURISOLATESHYPERGRAPH =
+  "Theorem norm_four_isolates_hypergraph :"
+  "  polyhedral_norm TriakisTetrahedron = 4."
+  "Proof. reflexivity. Qed."
+  .

@@ -1,0 +1,19 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-126: Node Buffer"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-126"", ""Node Buffer: byte indexing, endianness, native swaps"", () => {"
+  "  const buf = Buffer.alloc(128);"
+  "  buf[60] = 0x3C;"
+  "  assert.strictEqual(buf[60], 60);"
+  "  assert.strictEqual(buf.length, 128);"
+  "  const b16 = Buffer.from([0x12, 0x34]);"
+  "  b16.swap16();"
+  "  assert.deepStrictEqual([...b16], [0x34, 0x12]);"
+  "  const b32 = Buffer.from([0x12,0x34,0x56,0x78]);"
+  "  b32.swap32();"
+  "  assert.deepStrictEqual([...b32], [0x78,0x56,0x34,0x12]);"
+  "}, ""point/line/duality"");"
+  .

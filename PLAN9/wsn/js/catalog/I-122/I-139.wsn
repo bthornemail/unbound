@@ -1,0 +1,18 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-139: Host header + window frame + uppercase-as-header"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-139"", ""Host header + window frame + uppercase-as-header"", () => {"
+  "  function http11RequestValid(h: Record<string, string>): number {"
+  "    return ""Host"" in h ? 200 : 400;"
+  "  }"
+  "  assert.strictEqual(http11RequestValid({}), 400);"
+  "  assert.strictEqual(http11RequestValid({ Host: ""x"" }), 200);"
+  "  assert.strictEqual(0x41 + 0x20, 0x61);"
+  "  assert.strictEqual(parseInt(""A"", 36), 10);"
+  "  assert.strictEqual(parseInt(""a"", 36), 10);"
+  "  assert.strictEqual(4 * 36 * 36 + 4 * 36 + 19, 5347);"
+  "}, ""head/value/tail"");"
+  .

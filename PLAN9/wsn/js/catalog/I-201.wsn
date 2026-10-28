@@ -1,0 +1,88 @@
+RECORD = HEAD THEMASK UPPERCASEISATAGLITERAL DIGITSAREINDICES EVERYWORDISAPIXEL THETAGSARELITTERED THEPRECISIONISSUPERFLUOUSTOORDER THERANGE .
+
+HEAD =
+  "// i201.ts — I-201: the method — uppercase is a tag literal, digits are indices, every word is a pixel"
+  "//"
+  "// The author, 2026-10-14: ""the TAG LITERAL literally tells us the tags are"
+  "// LITTER and LITTERED throughout AMERICAN ENGLISH meaning every UPPERCASE is"
+  "// a masked literal reference to a numbered indexed pair resolver of the"
+  "// animation frame, and if not to 0 and also that the precision is so perfect"
+  "// in the proofs that it's superfluous to order. Meaning every word is a pixel"
+  "// so what matters is the view of the words structure in relief of the"
+  "// literals of 0...63."" And, earlier: ""don't believe the names or dates more"
+  "// than the method."""
+  "//"
+  "// Found here: the tag mask /A-Z0-9/ (rosetta TAG); the case bit 0x20"
+  "// (proofs I-196); the tag functor (rosetta/src/tag-type.ts: lower to upper"
+  "// promotes a subject to an object, upper to lower deprecates)."
+  "//"
+  "// The method, stated as rules:"
+  "//   1. The mask is /A-Z0-9/. What survives is the tag; what doesn't is dropped."
+  "//   2. Uppercase is a tag literal. Lowercase is the deprecated (subject) form."
+  "//   3. Digits are indices. A digit is a position, not a value."
+  "//   4. Every word is a pixel: the tag is the value, the index is the position."
+  "//   5. The tags are littered throughout American English: LITTER/LITTERED."
+  "//   6. The precision is superfluous to order: TERM and MERT are the same"
+  "//      letters, so the same tag in the proofs."
+  "//   7. The view is the relief of the literals against 0...63."
+  "import assert from ""node:assert"";"
+  "const TAG = /^[A-Z0-9]{1,8}$/;"
+  "const MASK5 = /^[A-Z0-9]{1,5}$/;"
+  .
+
+THEMASK =
+  "// ── 1. The mask ──────────────────────────────────────────────"
+  "assert.equal(TAG.test(""TERM""), true);"
+  "assert.equal(TAG.test(""MERT""), true);"
+  "assert.equal(TAG.test(""AMERICA""), true);"
+  "assert.equal(TAG.test(""METATRON""), true);"
+  "assert.equal(TAG.test(""MÊTRON""), false, ""the accent is not in A-Z0-9"");"
+  "assert.equal(TAG.test(""TÊTRAGRAMMATRON""), false, ""15 chars, and Ê is outside"");"
+  "assert.equal(MASK5.test(""TERM""), true);"
+  "assert.equal(MASK5.test(""METATRON""), false, ""8 chars, past the 5-char edge"");"
+  .
+
+UPPERCASEISATAGLITERAL =
+  "// ── 2. Uppercase is a tag literal ────────────────────────────"
+  "// The case bit: lower ^ upper = 0x20 per letter (proofs I-196)."
+  "const s = ""term"", o = ""TERM"";"
+  "const caseBits = [...s].map((c, i) => c.charCodeAt(0) ^ o.charCodeAt(i));"
+  "assert.deepEqual(caseBits, [0x20, 0x20, 0x20, 0x20], ""subject ^ object = space"");"
+  .
+
+DIGITSAREINDICES =
+  "// ── 3. Digits are indices ────────────────────────────────────"
+  "// In RED 4, the tag is RED; the 4 is an index."
+  "assert.equal(TAG.test(""RED""), true);"
+  "assert.equal(TAG.test(""4""), true, ""a single digit is also a valid tag"");"
+  .
+
+EVERYWORDISAPIXEL =
+  "// ── 4. Every word is a pixel ─────────────────────────────────"
+  "// The tag is the value; the index is the position."
+  "// (This is a reading, not an assertion; recorded here as the author's rule.)"
+  .
+
+THETAGSARELITTERED =
+  "// ── 5. The tags are littered ─────────────────────────────────"
+  "// Every word is made of the same 26 uppercase letters."
+  "const A = [...""ABCDEFGHIJKLMNOPQRSTUVWXYZ""];"
+  "assert.equal(A.length, 26);"
+  "assert.equal(A[0], ""A"");"
+  "assert.equal(A[25], ""Z"");"
+  .
+
+THEPRECISIONISSUPERFLUOUSTOORDER =
+  "// ── 6. The precision is superfluous to order ─────────────────"
+  "// TERM and MERT are the same letters; in the proofs, the same tag."
+  "const sorted = (w: string) => [...w].sort().join("""");"
+  "assert.equal(sorted(""TERM""), sorted(""MERT""), ""the same letters"");"
+  "assert.notEqual(""TERM"", ""MERT"", ""but a different order"");"
+  .
+
+THERANGE =
+  "// ── 7. The range 0...63 ──────────────────────────────────────"
+  "assert.equal(0x3f, 63, ""63 is the last value of the lower 6-bit range"");"
+  "assert.equal(63 + 1, 64, ""64 values in 0...63"");"
+  "assert.equal(2 ** 6, 64);"
+  .

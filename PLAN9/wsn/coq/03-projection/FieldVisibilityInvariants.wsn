@@ -1,0 +1,65 @@
+FIELDVISIBILITYINVARIANTS = CHECKED .
+
+CHECKED = HEAD COQ SCOPE ANTIPODALMIRROR LOCALBOUNDARYMAX REMOTEBOUNDARYMIN ANTIPODALMIRRORINVOLUTIVEIDENTITY LOCALPLANEBOUNDARYSEPARATION REMOTEPLANEBOUNDARYSEPARATION CENTROIDORIENTATIONSYMMETRY .
+
+HEAD =
+  "(*"
+  "  FieldVisibilityInvariants.v -- byte-plane mirror and boundary facts."
+  "*)"
+  .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+ANTIPODALMIRROR =
+  "Definition antipodal_mirror (position : N) : N :="
+  "  N.lxor position 0x80."
+  .
+
+LOCALBOUNDARYMAX =
+  "Definition local_boundary_max : N := 0x7F."
+  .
+
+REMOTEBOUNDARYMIN =
+  "Definition remote_boundary_min : N := 0x80."
+  .
+
+ANTIPODALMIRRORINVOLUTIVEIDENTITY =
+  "Theorem antipodal_mirror_involutive_identity :"
+  "  forall position, antipodal_mirror (antipodal_mirror position) = position."
+  "Proof."
+  "  intro position."
+  "  unfold antipodal_mirror."
+  "  rewrite N.lxor_assoc."
+  "  rewrite N.lxor_nilpotent."
+  "  apply N.lxor_0_r."
+  "Qed."
+  .
+
+LOCALPLANEBOUNDARYSEPARATION =
+  "Theorem local_plane_boundary_separation :"
+  "  local_boundary_max < remote_boundary_min."
+  "Proof. reflexivity. Qed."
+  .
+
+REMOTEPLANEBOUNDARYSEPARATION =
+  "Theorem remote_plane_boundary_separation :"
+  "  remote_boundary_min <= 0xFF."
+  "Proof."
+  "  vm_compute."
+  "  discriminate."
+  "Qed."
+  .
+
+CENTROIDORIENTATIONSYMMETRY =
+  "Theorem centroid_orientation_symmetry :"
+  "  antipodal_mirror 0x00 = 0x80 /\ antipodal_mirror 0x80 = 0x00."
+  "Proof."
+  "  split; reflexivity."
+  "Qed."
+  .

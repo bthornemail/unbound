@@ -1,0 +1,10 @@
+#!/bin/rc
+# manboy.rc - inside Plan 9: compile and run Knuth's man or boy test.
+rfork e
+w=/tmp/zm
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/manboy.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c manboy.c && 8l -o $w/manboy manboy.8 || exit compile
+$w/manboy

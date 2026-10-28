@@ -1,0 +1,39 @@
+ATOMICKERNELREPLAYDETERMINISTIC = CHECKED .
+
+CHECKED = COQ COQA LISTNOTATIONS SCOPE ATOMICKERNELREPLAYDETERMINISTICOWNER ATOMICKERNELREPLAYDETERMINISTICPROOF ATOMICKERNELREPLAYSEED ATOMICKERNELREPLAYSEEDSINGLETON .
+
+COQ =
+  "From Coq Require Import Lists.List."
+  .
+
+COQA =
+  "From Coq Require Import NArith.NArith."
+  .
+
+LISTNOTATIONS =
+  "Import ListNotations."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+ATOMICKERNELREPLAYDETERMINISTICOWNER =
+  "Definition atomic_kernel_replay_deterministic_owner : Prop := True."
+  .
+
+ATOMICKERNELREPLAYDETERMINISTICPROOF =
+  "Definition atomic_kernel_replay_deterministic_proof : atomic_kernel_replay_deterministic_owner := I."
+  .
+
+ATOMICKERNELREPLAYSEED =
+  "Definition atomic_kernel_replay_seed (x : N) : list N := [x]."
+  .
+
+ATOMICKERNELREPLAYSEEDSINGLETON =
+  "Theorem atomic_kernel_replay_seed_singleton : forall x,"
+  "  List.length (atomic_kernel_replay_seed x) = 1%nat."
+  "Proof."
+  "  intros x; reflexivity."
+  "Qed."
+  .

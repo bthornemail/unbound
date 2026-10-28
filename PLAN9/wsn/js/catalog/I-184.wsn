@@ -1,0 +1,76 @@
+RECORD = HEAD EVERYINDEXEVERYWIDTHTOBITS ANDNOOTHERPAIRDIFFERSBYTHECLOSURE THETAGS READWRITTENBETWEEN ARITHMETICREADSBOOLEANWRITESTHEYAGREEATTHECLOSUREONLY .
+
+HEAD =
+  "// i184.ts — I-184: the closure is the difference between reading and writing an index"
+  "//"
+  "// The author, 2026-10-13: ""the closures are the difference between reading and"
+  "// writing an index""; earlier the same day, of the tags 100BRIAN and 011BRIAN:"
+  "// ""one is my read tag, the other is my write tag""; and ""arithmetic is the"
+  "// read, boolean is the write"". Read with the closure as"
+  "// 2^n - 1 (every bit of n set, I-182, I-183): an index x read in n bits and the"
+  "// index written for it, its other view x ^ (2^n - 1), differ by exactly the"
+  "// closure, by XOR and by subtraction alike, and no other pair does. So"
+  "// 100 ^ 011 = 111; and in ""1963"", 19 (010011) is read, 44 (101100) is written,"
+  "// and 63 is the closure between them. And the closure is the one number where"
+  "// the read (subtraction) and the write (XOR) agree for every index."
+  "import assert from ""node:assert"";"
+  "const closure = (n: number) => 2 ** n - 1;"
+  "const write = (x: number, n: number) => x ^ closure(n);"
+  .
+
+EVERYINDEXEVERYWIDTHTOBITS =
+  "// ── 1. Every index, every width to 16 bits ──────────────────"
+  "for (let n = 1; n <= 16; n++) {"
+  "  const c = closure(n);"
+  "  for (let x = 0; x <= c; x++) {"
+  "    const w = write(x, n);"
+  "    assert.strictEqual(x ^ w, c, ""read ^ write = the closure"");"
+  "    assert.strictEqual(x + w, c, ""read + write = the closure: no carries, since they share no bit"");"
+  "    assert.strictEqual(c - x, w, ""the closure - read = write: no borrows"");"
+  "    assert.strictEqual(write(w, n), x, ""writing the written index reads it back"");"
+  "    assert.notStrictEqual(w, x, ""an index and its written view are never the same"");"
+  "  }"
+  "}"
+  .
+
+ANDNOOTHERPAIRDIFFERSBYTHECLOSURE =
+  "// ── 2. And no other pair differs by the closure ─────────────"
+  "for (let n = 1; n <= 10; n++) {"
+  "  const c = closure(n);"
+  "  for (let x = 0; x <= c; x++) for (let y = 0; y <= c; y++) assert.strictEqual((x ^ y) === c, y === write(x, n), `only the written view is a closure away (n = ${n})`);"
+  "}"
+  .
+
+THETAGS =
+  "// ── 3. The tags ─────────────────────────────────────────────"
+  "const tags: [string, string][] = [[""100BRIAN"", ""011BRIAN""], [""010DEEPSEEK"", ""101DEEPSEEK""], [""001CODEX"", ""110CODEX""], [""000VAULT"", ""111REPO""]];"
+  "for (const [read, written] of tags) assert.strictEqual(parseInt(read.slice(0, 3), 2) ^ parseInt(written.slice(0, 3), 2), closure(3), `${read} / ${written}: 111 between them`);"
+  .
+
+READWRITTENBETWEEN =
+  "// ── 4. 1963: 19 read, 44 written, 63 between ────────────────"
+  "assert.strictEqual(write(19, 6), 44, ""19 = 010011, written in six bits: 101100 = 44"");"
+  "assert.strictEqual(19 ^ 44, 63, ""19 ^ 44 = 63 = 2^6 - 1"");"
+  "assert.strictEqual(63 - 19, 19 ^ 63, ""63 - 19 = 19 ^ 63 = 44: the subtraction is the XOR"");"
+  .
+
+ARITHMETICREADSBOOLEANWRITESTHEYAGREEATTHECLOSUREONLY =
+  "// ── 5. Arithmetic reads, boolean writes: they agree at the closure only ─"
+  "for (let n = 1; n <= 10; n++) {"
+  "  const agree: number[] = [];"
+  "  for (let y = 0; y < 2 ** n; y++) {"
+  "    let all = true;"
+  "    for (let x = 0; x < 2 ** n && all; x++) if (y - x !== (y ^ x)) all = false;"
+  "    if (all) agree.push(y);"
+  "  }"
+  "  assert.deepStrictEqual(agree, [closure(n)], `in ${n} bits, y - x = y ^ x for every x only at y = 2^${n} - 1`);"
+  "}"
+  "let at19 = 0;"
+  "for (let x = 0; x < 64; x++) if (19 - x === (19 ^ x)) at19++;"
+  "assert.strictEqual(at19, 8, ""19 agrees only on its own 2^3 bit-subsets: it is not a closure of this kind"");"
+  "console.log(""I-184: the closure is the difference between reading and writing an index — passed"");"
+  "console.log(""  for every index to 16 bits: read ^ write = read + write = 2^n - 1, and only the written view is that far"");"
+  "console.log(""  the tags: 100 / 011, 010 / 101, 001 / 110, 000 / 111, each 111 apart"");"
+  "console.log(""  1963: 19 read, 44 written, 63 the closure"");"
+  "console.log(""  arithmetic (the read) and boolean (the write) agree for every index only at the closure"");"
+  .

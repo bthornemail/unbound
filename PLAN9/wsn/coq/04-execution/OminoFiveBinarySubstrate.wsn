@@ -1,0 +1,51 @@
+OMINOFIVEBINARYSUBSTRATE = CHECKED .
+
+CHECKED = COQ SCOPE OMINOFIVEBINARYSUBSTRATEOWNER OMINOFIVEBINARYSUBSTRATEPROOF RULESO FACTSO CLOSURESO COMBINATORSO CONSO OMINOFIVEBINARYSUBSTRATECOUNT OMINOFIVEBINARYSUBSTRATERULESBEFORECONS .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+OMINOFIVEBINARYSUBSTRATEOWNER =
+  "Definition omino_five_binary_substrate_owner : Prop := True."
+  .
+
+OMINOFIVEBINARYSUBSTRATEPROOF =
+  "Definition omino_five_binary_substrate_proof : omino_five_binary_substrate_owner := I."
+  .
+
+RULESO =
+  "Definition rules_o : N := 0."
+  .
+
+FACTSO =
+  "Definition facts_o : N := 1."
+  .
+
+CLOSURESO =
+  "Definition closures_o : N := 2."
+  .
+
+COMBINATORSO =
+  "Definition combinators_o : N := 3."
+  .
+
+CONSO =
+  "Definition cons_o : N := 4."
+  .
+
+OMINOFIVEBINARYSUBSTRATECOUNT =
+  "Theorem omino_five_binary_substrate_count :"
+  "  cons_o + 1 = 5."
+  "Proof. vm_compute; reflexivity. Qed."
+  .
+
+OMINOFIVEBINARYSUBSTRATERULESBEFORECONS =
+  "Theorem omino_five_binary_substrate_rules_before_cons :"
+  "  rules_o < cons_o."
+  "Proof. vm_compute; reflexivity. Qed."
+  .

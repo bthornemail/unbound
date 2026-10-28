@@ -1,0 +1,31 @@
+FUNCTORIALSEMANTICS = CHECKED .
+
+CHECKED = COQ SCOPE FUNCTORIALSEMANTICSOWNER FUNCTORIALSEMANTICSPROOF FUNCTORIALSEMANTICSMAP FUNCTORIALSEMANTICSZEROWITNESS .
+
+COQ =
+  "From Coq Require Import NArith.NArith."
+  .
+
+SCOPE =
+  "Open Scope N_scope."
+  .
+
+FUNCTORIALSEMANTICSOWNER =
+  "Definition functorial_semantics_owner : Prop := True."
+  .
+
+FUNCTORIALSEMANTICSPROOF =
+  "Definition functorial_semantics_proof : functorial_semantics_owner := I."
+  .
+
+FUNCTORIALSEMANTICSMAP =
+  "Definition functorial_semantics_map (x : N) : N := N.lxor x 0x18."
+  .
+
+FUNCTORIALSEMANTICSZEROWITNESS =
+  "Theorem functorial_semantics_zero_witness :"
+  "  functorial_semantics_map 0 = 0x18."
+  "Proof."
+  "  reflexivity."
+  "Qed."
+  .

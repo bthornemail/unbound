@@ -1,0 +1,113 @@
+RECORD = HEAD TESTCANFAILNOSIDEEFFECTP PREDICATECHANGESTHEBUFFERONLYONSUCCESSP FUNCTIONNEVERFAILSNOSIDEEFFECTP ACTIONNEVERFAILSWRITESITSCELLP THEFOURCELLSOFTHEXEACHONCEP THEEXCHANGELAWONABYTEFRAMEP THEKERNELSTWOCONDITIONSOVEREVERYBITVALUEP .
+
+HEAD =
+  "// i231.ts — I-231: the compare-exchange is a predicate — CDL2's four rule types, run on a shared buffer"
+  "//"
+  "// The author, 2026-10-27, of Atomics.compareExchange(svg, 60 ^ frame, 127, 63) (boxedPINE"
+  "// space/src/exchange.ts): ""this is the modal that the strict logic builds on"". CDL2 (Koster, 1976)"
+  "// declares every rule by two flags, can it fail and can it have a side effect, and names the four"
+  "// cells test, predicate, function, action (ZIGUAROTH _ARTICLES/CDL). This record runs the four"
+  "// primitives of the boot kernel on a shared buffer and observes the flags. Predictions, stated here"
+  "// before the checks:"
+  "//"
+  "//   P1  test (the texture and density check): can fail, never changes the buffer"
+  "//   P2  predicate (Atomics.compareExchange): fails when the cell is not the expected value and then"
+  "//       leaves the buffer byte-identical; succeeds otherwise and changes exactly that one cell"
+  "//   P3  function (Atomics.load): never fails, never changes the buffer"
+  "//   P4  action (Atomics.store): never fails, changes exactly the cell it writes"
+  "//   P5  the four observed (can fail, side effect) pairs are the four cells of the 2 x 2, each once"
+  "//   P6  the exchange law on a 128-byte frame: with byte 60 ^ f at 127, compareExchange(…, 127, 63)"
+  "//       writes 63 there and nothing else; applied again it fails and changes nothing"
+  "//   P7  the kernel's Day 5 condition, odd texture, holds for 0 of 65,536 values; the Day 3 condition,"
+  "//       even texture and density 8, holds for 12,870 = C(16, 8)"
+  "//"
+  "// What is asserted is behaviour. Calling the compare-exchange the modal of the strict logic is the"
+  "// author's reading. C11's compare-exchange differs on failure (it writes the current value into the"
+  "// caller's expected); JavaScript's has no such out-parameter, which is the host checked here."
+  "import assert from ""node:assert"";"
+  "const SIZE = 128;"
+  "const fresh = () => { const b = new Uint8Array(new SharedArrayBuffer(SIZE)); for (let i = 0; i < SIZE; i++) b[i] = i; return b; };"
+  "const same = (a: Uint8Array, b: Uint8Array) => a.every((v, i) => v === b[i]);"
+  "const diff = (a: Uint8Array, b: Uint8Array) => [...a.keys()].filter((i) => a[i] !== b[i]);"
+  "// The kernel's two checks over a 16-bit value (boxed omi_genesis.c)"
+  "const pop16 = (x: number) => { let c = 0; for (let i = 0; i < 16; i++) c += (x >> i) & 1; return c; };"
+  "const tex16 = (x: number) => { let t = 0; for (let i = 0; i < 16; i++) t += ((x >> i) & 1) ^ ((x >> ((i + 1) & 15)) & 1); return t; };"
+  "// Each primitive, run once, reporting whether it failed and which cells changed."
+  "type Run = { failed: boolean; changed: number[] };"
+  "const run = (f: (b: Uint8Array) => boolean): Run => { const b = fresh(), before = b.slice(); const ok = f(b); return { failed: !ok, changed: diff(before, b) }; };"
+  "const PRIMITIVES = {"
+  "  test: [(b: Uint8Array) => { const x = (b[1] << 8) | b[2]; return tex16(x) % 2 === 0 && pop16(x) === 8; },        // 0x0102: density 2, fails"
+  "         (b: Uint8Array) => { const x = 0x5a3c; return tex16(x) % 2 === 0 && pop16(x) === 8; }],                  // density 8, passes"
+  "  predicate: [(b: Uint8Array) => Atomics.compareExchange(b, 60, 127, 63) === 127,                                 // b[60] = 60, not 127: fails"
+  "              (b: Uint8Array) => Atomics.compareExchange(b, 60, 60, 63) === 60],                                   // b[60] = 60: succeeds"
+  "  function: [(b: Uint8Array) => { Atomics.load(b, 60); return true; }, (b: Uint8Array) => { Atomics.load(b, 127); return true; }],"
+  "  action: [(b: Uint8Array) => { Atomics.store(b, 60, 63); return true; }, (b: Uint8Array) => { Atomics.store(b, 127, 0); return true; }],"
+  "};"
+  "const observed = Object.fromEntries(Object.entries(PRIMITIVES).map(([k, fs]) => {"
+  "  const runs = fs.map(run);"
+  "  return [k, { canFail: runs.some((r) => r.failed), sideEffect: runs.some((r) => r.changed.length > 0), runs }];"
+  "})) as Record<keyof typeof PRIMITIVES, { canFail: boolean; sideEffect: boolean; runs: Run[] }>;"
+  .
+
+TESTCANFAILNOSIDEEFFECTP =
+  "// ── 1. test: can fail, no side effect (P1) ─────────────────────"
+  "assert.equal(observed.test.canFail, true, ""the check fails on 0x0102 (density 2)"");"
+  "assert.equal(observed.test.sideEffect, false, ""and never changes the buffer"");"
+  .
+
+PREDICATECHANGESTHEBUFFERONLYONSUCCESSP =
+  "// ── 2. predicate: changes the buffer only on success (P2) ──────"
+  "const [pFail, pOk] = observed.predicate.runs;"
+  "assert.equal(pFail.failed, true, ""compareExchange fails when the cell is not the expected value"");"
+  "assert.deepEqual(pFail.changed, [], ""and then the buffer is byte-identical"");"
+  "assert.equal(pOk.failed, false, ""it succeeds when the cell is the expected value"");"
+  "assert.deepEqual(pOk.changed, [60], ""and then exactly that one cell changes"");"
+  .
+
+FUNCTIONNEVERFAILSNOSIDEEFFECTP =
+  "// ── 3. function: never fails, no side effect (P3) ──────────────"
+  "assert.equal(observed.function.canFail, false, ""load never fails"");"
+  "assert.equal(observed.function.sideEffect, false, ""and never changes the buffer"");"
+  .
+
+ACTIONNEVERFAILSWRITESITSCELLP =
+  "// ── 4. action: never fails, writes its cell (P4) ───────────────"
+  "assert.equal(observed.action.canFail, false, ""store never fails"");"
+  "assert.deepEqual(observed.action.runs.map((r) => r.changed), [[60], [127]], ""and changes exactly the cell it writes"");"
+  .
+
+THEFOURCELLSOFTHEXEACHONCEP =
+  "// ── 5. the four cells of the 2 x 2, each once (P5) ─────────────"
+  "const cell = (o: { canFail: boolean; sideEffect: boolean }) => `${o.canFail ? ""can fail"" : ""cannot fail""}, ${o.sideEffect ? ""side effect"" : ""no side effect""}`;"
+  "assert.deepEqual(Object.fromEntries(Object.entries(observed).map(([k, o]) => [k, cell(o)])), {"
+  "  test: ""can fail, no side effect"", predicate: ""can fail, side effect"","
+  "  function: ""cannot fail, no side effect"", action: ""cannot fail, side effect"","
+  "}, ""the observed flags are CDL2's four cells"");"
+  "assert.equal(new Set(Object.values(observed).map(cell)).size, 4, ""each cell once"");"
+  .
+
+THEEXCHANGELAWONABYTEFRAMEP =
+  "// ── 6. the exchange law on a 128-byte frame (P6) ───────────────"
+  "for (let f = 0; f < SIZE; f++) {"
+  "  const b = new Uint8Array(new SharedArrayBuffer(SIZE)); b[60 ^ f] = 127; const before = b.slice();"
+  "  assert.equal(Atomics.compareExchange(b, 60 ^ f, 127, 63), 127, `frame ${f}: the exchange finds 127`);"
+  "  assert.deepEqual(diff(before, b), [60 ^ f], `frame ${f}: only byte 60 ^ frame changes`);"
+  "  const after = b.slice();"
+  "  assert.notEqual(Atomics.compareExchange(b, 60 ^ f, 127, 63), 127, `frame ${f}: applied again it fails`);"
+  "  assert.ok(same(after, b), `frame ${f}: and changes nothing`);"
+  "}"
+  .
+
+THEKERNELSTWOCONDITIONSOVEREVERYBITVALUEP =
+  "// ── 7. the kernel's two conditions over every 16-bit value (P7) ─"
+  "let odd = 0, day3 = 0;"
+  "for (let v = 0; v < 65536; v++) { const t = tex16(v); if (t % 2) odd++; else if (pop16(v) === 8) day3++; }"
+  "assert.equal(odd, 0, ""odd texture never occurs: a closed loop of 16 bits flips an even number of times"");"
+  "assert.equal(day3, 12870, ""even texture with density 8: every value with 8 bits set"");"
+  "assert.equal(12870, (16 * 15 * 14 * 13 * 12 * 11 * 10 * 9) / (8 * 7 * 6 * 5 * 4 * 3 * 2), ""C(16, 8)"");"
+  "console.log(""I-231: the compare-exchange is a predicate — CDL2's four rule types, run on a shared buffer — passed"");"
+  "console.log(""  test: can fail, no side effect · predicate: can fail, changes only on success"");"
+  "console.log(""  function: cannot fail, no side effect · action: cannot fail, writes its cell"");"
+  "console.log(""  the exchange (60 ^ frame, 127 -> 63) writes one byte, then fails and changes nothing, for all 128 frames"");"
+  "console.log(""  odd texture: 0 of 65,536 (Day 5 unreachable); Day 3: 12,870 = C(16, 8)"");"
+  .

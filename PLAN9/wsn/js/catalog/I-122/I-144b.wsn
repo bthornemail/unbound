@@ -1,0 +1,21 @@
+RECORD = HEAD .
+
+HEAD =
+  "// ══════════════════════════════════════════════════════════════════"
+  "// I-144b: base-36 as literal /A-Z0-9/ block"
+  "// ══════════════════════════════════════════════════════════════════"
+  "record(""I-144b"", ""base-36 as literal /A-Z0-9/ block"", () => {"
+  "  assert.strictEqual(BLOCK.length, 36);"
+  "  assert.strictEqual(BLOCK[0], ""0"");"
+  "  assert.strictEqual(BLOCK[10], ""A"");"
+  "  assert.strictEqual(BLOCK[31], ""V"");"
+  "  assert.strictEqual(BLOCK[35], ""Z"");"
+  "  assert.strictEqual(BLOCK.indexOf(""V""), 31);"
+  "  // the gap"
+  "  const gap: number[] = [];"
+  "  for (let c = 0x3A; c <= 0x40; c++) gap.push(c);"
+  "  assert.strictEqual(gap.length, 7);"
+  "  assert.deepStrictEqual(gap.map(c => String.fromCharCode(c)),"
+  "    ["":"","";"",""<"",""="","">"",""?"",""@""]);"
+  "}, ""point/line/duality"");"
+  .
