@@ -1,0 +1,59 @@
+#!/bin/rc
+# step.rc - inside Plan 9: stepd (the shared step() as a 9P file server at
+# /n/step) tested live. Three forward turns return to the start, as do three
+# back and one forward then one back; for scripted sequences stepd's registers
+# equal steptest's (the same step() zvtt.c ticks with) and a table written by
+# hand; FLAG refuses anything but IS or OF, and nothing turns; a register
+# refuses a write.
+rfork en
+w=/tmp/zstep
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/step.c PLAN9/src/step.h PLAN9/src/stepd.c PLAN9/src/steptest.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c step.c stepd.c steptest.c && 8l -o $w/stepd stepd.8 step.8 && 8l -o $w/steptest steptest.8 step.8 || exit compile
+fail=0
+fn check {
+	if(~ $1 $2) echo ok $3
+	if not { echo FAIL $3: got $1 want $2; fail=1 }
+}
+# the registers' zeroths, R0 R1 R2, joined
+fn regs {
+	a=`{cat /n/step/R0}; b=`{cat /n/step/R1}; c=`{cat /n/step/R2}
+	echo $a(1)^' '^$b(1)^' '^$c(1)
+}
+# a fresh stepd for each sequence, then the writes; its output away from any
+# backquote's pipe, which a running server would hold open
+fn run {
+	unmount /n/step >[2]/dev/null
+	$w/stepd </dev/null >/dev/null >[2=1] || exit stepd
+	for(d in $*) echo $d > /n/step/FLAG
+	regs
+}
+
+$w/stepd </dev/null >/dev/null >[2=1] || exit stepd
+st=`{cat /n/step/R0}
+check $"st 'YHWH 𐄀' 'R0 reads YHWH and its separator at the start'
+x=`{run}; check $"x 'YHWH YAHWEH ADONAI' 'the start: YHWH YAHWEH ADONAI'
+x=`{run IS}; check $"x 'YAHWEH ADONAI YHWH' 'IS: one turn forward'
+x=`{run OF}; check $"x 'ADONAI YHWH YAHWEH' 'OF: one turn back'
+x=`{run IS IS IS}; check $"x 'YHWH YAHWEH ADONAI' 'three forward return to the start'
+x=`{run OF OF OF}; check $"x 'YHWH YAHWEH ADONAI' 'three back return to the start'
+x=`{run IS OF}; check $"x 'YHWH YAHWEH ADONAI' 'forward then back return to the start'
+for(s in 'IS IS OF IS' 'OF OF IS' 'IS IS IS IS OF OF OF IS IS'){
+	x=`{run `{echo $s}}
+	y=`{$w/steptest `{echo $s}}
+	check $"x $"y 'stepd equals the shared step() for '^$s
+}
+x=`{run IS}
+f=`{cat /n/step/FLAG}
+check $"f IS 'FLAG reads the direction the last write took'
+if(@{echo YES > /n/step/FLAG} >[2]/dev/null) r=taken
+if not r=refused
+check $r refused 'FLAG refuses YES'
+x=`{regs}; check $"x 'YAHWEH ADONAI YHWH' 'and nothing turned'
+if(@{echo IS > /n/step/R0} >[2]/dev/null) r=taken
+if not r=refused
+check $r refused 'a register refuses a write'
+unmount /n/step
+if(~ $fail 0) echo 'step.rc: every answer as expected'

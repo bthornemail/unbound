@@ -85,6 +85,11 @@ PLAN9/src/zkey.c
 PLAN9/src/key.rc
 PLAN9/src/zvtt.c
 PLAN9/src/vtt.rc
+PLAN9/src/step.c
+PLAN9/src/step.h
+PLAN9/src/stepd.c
+PLAN9/src/steptest.c
+PLAN9/src/step.rc
 PLAN9/src/zcue.c
 PLAN9/src/cues.rc
 PLAN9/in/cues.txt

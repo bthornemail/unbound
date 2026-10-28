@@ -13,7 +13,7 @@ mkdir -p $w/unbound $w/narrative
 @{cd $w/unbound && tar xf $src} || exit tar
 p=$w/unbound/PLAN9
 cd $p/src
-8c zvtt.c && 8l -o $w/zvtt zvtt.8 || exit compile
+8c zvtt.c step.c && 8l -o $w/zvtt zvtt.8 step.8 || exit compile
 d=$p/in/narrative
 for(s in `{cd $d && ls | grep '\.txt$' | sed 's/\.txt$//'}){
 	$w/zvtt $d/VOICES $d/^$s^.txt $s > $w/narrative/^$s^.vtt || exit zvtt

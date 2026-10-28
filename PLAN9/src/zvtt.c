@@ -36,6 +36,7 @@
 #include <u.h>
 #include <libc.h>
 #include <bio.h>
+#include "step.h"	/* the turn of R0, R1, R2 by FLAG, shared with stepd.c */
 
 enum { NV = 16 };
 
@@ -58,36 +59,8 @@ static char *index16[16] = {
 
 enum { W = 11 };	/* the window: the length of each sentence */
 
-typedef struct Reg Reg;
-struct Reg {
-	char	*sep;	/* the Aegean separator */
-	char	*zero;	/* the zeroth it observes */
-};
-static Reg reg[3] = {
-	{ "\xF0\x90\x84\x80", "YHWH" },	/* U+10100 */
-	{ "\xF0\x90\x84\x81", "YAHWEH" },	/* U+10101 */
-	{ "\xF0\x90\x84\x82", "ADONAI" },	/* U+10102 */
-};
-static Reg *R0 = &reg[0], *R1 = &reg[1], *R2 = &reg[2];
-static int FLAG;
-
 static char *sentence[4] = { "GOD IS WORD", "WORD IS GOD", "GOD OF WORD", "WORD OF GOD" };
 static Rune place[] = { 0x10107, 0x10110, 0x10119, 0x10122, 0x1012B };
-
-static void
-step(void)
-{
-	Reg *BUCKET;
-
-	if(FLAG){
-		BUCKET = R0; R0 = R1; R1 = R2;
-		R2 = BUCKET;
-	}else{
-		BUCKET = R2; R2 = R1; R1 = R0;
-		R0 = BUCKET;
-	}
-	FLAG = 0;	/* RESET(FLAG) */
-}
 
 static Voice v[NV];
 static int nv;

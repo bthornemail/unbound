@@ -66,3 +66,7 @@ python3 PLAN9/frames.py serves /frame.png and /vtt/... on 127.0.0.1:8790 while Q
 restart-guest
 00:00:15.000 --> 00:00:16.000
 To restart the guest: fshalt in Plan 9 (fossil flushed), then quit at the monitor; QEMU exits a few seconds later. run.sh boots again; then the screen (aux/vga, binds), the floor (space.rc -o) and agentd (agentd.rc) are started again. The floor starts at its seeds.
+
+rc-server-in-backquote
+00:00:16.000 --> 00:00:17.000
+A server started inside an rc backquote holds the backquote's pipe open and rc waits for ever; start it with its output to /dev/null. Delete does not free a console shell blocked so; the guest had to be quit and booted again. A redirection that fails (a read-only file) stops an rc script: try such a write in a subshell, @{...}.

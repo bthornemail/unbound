@@ -146,3 +146,15 @@ Stage 1 of the XR view: PLAN9/frames.py serves the guest's own screen (a QEMU sc
 agentd
 00:00:35.000 --> 00:00:36.000
 Stage 2 of the XR view: space/agentd.c (agentd.rc, under aux/listen1 on tcp 8000, forwarded to the host's 127.0.0.1:18000) reads the running floor with mach(2): GET /agents (read, the default) as JSON, GET /constrain (asks, never writes), POST /interject (the only write; a GET there is 405). Checked: at tick 24 every agent at its seed; constrain gave SOLOMON ideal E2B3 in 6 ticks; an interjection of E2B3, from SOLOMON's own orbit, read back as 2849 = K(E2B3) at the next tick. boxedPINE space/guest.html shows the agents on the floor at their hues with live states; the guest frame and agentd agree.
+
+step-shared
+00:00:36.000 --> 00:00:37.000
+The PL360 turn of R0 R1 R2 (YHWH YAHWEH ADONAI) by FLAG moved out of zvtt.c into src/step.c and step.h, unchanged; zvtt.c and stepd.c share it. The 11 narrative tracks regenerated through it are byte-identical to the committed ones (0 differ).
+
+stepd
+00:00:37.000 --> 00:00:38.000
+src/stepd.c: the shared step() as a 9P file server at /n/step: R0 R1 R2 read their zeroth and separator; writing IS to FLAG is one turn forward, OF one back, then RESET(FLAG); anything else is refused and nothing turns. step.rc, live: 14 of 14, among them three forward and three back return to the start, and stepd equals steptest (the same step()) for three scripted sequences. No port forward: the host has no 9P client yet.
+
+omi-dom-merge
+00:00:38.000 --> 00:00:39.000
+github omi-dom: Grok's two lines joined. The building version (22-23 September, from /home/main/Programs/omi-dom-stack) kept whole on branch snapshot-2026-09-22; main (the package version) gains only what it lacked: 11 modules, 12 docs, client/circuit.html. npm test now awaits every selfTest in its own process: 46 pass, 0 fail, 2 without selfTest.
