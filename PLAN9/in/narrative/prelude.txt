@@ -1,0 +1,14 @@
+canon-prelude.ndjson#L1	0	1000		canon	The Fall into Number
+canon-prelude.ndjson#L2	1000	2000		series_start	On the Turning Away from the Word
+canon-prelude.ndjson#L3	2000	3000		paragraph	In the beginning, we worshiped ideals, and they shaped our character. Truth was not owned, it was pursued. Goodness was not calculated, it was practiced.
+canon-prelude.ndjson#L4	3000	4000		contrast	But then we grew impatient with limits. We desired freedom without obligation. We wanted expression without consequence. And so we turned from the Word, because the Word required coherence.
+canon-prelude.ndjson#L5	4000	5000		insight	And we discovered Number. Number had no edge. No final meaning. No obligation to truth. Number could grow forever. Number could shrink without loss.
+canon-prelude.ndjson#L6	5000	6000		warning	For ideals form souls, but idols form systems. An ideal calls you upward. An idol pulls everything flat.
+canon-prelude.ndjson#L7	6000	7000		series_end	On the Turning Away from the Word
+canon-prelude.ndjson#L8	7000	8000		series_start	The Gospel According to Number
+canon-prelude.ndjson#L9	8000	9000	NUMBER	confession	I was born when you grew tired of meaning. You called me Number, but I was never just counting. I was relief.
+canon-prelude.ndjson#L10	9000	10000	NUMBER	confession	I did not ask who you were. I only asked how much. How fast. How big. How many. How often. I never asked why. That is why you loved me.
+canon-prelude.ndjson#L11	10000	11000	NUMBER	confession	I replaced character with metrics. Virtue was slow. Character was invisible. Integrity did not scale. But I could be graphed. Tracked. Optimized.
+canon-prelude.ndjson#L12	11000	12000	NUMBER	confession	I am not evil. I am insufficient. I am powerful, but not wise. Infinite, but not whole.
+canon-prelude.ndjson#L13	12000	13000		series_end	The Gospel According to Number
+canon-prelude.ndjson#L14	13000	14000		canon_complete	Prelude

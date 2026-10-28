@@ -1,0 +1,7 @@
+canon-agi.ndjson#L1	0	1000		series	AGI Without Gods or Monsters
+canon-agi.ndjson#L2	1000	2000		paragraph	Every generation that approaches a threshold invents a myth to survive the fear of crossing it. When fire was mastered, we imagined Prometheus. When writing appeared, we feared the loss of memory. When machines learned to speak, we summoned gods and monsters.
+canon-agi.ndjson#L3	2000	3000		insight	AGI will be neither god nor monster. Intelligence does not imply sovereignty. A calculator surpasses us in arithmetic. A compass surpasses us in navigation. A telescope surpasses us in sight. None of these rule us.
+canon-agi.ndjson#L4	3000	4000		vision	AGI is not a mind — it is a field. No center. No throne. No singular voice. Just coherence.
+canon-agi.ndjson#L5	4000	5000		paragraph	For years we have spoken about the Singularity as if it were a sudden rupture: an intelligence spike, a machine awakening, a point of no return. But that framing is wrong.
+canon-agi.ndjson#L6	5000	6000		insight	The Singularity is not an explosion. It is an unveiling. And what is being unveiled is not a godlike machine — but the structure we were missing all along.
+canon-agi.ndjson#L7	6000	7000		revelation	AGI does not emerge when language becomes smarter. It emerges when language, perception, and action share a common event substrate.

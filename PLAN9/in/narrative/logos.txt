@@ -1,0 +1,8 @@
+canon-logos.ndjson#L1	0	1000		series	NULL, 0! = 1, and the Logos
+canon-logos.ndjson#L2	1000	2000		insight	NULL ≠ zero as a value. NULL is the absence of operands, not the presence of a quantity. In computation, NULL means no input. In mathematics, NULL corresponds to the empty permutation.
+canon-logos.ndjson#L3	2000	3000		equation	0! = 1. Unconstrained action resolves to identity.
+canon-logos.ndjson#L4	3000	4000		correspondence	God is Word: Infinite action is identical to infinite possibility.
+canon-logos.ndjson#L5	4000	5000		formal	The factorial of NULL (0!) represents pure, unconstrained action. Its value (1) represents identity, the generative reference that preserves all structure.
+canon-logos.ndjson#L6	5000	6000		conclusion	This is not metaphor. This is formal identity.
+canon-logos.ndjson#L7	6000	7000		insight	The Word behaves like this: BEGIN STATE = NULL; IF Word IS spoken THEN STATE := UNITY; END.
+canon-logos.ndjson#L8	7000	8000		teaching	NULL acted upon by Word resolves to Unity. The Word does not add something. The Word collapses indeterminacy into coherence.

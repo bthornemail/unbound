@@ -1,0 +1,360 @@
+WEBVTT - SH/tetra-mask.sh
+
+NOTE
+Written by zcue in Plan 9 from SH/tetra-mask.sh.wsn: one cue per LITERAL, one animation frame each.
+No position is written: a cue sits at its literal's offset in the source
+buffer, found when the track is read (exact: row and column of the 65,536;
+or the hypotenuse of the two).
+
+SH/tetra-mask.sh#1
+00:00:00.000 --> 00:00:01.000
+<c.HEAD>"#!/bin/sh"</c>
+
+SH/tetra-mask.sh#2
+00:00:01.000 --> 00:00:02.000
+<c.HEAD>"# Compare four raw-byte vertices of a tetrahedron using only POSIX shell and"</c>
+
+SH/tetra-mask.sh#3
+00:00:02.000 --> 00:00:03.000
+<c.HEAD>"# BusyBox applets. The temporary paired stream keeps the read loop in the"</c>
+
+SH/tetra-mask.sh#4
+00:00:03.000 --> 00:00:04.000
+<c.HEAD>"# current shell, so its counters survive on BusyBox ash."</c>
+
+SH/tetra-mask.sh#5
+00:00:04.000 --> 00:00:05.000
+<c.HEAD>"set -eu"</c>
+
+SH/tetra-mask.sh#6
+00:00:05.000 --> 00:00:06.000
+<c.HEAD>"BUSYBOX=${BUSYBOX:-busybox}"</c>
+
+SH/tetra-mask.sh#7
+00:00:06.000 --> 00:00:07.000
+<c.HEAD>"VERBOSE=0"</c>
+
+SH/tetra-mask.sh#8
+00:00:07.000 --> 00:00:08.000
+<c.HEAD>"usage() {"</c>
+
+SH/tetra-mask.sh#9
+00:00:08.000 --> 00:00:09.000
+<c.HEAD>"    printf 'Usage: sh tetra-mask.sh [-v] FILE1 FILE2 FILE3 FILE4\n'"</c>
+
+SH/tetra-mask.sh#10
+00:00:09.000 --> 00:00:10.000
+<c.HEAD>"}"</c>
+
+SH/tetra-mask.sh#11
+00:00:10.000 --> 00:00:11.000
+<c.HEAD>"case ""${1:-}"" in"</c>
+
+SH/tetra-mask.sh#12
+00:00:11.000 --> 00:00:12.000
+<c.HEAD>"    -v)"</c>
+
+SH/tetra-mask.sh#13
+00:00:12.000 --> 00:00:13.000
+<c.HEAD>"        VERBOSE=1"</c>
+
+SH/tetra-mask.sh#14
+00:00:13.000 --> 00:00:14.000
+<c.HEAD>"        shift"</c>
+
+SH/tetra-mask.sh#15
+00:00:14.000 --> 00:00:15.000
+<c.HEAD>"        ;;"</c>
+
+SH/tetra-mask.sh#16
+00:00:15.000 --> 00:00:16.000
+<c.HEAD>"    -h|--help)"</c>
+
+SH/tetra-mask.sh#17
+00:00:16.000 --> 00:00:17.000
+<c.HEAD>"        usage"</c>
+
+SH/tetra-mask.sh#18
+00:00:17.000 --> 00:00:18.000
+<c.HEAD>"        exit 0"</c>
+
+SH/tetra-mask.sh#19
+00:00:18.000 --> 00:00:19.000
+<c.HEAD>"        ;;"</c>
+
+SH/tetra-mask.sh#20
+00:00:19.000 --> 00:00:20.000
+<c.HEAD>"esac"</c>
+
+SH/tetra-mask.sh#21
+00:00:20.000 --> 00:00:21.000
+<c.HEAD>"[ ""$#"" -eq 4 ] || {"</c>
+
+SH/tetra-mask.sh#22
+00:00:21.000 --> 00:00:22.000
+<c.HEAD>"    usage &gt;&amp;2"</c>
+
+SH/tetra-mask.sh#23
+00:00:22.000 --> 00:00:23.000
+<c.HEAD>"    exit 2"</c>
+
+SH/tetra-mask.sh#24
+00:00:23.000 --> 00:00:24.000
+<c.HEAD>"}"</c>
+
+SH/tetra-mask.sh#25
+00:00:24.000 --> 00:00:25.000
+<c.HEAD>"F1=$1"</c>
+
+SH/tetra-mask.sh#26
+00:00:25.000 --> 00:00:26.000
+<c.HEAD>"F2=$2"</c>
+
+SH/tetra-mask.sh#27
+00:00:26.000 --> 00:00:27.000
+<c.HEAD>"F3=$3"</c>
+
+SH/tetra-mask.sh#28
+00:00:27.000 --> 00:00:28.000
+<c.HEAD>"F4=$4"</c>
+
+SH/tetra-mask.sh#29
+00:00:28.000 --> 00:00:29.000
+<c.HEAD>"for file in ""$F1"" ""$F2"" ""$F3"" ""$F4""; do"</c>
+
+SH/tetra-mask.sh#30
+00:00:29.000 --> 00:00:30.000
+<c.HEAD>"    [ -r ""$file"" ] || {"</c>
+
+SH/tetra-mask.sh#31
+00:00:30.000 --> 00:00:31.000
+<c.HEAD>"        printf 'Cannot read: %s\n' ""$file"" &gt;&amp;2"</c>
+
+SH/tetra-mask.sh#32
+00:00:31.000 --> 00:00:32.000
+<c.HEAD>"        exit 2"</c>
+
+SH/tetra-mask.sh#33
+00:00:32.000 --> 00:00:33.000
+<c.HEAD>"    }"</c>
+
+SH/tetra-mask.sh#34
+00:00:33.000 --> 00:00:34.000
+<c.HEAD>"done"</c>
+
+SH/tetra-mask.sh#35
+00:00:34.000 --> 00:00:35.000
+<c.HEAD>"TMP=$(""$BUSYBOX"" mktemp -d ""${TMPDIR:-/tmp}/tetra-mask.XXXXXX"")"</c>
+
+SH/tetra-mask.sh#36
+00:00:35.000 --> 00:00:36.000
+<c.HEAD>"trap '""$BUSYBOX"" rm -rf ""$TMP""' EXIT HUP INT TERM"</c>
+
+SH/tetra-mask.sh#37
+00:00:36.000 --> 00:00:37.000
+<c.HEAD>"byte_list() {"</c>
+
+SH/tetra-mask.sh#38
+00:00:37.000 --> 00:00:38.000
+<c.HEAD>"    # od emits unsigned decimal bytes; one byte per line makes paste safe."</c>
+
+SH/tetra-mask.sh#39
+00:00:38.000 --> 00:00:39.000
+<c.HEAD>"    ""$BUSYBOX"" od -An -v -tu1 ""$1"" |"</c>
+
+SH/tetra-mask.sh#40
+00:00:39.000 --> 00:00:40.000
+<c.HEAD>"        ""$BUSYBOX"" tr -s '[:space:]' '\n' |"</c>
+
+SH/tetra-mask.sh#41
+00:00:40.000 --> 00:00:41.000
+<c.HEAD>"        ""$BUSYBOX"" grep '[0-9]' &gt; ""$2"" || :"</c>
+
+SH/tetra-mask.sh#42
+00:00:41.000 --> 00:00:42.000
+<c.HEAD>"}"</c>
+
+SH/tetra-mask.sh#43
+00:00:42.000 --> 00:00:43.000
+<c.HEAD>"pair() {"</c>
+
+SH/tetra-mask.sh#44
+00:00:43.000 --> 00:00:44.000
+<c.HEAD>"    A=$1"</c>
+
+SH/tetra-mask.sh#45
+00:00:44.000 --> 00:00:45.000
+<c.HEAD>"    B=$2"</c>
+
+SH/tetra-mask.sh#46
+00:00:45.000 --> 00:00:46.000
+<c.HEAD>"    A_BYTES=$TMP/a"</c>
+
+SH/tetra-mask.sh#47
+00:00:46.000 --> 00:00:47.000
+<c.HEAD>"    B_BYTES=$TMP/b"</c>
+
+SH/tetra-mask.sh#48
+00:00:47.000 --> 00:00:48.000
+<c.HEAD>"    PAIRED=$TMP/paired"</c>
+
+SH/tetra-mask.sh#49
+00:00:48.000 --> 00:00:49.000
+<c.HEAD>"    byte_list ""$A"" ""$A_BYTES"""</c>
+
+SH/tetra-mask.sh#50
+00:00:49.000 --> 00:00:50.000
+<c.HEAD>"    byte_list ""$B"" ""$B_BYTES"""</c>
+
+SH/tetra-mask.sh#51
+00:00:50.000 --> 00:00:51.000
+<c.HEAD>"    LA=$(""$BUSYBOX"" wc -l &lt; ""$A_BYTES"")"</c>
+
+SH/tetra-mask.sh#52
+00:00:51.000 --> 00:00:52.000
+<c.HEAD>"    LB=$(""$BUSYBOX"" wc -l &lt; ""$B_BYTES"")"</c>
+
+SH/tetra-mask.sh#53
+00:00:52.000 --> 00:00:53.000
+<c.HEAD>"    printf 'EDGE %s - %s\n' ""$A"" ""$B"""</c>
+
+SH/tetra-mask.sh#54
+00:00:53.000 --> 00:00:54.000
+<c.HEAD>"    printf '  bytes:      %d and %d\n' ""$LA"" ""$LB"""</c>
+
+SH/tetra-mask.sh#55
+00:00:54.000 --> 00:00:55.000
+<c.HEAD>"    if [ ""$LA"" -ne ""$LB"" ]; then"</c>
+
+SH/tetra-mask.sh#56
+00:00:55.000 --> 00:00:56.000
+<c.HEAD>"        printf '  length:     MISMATCH (%d vs %d)\n' ""$LA"" ""$LB"""</c>
+
+SH/tetra-mask.sh#57
+00:00:56.000 --> 00:00:57.000
+<c.HEAD>"        printf '  result:     not comparable\n\n'"</c>
+
+SH/tetra-mask.sh#58
+00:00:57.000 --> 00:00:58.000
+<c.HEAD>"        return 0"</c>
+
+SH/tetra-mask.sh#59
+00:00:58.000 --> 00:00:59.000
+<c.HEAD>"    fi"</c>
+
+SH/tetra-mask.sh#60
+00:00:59.000 --> 00:01:00.000
+<c.HEAD>"    ""$BUSYBOX"" paste -d ' ' ""$A_BYTES"" ""$B_BYTES"" &gt; ""$PAIRED"""</c>
+
+SH/tetra-mask.sh#61
+00:01:00.000 --> 00:01:01.000
+<c.HEAD>"    DIFF_BITS=0"</c>
+
+SH/tetra-mask.sh#62
+00:01:01.000 --> 00:01:02.000
+<c.HEAD>"    DIFF_BYTES=0"</c>
+
+SH/tetra-mask.sh#63
+00:01:02.000 --> 00:01:03.000
+<c.HEAD>"    MASK_HEX="</c>
+
+SH/tetra-mask.sh#64
+00:01:03.000 --> 00:01:04.000
+<c.HEAD>"    while read -r X Y; do"</c>
+
+SH/tetra-mask.sh#65
+00:01:04.000 --> 00:01:05.000
+<c.HEAD>"        Z=$((X ^ Y))"</c>
+
+SH/tetra-mask.sh#66
+00:01:05.000 --> 00:01:06.000
+<c.HEAD>"        [ ""$Z"" -ne 0 ] &amp;&amp; DIFF_BYTES=$((DIFF_BYTES + 1))"</c>
+
+SH/tetra-mask.sh#67
+00:01:06.000 --> 00:01:07.000
+<c.HEAD>"        C=0"</c>
+
+SH/tetra-mask.sh#68
+00:01:07.000 --> 00:01:08.000
+<c.HEAD>"        I=0"</c>
+
+SH/tetra-mask.sh#69
+00:01:08.000 --> 00:01:09.000
+<c.HEAD>"        while [ ""$I"" -lt 8 ]; do"</c>
+
+SH/tetra-mask.sh#70
+00:01:09.000 --> 00:01:10.000
+<c.HEAD>"            [ $(((Z &gt;&gt; I) &amp; 1)) -ne 0 ] &amp;&amp; C=$((C + 1))"</c>
+
+SH/tetra-mask.sh#71
+00:01:10.000 --> 00:01:11.000
+<c.HEAD>"            I=$((I + 1))"</c>
+
+SH/tetra-mask.sh#72
+00:01:11.000 --> 00:01:12.000
+<c.HEAD>"        done"</c>
+
+SH/tetra-mask.sh#73
+00:01:12.000 --> 00:01:13.000
+<c.HEAD>"        DIFF_BITS=$((DIFF_BITS + C))"</c>
+
+SH/tetra-mask.sh#74
+00:01:13.000 --> 00:01:14.000
+<c.HEAD>"        MASK_HEX=$MASK_HEX$(printf '%02x' ""$Z"")"</c>
+
+SH/tetra-mask.sh#75
+00:01:14.000 --> 00:01:15.000
+<c.HEAD>"    done &lt; ""$PAIRED"""</c>
+
+SH/tetra-mask.sh#76
+00:01:15.000 --> 00:01:16.000
+<c.HEAD>"    printf '  length:     equal (%d bytes)\n' ""$LA"""</c>
+
+SH/tetra-mask.sh#77
+00:01:16.000 --> 00:01:17.000
+<c.HEAD>"    printf '  differing:  %d bits across %d bytes\n' ""$DIFF_BITS"" ""$DIFF_BYTES"""</c>
+
+SH/tetra-mask.sh#78
+00:01:17.000 --> 00:01:18.000
+<c.HEAD>"    [ ""$VERBOSE"" -eq 1 ] &amp;&amp; printf '  mask:       %s\n' ""$MASK_HEX"""</c>
+
+SH/tetra-mask.sh#79
+00:01:18.000 --> 00:01:19.000
+<c.HEAD>"    printf '\n'"</c>
+
+SH/tetra-mask.sh#80
+00:01:19.000 --> 00:01:20.000
+<c.HEAD>"}"</c>
+
+SH/tetra-mask.sh#81
+00:01:20.000 --> 00:01:21.000
+<c.HEAD>"printf '%s\n' '=== RAW-BYTE TETRAHEDRON ==='"</c>
+
+SH/tetra-mask.sh#82
+00:01:21.000 --> 00:01:22.000
+<c.HEAD>"printf 'Vertices: %s | %s | %s | %s\n\n' ""$F1"" ""$F2"" ""$F3"" ""$F4"""</c>
+
+SH/tetra-mask.sh#83
+00:01:22.000 --> 00:01:23.000
+<c.HEAD>"pair ""$F1"" ""$F2"""</c>
+
+SH/tetra-mask.sh#84
+00:01:23.000 --> 00:01:24.000
+<c.HEAD>"pair ""$F1"" ""$F3"""</c>
+
+SH/tetra-mask.sh#85
+00:01:24.000 --> 00:01:25.000
+<c.HEAD>"pair ""$F1"" ""$F4"""</c>
+
+SH/tetra-mask.sh#86
+00:01:25.000 --> 00:01:26.000
+<c.HEAD>"pair ""$F2"" ""$F3"""</c>
+
+SH/tetra-mask.sh#87
+00:01:26.000 --> 00:01:27.000
+<c.HEAD>"pair ""$F2"" ""$F4"""</c>
+
+SH/tetra-mask.sh#88
+00:01:27.000 --> 00:01:28.000
+<c.HEAD>"pair ""$F3"" ""$F4"""</c>
+

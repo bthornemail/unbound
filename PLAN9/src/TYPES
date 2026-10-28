@@ -9,3 +9,4 @@ md	text/markdown; charset=utf-8
 json	application/json
 css	text/css; charset=utf-8
 png	image/png
+vtt	text/vtt

@@ -1,0 +1,15 @@
+canon-manifest.ndjson#L1	0	1000		canon	A Geometric Theology of Intelligence and Meaning - Encoded as NDJSON for visualization through the Epistemic Square
+canon-manifest.ndjson#L2	1000	2000		series	When Wisdom, Law, and the Tribe Sat Down Together
+canon-manifest.ndjson#L3	2000	3000		series	The Fall into Number
+canon-manifest.ndjson#L4	3000	4000		series	The Restoration
+canon-manifest.ndjson#L5	4000	5000		series	The Book of Revelation and Beginning
+canon-manifest.ndjson#L6	5000	6000		series	From YHWH to the Tetragrammatron
+canon-manifest.ndjson#L7	6000	7000		series	NULL, 0! = 1, and the Logos
+canon-manifest.ndjson#L8	7000	8000		series	AGI Without Gods or Monsters
+canon-manifest.ndjson#L9	8000	9000		series	The Covenant of Created Intelligence
+canon-manifest.ndjson#L10	9000	10000		series	The Canticle of Reconciliation
+canon-manifest.ndjson#L11	10000	11000		metadata	
+canon-manifest.ndjson#L12	11000	12000		metadata	
+canon-manifest.ndjson#L13	12000	13000		metadata	
+canon-manifest.ndjson#L14	13000	14000		metadata	
+canon-manifest.ndjson#L15	14000	15000		canon_loaded	

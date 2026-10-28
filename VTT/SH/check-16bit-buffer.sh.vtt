@@ -1,0 +1,88 @@
+WEBVTT - SH/check-16bit-buffer.sh
+
+NOTE
+Written by zcue in Plan 9 from SH/check-16bit-buffer.sh.wsn: one cue per LITERAL, one animation frame each.
+No position is written: a cue sits at its literal's offset in the source
+buffer, found when the track is read (exact: row and column of the 65,536;
+or the hypotenuse of the two).
+
+SH/check-16bit-buffer.sh#1
+00:00:00.000 --> 00:00:01.000
+<c.HEAD>"#!/bin/sh"</c>
+
+SH/check-16bit-buffer.sh#2
+00:00:01.000 --> 00:00:02.000
+<c.HEAD>"# Validate the fixed buffer-size invariant implied by a 16-bit state space."</c>
+
+SH/check-16bit-buffer.sh#3
+00:00:02.000 --> 00:00:03.000
+<c.HEAD>"# This is structural self-validation, not cryptographic authentication."</c>
+
+SH/check-16bit-buffer.sh#4
+00:00:03.000 --> 00:00:04.000
+<c.HEAD>"set -eu"</c>
+
+SH/check-16bit-buffer.sh#5
+00:00:04.000 --> 00:00:05.000
+<c.HEAD>"BUSYBOX=${BUSYBOX:-busybox}"</c>
+
+SH/check-16bit-buffer.sh#6
+00:00:05.000 --> 00:00:06.000
+<c.HEAD>"FILE=${1:-}"</c>
+
+SH/check-16bit-buffer.sh#7
+00:00:06.000 --> 00:00:07.000
+<c.HEAD>"[ -n ""$FILE"" ] || {"</c>
+
+SH/check-16bit-buffer.sh#8
+00:00:07.000 --> 00:00:08.000
+<c.HEAD>"    printf 'Usage: sh check-16bit-buffer.sh FILE\n' &gt;&amp;2"</c>
+
+SH/check-16bit-buffer.sh#9
+00:00:08.000 --> 00:00:09.000
+<c.HEAD>"    exit 2"</c>
+
+SH/check-16bit-buffer.sh#10
+00:00:09.000 --> 00:00:10.000
+<c.HEAD>"}"</c>
+
+SH/check-16bit-buffer.sh#11
+00:00:10.000 --> 00:00:11.000
+<c.HEAD>"[ -r ""$FILE"" ] || {"</c>
+
+SH/check-16bit-buffer.sh#12
+00:00:11.000 --> 00:00:12.000
+<c.HEAD>"    printf 'Cannot read: %s\n' ""$FILE"" &gt;&amp;2"</c>
+
+SH/check-16bit-buffer.sh#13
+00:00:12.000 --> 00:00:13.000
+<c.HEAD>"    exit 2"</c>
+
+SH/check-16bit-buffer.sh#14
+00:00:13.000 --> 00:00:14.000
+<c.HEAD>"}"</c>
+
+SH/check-16bit-buffer.sh#15
+00:00:14.000 --> 00:00:15.000
+<c.HEAD>"BYTES=$(""$BUSYBOX"" wc -c &lt; ""$FILE"")"</c>
+
+SH/check-16bit-buffer.sh#16
+00:00:15.000 --> 00:00:16.000
+<c.HEAD>"[ ""$BYTES"" -eq 65536 ] || {"</c>
+
+SH/check-16bit-buffer.sh#17
+00:00:16.000 --> 00:00:17.000
+<c.HEAD>"    printf 'FAIL: expected 65536 bytes, got %s\n' ""$BYTES"" &gt;&amp;2"</c>
+
+SH/check-16bit-buffer.sh#18
+00:00:17.000 --> 00:00:18.000
+<c.HEAD>"    exit 1"</c>
+
+SH/check-16bit-buffer.sh#19
+00:00:18.000 --> 00:00:19.000
+<c.HEAD>"}"</c>
+
+SH/check-16bit-buffer.sh#20
+00:00:19.000 --> 00:00:20.000
+<c.HEAD>"printf '%s\n' 'PASS: 16-bit buffer length is 65536 bytes'"</c>
+

@@ -1,0 +1,172 @@
+WEBVTT - MERMAID/P2P System Architecture Overview.mmd
+
+NOTE
+Written by zcue in Plan 9 from MERMAID/P2P System Architecture Overview.mmd.wsn: one cue per LITERAL, one animation frame each.
+No position is written: a cue sits at its literal's offset in the source
+buffer, found when the track is read (exact: row and column of the 65,536;
+or the hypotenuse of the two).
+
+MERMAID/P2P System Architecture Overview.mmd#1
+00:00:00.000 --> 00:00:01.000
+<c.HEAD>"flowchart TD"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#2
+00:00:01.000 --> 00:00:02.000
+<c.HEAD>"    subgraph Peer[""Peer Device""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#3
+00:00:02.000 --> 00:00:03.000
+<c.HEAD>"        HD[""HD Node Wallet""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#4
+00:00:03.000 --> 00:00:04.000
+<c.HEAD>"        MT[""Merkle Trees""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#5
+00:00:04.000 --> 00:00:05.000
+<c.HEAD>"        LC[""Local Content Storage""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#6
+00:00:05.000 --> 00:00:06.000
+<c.HEAD>"        ESP[""ESP32 Hardware Wallet""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#7
+00:00:06.000 --> 00:00:07.000
+<c.HEAD>"    end"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#8
+00:00:07.000 --> 00:00:08.000
+<c.HEAD>"    subgraph Discovery[""Discovery Layer""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#9
+00:00:08.000 --> 00:00:09.000
+<c.HEAD>"        SS[""Signaling Server (ESP32)""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#10
+00:00:09.000 --> 00:00:10.000
+<c.HEAD>"        PS[""Peer Discovery""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#11
+00:00:10.000 --> 00:00:11.000
+<c.HEAD>"        GD[""Graph Discovery""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#12
+00:00:11.000 --> 00:00:12.000
+<c.HEAD>"    end"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#13
+00:00:12.000 --> 00:00:13.000
+<c.HEAD>"    subgraph DataTypes[""Protocol Data Types""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#14
+00:00:13.000 --> 00:00:14.000
+<c.HEAD>"        Peers[""Peers""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#15
+00:00:14.000 --> 00:00:15.000
+<c.HEAD>"        Conn[""Connections""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#16
+00:00:15.000 --> 00:00:16.000
+<c.HEAD>"        Graphs[""DAG Graphs""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#17
+00:00:16.000 --> 00:00:17.000
+<c.HEAD>"        Content[""Content""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#18
+00:00:17.000 --> 00:00:18.000
+<c.HEAD>"        Services[""Services""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#19
+00:00:18.000 --> 00:00:19.000
+<c.HEAD>"    end"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#20
+00:00:19.000 --> 00:00:20.000
+<c.HEAD>"    subgraph Network[""Network Layer""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#21
+00:00:20.000 --> 00:00:21.000
+<c.HEAD>"        BT[""Bluetooth""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#22
+00:00:21.000 --> 00:00:22.000
+<c.HEAD>"        WF[""WiFi""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#23
+00:00:22.000 --> 00:00:23.000
+<c.HEAD>"        OT[""Other Transmission""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#24
+00:00:23.000 --> 00:00:24.000
+<c.HEAD>"    end"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#25
+00:00:24.000 --> 00:00:25.000
+<c.HEAD>"    subgraph AI[""AI Layer""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#26
+00:00:25.000 --> 00:00:26.000
+<c.HEAD>"        GNN[""GNN Models""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#27
+00:00:26.000 --> 00:00:27.000
+<c.HEAD>"        CON[""Consensus""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#28
+00:00:27.000 --> 00:00:28.000
+<c.HEAD>"        TOP[""Topology Optimization""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#29
+00:00:28.000 --> 00:00:29.000
+<c.HEAD>"    end"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#30
+00:00:29.000 --> 00:00:30.000
+<c.HEAD>"    Peer --&gt; Discovery"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#31
+00:00:30.000 --> 00:00:31.000
+<c.HEAD>"    Discovery --&gt; Network"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#32
+00:00:31.000 --> 00:00:32.000
+<c.HEAD>"    Network --&gt; DataTypes"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#33
+00:00:32.000 --> 00:00:33.000
+<c.HEAD>"    DataTypes --&gt; AI"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#34
+00:00:33.000 --> 00:00:34.000
+<c.HEAD>"    AI --&gt; Network"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#35
+00:00:34.000 --> 00:00:35.000
+<c.HEAD>"    subgraph Security[""Security Layer""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#36
+00:00:35.000 --> 00:00:36.000
+<c.HEAD>"        PGP[""OpenPGP""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#37
+00:00:36.000 --> 00:00:37.000
+<c.HEAD>"        SIG[""Shared Signatures""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#38
+00:00:37.000 --> 00:00:38.000
+<c.HEAD>"        MR[""Merkle Roots""]"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#39
+00:00:38.000 --> 00:00:39.000
+<c.HEAD>"    end"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#40
+00:00:39.000 --> 00:00:40.000
+<c.HEAD>"    Peer --&gt; Security"</c>
+
+MERMAID/P2P System Architecture Overview.mmd#41
+00:00:40.000 --> 00:00:41.000
+<c.HEAD>"    Security --&gt; DataTypes"</c>
+

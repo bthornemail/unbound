@@ -1,0 +1,128 @@
+WEBVTT - MERMAID/Abstract Layer and Protocol Implementation.mmd
+
+NOTE
+Written by zcue in Plan 9 from MERMAID/Abstract Layer and Protocol Implementation.mmd.wsn: one cue per LITERAL, one animation frame each.
+No position is written: a cue sits at its literal's offset in the source
+buffer, found when the track is read (exact: row and column of the 65,536;
+or the hypotenuse of the two).
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#1
+00:00:00.000 --> 00:00:01.000
+<c.HEAD>"graph TD"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#2
+00:00:01.000 --> 00:00:02.000
+<c.HEAD>"    subgraph Abstract_Layer"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#3
+00:00:02.000 --> 00:00:03.000
+<c.HEAD>"        PredefNodes[Predefined Protocol Nodes] --&gt; ContentTypes"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#4
+00:00:03.000 --> 00:00:04.000
+<c.HEAD>"        ContentTypes --&gt; Doc[Document Nodes]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#5
+00:00:04.000 --> 00:00:05.000
+<c.HEAD>"        ContentTypes --&gt; Asset[Asset Nodes]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#6
+00:00:05.000 --> 00:00:06.000
+<c.HEAD>"        ContentTypes --&gt; Serv[Service Nodes]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#7
+00:00:06.000 --> 00:00:07.000
+<c.HEAD>"        PredefNodes --&gt; Interfaces"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#8
+00:00:07.000 --> 00:00:08.000
+<c.HEAD>"        Interfaces --&gt; WordNetIF[WordNet Interface]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#9
+00:00:08.000 --> 00:00:09.000
+<c.HEAD>"        Interfaces --&gt; ProtocolIF[Protocol Interface]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#10
+00:00:09.000 --> 00:00:10.000
+<c.HEAD>"        PredefNodes --&gt; Implementations"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#11
+00:00:10.000 --> 00:00:11.000
+<c.HEAD>"        Implementations --&gt; Messenger"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#12
+00:00:11.000 --> 00:00:12.000
+<c.HEAD>"        Implementations --&gt; Ledger"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#13
+00:00:12.000 --> 00:00:13.000
+<c.HEAD>"        Implementations --&gt; SocialNet[Social Network]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#14
+00:00:13.000 --> 00:00:14.000
+<c.HEAD>"        Implementations --&gt; Marketplace"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#15
+00:00:14.000 --> 00:00:15.000
+<c.HEAD>"        Implementations --&gt; University"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#16
+00:00:15.000 --> 00:00:16.000
+<c.HEAD>"        Implementations --&gt; BlockchainRPC[Blockchain RPC]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#17
+00:00:16.000 --> 00:00:17.000
+<c.HEAD>"    end"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#18
+00:00:17.000 --> 00:00:18.000
+<c.HEAD>"    subgraph Network_Types"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#19
+00:00:18.000 --> 00:00:19.000
+<c.HEAD>"        Networks --&gt; Private[Private Key Protected]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#20
+00:00:19.000 --> 00:00:20.000
+<c.HEAD>"        Networks --&gt; Shared[Shared Key Protected]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#21
+00:00:20.000 --> 00:00:21.000
+<c.HEAD>"        Networks --&gt; Public[Public Posted]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#22
+00:00:21.000 --> 00:00:22.000
+<c.HEAD>"    end"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#23
+00:00:22.000 --> 00:00:23.000
+<c.HEAD>"    subgraph Protocol_Layer"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#24
+00:00:23.000 --> 00:00:24.000
+<c.HEAD>"        BaseProtocol[Base Protocol Definition]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#25
+00:00:24.000 --> 00:00:25.000
+<c.HEAD>"        BaseProtocol --&gt; ContentDelivery[Content Delivery System]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#26
+00:00:25.000 --> 00:00:26.000
+<c.HEAD>"        BaseProtocol --&gt; NetworkDef[Network Definitions]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#27
+00:00:26.000 --> 00:00:27.000
+<c.HEAD>"        BaseProtocol --&gt; AbstractImpl[Implementation Templates]"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#28
+00:00:27.000 --> 00:00:28.000
+<c.HEAD>"    end"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#29
+00:00:28.000 --> 00:00:29.000
+<c.HEAD>"    PredefNodes --&gt; Networks"</c>
+
+MERMAID/Abstract Layer and Protocol Implementation.mmd#30
+00:00:29.000 --> 00:00:30.000
+<c.HEAD>"    Interfaces --&gt; BaseProtocol"</c>
+

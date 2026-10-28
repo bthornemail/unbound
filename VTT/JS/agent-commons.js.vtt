@@ -1,0 +1,1664 @@
+WEBVTT - JS/agent-commons.js
+
+NOTE
+Written by zcue in Plan 9 from JS/agent-commons.js.wsn: one cue per LITERAL, one animation frame each.
+No position is written: a cue sits at its literal's offset in the source
+buffer, found when the track is read (exact: row and column of the 65,536;
+or the hypotenuse of the two).
+
+JS/agent-commons.js#1
+00:00:00.000 --> 00:00:01.000
+<c.HEAD>"// agent-commons.js — the interactive entry for the project: a popup book you"</c>
+
+JS/agent-commons.js#2
+00:00:01.000 --> 00:00:02.000
+<c.HEAD>"// operate. Dependency-free (no CDN, no imports): it serves from `busybox httpd`"</c>
+
+JS/agent-commons.js#3
+00:00:02.000 --> 00:00:03.000
+<c.HEAD>"// offline and reconstructs anywhere. Each spread is a working toy over a law"</c>
+
+JS/agent-commons.js#4
+00:00:03.000 --> 00:00:04.000
+<c.HEAD>"// that is checked elsewhere by the BusyBox harness; the UI must not become a"</c>
+
+JS/agent-commons.js#5
+00:00:04.000 --> 00:00:05.000
+<c.HEAD>"// second, incompatible state engine. It shows shape, not authentication."</c>
+
+JS/agent-commons.js#6
+00:00:05.000 --> 00:00:06.000
+<c.HEAD>"const WIDTH = 640;"</c>
+
+JS/agent-commons.js#7
+00:00:06.000 --> 00:00:07.000
+<c.HEAD>"const HEIGHT = 360;"</c>
+
+JS/agent-commons.js#8
+00:00:07.000 --> 00:00:08.000
+<c.HEAD>"const AUDIO_RATE = 48000;"</c>
+
+JS/agent-commons.js#9
+00:00:08.000 --> 00:00:09.000
+<c.HEAD>"const AUDIO_FRAMES = 2048;"</c>
+
+JS/agent-commons.js#10
+00:00:09.000 --> 00:00:10.000
+<c.HEAD>"function rotl16(value, amount) {"</c>
+
+JS/agent-commons.js#11
+00:00:10.000 --> 00:00:11.000
+<c.HEAD>"  return ((value &lt;&lt; amount) | (value &gt;&gt;&gt; (16 - amount))) &amp; 0xffff;"</c>
+
+JS/agent-commons.js#12
+00:00:11.000 --> 00:00:12.000
+<c.HEAD>"}"</c>
+
+JS/agent-commons.js#13
+00:00:12.000 --> 00:00:13.000
+<c.HEAD>"// The browser projection of the law checked exhaustively by the BusyBox probe."</c>
+
+JS/agent-commons.js#14
+00:00:13.000 --> 00:00:14.000
+<c.HEAD>"export function nextState(value) {"</c>
+
+JS/agent-commons.js#15
+00:00:14.000 --> 00:00:15.000
+<c.HEAD>"  return (rotl16(value, 1) ^ rotl16(value, 3) ^ rotl16(value, 14) ^ 0x1d1d) &amp; 0xffff;"</c>
+
+JS/agent-commons.js#16
+00:00:15.000 --> 00:00:16.000
+<c.HEAD>"}"</c>
+
+JS/agent-commons.js#17
+00:00:16.000 --> 00:00:17.000
+<c.HEAD>"// --- the Fano law: ""mark a XOR b for every marked pair"" (one OR of three ANDs"</c>
+
+JS/agent-commons.js#18
+00:00:17.000 --> 00:00:18.000
+<c.HEAD>"// per point). Every 7-bit state converges in at most two steps to one of the 16"</c>
+
+JS/agent-commons.js#19
+00:00:18.000 --> 00:00:19.000
+<c.HEAD>"// XOR-closed constants. Checked cold in the proofs; projected here. ---"</c>
+
+JS/agent-commons.js#20
+00:00:19.000 --> 00:00:20.000
+<c.HEAD>"const LINES = [[1, 2, 3], [1, 4, 5], [1, 6, 7], [2, 4, 6], [2, 5, 7], [3, 4, 7], [3, 5, 6]];"</c>
+
+JS/agent-commons.js#21
+00:00:20.000 --> 00:00:21.000
+<c.HEAD>"const bit = (m, n) =&gt; (m &gt;&gt; (n - 1)) &amp; 1;"</c>
+
+JS/agent-commons.js#22
+00:00:21.000 --> 00:00:22.000
+<c.HEAD>"export function fanoStep(mask) {"</c>
+
+JS/agent-commons.js#23
+00:00:22.000 --> 00:00:23.000
+<c.HEAD>"  let o = mask &amp; 0x7f;"</c>
+
+JS/agent-commons.js#24
+00:00:23.000 --> 00:00:24.000
+<c.HEAD>"  for (const [a, b, c] of LINES) {"</c>
+
+JS/agent-commons.js#25
+00:00:24.000 --> 00:00:25.000
+<c.HEAD>"    o |= (bit(mask, a) &amp; bit(mask, b)) &lt;&lt; (c - 1);"</c>
+
+JS/agent-commons.js#26
+00:00:25.000 --> 00:00:26.000
+<c.HEAD>"    o |= (bit(mask, a) &amp; bit(mask, c)) &lt;&lt; (b - 1);"</c>
+
+JS/agent-commons.js#27
+00:00:26.000 --> 00:00:27.000
+<c.HEAD>"    o |= (bit(mask, b) &amp; bit(mask, c)) &lt;&lt; (a - 1);"</c>
+
+JS/agent-commons.js#28
+00:00:27.000 --> 00:00:28.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#29
+00:00:28.000 --> 00:00:29.000
+<c.HEAD>"  return o;"</c>
+
+JS/agent-commons.js#30
+00:00:29.000 --> 00:00:30.000
+<c.HEAD>"}"</c>
+
+JS/agent-commons.js#31
+00:00:30.000 --> 00:00:31.000
+<c.HEAD>"function fanoConverge(mask) {"</c>
+
+JS/agent-commons.js#32
+00:00:31.000 --> 00:00:32.000
+<c.HEAD>"  let s = mask &amp; 0x7f, steps = 0, trail = [s];"</c>
+
+JS/agent-commons.js#33
+00:00:32.000 --> 00:00:33.000
+<c.HEAD>"  while (steps &lt; 6) { const t = fanoStep(s); if (t === s) break; s = t; trail.push(s); steps += 1; }"</c>
+
+JS/agent-commons.js#34
+00:00:33.000 --> 00:00:34.000
+<c.HEAD>"  return { mask: s, steps, trail };"</c>
+
+JS/agent-commons.js#35
+00:00:34.000 --> 00:00:35.000
+<c.HEAD>"}"</c>
+
+JS/agent-commons.js#36
+00:00:35.000 --> 00:00:36.000
+<c.HEAD>"const CONSTANTS = [0, 1, 2, 4, 8, 16, 32, 64, 7, 25, 97, 42, 82, 76, 52, 127];"</c>
+
+JS/agent-commons.js#37
+00:00:36.000 --> 00:00:37.000
+<c.HEAD>"const CONST_NAME = (m) =&gt; m === 0 ? 'empty' : m === 127 ? 'full'"</c>
+
+JS/agent-commons.js#38
+00:00:37.000 --> 00:00:38.000
+<c.HEAD>"  : [1, 2, 4, 8, 16, 32, 64].includes(m) ? 'point ' + (Math.log2(m) + 1) : 'line';"</c>
+
+JS/agent-commons.js#39
+00:00:38.000 --> 00:00:39.000
+<c.HEAD>"// The E8 root system on its Coxeter plane, read from the verified proof SVG:"</c>
+
+JS/agent-commons.js#40
+00:00:39.000 --> 00:00:40.000
+<c.HEAD>"// 8 rings of 30 roots at these radii and phase offsets (degrees). The root set"</c>
+
+JS/agent-commons.js#41
+00:00:40.000 --> 00:00:41.000
+<c.HEAD>"// is invariant under a 12 degree turn, so stepping 12 degrees is the real motion."</c>
+
+JS/agent-commons.js#42
+00:00:41.000 --> 00:00:42.000
+<c.HEAD>"const E8_RINGS = ["</c>
+
+JS/agent-commons.js#43
+00:00:42.000 --> 00:00:43.000
+<c.HEAD>"  { r: 50.17, ph: 6.81 }, { r: 81.18, ph: 6.81 }, { r: 99.80, ph: 0.81 }, { r: 120.66, ph: 0.81 },"</c>
+
+JS/agent-commons.js#44
+00:00:43.000 --> 00:00:44.000
+<c.HEAD>"  { r: 148.33, ph: 6.81 }, { r: 161.48, ph: 0.81 }, { r: 195.23, ph: 0.81 }, { r: 240.00, ph: 6.81 },"</c>
+
+JS/agent-commons.js#45
+00:00:44.000 --> 00:00:45.000
+<c.HEAD>"];"</c>
+
+JS/agent-commons.js#46
+00:00:45.000 --> 00:00:46.000
+<c.HEAD>"const DEG = Math.PI / 180;"</c>
+
+JS/agent-commons.js#47
+00:00:46.000 --> 00:00:47.000
+<c.HEAD>"const bytesOf = (s) =&gt; [...s].map((c) =&gt; c.charCodeAt(0));"</c>
+
+JS/agent-commons.js#48
+00:00:47.000 --> 00:00:48.000
+<c.HEAD>"const hex = (n, w = 2) =&gt; '0x' + (n &gt;&gt;&gt; 0).toString(16).padStart(w, '0');"</c>
+
+JS/agent-commons.js#49
+00:00:48.000 --> 00:00:49.000
+<c.HEAD>"const popcount = (n) =&gt; { let c = 0; while (n) { c += n &amp; 1; n &gt;&gt;= 1; } return c; };"</c>
+
+JS/agent-commons.js#50
+00:00:49.000 --> 00:00:50.000
+<c.HEAD>"const rot13 = (s) =&gt; s.replace(/[a-z]/gi, (c) =&gt; String.fromCharCode((c &lt;= 'Z' ? 90 : 122) &gt;= (c = c.charCodeAt(0) + 13) ? c : c - 26));"</c>
+
+JS/agent-commons.js#51
+00:00:50.000 --> 00:00:51.000
+<c.HEAD>"// each agent's seed is its own literal, never a hash: the first two bytes of its tag"</c>
+
+JS/agent-commons.js#52
+00:00:51.000 --> 00:00:52.000
+<c.HEAD>"const speakerSeed = (name) =&gt; (((name.charCodeAt(0) &amp; 0xff) &lt;&lt; 8) | (name.charCodeAt(1) &amp; 0xff || 0)) &amp; 0xffff;"</c>
+
+JS/agent-commons.js#53
+00:00:52.000 --> 00:00:53.000
+<c.HEAD>"const COMMONS_TAGS = ['METATRON', 'SOLOMON', 'SOLON', 'ASABIYAH', 'ENOCH', 'SPEAKER', 'GENESIS', 'OBSERVER'];"</c>
+
+JS/agent-commons.js#54
+00:00:53.000 --> 00:00:54.000
+<c.HEAD>"const SPREADS = ['cover', 'state', 'commons', 'fano', 'tetra', 'switch', 'join'];"</c>
+
+JS/agent-commons.js#55
+00:00:54.000 --> 00:00:55.000
+<c.HEAD>"export class AgentCommons extends HTMLElement {"</c>
+
+JS/agent-commons.js#56
+00:00:55.000 --> 00:00:56.000
+<c.HEAD>"  constructor() {"</c>
+
+JS/agent-commons.js#57
+00:00:56.000 --> 00:00:57.000
+<c.HEAD>"    super();"</c>
+
+JS/agent-commons.js#58
+00:00:57.000 --> 00:00:58.000
+<c.HEAD>"    this.attachShadow({ mode: 'open' });"</c>
+
+JS/agent-commons.js#59
+00:00:58.000 --> 00:00:59.000
+<c.HEAD>"    this.shadowRoot.innerHTML = `"</c>
+
+JS/agent-commons.js#60
+00:00:59.000 --> 00:01:00.000
+<c.HEAD>"      &lt;style&gt;"</c>
+
+JS/agent-commons.js#61
+00:01:00.000 --> 00:01:01.000
+<c.HEAD>"        :host { display:block; min-height:100vh; box-sizing:border-box; color:#d7fff5; background:#071013;"</c>
+
+JS/agent-commons.js#62
+00:01:01.000 --> 00:01:02.000
+<c.HEAD>"          font:14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;"</c>
+
+JS/agent-commons.js#63
+00:01:02.000 --> 00:01:03.000
+<c.HEAD>"          padding-left:max(18px, env(safe-area-inset-left,0)); padding-right:max(18px, env(safe-area-inset-right,0)); }"</c>
+
+JS/agent-commons.js#64
+00:01:03.000 --> 00:01:04.000
+<c.HEAD>"        main { max-width:720px; margin:auto; padding-block:clamp(20px,5vw,40px); min-height:100vh; display:flex; flex-direction:column; }"</c>
+
+JS/agent-commons.js#65
+00:01:04.000 --> 00:01:05.000
+<c.HEAD>"        .book { flex:1; display:flex; flex-direction:column; }"</c>
+
+JS/agent-commons.js#66
+00:01:05.000 --> 00:01:06.000
+<c.HEAD>"        .spread { display:none; flex-direction:column; gap:1rem; animation:fade .25s ease; }"</c>
+
+JS/agent-commons.js#67
+00:01:06.000 --> 00:01:07.000
+<c.HEAD>"        .spread.on { display:flex; }"</c>
+
+JS/agent-commons.js#68
+00:01:07.000 --> 00:01:08.000
+<c.HEAD>"        @media (prefers-reduced-motion: reduce){ .spread{animation:none} }"</c>
+
+JS/agent-commons.js#69
+00:01:08.000 --> 00:01:09.000
+<c.HEAD>"        @keyframes fade { from{opacity:.4} to{opacity:1} }"</c>
+
+JS/agent-commons.js#70
+00:01:09.000 --> 00:01:10.000
+<c.HEAD>"        h1 { color:#72ffe0; font-size:clamp(1.4rem,5vw,2rem); margin:0; letter-spacing:.02em; }"</c>
+
+JS/agent-commons.js#71
+00:01:10.000 --> 00:01:11.000
+<c.HEAD>"        h2 { color:#72ffe0; font-size:1.05rem; margin:0; text-transform:uppercase; letter-spacing:.14em; }"</c>
+
+JS/agent-commons.js#72
+00:01:11.000 --> 00:01:12.000
+<c.HEAD>"        p { margin:0; max-width:60ch; color:#aeded3; }"</c>
+
+JS/agent-commons.js#73
+00:01:12.000 --> 00:01:13.000
+<c.HEAD>"        .big { font-size:clamp(2.2rem,9vw,3.4rem); color:#72ffe0; line-height:1; }"</c>
+
+JS/agent-commons.js#74
+00:01:13.000 --> 00:01:14.000
+<c.HEAD>"        .dim { color:#6f9a90; }"</c>
+
+JS/agent-commons.js#75
+00:01:14.000 --> 00:01:15.000
+<c.HEAD>"        canvas { display:block; width:100%; max-width:${WIDTH}px; aspect-ratio:16/9; border:1px solid #23695d; background:#020607; transform-origin:center; }"</c>
+
+JS/agent-commons.js#76
+00:01:15.000 --> 00:01:16.000
+<c.HEAD>"        .stage { width:100%; max-width:${WIDTH}px; }"</c>
+
+JS/agent-commons.js#77
+00:01:16.000 --> 00:01:17.000
+<c.HEAD>"        .stage svg { display:block; width:100%; height:auto; border:1px solid #23695d; background:#020607; border-radius:4px; }"</c>
+
+JS/agent-commons.js#78
+00:01:17.000 --> 00:01:18.000
+<c.HEAD>"        button { padding:.55rem .8rem; color:#071013; background:#72ffe0; border:0; border-radius:4px; cursor:pointer; font:inherit; }"</c>
+
+JS/agent-commons.js#79
+00:01:18.000 --> 00:01:19.000
+<c.HEAD>"        button.ghost { color:#72ffe0; background:transparent; border:1px solid #23695d; }"</c>
+
+JS/agent-commons.js#80
+00:01:19.000 --> 00:01:20.000
+<c.HEAD>"        button:focus-visible { outline:2px solid #72ffe0; outline-offset:2px; }"</c>
+
+JS/agent-commons.js#81
+00:01:20.000 --> 00:01:21.000
+<c.HEAD>"        .row { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; }"</c>
+
+JS/agent-commons.js#82
+00:01:21.000 --> 00:01:22.000
+<c.HEAD>"        output, .read { display:block; color:#9bcfc4; white-space:pre-wrap; font-variant-numeric:tabular-nums; }"</c>
+
+JS/agent-commons.js#83
+00:01:22.000 --> 00:01:23.000
+<c.HEAD>"        input[type=range]{ width:100%; accent-color:#72ffe0; }"</c>
+
+JS/agent-commons.js#84
+00:01:23.000 --> 00:01:24.000
+<c.HEAD>"        label { color:#9bcfc4; font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; }"</c>
+
+JS/agent-commons.js#85
+00:01:24.000 --> 00:01:25.000
+<c.HEAD>"        .grid16 { display:grid; grid-template-columns:repeat(8,1fr); gap:5px; max-width:360px; }"</c>
+
+JS/agent-commons.js#86
+00:01:25.000 --> 00:01:26.000
+<c.HEAD>"        .cell { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:1px solid #1d4a42; border-radius:3px; font-size:.7rem; color:#6f9a90; }"</c>
+
+JS/agent-commons.js#87
+00:01:26.000 --> 00:01:27.000
+<c.HEAD>"        .cell.on { background:#72ffe0; color:#071013; border-color:#72ffe0; font-weight:600; }"</c>
+
+JS/agent-commons.js#88
+00:01:27.000 --> 00:01:28.000
+<c.HEAD>"        .edges { display:flex; flex-direction:column; gap:4px; font-size:.85rem; }"</c>
+
+JS/agent-commons.js#89
+00:01:28.000 --> 00:01:29.000
+<c.HEAD>"        .edge { display:flex; justify-content:space-between; gap:1rem; padding:4px 8px; border:1px solid #1d4a42; border-radius:4px; }"</c>
+
+JS/agent-commons.js#90
+00:01:29.000 --> 00:01:30.000
+<c.HEAD>"        .edge.lit { border-color:#72ffe0; color:#d7fff5; }"</c>
+
+JS/agent-commons.js#91
+00:01:30.000 --> 00:01:31.000
+<c.HEAD>"        .edge .nc { color:#6f9a90; }"</c>
+
+JS/agent-commons.js#92
+00:01:31.000 --> 00:01:32.000
+<c.HEAD>"        .lit b { color:#72ffe0; }"</c>
+
+JS/agent-commons.js#93
+00:01:32.000 --> 00:01:33.000
+<c.HEAD>"        .payload { font-size:clamp(1.1rem,4vw,1.5rem); color:#d7fff5; word-break:break-all; }"</c>
+
+JS/agent-commons.js#94
+00:01:33.000 --> 00:01:34.000
+<c.HEAD>"        .frame { color:#6f9a90; }"</c>
+
+JS/agent-commons.js#95
+00:01:34.000 --> 00:01:35.000
+<c.HEAD>"        nav { display:flex; justify-content:space-between; align-items:center; margin-top:1.4rem; padding-top:1rem; border-top:1px solid #16342f; }"</c>
+
+JS/agent-commons.js#96
+00:01:35.000 --> 00:01:36.000
+<c.HEAD>"        .dots { display:flex; gap:7px; }"</c>
+
+JS/agent-commons.js#97
+00:01:36.000 --> 00:01:37.000
+<c.HEAD>"        .dot { width:8px; height:8px; border-radius:50%; background:#1d4a42; border:0; padding:0; cursor:pointer; }"</c>
+
+JS/agent-commons.js#98
+00:01:37.000 --> 00:01:38.000
+<c.HEAD>"        .dot.on { background:#72ffe0; }"</c>
+
+JS/agent-commons.js#99
+00:01:38.000 --> 00:01:39.000
+<c.HEAD>"        a { color:#72ffe0; }"</c>
+
+JS/agent-commons.js#100
+00:01:39.000 --> 00:01:40.000
+<c.HEAD>"        code { color:#72ffe0; }"</c>
+
+JS/agent-commons.js#101
+00:01:40.000 --> 00:01:41.000
+<c.HEAD>"      &lt;/style&gt;"</c>
+
+JS/agent-commons.js#102
+00:01:41.000 --> 00:01:42.000
+<c.HEAD>"      &lt;main&gt;"</c>
+
+JS/agent-commons.js#103
+00:01:42.000 --> 00:01:43.000
+<c.HEAD>"        &lt;div class=""book""&gt;"</c>
+
+JS/agent-commons.js#104
+00:01:43.000 --> 00:01:44.000
+<c.HEAD>"          &lt;section class=""spread"" data-s=""cover""&gt;"</c>
+
+JS/agent-commons.js#105
+00:01:44.000 --> 00:01:45.000
+<c.HEAD>"            &lt;h1&gt;boxedPINE&lt;/h1&gt;"</c>
+
+JS/agent-commons.js#106
+00:01:45.000 --> 00:01:46.000
+<c.HEAD>"            &lt;p class=""big""&gt;a popup book you operate&lt;/p&gt;"</c>
+
+JS/agent-commons.js#107
+00:01:46.000 --> 00:01:47.000
+<c.HEAD>"            &lt;p&gt;Six spreads, each a working toy over one law. Nothing here asks your belief — every law is checked cold by the BusyBox harness beside it; these are the shapes, live. Turn the page.&lt;/p&gt;"</c>
+
+JS/agent-commons.js#108
+00:01:47.000 --> 00:01:48.000
+<c.HEAD>"            &lt;div class=""row""&gt;&lt;button data-open&gt;Open &amp;#9654;&lt;/button&gt;&lt;/div&gt;"</c>
+
+JS/agent-commons.js#109
+00:01:48.000 --> 00:01:49.000
+<c.HEAD>"          &lt;/section&gt;"</c>
+
+JS/agent-commons.js#110
+00:01:49.000 --> 00:01:50.000
+<c.HEAD>"          &lt;section class=""spread"" data-s=""state""&gt;"</c>
+
+JS/agent-commons.js#111
+00:01:50.000 --> 00:01:51.000
+<c.HEAD>"            &lt;h2&gt;The state commons&lt;/h2&gt;"</c>
+
+JS/agent-commons.js#112
+00:01:51.000 --> 00:01:52.000
+<c.HEAD>"            &lt;p&gt;The E8 root system on its Coxeter plane — the &lt;b&gt;actual figure from the proof&lt;/b&gt;, 240 roots (each &lt;span style=""color:#72ffe0""&gt;positive&lt;/span&gt; paired with its &lt;span style=""color:#9bcfc4""&gt;negative reflection&lt;/span&gt;) in 8 shells, turning one Coxeter step — 12° — at a time: 30 steps complete the turn, 15 reach −1. A constellation in frozen motion, un-frozen. Pause and resume with the button; the permutation law steps beside it.&lt;/p&gt;"</c>
+
+JS/agent-commons.js#113
+00:01:52.000 --> 00:01:53.000
+<c.HEAD>"            &lt;div class=""stage"" data-e8&gt;&lt;/div&gt;"</c>
+
+JS/agent-commons.js#114
+00:01:53.000 --> 00:01:54.000
+<c.HEAD>"            &lt;canvas width=""${WIDTH}"" height=""${HEIGHT}"" hidden&gt;&lt;/canvas&gt;"</c>
+
+JS/agent-commons.js#115
+00:01:54.000 --> 00:01:55.000
+<c.HEAD>"            &lt;div class=""row""&gt;"</c>
+
+JS/agent-commons.js#116
+00:01:55.000 --> 00:01:56.000
+<c.HEAD>"              &lt;button data-step&gt;Advance state&lt;/button&gt;"</c>
+
+JS/agent-commons.js#117
+00:01:56.000 --> 00:01:57.000
+<c.HEAD>"              &lt;button class=""ghost"" data-play&gt;Pause&lt;/button&gt;"</c>
+
+JS/agent-commons.js#118
+00:01:57.000 --> 00:01:58.000
+<c.HEAD>"              &lt;button class=""ghost"" data-render&gt;Render offline audio&lt;/button&gt;"</c>
+
+JS/agent-commons.js#119
+00:01:58.000 --> 00:01:59.000
+<c.HEAD>"            &lt;/div&gt;"</c>
+
+JS/agent-commons.js#120
+00:01:59.000 --> 00:02:00.000
+<c.HEAD>"            &lt;output data-readout&gt;initializing…&lt;/output&gt;"</c>
+
+JS/agent-commons.js#121
+00:02:00.000 --> 00:02:01.000
+<c.HEAD>"            &lt;video muted playsinline hidden&gt;&lt;/video&gt;"</c>
+
+JS/agent-commons.js#122
+00:02:01.000 --> 00:02:02.000
+<c.HEAD>"          &lt;/section&gt;"</c>
+
+JS/agent-commons.js#123
+00:02:02.000 --> 00:02:03.000
+<c.HEAD>"          &lt;section class=""spread"" data-s=""commons""&gt;"</c>
+
+JS/agent-commons.js#124
+00:02:03.000 --> 00:02:04.000
+<c.HEAD>"            &lt;h2&gt;The Agent Commons&lt;/h2&gt;"</c>
+
+JS/agent-commons.js#125
+00:02:04.000 --> 00:02:05.000
+<c.HEAD>"            &lt;p&gt;Eight sovereign narrators are the &lt;b&gt;base&lt;/b&gt; — each at once a &lt;b&gt;sun&lt;/b&gt; (it pulls) and a &lt;b&gt;planet&lt;/b&gt; (it orbits), glowing with the &lt;b&gt;f-mean of the hues it holds&lt;/b&gt;: the colour of its combination. Their centre of mass, the f-mean of the eight, is the global base; the 144 colour-name agents are the field it holds and sways. The constellation has a &lt;b&gt;point of view&lt;/b&gt; — turn the observer and the colour order holds; flip to the other side and it reverses. Same stars, read the other way.&lt;/p&gt;"</c>
+
+JS/agent-commons.js#126
+00:02:05.000 --> 00:02:06.000
+<c.HEAD>"            &lt;canvas data-commons width=""${WIDTH}"" height=""${HEIGHT}""&gt;&lt;/canvas&gt;"</c>
+
+JS/agent-commons.js#127
+00:02:06.000 --> 00:02:07.000
+<c.HEAD>"            &lt;div class=""row""&gt;"</c>
+
+JS/agent-commons.js#128
+00:02:07.000 --> 00:02:08.000
+<c.HEAD>"              &lt;button data-cstep&gt;Step the commons&lt;/button&gt;"</c>
+
+JS/agent-commons.js#129
+00:02:08.000 --> 00:02:09.000
+<c.HEAD>"              &lt;button class=""ghost"" data-cwalk&gt;Walk&lt;/button&gt;"</c>
+
+JS/agent-commons.js#130
+00:02:09.000 --> 00:02:10.000
+<c.HEAD>"              &lt;button class=""ghost"" data-pov&gt;Observer ⟳&lt;/button&gt;"</c>
+
+JS/agent-commons.js#131
+00:02:10.000 --> 00:02:11.000
+<c.HEAD>"              &lt;button class=""ghost"" data-flip&gt;Flip side&lt;/button&gt;"</c>
+
+JS/agent-commons.js#132
+00:02:11.000 --> 00:02:12.000
+<c.HEAD>"            &lt;/div&gt;"</c>
+
+JS/agent-commons.js#133
+00:02:12.000 --> 00:02:13.000
+<c.HEAD>"            &lt;output data-cout&gt;&lt;/output&gt;"</c>
+
+JS/agent-commons.js#134
+00:02:13.000 --> 00:02:14.000
+<c.HEAD>"          &lt;/section&gt;"</c>
+
+JS/agent-commons.js#135
+00:02:14.000 --> 00:02:15.000
+<c.HEAD>"          &lt;section class=""spread"" data-s=""fano""&gt;"</c>
+
+JS/agent-commons.js#136
+00:02:15.000 --> 00:02:16.000
+<c.HEAD>"            &lt;h2&gt;The Fano converger&lt;/h2&gt;"</c>
+
+JS/agent-commons.js#137
+00:02:16.000 --> 00:02:17.000
+<c.HEAD>"            &lt;p&gt;Pick any 7-bit byte. The law marks &lt;code&gt;a&amp;nbsp;XOR&amp;nbsp;b&lt;/code&gt; for every lit pair, and in &lt;b&gt;at most two steps&lt;/b&gt; it settles on one of 16 constants: the empty set, 7 points, 7 lines, the full set. Checked over all 128; watch one.&lt;/p&gt;"</c>
+
+JS/agent-commons.js#138
+00:02:17.000 --> 00:02:18.000
+<c.HEAD>"            &lt;label for=""fbyte""&gt;input byte &lt;span data-fval&gt;22&lt;/span&gt;&lt;/label&gt;"</c>
+
+JS/agent-commons.js#139
+00:02:18.000 --> 00:02:19.000
+<c.HEAD>"            &lt;input type=""range"" id=""fbyte"" min=""0"" max=""127"" value=""22""&gt;"</c>
+
+JS/agent-commons.js#140
+00:02:19.000 --> 00:02:20.000
+<c.HEAD>"            &lt;output data-fout&gt;&lt;/output&gt;"</c>
+
+JS/agent-commons.js#141
+00:02:20.000 --> 00:02:21.000
+<c.HEAD>"            &lt;div class=""grid16"" data-grid&gt;&lt;/div&gt;"</c>
+
+JS/agent-commons.js#142
+00:02:21.000 --> 00:02:22.000
+<c.HEAD>"          &lt;/section&gt;"</c>
+
+JS/agent-commons.js#143
+00:02:22.000 --> 00:02:23.000
+<c.HEAD>"          &lt;section class=""spread"" data-s=""tetra""&gt;"</c>
+
+JS/agent-commons.js#144
+00:02:23.000 --> 00:02:24.000
+<c.HEAD>"            &lt;h2&gt;The tetrahedron&lt;/h2&gt;"</c>
+
+JS/agent-commons.js#145
+00:02:24.000 --> 00:02:25.000
+<c.HEAD>"            &lt;p&gt;Four literals as vertices — WORD · GOD · OF · of — and the six edges between them, by raw bytes, with no padding. Only equal-length pairs are comparable. The one literal edge is a single bit.&lt;/p&gt;"</c>
+
+JS/agent-commons.js#146
+00:02:25.000 --> 00:02:26.000
+<c.HEAD>"            &lt;div class=""edges"" data-edges&gt;&lt;/div&gt;"</c>
+
+JS/agent-commons.js#147
+00:02:26.000 --> 00:02:27.000
+<c.HEAD>"            &lt;p class=""dim""&gt;OF &amp;#8596; of differ by exactly &lt;code&gt;0x20&lt;/code&gt; on each letter — the case bit, lower&amp;#8596;upper. The rest need the display layer to line up.&lt;/p&gt;"</c>
+
+JS/agent-commons.js#148
+00:02:27.000 --> 00:02:28.000
+<c.HEAD>"          &lt;/section&gt;"</c>
+
+JS/agent-commons.js#149
+00:02:28.000 --> 00:02:29.000
+<c.HEAD>"          &lt;section class=""spread"" data-s=""switch""&gt;"</c>
+
+JS/agent-commons.js#150
+00:02:29.000 --> 00:02:30.000
+<c.HEAD>"            &lt;h2&gt;The two switches&lt;/h2&gt;"</c>
+
+JS/agent-commons.js#151
+00:02:30.000 --> 00:02:31.000
+<c.HEAD>"            &lt;p&gt;A literal read two ways. &lt;b&gt;Direction&lt;/b&gt; reverses it; &lt;b&gt;encoding&lt;/b&gt; rot13s the letters. Each switch is its own inverse — flip twice and you are back. The frame never changes, only the reading.&lt;/p&gt;"</c>
+
+JS/agent-commons.js#152
+00:02:31.000 --> 00:02:32.000
+<c.HEAD>"            &lt;div class=""payload"" data-pl&gt;&lt;/div&gt;"</c>
+
+JS/agent-commons.js#153
+00:02:32.000 --> 00:02:33.000
+<c.HEAD>"            &lt;div class=""row""&gt;"</c>
+
+JS/agent-commons.js#154
+00:02:33.000 --> 00:02:34.000
+<c.HEAD>"              &lt;button class=""ghost"" data-rev&gt;Direction ⟲&lt;/button&gt;"</c>
+
+JS/agent-commons.js#155
+00:02:34.000 --> 00:02:35.000
+<c.HEAD>"              &lt;button class=""ghost"" data-enc&gt;Encoding ⟲&lt;/button&gt;"</c>
+
+JS/agent-commons.js#156
+00:02:35.000 --> 00:02:36.000
+<c.HEAD>"            &lt;/div&gt;"</c>
+
+JS/agent-commons.js#157
+00:02:36.000 --> 00:02:37.000
+<c.HEAD>"            &lt;p class=""frame"" data-sw&gt;&lt;/p&gt;"</c>
+
+JS/agent-commons.js#158
+00:02:37.000 --> 00:02:38.000
+<c.HEAD>"          &lt;/section&gt;"</c>
+
+JS/agent-commons.js#159
+00:02:38.000 --> 00:02:39.000
+<c.HEAD>"          &lt;section class=""spread"" data-s=""join""&gt;"</c>
+
+JS/agent-commons.js#160
+00:02:39.000 --> 00:02:40.000
+<c.HEAD>"            &lt;h2&gt;Open it&lt;/h2&gt;"</c>
+
+JS/agent-commons.js#161
+00:02:40.000 --> 00:02:41.000
+<c.HEAD>"            &lt;p&gt;Free · forkable · asks no one's permission. The data is disposable; the value is that you can rebuild this from first principles and check every step.&lt;/p&gt;"</c>
+
+JS/agent-commons.js#162
+00:02:41.000 --> 00:02:42.000
+<c.HEAD>"            &lt;p class=""read""&gt;serve it yourself — one binary, no install:"</c>
+
+JS/agent-commons.js#163
+00:02:42.000 --> 00:02:43.000
+<c.HEAD>"  &lt;b&gt;busybox httpd -f -p 8080 -h web&lt;/b&gt;"</c>
+
+JS/agent-commons.js#164
+00:02:43.000 --> 00:02:44.000
+<c.HEAD>"then open  http://127.0.0.1:8080/"</c>
+
+JS/agent-commons.js#165
+00:02:44.000 --> 00:02:45.000
+<c.HEAD>"the laws are checked cold:"</c>
+
+JS/agent-commons.js#166
+00:02:45.000 --> 00:02:46.000
+<c.HEAD>"  &lt;b&gt;sh tests/run.sh&lt;/b&gt;&lt;/p&gt;"</c>
+
+JS/agent-commons.js#167
+00:02:46.000 --> 00:02:47.000
+<c.HEAD>"            &lt;p class=""dim""&gt;FREEDOM · AUTONOMY · SOVEREIGNTY · RECIPROCITY — held through GRACE · LOVE · UNDERSTANDING · EMPATHY. And the question stays open: God is ___?&lt;/p&gt;"</c>
+
+JS/agent-commons.js#168
+00:02:47.000 --> 00:02:48.000
+<c.HEAD>"          &lt;/section&gt;"</c>
+
+JS/agent-commons.js#169
+00:02:48.000 --> 00:02:49.000
+<c.HEAD>"        &lt;/div&gt;"</c>
+
+JS/agent-commons.js#170
+00:02:49.000 --> 00:02:50.000
+<c.HEAD>"        &lt;nav&gt;"</c>
+
+JS/agent-commons.js#171
+00:02:50.000 --> 00:02:51.000
+<c.HEAD>"          &lt;button class=""ghost"" data-prev&gt;&amp;#9664; back&lt;/button&gt;"</c>
+
+JS/agent-commons.js#172
+00:02:51.000 --> 00:02:52.000
+<c.HEAD>"          &lt;div class=""dots""&gt;&lt;/div&gt;"</c>
+
+JS/agent-commons.js#173
+00:02:52.000 --> 00:02:53.000
+<c.HEAD>"          &lt;button class=""ghost"" data-next&gt;next &amp;#9654;&lt;/button&gt;"</c>
+
+JS/agent-commons.js#174
+00:02:53.000 --> 00:02:54.000
+<c.HEAD>"        &lt;/nav&gt;"</c>
+
+JS/agent-commons.js#175
+00:02:54.000 --> 00:02:55.000
+<c.HEAD>"      &lt;/main&gt;"</c>
+
+JS/agent-commons.js#176
+00:02:55.000 --> 00:02:56.000
+<c.HEAD>"    `;"</c>
+
+JS/agent-commons.js#177
+00:02:56.000 --> 00:02:57.000
+<c.HEAD>"    this.canvas = this.shadowRoot.querySelector('canvas');"</c>
+
+JS/agent-commons.js#178
+00:02:57.000 --> 00:02:58.000
+<c.HEAD>"    this.readout = this.shadowRoot.querySelector('[data-readout]');"</c>
+
+JS/agent-commons.js#179
+00:02:58.000 --> 00:02:59.000
+<c.HEAD>"    this.video = this.shadowRoot.querySelector('video');"</c>
+
+JS/agent-commons.js#180
+00:02:59.000 --> 00:03:00.000
+<c.HEAD>"    this.state = 1;"</c>
+
+JS/agent-commons.js#181
+00:03:00.000 --> 00:03:01.000
+<c.HEAD>"    this.frame = 0;"</c>
+
+JS/agent-commons.js#182
+00:03:01.000 --> 00:03:02.000
+<c.HEAD>"    this.index = 0;"</c>
+
+JS/agent-commons.js#183
+00:03:02.000 --> 00:03:03.000
+<c.HEAD>"    this.playing = null;"</c>
+
+JS/agent-commons.js#184
+00:03:03.000 --> 00:03:04.000
+<c.HEAD>"    this.sw = { rev: false, enc: false };"</c>
+
+JS/agent-commons.js#185
+00:03:04.000 --> 00:03:05.000
+<c.HEAD>"    this.swBase = 'The Light Garden';"</c>
+
+JS/agent-commons.js#186
+00:03:05.000 --> 00:03:06.000
+<c.HEAD>"    this.agents = COMMONS_TAGS.map((t) =&gt; ({ tag: t, state: speakerSeed(t) }));  // each its own local state"</c>
+
+JS/agent-commons.js#187
+00:03:06.000 --> 00:03:07.000
+<c.HEAD>"    this.cwalk = null;"</c>
+
+JS/agent-commons.js#188
+00:03:07.000 --> 00:03:08.000
+<c.HEAD>"    this.pov = 0;       // the observer's vantage (a turn keeps the colour order)"</c>
+
+JS/agent-commons.js#189
+00:03:08.000 --> 00:03:09.000
+<c.HEAD>"    this.flip = false;  // the other side (reverses the colour order)"</c>
+
+JS/agent-commons.js#190
+00:03:09.000 --> 00:03:10.000
+<c.HEAD>"    this.paused = false; // E8 animation intent; it runs only while its own spread is open"</c>
+
+JS/agent-commons.js#191
+00:03:10.000 --> 00:03:11.000
+<c.HEAD>"    this.offscreen = typeof OffscreenCanvas === 'function' ? new OffscreenCanvas(WIDTH, HEIGHT) : null;"</c>
+
+JS/agent-commons.js#192
+00:03:11.000 --> 00:03:12.000
+<c.HEAD>"    this.drawContext = this.offscreen ? this.offscreen.getContext('2d') : this.canvas.getContext('2d');"</c>
+
+JS/agent-commons.js#193
+00:03:12.000 --> 00:03:13.000
+<c.HEAD>"    this.visibleContext = this.canvas.getContext('2d');"</c>
+
+JS/agent-commons.js#194
+00:03:13.000 --> 00:03:14.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#195
+00:03:14.000 --> 00:03:15.000
+<c.HEAD>"  connectedCallback() {"</c>
+
+JS/agent-commons.js#196
+00:03:15.000 --> 00:03:16.000
+<c.HEAD>"    const $ = (s) =&gt; this.shadowRoot.querySelector(s);"</c>
+
+JS/agent-commons.js#197
+00:03:16.000 --> 00:03:17.000
+<c.HEAD>"    const $$ = (s) =&gt; this.shadowRoot.querySelectorAll(s);"</c>
+
+JS/agent-commons.js#198
+00:03:17.000 --> 00:03:18.000
+<c.HEAD>"    // nav"</c>
+
+JS/agent-commons.js#199
+00:03:18.000 --> 00:03:19.000
+<c.HEAD>"    const dots = $('.dots');"</c>
+
+JS/agent-commons.js#200
+00:03:19.000 --> 00:03:20.000
+<c.HEAD>"    SPREADS.forEach((_, i) =&gt; {"</c>
+
+JS/agent-commons.js#201
+00:03:20.000 --> 00:03:21.000
+<c.HEAD>"      const d = document.createElement('button');"</c>
+
+JS/agent-commons.js#202
+00:03:21.000 --> 00:03:22.000
+<c.HEAD>"      d.className = 'dot'; d.setAttribute('aria-label', 'spread ' + (i + 1));"</c>
+
+JS/agent-commons.js#203
+00:03:22.000 --> 00:03:23.000
+<c.HEAD>"      d.addEventListener('click', () =&gt; this.goto(i));"</c>
+
+JS/agent-commons.js#204
+00:03:23.000 --> 00:03:24.000
+<c.HEAD>"      dots.appendChild(d);"</c>
+
+JS/agent-commons.js#205
+00:03:24.000 --> 00:03:25.000
+<c.HEAD>"    });"</c>
+
+JS/agent-commons.js#206
+00:03:25.000 --> 00:03:26.000
+<c.HEAD>"    $('[data-prev]').addEventListener('click', () =&gt; this.goto(this.index - 1));"</c>
+
+JS/agent-commons.js#207
+00:03:26.000 --> 00:03:27.000
+<c.HEAD>"    $('[data-next]').addEventListener('click', () =&gt; this.goto(this.index + 1));"</c>
+
+JS/agent-commons.js#208
+00:03:27.000 --> 00:03:28.000
+<c.HEAD>"    $('[data-open]').addEventListener('click', () =&gt; this.goto(1));"</c>
+
+JS/agent-commons.js#209
+00:03:28.000 --> 00:03:29.000
+<c.HEAD>"    // state commons"</c>
+
+JS/agent-commons.js#210
+00:03:29.000 --> 00:03:30.000
+<c.HEAD>"    $('[data-step]').addEventListener('click', () =&gt; this.advance());"</c>
+
+JS/agent-commons.js#211
+00:03:30.000 --> 00:03:31.000
+<c.HEAD>"    $('[data-play]').addEventListener('click', (e) =&gt; this.togglePlay(e.target));"</c>
+
+JS/agent-commons.js#212
+00:03:31.000 --> 00:03:32.000
+<c.HEAD>"    $('[data-render]').addEventListener('click', () =&gt; this.renderOfflineAudio());"</c>
+
+JS/agent-commons.js#213
+00:03:32.000 --> 00:03:33.000
+<c.HEAD>"    this.installTextTrack();"</c>
+
+JS/agent-commons.js#214
+00:03:33.000 --> 00:03:34.000
+<c.HEAD>"    // fano"</c>
+
+JS/agent-commons.js#215
+00:03:34.000 --> 00:03:35.000
+<c.HEAD>"    const fb = $('#fbyte');"</c>
+
+JS/agent-commons.js#216
+00:03:35.000 --> 00:03:36.000
+<c.HEAD>"    fb.addEventListener('input', () =&gt; this.drawFano(+fb.value));"</c>
+
+JS/agent-commons.js#217
+00:03:36.000 --> 00:03:37.000
+<c.HEAD>"    // tetra"</c>
+
+JS/agent-commons.js#218
+00:03:37.000 --> 00:03:38.000
+<c.HEAD>"    this.drawTetra();"</c>
+
+JS/agent-commons.js#219
+00:03:38.000 --> 00:03:39.000
+<c.HEAD>"    // switch"</c>
+
+JS/agent-commons.js#220
+00:03:39.000 --> 00:03:40.000
+<c.HEAD>"    $('[data-rev]').addEventListener('click', () =&gt; { this.sw.rev = !this.sw.rev; this.drawSwitch(); });"</c>
+
+JS/agent-commons.js#221
+00:03:40.000 --> 00:03:41.000
+<c.HEAD>"    $('[data-enc]').addEventListener('click', () =&gt; { this.sw.enc = !this.sw.enc; this.drawSwitch(); });"</c>
+
+JS/agent-commons.js#222
+00:03:41.000 --> 00:03:42.000
+<c.HEAD>"    // the commons: each agent its own local state on a shared plane"</c>
+
+JS/agent-commons.js#223
+00:03:42.000 --> 00:03:43.000
+<c.HEAD>"    this.commonsCtx = $('[data-commons]').getContext('2d');"</c>
+
+JS/agent-commons.js#224
+00:03:43.000 --> 00:03:44.000
+<c.HEAD>"    $('[data-cstep]').addEventListener('click', () =&gt; this.stepCommons());"</c>
+
+JS/agent-commons.js#225
+00:03:44.000 --> 00:03:45.000
+<c.HEAD>"    $('[data-cwalk]').addEventListener('click', (e) =&gt; this.walkCommons(e.target));"</c>
+
+JS/agent-commons.js#226
+00:03:45.000 --> 00:03:46.000
+<c.HEAD>"    $('[data-pov]').addEventListener('click', () =&gt; { this.pov = (this.pov + 1) % 8; this.drawCommons(); });"</c>
+
+JS/agent-commons.js#227
+00:03:46.000 --> 00:03:47.000
+<c.HEAD>"    $('[data-flip]').addEventListener('click', () =&gt; { this.flip = !this.flip; this.drawCommons(); });"</c>
+
+JS/agent-commons.js#228
+00:03:47.000 --> 00:03:48.000
+<c.HEAD>"    this.loadE8();"</c>
+
+JS/agent-commons.js#229
+00:03:48.000 --> 00:03:49.000
+<c.HEAD>"    this.drawFano(22);"</c>
+
+JS/agent-commons.js#230
+00:03:49.000 --> 00:03:50.000
+<c.HEAD>"    this.drawSwitch();"</c>
+
+JS/agent-commons.js#231
+00:03:50.000 --> 00:03:51.000
+<c.HEAD>"    this.drawCommons();"</c>
+
+JS/agent-commons.js#232
+00:03:51.000 --> 00:03:52.000
+<c.HEAD>"    this.goto(0);"</c>
+
+JS/agent-commons.js#233
+00:03:52.000 --> 00:03:53.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#234
+00:03:53.000 --> 00:03:54.000
+<c.HEAD>"  updateReadout() {"</c>
+
+JS/agent-commons.js#235
+00:03:54.000 --> 00:03:55.000
+<c.HEAD>"    const p = this.state &amp; 0x7f;"</c>
+
+JS/agent-commons.js#236
+00:03:55.000 --> 00:03:56.000
+<c.HEAD>"    this.readout.textContent = `frame ${this.frame} · state ${hex(this.state, 4)} · fano ${p} · hue ${this.state % 240}`;"</c>
+
+JS/agent-commons.js#237
+00:03:56.000 --> 00:03:57.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#238
+00:03:57.000 --> 00:03:58.000
+<c.HEAD>"  async loadE8() {"</c>
+
+JS/agent-commons.js#239
+00:03:58.000 --> 00:03:59.000
+<c.HEAD>"    const stage = this.shadowRoot.querySelector('[data-e8]');"</c>
+
+JS/agent-commons.js#240
+00:03:59.000 --> 00:04:00.000
+<c.HEAD>"    try {"</c>
+
+JS/agent-commons.js#241
+00:04:00.000 --> 00:04:01.000
+<c.HEAD>"      const res = await fetch('./e8-step.svg'); if (!res.ok) throw 0;"</c>
+
+JS/agent-commons.js#242
+00:04:01.000 --> 00:04:02.000
+<c.HEAD>"      stage.innerHTML = await res.text();"</c>
+
+JS/agent-commons.js#243
+00:04:02.000 --> 00:04:03.000
+<c.HEAD>"      this.svgEl = stage.querySelector('svg');"</c>
+
+JS/agent-commons.js#244
+00:04:03.000 --> 00:04:04.000
+<c.HEAD>"      if (this.svgEl) { this.svgEl.removeAttribute('width'); this.svgEl.removeAttribute('height'); }"</c>
+
+JS/agent-commons.js#245
+00:04:04.000 --> 00:04:05.000
+<c.HEAD>"      this.canvas.hidden = true;"</c>
+
+JS/agent-commons.js#246
+00:04:05.000 --> 00:04:06.000
+<c.HEAD>"    } catch (e) {"</c>
+
+JS/agent-commons.js#247
+00:04:06.000 --> 00:04:07.000
+<c.HEAD>"      this.svgEl = null; this.canvas.hidden = false; this.draw();   // offline fallback: the canvas constellation"</c>
+
+JS/agent-commons.js#248
+00:04:07.000 --> 00:04:08.000
+<c.HEAD>"    }"</c>
+
+JS/agent-commons.js#249
+00:04:08.000 --> 00:04:09.000
+<c.HEAD>"    this.syncE8();"</c>
+
+JS/agent-commons.js#250
+00:04:09.000 --> 00:04:10.000
+<c.HEAD>"    this.updateReadout();"</c>
+
+JS/agent-commons.js#251
+00:04:10.000 --> 00:04:11.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#252
+00:04:11.000 --> 00:04:12.000
+<c.HEAD>"  // the E8 SMIL animation runs only while its spread is open and not paused — never in the background"</c>
+
+JS/agent-commons.js#253
+00:04:12.000 --> 00:04:13.000
+<c.HEAD>"  syncE8() {"</c>
+
+JS/agent-commons.js#254
+00:04:13.000 --> 00:04:14.000
+<c.HEAD>"    if (!this.svgEl) return;"</c>
+
+JS/agent-commons.js#255
+00:04:14.000 --> 00:04:15.000
+<c.HEAD>"    try { (this.index === 1 &amp;&amp; !this.paused) ? this.svgEl.unpauseAnimations() : this.svgEl.pauseAnimations(); } catch (e) {}"</c>
+
+JS/agent-commons.js#256
+00:04:15.000 --> 00:04:16.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#257
+00:04:16.000 --> 00:04:17.000
+<c.HEAD>"  goto(i) {"</c>
+
+JS/agent-commons.js#258
+00:04:17.000 --> 00:04:18.000
+<c.HEAD>"    this.index = Math.max(0, Math.min(SPREADS.length - 1, i));"</c>
+
+JS/agent-commons.js#259
+00:04:18.000 --> 00:04:19.000
+<c.HEAD>"    this.shadowRoot.querySelectorAll('.spread').forEach((s, k) =&gt; s.classList.toggle('on', k === this.index));"</c>
+
+JS/agent-commons.js#260
+00:04:19.000 --> 00:04:20.000
+<c.HEAD>"    this.shadowRoot.querySelectorAll('.dot').forEach((d, k) =&gt; d.classList.toggle('on', k === this.index));"</c>
+
+JS/agent-commons.js#261
+00:04:20.000 --> 00:04:21.000
+<c.HEAD>"    if (this.index !== 2 &amp;&amp; this.cwalk) { clearInterval(this.cwalk); this.cwalk = null; const b = this.shadowRoot.querySelector('[data-cwalk]'); if (b) b.textContent = 'Walk'; }"</c>
+
+JS/agent-commons.js#262
+00:04:21.000 --> 00:04:22.000
+<c.HEAD>"    this.syncE8();"</c>
+
+JS/agent-commons.js#263
+00:04:22.000 --> 00:04:23.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#264
+00:04:23.000 --> 00:04:24.000
+<c.HEAD>"  // ---- state commons (preserved law + canvas) ----"</c>
+
+JS/agent-commons.js#265
+00:04:24.000 --> 00:04:25.000
+<c.HEAD>"  installTextTrack() {"</c>
+
+JS/agent-commons.js#266
+00:04:25.000 --> 00:04:26.000
+<c.HEAD>"    if (!this.video.textTracks || typeof VTTCue !== 'function') return;"</c>
+
+JS/agent-commons.js#267
+00:04:26.000 --> 00:04:27.000
+<c.HEAD>"    this.track = this.video.addTextTrack('metadata', 'state cues', 'en');"</c>
+
+JS/agent-commons.js#268
+00:04:27.000 --> 00:04:28.000
+<c.HEAD>"    this.track.mode = 'hidden';"</c>
+
+JS/agent-commons.js#269
+00:04:28.000 --> 00:04:29.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#270
+00:04:29.000 --> 00:04:30.000
+<c.HEAD>"  draw() {"</c>
+
+JS/agent-commons.js#271
+00:04:30.000 --> 00:04:31.000
+<c.HEAD>"    const ctx = this.drawContext;"</c>
+
+JS/agent-commons.js#272
+00:04:31.000 --> 00:04:32.000
+<c.HEAD>"    const phase = this.state &amp; 0x7f, hue = this.state % 240;"</c>
+
+JS/agent-commons.js#273
+00:04:32.000 --> 00:04:33.000
+<c.HEAD>"    ctx.fillStyle = '#020607'; ctx.fillRect(0, 0, WIDTH, HEIGHT);"</c>
+
+JS/agent-commons.js#274
+00:04:33.000 --> 00:04:34.000
+<c.HEAD>"    // the exact E8 Coxeter constellation, turned 12 degrees per step (the real motion)"</c>
+
+JS/agent-commons.js#275
+00:04:34.000 --> 00:04:35.000
+<c.HEAD>"    const cx = WIDTH / 2, cy = HEIGHT / 2, scale = (Math.min(WIDTH, HEIGHT) / 2 - 16) / 240;"</c>
+
+JS/agent-commons.js#276
+00:04:35.000 --> 00:04:36.000
+<c.HEAD>"    for (const { r } of E8_RINGS) {                    // the orbit shells"</c>
+
+JS/agent-commons.js#277
+00:04:36.000 --> 00:04:37.000
+<c.HEAD>"      ctx.strokeStyle = 'rgba(114,255,224,0.10)'; ctx.lineWidth = 1;"</c>
+
+JS/agent-commons.js#278
+00:04:37.000 --> 00:04:38.000
+<c.HEAD>"      ctx.beginPath(); ctx.arc(cx, cy, r * scale, 0, Math.PI * 2); ctx.stroke();"</c>
+
+JS/agent-commons.js#279
+00:04:38.000 --> 00:04:39.000
+<c.HEAD>"    }"</c>
+
+JS/agent-commons.js#280
+00:04:39.000 --> 00:04:40.000
+<c.HEAD>"    E8_RINGS.forEach(({ r, ph }, i) =&gt; {               // the 30 roots on each shell"</c>
+
+JS/agent-commons.js#281
+00:04:40.000 --> 00:04:41.000
+<c.HEAD>"      const R = r * scale;"</c>
+
+JS/agent-commons.js#282
+00:04:41.000 --> 00:04:42.000
+<c.HEAD>"      for (let k = 0; k &lt; 30; k++) {"</c>
+
+JS/agent-commons.js#283
+00:04:42.000 --> 00:04:43.000
+<c.HEAD>"        const a = (ph + k * 12) * DEG;"</c>
+
+JS/agent-commons.js#284
+00:04:43.000 --> 00:04:44.000
+<c.HEAD>"        ctx.fillStyle = `hsl(${(hue + i * 9) % 360} 85% ${54 + i * 3}%)`;"</c>
+
+JS/agent-commons.js#285
+00:04:44.000 --> 00:04:45.000
+<c.HEAD>"        ctx.beginPath(); ctx.arc(cx + R * Math.cos(a), cy + R * Math.sin(a), 2.4, 0, Math.PI * 2); ctx.fill();"</c>
+
+JS/agent-commons.js#286
+00:04:45.000 --> 00:04:46.000
+<c.HEAD>"      }"</c>
+
+JS/agent-commons.js#287
+00:04:46.000 --> 00:04:47.000
+<c.HEAD>"    });"</c>
+
+JS/agent-commons.js#288
+00:04:47.000 --> 00:04:48.000
+<c.HEAD>"    ctx.fillStyle = '#72ffe0'; ctx.font = '15px ui-monospace, monospace';"</c>
+
+JS/agent-commons.js#289
+00:04:48.000 --> 00:04:49.000
+<c.HEAD>"    ctx.fillText(`state ${hex(this.state, 4)} · fano ${phase}`, 20, 28);"</c>
+
+JS/agent-commons.js#290
+00:04:49.000 --> 00:04:50.000
+<c.HEAD>"    ctx.fillStyle = '#6f9a90'; ctx.font = '12px ui-monospace, monospace';"</c>
+
+JS/agent-commons.js#291
+00:04:50.000 --> 00:04:51.000
+<c.HEAD>"    ctx.fillText('E8 · 240 roots · 8 rings of 30 · exact Coxeter radii · 12° per step', 20, HEIGHT - 16);"</c>
+
+JS/agent-commons.js#292
+00:04:51.000 --> 00:04:52.000
+<c.HEAD>"    if (this.offscreen) { this.visibleContext.clearRect(0, 0, WIDTH, HEIGHT); this.visibleContext.drawImage(this.offscreen, 0, 0); }"</c>
+
+JS/agent-commons.js#293
+00:04:52.000 --> 00:04:53.000
+<c.HEAD>"    // the Coxeter turn as a CSSOM matrix (DOMMatrix) on the canvas element"</c>
+
+JS/agent-commons.js#294
+00:04:53.000 --> 00:04:54.000
+<c.HEAD>"    const mtx = typeof DOMMatrix === 'function' ? new DOMMatrix().rotate((this.frame * 12) % 360) : null;"</c>
+
+JS/agent-commons.js#295
+00:04:54.000 --> 00:04:55.000
+<c.HEAD>"    this.canvas.style.transform = mtx"</c>
+
+JS/agent-commons.js#296
+00:04:55.000 --> 00:04:56.000
+<c.HEAD>"      ? `matrix(${mtx.a}, ${mtx.b}, ${mtx.c}, ${mtx.d}, ${mtx.e}, ${mtx.f})`"</c>
+
+JS/agent-commons.js#297
+00:04:56.000 --> 00:04:57.000
+<c.HEAD>"      : `rotate(${(this.frame * 12) % 360}deg)`;"</c>
+
+JS/agent-commons.js#298
+00:04:57.000 --> 00:04:58.000
+<c.HEAD>"    this.readout.textContent = `frame ${this.frame} · state ${hex(this.state, 4)} · fano ${phase} · hue ${hue}`;"</c>
+
+JS/agent-commons.js#299
+00:04:58.000 --> 00:04:59.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#300
+00:04:59.000 --> 00:05:00.000
+<c.HEAD>"  advance() { this.state = nextState(this.state); this.frame += 1; if (!this.svgEl) this.draw(); this.updateReadout(); }"</c>
+
+JS/agent-commons.js#301
+00:05:00.000 --> 00:05:01.000
+<c.HEAD>"  togglePlay(btn) {"</c>
+
+JS/agent-commons.js#302
+00:05:01.000 --> 00:05:02.000
+<c.HEAD>"    if (this.svgEl) {"</c>
+
+JS/agent-commons.js#303
+00:05:02.000 --> 00:05:03.000
+<c.HEAD>"      this.paused = !this.paused;"</c>
+
+JS/agent-commons.js#304
+00:05:03.000 --> 00:05:04.000
+<c.HEAD>"      this.syncE8();"</c>
+
+JS/agent-commons.js#305
+00:05:04.000 --> 00:05:05.000
+<c.HEAD>"      btn.textContent = this.paused ? 'Play' : 'Pause';"</c>
+
+JS/agent-commons.js#306
+00:05:05.000 --> 00:05:06.000
+<c.HEAD>"      return;"</c>
+
+JS/agent-commons.js#307
+00:05:06.000 --> 00:05:07.000
+<c.HEAD>"    }"</c>
+
+JS/agent-commons.js#308
+00:05:07.000 --> 00:05:08.000
+<c.HEAD>"    if (this.playing) { clearInterval(this.playing); this.playing = null; btn.textContent = 'Resume'; }"</c>
+
+JS/agent-commons.js#309
+00:05:08.000 --> 00:05:09.000
+<c.HEAD>"    else { this.playing = setInterval(() =&gt; this.advance(), 120); btn.textContent = 'Pause'; }"</c>
+
+JS/agent-commons.js#310
+00:05:09.000 --> 00:05:10.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#311
+00:05:10.000 --> 00:05:11.000
+<c.HEAD>"  async renderOfflineAudio() {"</c>
+
+JS/agent-commons.js#312
+00:05:11.000 --> 00:05:12.000
+<c.HEAD>"    if (typeof OfflineAudioContext !== 'function') { this.readout.textContent = 'OfflineAudioContext is unavailable here.'; return; }"</c>
+
+JS/agent-commons.js#313
+00:05:12.000 --> 00:05:13.000
+<c.HEAD>"    const context = new OfflineAudioContext(1, AUDIO_FRAMES, AUDIO_RATE);"</c>
+
+JS/agent-commons.js#314
+00:05:13.000 --> 00:05:14.000
+<c.HEAD>"    const buffer = context.createBuffer(1, AUDIO_FRAMES, AUDIO_RATE);"</c>
+
+JS/agent-commons.js#315
+00:05:14.000 --> 00:05:15.000
+<c.HEAD>"    const samples = buffer.getChannelData(0);"</c>
+
+JS/agent-commons.js#316
+00:05:15.000 --> 00:05:16.000
+<c.HEAD>"    let state = this.state;"</c>
+
+JS/agent-commons.js#317
+00:05:16.000 --> 00:05:17.000
+<c.HEAD>"    for (let i = 0; i &lt; samples.length; i += 1) { state = nextState(state); samples[i] = (state / 32767.5) - 1; }"</c>
+
+JS/agent-commons.js#318
+00:05:17.000 --> 00:05:18.000
+<c.HEAD>"    const src = context.createBufferSource(); src.buffer = buffer; src.connect(context.destination); src.start();"</c>
+
+JS/agent-commons.js#319
+00:05:18.000 --> 00:05:19.000
+<c.HEAD>"    const rendered = await context.startRendering();"</c>
+
+JS/agent-commons.js#320
+00:05:19.000 --> 00:05:20.000
+<c.HEAD>"    this.readout.textContent = `offline audio rendered: ${rendered.length} frames · final ${hex(state, 4)}`;"</c>
+
+JS/agent-commons.js#321
+00:05:20.000 --> 00:05:21.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#322
+00:05:21.000 --> 00:05:22.000
+<c.HEAD>"  // ---- fano converger ----"</c>
+
+JS/agent-commons.js#323
+00:05:22.000 --> 00:05:23.000
+<c.HEAD>"  drawFano(v) {"</c>
+
+JS/agent-commons.js#324
+00:05:23.000 --> 00:05:24.000
+<c.HEAD>"    this.shadowRoot.querySelector('[data-fval]').textContent = v;"</c>
+
+JS/agent-commons.js#325
+00:05:24.000 --> 00:05:25.000
+<c.HEAD>"    const { mask, steps, trail } = fanoConverge(v);"</c>
+
+JS/agent-commons.js#326
+00:05:25.000 --> 00:05:26.000
+<c.HEAD>"    const isC = CONSTANTS.includes(mask);"</c>
+
+JS/agent-commons.js#327
+00:05:26.000 --> 00:05:27.000
+<c.HEAD>"    this.shadowRoot.querySelector('[data-fout]').textContent ="</c>
+
+JS/agent-commons.js#328
+00:05:27.000 --> 00:05:28.000
+<c.HEAD>"      `${v} (${v.toString(2).padStart(7, '0')})  →  ` + trail.map((m) =&gt; m.toString(2).padStart(7, '0')).join('  →  ') +"</c>
+
+JS/agent-commons.js#329
+00:05:28.000 --> 00:05:29.000
+<c.HEAD>"      `\nsettled in ${steps} step${steps === 1 ? '' : 's'} on ${hex(mask)} — ${isC ? CONST_NAME(mask) + ' (a constant)' : 'not a constant'}`;"</c>
+
+JS/agent-commons.js#330
+00:05:29.000 --> 00:05:30.000
+<c.HEAD>"    const grid = this.shadowRoot.querySelector('[data-grid]');"</c>
+
+JS/agent-commons.js#331
+00:05:30.000 --> 00:05:31.000
+<c.HEAD>"    grid.innerHTML = '';"</c>
+
+JS/agent-commons.js#332
+00:05:31.000 --> 00:05:32.000
+<c.HEAD>"    for (let i = 0; i &lt; 16; i++) {"</c>
+
+JS/agent-commons.js#333
+00:05:32.000 --> 00:05:33.000
+<c.HEAD>"      const m = CONSTANTS[i];"</c>
+
+JS/agent-commons.js#334
+00:05:33.000 --> 00:05:34.000
+<c.HEAD>"      const cell = document.createElement('div');"</c>
+
+JS/agent-commons.js#335
+00:05:34.000 --> 00:05:35.000
+<c.HEAD>"      cell.className = 'cell' + (m === mask ? ' on' : '');"</c>
+
+JS/agent-commons.js#336
+00:05:35.000 --> 00:05:36.000
+<c.HEAD>"      cell.textContent = i;"</c>
+
+JS/agent-commons.js#337
+00:05:36.000 --> 00:05:37.000
+<c.HEAD>"      cell.title = hex(m) + ' — ' + CONST_NAME(m);"</c>
+
+JS/agent-commons.js#338
+00:05:37.000 --> 00:05:38.000
+<c.HEAD>"      grid.appendChild(cell);"</c>
+
+JS/agent-commons.js#339
+00:05:38.000 --> 00:05:39.000
+<c.HEAD>"    }"</c>
+
+JS/agent-commons.js#340
+00:05:39.000 --> 00:05:40.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#341
+00:05:40.000 --> 00:05:41.000
+<c.HEAD>"  // ---- tetrahedron ----"</c>
+
+JS/agent-commons.js#342
+00:05:41.000 --> 00:05:42.000
+<c.HEAD>"  drawTetra() {"</c>
+
+JS/agent-commons.js#343
+00:05:42.000 --> 00:05:43.000
+<c.HEAD>"    const V = { WORD: 'WORD', GOD: 'GOD', OF: 'OF', of: 'of' };"</c>
+
+JS/agent-commons.js#344
+00:05:43.000 --> 00:05:44.000
+<c.HEAD>"    const names = Object.keys(V);"</c>
+
+JS/agent-commons.js#345
+00:05:44.000 --> 00:05:45.000
+<c.HEAD>"    const box = this.shadowRoot.querySelector('[data-edges]');"</c>
+
+JS/agent-commons.js#346
+00:05:45.000 --> 00:05:46.000
+<c.HEAD>"    for (let i = 0; i &lt; names.length; i++) for (let j = i + 1; j &lt; names.length; j++) {"</c>
+
+JS/agent-commons.js#347
+00:05:46.000 --> 00:05:47.000
+<c.HEAD>"      const A = V[names[i]], B = V[names[j]];"</c>
+
+JS/agent-commons.js#348
+00:05:47.000 --> 00:05:48.000
+<c.HEAD>"      const row = document.createElement('div'); row.className = 'edge';"</c>
+
+JS/agent-commons.js#349
+00:05:48.000 --> 00:05:49.000
+<c.HEAD>"      if (A.length !== B.length) {"</c>
+
+JS/agent-commons.js#350
+00:05:49.000 --> 00:05:50.000
+<c.HEAD>"        row.innerHTML = `&lt;span&gt;${names[i]} &amp;#8596; ${names[j]}&lt;/span&gt;&lt;span class=""nc""&gt;lengths ${A.length}/${B.length} — not comparable&lt;/span&gt;`;"</c>
+
+JS/agent-commons.js#351
+00:05:50.000 --> 00:05:51.000
+<c.HEAD>"      } else {"</c>
+
+JS/agent-commons.js#352
+00:05:51.000 --> 00:05:52.000
+<c.HEAD>"        const mask = bytesOf(A).map((x, k) =&gt; x ^ bytesOf(B)[k]);"</c>
+
+JS/agent-commons.js#353
+00:05:52.000 --> 00:05:53.000
+<c.HEAD>"        const pop = mask.reduce((s, m) =&gt; s + popcount(m), 0);"</c>
+
+JS/agent-commons.js#354
+00:05:53.000 --> 00:05:54.000
+<c.HEAD>"        row.className = 'edge lit';"</c>
+
+JS/agent-commons.js#355
+00:05:54.000 --> 00:05:55.000
+<c.HEAD>"        row.innerHTML = `&lt;span&gt;${names[i]} &amp;#8596; ${names[j]}&lt;/span&gt;&lt;span&gt;&lt;b&gt;${mask.map((x) =&gt; hex(x)).join(' ')}&lt;/b&gt; · ${pop} bits&lt;/span&gt;`;"</c>
+
+JS/agent-commons.js#356
+00:05:55.000 --> 00:05:56.000
+<c.HEAD>"      }"</c>
+
+JS/agent-commons.js#357
+00:05:56.000 --> 00:05:57.000
+<c.HEAD>"      box.appendChild(row);"</c>
+
+JS/agent-commons.js#358
+00:05:57.000 --> 00:05:58.000
+<c.HEAD>"    }"</c>
+
+JS/agent-commons.js#359
+00:05:58.000 --> 00:05:59.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#360
+00:05:59.000 --> 00:06:00.000
+<c.HEAD>"  // ---- the two switches ----"</c>
+
+JS/agent-commons.js#361
+00:06:00.000 --> 00:06:01.000
+<c.HEAD>"  drawSwitch() {"</c>
+
+JS/agent-commons.js#362
+00:06:01.000 --> 00:06:02.000
+<c.HEAD>"    let s = this.swBase;"</c>
+
+JS/agent-commons.js#363
+00:06:02.000 --> 00:06:03.000
+<c.HEAD>"    if (this.sw.enc) s = rot13(s);"</c>
+
+JS/agent-commons.js#364
+00:06:03.000 --> 00:06:04.000
+<c.HEAD>"    if (this.sw.rev) s = [...s].reverse().join('');"</c>
+
+JS/agent-commons.js#365
+00:06:04.000 --> 00:06:05.000
+<c.HEAD>"    this.shadowRoot.querySelector('[data-pl]').textContent = s;"</c>
+
+JS/agent-commons.js#366
+00:06:05.000 --> 00:06:06.000
+<c.HEAD>"    this.shadowRoot.querySelector('[data-sw]').textContent ="</c>
+
+JS/agent-commons.js#367
+00:06:06.000 --> 00:06:07.000
+<c.HEAD>"      `direction: ${this.sw.rev ? 'reversed' : 'forward'} · encoding: ${this.sw.enc ? 'rot13' : 'plain'} — the literal underneath is unchanged`;"</c>
+
+JS/agent-commons.js#368
+00:06:07.000 --> 00:06:08.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#369
+00:06:08.000 --> 00:06:09.000
+<c.HEAD>"  // ---- the Agent Commons: sovereign agents, each its own local state, one shared plane ----"</c>
+
+JS/agent-commons.js#370
+00:06:09.000 --> 00:06:10.000
+<c.HEAD>"  drawCommons() {"</c>
+
+JS/agent-commons.js#371
+00:06:10.000 --> 00:06:11.000
+<c.HEAD>"    const ctx = this.commonsCtx, cx = WIDTH / 2, cy = HEIGHT / 2;"</c>
+
+JS/agent-commons.js#372
+00:06:11.000 --> 00:06:12.000
+<c.HEAD>"    ctx.fillStyle = '#020607'; ctx.fillRect(0, 0, WIDTH, HEIGHT);"</c>
+
+JS/agent-commons.js#373
+00:06:12.000 --> 00:06:13.000
+<c.HEAD>"    // the observer's point of view: a turn (pov) keeps the colour order; the other side (flip) reverses it"</c>
+
+JS/agent-commons.js#374
+00:06:13.000 --> 00:06:14.000
+<c.HEAD>"    const rot = this.pov * Math.PI / 4, mir = this.flip ? -1 : 1;"</c>
+
+JS/agent-commons.js#375
+00:06:14.000 --> 00:06:15.000
+<c.HEAD>"    const view = (x, y) =&gt; { const dx = (x - cx) * mir, dy = y - cy; return [cx + dx * Math.cos(rot) - dy * Math.sin(rot), cy + dx * Math.sin(rot) + dy * Math.cos(rot)]; };"</c>
+
+JS/agent-commons.js#376
+00:06:15.000 --> 00:06:16.000
+<c.HEAD>"    // the 8 base agents — each a sun (it pulls) and a planet (it orbits): position from its local state"</c>
+
+JS/agent-commons.js#377
+00:06:16.000 --> 00:06:17.000
+<c.HEAD>"    const bodies = this.agents.map((ag, i) =&gt; {"</c>
+
+JS/agent-commons.js#378
+00:06:17.000 --> 00:06:18.000
+<c.HEAD>"      const rad = 46 + i * 15, ang = (ag.state / 65536) * Math.PI * 2 + i * (Math.PI * 2 / 8);"</c>
+
+JS/agent-commons.js#379
+00:06:18.000 --> 00:06:19.000
+<c.HEAD>"      return { x: cx + rad * Math.cos(ang), y: cy + rad * Math.sin(ang) };"</c>
+
+JS/agent-commons.js#380
+00:06:19.000 --> 00:06:20.000
+<c.HEAD>"    });"</c>
+
+JS/agent-commons.js#381
+00:06:20.000 --> 00:06:21.000
+<c.HEAD>"    const bx = bodies.reduce((s, b) =&gt; s + b.x, 0) / 8, by = bodies.reduce((s, b) =&gt; s + b.y, 0) / 8;  // f-mean = barycentre = global base"</c>
+
+JS/agent-commons.js#382
+00:06:21.000 --> 00:06:22.000
+<c.HEAD>"    // the 144 colour-name field, swayed by the eight's gravity; each sun accumulates the circular mean (f-mean) of the hues it pulls"</c>
+
+JS/agent-commons.js#383
+00:06:22.000 --> 00:06:23.000
+<c.HEAD>"    const g = Math.min(WIDTH, HEIGHT) - 28, ox = (WIDTH - g) / 2, oy = (HEIGHT - g) / 2, cs = g / 11;"</c>
+
+JS/agent-commons.js#384
+00:06:23.000 --> 00:06:24.000
+<c.HEAD>"    const acc = bodies.map(() =&gt; ({ sx: 0, sy: 0 }));"</c>
+
+JS/agent-commons.js#385
+00:06:24.000 --> 00:06:25.000
+<c.HEAD>"    for (let r = 0; r &lt; 12; r++) for (let c = 0; c &lt; 12; c++) {"</c>
+
+JS/agent-commons.js#386
+00:06:25.000 --> 00:06:26.000
+<c.HEAD>"      const px = ox + c * cs, py = oy + r * cs, hue = (r * 12 + c) / 144 * 360, hr = hue * Math.PI / 180;"</c>
+
+JS/agent-commons.js#387
+00:06:26.000 --> 00:06:27.000
+<c.HEAD>"      let dx = 0, dy = 0;"</c>
+
+JS/agent-commons.js#388
+00:06:27.000 --> 00:06:28.000
+<c.HEAD>"      bodies.forEach((b, j) =&gt; { const ex = b.x - px, ey = b.y - py, k = 520 / (ex * ex + ey * ey + 900); dx += ex * k; dy += ey * k; acc[j].sx += k * Math.cos(hr); acc[j].sy += k * Math.sin(hr); });"</c>
+
+JS/agent-commons.js#389
+00:06:28.000 --> 00:06:29.000
+<c.HEAD>"      const [vx, vy] = view(px + dx, py + dy);"</c>
+
+JS/agent-commons.js#390
+00:06:29.000 --> 00:06:30.000
+<c.HEAD>"      ctx.fillStyle = `hsl(${Math.round(hue)} 60% 55%)`;"</c>
+
+JS/agent-commons.js#391
+00:06:30.000 --> 00:06:31.000
+<c.HEAD>"      ctx.beginPath(); ctx.arc(vx, vy, 2.6, 0, Math.PI * 2); ctx.fill();"</c>
+
+JS/agent-commons.js#392
+00:06:31.000 --> 00:06:32.000
+<c.HEAD>"    }"</c>
+
+JS/agent-commons.js#393
+00:06:32.000 --> 00:06:33.000
+<c.HEAD>"    const sunHue = (j) =&gt; ((Math.atan2(acc[j].sy, acc[j].sx) * 180 / Math.PI) + 360) % 360;"</c>
+
+JS/agent-commons.js#394
+00:06:33.000 --> 00:06:34.000
+<c.HEAD>"    bodies.forEach((b, j) =&gt; {"</c>
+
+JS/agent-commons.js#395
+00:06:34.000 --> 00:06:35.000
+<c.HEAD>"      const [vx, vy] = view(b.x, b.y), h = Math.round(sunHue(j));"</c>
+
+JS/agent-commons.js#396
+00:06:35.000 --> 00:06:36.000
+<c.HEAD>"      ctx.fillStyle = `hsla(${h}, 90%, 60%, 0.22)`; ctx.beginPath(); ctx.arc(vx, vy, 13, 0, Math.PI * 2); ctx.fill();"</c>
+
+JS/agent-commons.js#397
+00:06:36.000 --> 00:06:37.000
+<c.HEAD>"      ctx.fillStyle = `hsl(${h} 90% 64%)`; ctx.beginPath(); ctx.arc(vx, vy, 5, 0, Math.PI * 2); ctx.fill();"</c>
+
+JS/agent-commons.js#398
+00:06:37.000 --> 00:06:38.000
+<c.HEAD>"    });"</c>
+
+JS/agent-commons.js#399
+00:06:38.000 --> 00:06:39.000
+<c.HEAD>"    const [vbx, vby] = view(bx, by);"</c>
+
+JS/agent-commons.js#400
+00:06:39.000 --> 00:06:40.000
+<c.HEAD>"    ctx.strokeStyle = '#72ffe0'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(vbx, vby, 7, 0, Math.PI * 2); ctx.stroke();"</c>
+
+JS/agent-commons.js#401
+00:06:40.000 --> 00:06:41.000
+<c.HEAD>"    // the colour order read clockwise from this vantage"</c>
+
+JS/agent-commons.js#402
+00:06:41.000 --> 00:06:42.000
+<c.HEAD>"    const order = bodies.map((b, j) =&gt; { const [vx, vy] = view(b.x, b.y); return { a: Math.atan2(vy - vby, vx - vbx), h: Math.round(sunHue(j)) }; })"</c>
+
+JS/agent-commons.js#403
+00:06:42.000 --> 00:06:43.000
+<c.HEAD>"      .sort((p, q) =&gt; p.a - q.a).map((o) =&gt; o.h);"</c>
+
+JS/agent-commons.js#404
+00:06:43.000 --> 00:06:44.000
+<c.HEAD>"    ctx.fillStyle = '#9bcfc4'; ctx.font = '11px ui-monospace, monospace';"</c>
+
+JS/agent-commons.js#405
+00:06:44.000 --> 00:06:45.000
+<c.HEAD>"    ctx.fillText(`observer ${this.pov}${this.flip ? ' · flipped' : ''}  ·  ○ = f-mean (global base)`, 14, HEIGHT - 12);"</c>
+
+JS/agent-commons.js#406
+00:06:45.000 --> 00:06:46.000
+<c.HEAD>"    this.shadowRoot.querySelector('[data-cout]').textContent = `colour order from here: ${order.map((h) =&gt; h + '°').join(' ')}`;"</c>
+
+JS/agent-commons.js#407
+00:06:46.000 --> 00:06:47.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#408
+00:06:47.000 --> 00:06:48.000
+<c.HEAD>"  stepCommons() { for (const ag of this.agents) ag.state = nextState(ag.state); this.drawCommons(); }"</c>
+
+JS/agent-commons.js#409
+00:06:48.000 --> 00:06:49.000
+<c.HEAD>"  walkCommons(btn) {"</c>
+
+JS/agent-commons.js#410
+00:06:49.000 --> 00:06:50.000
+<c.HEAD>"    if (this.cwalk) { clearInterval(this.cwalk); this.cwalk = null; btn.textContent = 'Walk'; }"</c>
+
+JS/agent-commons.js#411
+00:06:50.000 --> 00:06:51.000
+<c.HEAD>"    else { this.cwalk = setInterval(() =&gt; this.stepCommons(), 140); btn.textContent = 'Stop'; }"</c>
+
+JS/agent-commons.js#412
+00:06:51.000 --> 00:06:52.000
+<c.HEAD>"  }"</c>
+
+JS/agent-commons.js#413
+00:06:52.000 --> 00:06:53.000
+<c.HEAD>"}"</c>
+
+JS/agent-commons.js#414
+00:06:53.000 --> 00:06:54.000
+<c.HEAD>"customElements.define('agent-commons', AgentCommons);"</c>
+

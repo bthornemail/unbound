@@ -1,0 +1,51 @@
+WEBVTT - observer: who watches the narrative of the 8 agents
+
+NOTE
+The 8th point of the canon's Fano plane: "The 8th belongs to the session."
+(canon-manifest.ndjson, metadata protocol). One cue per observer, one second long,
+in the order registered; the time is the order. The identifier is the observer;
+the voice is the agent tag it observes through. Never delete a cue: a later cue
+replaces it. The series files beside this one are written by zvtt in Plan 9
+(unbound/PLAN9/src/zvtt.c, vtt.rc) from light-garden's canon; each cue's
+identifier is its canon file and line, the same line boxedPINE's
+public/narrative/timeline.ndjson names as node_id "canon:FILE#LN".
+
+REGION
+id:OBSERVER
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:60%,80%
+scroll:up
+
+STYLE
+::cue(.author) { font-weight: bold }
+::cue(.claude) { font-style: italic }
+
+session
+00:00:00.000 --> 00:00:01.000 region:OBSERVER
+<v.session OBSERVER>The 8th point has no light and no sound in the manifest's fano-lines; it is whoever holds the session. The 7 others: METATRON 1 (R, A), SOLOMON 2 (O, B), SOLON 3 (Y, C), ASABIYAH 4 (G, D), GENESIS 5 (B, E), ENOCH 6 (I, F), SPEAKER 7 (V, G).</v>
+
+author
+00:00:01.000 --> 00:00:02.000 region:OBSERVER
+<v.author OBSERVER>Brian James Thorne: the questions, the abstraction, the readings. Watches every series here and production.vtt.</v>
+
+claude
+00:00:02.000 --> 00:00:03.000 region:OBSERVER
+<v.claude OBSERVER>Claude (Anthropic): code and checks. Watches the canon against these files: the cue count of each series equals its canon's event count (2,439 in 11 series), and every file passes the WebVTT check.</v>
+
+deepseek
+00:00:03.000 --> 00:00:04.000 region:OBSERVER
+<v.deepseek OBSERVER>DeepSeek: words and predictions, where a record says so.</v>
+
+characters
+00:00:04.000 --> 00:00:05.000 region:OBSERVER
+<v.characters OBSERVER>boxedPINE/public/characters/TAG: each agent's 16 files (14 Fano planes, Hasse XOR at place 0 to read, Hasse XNOR at place 15 to write); digest.json folds each set to 0 when intact. OBSERVER has its own set like the other 7.</v>
+
+timeline
+00:00:05.000 --> 00:00:06.000 region:OBSERVER
+<v.timeline OBSERVER>boxedPINE/public/narrative/timeline.ndjson: 235 nodes, one lane, each a canon line with no voice; the voices are here, in the series files.</v>
+
+rosetta
+00:00:06.000 --> 00:00:07.000 region:OBSERVER
+<v.rosetta OBSERVER>boxedPINE/rosetta/README.md: agent.ts answers an agent by its tag in the Host or path; tag-type.ts promotes a word to a tag (lower to upper). The voices here are the canon's names promoted the same way: Solomon to SOLOMON, ʿAsabiyyah to ASABIYAH, Number to NUMBER, Logos to LOGOS.</v>

@@ -1,0 +1,22 @@
+#!/bin/rc
+# vtt.rc - inside Plan 9: each canon series in PLAN9/in/narrative written as
+# WebVTT by zvtt (voices, regions and colours from in/narrative/VOICES), to the
+# output disk as narrative/<series>.vtt.
+rfork e
+ifs='
+'
+src=/dev/sd01/data
+dst=/dev/sd02/data
+w=/tmp/zv
+rm -rf $w
+mkdir -p $w/unbound $w/narrative
+@{cd $w/unbound && tar xf $src} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zvtt.c && 8l -o $w/zvtt zvtt.8 || exit compile
+d=$p/in/narrative
+for(s in `{cd $d && ls | grep '\.txt$' | sed 's/\.txt$//'}){
+	$w/zvtt $d/VOICES $d/^$s^.txt $s > $w/narrative/^$s^.vtt || exit zvtt
+	echo $s `{grep -c ' --> ' $w/narrative/^$s^.vtt}
+}
+@{cd $w && tar cf $dst narrative} || exit tar

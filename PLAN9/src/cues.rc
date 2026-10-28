@@ -1,0 +1,23 @@
+#!/bin/rc
+# cues.rc - inside Plan 9: each file named in PLAN9/in/cues.txt, from its Wirth
+# syntax notation in PLAN9/wsn/unbound, written as WebVTT by zcue, to the output
+# disk as cues/<path>.vtt.
+rfork e
+ifs='
+'
+src=/dev/sd01/data
+dst=/dev/sd02/data
+w=/tmp/zc
+rm -rf $w
+mkdir -p $w/unbound $w/cues
+@{cd $w/unbound && tar xf $src} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zcue.c && 8l -o $w/zcue zcue.8 || exit compile
+for(f in `{cat $p/in/cues.txt}){
+	d=`{basename -d $f}
+	mkdir -p $w/cues/$d
+	$w/zcue $p/wsn/unbound/^$f^.wsn $f > $w/cues/^$f^.vtt || exit zcue
+	echo $f `{grep -c ' --> ' $w/cues/^$f^.vtt}
+}
+@{cd $w && tar cf $dst cues} || exit tar

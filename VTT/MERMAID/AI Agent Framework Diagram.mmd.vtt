@@ -1,0 +1,120 @@
+WEBVTT - MERMAID/AI Agent Framework Diagram.mmd
+
+NOTE
+Written by zcue in Plan 9 from MERMAID/AI Agent Framework Diagram.mmd.wsn: one cue per LITERAL, one animation frame each.
+No position is written: a cue sits at its literal's offset in the source
+buffer, found when the track is read (exact: row and column of the 65,536;
+or the hypotenuse of the two).
+
+MERMAID/AI Agent Framework Diagram.mmd#1
+00:00:00.000 --> 00:00:01.000
+<c.HEAD>"graph TD"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#2
+00:00:01.000 --> 00:00:02.000
+<c.HEAD>"    Environment[Environment] --&gt; Sensor[Sensor Interface]"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#3
+00:00:02.000 --> 00:00:03.000
+<c.HEAD>"    Sensor --&gt; Perception[Perception Module]"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#4
+00:00:03.000 --> 00:00:04.000
+<c.HEAD>"    Perception --&gt; BeliefState[Belief State]"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#5
+00:00:04.000 --> 00:00:05.000
+<c.HEAD>"    BeliefState --&gt; Planner[Planning Module]"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#6
+00:00:05.000 --> 00:00:06.000
+<c.HEAD>"    KB[Knowledge Base] --&gt; BeliefState"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#7
+00:00:06.000 --> 00:00:07.000
+<c.HEAD>"    KB --&gt; Planner"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#8
+00:00:07.000 --> 00:00:08.000
+<c.HEAD>"    Goals[Goal Repository] --&gt; Planner"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#9
+00:00:08.000 --> 00:00:09.000
+<c.HEAD>"    Planner --&gt; ActionSelector[Action Selector]"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#10
+00:00:09.000 --> 00:00:10.000
+<c.HEAD>"    ActionSelector --&gt; Executor[Action Executor]"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#11
+00:00:10.000 --> 00:00:11.000
+<c.HEAD>"    Executor --&gt; Actuator[Actuator Interface]"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#12
+00:00:11.000 --> 00:00:12.000
+<c.HEAD>"    Actuator --&gt; Environment"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#13
+00:00:12.000 --> 00:00:13.000
+<c.HEAD>"    LearningModule[Learning Module] --&gt; KB"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#14
+00:00:13.000 --> 00:00:14.000
+<c.HEAD>"    Perception --&gt; LearningModule"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#15
+00:00:14.000 --> 00:00:15.000
+<c.HEAD>"    Executor --&gt; LearningModule"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#16
+00:00:15.000 --> 00:00:16.000
+<c.HEAD>"    subgraph Cognitive Core"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#17
+00:00:16.000 --> 00:00:17.000
+<c.HEAD>"        BeliefState"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#18
+00:00:17.000 --> 00:00:18.000
+<c.HEAD>"        Planner"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#19
+00:00:18.000 --> 00:00:19.000
+<c.HEAD>"        ActionSelector"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#20
+00:00:19.000 --> 00:00:20.000
+<c.HEAD>"        LearningModule"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#21
+00:00:20.000 --> 00:00:21.000
+<c.HEAD>"    end"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#22
+00:00:21.000 --> 00:00:22.000
+<c.HEAD>"    subgraph Memory Systems"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#23
+00:00:22.000 --> 00:00:23.000
+<c.HEAD>"        KB"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#24
+00:00:23.000 --> 00:00:24.000
+<c.HEAD>"        Goals"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#25
+00:00:24.000 --> 00:00:25.000
+<c.HEAD>"    end"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#26
+00:00:25.000 --> 00:00:26.000
+<c.HEAD>"    style Environment fill:#f9f,stroke:#333"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#27
+00:00:26.000 --> 00:00:27.000
+<c.HEAD>"    style Cognitive Core fill:#cfd,stroke:#333"</c>
+
+MERMAID/AI Agent Framework Diagram.mmd#28
+00:00:27.000 --> 00:00:28.000
+<c.HEAD>"    style Memory Systems fill:#dcf,stroke:#333"</c>
+

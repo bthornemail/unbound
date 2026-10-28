@@ -1,0 +1,17 @@
+SVG/visual-proofs.svg
+SVG/Four_bit_adder_with_carry_lookahead.svg
+SVG/Difference_DNA_RNA-EN.svg
+SH/tetra-mask.sh
+SH/check-reference-index.sh
+SH/check-16bit-buffer.sh
+JS/agent-commons.js
+MERMAID/Abstract Layer and Protocol Implementation.mmd
+MERMAID/AI Agent Framework Diagram.mmd
+MERMAID/Complete TMHG System Structure.mmd
+MERMAID/Entity Identity and Context System.mmd
+MERMAID/Entity Layer System with Vector Space.mmd
+MERMAID/HDNode Content Architecture with Logic Gates.mmd
+MERMAID/P2P System Architecture Overview.mmd
+MERMAID/Relative Dimensional Geometry (n ± k).mmd
+MERMAID/Simplified AI Agent Framework.mmd
+MERMAID/TMHG System Hierarchy.mmd

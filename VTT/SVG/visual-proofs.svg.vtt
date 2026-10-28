@@ -1,0 +1,3608 @@
+WEBVTT - SVG/visual-proofs.svg
+
+NOTE
+Written by zcue in Plan 9 from SVG/visual-proofs.svg.wsn: one cue per LITERAL, one animation frame each.
+No position is written: a cue sits at its literal's offset in the source
+buffer, found when the track is read (exact: row and column of the 65,536;
+or the hypotenuse of the two).
+
+SVG/visual-proofs.svg#1
+00:00:00.000 --> 00:00:01.000
+<c.HEAD>"&lt;?xml version='1.0' encoding='UTF-8'?&gt;"</c>
+
+SVG/visual-proofs.svg#2
+00:00:01.000 --> 00:00:02.000
+<c.HEAD>"&lt;svg xmlns=""http://www.w3.org/2000/svg"" xmlns:xlink=""http://www.w3.org/1999/xlink"" viewBox=""0 0 1200 980"" width=""1200"" height=""980""&gt;"</c>
+
+SVG/visual-proofs.svg#3
+00:00:02.000 --> 00:00:03.000
+<c.HEAD>"  &lt;title&gt;Visual proofs — periodic table index · delta-driven&lt;/title&gt;"</c>
+
+SVG/visual-proofs.svg#4
+00:00:03.000 --> 00:00:04.000
+<c.HEAD>"  &lt;desc&gt;One pure SVG. Click an element in the periodic table to reveal its visual proof. Animations are discrete steps in the spirit of delta (rotl1⊕rotl3⊕rotr2⊕const). Period 4: tetrahedron literals WORD GOD OF of and DNA/RNA CGAT CGAU codepoint differences.&lt;/desc&gt;"</c>
+
+SVG/visual-proofs.svg#5
+00:00:04.000 --> 00:00:05.000
+<c.HEAD>"  &lt;defs&gt;"</c>
+
+SVG/visual-proofs.svg#6
+00:00:05.000 --> 00:00:06.000
+<c.HEAD>"    &lt;style&gt;"</c>
+
+SVG/visual-proofs.svg#7
+00:00:06.000 --> 00:00:07.000
+<c.HEAD>"      :root { --bg:#0a1214; --ink:#d7fff5; --dim:#6a9a8e; --accent:#72ffe0; --cell:#122022; --cell-b:#23695d; --hot:#1f4e9c; --warm:#c26a2b; --ok:#2f7d4a; }"</c>
+
+SVG/visual-proofs.svg#8
+00:00:07.000 --> 00:00:08.000
+<c.HEAD>"      svg { background: var(--bg); }"</c>
+
+SVG/visual-proofs.svg#9
+00:00:08.000 --> 00:00:09.000
+<c.HEAD>"      text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: var(--ink); }"</c>
+
+SVG/visual-proofs.svg#10
+00:00:09.000 --> 00:00:10.000
+<c.HEAD>"      .title { font-size: 18px; fill: var(--accent); letter-spacing: 0.06em; }"</c>
+
+SVG/visual-proofs.svg#11
+00:00:10.000 --> 00:00:11.000
+<c.HEAD>"      .sub { font-size: 11px; fill: var(--dim); }"</c>
+
+SVG/visual-proofs.svg#12
+00:00:11.000 --> 00:00:12.000
+<c.HEAD>"      .sym { font-size: 16px; font-weight: 700; fill: var(--accent); text-anchor: middle; }"</c>
+
+SVG/visual-proofs.svg#13
+00:00:12.000 --> 00:00:13.000
+<c.HEAD>"      .anum { font-size: 9px; fill: var(--dim); }"</c>
+
+SVG/visual-proofs.svg#14
+00:00:13.000 --> 00:00:14.000
+<c.HEAD>"      .ename { font-size: 8px; fill: var(--ink); text-anchor: middle; }"</c>
+
+SVG/visual-proofs.svg#15
+00:00:14.000 --> 00:00:15.000
+<c.HEAD>"      .cell { fill: var(--cell); stroke: var(--cell-b); stroke-width: 1.2; rx: 4; cursor: pointer; }"</c>
+
+SVG/visual-proofs.svg#16
+00:00:15.000 --> 00:00:16.000
+<c.HEAD>"      .cell:hover { stroke: var(--accent); stroke-width: 2; }"</c>
+
+SVG/visual-proofs.svg#17
+00:00:16.000 --> 00:00:17.000
+<c.HEAD>"      a { cursor: pointer; }"</c>
+
+SVG/visual-proofs.svg#18
+00:00:17.000 --> 00:00:18.000
+<c.HEAD>"      .stage-frame { fill: #071013; stroke: var(--cell-b); stroke-width: 1.5; rx: 8; }"</c>
+
+SVG/visual-proofs.svg#19
+00:00:18.000 --> 00:00:19.000
+<c.HEAD>"      .stage-title { font-size: 14px; fill: var(--accent); }"</c>
+
+SVG/visual-proofs.svg#20
+00:00:19.000 --> 00:00:20.000
+<c.HEAD>"      .caption { font-size: 11px; fill: var(--dim); }"</c>
+
+SVG/visual-proofs.svg#21
+00:00:20.000 --> 00:00:21.000
+<c.HEAD>"      .plus { fill: #1f4e9c; } .minus { fill: #9cb6e0; }"</c>
+
+SVG/visual-proofs.svg#22
+00:00:21.000 --> 00:00:22.000
+<c.HEAD>"      .even { fill: #2f7d4a; } .odd { fill: #c26a2b; }"</c>
+
+SVG/visual-proofs.svg#23
+00:00:22.000 --> 00:00:23.000
+<c.HEAD>"      .still { fill: #e0c060; }"</c>
+
+SVG/visual-proofs.svg#24
+00:00:23.000 --> 00:00:24.000
+<c.HEAD>"      .orbit { fill: #72ffe0; }"</c>
+
+SVG/visual-proofs.svg#25
+00:00:24.000 --> 00:00:25.000
+<c.HEAD>"      .ring { fill: none; stroke: #2a4a44; stroke-width: 1; }"</c>
+
+SVG/visual-proofs.svg#26
+00:00:25.000 --> 00:00:26.000
+<c.HEAD>"      .wire { fill: none; stroke: #3a6a60; stroke-width: 1.5; }"</c>
+
+SVG/visual-proofs.svg#27
+00:00:26.000 --> 00:00:27.000
+<c.HEAD>"      .gate { fill: #122022; stroke: var(--accent); stroke-width: 1.2; }"</c>
+
+SVG/visual-proofs.svg#28
+00:00:27.000 --> 00:00:28.000
+<c.HEAD>"      .label { font-size: 10px; fill: var(--ink); }"</c>
+
+SVG/visual-proofs.svg#29
+00:00:28.000 --> 00:00:29.000
+<c.HEAD>"      .proof { display: none; }"</c>
+
+SVG/visual-proofs.svg#30
+00:00:29.000 --> 00:00:30.000
+<c.HEAD>"      .proof:target { display: block; }"</c>
+
+SVG/visual-proofs.svg#31
+00:00:30.000 --> 00:00:31.000
+<c.HEAD>"      #default-view { display: block; }"</c>
+
+SVG/visual-proofs.svg#32
+00:00:31.000 --> 00:00:32.000
+<c.HEAD>"      .proof:target ~ #default-view { display: none; }"</c>
+
+SVG/visual-proofs.svg#33
+00:00:32.000 --> 00:00:33.000
+<c.HEAD>"      @media (prefers-color-scheme: light) {"</c>
+
+SVG/visual-proofs.svg#34
+00:00:33.000 --> 00:00:34.000
+<c.HEAD>"        :root { --bg:#f4f7f6; --ink:#122022; --dim:#4a6a60; --accent:#0a6a5a; --cell:#fff; --cell-b:#8ab; }"</c>
+
+SVG/visual-proofs.svg#35
+00:00:34.000 --> 00:00:35.000
+<c.HEAD>"        .stage-frame { fill: #fff; }"</c>
+
+SVG/visual-proofs.svg#36
+00:00:35.000 --> 00:00:36.000
+<c.HEAD>"        .plus { fill: #1f4e9c; } .minus { fill: #6a90c0; }"</c>
+
+SVG/visual-proofs.svg#37
+00:00:36.000 --> 00:00:37.000
+<c.HEAD>"        .still { fill: #b8860b; } .orbit { fill: #0a6a5a; }"</c>
+
+SVG/visual-proofs.svg#38
+00:00:37.000 --> 00:00:38.000
+<c.HEAD>"        .ring { stroke: #cde; } .wire { stroke: #8ab; }"</c>
+
+SVG/visual-proofs.svg#39
+00:00:38.000 --> 00:00:39.000
+<c.HEAD>"        .gate { fill: #f8fafa; stroke: #0a6a5a; }"</c>
+
+SVG/visual-proofs.svg#40
+00:00:39.000 --> 00:00:40.000
+<c.HEAD>"      }"</c>
+
+SVG/visual-proofs.svg#41
+00:00:40.000 --> 00:00:41.000
+<c.HEAD>"    &lt;/style&gt;"</c>
+
+SVG/visual-proofs.svg#42
+00:00:41.000 --> 00:00:42.000
+<c.HEAD>"    &lt;!-- reusable markers --&gt;"</c>
+
+SVG/visual-proofs.svg#43
+00:00:42.000 --> 00:00:43.000
+<c.HEAD>"    &lt;marker id=""arrow"" viewBox=""0 0 8 8"" refX=""6"" refY=""4"" markerWidth=""6"" markerHeight=""6"" orient=""auto""&gt;"</c>
+
+SVG/visual-proofs.svg#44
+00:00:43.000 --> 00:00:44.000
+<c.HEAD>"      &lt;path d=""M0,0 L8,4 L0,8 Z"" fill=""#72ffe0""/&gt;"</c>
+
+SVG/visual-proofs.svg#45
+00:00:44.000 --> 00:00:45.000
+<c.HEAD>"    &lt;/marker&gt;"</c>
+
+SVG/visual-proofs.svg#46
+00:00:45.000 --> 00:00:46.000
+<c.HEAD>"  &lt;/defs&gt;"</c>
+
+SVG/visual-proofs.svg#47
+00:00:46.000 --> 00:00:47.000
+<c.HEAD>"  &lt;!-- ════════ HEADER ════════ --&gt;"</c>
+
+SVG/visual-proofs.svg#48
+00:00:47.000 --> 00:00:48.000
+<c.HEAD>"  &lt;text class=""title"" x=""24"" y=""28""&gt;VISUAL PROOFS&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#49
+00:00:48.000 --> 00:00:49.000
+<c.HEAD>"  &lt;text class=""sub"" x=""24"" y=""46""&gt;periodic table index · click an element · delta steps the figure&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#50
+00:00:49.000 --> 00:00:50.000
+<c.HEAD>"  &lt;!-- ════════ PERIODIC TABLE INDEX ════════ --&gt;"</c>
+
+SVG/visual-proofs.svg#51
+00:00:50.000 --> 00:00:51.000
+<c.HEAD>"  &lt;!-- layout:  periods (rows) × groups (cols), element-style cells --&gt;"</c>
+
+SVG/visual-proofs.svg#52
+00:00:51.000 --> 00:00:52.000
+<c.HEAD>"  &lt;g id=""periodic-table"" transform=""translate(24, 64)""&gt;"</c>
+
+SVG/visual-proofs.svg#53
+00:00:52.000 --> 00:00:53.000
+<c.HEAD>"    &lt;!-- column headers (groups) --&gt;"</c>
+
+SVG/visual-proofs.svg#54
+00:00:53.000 --> 00:00:54.000
+<c.HEAD>"    &lt;g class=""sub"" font-size=""9""&gt;"</c>
+
+SVG/visual-proofs.svg#55
+00:00:54.000 --> 00:00:55.000
+<c.HEAD>"      &lt;text x=""28"" y=""0"" text-anchor=""middle""&gt;I&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#56
+00:00:55.000 --> 00:00:56.000
+<c.HEAD>"      &lt;text x=""84"" y=""0"" text-anchor=""middle""&gt;II&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#57
+00:00:56.000 --> 00:00:57.000
+<c.HEAD>"      &lt;text x=""140"" y=""0"" text-anchor=""middle""&gt;III&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#58
+00:00:57.000 --> 00:00:58.000
+<c.HEAD>"      &lt;text x=""196"" y=""0"" text-anchor=""middle""&gt;IV&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#59
+00:00:58.000 --> 00:00:59.000
+<c.HEAD>"      &lt;text x=""252"" y=""0"" text-anchor=""middle""&gt;V&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#60
+00:00:59.000 --> 00:01:00.000
+<c.HEAD>"      &lt;text x=""308"" y=""0"" text-anchor=""middle""&gt;VI&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#61
+00:01:00.000 --> 00:01:01.000
+<c.HEAD>"      &lt;text x=""364"" y=""0"" text-anchor=""middle""&gt;VII&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#62
+00:01:01.000 --> 00:01:02.000
+<c.HEAD>"      &lt;text x=""420"" y=""0"" text-anchor=""middle""&gt;VIII&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#63
+00:01:02.000 --> 00:01:03.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#64
+00:01:03.000 --> 00:01:04.000
+<c.HEAD>"    &lt;!-- Period 1 — kernel primitives --&gt;"</c>
+
+SVG/visual-proofs.svg#65
+00:01:04.000 --> 00:01:05.000
+<c.HEAD>"    &lt;text class=""sub"" x=""-14"" y=""36"" font-size=""9""&gt;1&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#66
+00:01:05.000 --> 00:01:06.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-delta""&gt;"</c>
+
+SVG/visual-proofs.svg#67
+00:01:06.000 --> 00:01:07.000
+<c.HEAD>"      &lt;g transform=""translate(0,12)""&gt;"</c>
+
+SVG/visual-proofs.svg#68
+00:01:07.000 --> 00:01:08.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#69
+00:01:08.000 --> 00:01:09.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;1&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#70
+00:01:09.000 --> 00:01:10.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;Δ&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#71
+00:01:10.000 --> 00:01:11.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;delta&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#72
+00:01:11.000 --> 00:01:12.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#73
+00:01:12.000 --> 00:01:13.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#74
+00:01:13.000 --> 00:01:14.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-L""&gt;"</c>
+
+SVG/visual-proofs.svg#75
+00:01:14.000 --> 00:01:15.000
+<c.HEAD>"      &lt;g transform=""translate(56,12)""&gt;"</c>
+
+SVG/visual-proofs.svg#76
+00:01:15.000 --> 00:01:16.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#77
+00:01:16.000 --> 00:01:17.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;2&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#78
+00:01:17.000 --> 00:01:18.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;L&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#79
+00:01:18.000 --> 00:01:19.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;linear&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#80
+00:01:19.000 --> 00:01:20.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#81
+00:01:20.000 --> 00:01:21.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#82
+00:01:21.000 --> 00:01:22.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-K""&gt;"</c>
+
+SVG/visual-proofs.svg#83
+00:01:22.000 --> 00:01:23.000
+<c.HEAD>"      &lt;g transform=""translate(112,12)""&gt;"</c>
+
+SVG/visual-proofs.svg#84
+00:01:23.000 --> 00:01:24.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#85
+00:01:24.000 --> 00:01:25.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;3&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#86
+00:01:25.000 --> 00:01:26.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;K&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#87
+00:01:26.000 --> 00:01:27.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;K(p,C)&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#88
+00:01:27.000 --> 00:01:28.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#89
+00:01:28.000 --> 00:01:29.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#90
+00:01:29.000 --> 00:01:30.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-mask""&gt;"</c>
+
+SVG/visual-proofs.svg#91
+00:01:30.000 --> 00:01:31.000
+<c.HEAD>"      &lt;g transform=""translate(168,12)""&gt;"</c>
+
+SVG/visual-proofs.svg#92
+00:01:31.000 --> 00:01:32.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#93
+00:01:32.000 --> 00:01:33.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;4&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#94
+00:01:33.000 --> 00:01:34.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;μ&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#95
+00:01:34.000 --> 00:01:35.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;mask&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#96
+00:01:35.000 --> 00:01:36.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#97
+00:01:36.000 --> 00:01:37.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#98
+00:01:37.000 --> 00:01:38.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-replay""&gt;"</c>
+
+SVG/visual-proofs.svg#99
+00:01:38.000 --> 00:01:39.000
+<c.HEAD>"      &lt;g transform=""translate(224,12)""&gt;"</c>
+
+SVG/visual-proofs.svg#100
+00:01:39.000 --> 00:01:40.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#101
+00:01:40.000 --> 00:01:41.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;5&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#102
+00:01:41.000 --> 00:01:42.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;↻&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#103
+00:01:42.000 --> 00:01:43.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;replay&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#104
+00:01:43.000 --> 00:01:44.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#105
+00:01:44.000 --> 00:01:45.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#106
+00:01:45.000 --> 00:01:46.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-const""&gt;"</c>
+
+SVG/visual-proofs.svg#107
+00:01:46.000 --> 00:01:47.000
+<c.HEAD>"      &lt;g transform=""translate(280,12)""&gt;"</c>
+
+SVG/visual-proofs.svg#108
+00:01:47.000 --> 00:01:48.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#109
+00:01:48.000 --> 00:01:49.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;6&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#110
+00:01:49.000 --> 00:01:50.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;1D&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#111
+00:01:50.000 --> 00:01:51.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;const&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#112
+00:01:51.000 --> 00:01:52.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#113
+00:01:52.000 --> 00:01:53.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#114
+00:01:53.000 --> 00:01:54.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-w16""&gt;"</c>
+
+SVG/visual-proofs.svg#115
+00:01:54.000 --> 00:01:55.000
+<c.HEAD>"      &lt;g transform=""translate(336,12)""&gt;"</c>
+
+SVG/visual-proofs.svg#116
+00:01:55.000 --> 00:01:56.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#117
+00:01:56.000 --> 00:01:57.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;7&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#118
+00:01:57.000 --> 00:01:58.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;16&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#119
+00:01:58.000 --> 00:01:59.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;W16&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#120
+00:01:59.000 --> 00:02:00.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#121
+00:02:00.000 --> 00:02:01.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#122
+00:02:01.000 --> 00:02:02.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-65536""&gt;"</c>
+
+SVG/visual-proofs.svg#123
+00:02:02.000 --> 00:02:03.000
+<c.HEAD>"      &lt;g transform=""translate(392,12)""&gt;"</c>
+
+SVG/visual-proofs.svg#124
+00:02:03.000 --> 00:02:04.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#125
+00:02:04.000 --> 00:02:05.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;8&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#126
+00:02:05.000 --> 00:02:06.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;2¹⁶&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#127
+00:02:06.000 --> 00:02:07.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;space&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#128
+00:02:07.000 --> 00:02:08.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#129
+00:02:08.000 --> 00:02:09.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#130
+00:02:09.000 --> 00:02:10.000
+<c.HEAD>"    &lt;!-- Period 2 — still / orbit / square / boot --&gt;"</c>
+
+SVG/visual-proofs.svg#131
+00:02:10.000 --> 00:02:11.000
+<c.HEAD>"    &lt;text class=""sub"" x=""-14"" y=""100"" font-size=""9""&gt;2&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#132
+00:02:11.000 --> 00:02:12.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-still""&gt;"</c>
+
+SVG/visual-proofs.svg#133
+00:02:12.000 --> 00:02:13.000
+<c.HEAD>"      &lt;g transform=""translate(0,76)""&gt;"</c>
+
+SVG/visual-proofs.svg#134
+00:02:13.000 --> 00:02:14.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#135
+00:02:14.000 --> 00:02:15.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;9&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#136
+00:02:15.000 --> 00:02:16.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;⊙&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#137
+00:02:16.000 --> 00:02:17.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;still&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#138
+00:02:17.000 --> 00:02:18.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#139
+00:02:18.000 --> 00:02:19.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#140
+00:02:19.000 --> 00:02:20.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-aa55""&gt;"</c>
+
+SVG/visual-proofs.svg#141
+00:02:20.000 --> 00:02:21.000
+<c.HEAD>"      &lt;g transform=""translate(56,76)""&gt;"</c>
+
+SVG/visual-proofs.svg#142
+00:02:21.000 --> 00:02:22.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#143
+00:02:22.000 --> 00:02:23.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;10&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#144
+00:02:23.000 --> 00:02:24.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;AA&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#145
+00:02:24.000 --> 00:02:25.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;boot&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#146
+00:02:25.000 --> 00:02:26.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#147
+00:02:26.000 --> 00:02:27.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#148
+00:02:27.000 --> 00:02:28.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-orbit""&gt;"</c>
+
+SVG/visual-proofs.svg#149
+00:02:28.000 --> 00:02:29.000
+<c.HEAD>"      &lt;g transform=""translate(112,76)""&gt;"</c>
+
+SVG/visual-proofs.svg#150
+00:02:29.000 --> 00:02:30.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#151
+00:02:30.000 --> 00:02:31.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;11&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#152
+00:02:31.000 --> 00:02:32.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;○₄&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#153
+00:02:32.000 --> 00:02:33.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;orbit&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#154
+00:02:33.000 --> 00:02:34.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#155
+00:02:34.000 --> 00:02:35.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#156
+00:02:35.000 --> 00:02:36.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-square""&gt;"</c>
+
+SVG/visual-proofs.svg#157
+00:02:36.000 --> 00:02:37.000
+<c.HEAD>"      &lt;g transform=""translate(168,76)""&gt;"</c>
+
+SVG/visual-proofs.svg#158
+00:02:37.000 --> 00:02:38.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#159
+00:02:38.000 --> 00:02:39.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;12&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#160
+00:02:39.000 --> 00:02:40.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;□&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#161
+00:02:40.000 --> 00:02:41.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;square&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#162
+00:02:41.000 --> 00:02:42.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#163
+00:02:42.000 --> 00:02:43.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#164
+00:02:43.000 --> 00:02:44.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-null""&gt;"</c>
+
+SVG/visual-proofs.svg#165
+00:02:44.000 --> 00:02:45.000
+<c.HEAD>"      &lt;g transform=""translate(224,76)""&gt;"</c>
+
+SVG/visual-proofs.svg#166
+00:02:45.000 --> 00:02:46.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#167
+00:02:46.000 --> 00:02:47.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;13&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#168
+00:02:47.000 --> 00:02:48.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;∅∅&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#169
+00:02:48.000 --> 00:02:49.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;NULL²&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#170
+00:02:49.000 --> 00:02:50.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#171
+00:02:50.000 --> 00:02:51.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#172
+00:02:51.000 --> 00:02:52.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-xnor""&gt;"</c>
+
+SVG/visual-proofs.svg#173
+00:02:52.000 --> 00:02:53.000
+<c.HEAD>"      &lt;g transform=""translate(280,76)""&gt;"</c>
+
+SVG/visual-proofs.svg#174
+00:02:53.000 --> 00:02:54.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#175
+00:02:54.000 --> 00:02:55.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;14&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#176
+00:02:55.000 --> 00:02:56.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;⊙̸&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#177
+00:02:56.000 --> 00:02:57.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;xnor&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#178
+00:02:57.000 --> 00:02:58.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#179
+00:02:58.000 --> 00:02:59.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#180
+00:02:59.000 --> 00:03:00.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-parity""&gt;"</c>
+
+SVG/visual-proofs.svg#181
+00:03:00.000 --> 00:03:01.000
+<c.HEAD>"      &lt;g transform=""translate(336,76)""&gt;"</c>
+
+SVG/visual-proofs.svg#182
+00:03:01.000 --> 00:03:02.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#183
+00:03:02.000 --> 00:03:03.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;15&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#184
+00:03:03.000 --> 00:03:04.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;π&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#185
+00:03:04.000 --> 00:03:05.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;parity&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#186
+00:03:05.000 --> 00:03:06.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#187
+00:03:06.000 --> 00:03:07.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#188
+00:03:07.000 --> 00:03:08.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-nibble""&gt;"</c>
+
+SVG/visual-proofs.svg#189
+00:03:08.000 --> 00:03:09.000
+<c.HEAD>"      &lt;g transform=""translate(392,76)""&gt;"</c>
+
+SVG/visual-proofs.svg#190
+00:03:09.000 --> 00:03:10.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#191
+00:03:10.000 --> 00:03:11.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;16&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#192
+00:03:11.000 --> 00:03:12.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;n₄&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#193
+00:03:12.000 --> 00:03:13.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;nibble&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#194
+00:03:13.000 --> 00:03:14.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#195
+00:03:14.000 --> 00:03:15.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#196
+00:03:15.000 --> 00:03:16.000
+<c.HEAD>"    &lt;!-- Period 3 — structures / geometry --&gt;"</c>
+
+SVG/visual-proofs.svg#197
+00:03:16.000 --> 00:03:17.000
+<c.HEAD>"    &lt;text class=""sub"" x=""-14"" y=""164"" font-size=""9""&gt;3&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#198
+00:03:17.000 --> 00:03:18.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-cla""&gt;"</c>
+
+SVG/visual-proofs.svg#199
+00:03:18.000 --> 00:03:19.000
+<c.HEAD>"      &lt;g transform=""translate(0,140)""&gt;"</c>
+
+SVG/visual-proofs.svg#200
+00:03:19.000 --> 00:03:20.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#201
+00:03:20.000 --> 00:03:21.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;17&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#202
+00:03:21.000 --> 00:03:22.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;Σ&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#203
+00:03:22.000 --> 00:03:23.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;CLA&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#204
+00:03:23.000 --> 00:03:24.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#205
+00:03:24.000 --> 00:03:25.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#206
+00:03:25.000 --> 00:03:26.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-e8""&gt;"</c>
+
+SVG/visual-proofs.svg#207
+00:03:26.000 --> 00:03:27.000
+<c.HEAD>"      &lt;g transform=""translate(56,140)""&gt;"</c>
+
+SVG/visual-proofs.svg#208
+00:03:27.000 --> 00:03:28.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#209
+00:03:28.000 --> 00:03:29.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;18&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#210
+00:03:29.000 --> 00:03:30.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;E8&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#211
+00:03:30.000 --> 00:03:31.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;Coxeter&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#212
+00:03:31.000 --> 00:03:32.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#213
+00:03:32.000 --> 00:03:33.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#214
+00:03:33.000 --> 00:03:34.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-kmap""&gt;"</c>
+
+SVG/visual-proofs.svg#215
+00:03:34.000 --> 00:03:35.000
+<c.HEAD>"      &lt;g transform=""translate(112,140)""&gt;"</c>
+
+SVG/visual-proofs.svg#216
+00:03:35.000 --> 00:03:36.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#217
+00:03:36.000 --> 00:03:37.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;19&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#218
+00:03:37.000 --> 00:03:38.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;Km&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#219
+00:03:38.000 --> 00:03:39.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;K-map&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#220
+00:03:39.000 --> 00:03:40.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#221
+00:03:40.000 --> 00:03:41.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#222
+00:03:41.000 --> 00:03:42.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-smith""&gt;"</c>
+
+SVG/visual-proofs.svg#223
+00:03:42.000 --> 00:03:43.000
+<c.HEAD>"      &lt;g transform=""translate(168,140)""&gt;"</c>
+
+SVG/visual-proofs.svg#224
+00:03:43.000 --> 00:03:44.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#225
+00:03:44.000 --> 00:03:45.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;20&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#226
+00:03:45.000 --> 00:03:46.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;Sm&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#227
+00:03:46.000 --> 00:03:47.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;Smith&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#228
+00:03:47.000 --> 00:03:48.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#229
+00:03:48.000 --> 00:03:49.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#230
+00:03:49.000 --> 00:03:50.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-octal""&gt;"</c>
+
+SVG/visual-proofs.svg#231
+00:03:50.000 --> 00:03:51.000
+<c.HEAD>"      &lt;g transform=""translate(224,140)""&gt;"</c>
+
+SVG/visual-proofs.svg#232
+00:03:51.000 --> 00:03:52.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#233
+00:03:52.000 --> 00:03:53.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;21&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#234
+00:03:53.000 --> 00:03:54.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;8&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#235
+00:03:54.000 --> 00:03:55.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;octal&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#236
+00:03:55.000 --> 00:03:56.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#237
+00:03:56.000 --> 00:03:57.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#238
+00:03:57.000 --> 00:03:58.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-998001""&gt;"</c>
+
+SVG/visual-proofs.svg#239
+00:03:58.000 --> 00:03:59.000
+<c.HEAD>"      &lt;g transform=""translate(280,140)""&gt;"</c>
+
+SVG/visual-proofs.svg#240
+00:03:59.000 --> 00:04:00.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#241
+00:04:00.000 --> 00:04:01.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;22&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#242
+00:04:01.000 --> 00:04:02.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;1/₉&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#243
+00:04:02.000 --> 00:04:03.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;998001&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#244
+00:04:03.000 --> 00:04:04.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#245
+00:04:04.000 --> 00:04:05.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#246
+00:04:05.000 --> 00:04:06.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-fano""&gt;"</c>
+
+SVG/visual-proofs.svg#247
+00:04:06.000 --> 00:04:07.000
+<c.HEAD>"      &lt;g transform=""translate(336,140)""&gt;"</c>
+
+SVG/visual-proofs.svg#248
+00:04:07.000 --> 00:04:08.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#249
+00:04:08.000 --> 00:04:09.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;23&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#250
+00:04:09.000 --> 00:04:10.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;F₇&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#251
+00:04:10.000 --> 00:04:11.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;Fano&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#252
+00:04:11.000 --> 00:04:12.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#253
+00:04:12.000 --> 00:04:13.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#254
+00:04:13.000 --> 00:04:14.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-yhwh""&gt;"</c>
+
+SVG/visual-proofs.svg#255
+00:04:14.000 --> 00:04:15.000
+<c.HEAD>"      &lt;g transform=""translate(392,140)""&gt;"</c>
+
+SVG/visual-proofs.svg#256
+00:04:15.000 --> 00:04:16.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#257
+00:04:16.000 --> 00:04:17.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;24&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#258
+00:04:17.000 --> 00:04:18.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;יה&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#259
+00:04:18.000 --> 00:04:19.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;YHWH&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#260
+00:04:19.000 --> 00:04:20.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#261
+00:04:20.000 --> 00:04:21.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#262
+00:04:21.000 --> 00:04:22.000
+<c.HEAD>"    &lt;!-- Period 4 — tetrahedron literals · DNA/RNA · reverse --&gt;"</c>
+
+SVG/visual-proofs.svg#263
+00:04:22.000 --> 00:04:23.000
+<c.HEAD>"    &lt;text class=""sub"" x=""-14"" y=""228"" font-size=""9""&gt;4&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#264
+00:04:23.000 --> 00:04:24.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-word""&gt;"</c>
+
+SVG/visual-proofs.svg#265
+00:04:24.000 --> 00:04:25.000
+<c.HEAD>"      &lt;g transform=""translate(0,204)""&gt;"</c>
+
+SVG/visual-proofs.svg#266
+00:04:25.000 --> 00:04:26.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#267
+00:04:26.000 --> 00:04:27.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;25&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#268
+00:04:27.000 --> 00:04:28.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;W&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#269
+00:04:28.000 --> 00:04:29.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;WORD&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#270
+00:04:29.000 --> 00:04:30.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#271
+00:04:30.000 --> 00:04:31.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#272
+00:04:31.000 --> 00:04:32.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-god""&gt;"</c>
+
+SVG/visual-proofs.svg#273
+00:04:32.000 --> 00:04:33.000
+<c.HEAD>"      &lt;g transform=""translate(56,204)""&gt;"</c>
+
+SVG/visual-proofs.svg#274
+00:04:33.000 --> 00:04:34.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#275
+00:04:34.000 --> 00:04:35.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;26&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#276
+00:04:35.000 --> 00:04:36.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;G&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#277
+00:04:36.000 --> 00:04:37.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;GOD&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#278
+00:04:37.000 --> 00:04:38.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#279
+00:04:38.000 --> 00:04:39.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#280
+00:04:39.000 --> 00:04:40.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-of""&gt;"</c>
+
+SVG/visual-proofs.svg#281
+00:04:40.000 --> 00:04:41.000
+<c.HEAD>"      &lt;g transform=""translate(112,204)""&gt;"</c>
+
+SVG/visual-proofs.svg#282
+00:04:41.000 --> 00:04:42.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#283
+00:04:42.000 --> 00:04:43.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;27&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#284
+00:04:43.000 --> 00:04:44.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;OF&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#285
+00:04:44.000 --> 00:04:45.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;OF/of&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#286
+00:04:45.000 --> 00:04:46.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#287
+00:04:46.000 --> 00:04:47.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#288
+00:04:47.000 --> 00:04:48.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-is""&gt;"</c>
+
+SVG/visual-proofs.svg#289
+00:04:48.000 --> 00:04:49.000
+<c.HEAD>"      &lt;g transform=""translate(168,204)""&gt;"</c>
+
+SVG/visual-proofs.svg#290
+00:04:49.000 --> 00:04:50.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#291
+00:04:50.000 --> 00:04:51.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;28&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#292
+00:04:51.000 --> 00:04:52.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;IS&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#293
+00:04:52.000 --> 00:04:53.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;IS/is&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#294
+00:04:53.000 --> 00:04:54.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#295
+00:04:54.000 --> 00:04:55.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#296
+00:04:55.000 --> 00:04:56.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-cgat""&gt;"</c>
+
+SVG/visual-proofs.svg#297
+00:04:56.000 --> 00:04:57.000
+<c.HEAD>"      &lt;g transform=""translate(224,204)""&gt;"</c>
+
+SVG/visual-proofs.svg#298
+00:04:57.000 --> 00:04:58.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#299
+00:04:58.000 --> 00:04:59.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;29&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#300
+00:04:59.000 --> 00:05:00.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;AT&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#301
+00:05:00.000 --> 00:05:01.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;CGAT&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#302
+00:05:01.000 --> 00:05:02.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#303
+00:05:02.000 --> 00:05:03.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#304
+00:05:03.000 --> 00:05:04.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-cgau""&gt;"</c>
+
+SVG/visual-proofs.svg#305
+00:05:04.000 --> 00:05:05.000
+<c.HEAD>"      &lt;g transform=""translate(280,204)""&gt;"</c>
+
+SVG/visual-proofs.svg#306
+00:05:05.000 --> 00:05:06.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#307
+00:05:06.000 --> 00:05:07.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;30&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#308
+00:05:07.000 --> 00:05:08.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;AU&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#309
+00:05:08.000 --> 00:05:09.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;CGAU&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#310
+00:05:09.000 --> 00:05:10.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#311
+00:05:10.000 --> 00:05:11.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#312
+00:05:11.000 --> 00:05:12.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-tu""&gt;"</c>
+
+SVG/visual-proofs.svg#313
+00:05:12.000 --> 00:05:13.000
+<c.HEAD>"      &lt;g transform=""translate(336,204)""&gt;"</c>
+
+SVG/visual-proofs.svg#314
+00:05:13.000 --> 00:05:14.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#315
+00:05:14.000 --> 00:05:15.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;31&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#316
+00:05:15.000 --> 00:05:16.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;T/U&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#317
+00:05:16.000 --> 00:05:17.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;diff&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#318
+00:05:17.000 --> 00:05:18.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#319
+00:05:18.000 --> 00:05:19.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#320
+00:05:19.000 --> 00:05:20.000
+<c.HEAD>"    &lt;a xlink:href=""#proof-rev""&gt;"</c>
+
+SVG/visual-proofs.svg#321
+00:05:20.000 --> 00:05:21.000
+<c.HEAD>"      &lt;g transform=""translate(392,204)""&gt;"</c>
+
+SVG/visual-proofs.svg#322
+00:05:21.000 --> 00:05:22.000
+<c.HEAD>"        &lt;rect class=""cell"" width=""52"" height=""52""/&gt;"</c>
+
+SVG/visual-proofs.svg#323
+00:05:22.000 --> 00:05:23.000
+<c.HEAD>"        &lt;text class=""anum"" x=""6"" y=""14""&gt;32&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#324
+00:05:23.000 --> 00:05:24.000
+<c.HEAD>"        &lt;text class=""sym"" x=""26"" y=""32""&gt;↺&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#325
+00:05:24.000 --> 00:05:25.000
+<c.HEAD>"        &lt;text class=""ename"" x=""26"" y=""46""&gt;reverse&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#326
+00:05:25.000 --> 00:05:26.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#327
+00:05:26.000 --> 00:05:27.000
+<c.HEAD>"    &lt;/a&gt;"</c>
+
+SVG/visual-proofs.svg#328
+00:05:27.000 --> 00:05:28.000
+<c.HEAD>"  &lt;a xlink:href=""#proof-tetra""&gt;&lt;g transform=""translate(0,268)""&gt;&lt;rect class=""cell"" width=""444"" height=""36"" rx=""4""/&gt;&lt;text class=""anum"" x=""8"" y=""14""&gt;33&lt;/text&gt;&lt;text class=""sym"" x=""222"" y=""24"" font-size=""14""&gt;◇  TETRA  WORD · GOD · OF · of&lt;/text&gt;&lt;/g&gt;&lt;/a&gt;&lt;a xlink:href=""#proof-codepoints""&gt;&lt;g transform=""translate(0,312)""&gt;&lt;rect class=""cell"" width=""444"" height=""36"" rx=""4""/&gt;&lt;text class=""anum"" x=""8"" y=""14""&gt;34&lt;/text&gt;&lt;text class=""sym"" x=""222"" y=""24"" font-size=""13""&gt;▦  CODEPOINTS  deviations from 20–7E&lt;/text&gt;&lt;/g&gt;&lt;/a&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#329
+00:05:28.000 --> 00:05:29.000
+<c.HEAD>"  &lt;!-- ════════ STAGE ════════ --&gt;"</c>
+
+SVG/visual-proofs.svg#330
+00:05:29.000 --> 00:05:30.000
+<c.HEAD>"  &lt;rect class=""stage-frame"" x=""500"" y=""60"" width=""676"" height=""880""/&gt;"</c>
+
+SVG/visual-proofs.svg#331
+00:05:30.000 --> 00:05:31.000
+<c.HEAD>"  &lt;text class=""sub"" x=""516"" y=""82""&gt;stage · selected proof visual&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#332
+00:05:31.000 --> 00:05:32.000
+<c.HEAD>"  &lt;!-- default view when nothing targeted --&gt;"</c>
+
+SVG/visual-proofs.svg#333
+00:05:32.000 --> 00:05:33.000
+<c.HEAD>"  &lt;!-- ════ PROOF VISUALS (shown via :target) ════ --&gt;"</c>
+
+SVG/visual-proofs.svg#334
+00:05:33.000 --> 00:05:34.000
+<c.HEAD>"  &lt;!-- 1 Δ delta --&gt;"</c>
+
+SVG/visual-proofs.svg#335
+00:05:34.000 --> 00:05:35.000
+<c.HEAD>"  &lt;g id=""proof-delta"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#336
+00:05:35.000 --> 00:05:36.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;Δ  delta&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#337
+00:05:36.000 --> 00:05:37.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;mask n (rotl1 ⊕ rotl3 ⊕ rotr2 ⊕ const) — one step of the law&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#338
+00:05:37.000 --> 00:05:38.000
+<c.HEAD>"    &lt;g transform=""translate(840, 400)""&gt;"</c>
+
+SVG/visual-proofs.svg#339
+00:05:38.000 --> 00:05:39.000
+<c.HEAD>"      &lt;!-- state word as 16 dots, animated by discrete rotation of highlight --&gt;"</c>
+
+SVG/visual-proofs.svg#340
+00:05:39.000 --> 00:05:40.000
+<c.HEAD>"      &lt;g&gt;"</c>
+
+SVG/visual-proofs.svg#341
+00:05:40.000 --> 00:05:41.000
+<c.HEAD>"        &lt;animateTransform attributeName=""transform"" type=""rotate"" values=""0;45;90;135;180;225;270;315;360"" keyTimes=""0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#342
+00:05:41.000 --> 00:05:42.000
+<c.HEAD>"        &lt;circle class=""orbit"" cx=""0"" cy=""-90"" r=""8""/&gt;"</c>
+
+SVG/visual-proofs.svg#343
+00:05:42.000 --> 00:05:43.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#344
+00:05:43.000 --> 00:05:44.000
+<c.HEAD>"      &lt;circle class=""ring"" r=""90""/&gt;"</c>
+
+SVG/visual-proofs.svg#345
+00:05:44.000 --> 00:05:45.000
+<c.HEAD>"      &lt;!-- 16 bit positions --&gt;"</c>
+
+SVG/visual-proofs.svg#346
+00:05:45.000 --> 00:05:46.000
+<c.HEAD>"      &lt;g id=""delta-bits""&gt;"</c>
+
+SVG/visual-proofs.svg#347
+00:05:46.000 --> 00:05:47.000
+<c.HEAD>"        &lt;!-- generated positions on circle --&gt;"</c>
+
+SVG/visual-proofs.svg#348
+00:05:47.000 --> 00:05:48.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""0"" cy=""-90"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#349
+00:05:48.000 --> 00:05:49.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""34.4"" cy=""-83.1"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#350
+00:05:49.000 --> 00:05:50.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""63.6"" cy=""-63.6"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#351
+00:05:50.000 --> 00:05:51.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""83.1"" cy=""-34.4"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#352
+00:05:51.000 --> 00:05:52.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""90"" cy=""0"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#353
+00:05:52.000 --> 00:05:53.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""83.1"" cy=""34.4"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#354
+00:05:53.000 --> 00:05:54.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""63.6"" cy=""63.6"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#355
+00:05:54.000 --> 00:05:55.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""34.4"" cy=""83.1"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#356
+00:05:55.000 --> 00:05:56.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""0"" cy=""90"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#357
+00:05:56.000 --> 00:05:57.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""-34.4"" cy=""83.1"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#358
+00:05:57.000 --> 00:05:58.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""-63.6"" cy=""63.6"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#359
+00:05:58.000 --> 00:05:59.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""-83.1"" cy=""34.4"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#360
+00:05:59.000 --> 00:06:00.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""-90"" cy=""0"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#361
+00:06:00.000 --> 00:06:01.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""-83.1"" cy=""-34.4"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#362
+00:06:01.000 --> 00:06:02.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""-63.6"" cy=""-63.6"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#363
+00:06:02.000 --> 00:06:03.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""-34.4"" cy=""-83.1"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#364
+00:06:03.000 --> 00:06:04.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#365
+00:06:04.000 --> 00:06:05.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""130"" text-anchor=""middle""&gt;one discrete step · period 8 on W16&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#366
+00:06:05.000 --> 00:06:06.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#367
+00:06:06.000 --> 00:06:07.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#368
+00:06:07.000 --> 00:06:08.000
+<c.HEAD>"  &lt;!-- 2 L linear still points --&gt;"</c>
+
+SVG/visual-proofs.svg#369
+00:06:08.000 --> 00:06:09.000
+<c.HEAD>"  &lt;g id=""proof-L"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#370
+00:06:09.000 --> 00:06:10.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;L  linear part — still points&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#371
+00:06:10.000 --> 00:06:11.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;L(p)=rotl1⊕rotl3⊕rotl14 · eight fixed words: even-parity nibble ×4&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#372
+00:06:11.000 --> 00:06:12.000
+<c.HEAD>"    &lt;g transform=""translate(620, 220)""&gt;"</c>
+
+SVG/visual-proofs.svg#373
+00:06:12.000 --> 00:06:13.000
+<c.HEAD>"      &lt;!-- 8 still words as large cells --&gt;"</c>
+
+SVG/visual-proofs.svg#374
+00:06:13.000 --> 00:06:14.000
+<c.HEAD>"      &lt;g font-size=""12"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#375
+00:06:14.000 --> 00:06:15.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;&lt;rect class=""gate"" width=""100"" height=""36"" rx=""4""/&gt;&lt;text class=""still"" x=""50"" y=""23""&gt;0000&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#376
+00:06:15.000 --> 00:06:16.000
+<c.HEAD>"        &lt;g transform=""translate(120,0)""&gt;&lt;rect class=""gate"" width=""100"" height=""36"" rx=""4""/&gt;&lt;text class=""still"" x=""50"" y=""23""&gt;3333&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#377
+00:06:16.000 --> 00:06:17.000
+<c.HEAD>"        &lt;g transform=""translate(240,0)""&gt;&lt;rect class=""gate"" width=""100"" height=""36"" rx=""4""/&gt;&lt;text class=""still"" x=""50"" y=""23""&gt;5555&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#378
+00:06:17.000 --> 00:06:18.000
+<c.HEAD>"        &lt;g transform=""translate(360,0)""&gt;&lt;rect class=""gate"" width=""100"" height=""36"" rx=""4""/&gt;&lt;text class=""still"" x=""50"" y=""23""&gt;6666&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#379
+00:06:18.000 --> 00:06:19.000
+<c.HEAD>"        &lt;g transform=""translate(0,60)""&gt;&lt;rect class=""gate"" width=""100"" height=""36"" rx=""4""/&gt;&lt;text class=""still"" x=""50"" y=""23""&gt;9999&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#380
+00:06:19.000 --> 00:06:20.000
+<c.HEAD>"        &lt;g transform=""translate(120,60)""&gt;&lt;rect class=""gate"" width=""100"" height=""36"" rx=""4""/&gt;&lt;text class=""still"" x=""50"" y=""23""&gt;AAAA&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#381
+00:06:20.000 --> 00:06:21.000
+<c.HEAD>"        &lt;g transform=""translate(240,60)""&gt;&lt;rect class=""gate"" width=""100"" height=""36"" rx=""4""/&gt;&lt;text class=""still"" x=""50"" y=""23""&gt;CCCC&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#382
+00:06:21.000 --> 00:06:22.000
+<c.HEAD>"        &lt;g transform=""translate(360,60)""&gt;&lt;rect class=""gate"" width=""100"" height=""36"" rx=""4""/&gt;&lt;text class=""still"" x=""50"" y=""23""&gt;FFFF&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#383
+00:06:22.000 --> 00:06:23.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#384
+00:06:23.000 --> 00:06:24.000
+<c.HEAD>"      &lt;text class=""caption"" x=""230"" y=""130"" text-anchor=""middle""&gt;L(p)=p  ⇔  nibble even parity, repeated four times&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#385
+00:06:24.000 --> 00:06:25.000
+<c.HEAD>"      &lt;!-- pulse on stills --&gt;"</c>
+
+SVG/visual-proofs.svg#386
+00:06:25.000 --> 00:06:26.000
+<c.HEAD>"      &lt;g&gt;"</c>
+
+SVG/visual-proofs.svg#387
+00:06:26.000 --> 00:06:27.000
+<c.HEAD>"        &lt;animate attributeName=""opacity"" values=""0.5;1;0.5"" dur=""2s"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#388
+00:06:27.000 --> 00:06:28.000
+<c.HEAD>"        &lt;circle class=""still"" cx=""50"" cy=""18"" r=""0""/&gt;"</c>
+
+SVG/visual-proofs.svg#389
+00:06:28.000 --> 00:06:29.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#390
+00:06:29.000 --> 00:06:30.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#391
+00:06:30.000 --> 00:06:31.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#392
+00:06:31.000 --> 00:06:32.000
+<c.HEAD>"  &lt;!-- 3 K --&gt;"</c>
+
+SVG/visual-proofs.svg#393
+00:06:32.000 --> 00:06:33.000
+<c.HEAD>"  &lt;g id=""proof-K"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#394
+00:06:33.000 --> 00:06:34.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;K(p,C) = L(p) ⊕ C&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#395
+00:06:34.000 --> 00:06:35.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;full delta step · C selects the coset&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#396
+00:06:35.000 --> 00:06:36.000
+<c.HEAD>"    &lt;g transform=""translate(840, 400)""&gt;"</c>
+
+SVG/visual-proofs.svg#397
+00:06:36.000 --> 00:06:37.000
+<c.HEAD>"      &lt;circle class=""ring"" r=""100""/&gt;"</c>
+
+SVG/visual-proofs.svg#398
+00:06:37.000 --> 00:06:38.000
+<c.HEAD>"      &lt;g&gt;"</c>
+
+SVG/visual-proofs.svg#399
+00:06:38.000 --> 00:06:39.000
+<c.HEAD>"        &lt;animateTransform attributeName=""transform"" type=""rotate"" values=""0;90;180;270;360"" keyTimes=""0;0.25;0.5;0.75;1"" dur=""4s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#400
+00:06:39.000 --> 00:06:40.000
+<c.HEAD>"        &lt;circle class=""orbit"" cx=""0"" cy=""-100"" r=""10""/&gt;"</c>
+
+SVG/visual-proofs.svg#401
+00:06:40.000 --> 00:06:41.000
+<c.HEAD>"        &lt;text class=""label"" x=""0"" y=""-118"" text-anchor=""middle""&gt;p&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#402
+00:06:41.000 --> 00:06:42.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#403
+00:06:42.000 --> 00:06:43.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""8"" text-anchor=""middle""&gt;C&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#404
+00:06:43.000 --> 00:06:44.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""140"" text-anchor=""middle""&gt;period depends on C · 1D1D → 4 on AA55 · 1D → 8 ∀&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#405
+00:06:44.000 --> 00:06:45.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#406
+00:06:45.000 --> 00:06:46.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#407
+00:06:46.000 --> 00:06:47.000
+<c.HEAD>"  &lt;!-- 4 mask --&gt;"</c>
+
+SVG/visual-proofs.svg#408
+00:06:47.000 --> 00:06:48.000
+<c.HEAD>"  &lt;g id=""proof-mask"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#409
+00:06:48.000 --> 00:06:49.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;μ  mask n&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#410
+00:06:49.000 --> 00:06:50.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;land with 2ⁿ−1 · keeps the contiguous width field&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#411
+00:06:50.000 --> 00:06:51.000
+<c.HEAD>"    &lt;g transform=""translate(620, 280)""&gt;"</c>
+
+SVG/visual-proofs.svg#412
+00:06:51.000 --> 00:06:52.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""0""&gt;width n bits&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#413
+00:06:52.000 --> 00:06:53.000
+<c.HEAD>"      &lt;!-- bar representing full register vs masked --&gt;"</c>
+
+SVG/visual-proofs.svg#414
+00:06:53.000 --> 00:06:54.000
+<c.HEAD>"      &lt;rect x=""0"" y=""20"" width=""480"" height=""24"" fill=""#1a3030"" stroke=""#23695d""/&gt;"</c>
+
+SVG/visual-proofs.svg#415
+00:06:54.000 --> 00:06:55.000
+<c.HEAD>"      &lt;rect x=""0"" y=""20"" width=""240"" height=""24"" fill=""#1f4e9c"" opacity=""0.7""&gt;"</c>
+
+SVG/visual-proofs.svg#416
+00:06:55.000 --> 00:06:56.000
+<c.HEAD>"        &lt;animate attributeName=""width"" values=""120;240;360;480;240"" keyTimes=""0;0.25;0.5;0.75;1"" dur=""6s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#417
+00:06:56.000 --> 00:06:57.000
+<c.HEAD>"      &lt;/rect&gt;"</c>
+
+SVG/visual-proofs.svg#418
+00:06:57.000 --> 00:06:58.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""70""&gt;masked region tracks n · outside bits forced 0&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#419
+00:06:58.000 --> 00:06:59.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#420
+00:06:59.000 --> 00:07:00.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#421
+00:07:00.000 --> 00:07:01.000
+<c.HEAD>"  &lt;!-- 5 replay --&gt;"</c>
+
+SVG/visual-proofs.svg#422
+00:07:01.000 --> 00:07:02.000
+<c.HEAD>"  &lt;g id=""proof-replay"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#423
+00:07:02.000 --> 00:07:03.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;↻  replay&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#424
+00:07:03.000 --> 00:07:04.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;iterate delta · list length = steps · deterministic&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#425
+00:07:04.000 --> 00:07:05.000
+<c.HEAD>"    &lt;g transform=""translate(620, 260)""&gt;"</c>
+
+SVG/visual-proofs.svg#426
+00:07:05.000 --> 00:07:06.000
+<c.HEAD>"      &lt;!-- chain of states --&gt;"</c>
+
+SVG/visual-proofs.svg#427
+00:07:06.000 --> 00:07:07.000
+<c.HEAD>"      &lt;g font-size=""11"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#428
+00:07:07.000 --> 00:07:08.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""32"" rx=""3""/&gt;&lt;text x=""35"" y=""21"" class=""orbit""&gt;s₀&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#429
+00:07:08.000 --> 00:07:09.000
+<c.HEAD>"        &lt;line class=""wire"" x1=""70"" y1=""16"" x2=""100"" y2=""16"" marker-end=""url(#arrow)""/&gt;"</c>
+
+SVG/visual-proofs.svg#430
+00:07:09.000 --> 00:07:10.000
+<c.HEAD>"        &lt;g transform=""translate(100,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""32"" rx=""3""/&gt;&lt;text x=""35"" y=""21"" class=""orbit""&gt;s₁&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#431
+00:07:10.000 --> 00:07:11.000
+<c.HEAD>"        &lt;line class=""wire"" x1=""170"" y1=""16"" x2=""200"" y2=""16"" marker-end=""url(#arrow)""/&gt;"</c>
+
+SVG/visual-proofs.svg#432
+00:07:11.000 --> 00:07:12.000
+<c.HEAD>"        &lt;g transform=""translate(200,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""32"" rx=""3""/&gt;&lt;text x=""35"" y=""21"" class=""orbit""&gt;s₂&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#433
+00:07:12.000 --> 00:07:13.000
+<c.HEAD>"        &lt;line class=""wire"" x1=""270"" y1=""16"" x2=""300"" y2=""16"" marker-end=""url(#arrow)""/&gt;"</c>
+
+SVG/visual-proofs.svg#434
+00:07:13.000 --> 00:07:14.000
+<c.HEAD>"        &lt;g transform=""translate(300,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""32"" rx=""3""/&gt;&lt;text x=""35"" y=""21"" class=""orbit""&gt;…&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#435
+00:07:14.000 --> 00:07:15.000
+<c.HEAD>"        &lt;line class=""wire"" x1=""370"" y1=""16"" x2=""400"" y2=""16"" marker-end=""url(#arrow)""/&gt;"</c>
+
+SVG/visual-proofs.svg#436
+00:07:15.000 --> 00:07:16.000
+<c.HEAD>"        &lt;g transform=""translate(400,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""32"" rx=""3""/&gt;&lt;text x=""35"" y=""21"" class=""orbit""&gt;sₖ&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#437
+00:07:16.000 --> 00:07:17.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#438
+00:07:17.000 --> 00:07:18.000
+<c.HEAD>"      &lt;text class=""caption"" x=""235"" y=""70"" text-anchor=""middle""&gt;seed₁ = seed₂  ⇒  replay equal · Coq: replay_deterministic&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#439
+00:07:18.000 --> 00:07:19.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#440
+00:07:19.000 --> 00:07:20.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#441
+00:07:20.000 --> 00:07:21.000
+<c.HEAD>"  &lt;!-- 6 const --&gt;"</c>
+
+SVG/visual-proofs.svg#442
+00:07:21.000 --> 00:07:22.000
+<c.HEAD>"  &lt;g id=""proof-const"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#443
+00:07:22.000 --> 00:07:23.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;1D  constant&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#444
+00:07:23.000 --> 00:07:24.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;repeat_byte 0x1D · width-aligned&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#445
+00:07:24.000 --> 00:07:25.000
+<c.HEAD>"    &lt;g transform=""translate(700, 300)""&gt;"</c>
+
+SVG/visual-proofs.svg#446
+00:07:25.000 --> 00:07:26.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""0""&gt;0x1D1D (W16)&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#447
+00:07:26.000 --> 00:07:27.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""30""&gt;0x1D1D1D1D (W32)&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#448
+00:07:27.000 --> 00:07:28.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""60""&gt;… pattern fills n bits&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#449
+00:07:28.000 --> 00:07:29.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""110""&gt;AA55 under 1D1D: period 4 · under 1D: period 8 ∀ words&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#450
+00:07:29.000 --> 00:07:30.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#451
+00:07:30.000 --> 00:07:31.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#452
+00:07:31.000 --> 00:07:32.000
+<c.HEAD>"  &lt;!-- 7 W16 --&gt;"</c>
+
+SVG/visual-proofs.svg#453
+00:07:32.000 --> 00:07:33.000
+<c.HEAD>"  &lt;g id=""proof-w16"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#454
+00:07:33.000 --> 00:07:34.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;W16&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#455
+00:07:34.000 --> 00:07:35.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;16-bit width · oscillator period 8 for every seed&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#456
+00:07:35.000 --> 00:07:36.000
+<c.HEAD>"    &lt;g transform=""translate(840, 400)""&gt;"</c>
+
+SVG/visual-proofs.svg#457
+00:07:36.000 --> 00:07:37.000
+<c.HEAD>"      &lt;g&gt;"</c>
+
+SVG/visual-proofs.svg#458
+00:07:37.000 --> 00:07:38.000
+<c.HEAD>"        &lt;animateTransform attributeName=""transform"" type=""rotate"" values=""0;45;90;135;180;225;270;315;360"" keyTimes=""0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#459
+00:07:38.000 --> 00:07:39.000
+<c.HEAD>"        &lt;polygon points=""0,-80 20,-20 0,0 -20,-20"" class=""orbit"" opacity=""0.9""/&gt;"</c>
+
+SVG/visual-proofs.svg#460
+00:07:39.000 --> 00:07:40.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#461
+00:07:40.000 --> 00:07:41.000
+<c.HEAD>"      &lt;circle class=""ring"" r=""80""/&gt;"</c>
+
+SVG/visual-proofs.svg#462
+00:07:41.000 --> 00:07:42.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""120"" text-anchor=""middle""&gt;8 discrete ticks close the tour&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#463
+00:07:42.000 --> 00:07:43.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#464
+00:07:43.000 --> 00:07:44.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#465
+00:07:44.000 --> 00:07:45.000
+<c.HEAD>"  &lt;!-- 8 65536 --&gt;"</c>
+
+SVG/visual-proofs.svg#466
+00:07:45.000 --> 00:07:46.000
+<c.HEAD>"  &lt;g id=""proof-65536"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#467
+00:07:46.000 --> 00:07:47.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;2¹⁶ = 65536&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#468
+00:07:47.000 --> 00:07:48.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;contiguous address space of one 16-pair word&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#469
+00:07:48.000 --> 00:07:49.000
+<c.HEAD>"    &lt;g transform=""translate(620, 250)""&gt;"</c>
+
+SVG/visual-proofs.svg#470
+00:07:49.000 --> 00:07:50.000
+<c.HEAD>"      &lt;!-- grid suggestion --&gt;"</c>
+
+SVG/visual-proofs.svg#471
+00:07:50.000 --> 00:07:51.000
+<c.HEAD>"      &lt;g stroke=""#23695d"" stroke-width=""0.5"" fill=""none""&gt;"</c>
+
+SVG/visual-proofs.svg#472
+00:07:51.000 --> 00:07:52.000
+<c.HEAD>"        &lt;rect x=""0"" y=""0"" width=""480"" height=""240""/&gt;"</c>
+
+SVG/visual-proofs.svg#473
+00:07:52.000 --> 00:07:53.000
+<c.HEAD>"        &lt;!-- simplified lattice --&gt;"</c>
+
+SVG/visual-proofs.svg#474
+00:07:53.000 --> 00:07:54.000
+<c.HEAD>"        &lt;path d=""M0,60 H480 M0,120 H480 M0,180 H480 M120,0 V240 M240,0 V240 M360,0 V240""/&gt;"</c>
+
+SVG/visual-proofs.svg#475
+00:07:54.000 --> 00:07:55.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#476
+00:07:55.000 --> 00:07:56.000
+<c.HEAD>"      &lt;circle class=""orbit"" cx=""0"" cy=""0"" r=""5""&gt;"</c>
+
+SVG/visual-proofs.svg#477
+00:07:56.000 --> 00:07:57.000
+<c.HEAD>"        &lt;animate attributeName=""cx"" values=""0;120;240;360;480;360;240;120;0"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#478
+00:07:57.000 --> 00:07:58.000
+<c.HEAD>"        &lt;animate attributeName=""cy"" values=""0;60;0;120;60;180;240;180;0"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#479
+00:07:58.000 --> 00:07:59.000
+<c.HEAD>"      &lt;/circle&gt;"</c>
+
+SVG/visual-proofs.svg#480
+00:07:59.000 --> 00:08:00.000
+<c.HEAD>"      &lt;text class=""caption"" x=""240"" y=""270"" text-anchor=""middle""&gt;delta walks the lattice · every address reachable&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#481
+00:08:00.000 --> 00:08:01.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#482
+00:08:01.000 --> 00:08:02.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#483
+00:08:02.000 --> 00:08:03.000
+<c.HEAD>"  &lt;!-- 9 still (duplicate emphasis with L) --&gt;"</c>
+
+SVG/visual-proofs.svg#484
+00:08:03.000 --> 00:08:04.000
+<c.HEAD>"  &lt;g id=""proof-still"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#485
+00:08:04.000 --> 00:08:05.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;⊙  still points of L&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#486
+00:08:05.000 --> 00:08:06.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;I-222: eight words · even-parity nibble repeated&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#487
+00:08:06.000 --> 00:08:07.000
+<c.HEAD>"    &lt;g transform=""translate(700, 280)""&gt;"</c>
+
+SVG/visual-proofs.svg#488
+00:08:07.000 --> 00:08:08.000
+<c.HEAD>"      &lt;g font-size=""14"" text-anchor=""middle"" class=""still""&gt;"</c>
+
+SVG/visual-proofs.svg#489
+00:08:08.000 --> 00:08:09.000
+<c.HEAD>"        &lt;text x=""0"" y=""0""&gt;0000&lt;/text&gt;&lt;text x=""100"" y=""0""&gt;3333&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#490
+00:08:09.000 --> 00:08:10.000
+<c.HEAD>"        &lt;text x=""200"" y=""0""&gt;5555&lt;/text&gt;&lt;text x=""300"" y=""0""&gt;6666&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#491
+00:08:10.000 --> 00:08:11.000
+<c.HEAD>"        &lt;text x=""0"" y=""40""&gt;9999&lt;/text&gt;&lt;text x=""100"" y=""40""&gt;AAAA&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#492
+00:08:11.000 --> 00:08:12.000
+<c.HEAD>"        &lt;text x=""200"" y=""40""&gt;CCCC&lt;/text&gt;&lt;text x=""300"" y=""40""&gt;FFFF&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#493
+00:08:12.000 --> 00:08:13.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#494
+00:08:13.000 --> 00:08:14.000
+<c.HEAD>"      &lt;text class=""caption"" x=""150"" y=""100"" text-anchor=""middle""&gt;L leaves them fixed · not still under full K(·,1D1D)&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#495
+00:08:14.000 --> 00:08:15.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#496
+00:08:15.000 --> 00:08:16.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#497
+00:08:16.000 --> 00:08:17.000
+<c.HEAD>"  &lt;!-- 10 AA55 boot --&gt;"</c>
+
+SVG/visual-proofs.svg#498
+00:08:17.000 --> 00:08:18.000
+<c.HEAD>"  &lt;g id=""proof-aa55"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#499
+00:08:18.000 --> 00:08:19.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;AA55  boot mark&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#500
+00:08:19.000 --> 00:08:20.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;sector[510]=55 sector[511]=AA · little-endian word 0xAA55&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#501
+00:08:20.000 --> 00:08:21.000
+<c.HEAD>"    &lt;g transform=""translate(620, 260)""&gt;"</c>
+
+SVG/visual-proofs.svg#502
+00:08:21.000 --> 00:08:22.000
+<c.HEAD>"      &lt;!-- sector bar --&gt;"</c>
+
+SVG/visual-proofs.svg#503
+00:08:22.000 --> 00:08:23.000
+<c.HEAD>"      &lt;rect x=""0"" y=""0"" width=""480"" height=""40"" fill=""#122022"" stroke=""#23695d""/&gt;"</c>
+
+SVG/visual-proofs.svg#504
+00:08:23.000 --> 00:08:24.000
+<c.HEAD>"      &lt;rect x=""400"" y=""0"" width=""40"" height=""40"" fill=""#c26a2b"" opacity=""0.8""/&gt;"</c>
+
+SVG/visual-proofs.svg#505
+00:08:24.000 --> 00:08:25.000
+<c.HEAD>"      &lt;rect x=""440"" y=""0"" width=""40"" height=""40"" fill=""#1f4e9c"" opacity=""0.8""/&gt;"</c>
+
+SVG/visual-proofs.svg#506
+00:08:25.000 --> 00:08:26.000
+<c.HEAD>"      &lt;text class=""label"" x=""420"" y=""25"" text-anchor=""middle""&gt;55&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#507
+00:08:26.000 --> 00:08:27.000
+<c.HEAD>"      &lt;text class=""label"" x=""460"" y=""25"" text-anchor=""middle""&gt;AA&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#508
+00:08:27.000 --> 00:08:28.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""70""&gt;offsets 510 · 511 — the last pair of the 512-byte sector&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#509
+00:08:28.000 --> 00:08:29.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""100""&gt;AA = 10101010 · 55 = 01010101 · every bit differs&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#510
+00:08:29.000 --> 00:08:30.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#511
+00:08:30.000 --> 00:08:31.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#512
+00:08:31.000 --> 00:08:32.000
+<c.HEAD>"  &lt;!-- 11 orbit --&gt;"</c>
+
+SVG/visual-proofs.svg#513
+00:08:32.000 --> 00:08:33.000
+<c.HEAD>"  &lt;g id=""proof-orbit"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#514
+00:08:33.000 --> 00:08:34.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;○₄  AA55 orbit under K(·,1D1D)&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#515
+00:08:34.000 --> 00:08:35.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;I-222: AA55 → 718E → EE11 → CA35 → AA55&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#516
+00:08:35.000 --> 00:08:36.000
+<c.HEAD>"    &lt;g transform=""translate(840, 400)""&gt;"</c>
+
+SVG/visual-proofs.svg#517
+00:08:36.000 --> 00:08:37.000
+<c.HEAD>"      &lt;circle class=""ring"" r=""110""/&gt;"</c>
+
+SVG/visual-proofs.svg#518
+00:08:37.000 --> 00:08:38.000
+<c.HEAD>"      &lt;!-- four orbit nodes --&gt;"</c>
+
+SVG/visual-proofs.svg#519
+00:08:38.000 --> 00:08:39.000
+<c.HEAD>"      &lt;g font-size=""12"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#520
+00:08:39.000 --> 00:08:40.000
+<c.HEAD>"        &lt;g transform=""translate(0,-110)""&gt;"</c>
+
+SVG/visual-proofs.svg#521
+00:08:40.000 --> 00:08:41.000
+<c.HEAD>"          &lt;circle class=""orbit"" r=""18""/&gt;"</c>
+
+SVG/visual-proofs.svg#522
+00:08:41.000 --> 00:08:42.000
+<c.HEAD>"          &lt;text x=""0"" y=""4"" fill=""#0a1214"" font-size=""9""&gt;AA55&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#523
+00:08:42.000 --> 00:08:43.000
+<c.HEAD>"        &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#524
+00:08:43.000 --> 00:08:44.000
+<c.HEAD>"        &lt;g transform=""translate(110,0)""&gt;"</c>
+
+SVG/visual-proofs.svg#525
+00:08:44.000 --> 00:08:45.000
+<c.HEAD>"          &lt;circle class=""plus"" r=""18""/&gt;"</c>
+
+SVG/visual-proofs.svg#526
+00:08:45.000 --> 00:08:46.000
+<c.HEAD>"          &lt;text x=""0"" y=""4"" fill=""#fff"" font-size=""9""&gt;718E&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#527
+00:08:46.000 --> 00:08:47.000
+<c.HEAD>"        &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#528
+00:08:47.000 --> 00:08:48.000
+<c.HEAD>"        &lt;g transform=""translate(0,110)""&gt;"</c>
+
+SVG/visual-proofs.svg#529
+00:08:48.000 --> 00:08:49.000
+<c.HEAD>"          &lt;circle class=""minus"" r=""18""/&gt;"</c>
+
+SVG/visual-proofs.svg#530
+00:08:49.000 --> 00:08:50.000
+<c.HEAD>"          &lt;text x=""0"" y=""4"" fill=""#0a1214"" font-size=""9""&gt;EE11&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#531
+00:08:50.000 --> 00:08:51.000
+<c.HEAD>"        &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#532
+00:08:51.000 --> 00:08:52.000
+<c.HEAD>"        &lt;g transform=""translate(-110,0)""&gt;"</c>
+
+SVG/visual-proofs.svg#533
+00:08:52.000 --> 00:08:53.000
+<c.HEAD>"          &lt;circle class=""even"" r=""18""/&gt;"</c>
+
+SVG/visual-proofs.svg#534
+00:08:53.000 --> 00:08:54.000
+<c.HEAD>"          &lt;text x=""0"" y=""4"" fill=""#fff"" font-size=""9""&gt;CA35&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#535
+00:08:54.000 --> 00:08:55.000
+<c.HEAD>"        &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#536
+00:08:55.000 --> 00:08:56.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#537
+00:08:56.000 --> 00:08:57.000
+<c.HEAD>"      &lt;!-- moving token --&gt;"</c>
+
+SVG/visual-proofs.svg#538
+00:08:57.000 --> 00:08:58.000
+<c.HEAD>"      &lt;g&gt;"</c>
+
+SVG/visual-proofs.svg#539
+00:08:58.000 --> 00:08:59.000
+<c.HEAD>"        &lt;animateTransform attributeName=""transform"" type=""rotate"" values=""0;90;180;270;360"" keyTimes=""0;0.25;0.5;0.75;1"" dur=""4s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#540
+00:08:59.000 --> 00:09:00.000
+<c.HEAD>"        &lt;circle cx=""0"" cy=""-110"" r=""6"" fill=""#fff""/&gt;"</c>
+
+SVG/visual-proofs.svg#541
+00:09:00.000 --> 00:09:01.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#542
+00:09:01.000 --> 00:09:02.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""150"" text-anchor=""middle""&gt;period 4 · not a still point&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#543
+00:09:02.000 --> 00:09:03.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#544
+00:09:03.000 --> 00:09:04.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#545
+00:09:04.000 --> 00:09:05.000
+<c.HEAD>"  &lt;!-- 12 square --&gt;"</c>
+
+SVG/visual-proofs.svg#546
+00:09:05.000 --> 00:09:06.000
+<c.HEAD>"  &lt;g id=""proof-square"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#547
+00:09:06.000 --> 00:09:07.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;□  carry-less square  (GF(2)[x])&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#548
+00:09:07.000 --> 00:09:08.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;bit i → bit 2i · square(AA)=4444 · square(55)=1111 · square(FF)=5555&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#549
+00:09:08.000 --> 00:09:09.000
+<c.HEAD>"    &lt;g transform=""translate(700, 280)""&gt;"</c>
+
+SVG/visual-proofs.svg#550
+00:09:09.000 --> 00:09:10.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""0""&gt;AA  →  4444&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#551
+00:09:10.000 --> 00:09:11.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""28""&gt;55  →  1111&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#552
+00:09:11.000 --> 00:09:12.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""56""&gt;FF  →  5555  (still point)&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#553
+00:09:12.000 --> 00:09:13.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""84""&gt;AA55 → 44441111&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#554
+00:09:13.000 --> 00:09:14.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""130""&gt;squaring is linear over GF(2): □(a)⊕□(b)=□(a⊕b)&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#555
+00:09:14.000 --> 00:09:15.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#556
+00:09:15.000 --> 00:09:16.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#557
+00:09:16.000 --> 00:09:17.000
+<c.HEAD>"  &lt;!-- 13 NULL NULL --&gt;"</c>
+
+SVG/visual-proofs.svg#558
+00:09:17.000 --> 00:09:18.000
+<c.HEAD>"  &lt;g id=""proof-null"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#559
+00:09:18.000 --> 00:09:19.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;∅∅  NULL NULL squared&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#560
+00:09:19.000 --> 00:09:20.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;AA XNOR 55 = 00 · word against itself turned XNOR = 00 00&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#561
+00:09:20.000 --> 00:09:21.000
+<c.HEAD>"    &lt;g transform=""translate(750, 320)""&gt;"</c>
+
+SVG/visual-proofs.svg#562
+00:09:21.000 --> 00:09:22.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""0""&gt;AA ⊕ 55 = FF&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#563
+00:09:22.000 --> 00:09:23.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""30""&gt;AA ⊙̸ 55 = 00&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#564
+00:09:23.000 --> 00:09:24.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""60""&gt;□(FF) = 5555 ∈ still&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#565
+00:09:24.000 --> 00:09:25.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""110""&gt;the boot pair's difference, squared, lands on a still point&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#566
+00:09:25.000 --> 00:09:26.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#567
+00:09:26.000 --> 00:09:27.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#568
+00:09:27.000 --> 00:09:28.000
+<c.HEAD>"  &lt;!-- 14 xnor --&gt;"</c>
+
+SVG/visual-proofs.svg#569
+00:09:28.000 --> 00:09:29.000
+<c.HEAD>"  &lt;g id=""proof-xnor"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#570
+00:09:29.000 --> 00:09:30.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;⊙̸  XNOR&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#571
+00:09:30.000 --> 00:09:31.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;~(a⊕b) · AA XNOR 55 = 00 · project check: xor ^ xnor = 0xff&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#572
+00:09:31.000 --> 00:09:32.000
+<c.HEAD>"    &lt;g transform=""translate(700, 300)""&gt;"</c>
+
+SVG/visual-proofs.svg#573
+00:09:32.000 --> 00:09:33.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""0""&gt;byte law:  a⊕b  and  a⊙̸b  partition the bits&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#574
+00:09:33.000 --> 00:09:34.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""40""&gt;harness: check-xor-xnor.sh&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#575
+00:09:34.000 --> 00:09:35.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#576
+00:09:35.000 --> 00:09:36.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#577
+00:09:36.000 --> 00:09:37.000
+<c.HEAD>"  &lt;!-- 15 parity --&gt;"</c>
+
+SVG/visual-proofs.svg#578
+00:09:37.000 --> 00:09:38.000
+<c.HEAD>"  &lt;g id=""proof-parity"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#579
+00:09:38.000 --> 00:09:39.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;π  nibble parity&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#580
+00:09:39.000 --> 00:09:40.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;still nibbles are exactly the even-parity 4-bit values&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#581
+00:09:40.000 --> 00:09:41.000
+<c.HEAD>"    &lt;g transform=""translate(650, 260)""&gt;"</c>
+
+SVG/visual-proofs.svg#582
+00:09:41.000 --> 00:09:42.000
+<c.HEAD>"      &lt;g font-size=""11""&gt;"</c>
+
+SVG/visual-proofs.svg#583
+00:09:42.000 --> 00:09:43.000
+<c.HEAD>"        &lt;text class=""still"" x=""0"" y=""0""&gt;0 3 5 6 9 A C F&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#584
+00:09:43.000 --> 00:09:44.000
+<c.HEAD>"        &lt;text class=""caption"" x=""0"" y=""30""&gt;even parity · each repeated ×4 makes a still word&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#585
+00:09:44.000 --> 00:09:45.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#586
+00:09:45.000 --> 00:09:46.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#587
+00:09:46.000 --> 00:09:47.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#588
+00:09:47.000 --> 00:09:48.000
+<c.HEAD>"  &lt;!-- 16 nibble / AA55 path on adder --&gt;"</c>
+
+SVG/visual-proofs.svg#589
+00:09:48.000 --> 00:09:49.000
+<c.HEAD>"  &lt;g id=""proof-nibble"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#590
+00:09:49.000 --> 00:09:50.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;n₄  AA55 nibbles on the adder&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#591
+00:09:50.000 --> 00:09:51.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;[A,A,5,5] sum 30 · YHWH [10,5,6,5] sum 26 · share 10 and 5&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#592
+00:09:51.000 --> 00:09:52.000
+<c.HEAD>"    &lt;g transform=""translate(650, 280)""&gt;"</c>
+
+SVG/visual-proofs.svg#593
+00:09:52.000 --> 00:09:53.000
+<c.HEAD>"      &lt;g font-size=""18"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#594
+00:09:53.000 --> 00:09:54.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;&lt;rect class=""gate"" width=""60"" height=""48"" rx=""4""/&gt;&lt;text class=""orbit"" x=""30"" y=""30""&gt;A&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#595
+00:09:54.000 --> 00:09:55.000
+<c.HEAD>"        &lt;g transform=""translate(80,0)""&gt;&lt;rect class=""gate"" width=""60"" height=""48"" rx=""4""/&gt;&lt;text class=""orbit"" x=""30"" y=""30""&gt;A&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#596
+00:09:55.000 --> 00:09:56.000
+<c.HEAD>"        &lt;g transform=""translate(160,0)""&gt;&lt;rect class=""gate"" width=""60"" height=""48"" rx=""4""/&gt;&lt;text class=""orbit"" x=""30"" y=""30""&gt;5&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#597
+00:09:56.000 --> 00:09:57.000
+<c.HEAD>"        &lt;g transform=""translate(240,0)""&gt;&lt;rect class=""gate"" width=""60"" height=""48"" rx=""4""/&gt;&lt;text class=""orbit"" x=""30"" y=""30""&gt;5&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#598
+00:09:57.000 --> 00:09:58.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#599
+00:09:58.000 --> 00:09:59.000
+<c.HEAD>"      &lt;text class=""caption"" x=""150"" y=""90"" text-anchor=""middle""&gt;four-bit path · I-222 §5&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#600
+00:09:59.000 --> 00:10:00.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#601
+00:10:00.000 --> 00:10:01.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#602
+00:10:01.000 --> 00:10:02.000
+<c.HEAD>"  &lt;!-- 17 CLA --&gt;"</c>
+
+SVG/visual-proofs.svg#603
+00:10:02.000 --> 00:10:03.000
+<c.HEAD>"  &lt;g id=""proof-cla"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#604
+00:10:03.000 --> 00:10:04.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;Σ  four-bit CLA&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#605
+00:10:04.000 --> 00:10:05.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;Gᵢ=Aᵢ·Bᵢ  Pᵢ=Aᵢ⊕Bᵢ  Cᵢ₊₁=Gᵢ+PᵢCᵢ  Sᵢ=Pᵢ⊕Cᵢ&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#606
+00:10:05.000 --> 00:10:06.000
+<c.HEAD>"    &lt;g transform=""translate(620, 240)""&gt;"</c>
+
+SVG/visual-proofs.svg#607
+00:10:06.000 --> 00:10:07.000
+<c.HEAD>"      &lt;!-- simplified 4-unit strip --&gt;"</c>
+
+SVG/visual-proofs.svg#608
+00:10:07.000 --> 00:10:08.000
+<c.HEAD>"      &lt;g font-size=""10"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#609
+00:10:08.000 --> 00:10:09.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;"</c>
+
+SVG/visual-proofs.svg#610
+00:10:09.000 --> 00:10:10.000
+<c.HEAD>"          &lt;rect class=""gate"" width=""100"" height=""80"" rx=""4""/&gt;"</c>
+
+SVG/visual-proofs.svg#611
+00:10:10.000 --> 00:10:11.000
+<c.HEAD>"          &lt;text x=""50"" y=""25""&gt;unit 0&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#612
+00:10:11.000 --> 00:10:12.000
+<c.HEAD>"          &lt;text class=""label"" x=""50"" y=""45""&gt;G₀ P₀&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#613
+00:10:12.000 --> 00:10:13.000
+<c.HEAD>"          &lt;text class=""label"" x=""50"" y=""65""&gt;→ C₁&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#614
+00:10:13.000 --> 00:10:14.000
+<c.HEAD>"        &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#615
+00:10:14.000 --> 00:10:15.000
+<c.HEAD>"        &lt;g transform=""translate(120,0)""&gt;"</c>
+
+SVG/visual-proofs.svg#616
+00:10:15.000 --> 00:10:16.000
+<c.HEAD>"          &lt;rect class=""gate"" width=""100"" height=""80"" rx=""4""/&gt;"</c>
+
+SVG/visual-proofs.svg#617
+00:10:16.000 --> 00:10:17.000
+<c.HEAD>"          &lt;text x=""50"" y=""25""&gt;unit 1&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#618
+00:10:17.000 --> 00:10:18.000
+<c.HEAD>"          &lt;text class=""label"" x=""50"" y=""45""&gt;G₁ P₁&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#619
+00:10:18.000 --> 00:10:19.000
+<c.HEAD>"          &lt;text class=""label"" x=""50"" y=""65""&gt;→ C₂&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#620
+00:10:19.000 --> 00:10:20.000
+<c.HEAD>"        &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#621
+00:10:20.000 --> 00:10:21.000
+<c.HEAD>"        &lt;g transform=""translate(240,0)""&gt;"</c>
+
+SVG/visual-proofs.svg#622
+00:10:21.000 --> 00:10:22.000
+<c.HEAD>"          &lt;rect class=""gate"" width=""100"" height=""80"" rx=""4""/&gt;"</c>
+
+SVG/visual-proofs.svg#623
+00:10:22.000 --> 00:10:23.000
+<c.HEAD>"          &lt;text x=""50"" y=""25""&gt;unit 2&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#624
+00:10:23.000 --> 00:10:24.000
+<c.HEAD>"          &lt;text class=""label"" x=""50"" y=""45""&gt;G₂ P₂&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#625
+00:10:24.000 --> 00:10:25.000
+<c.HEAD>"          &lt;text class=""label"" x=""50"" y=""65""&gt;→ C₃&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#626
+00:10:25.000 --> 00:10:26.000
+<c.HEAD>"        &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#627
+00:10:26.000 --> 00:10:27.000
+<c.HEAD>"        &lt;g transform=""translate(360,0)""&gt;"</c>
+
+SVG/visual-proofs.svg#628
+00:10:27.000 --> 00:10:28.000
+<c.HEAD>"          &lt;rect class=""gate"" width=""100"" height=""80"" rx=""4""/&gt;"</c>
+
+SVG/visual-proofs.svg#629
+00:10:28.000 --> 00:10:29.000
+<c.HEAD>"          &lt;text x=""50"" y=""25""&gt;unit 3&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#630
+00:10:29.000 --> 00:10:30.000
+<c.HEAD>"          &lt;text class=""label"" x=""50"" y=""45""&gt;G₃ P₃&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#631
+00:10:30.000 --> 00:10:31.000
+<c.HEAD>"          &lt;text class=""label"" x=""50"" y=""65""&gt;→ C₄&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#632
+00:10:31.000 --> 00:10:32.000
+<c.HEAD>"        &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#633
+00:10:32.000 --> 00:10:33.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#634
+00:10:33.000 --> 00:10:34.000
+<c.HEAD>"      &lt;!-- delta lights units in orbit order --&gt;"</c>
+
+SVG/visual-proofs.svg#635
+00:10:34.000 --> 00:10:35.000
+<c.HEAD>"      &lt;rect x=""0"" y=""0"" width=""100"" height=""80"" rx=""4"" fill=""#72ffe0"" opacity=""0.15""&gt;"</c>
+
+SVG/visual-proofs.svg#636
+00:10:35.000 --> 00:10:36.000
+<c.HEAD>"        &lt;animate attributeName=""x"" values=""0;120;240;360;0"" keyTimes=""0;0.25;0.5;0.75;1"" dur=""4s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#637
+00:10:36.000 --> 00:10:37.000
+<c.HEAD>"      &lt;/rect&gt;"</c>
+
+SVG/visual-proofs.svg#638
+00:10:37.000 --> 00:10:38.000
+<c.HEAD>"      &lt;text class=""caption"" x=""230"" y=""120"" text-anchor=""middle""&gt;tour s ↦ unit s  (AA55 orbit period 4)&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#639
+00:10:38.000 --> 00:10:39.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#640
+00:10:39.000 --> 00:10:40.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#641
+00:10:40.000 --> 00:10:41.000
+<c.HEAD>"  &lt;!-- 18 E8 --&gt;"</c>
+
+SVG/visual-proofs.svg#642
+00:10:41.000 --> 00:10:42.000
+<c.HEAD>"  &lt;g id=""proof-e8"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#643
+00:10:42.000 --> 00:10:43.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;E8  Coxeter step&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#644
+00:10:43.000 --> 00:10:44.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;240 roots · 8 shells · 12° discrete turn · 30 steps = full · 15 = −1&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#645
+00:10:44.000 --> 00:10:45.000
+<c.HEAD>"    &lt;g transform=""translate(840, 420)""&gt;"</c>
+
+SVG/visual-proofs.svg#646
+00:10:45.000 --> 00:10:46.000
+<c.HEAD>"      &lt;circle class=""ring"" r=""40""/&gt;&lt;circle class=""ring"" r=""60""/&gt;"</c>
+
+SVG/visual-proofs.svg#647
+00:10:46.000 --> 00:10:47.000
+<c.HEAD>"      &lt;circle class=""ring"" r=""80""/&gt;&lt;circle class=""ring"" r=""100""/&gt;"</c>
+
+SVG/visual-proofs.svg#648
+00:10:47.000 --> 00:10:48.000
+<c.HEAD>"      &lt;g&gt;"</c>
+
+SVG/visual-proofs.svg#649
+00:10:48.000 --> 00:10:49.000
+<c.HEAD>"        &lt;animateTransform attributeName=""transform"" type=""rotate"" values=""0;-12;-24;-36;-48;-60;-72;-84;-96;-108;-120;-132;-144;-156;-168;-180;-192;-204;-216;-228;-240;-252;-264;-276;-288;-300;-312;-324;-336;-348;-360"" keyTimes=""0;0.0333;0.0667;0.1;0.1333;0.1667;0.2;0.2333;0.2667;0.3;0.3333;0.3667;0.4;0.4333;0.4667;0.5;0.5333;0.5667;0.6;0.6333;0.6667;0.7;0.7333;0.7667;0.8;0.8333;0.8667;0.9;0.9333;0.9667;1"" dur=""15s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#650
+00:10:49.000 --> 00:10:50.000
+<c.HEAD>"        &lt;!-- sample roots on outer ring --&gt;"</c>
+
+SVG/visual-proofs.svg#651
+00:10:50.000 --> 00:10:51.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""0"" cy=""-100"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#652
+00:10:51.000 --> 00:10:52.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""20.8"" cy=""-97.8"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#653
+00:10:52.000 --> 00:10:53.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""40.7"" cy=""-91.4"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#654
+00:10:53.000 --> 00:10:54.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""58.8"" cy=""-80.9"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#655
+00:10:54.000 --> 00:10:55.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""74.2"" cy=""-67.1"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#656
+00:10:55.000 --> 00:10:56.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""86.6"" cy=""-50.0"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#657
+00:10:56.000 --> 00:10:57.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""95.1"" cy=""-30.9"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#658
+00:10:57.000 --> 00:10:58.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""99.4"" cy=""-10.5"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#659
+00:10:58.000 --> 00:10:59.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""99.4"" cy=""10.5"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#660
+00:10:59.000 --> 00:11:00.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""95.1"" cy=""30.9"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#661
+00:11:00.000 --> 00:11:01.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""86.6"" cy=""50.0"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#662
+00:11:01.000 --> 00:11:02.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""74.2"" cy=""67.1"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#663
+00:11:02.000 --> 00:11:03.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""58.8"" cy=""80.9"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#664
+00:11:03.000 --> 00:11:04.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""40.7"" cy=""91.4"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#665
+00:11:04.000 --> 00:11:05.000
+<c.HEAD>"        &lt;circle class=""plus"" cx=""20.8"" cy=""97.8"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#666
+00:11:05.000 --> 00:11:06.000
+<c.HEAD>"        &lt;circle class=""minus"" cx=""0"" cy=""100"" r=""3""/&gt;"</c>
+
+SVG/visual-proofs.svg#667
+00:11:06.000 --> 00:11:07.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#668
+00:11:07.000 --> 00:11:08.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""140"" text-anchor=""middle""&gt;one step of c = 12° · same discrete law as delta tours&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#669
+00:11:08.000 --> 00:11:09.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#670
+00:11:09.000 --> 00:11:10.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#671
+00:11:10.000 --> 00:11:11.000
+<c.HEAD>"  &lt;!-- 19 K-map --&gt;"</c>
+
+SVG/visual-proofs.svg#672
+00:11:11.000 --> 00:11:12.000
+<c.HEAD>"  &lt;g id=""proof-kmap"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#673
+00:11:12.000 --> 00:11:13.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;Km  Karnaugh / Gray&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#674
+00:11:13.000 --> 00:11:14.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;Gray-code adjacency · 4 discrete 90° steps cycle the torus&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#675
+00:11:14.000 --> 00:11:15.000
+<c.HEAD>"    &lt;g transform=""translate(780, 380)""&gt;"</c>
+
+SVG/visual-proofs.svg#676
+00:11:15.000 --> 00:11:16.000
+<c.HEAD>"      &lt;g&gt;"</c>
+
+SVG/visual-proofs.svg#677
+00:11:16.000 --> 00:11:17.000
+<c.HEAD>"        &lt;animateTransform attributeName=""transform"" type=""rotate"" values=""0;90;180;270;360"" keyTimes=""0;0.25;0.5;0.75;1"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#678
+00:11:17.000 --> 00:11:18.000
+<c.HEAD>"        &lt;rect x=""-60"" y=""-60"" width=""50"" height=""50"" class=""gate""/&gt;&lt;text class=""label"" x=""-35"" y=""-30""&gt;00&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#679
+00:11:18.000 --> 00:11:19.000
+<c.HEAD>"        &lt;rect x=""-10"" y=""-60"" width=""50"" height=""50"" class=""gate""/&gt;&lt;text class=""label"" x=""15"" y=""-30""&gt;01&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#680
+00:11:19.000 --> 00:11:20.000
+<c.HEAD>"        &lt;rect x=""-10"" y=""-10"" width=""50"" height=""50"" class=""gate""/&gt;&lt;text class=""label"" x=""15"" y=""20""&gt;11&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#681
+00:11:20.000 --> 00:11:21.000
+<c.HEAD>"        &lt;rect x=""-60"" y=""-10"" width=""50"" height=""50"" class=""gate""/&gt;&lt;text class=""label"" x=""-35"" y=""20""&gt;10&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#682
+00:11:21.000 --> 00:11:22.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#683
+00:11:22.000 --> 00:11:23.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""100"" text-anchor=""middle""&gt;neighbours differ by one bit · torus wrap&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#684
+00:11:23.000 --> 00:11:24.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#685
+00:11:24.000 --> 00:11:25.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#686
+00:11:25.000 --> 00:11:26.000
+<c.HEAD>"  &lt;!-- 20 Smith --&gt;"</c>
+
+SVG/visual-proofs.svg#687
+00:11:26.000 --> 00:11:27.000
+<c.HEAD>"  &lt;g id=""proof-smith"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#688
+00:11:27.000 --> 00:11:28.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;Sm  Smith chart loci&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#689
+00:11:28.000 --> 00:11:29.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;constant-|Γ| circles · 12° discrete turn of the reflection plane&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#690
+00:11:29.000 --> 00:11:30.000
+<c.HEAD>"    &lt;g transform=""translate(840, 420)""&gt;"</c>
+
+SVG/visual-proofs.svg#691
+00:11:30.000 --> 00:11:31.000
+<c.HEAD>"      &lt;circle class=""ring"" r=""30""/&gt;&lt;circle class=""ring"" r=""55""/&gt;&lt;circle class=""ring"" r=""80""/&gt;&lt;circle class=""ring"" r=""100""/&gt;"</c>
+
+SVG/visual-proofs.svg#692
+00:11:31.000 --> 00:11:32.000
+<c.HEAD>"      &lt;g&gt;"</c>
+
+SVG/visual-proofs.svg#693
+00:11:32.000 --> 00:11:33.000
+<c.HEAD>"        &lt;animateTransform attributeName=""transform"" type=""rotate"" values=""0;-12;-24;-36;-48;-60;-72;-84;-96;-108;-120;-132;-144;-156;-168;-180;-192;-204;-216;-228;-240;-252;-264;-276;-288;-300;-312;-324;-336;-348;-360"" keyTimes=""0;0.0333;0.0667;0.1;0.1333;0.1667;0.2;0.2333;0.2667;0.3;0.3333;0.3667;0.4;0.4333;0.4667;0.5;0.5333;0.5667;0.6;0.6333;0.6667;0.7;0.7333;0.7667;0.8;0.8333;0.8667;0.9;0.9333;0.9667;1"" dur=""15s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#694
+00:11:33.000 --> 00:11:34.000
+<c.HEAD>"        &lt;line class=""wire"" x1=""0"" y1=""0"" x2=""100"" y2=""0""/&gt;"</c>
+
+SVG/visual-proofs.svg#695
+00:11:34.000 --> 00:11:35.000
+<c.HEAD>"        &lt;circle class=""orbit"" cx=""100"" cy=""0"" r=""5""/&gt;"</c>
+
+SVG/visual-proofs.svg#696
+00:11:35.000 --> 00:11:36.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#697
+00:11:36.000 --> 00:11:37.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""140"" text-anchor=""middle""&gt;same 30-step / 12° grammar as E8&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#698
+00:11:37.000 --> 00:11:38.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#699
+00:11:38.000 --> 00:11:39.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#700
+00:11:39.000 --> 00:11:40.000
+<c.HEAD>"  &lt;!-- 21 octal --&gt;"</c>
+
+SVG/visual-proofs.svg#701
+00:11:40.000 --> 00:11:41.000
+<c.HEAD>"  &lt;g id=""proof-octal"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#702
+00:11:41.000 --> 00:11:42.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;8  octal dialectic 16-pairs&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#703
+00:11:42.000 --> 00:11:43.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;variables as pairs of octal digits · each pair spans 64 · 1024 pairs → 65536&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#704
+00:11:43.000 --> 00:11:44.000
+<c.HEAD>"    &lt;g transform=""translate(700, 300)""&gt;"</c>
+
+SVG/visual-proofs.svg#705
+00:11:44.000 --> 00:11:45.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""0""&gt;(oₕ , oₗ)  per 16-bit limb&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#706
+00:11:45.000 --> 00:11:46.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""30""&gt;Aᵢ Bᵢ Gᵢ Pᵢ Cᵢ Sᵢ  all read as pairs&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#707
+00:11:46.000 --> 00:11:47.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""80""&gt;delineates the contiguous 65536-space&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#708
+00:11:47.000 --> 00:11:48.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#709
+00:11:48.000 --> 00:11:49.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#710
+00:11:49.000 --> 00:11:50.000
+<c.HEAD>"  &lt;!-- 22 998001 --&gt;"</c>
+
+SVG/visual-proofs.svg#711
+00:11:50.000 --> 00:11:51.000
+<c.HEAD>"  &lt;g id=""proof-998001"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#712
+00:11:51.000 --> 00:11:52.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;1/998001&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#713
+00:11:52.000 --> 00:11:53.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;0.000001002003…997998999… · contiguous counters in the expansion&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#714
+00:11:53.000 --> 00:11:54.000
+<c.HEAD>"    &lt;g transform=""translate(620, 280)""&gt;"</c>
+
+SVG/visual-proofs.svg#715
+00:11:54.000 --> 00:11:55.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""0""&gt;same shape: linear index → structured runs&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#716
+00:11:55.000 --> 00:11:56.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""30""&gt;here: linear 0…65535 → octal dialectic pairs&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#717
+00:11:56.000 --> 00:11:57.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""80""&gt;delta walks the space the way the decimal walks its digits&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#718
+00:11:57.000 --> 00:11:58.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#719
+00:11:58.000 --> 00:11:59.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#720
+00:11:59.000 --> 00:12:00.000
+<c.HEAD>"  &lt;!-- 23 Fano --&gt;"</c>
+
+SVG/visual-proofs.svg#721
+00:12:00.000 --> 00:12:01.000
+<c.HEAD>"  &lt;g id=""proof-fano"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#722
+00:12:01.000 --> 00:12:02.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;F₇  Fano converger&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#723
+00:12:02.000 --> 00:12:03.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;7-bit · mark a⊕b for every lit pair · ≤2 steps → one of 16 constants&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#724
+00:12:03.000 --> 00:12:04.000
+<c.HEAD>"    &lt;g transform=""translate(840, 400)""&gt;"</c>
+
+SVG/visual-proofs.svg#725
+00:12:04.000 --> 00:12:05.000
+<c.HEAD>"      &lt;!-- Fano plane points --&gt;"</c>
+
+SVG/visual-proofs.svg#726
+00:12:05.000 --> 00:12:06.000
+<c.HEAD>"      &lt;circle class=""plus"" cx=""0"" cy=""-70"" r=""6""/&gt;"</c>
+
+SVG/visual-proofs.svg#727
+00:12:06.000 --> 00:12:07.000
+<c.HEAD>"      &lt;circle class=""plus"" cx=""60"" cy=""-25"" r=""6""/&gt;"</c>
+
+SVG/visual-proofs.svg#728
+00:12:07.000 --> 00:12:08.000
+<c.HEAD>"      &lt;circle class=""plus"" cx=""40"" cy=""50"" r=""6""/&gt;"</c>
+
+SVG/visual-proofs.svg#729
+00:12:08.000 --> 00:12:09.000
+<c.HEAD>"      &lt;circle class=""plus"" cx=""-40"" cy=""50"" r=""6""/&gt;"</c>
+
+SVG/visual-proofs.svg#730
+00:12:09.000 --> 00:12:10.000
+<c.HEAD>"      &lt;circle class=""plus"" cx=""-60"" cy=""-25"" r=""6""/&gt;"</c>
+
+SVG/visual-proofs.svg#731
+00:12:10.000 --> 00:12:11.000
+<c.HEAD>"      &lt;circle class=""plus"" cx=""0"" cy=""0"" r=""6""/&gt;"</c>
+
+SVG/visual-proofs.svg#732
+00:12:11.000 --> 00:12:12.000
+<c.HEAD>"      &lt;circle class=""plus"" cx=""0"" cy=""70"" r=""6""/&gt;"</c>
+
+SVG/visual-proofs.svg#733
+00:12:12.000 --> 00:12:13.000
+<c.HEAD>"      &lt;g fill=""none"" stroke=""#23695d"" stroke-width=""1""&gt;"</c>
+
+SVG/visual-proofs.svg#734
+00:12:13.000 --> 00:12:14.000
+<c.HEAD>"        &lt;ellipse cx=""0"" cy=""-20"" rx=""55"" ry=""55""/&gt;"</c>
+
+SVG/visual-proofs.svg#735
+00:12:14.000 --> 00:12:15.000
+<c.HEAD>"        &lt;line x1=""-60"" y1=""-25"" x2=""60"" y2=""-25""/&gt;"</c>
+
+SVG/visual-proofs.svg#736
+00:12:15.000 --> 00:12:16.000
+<c.HEAD>"        &lt;line x1=""0"" y1=""-70"" x2=""0"" y2=""70""/&gt;"</c>
+
+SVG/visual-proofs.svg#737
+00:12:16.000 --> 00:12:17.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#738
+00:12:17.000 --> 00:12:18.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""120"" text-anchor=""middle""&gt;empty · 7 points · 7 lines · full&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#739
+00:12:18.000 --> 00:12:19.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#740
+00:12:19.000 --> 00:12:20.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#741
+00:12:20.000 --> 00:12:21.000
+<c.HEAD>"  &lt;!-- 24 YHWH --&gt;"</c>
+
+SVG/visual-proofs.svg#742
+00:12:21.000 --> 00:12:22.000
+<c.HEAD>"  &lt;g id=""proof-yhwh"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#743
+00:12:22.000 --> 00:12:23.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;יהוה  /  AA55&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#744
+00:12:23.000 --> 00:12:24.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;YHWH [10,5,6,5] sum 26 · AA55 [10,10,5,5] sum 30 · share Yod &amp;amp; He&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#745
+00:12:24.000 --> 00:12:25.000
+<c.HEAD>"    &lt;g transform=""translate(700, 300)""&gt;"</c>
+
+SVG/visual-proofs.svg#746
+00:12:25.000 --> 00:12:26.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""0""&gt;Yod 10 · He 5 · Vav 6 · He 5&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#747
+00:12:26.000 --> 00:12:27.000
+<c.HEAD>"      &lt;text class=""label"" x=""0"" y=""30""&gt;A 10 · A 10 · 5 · 5&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#748
+00:12:27.000 --> 00:12:28.000
+<c.HEAD>"      &lt;text class=""caption"" x=""0"" y=""80""&gt;four-bit adder is the scale · I-222&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#749
+00:12:28.000 --> 00:12:29.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#750
+00:12:29.000 --> 00:12:30.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#751
+00:12:30.000 --> 00:12:31.000
+<c.HEAD>"  &lt;!-- 25 WORD --&gt;"</c>
+
+SVG/visual-proofs.svg#752
+00:12:31.000 --> 00:12:32.000
+<c.HEAD>"  &lt;g id=""proof-word"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#753
+00:12:32.000 --> 00:12:33.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;WORD&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#754
+00:12:33.000 --> 00:12:34.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;literal vertex · codepoints 57 4F 52 44 · tetrahedron with GOD · OF · of&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#755
+00:12:34.000 --> 00:12:35.000
+<c.HEAD>"    &lt;g transform=""translate(620, 240)""&gt;"</c>
+
+SVG/visual-proofs.svg#756
+00:12:35.000 --> 00:12:36.000
+<c.HEAD>"      &lt;g font-size=""22"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#757
+00:12:36.000 --> 00:12:37.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""35"" y=""36""&gt;W&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;57&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#758
+00:12:37.000 --> 00:12:38.000
+<c.HEAD>"        &lt;g transform=""translate(90,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""35"" y=""36""&gt;O&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;4F&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#759
+00:12:38.000 --> 00:12:39.000
+<c.HEAD>"        &lt;g transform=""translate(180,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""35"" y=""36""&gt;R&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;52&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#760
+00:12:39.000 --> 00:12:40.000
+<c.HEAD>"        &lt;g transform=""translate(270,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""35"" y=""36""&gt;D&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;44&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#761
+00:12:40.000 --> 00:12:41.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#762
+00:12:41.000 --> 00:12:42.000
+<c.HEAD>"      &lt;text class=""caption"" x=""170"" y=""120"" text-anchor=""middle""&gt;G|W · O · R? · D — W and G share the left column of the dialectic&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#763
+00:12:42.000 --> 00:12:43.000
+<c.HEAD>"      &lt;text class=""caption"" x=""170"" y=""145"" text-anchor=""middle""&gt;reverse log: DROW · back-logging the vertex&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#764
+00:12:43.000 --> 00:12:44.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#765
+00:12:44.000 --> 00:12:45.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#766
+00:12:45.000 --> 00:12:46.000
+<c.HEAD>"  &lt;!-- 26 GOD --&gt;"</c>
+
+SVG/visual-proofs.svg#767
+00:12:46.000 --> 00:12:47.000
+<c.HEAD>"  &lt;g id=""proof-god"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#768
+00:12:47.000 --> 00:12:48.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;GOD&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#769
+00:12:48.000 --> 00:12:49.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;literal vertex · codepoints 47 4F 44 · shares O·D with WORD&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#770
+00:12:49.000 --> 00:12:50.000
+<c.HEAD>"    &lt;g transform=""translate(650, 260)""&gt;"</c>
+
+SVG/visual-proofs.svg#771
+00:12:50.000 --> 00:12:51.000
+<c.HEAD>"      &lt;g font-size=""22"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#772
+00:12:51.000 --> 00:12:52.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""35"" y=""36""&gt;G&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;47&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#773
+00:12:52.000 --> 00:12:53.000
+<c.HEAD>"        &lt;g transform=""translate(90,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""35"" y=""36""&gt;O&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;4F&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#774
+00:12:53.000 --> 00:12:54.000
+<c.HEAD>"        &lt;g transform=""translate(180,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""35"" y=""36""&gt;D&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;44&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#775
+00:12:54.000 --> 00:12:55.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#776
+00:12:55.000 --> 00:12:56.000
+<c.HEAD>"      &lt;text class=""caption"" x=""125"" y=""120"" text-anchor=""middle""&gt;G aligns with DNA/RNA G (Guanine) · O·D locked with WORD&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#777
+00:12:56.000 --> 00:12:57.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#778
+00:12:57.000 --> 00:12:58.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#779
+00:12:58.000 --> 00:12:59.000
+<c.HEAD>"  &lt;!-- 27 OF / of --&gt;"</c>
+
+SVG/visual-proofs.svg#780
+00:12:59.000 --> 00:13:00.000
+<c.HEAD>"  &lt;g id=""proof-of"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#781
+00:13:00.000 --> 00:13:01.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;OF ↔ of&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#782
+00:13:01.000 --> 00:13:02.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;the one literal edge · OF ⊕ of = 20 20 · case bit only&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#783
+00:13:02.000 --> 00:13:03.000
+<c.HEAD>"    &lt;g transform=""translate(650, 250)""&gt;"</c>
+
+SVG/visual-proofs.svg#784
+00:13:03.000 --> 00:13:04.000
+<c.HEAD>"      &lt;g font-size=""22"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#785
+00:13:04.000 --> 00:13:05.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;&lt;rect class=""gate"" width=""80"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""40"" y=""36""&gt;O F&lt;/text&gt;&lt;text class=""caption"" x=""40"" y=""70""&gt;4F 46&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#786
+00:13:05.000 --> 00:13:06.000
+<c.HEAD>"        &lt;g transform=""translate(140,0)""&gt;&lt;rect class=""gate"" width=""80"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""40"" y=""36""&gt;o f&lt;/text&gt;&lt;text class=""caption"" x=""40"" y=""70""&gt;6F 66&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#787
+00:13:06.000 --> 00:13:07.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#788
+00:13:07.000 --> 00:13:08.000
+<c.HEAD>"      &lt;text class=""label"" x=""110"" y=""100"" text-anchor=""middle""&gt;⊕&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#789
+00:13:08.000 --> 00:13:09.000
+<c.HEAD>"      &lt;text class=""still"" x=""110"" y=""130"" text-anchor=""middle"" font-size=""16""&gt;20 20&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#790
+00:13:09.000 --> 00:13:10.000
+<c.HEAD>"      &lt;text class=""caption"" x=""110"" y=""160"" text-anchor=""middle""&gt;O|F · single-bit case flip per letter · tetra-mask comparable edge&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#791
+00:13:10.000 --> 00:13:11.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#792
+00:13:11.000 --> 00:13:12.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#793
+00:13:12.000 --> 00:13:13.000
+<c.HEAD>"  &lt;!-- 28 IS / is --&gt;"</c>
+
+SVG/visual-proofs.svg#794
+00:13:13.000 --> 00:13:14.000
+<c.HEAD>"  &lt;g id=""proof-is"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#795
+00:13:14.000 --> 00:13:15.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;IS ↔ is&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#796
+00:13:15.000 --> 00:13:16.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;same case-bit law · IS ⊕ is = 20 20 · around OF in the dialectic&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#797
+00:13:16.000 --> 00:13:17.000
+<c.HEAD>"    &lt;g transform=""translate(650, 250)""&gt;"</c>
+
+SVG/visual-proofs.svg#798
+00:13:17.000 --> 00:13:18.000
+<c.HEAD>"      &lt;g font-size=""22"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#799
+00:13:18.000 --> 00:13:19.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;&lt;rect class=""gate"" width=""80"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""40"" y=""36""&gt;I S&lt;/text&gt;&lt;text class=""caption"" x=""40"" y=""70""&gt;49 53&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#800
+00:13:19.000 --> 00:13:20.000
+<c.HEAD>"        &lt;g transform=""translate(140,0)""&gt;&lt;rect class=""gate"" width=""80"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""40"" y=""36""&gt;i s&lt;/text&gt;&lt;text class=""caption"" x=""40"" y=""70""&gt;69 73&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#801
+00:13:20.000 --> 00:13:21.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#802
+00:13:21.000 --> 00:13:22.000
+<c.HEAD>"      &lt;text class=""still"" x=""110"" y=""120"" text-anchor=""middle"" font-size=""16""&gt;20 20&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#803
+00:13:22.000 --> 00:13:23.000
+<c.HEAD>"      &lt;text class=""caption"" x=""110"" y=""150"" text-anchor=""middle""&gt;I|S · parallel to O|F · reverse log: SI / si&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#804
+00:13:23.000 --> 00:13:24.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#805
+00:13:24.000 --> 00:13:25.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#806
+00:13:25.000 --> 00:13:26.000
+<c.HEAD>"  &lt;!-- 29 CGAT DNA --&gt;"</c>
+
+SVG/visual-proofs.svg#807
+00:13:26.000 --> 00:13:27.000
+<c.HEAD>"  &lt;g id=""proof-cgat"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#808
+00:13:27.000 --> 00:13:28.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;CGAT  DNA&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#809
+00:13:28.000 --> 00:13:29.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;Cytosine Guanine Adenine Thymine · codepoints 43 47 41 54&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#810
+00:13:29.000 --> 00:13:30.000
+<c.HEAD>"    &lt;g transform=""translate(620, 240)""&gt;"</c>
+
+SVG/visual-proofs.svg#811
+00:13:30.000 --> 00:13:31.000
+<c.HEAD>"      &lt;g font-size=""20"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#812
+00:13:31.000 --> 00:13:32.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""plus"" x=""35"" y=""36""&gt;C&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;43&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#813
+00:13:32.000 --> 00:13:33.000
+<c.HEAD>"        &lt;g transform=""translate(90,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""even"" x=""35"" y=""36""&gt;G&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;47&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#814
+00:13:33.000 --> 00:13:34.000
+<c.HEAD>"        &lt;g transform=""translate(180,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""35"" y=""36""&gt;A&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;41&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#815
+00:13:34.000 --> 00:13:35.000
+<c.HEAD>"        &lt;g transform=""translate(270,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""odd"" x=""35"" y=""36""&gt;T&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;54&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#816
+00:13:35.000 --> 00:13:36.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#817
+00:13:36.000 --> 00:13:37.000
+<c.HEAD>"      &lt;text class=""caption"" x=""170"" y=""120"" text-anchor=""middle""&gt;like WORD: four letters · G shared with GOD · T is the DNA-only base&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#818
+00:13:37.000 --> 00:13:38.000
+<c.HEAD>"      &lt;text class=""caption"" x=""170"" y=""145"" text-anchor=""middle""&gt;Difference_DNA_RNA-EN.svg · helix of sugar-phosphates&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#819
+00:13:38.000 --> 00:13:39.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#820
+00:13:39.000 --> 00:13:40.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#821
+00:13:40.000 --> 00:13:41.000
+<c.HEAD>"  &lt;!-- 30 CGAU RNA --&gt;"</c>
+
+SVG/visual-proofs.svg#822
+00:13:41.000 --> 00:13:42.000
+<c.HEAD>"  &lt;g id=""proof-cgau"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#823
+00:13:42.000 --> 00:13:43.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;CGAU  RNA&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#824
+00:13:43.000 --> 00:13:44.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;Cytosine Guanine Adenine Uracil · codepoints 43 47 41 55&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#825
+00:13:44.000 --> 00:13:45.000
+<c.HEAD>"    &lt;g transform=""translate(620, 240)""&gt;"</c>
+
+SVG/visual-proofs.svg#826
+00:13:45.000 --> 00:13:46.000
+<c.HEAD>"      &lt;g font-size=""20"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#827
+00:13:46.000 --> 00:13:47.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""plus"" x=""35"" y=""36""&gt;C&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;43&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#828
+00:13:47.000 --> 00:13:48.000
+<c.HEAD>"        &lt;g transform=""translate(90,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""even"" x=""35"" y=""36""&gt;G&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;47&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#829
+00:13:48.000 --> 00:13:49.000
+<c.HEAD>"        &lt;g transform=""translate(180,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""orbit"" x=""35"" y=""36""&gt;A&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;41&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#830
+00:13:49.000 --> 00:13:50.000
+<c.HEAD>"        &lt;g transform=""translate(270,0)""&gt;&lt;rect class=""gate"" width=""70"" height=""56"" rx=""4""/&gt;&lt;text class=""still"" x=""35"" y=""36""&gt;U&lt;/text&gt;&lt;text class=""caption"" x=""35"" y=""70""&gt;55&lt;/text&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#831
+00:13:50.000 --> 00:13:51.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#832
+00:13:51.000 --> 00:13:52.000
+<c.HEAD>"      &lt;text class=""caption"" x=""170"" y=""120"" text-anchor=""middle""&gt;like GOD shortened form · U replaces T · single-bit codepoint step&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#833
+00:13:52.000 --> 00:13:53.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#834
+00:13:53.000 --> 00:13:54.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#835
+00:13:54.000 --> 00:13:55.000
+<c.HEAD>"  &lt;!-- 31 T/U difference --&gt;"</c>
+
+SVG/visual-proofs.svg#836
+00:13:55.000 --> 00:13:56.000
+<c.HEAD>"  &lt;g id=""proof-tu"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#837
+00:13:56.000 --> 00:13:57.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;T/U  the difference&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#838
+00:13:57.000 --> 00:13:58.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;CGAT ⊕ CGAU = 00 00 00 01 · T=54 U=55 · one bit · the ? in the dialectic&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#839
+00:13:58.000 --> 00:13:59.000
+<c.HEAD>"    &lt;g transform=""translate(620, 230)""&gt;"</c>
+
+SVG/visual-proofs.svg#840
+00:13:59.000 --> 00:14:00.000
+<c.HEAD>"      &lt;g font-size=""18"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#841
+00:14:00.000 --> 00:14:01.000
+<c.HEAD>"        &lt;g transform=""translate(0,0)""&gt;"</c>
+
+SVG/visual-proofs.svg#842
+00:14:01.000 --> 00:14:02.000
+<c.HEAD>"          &lt;rect class=""gate"" width=""200"" height=""40"" rx=""4""/&gt;"</c>
+
+SVG/visual-proofs.svg#843
+00:14:02.000 --> 00:14:03.000
+<c.HEAD>"          &lt;text class=""label"" x=""100"" y=""26""&gt;C G A T&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#844
+00:14:03.000 --> 00:14:04.000
+<c.HEAD>"        &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#845
+00:14:04.000 --> 00:14:05.000
+<c.HEAD>"        &lt;g transform=""translate(0,60)""&gt;"</c>
+
+SVG/visual-proofs.svg#846
+00:14:05.000 --> 00:14:06.000
+<c.HEAD>"          &lt;rect class=""gate"" width=""200"" height=""40"" rx=""4""/&gt;"</c>
+
+SVG/visual-proofs.svg#847
+00:14:06.000 --> 00:14:07.000
+<c.HEAD>"          &lt;text class=""label"" x=""100"" y=""26""&gt;C G A U&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#848
+00:14:07.000 --> 00:14:08.000
+<c.HEAD>"        &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#849
+00:14:08.000 --> 00:14:09.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#850
+00:14:09.000 --> 00:14:10.000
+<c.HEAD>"      &lt;!-- highlight last position --&gt;"</c>
+
+SVG/visual-proofs.svg#851
+00:14:10.000 --> 00:14:11.000
+<c.HEAD>"      &lt;rect x=""150"" y=""0"" width=""50"" height=""40"" fill=""#c26a2b"" opacity=""0.35"" rx=""4""&gt;"</c>
+
+SVG/visual-proofs.svg#852
+00:14:11.000 --> 00:14:12.000
+<c.HEAD>"        &lt;animate attributeName=""opacity"" values=""0.2;0.6;0.2"" dur=""2s"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#853
+00:14:12.000 --> 00:14:13.000
+<c.HEAD>"      &lt;/rect&gt;"</c>
+
+SVG/visual-proofs.svg#854
+00:14:13.000 --> 00:14:14.000
+<c.HEAD>"      &lt;rect x=""150"" y=""60"" width=""50"" height=""40"" fill=""#e0c060"" opacity=""0.35"" rx=""4""&gt;"</c>
+
+SVG/visual-proofs.svg#855
+00:14:14.000 --> 00:14:15.000
+<c.HEAD>"        &lt;animate attributeName=""opacity"" values=""0.6;0.2;0.6"" dur=""2s"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#856
+00:14:15.000 --> 00:14:16.000
+<c.HEAD>"      &lt;/rect&gt;"</c>
+
+SVG/visual-proofs.svg#857
+00:14:16.000 --> 00:14:17.000
+<c.HEAD>"      &lt;text class=""still"" x=""100"" y=""130"" text-anchor=""middle"" font-size=""14""&gt;⊕ → 00 00 00 01&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#858
+00:14:17.000 --> 00:14:18.000
+<c.HEAD>"      &lt;text class=""caption"" x=""100"" y=""160"" text-anchor=""middle""&gt;G|W O R? D · O|F I|S · the ? is the T↔U slot · reverse back-logs the pair&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#859
+00:14:18.000 --> 00:14:19.000
+<c.HEAD>"      &lt;text class=""caption"" x=""100"" y=""185"" text-anchor=""middle""&gt;same shape as OF↔of (case bit) but here the RNA/DNA base bit&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#860
+00:14:19.000 --> 00:14:20.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#861
+00:14:20.000 --> 00:14:21.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#862
+00:14:21.000 --> 00:14:22.000
+<c.HEAD>"  &lt;!-- 32 reverse / back logging --&gt;"</c>
+
+SVG/visual-proofs.svg#863
+00:14:22.000 --> 00:14:23.000
+<c.HEAD>"  &lt;g id=""proof-rev"" class=""proof""&gt;"</c>
+
+SVG/visual-proofs.svg#864
+00:14:23.000 --> 00:14:24.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;↺  reverse back logging&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#865
+00:14:24.000 --> 00:14:25.000
+<c.HEAD>"    &lt;text class=""caption"" x=""516"" y=""140""&gt;read each literal backward · DROW · DOG · FO · si · TAGC · UAGC&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#866
+00:14:25.000 --> 00:14:26.000
+<c.HEAD>"    &lt;g transform=""translate(600, 220)""&gt;"</c>
+
+SVG/visual-proofs.svg#867
+00:14:26.000 --> 00:14:27.000
+<c.HEAD>"      &lt;g font-size=""14""&gt;"</c>
+
+SVG/visual-proofs.svg#868
+00:14:27.000 --> 00:14:28.000
+<c.HEAD>"        &lt;text class=""label"" x=""0"" y=""0""&gt;WORD → DROW&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#869
+00:14:28.000 --> 00:14:29.000
+<c.HEAD>"        &lt;text class=""label"" x=""0"" y=""28""&gt;GOD  → DOG&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#870
+00:14:29.000 --> 00:14:30.000
+<c.HEAD>"        &lt;text class=""label"" x=""0"" y=""56""&gt;OF   → FO&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#871
+00:14:30.000 --> 00:14:31.000
+<c.HEAD>"        &lt;text class=""label"" x=""0"" y=""84""&gt;IS   → SI&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#872
+00:14:31.000 --> 00:14:32.000
+<c.HEAD>"        &lt;text class=""label"" x=""0"" y=""112""&gt;CGAT → TAGC&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#873
+00:14:32.000 --> 00:14:33.000
+<c.HEAD>"        &lt;text class=""label"" x=""0"" y=""140""&gt;CGAU → UAGC&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#874
+00:14:33.000 --> 00:14:34.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#875
+00:14:34.000 --> 00:14:35.000
+<c.HEAD>"      &lt;g transform=""translate(220,0)"" font-size=""14""&gt;"</c>
+
+SVG/visual-proofs.svg#876
+00:14:35.000 --> 00:14:36.000
+<c.HEAD>"        &lt;text class=""caption"" x=""0"" y=""0""&gt;forward = DNA/WORD axis&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#877
+00:14:36.000 --> 00:14:37.000
+<c.HEAD>"        &lt;text class=""caption"" x=""0"" y=""28""&gt;reverse = back-logged read&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#878
+00:14:37.000 --> 00:14:38.000
+<c.HEAD>"        &lt;text class=""caption"" x=""0"" y=""56""&gt;delta steps the index;&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#879
+00:14:38.000 --> 00:14:39.000
+<c.HEAD>"        &lt;text class=""caption"" x=""0"" y=""84""&gt;reverse is the other face&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#880
+00:14:39.000 --> 00:14:40.000
+<c.HEAD>"        &lt;text class=""caption"" x=""0"" y=""112""&gt;of the same pair&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#881
+00:14:40.000 --> 00:14:41.000
+<c.HEAD>"        &lt;text class=""caption"" x=""0"" y=""140""&gt;(like OF/of case dual)&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#882
+00:14:41.000 --> 00:14:42.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#883
+00:14:42.000 --> 00:14:43.000
+<c.HEAD>"      &lt;!-- discrete flip animation --&gt;"</c>
+
+SVG/visual-proofs.svg#884
+00:14:43.000 --> 00:14:44.000
+<c.HEAD>"      &lt;g transform=""translate(100, 200)""&gt;"</c>
+
+SVG/visual-proofs.svg#885
+00:14:44.000 --> 00:14:45.000
+<c.HEAD>"        &lt;text class=""orbit"" font-size=""20"" text-anchor=""middle""&gt;"</c>
+
+SVG/visual-proofs.svg#886
+00:14:45.000 --> 00:14:46.000
+<c.HEAD>"          &lt;animate attributeName=""opacity"" values=""1;0;1;0;1"" keyTimes=""0;0.25;0.5;0.75;1"" dur=""4s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#887
+00:14:46.000 --> 00:14:47.000
+<c.HEAD>"          CGAT"</c>
+
+SVG/visual-proofs.svg#888
+00:14:47.000 --> 00:14:48.000
+<c.HEAD>"        &lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#889
+00:14:48.000 --> 00:14:49.000
+<c.HEAD>"        &lt;text class=""still"" font-size=""20"" text-anchor=""middle"" y=""0""&gt;"</c>
+
+SVG/visual-proofs.svg#890
+00:14:49.000 --> 00:14:50.000
+<c.HEAD>"          &lt;animate attributeName=""opacity"" values=""0;1;0;1;0"" keyTimes=""0;0.25;0.5;0.75;1"" dur=""4s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;"</c>
+
+SVG/visual-proofs.svg#891
+00:14:50.000 --> 00:14:51.000
+<c.HEAD>"          TAGC"</c>
+
+SVG/visual-proofs.svg#892
+00:14:51.000 --> 00:14:52.000
+<c.HEAD>"        &lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#893
+00:14:52.000 --> 00:14:53.000
+<c.HEAD>"      &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#894
+00:14:53.000 --> 00:14:54.000
+<c.HEAD>"    &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#895
+00:14:54.000 --> 00:14:55.000
+<c.HEAD>"  &lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#896
+00:14:55.000 --> 00:14:56.000
+<c.HEAD>"  &lt;!-- footer --&gt;"</c>
+
+SVG/visual-proofs.svg#897
+00:14:56.000 --> 00:14:57.000
+<c.HEAD>"  &lt;text class=""sub"" x=""24"" y=""960""&gt;pure SVG · :target shows proof · discrete SMIL = delta steps · I-222 · tetra WORD·GOD·OF·of · CGAT/CGAU · reverse back logging&lt;/text&gt;"</c>
+
+SVG/visual-proofs.svg#898
+00:14:57.000 --> 00:14:58.000
+<c.HEAD>"&lt;g id=""proof-tetra"" class=""proof""&gt;&lt;text class=""stage-title"" x=""516"" y=""120""&gt;◇  tetrahedron&lt;/text&gt;&lt;text class=""caption"" x=""516"" y=""140""&gt;four vertices · six edges · only OF↔of is comparable (0x20 case bit) · raw bytes, no pad&lt;/text&gt;&lt;g id=""tetra-fig""&gt;&lt;line x1=""720"" y1=""280"" x2=""980"" y2=""280"" stroke=""#23695d"" stroke-width=""1.5"" stroke-dasharray=""6 4""/&gt;&lt;text x=""850.0"" y=""268.0"" text-anchor=""middle"" font-size=""10"" fill=""#6a9a8e""&gt;len≠&lt;/text&gt;&lt;line x1=""720"" y1=""280"" x2=""720"" y2=""520"" stroke=""#23695d"" stroke-width=""1.5"" stroke-dasharray=""6 4""/&gt;&lt;text x=""692.0"" y=""400.0"" text-anchor=""middle"" font-size=""10"" fill=""#6a9a8e""&gt;len≠&lt;/text&gt;&lt;line x1=""720"" y1=""280"" x2=""980"" y2=""520"" stroke=""#23695d"" stroke-width=""1.5"" stroke-dasharray=""6 4""/&gt;&lt;text x=""840.0"" y=""392.0"" text-anchor=""middle"" font-size=""10"" fill=""#6a9a8e""&gt;len≠&lt;/text&gt;&lt;line x1=""980"" y1=""280"" x2=""720"" y2=""520"" stroke=""#23695d"" stroke-width=""1.5"" stroke-dasharray=""6 4""/&gt;&lt;text x=""860.0"" y=""392.0"" text-anchor=""middle"" font-size=""10"" fill=""#6a9a8e""&gt;len≠&lt;/text&gt;&lt;line x1=""980"" y1=""280"" x2=""980"" y2=""520"" stroke=""#23695d"" stroke-width=""1.5"" stroke-dasharray=""6 4""/&gt;&lt;text x=""1008.0"" y=""400.0"" text-anchor=""middle"" font-size=""10"" fill=""#6a9a8e""&gt;len≠&lt;/text&gt;&lt;line x1=""720"" y1=""520"" x2=""980"" y2=""520"" stroke=""#e0c060"" stroke-width=""3""/&gt;&lt;text x=""850.0"" y=""536.0"" text-anchor=""middle"" font-size=""10"" fill=""#e0c060""&gt;20 20&lt;/text&gt;&lt;g transform=""translate(680,256)""&gt;&lt;rect class=""gate"" width=""80"" height=""48"" rx=""6""/&gt;&lt;text class=""orbit"" x=""40"" y=""30"" text-anchor=""middle"" font-size=""16""&gt;WORD&lt;/text&gt;&lt;/g&gt;&lt;g transform=""translate(940,256)""&gt;&lt;rect class=""gate"" width=""80"" height=""48"" rx=""6""/&gt;&lt;text class=""orbit"" x=""40"" y=""30"" text-anchor=""middle"" font-size=""16""&gt;GOD&lt;/text&gt;&lt;/g&gt;&lt;g transform=""translate(680,496)""&gt;&lt;rect class=""gate"" width=""80"" height=""48"" rx=""6""/&gt;&lt;text class=""orbit"" x=""40"" y=""30"" text-anchor=""middle"" font-size=""16""&gt;OF&lt;/text&gt;&lt;/g&gt;&lt;g transform=""translate(940,496)""&gt;&lt;rect class=""gate"" width=""80"" height=""48"" rx=""6"" stroke=""#e0c060""/&gt;&lt;text class=""still"" x=""40"" y=""30"" text-anchor=""middle"" font-size=""16""&gt;of&lt;/text&gt;&lt;/g&gt;&lt;line x1=""720"" y1=""520"" x2=""980"" y2=""520"" stroke=""#e0c060"" stroke-width=""5"" opacity=""0.4""&gt;&lt;animate attributeName=""opacity"" values=""0.2;0.7;0.2"" dur=""2s"" repeatCount=""indefinite""/&gt;&lt;/line&gt;&lt;/g&gt;&lt;text class=""caption"" x=""516"" y=""580""&gt;codepoints&lt;/text&gt;&lt;text class=""label"" x=""516"" y=""605""&gt;WORD  57 4F 52 44&lt;/text&gt;&lt;text class=""label"" x=""676"" y=""605""&gt;GOD  47 4F 44&lt;/text&gt;&lt;text class=""label"" x=""836"" y=""605""&gt;OF  4F 46&lt;/text&gt;&lt;text class=""label"" x=""996"" y=""605""&gt;of  6F 66&lt;/text&gt;&lt;text class=""caption"" x=""516"" y=""640""&gt;OF ⊕ of = 20 20  ·  the only equal-length edge · tetra-mask reports the other five not comparable&lt;/text&gt;&lt;text class=""caption"" x=""516"" y=""660""&gt;G|W O R? D · O|F I|S · CGAT/CGAU is the same shape (single-slot difference)&lt;/text&gt;&lt;/g&gt;&lt;g id=""proof-codepoints"" class=""proof""&gt;&lt;text class=""stage-title"" x=""516"" y=""110""&gt;▦  literal codepoint deviations&lt;/text&gt;&lt;text class=""caption"" x=""516"" y=""128""&gt;selected range 20–7E (printable ASCII) · each SVG as in-range % and 32-bin spectrum&lt;/text&gt;&lt;text class=""caption"" x=""516"" y=""155""&gt;file&lt;/text&gt;&lt;text class=""caption"" x=""720"" y=""155""&gt;bytes&lt;/text&gt;&lt;text class=""caption"" x=""790"" y=""155""&gt;in-range&lt;/text&gt;&lt;text class=""caption"" x=""870"" y=""155""&gt;out&lt;/text&gt;&lt;text class=""caption"" x=""920"" y=""155""&gt;spectrum (00→FF)&lt;/text&gt;&lt;text class=""label"" x=""516"" y=""184""&gt;Difference DNA RNA-EN&lt;/text&gt;&lt;text class=""caption"" x=""720"" y=""184""&gt;127863&lt;/text&gt;&lt;text class=""label"" x=""790"" y=""184""&gt;98.9%&lt;/text&gt;&lt;text class=""odd"" x=""870"" y=""184""&gt;1354&lt;/text&gt;&lt;rect x=""920.0"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""927.5"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""935.0"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""942.5"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""950.0"" y=""189"" width=""7.0"" height=""9"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""957.5"" y=""187"" width=""7.0"" height=""11"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""965.0"" y=""170"" width=""7.0"" height=""28"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""972.5"" y=""188"" width=""7.0"" height=""10"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""980.0"" y=""197"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""987.5"" y=""197"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""995.0"" y=""197"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1002.5"" y=""197"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1010.0"" y=""190"" width=""7.0"" height=""8"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1017.5"" y=""185"" width=""7.0"" height=""13"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1025.0"" y=""188"" width=""7.0"" height=""10"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1032.5"" y=""197"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1040.0"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1047.5"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1055.0"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1062.5"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1070.0"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1077.5"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1085.0"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1092.5"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1100.0"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1107.5"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1115.0"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1122.5"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1130.0"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1137.5"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1145.0"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1152.5"" y=""197"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;line x1=""950.0"" x2=""1040.0"" y1=""202"" y2=""202"" stroke=""#72ffe0"" stroke-width=""1.5""/&gt;&lt;text class=""label"" x=""516"" y=""232""&gt;Four bit adder with carry lo&lt;/text&gt;&lt;text class=""caption"" x=""720"" y=""232""&gt;46187&lt;/text&gt;&lt;text class=""label"" x=""790"" y=""232""&gt;98.6%&lt;/text&gt;&lt;text class=""odd"" x=""870"" y=""232""&gt;656&lt;/text&gt;&lt;rect x=""920.0"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""927.5"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""935.0"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""942.5"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""950.0"" y=""224"" width=""7.0"" height=""22"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""957.5"" y=""239"" width=""7.0"" height=""7"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""965.0"" y=""218"" width=""7.0"" height=""28"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""972.5"" y=""232"" width=""7.0"" height=""14"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""980.0"" y=""245"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""987.5"" y=""245"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""995.0"" y=""245"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1002.5"" y=""245"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1010.0"" y=""232"" width=""7.0"" height=""14"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1017.5"" y=""232"" width=""7.0"" height=""14"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1025.0"" y=""228"" width=""7.0"" height=""18"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1032.5"" y=""244"" width=""7.0"" height=""2"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1040.0"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1047.5"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1055.0"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1062.5"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1070.0"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1077.5"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1085.0"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1092.5"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1100.0"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1107.5"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1115.0"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1122.5"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1130.0"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1137.5"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1145.0"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1152.5"" y=""245"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;line x1=""950.0"" x2=""1040.0"" y1=""250"" y2=""250"" stroke=""#72ffe0"" stroke-width=""1.5""/&gt;&lt;text class=""label"" x=""516"" y=""280""&gt;K-map 6,8,9,10,11,12,13,14&lt;/text&gt;&lt;text class=""caption"" x=""720"" y=""280""&gt;5083&lt;/text&gt;&lt;text class=""label"" x=""790"" y=""280""&gt;98.8%&lt;/text&gt;&lt;text class=""caption"" x=""870"" y=""280""&gt;61&lt;/text&gt;&lt;rect x=""920.0"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""927.5"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""935.0"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""942.5"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""950.0"" y=""272"" width=""7.0"" height=""22"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""957.5"" y=""285"" width=""7.0"" height=""9"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""965.0"" y=""266"" width=""7.0"" height=""28"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""972.5"" y=""273"" width=""7.0"" height=""21"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""980.0"" y=""293"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""987.5"" y=""293"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""995.0"" y=""293"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1002.5"" y=""293"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1010.0"" y=""280"" width=""7.0"" height=""14"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1017.5"" y=""281"" width=""7.0"" height=""13"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1025.0"" y=""275"" width=""7.0"" height=""19"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1032.5"" y=""288"" width=""7.0"" height=""6"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1040.0"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1047.5"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1055.0"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1062.5"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1070.0"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1077.5"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1085.0"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1092.5"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1100.0"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1107.5"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1115.0"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1122.5"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1130.0"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1137.5"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1145.0"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1152.5"" y=""293"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;line x1=""950.0"" x2=""1040.0"" y1=""298"" y2=""298"" stroke=""#72ffe0"" stroke-width=""1.5""/&gt;&lt;text class=""label"" x=""516"" y=""328""&gt;Karnaugh map torus&lt;/text&gt;&lt;text class=""caption"" x=""720"" y=""328""&gt;8125&lt;/text&gt;&lt;text class=""label"" x=""790"" y=""328""&gt;98.4%&lt;/text&gt;&lt;text class=""odd"" x=""870"" y=""328""&gt;126&lt;/text&gt;&lt;rect x=""920.0"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""927.5"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""935.0"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""942.5"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""950.0"" y=""314"" width=""7.0"" height=""28"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""957.5"" y=""333"" width=""7.0"" height=""9"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""965.0"" y=""326"" width=""7.0"" height=""16"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""972.5"" y=""329"" width=""7.0"" height=""13"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""980.0"" y=""341"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""987.5"" y=""341"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""995.0"" y=""341"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1002.5"" y=""341"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1010.0"" y=""325"" width=""7.0"" height=""17"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1017.5"" y=""327"" width=""7.0"" height=""15"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1025.0"" y=""325"" width=""7.0"" height=""17"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1032.5"" y=""338"" width=""7.0"" height=""4"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1040.0"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1047.5"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1055.0"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1062.5"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1070.0"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1077.5"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1085.0"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1092.5"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1100.0"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1107.5"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1115.0"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1122.5"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1130.0"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1137.5"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1145.0"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1152.5"" y=""341"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;line x1=""950.0"" x2=""1040.0"" y1=""346"" y2=""346"" stroke=""#72ffe0"" stroke-width=""1.5""/&gt;&lt;text class=""label"" x=""516"" y=""376""&gt;Smith chart gen&lt;/text&gt;&lt;text class=""caption"" x=""720"" y=""376""&gt;523703&lt;/text&gt;&lt;text class=""orbit"" x=""790"" y=""376""&gt;100.0%&lt;/text&gt;&lt;text class=""caption"" x=""870"" y=""376""&gt;18&lt;/text&gt;&lt;rect x=""920.0"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""927.5"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""935.0"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""942.5"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""950.0"" y=""382"" width=""7.0"" height=""8"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""957.5"" y=""371"" width=""7.0"" height=""19"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""965.0"" y=""362"" width=""7.0"" height=""28"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""972.5"" y=""385"" width=""7.0"" height=""5"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""980.0"" y=""389"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""987.5"" y=""389"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""995.0"" y=""389"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1002.5"" y=""389"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1010.0"" y=""388"" width=""7.0"" height=""2"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1017.5"" y=""386"" width=""7.0"" height=""4"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1025.0"" y=""388"" width=""7.0"" height=""2"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1032.5"" y=""389"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1040.0"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1047.5"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1055.0"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1062.5"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1070.0"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1077.5"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1085.0"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1092.5"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1100.0"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1107.5"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1115.0"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1122.5"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1130.0"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1137.5"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1145.0"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1152.5"" y=""389"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;line x1=""950.0"" x2=""1040.0"" y1=""394"" y2=""394"" stroke=""#72ffe0"" stroke-width=""1.5""/&gt;&lt;text class=""label"" x=""516"" y=""424""&gt;e8-step&lt;/text&gt;&lt;text class=""caption"" x=""720"" y=""424""&gt;14966&lt;/text&gt;&lt;text class=""orbit"" x=""790"" y=""424""&gt;99.9%&lt;/text&gt;&lt;text class=""caption"" x=""870"" y=""424""&gt;22&lt;/text&gt;&lt;rect x=""920.0"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""927.5"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""935.0"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""942.5"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""950.0"" y=""410"" width=""7.0"" height=""28"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""957.5"" y=""429"" width=""7.0"" height=""9"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""965.0"" y=""412"" width=""7.0"" height=""26"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""972.5"" y=""421"" width=""7.0"" height=""17"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""980.0"" y=""437"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""987.5"" y=""437"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""995.0"" y=""437"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1002.5"" y=""437"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1010.0"" y=""422"" width=""7.0"" height=""16"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1017.5"" y=""426"" width=""7.0"" height=""12"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1025.0"" y=""423"" width=""7.0"" height=""15"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1032.5"" y=""434"" width=""7.0"" height=""4"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1040.0"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1047.5"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1055.0"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1062.5"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1070.0"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1077.5"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1085.0"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1092.5"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1100.0"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1107.5"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1115.0"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1122.5"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1130.0"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1137.5"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1145.0"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1152.5"" y=""437"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;line x1=""950.0"" x2=""1040.0"" y1=""442"" y2=""442"" stroke=""#72ffe0"" stroke-width=""1.5""/&gt;&lt;text class=""label"" x=""516"" y=""472""&gt;visual-proofs&lt;/text&gt;&lt;text class=""caption"" x=""720"" y=""472""&gt;53852&lt;/text&gt;&lt;text class=""label"" x=""790"" y=""472""&gt;96.5%&lt;/text&gt;&lt;text class=""odd"" x=""870"" y=""472""&gt;1909&lt;/text&gt;&lt;rect x=""920.0"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""927.5"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""935.0"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""942.5"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""950.0"" y=""458"" width=""7.0"" height=""28"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""957.5"" y=""482"" width=""7.0"" height=""4"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""965.0"" y=""477"" width=""7.0"" height=""9"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""972.5"" y=""474"" width=""7.0"" height=""12"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""980.0"" y=""485"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""987.5"" y=""485"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""995.0"" y=""485"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1002.5"" y=""485"" width=""7.0"" height=""1"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1010.0"" y=""471"" width=""7.0"" height=""15"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1017.5"" y=""474"" width=""7.0"" height=""12"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1025.0"" y=""471"" width=""7.0"" height=""15"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1032.5"" y=""482"" width=""7.0"" height=""4"" fill=""#72ffe0"" opacity=""0.85""/&gt;&lt;rect x=""1040.0"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1047.5"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1055.0"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1062.5"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1070.0"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1077.5"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1085.0"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1092.5"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1100.0"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1107.5"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1115.0"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1122.5"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1130.0"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1137.5"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1145.0"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;rect x=""1152.5"" y=""485"" width=""7.0"" height=""1"" fill=""#c26a2b"" opacity=""0.7""/&gt;&lt;line x1=""950.0"" x2=""1040.0"" y1=""490"" y2=""490"" stroke=""#72ffe0"" stroke-width=""1.5""/&gt;&lt;text class=""caption"" x=""516"" y=""526""&gt;cyan = bins inside 20–7E · orange = outside · deviation = mass outside the selected literal range&lt;/text&gt;&lt;text class=""caption"" x=""516"" y=""546""&gt;embedded as raw byte histograms · same measurement style as tetra-mask (no pad, no truncate)&lt;/text&gt;&lt;/g&gt;&lt;g id=""default-view""&gt;"</c>
+
+SVG/visual-proofs.svg#899
+00:14:58.000 --> 00:14:59.000
+<c.HEAD>"    &lt;text class=""stage-title"" x=""516"" y=""120""&gt;◇  tetrahedron&lt;/text&gt;&lt;text class=""caption"" x=""516"" y=""140""&gt;click  ◇ TETRA  in the table (or any vertex) · four vertices · six edges&lt;/text&gt;&lt;g transform=""translate(750,220)""&gt;&lt;line x1=""0"" y1=""0"" x2=""200"" y2=""0"" stroke=""#23695d"" stroke-width=""1.5"" stroke-dasharray=""5 3""/&gt;&lt;line x1=""0"" y1=""0"" x2=""0"" y2=""160"" stroke=""#23695d"" stroke-width=""1.5"" stroke-dasharray=""5 3""/&gt;&lt;line x1=""0"" y1=""0"" x2=""200"" y2=""160"" stroke=""#23695d"" stroke-width=""1.5"" stroke-dasharray=""5 3""/&gt;&lt;line x1=""200"" y1=""0"" x2=""0"" y2=""160"" stroke=""#23695d"" stroke-width=""1.5"" stroke-dasharray=""5 3""/&gt;&lt;line x1=""200"" y1=""0"" x2=""200"" y2=""160"" stroke=""#23695d"" stroke-width=""1.5"" stroke-dasharray=""5 3""/&gt;&lt;line x1=""0"" y1=""160"" x2=""200"" y2=""160"" stroke=""#e0c060"" stroke-width=""3""/&gt;&lt;g transform=""translate(-30,-16)""&gt;&lt;rect class=""gate"" width=""60"" height=""32"" rx=""4""/&gt;&lt;text x=""30"" y=""21"" text-anchor=""middle"" font-size=""12"" class=""orbit""&gt;WORD&lt;/text&gt;&lt;/g&gt;&lt;g transform=""translate(170,-16)""&gt;&lt;rect class=""gate"" width=""60"" height=""32"" rx=""4""/&gt;&lt;text x=""30"" y=""21"" text-anchor=""middle"" font-size=""12"" class=""orbit""&gt;GOD&lt;/text&gt;&lt;/g&gt;&lt;g transform=""translate(-30,144)""&gt;&lt;rect class=""gate"" width=""60"" height=""32"" rx=""4""/&gt;&lt;text x=""30"" y=""21"" text-anchor=""middle"" font-size=""12"" class=""orbit""&gt;OF&lt;/text&gt;&lt;/g&gt;&lt;g transform=""translate(170,144)""&gt;&lt;rect class=""gate"" width=""60"" height=""32"" rx=""4"" stroke=""#e0c060""/&gt;&lt;text x=""30"" y=""21"" text-anchor=""middle"" font-size=""12"" class=""still""&gt;of&lt;/text&gt;&lt;/g&gt;&lt;text x=""100"" y=""200"" text-anchor=""middle"" class=""caption""&gt;lit edge OF↔of = 20 20 · five edges not comparable&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;"</c>
+
+SVG/visual-proofs.svg#900
+00:14:59.000 --> 00:15:00.000
+<c.HEAD>"  &lt;/svg&gt;"</c>
+

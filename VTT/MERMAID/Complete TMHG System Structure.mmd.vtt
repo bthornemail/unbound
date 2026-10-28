@@ -1,0 +1,476 @@
+WEBVTT - MERMAID/Complete TMHG System Structure.mmd
+
+NOTE
+Written by zcue in Plan 9 from MERMAID/Complete TMHG System Structure.mmd.wsn: one cue per LITERAL, one animation frame each.
+No position is written: a cue sits at its literal's offset in the source
+buffer, found when the track is read (exact: row and column of the 65,536;
+or the hypotenuse of the two).
+
+MERMAID/Complete TMHG System Structure.mmd#1
+00:00:00.000 --> 00:00:01.000
+<c.HEAD>"graph TD"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#2
+00:00:01.000 --> 00:00:02.000
+<c.HEAD>"    TMHG --&gt; God4D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#3
+00:00:02.000 --> 00:00:03.000
+<c.HEAD>"    God4D --&gt; Word4D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#4
+00:00:03.000 --> 00:00:04.000
+<c.HEAD>"    Word4D --&gt; Universe"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#5
+00:00:04.000 --> 00:00:05.000
+<c.HEAD>"    Universe --&gt; God3D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#6
+00:00:05.000 --> 00:00:06.000
+<c.HEAD>"    God3D --&gt; Evalute"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#7
+00:00:06.000 --> 00:00:07.000
+<c.HEAD>"    Evalute --&gt; Logic &amp; Propagate"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#8
+00:00:07.000 --> 00:00:08.000
+<c.HEAD>"    Logic --&gt; Proof"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#9
+00:00:08.000 --> 00:00:09.000
+<c.HEAD>"    Proof --&gt; NAND &amp; NOR"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#10
+00:00:09.000 --> 00:00:10.000
+<c.HEAD>"    Propagate --&gt; State"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#11
+00:00:10.000 --> 00:00:11.000
+<c.HEAD>"    State --&gt; Step &amp; Forward &amp; Backward"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#12
+00:00:11.000 --> 00:00:12.000
+<c.HEAD>"    God3D --&gt; Concieve"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#13
+00:00:12.000 --> 00:00:13.000
+<c.HEAD>"    Concieve --&gt; Generate &amp; Entity"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#14
+00:00:13.000 --> 00:00:14.000
+<c.HEAD>"    Generate --&gt; Manifest"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#15
+00:00:14.000 --> 00:00:15.000
+<c.HEAD>"    Manifest --&gt; Word3D &amp; Context"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#16
+00:00:15.000 --> 00:00:16.000
+<c.HEAD>"    Entity --&gt; Identity3D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#17
+00:00:16.000 --> 00:00:17.000
+<c.HEAD>"    Identity3D --&gt; Abstract &amp; Subjective &amp; Objective &amp; Relative"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#18
+00:00:17.000 --> 00:00:18.000
+<c.HEAD>"    Abstract --&gt; Properties2D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#19
+00:00:18.000 --> 00:00:19.000
+<c.HEAD>"    Properties2D --&gt; Attributes2D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#20
+00:00:19.000 --> 00:00:20.000
+<c.HEAD>"    Attributes2D --&gt; Observation2D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#21
+00:00:20.000 --> 00:00:21.000
+<c.HEAD>"    Observation2D --&gt; Idea2d"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#22
+00:00:21.000 --> 00:00:22.000
+<c.HEAD>"    Subjective --&gt; Bias"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#23
+00:00:22.000 --> 00:00:23.000
+<c.HEAD>"    Bias --&gt; Features"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#24
+00:00:23.000 --> 00:00:24.000
+<c.HEAD>"    Features --&gt; Opinions"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#25
+00:00:24.000 --> 00:00:25.000
+<c.HEAD>"    Opinions --&gt; Judgemets"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#26
+00:00:25.000 --> 00:00:26.000
+<c.HEAD>"    Judgemets --&gt; Weights"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#27
+00:00:26.000 --> 00:00:27.000
+<c.HEAD>"    Weights --&gt; Evaluations"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#28
+00:00:27.000 --> 00:00:28.000
+<c.HEAD>"    Evaluations --&gt; Assements"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#29
+00:00:28.000 --> 00:00:29.000
+<c.HEAD>"    Assements --&gt; Score &amp; Word3D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#30
+00:00:29.000 --> 00:00:30.000
+<c.HEAD>"    Objective --&gt; environment"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#31
+00:00:30.000 --> 00:00:31.000
+<c.HEAD>"    environment --&gt; views &amp; Word2D &amp; Event3D &amp; Object3d"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#32
+00:00:31.000 --> 00:00:32.000
+<c.HEAD>"    views --&gt; scene"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#33
+00:00:32.000 --> 00:00:33.000
+<c.HEAD>"    scene --&gt; physics"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#34
+00:00:33.000 --> 00:00:34.000
+<c.HEAD>"    physics --&gt; geometry"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#35
+00:00:34.000 --> 00:00:35.000
+<c.HEAD>"    geometry --&gt; tetrahedron-sphere"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#36
+00:00:35.000 --> 00:00:36.000
+<c.HEAD>"    Word2D --&gt; Definition &amp; iWord"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#37
+00:00:36.000 --> 00:00:37.000
+<c.HEAD>"    Object3d --&gt; inanimate &amp; animate"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#38
+00:00:37.000 --> 00:00:38.000
+<c.HEAD>"    inanimate --&gt; client"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#39
+00:00:38.000 --> 00:00:39.000
+<c.HEAD>"    animate --&gt; human"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#40
+00:00:39.000 --> 00:00:40.000
+<c.HEAD>"    human --&gt; God2D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#41
+00:00:40.000 --> 00:00:41.000
+<c.HEAD>"    God2D --&gt; person"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#42
+00:00:41.000 --> 00:00:42.000
+<c.HEAD>"    Relative --&gt; Definitions2D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#43
+00:00:42.000 --> 00:00:43.000
+<c.HEAD>"    Definitions2D --&gt; References2D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#44
+00:00:43.000 --> 00:00:44.000
+<c.HEAD>"    God3D --&gt; Perceive"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#45
+00:00:44.000 --> 00:00:45.000
+<c.HEAD>"    Perceive --&gt; Observe &amp; Scope &amp; Analyze &amp; Interpret"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#46
+00:00:45.000 --> 00:00:46.000
+<c.HEAD>"    Observe --&gt; Domain_obs[Domain] &amp; Distance &amp; Direction &amp; Interval"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#47
+00:00:46.000 --> 00:00:47.000
+<c.HEAD>"    Scope --&gt; Scale &amp; Range &amp; Analyze_scope[Analyze]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#48
+00:00:47.000 --> 00:00:48.000
+<c.HEAD>"    Scale --&gt; Size &amp; Timeframe"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#49
+00:00:48.000 --> 00:00:49.000
+<c.HEAD>"    Size --&gt; Min &amp; Max"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#50
+00:00:49.000 --> 00:00:50.000
+<c.HEAD>"    Timeframe --&gt; Begin &amp; End"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#51
+00:00:50.000 --> 00:00:51.000
+<c.HEAD>"    Range --&gt; Magnitude &amp; Intensity"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#52
+00:00:51.000 --> 00:00:52.000
+<c.HEAD>"    Magnitude --&gt; High &amp; Low"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#53
+00:00:52.000 --> 00:00:53.000
+<c.HEAD>"    Intensity --&gt; Strength &amp; Quality"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#54
+00:00:53.000 --> 00:00:54.000
+<c.HEAD>"    Analyze --&gt; Subject &amp; Perspective"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#55
+00:00:54.000 --> 00:00:55.000
+<c.HEAD>"    Subject --&gt; Status &amp; Details"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#56
+00:00:55.000 --> 00:00:56.000
+<c.HEAD>"    Status --&gt; Image &amp; Statistics"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#57
+00:00:56.000 --> 00:00:57.000
+<c.HEAD>"    Details --&gt; Static &amp; Dynamic"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#58
+00:00:57.000 --> 00:00:58.000
+<c.HEAD>"    Perspective --&gt; GraphContext"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#59
+00:00:58.000 --> 00:00:59.000
+<c.HEAD>"    GraphContext --&gt; NodeContext"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#60
+00:00:59.000 --> 00:01:00.000
+<c.HEAD>"    NodeContext --&gt; Geometry_node[Geometry]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#61
+00:01:00.000 --> 00:01:01.000
+<c.HEAD>"    Geometry_node --&gt; Size_geom[Size] &amp; Vertices &amp; Indices &amp; Edges"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#62
+00:01:01.000 --> 00:01:02.000
+<c.HEAD>"    Interpret --&gt; Domain_int[Domain] &amp; Context &amp; Model &amp; Alignment"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#63
+00:01:02.000 --> 00:01:03.000
+<c.HEAD>"    Domain_int --&gt; Private &amp; Protected &amp; Public &amp; Definitions_dom[Definitions]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#64
+00:01:03.000 --> 00:01:04.000
+<c.HEAD>"    Private --&gt; extendedKey &amp; sharedSignature"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#65
+00:01:04.000 --> 00:01:05.000
+<c.HEAD>"    Protected --&gt; preSharedKey"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#66
+00:01:05.000 --> 00:01:06.000
+<c.HEAD>"    Public --&gt; publicKey"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#67
+00:01:06.000 --> 00:01:07.000
+<c.HEAD>"    Definitions_dom --&gt; Parameters &amp; References &amp; Attributes_def[Attributes] &amp; Properties"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#68
+00:01:07.000 --> 00:01:08.000
+<c.HEAD>"    Parameters --&gt; Features_param[Features] &amp; Scores"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#69
+00:01:08.000 --> 00:01:09.000
+<c.HEAD>"    References --&gt; Entites &amp; Identities"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#70
+00:01:09.000 --> 00:01:10.000
+<c.HEAD>"    Attributes_def --&gt; Observation2D_def[Observation2D]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#71
+00:01:10.000 --> 00:01:11.000
+<c.HEAD>"    Observation2D_def --&gt; Position &amp; Scale_obs[Scale] &amp; Rotation &amp; Speed"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#72
+00:01:11.000 --> 00:01:12.000
+<c.HEAD>"    Properties --&gt; Matrix &amp; Center"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#73
+00:01:12.000 --> 00:01:13.000
+<c.HEAD>"    Matrix --&gt; Uint16Array"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#74
+00:01:13.000 --> 00:01:14.000
+<c.HEAD>"    Center --&gt; Point"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#75
+00:01:14.000 --> 00:01:15.000
+<c.HEAD>"    Context --&gt; Auth &amp; Merkle &amp; PubSub &amp; DHT"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#76
+00:01:15.000 --> 00:01:16.000
+<c.HEAD>"    Auth --&gt; ExtendedKey &amp; Signature"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#77
+00:01:16.000 --> 00:01:17.000
+<c.HEAD>"    Merkle --&gt; Root_merkle[Root] &amp; Leaf_merkle[Leaf]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#78
+00:01:17.000 --> 00:01:18.000
+<c.HEAD>"    PubSub --&gt; Root_pubsub[Root] &amp; Leaf_pubsub[Leaf]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#79
+00:01:18.000 --> 00:01:19.000
+<c.HEAD>"    DHT --&gt; PubSub_dht[PubSub] &amp; Key &amp; Inbound &amp; Outbound"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#80
+00:01:19.000 --> 00:01:20.000
+<c.HEAD>"    Inbound --&gt; Hash_in[Hash] &amp; Path_in[Path] &amp; URL_in[URL] &amp; Timestamp_in[Timestamp]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#81
+00:01:20.000 --> 00:01:21.000
+<c.HEAD>"    Outbound --&gt; Hash_out[Hash] &amp; Path_out[Path] &amp; URL_out[URL] &amp; Timestamp_out[Timestamp]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#82
+00:01:21.000 --> 00:01:22.000
+<c.HEAD>"    Model --&gt; Features_model[Features] &amp; Weights_model[Weights] &amp; Biases &amp; Layer"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#83
+00:01:22.000 --> 00:01:23.000
+<c.HEAD>"    Features_model --&gt; Angle"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#84
+00:01:23.000 --> 00:01:24.000
+<c.HEAD>"    Angle --&gt; Vertex &amp; Arms"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#85
+00:01:24.000 --> 00:01:25.000
+<c.HEAD>"    Arms --&gt; Common &amp; Adjecent"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#86
+00:01:25.000 --> 00:01:26.000
+<c.HEAD>"    Weights_model --&gt; Object4D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#87
+00:01:26.000 --> 00:01:27.000
+<c.HEAD>"    Object4D --&gt; Index &amp; Attributes_obj[Attributes] &amp; Refrences &amp; Parameters_obj[Parameters]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#88
+00:01:27.000 --> 00:01:28.000
+<c.HEAD>"    Index --&gt; Uint16Array_obj[Uint16Array]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#89
+00:01:28.000 --> 00:01:29.000
+<c.HEAD>"    Attributes_obj --&gt; Position_obj[Position] &amp; Scale_obj[Scale] &amp; Rotation_obj[Rotation] &amp; Matrix_obj[Matrix]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#90
+00:01:29.000 --> 00:01:30.000
+<c.HEAD>"    Refrences --&gt; Children"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#91
+00:01:30.000 --> 00:01:31.000
+<c.HEAD>"    Children --&gt; Distance_child[Distance] &amp; Matrix_child[Matrix]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#92
+00:01:31.000 --> 00:01:32.000
+<c.HEAD>"    Parameters_obj --&gt; Matrix_param[Matrix]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#93
+00:01:32.000 --> 00:01:33.000
+<c.HEAD>"    Matrix_param --&gt; Uint16Array_param[Uint16Array]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#94
+00:01:33.000 --> 00:01:34.000
+<c.HEAD>"    Biases --&gt; Ray"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#95
+00:01:34.000 --> 00:01:35.000
+<c.HEAD>"    Ray --&gt; Origin &amp; Destination &amp; Near &amp; Far"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#96
+00:01:35.000 --> 00:01:36.000
+<c.HEAD>"    Near --&gt; Distance_near[Distance]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#97
+00:01:36.000 --> 00:01:37.000
+<c.HEAD>"    Distance_near --&gt; Number_near[Number]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#98
+00:01:37.000 --> 00:01:38.000
+<c.HEAD>"    Far --&gt; Distance_far[Distance]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#99
+00:01:38.000 --> 00:01:39.000
+<c.HEAD>"    Distance_far --&gt; Number_far[Number]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#100
+00:01:39.000 --> 00:01:40.000
+<c.HEAD>"    Layer --&gt; Neuron &amp; Activation &amp; Resolve &amp; Learning"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#101
+00:01:40.000 --> 00:01:41.000
+<c.HEAD>"    Neuron --&gt; Input &amp; Output &amp; Delta"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#102
+00:01:41.000 --> 00:01:42.000
+<c.HEAD>"    Activation --&gt; Function"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#103
+00:01:42.000 --> 00:01:43.000
+<c.HEAD>"    Function --&gt; Derive"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#104
+00:01:43.000 --> 00:01:44.000
+<c.HEAD>"    Derive --&gt; sigmoid &amp; tanh &amp; relu &amp; linear"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#105
+00:01:44.000 --> 00:01:45.000
+<c.HEAD>"    sigmoid --&gt; extendedKey_sig[extendedKey] &amp; sharedSignature_sig[sharedSignature]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#106
+00:01:45.000 --> 00:01:46.000
+<c.HEAD>"    tanh --&gt; preSharedKey_tanh[preSharedKey]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#107
+00:01:46.000 --> 00:01:47.000
+<c.HEAD>"    relu --&gt; publicKey_relu[publicKey]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#108
+00:01:47.000 --> 00:01:48.000
+<c.HEAD>"    linear --&gt; publicKey_linear[publicKey]"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#109
+00:01:48.000 --> 00:01:49.000
+<c.HEAD>"    Resolve --&gt; Results &amp; Error"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#110
+00:01:49.000 --> 00:01:50.000
+<c.HEAD>"    Results --&gt; Token"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#111
+00:01:50.000 --> 00:01:51.000
+<c.HEAD>"    Token --&gt; Value"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#112
+00:01:51.000 --> 00:01:52.000
+<c.HEAD>"    Error --&gt; Loss"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#113
+00:01:52.000 --> 00:01:53.000
+<c.HEAD>"    Loss --&gt; Graidents"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#114
+00:01:53.000 --> 00:01:54.000
+<c.HEAD>"    Learning --&gt; Activte &amp; Rate"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#115
+00:01:54.000 --> 00:01:55.000
+<c.HEAD>"    God3D --&gt; Genesis3D"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#116
+00:01:55.000 --> 00:01:56.000
+<c.HEAD>"    Genesis3D --&gt; Timestamp"</c>
+
+MERMAID/Complete TMHG System Structure.mmd#117
+00:01:56.000 --> 00:01:57.000
+<c.HEAD>"classDef default fill:#f9f,stroke:#333,stroke-width:2px;"</c>
+

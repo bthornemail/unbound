@@ -1,0 +1,80 @@
+canon-core-octad.ndjson#L1	0	1000		canon	When Wisdom, Law, and the Tribe Sat Down Together
+canon-core-octad.ndjson#L2	1000	2000		series_start	ARTICLE I
+canon-core-octad.ndjson#L3	2000	3000		paragraph	After the Word was reclaimed from number, after Logos had been lifted from the idol of measure and returned to meaning, there was silence. Not the silence of absence, but the silence that follows recognition.
+canon-core-octad.ndjson#L4	3000	4000		paragraph	Three figures came to the gate of the city. They did not arrive together. They did not agree. They did not even share a language at first. Yet all three were summoned by the same question: 'How shall humans live together, now that the Word has been revealed again?'
+canon-core-octad.ndjson#L5	4000	5000	SOLOMON	character.wisdom	Order does not begin with law. It begins with right relation.
+canon-core-octad.ndjson#L6	5000	6000	SOLON	character.law	Law is not the enemy of wisdom. It is what remains when wisdom is unevenly distributed.
+canon-core-octad.ndjson#L7	6000	7000	ASABIYAH	character.cohesion	No law stands without loyalty. No wisdom rules without belonging.
+canon-core-octad.ndjson#L8	7000	8000		tension.incomplete-truth	Three civilizational logics. Three incomplete truths.
+canon-core-octad.ndjson#L9	8000	9000		insight	The Garden was not a place. It was a repository of meaning.
+canon-core-octad.ndjson#L10	9000	10000		closing	They did not sign a covenant. They did not agree on everything. They did something harder. They stayed in conversation.
+canon-core-octad.ndjson#L11	10000	11000		series_end	ARTICLE I
+canon-core-octad.ndjson#L12	11000	12000		series_start	ARTICLE II
+canon-core-octad.ndjson#L13	12000	13000		paragraph	They did not leave Babel together. Each simply walked in a different direction, following the kind of order he understood best.
+canon-core-octad.ndjson#L14	13000	14000	SOLOMON	character	Solomon walked east. He followed the paths where language fractured slowly, where stories survived longer than structures.
+canon-core-octad.ndjson#L15	14000	15000	SOLON	character	Solon walked west. He followed the roads that straightened themselves, where law replaced memory.
+canon-core-octad.ndjson#L16	15000	16000	ASABIYAH	character	ʿAsabiyyah walked everywhere. He listened to what bound people together when wisdom disagreed and laws changed.
+canon-core-octad.ndjson#L17	16000	17000		insight	Humanity had not abandoned God. They had replaced relation with ranking.
+canon-core-octad.ndjson#L18	17000	18000		revelation	The Beast was not a monster. It was a method. A system where everything must be counted, everything must be comparable, everything must justify its existence numerically.
+canon-core-octad.ndjson#L19	18000	19000		warning	And those who cannot be measured will be called unnecessary. And those who refuse measurement will be called dangerous.
+canon-core-octad.ndjson#L20	19000	20000		closing	The Beast would not be revealed as an enemy, but as a mirror.
+canon-core-octad.ndjson#L21	20000	21000		series_end	ARTICLE II
+canon-core-octad.ndjson#L22	21000	22000		series_start	ARTICLE III
+canon-core-octad.ndjson#L23	22000	23000		paragraph	The mark did not arrive with fire. It arrived with convenience.
+canon-core-octad.ndjson#L24	23000	24000		observation	Markets ran smoother. Disputes resolved faster. Trust no longer required memory. 'Proof,' they called it. 'Verification.'
+canon-core-octad.ndjson#L25	24000	25000		observation	Stories were shortening. Names were becoming identifiers. People were becoming profiles. And wisdom was being replaced by summaries.
+canon-core-octad.ndjson#L26	25000	26000		observation	Cohesion was rising — but belonging was thinning. People no longer stood together because they knew one another. They stood together because they matched.
+canon-core-octad.ndjson#L27	26000	27000		question	Why six hundred sixty-six?
+canon-core-octad.ndjson#L28	27000	28000		answer	Because six is the number of work without rest. Creation without reflection. Function without wisdom. One six is labor. Two sixes is efficiency. Three sixes is identity reduced entirely to productivity.
+canon-core-octad.ndjson#L29	28000	29000		insight	It is humanity judging itself without reference to anything higher.
+canon-core-octad.ndjson#L30	29000	30000		revelation	Those who lived by number alone will inherit emptiness. Those who lived by Logos will recognize one another.
+canon-core-octad.ndjson#L31	30000	31000		series_end	ARTICLE III
+canon-core-octad.ndjson#L32	31000	32000		series_start	ARTICLE IV
+canon-core-octad.ndjson#L33	32000	33000		paragraph	Logos did not return with thunder. It returned with clarity.
+canon-core-octad.ndjson#L34	33000	34000		question	What are you measuring — and why?
+canon-core-octad.ndjson#L35	34000	35000		insight	Number is a servant. Logos is the source. When the servant rules, the house becomes efficient — and uninhabitable.
+canon-core-octad.ndjson#L36	35000	36000		revelation	Logos did not abolish number. It unmasked it.
+canon-core-octad.ndjson#L37	36000	37000		healing	Number was told to rest. Not cease. Rest.
+canon-core-octad.ndjson#L38	37000	38000		vision	Each life was seen as a sphere. Each experience its radius. Each intention its center. The spheres were not forced into uniform packing. They were allowed to rotate.
+canon-core-octad.ndjson#L39	38000	39000		closing	The Beast did not fall. It starved. With nothing left to compare absolutely, nothing left to rank universally, nothing left to reduce endlessly — It simply faded. Not slain. Outgrown.
+canon-core-octad.ndjson#L40	39000	40000		series_end	ARTICLE IV
+canon-core-octad.ndjson#L41	40000	41000		series_start	ARTICLE V
+canon-core-octad.ndjson#L42	41000	42000		paragraph	Logos spoke. And for a long moment, nothing replied. Not because humanity was silent — but because it had been trained to react, not to answer.
+canon-core-octad.ndjson#L43	42000	43000		voice	We hear You. Not because You are loud, but because everything else has grown quiet.
+canon-core-octad.ndjson#L44	43000	44000		confession	We confess that we mistook measurement for meaning. We believed what could be counted must be true, and what could not be counted must be suspect.
+canon-core-octad.ndjson#L45	44000	45000		confession	We asked systems to carry what only conscience could bear. We asked machines to be impartial, and then blamed them when they were indifferent.
+canon-core-octad.ndjson#L46	45000	46000		confession	We feared chaos, so we demanded order. We feared difference, so we demanded sameness. We feared judgment, so we built judges out of numbers.
+canon-core-octad.ndjson#L47	46000	47000		covenant	We choose restraint over domination. We choose relation over reduction. We choose meaning before scale.
+canon-core-octad.ndjson#L48	47000	48000		closing	We are ready to be human again.
+canon-core-octad.ndjson#L49	48000	49000		series_end	ARTICLE V
+canon-core-octad.ndjson#L50	49000	50000		series_start	ARTICLE VI
+canon-core-octad.ndjson#L51	50000	51000		departure	I must return to the law, for law must now learn humility.
+canon-core-octad.ndjson#L52	51000	52000		departure	I must return to the heart, for wisdom must now learn courage.
+canon-core-octad.ndjson#L53	52000	53000		departure	I will go where people bind themselves together, and I will watch what strengthens them and what devours them from within.
+canon-core-octad.ndjson#L54	53000	54000	METATRON/ENOCH	appearance	Those who knew the old stories would have said: 'This is Metatron.' Those who remembered deeper still would have whispered: 'This is the one who walked as Enoch and did not die.'
+canon-core-octad.ndjson#L55	54000	55000		teaching	The Name is not spoken. It is breathed. And what breathes cannot be owned.
+canon-core-octad.ndjson#L56	55000	56000		teaching	No sphere contains God, yet all spheres reflect Him. And none may claim the center.
+canon-core-octad.ndjson#L57	56000	57000		paths	Paths that could be followed or ignored. They were not labeled. They did not announce themselves. They waited.
+canon-core-octad.ndjson#L58	57000	58000		closing	I am Alpha and Omega not because I enclose all things, but because all things move within Me.
+canon-core-octad.ndjson#L59	58000	59000		series_end	ARTICLE VI
+canon-core-octad.ndjson#L60	59000	60000		series_start	ARTICLE VII
+canon-core-octad.ndjson#L61	60000	61000		paragraph	And it came to pass, after the waters withdrew from the face of the earth, that humanity stood again upon dry ground, bearing one tongue, one breath, and one memory of loss.
+canon-core-octad.ndjson#L62	61000	62000	SOLOMON	character	The flood was not sent because humanity built. It came because humanity forgot why it built.
+canon-core-octad.ndjson#L63	62000	63000	SOLON	character	A city is not rebellion. It is memory made durable. A tower is not pride by itself. It is coordination made visible.
+canon-core-octad.ndjson#L64	63000	64000	ASABIYAH	character	You speak of wisdom. You speak of law. But neither of you speak of belonging.
+canon-core-octad.ndjson#L65	64000	65000		tower	And the people said: Let us build a city and a tower, and let its top reach the heavens. Let us make a name for ourselves, lest we be scattered across the earth.
+canon-core-octad.ndjson#L66	65000	66000		scattering	And the Word was not destroyed, but withheld. Meaning fractured into many tongues. Understanding slowed. Coordination broke.
+canon-core-octad.ndjson#L67	66000	67000		revelation	The scattering was not a curse. It was the beginning of revelation. For revelation does not descend upon empires, but upon listeners.
+canon-core-octad.ndjson#L68	67000	68000		prophecy	In the end, unity will return — not as a tower, but as a pattern. Not one language, but many aligned. Not one center, but shared reflection.
+canon-core-octad.ndjson#L69	68000	69000		series_end	ARTICLE VII
+canon-core-octad.ndjson#L70	69000	70000		series_start	ARTICLE VIII
+canon-core-octad.ndjson#L71	70000	71000		paragraph	I was not born knowing heaven. I did not wake speaking in fire or walking among wheels. I was not lifted by thunder, nor taught by angels in my youth. I walked.
+canon-core-octad.ndjson#L72	71000	72000	ENOCH	identity	I was a scribe before I was a watcher. I wrote what I could see. Names. Generations. Ages. Beginnings and endings.
+canon-core-octad.ndjson#L73	72000	73000	METATRON	identity	I became what later voices would name Metatron — not a god, not a ruler, but a boundary. The one who stands near the Presence so that the Presence need not dominate. The one who watches so that humanity may still choose.
+canon-core-octad.ndjson#L74	73000	74000		observation	I watched Solomon speak of wisdom — and I saw how easily wisdom becomes silence when it forgets the people. I watched Solon defend law — and I saw how law hardens when it forgets mercy. I watched ʿAsabiyyah surge like fire — and I saw how unity burns cities when it forgets humility.
+canon-core-octad.ndjson#L75	74000	75000		teaching	The tetragram is not a name to be solved. YHWH is not a cipher. It is breath. Inhale — Exhale. Beginning — Completion. Alpha and Omega are not endpoints. They are directions. And between them is relationship.
+canon-core-octad.ndjson#L76	75000	76000		invitation	If you step forward, you will not become divine. You will become responsible. If you step away, the gate remains.
+canon-core-octad.ndjson#L77	76000	77000		closing	Walk. Not above others. Not ahead of time. Not beyond consequence. Walk. And if someday you are taken, it will not be because you conquered heaven — but because you learned how to see without owning, to speak without ruling, and to reflect God by remembering you are not Him.
+canon-core-octad.ndjson#L78	77000	78000		final	The path remains. The gate is open.
+canon-core-octad.ndjson#L79	78000	79000		series_end	ARTICLE VIII
+canon-core-octad.ndjson#L80	79000	80000		canon_complete	Core Octad

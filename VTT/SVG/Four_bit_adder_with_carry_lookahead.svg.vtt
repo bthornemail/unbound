@@ -1,0 +1,1888 @@
+WEBVTT - SVG/Four_bit_adder_with_carry_lookahead.svg
+
+NOTE
+Written by zcue in Plan 9 from SVG/Four_bit_adder_with_carry_lookahead.svg.wsn: one cue per LITERAL, one animation frame each.
+No position is written: a cue sits at its literal's offset in the source
+buffer, found when the track is read (exact: row and column of the 65,536;
+or the hypotenuse of the two).
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#1
+00:00:00.000 --> 00:00:01.000
+<c.HEAD>"&lt;?xml version='1.0' encoding='UTF-8'?&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#2
+00:00:01.000 --> 00:00:02.000
+<c.HEAD>"&lt;!-- Created with Digital by H.Neemann --&gt;&lt;!-- created: Fri Jul 30 18:48:41 CEST 2021 --&gt;&lt;svg xmlns:svg=""http://www.w3.org/2000/svg"" xmlns=""http://www.w3.org/2000/svg"" width=""182.7mm"" height=""242.85mm"" viewBox=""121 100 1218 1690""&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#3
+00:00:02.000 --> 00:00:03.000
+<c.HEAD>"&lt;svg:title&gt;Four-bit CLA cycled by I-222: AA55 boot mark, still points of L, NULL NULL squared, octal dialectic 16-pairs on 65536&lt;/svg:title&gt;&lt;svg:style&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#4
+00:00:03.000 --> 00:00:04.000
+<c.HEAD>"  text { font: 13px ui-monospace, monospace; fill: #222; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#5
+00:00:04.000 --> 00:00:05.000
+<c.HEAD>"  .small { font-size: 11px; fill: #555; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#6
+00:00:05.000 --> 00:00:06.000
+<c.HEAD>"  .eq { font-size: 12px; fill: #333; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#7
+00:00:06.000 --> 00:00:07.000
+<c.HEAD>"  .legend-title { font-size: 14px; font-weight: 600; fill: #111; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#8
+00:00:07.000 --> 00:00:08.000
+<c.HEAD>"  .kernel { font-size: 11px; fill: #1a3a5c; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#9
+00:00:08.000 --> 00:00:09.000
+<c.HEAD>"  .octal { font-size: 11px; fill: #5a2a6a; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#10
+00:00:09.000 --> 00:00:10.000
+<c.HEAD>"  .proof { font-size: 11px; fill: #6a3a1a; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#11
+00:00:10.000 --> 00:00:11.000
+<c.HEAD>"  .ring { fill: none; stroke: #ddd; stroke-width: 1; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#12
+00:00:11.000 --> 00:00:12.000
+<c.HEAD>"  .plus { fill: #1f4e9c; } .minus { fill: #9cb6e0; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#13
+00:00:12.000 --> 00:00:13.000
+<c.HEAD>"  .even { fill: #2f7d4a; } .odd { fill: #c26a2b; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#14
+00:00:13.000 --> 00:00:14.000
+<c.HEAD>"  .cell { stroke: #fff; stroke-width: 1; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#15
+00:00:14.000 --> 00:00:15.000
+<c.HEAD>"  .sig-g { fill: #2f7d4a; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#16
+00:00:15.000 --> 00:00:16.000
+<c.HEAD>"  .sig-p { fill: #1f4e9c; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#17
+00:00:16.000 --> 00:00:17.000
+<c.HEAD>"  .sig-c { fill: #c26a2b; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#18
+00:00:17.000 --> 00:00:18.000
+<c.HEAD>"  .sig-s { fill: #6b3fa0; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#19
+00:00:18.000 --> 00:00:19.000
+<c.HEAD>"  .sig-ab { fill: #444; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#20
+00:00:19.000 --> 00:00:20.000
+<c.HEAD>"  .stage-band { fill: #1f4e9c; opacity: 0.08; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#21
+00:00:20.000 --> 00:00:21.000
+<c.HEAD>"  .stage-label { font-size: 12px; fill: #1f4e9c; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#22
+00:00:21.000 --> 00:00:22.000
+<c.HEAD>"  .tour-idx { font-size: 13px; font-weight: 600; fill: #1f4e9c; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#23
+00:00:22.000 --> 00:00:23.000
+<c.HEAD>"  @media (prefers-color-scheme: dark) {"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#24
+00:00:23.000 --> 00:00:24.000
+<c.HEAD>"    text { fill: #eee; } .small { fill: #aaa; } .eq { fill: #ccc; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#25
+00:00:24.000 --> 00:00:25.000
+<c.HEAD>"    .legend-title { fill: #eee; } .kernel { fill: #9ec8f0; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#26
+00:00:25.000 --> 00:00:26.000
+<c.HEAD>"    .octal { fill: #d4a0e8; } .proof { fill: #e0b080; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#27
+00:00:26.000 --> 00:00:27.000
+<c.HEAD>"    .ring { stroke: #444; } .cell { stroke: #111; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#28
+00:00:27.000 --> 00:00:28.000
+<c.HEAD>"    .sig-g { fill: #5dba7a; } .sig-p { fill: #7eb0ff; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#29
+00:00:28.000 --> 00:00:29.000
+<c.HEAD>"    .sig-c { fill: #e09a5c; } .sig-s { fill: #c49bff; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#30
+00:00:29.000 --> 00:00:30.000
+<c.HEAD>"    .sig-ab { fill: #bbb; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#31
+00:00:30.000 --> 00:00:31.000
+<c.HEAD>"    .stage-band { fill: #7eb0ff; opacity: 0.12; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#32
+00:00:31.000 --> 00:00:32.000
+<c.HEAD>"    .stage-label { fill: #7eb0ff; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#33
+00:00:32.000 --> 00:00:33.000
+<c.HEAD>"    .tour-idx { fill: #7eb0ff; }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#34
+00:00:33.000 --> 00:00:34.000
+<c.HEAD>"  }"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#35
+00:00:34.000 --> 00:00:35.000
+<c.HEAD>"&lt;/svg:style&gt;&lt;svg:g id=""adder-step""&gt;&lt;svg:g stroke-linecap=""square""&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#36
+00:00:35.000 --> 00:00:36.000
+<c.HEAD>"&lt;svg:path d=""M 999,1180 L 999,1171"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#37
+00:00:36.000 --> 00:00:37.000
+<c.HEAD>"&lt;svg:path d=""M 999,1100 L 999,1109"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#38
+00:00:37.000 --> 00:00:38.000
+<c.HEAD>"&lt;svg:path d=""M 779,1060 L 779,1051"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#39
+00:00:38.000 --> 00:00:39.000
+<c.HEAD>"&lt;svg:path d=""M 779,980 L 779,989"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#40
+00:00:39.000 --> 00:00:40.000
+<c.HEAD>"&lt;svg:path d=""M 999,1560 L 999,1551"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#41
+00:00:40.000 --> 00:00:41.000
+<c.HEAD>"&lt;svg:path d=""M 999,1480 L 999,1489"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#42
+00:00:41.000 --> 00:00:42.000
+<c.HEAD>"&lt;svg:path d=""M 999,1680 L 999,1671"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#43
+00:00:42.000 --> 00:00:43.000
+<c.HEAD>"&lt;svg:path d=""M 999,1600 L 999,1609"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#44
+00:00:43.000 --> 00:00:44.000
+<c.HEAD>"&lt;svg:path d=""M 779,1460 L 779,1451"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#45
+00:00:44.000 --> 00:00:45.000
+<c.HEAD>"&lt;svg:path d=""M 779,1380 L 779,1389"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#46
+00:00:45.000 --> 00:00:46.000
+<c.HEAD>"&lt;svg:path d=""M 360,1280 L 420,1280 L 1060,1280 L 1060,1320 L 1000,1320"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#47
+00:00:46.000 --> 00:00:47.000
+<c.HEAD>"&lt;svg:path d=""M 200,640 L 240,640 L 280,640"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#48
+00:00:47.000 --> 00:00:48.000
+<c.HEAD>"&lt;svg:path d=""M 1000,640 L 1140,640 L 1140,560 L 420,560 L 360,560"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#49
+00:00:48.000 --> 00:00:49.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1540 L 1140,1540 L 1140,1640 L 1000,1640"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#50
+00:00:49.000 --> 00:00:50.000
+<c.HEAD>"&lt;svg:path d=""M 240,320 L 240,260 L 280,260 L 294,260"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#51
+00:00:50.000 --> 00:00:51.000
+<c.HEAD>"&lt;svg:path d=""M 420,560 L 420,520 L 460,520 L 474,520"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#52
+00:00:51.000 --> 00:00:52.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1160 L 1180,1160 L 1180,1660 L 1000,1660"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#53
+00:00:52.000 --> 00:00:53.000
+<c.HEAD>"&lt;svg:path d=""M 773,1420 L 780,1420 L 920,1420"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#54
+00:00:53.000 --> 00:00:54.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1420 L 1100,1420 L 1100,1500 L 1000,1500"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#55
+00:00:54.000 --> 00:00:55.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1680 L 1200,1680 L 1200,1180"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#56
+00:00:55.000 --> 00:00:56.000
+<c.HEAD>"&lt;svg:path d=""M 1000,400 L 1180,400 L 1180,240 L 420,240 L 360,240"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#57
+00:00:56.000 --> 00:00:57.000
+<c.HEAD>"&lt;svg:path d=""M 776,1040 L 780,1040 L 920,1040"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#58
+00:00:57.000 --> 00:00:58.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1040 L 1140,1040 L 1140,1120 L 1000,1120"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#59
+00:00:58.000 --> 00:00:59.000
+<c.HEAD>"&lt;svg:path d=""M 360,660 L 420,660 L 420,600 L 840,600 L 1120,600 L 1120,980 L 1000,980"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#60
+00:00:59.000 --> 00:01:00.000
+<c.HEAD>"&lt;svg:path d=""M 240,1360 L 240,1300 L 280,1300 L 294,1300"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#61
+00:01:00.000 --> 00:01:01.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1560 L 1160,1560 L 1160,1060 L 1000,1060"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#62
+00:01:01.000 --> 00:01:02.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1180 L 1200,1180 L 1200,760 L 1000,760"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#63
+00:01:02.000 --> 00:01:03.000
+<c.HEAD>"&lt;svg:path d=""M 220,680 L 220,540 L 280,540 L 294,540"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#64
+00:01:03.000 --> 00:01:04.000
+<c.HEAD>"&lt;svg:path d=""M 200,160 L 420,160 L 460,160 L 474,160"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#65
+00:01:04.000 --> 00:01:05.000
+<c.HEAD>"&lt;svg:path d=""M 540,800 L 1260,800"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#66
+00:01:05.000 --> 00:01:06.000
+<c.HEAD>"&lt;svg:path d=""M 776,1440 L 780,1440 L 860,1440 L 860,1520 L 920,1520"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#67
+00:01:06.000 --> 00:01:07.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1440 L 1120,1440 L 1120,980"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#68
+00:01:07.000 --> 00:01:08.000
+<c.HEAD>"&lt;svg:path d=""M 780,1060 L 840,1060 L 840,1140 L 920,1140"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#69
+00:01:08.000 --> 00:01:09.000
+<c.HEAD>"&lt;svg:path d=""M 776,420 L 780,420 L 920,420"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#70
+00:01:09.000 --> 00:01:10.000
+<c.HEAD>"&lt;svg:path d=""M 200,680 L 220,680 L 280,680"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#71
+00:01:10.000 --> 00:01:11.000
+<c.HEAD>"&lt;svg:path d=""M 1000,680 L 1160,680 L 1160,340 L 840,340 L 360,340"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#72
+00:01:11.000 --> 00:01:12.000
+<c.HEAD>"&lt;svg:path d=""M 776,680 L 780,680 L 840,680 L 840,600"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#73
+00:01:12.000 --> 00:01:13.000
+<c.HEAD>"&lt;svg:path d=""M 200,940 L 240,940 L 280,940"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#74
+00:01:13.000 --> 00:01:14.000
+<c.HEAD>"&lt;svg:path d=""M 1000,940 L 1100,940 L 1100,860 L 420,860 L 360,860"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#75
+00:01:14.000 --> 00:01:15.000
+<c.HEAD>"&lt;svg:path d=""M 540,180 L 1260,180"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#76
+00:01:15.000 --> 00:01:16.000
+<c.HEAD>"&lt;svg:path d=""M 420,860 L 420,820 L 460,820 L 474,820"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#77
+00:01:16.000 --> 00:01:17.000
+<c.HEAD>"&lt;svg:path d=""M 780,1460 L 840,1460 L 840,1640 L 920,1640"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#78
+00:01:17.000 --> 00:01:18.000
+<c.HEAD>"&lt;svg:path d=""M 1000,440 L 1200,440 L 1200,120 L 420,120 L 420,160"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#79
+00:01:18.000 --> 00:01:19.000
+<c.HEAD>"&lt;svg:path d=""M 773,700 L 780,700 L 880,700 L 880,660 L 920,660"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#80
+00:01:19.000 --> 00:01:20.000
+<c.HEAD>"&lt;svg:path d=""M 200,320 L 240,320 L 280,320"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#81
+00:01:20.000 --> 00:01:21.000
+<c.HEAD>"&lt;svg:path d=""M 360,960 L 420,960 L 420,900 L 840,900 L 1080,900 L 1080,1360 L 1000,1360"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#82
+00:01:21.000 --> 00:01:22.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1600 L 1060,1600 L 1060,1480 L 1000,1480"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#83
+00:01:22.000 --> 00:01:23.000
+<c.HEAD>"&lt;svg:path d=""M 240,640 L 240,580 L 280,580 L 294,580"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#84
+00:01:23.000 --> 00:01:24.000
+<c.HEAD>"&lt;svg:path d=""M 560,1220 L 1260,1220"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#85
+00:01:24.000 --> 00:01:25.000
+<c.HEAD>"&lt;svg:path d=""M 420,240 L 420,200 L 460,200 L 474,200"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#86
+00:01:25.000 --> 00:01:26.000
+<c.HEAD>"&lt;svg:path d=""M 220,980 L 220,840 L 280,840 L 294,840"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#87
+00:01:26.000 --> 00:01:27.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1100 L 1100,1100 L 1100,1020"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#88
+00:01:27.000 --> 00:01:28.000
+<c.HEAD>"&lt;svg:path d=""M 1000,720 L 1140,720 L 1140,640"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#89
+00:01:28.000 --> 00:01:29.000
+<c.HEAD>"&lt;svg:path d=""M 776,720 L 780,720 L 880,720 L 880,740 L 920,740"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#90
+00:01:29.000 --> 00:01:30.000
+<c.HEAD>"&lt;svg:path d=""M 200,1360 L 240,1360 L 280,1360"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#91
+00:01:30.000 --> 00:01:31.000
+<c.HEAD>"&lt;svg:path d=""M 200,980 L 220,980 L 280,980"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#92
+00:01:31.000 --> 00:01:32.000
+<c.HEAD>"&lt;svg:path d=""M 780,980 L 840,980 L 840,900"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#93
+00:01:32.000 --> 00:01:33.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1620 L 1100,1620 L 1100,1500"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#94
+00:01:33.000 --> 00:01:34.000
+<c.HEAD>"&lt;svg:path d=""M 420,1280 L 420,1240 L 480,1240 L 494,1240"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#95
+00:01:34.000 --> 00:01:35.000
+<c.HEAD>"&lt;svg:path d=""M 220,360 L 220,220 L 280,220 L 294,220"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#96
+00:01:35.000 --> 00:01:36.000
+<c.HEAD>"&lt;svg:path d=""M 1000,740 L 1180,740 L 1180,400"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#97
+00:01:36.000 --> 00:01:37.000
+<c.HEAD>"&lt;svg:path d=""M 360,1380 L 420,1380 L 420,1320 L 840,1320 L 840,1380 L 780,1380"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#98
+00:01:37.000 --> 00:01:38.000
+<c.HEAD>"&lt;svg:path d=""M 200,360 L 220,360 L 280,360"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#99
+00:01:38.000 --> 00:01:39.000
+<c.HEAD>"&lt;svg:path d=""M 776,1000 L 780,1000 L 860,1000 L 860,960 L 920,960"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#100
+00:01:39.000 --> 00:01:40.000
+<c.HEAD>"&lt;svg:path d=""M 220,1400 L 220,1260 L 280,1260 L 294,1260"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#101
+00:01:40.000 --> 00:01:41.000
+<c.HEAD>"&lt;svg:path d=""M 240,940 L 240,880 L 280,880 L 294,880"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#102
+00:01:41.000 --> 00:01:42.000
+<c.HEAD>"&lt;svg:path d=""M 540,500 L 1260,500"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#103
+00:01:42.000 --> 00:01:43.000
+<c.HEAD>"&lt;svg:path d=""M 200,1400 L 220,1400 L 280,1400"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#104
+00:01:43.000 --> 00:01:44.000
+<c.HEAD>"&lt;svg:path d=""M 776,1400 L 780,1400 L 860,1400 L 860,1340 L 920,1340"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#105
+00:01:44.000 --> 00:01:45.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1400 L 1060,1400 L 1060,1320"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#106
+00:01:45.000 --> 00:01:46.000
+<c.HEAD>"&lt;svg:path d=""M 776,380 L 780,380 L 840,380 L 840,340"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#107
+00:01:46.000 --> 00:01:47.000
+<c.HEAD>"&lt;svg:path d=""M 1000,1020 L 1100,1020 L 1100,940"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#108
+00:01:47.000 --> 00:01:48.000
+<c.HEAD>"&lt;svg:path d=""M 1060,1400 L 1060,1480"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#109
+00:01:48.000 --> 00:01:49.000
+<c.HEAD>"&lt;svg:path d=""M 700,400 L 420,400 L 420,480 L 460,480 L 474,480"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#110
+00:01:49.000 --> 00:01:50.000
+<c.HEAD>"&lt;svg:path d=""M 474,780 L 460,780 L 420,780 L 420,700 L 700,700"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#111
+00:01:50.000 --> 00:01:51.000
+<c.HEAD>"&lt;svg:path d=""M 494,1200 L 480,1200 L 420,1200 L 420,1020 L 700,1020"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#112
+00:01:51.000 --> 00:01:52.000
+<c.HEAD>"&lt;svg:path d=""M 1160,680 L 1160,1060"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#113
+00:01:52.000 --> 00:01:53.000
+<c.HEAD>"&lt;svg:path d=""M 1100,1100 L 1100,1420"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#114
+00:01:53.000 --> 00:01:54.000
+<c.HEAD>"&lt;svg:path d=""M 1200,440 L 1200,760"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#115
+00:01:54.000 --> 00:01:55.000
+<c.HEAD>"&lt;svg:path d=""M 1140,1120 L 1140,1540"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#116
+00:01:55.000 --> 00:01:56.000
+<c.HEAD>"&lt;svg:path d=""M 1140,720 L 1140,1040"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#117
+00:01:56.000 --> 00:01:57.000
+<c.HEAD>"&lt;svg:path d=""M 700,1420 L 660,1420 L 660,1720 L 1260,1720"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#118
+00:01:57.000 --> 00:01:58.000
+<c.HEAD>"&lt;svg:path d=""M 1180,740 L 1180,1160"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#119
+00:01:58.000 --> 00:01:59.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#120
+00:01:59.000 --> 00:02:00.000
+<c.HEAD>"&lt;svg:circle cx=""420.0"" cy=""1280.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#121
+00:02:00.000 --> 00:02:01.000
+<c.HEAD>"&lt;svg:circle cx=""240.0"" cy=""640.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#122
+00:02:01.000 --> 00:02:02.000
+<c.HEAD>"&lt;svg:circle cx=""1140.0"" cy=""640.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#123
+00:02:02.000 --> 00:02:03.000
+<c.HEAD>"&lt;svg:circle cx=""1140.0"" cy=""1540.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#124
+00:02:03.000 --> 00:02:04.000
+<c.HEAD>"&lt;svg:circle cx=""840.0"" cy=""900.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#125
+00:02:04.000 --> 00:02:05.000
+<c.HEAD>"&lt;svg:circle cx=""1180.0"" cy=""1160.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#126
+00:02:05.000 --> 00:02:06.000
+<c.HEAD>"&lt;svg:circle cx=""1100.0"" cy=""1420.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#127
+00:02:06.000 --> 00:02:07.000
+<c.HEAD>"&lt;svg:circle cx=""1180.0"" cy=""400.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#128
+00:02:07.000 --> 00:02:08.000
+<c.HEAD>"&lt;svg:circle cx=""1140.0"" cy=""1040.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#129
+00:02:08.000 --> 00:02:09.000
+<c.HEAD>"&lt;svg:circle cx=""1200.0"" cy=""1180.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#130
+00:02:09.000 --> 00:02:10.000
+<c.HEAD>"&lt;svg:circle cx=""420.0"" cy=""160.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#131
+00:02:10.000 --> 00:02:11.000
+<c.HEAD>"&lt;svg:circle cx=""1160.0"" cy=""1060.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#132
+00:02:11.000 --> 00:02:12.000
+<c.HEAD>"&lt;svg:circle cx=""220.0"" cy=""680.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#133
+00:02:12.000 --> 00:02:13.000
+<c.HEAD>"&lt;svg:circle cx=""1160.0"" cy=""680.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#134
+00:02:13.000 --> 00:02:14.000
+<c.HEAD>"&lt;svg:circle cx=""1060.0"" cy=""1320.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#135
+00:02:14.000 --> 00:02:15.000
+<c.HEAD>"&lt;svg:circle cx=""240.0"" cy=""940.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#136
+00:02:15.000 --> 00:02:16.000
+<c.HEAD>"&lt;svg:circle cx=""1100.0"" cy=""940.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#137
+00:02:16.000 --> 00:02:17.000
+<c.HEAD>"&lt;svg:circle cx=""420.0"" cy=""560.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#138
+00:02:17.000 --> 00:02:18.000
+<c.HEAD>"&lt;svg:circle cx=""1200.0"" cy=""440.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#139
+00:02:18.000 --> 00:02:19.000
+<c.HEAD>"&lt;svg:circle cx=""240.0"" cy=""320.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#140
+00:02:19.000 --> 00:02:20.000
+<c.HEAD>"&lt;svg:circle cx=""1060.0"" cy=""1480.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#141
+00:02:20.000 --> 00:02:21.000
+<c.HEAD>"&lt;svg:circle cx=""1100.0"" cy=""1100.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#142
+00:02:21.000 --> 00:02:22.000
+<c.HEAD>"&lt;svg:circle cx=""1140.0"" cy=""720.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#143
+00:02:22.000 --> 00:02:23.000
+<c.HEAD>"&lt;svg:circle cx=""240.0"" cy=""1360.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#144
+00:02:23.000 --> 00:02:24.000
+<c.HEAD>"&lt;svg:circle cx=""840.0"" cy=""340.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#145
+00:02:24.000 --> 00:02:25.000
+<c.HEAD>"&lt;svg:circle cx=""220.0"" cy=""980.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#146
+00:02:25.000 --> 00:02:26.000
+<c.HEAD>"&lt;svg:circle cx=""1120.0"" cy=""980.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#147
+00:02:26.000 --> 00:02:27.000
+<c.HEAD>"&lt;svg:circle cx=""840.0"" cy=""600.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#148
+00:02:27.000 --> 00:02:28.000
+<c.HEAD>"&lt;svg:circle cx=""420.0"" cy=""860.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#149
+00:02:28.000 --> 00:02:29.000
+<c.HEAD>"&lt;svg:circle cx=""1100.0"" cy=""1500.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#150
+00:02:29.000 --> 00:02:30.000
+<c.HEAD>"&lt;svg:circle cx=""1140.0"" cy=""1120.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#151
+00:02:30.000 --> 00:02:31.000
+<c.HEAD>"&lt;svg:circle cx=""1180.0"" cy=""740.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#152
+00:02:31.000 --> 00:02:32.000
+<c.HEAD>"&lt;svg:circle cx=""220.0"" cy=""360.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#153
+00:02:32.000 --> 00:02:33.000
+<c.HEAD>"&lt;svg:circle cx=""420.0"" cy=""240.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#154
+00:02:33.000 --> 00:02:34.000
+<c.HEAD>"&lt;svg:circle cx=""1200.0"" cy=""760.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#155
+00:02:34.000 --> 00:02:35.000
+<c.HEAD>"&lt;svg:circle cx=""220.0"" cy=""1400.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#156
+00:02:35.000 --> 00:02:36.000
+<c.HEAD>"&lt;svg:circle cx=""1060.0"" cy=""1400.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#157
+00:02:36.000 --> 00:02:37.000
+<c.HEAD>"&lt;svg:circle cx=""1100.0"" cy=""1020.0"" r=""4.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#158
+00:02:37.000 --> 00:02:38.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#159
+00:02:38.000 --> 00:02:39.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#160
+00:02:39.000 --> 00:02:40.000
+<c.HEAD>"&lt;svg:path d=""M 169,145 L 199,145 L 199,175 L 169,175 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#161
+00:02:40.000 --> 00:02:41.000
+<c.HEAD>"&lt;svg:circle cx=""184.0"" cy=""160.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#162
+00:02:41.000 --> 00:02:42.000
+<c.HEAD>"&lt;svg:text text-anchor=""end"" x=""155.0"" y=""169.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-c""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-c""&gt;C&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;0&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#163
+00:02:42.000 --> 00:02:43.000
+<c.HEAD>"&lt;svg:circle cx=""200.0"" cy=""160.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#164
+00:02:43.000 --> 00:02:44.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#165
+00:02:44.000 --> 00:02:45.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#166
+00:02:45.000 --> 00:02:46.000
+<c.HEAD>"&lt;svg:path d=""M 169,305 L 199,305 L 199,335 L 169,335 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#167
+00:02:46.000 --> 00:02:47.000
+<c.HEAD>"&lt;svg:circle cx=""184.0"" cy=""320.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#168
+00:02:47.000 --> 00:02:48.000
+<c.HEAD>"&lt;svg:text text-anchor=""end"" x=""155.0"" y=""329.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-ab""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-ab""&gt;A&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;0&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#169
+00:02:48.000 --> 00:02:49.000
+<c.HEAD>"&lt;svg:circle cx=""200.0"" cy=""320.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#170
+00:02:49.000 --> 00:02:50.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#171
+00:02:50.000 --> 00:02:51.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#172
+00:02:51.000 --> 00:02:52.000
+<c.HEAD>"&lt;svg:path d=""M 169,345 L 199,345 L 199,375 L 169,375 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#173
+00:02:52.000 --> 00:02:53.000
+<c.HEAD>"&lt;svg:circle cx=""184.0"" cy=""360.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#174
+00:02:53.000 --> 00:02:54.000
+<c.HEAD>"&lt;svg:text text-anchor=""end"" x=""155.0"" y=""369.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-ab""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-ab""&gt;B&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;0&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#175
+00:02:54.000 --> 00:02:55.000
+<c.HEAD>"&lt;svg:circle cx=""200.0"" cy=""360.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#176
+00:02:55.000 --> 00:02:56.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#177
+00:02:56.000 --> 00:02:57.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#178
+00:02:57.000 --> 00:02:58.000
+<c.HEAD>"&lt;svg:path d=""M 330,370 L 281,370 L 281,310 L 330,310 C 340,310 360,320 359,340 C 359,360 340,370 330,370 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#179
+00:02:58.000 --> 00:02:59.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""320.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#180
+00:02:59.000 --> 00:03:00.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""360.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#181
+00:03:00.000 --> 00:03:01.000
+<c.HEAD>"&lt;svg:circle cx=""360.0"" cy=""340.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#182
+00:03:01.000 --> 00:03:02.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#183
+00:03:02.000 --> 00:03:03.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#184
+00:03:03.000 --> 00:03:04.000
+<c.HEAD>"&lt;svg:path d=""M 310,270 L 290,270 C 300,254 300,226 290,210 L 310,210 C 330,210 350,220 360,240 C 350,260 330,270 310,270 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#185
+00:03:04.000 --> 00:03:05.000
+<c.HEAD>"&lt;svg:path d=""M 280,270 C 290,260 290,220 280,210"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#186
+00:03:05.000 --> 00:03:06.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""220.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#187
+00:03:06.000 --> 00:03:07.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""260.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#188
+00:03:07.000 --> 00:03:08.000
+<c.HEAD>"&lt;svg:circle cx=""360.0"" cy=""240.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#189
+00:03:08.000 --> 00:03:09.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#190
+00:03:09.000 --> 00:03:10.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#191
+00:03:10.000 --> 00:03:11.000
+<c.HEAD>"&lt;svg:path d=""M 490,210 L 470,210 C 480,194 480,166 470,150 L 490,150 C 510,150 530,160 540,180 C 530,200 510,210 490,210 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#192
+00:03:11.000 --> 00:03:12.000
+<c.HEAD>"&lt;svg:path d=""M 460,210 C 470,200 470,160 460,150"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#193
+00:03:12.000 --> 00:03:13.000
+<c.HEAD>"&lt;svg:circle cx=""460.0"" cy=""160.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#194
+00:03:13.000 --> 00:03:14.000
+<c.HEAD>"&lt;svg:circle cx=""460.0"" cy=""200.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#195
+00:03:14.000 --> 00:03:15.000
+<c.HEAD>"&lt;svg:circle cx=""540.0"" cy=""180.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#196
+00:03:15.000 --> 00:03:16.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#197
+00:03:16.000 --> 00:03:17.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#198
+00:03:17.000 --> 00:03:18.000
+<c.HEAD>"&lt;svg:path d=""M 750,370 L 780,370 C 770,386 770,414 780,430 L 760,430 C 730,430 710,420 700,400 C 710,380 730,370 750,370 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#199
+00:03:18.000 --> 00:03:19.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""420.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#200
+00:03:19.000 --> 00:03:20.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""380.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#201
+00:03:20.000 --> 00:03:21.000
+<c.HEAD>"&lt;svg:circle cx=""700.0"" cy=""400.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#202
+00:03:21.000 --> 00:03:22.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#203
+00:03:22.000 --> 00:03:23.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#204
+00:03:23.000 --> 00:03:24.000
+<c.HEAD>"&lt;svg:circle cx=""1276.0"" cy=""180.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#205
+00:03:24.000 --> 00:03:25.000
+<c.HEAD>"&lt;svg:circle cx=""1276.0"" cy=""180.0"" r=""15.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#206
+00:03:25.000 --> 00:03:26.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""1305.0"" y=""189.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-s""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-s""&gt;S&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;0&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#207
+00:03:26.000 --> 00:03:27.000
+<c.HEAD>"&lt;svg:circle cx=""1260.0"" cy=""180.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#208
+00:03:27.000 --> 00:03:28.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#209
+00:03:28.000 --> 00:03:29.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#210
+00:03:29.000 --> 00:03:30.000
+<c.HEAD>"&lt;svg:path d=""M 950,390 L 999,390 L 999,450 L 950,450 C 940,450 920,440 921,420 C 921,400 940,390 950,390 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#211
+00:03:30.000 --> 00:03:31.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""440.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#212
+00:03:31.000 --> 00:03:32.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""400.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#213
+00:03:32.000 --> 00:03:33.000
+<c.HEAD>"&lt;svg:circle cx=""920.0"" cy=""420.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#214
+00:03:33.000 --> 00:03:34.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#215
+00:03:34.000 --> 00:03:35.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#216
+00:03:35.000 --> 00:03:36.000
+<c.HEAD>"&lt;svg:path d=""M 490,530 L 470,530 C 480,514 480,486 470,470 L 490,470 C 510,470 530,480 540,500 C 530,520 510,530 490,530 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#217
+00:03:36.000 --> 00:03:37.000
+<c.HEAD>"&lt;svg:path d=""M 460,530 C 470,520 470,480 460,470"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#218
+00:03:37.000 --> 00:03:38.000
+<c.HEAD>"&lt;svg:circle cx=""460.0"" cy=""480.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#219
+00:03:38.000 --> 00:03:39.000
+<c.HEAD>"&lt;svg:circle cx=""460.0"" cy=""520.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#220
+00:03:39.000 --> 00:03:40.000
+<c.HEAD>"&lt;svg:circle cx=""540.0"" cy=""500.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#221
+00:03:40.000 --> 00:03:41.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#222
+00:03:41.000 --> 00:03:42.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#223
+00:03:42.000 --> 00:03:43.000
+<c.HEAD>"&lt;svg:path d=""M 169,625 L 199,625 L 199,655 L 169,655 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#224
+00:03:43.000 --> 00:03:44.000
+<c.HEAD>"&lt;svg:circle cx=""184.0"" cy=""640.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#225
+00:03:44.000 --> 00:03:45.000
+<c.HEAD>"&lt;svg:text text-anchor=""end"" x=""155.0"" y=""649.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-ab""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-ab""&gt;A&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;1&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#226
+00:03:45.000 --> 00:03:46.000
+<c.HEAD>"&lt;svg:circle cx=""200.0"" cy=""640.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#227
+00:03:46.000 --> 00:03:47.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#228
+00:03:47.000 --> 00:03:48.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#229
+00:03:48.000 --> 00:03:49.000
+<c.HEAD>"&lt;svg:path d=""M 169,665 L 199,665 L 199,695 L 169,695 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#230
+00:03:49.000 --> 00:03:50.000
+<c.HEAD>"&lt;svg:circle cx=""184.0"" cy=""680.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#231
+00:03:50.000 --> 00:03:51.000
+<c.HEAD>"&lt;svg:text text-anchor=""end"" x=""155.0"" y=""689.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-ab""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-ab""&gt;B&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;1&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#232
+00:03:51.000 --> 00:03:52.000
+<c.HEAD>"&lt;svg:circle cx=""200.0"" cy=""680.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#233
+00:03:52.000 --> 00:03:53.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#234
+00:03:53.000 --> 00:03:54.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#235
+00:03:54.000 --> 00:03:55.000
+<c.HEAD>"&lt;svg:path d=""M 330,690 L 281,690 L 281,630 L 330,630 C 340,630 360,640 359,660 C 359,680 340,690 330,690 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#236
+00:03:55.000 --> 00:03:56.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""640.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#237
+00:03:56.000 --> 00:03:57.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""680.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#238
+00:03:57.000 --> 00:03:58.000
+<c.HEAD>"&lt;svg:circle cx=""360.0"" cy=""660.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#239
+00:03:58.000 --> 00:03:59.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#240
+00:03:59.000 --> 00:04:00.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#241
+00:04:00.000 --> 00:04:01.000
+<c.HEAD>"&lt;svg:path d=""M 310,590 L 290,590 C 300,574 300,546 290,530 L 310,530 C 330,530 350,540 360,560 C 350,580 330,590 310,590 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#242
+00:04:01.000 --> 00:04:02.000
+<c.HEAD>"&lt;svg:path d=""M 280,590 C 290,580 290,540 280,530"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#243
+00:04:02.000 --> 00:04:03.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""540.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#244
+00:04:03.000 --> 00:04:04.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""580.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#245
+00:04:04.000 --> 00:04:05.000
+<c.HEAD>"&lt;svg:circle cx=""360.0"" cy=""560.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#246
+00:04:05.000 --> 00:04:06.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#247
+00:04:06.000 --> 00:04:07.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#248
+00:04:07.000 --> 00:04:08.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""382.0"" y=""441.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-c""&gt;C&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-c""&gt;1&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#249
+00:04:08.000 --> 00:04:09.000
+<c.HEAD>"&lt;svg:path d=""M 380,420 L 420,420 L 420,460 L 380,460 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#250
+00:04:09.000 --> 00:04:10.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#251
+00:04:10.000 --> 00:04:11.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#252
+00:04:11.000 --> 00:04:12.000
+<c.HEAD>"&lt;svg:circle cx=""1276.0"" cy=""500.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#253
+00:04:12.000 --> 00:04:13.000
+<c.HEAD>"&lt;svg:circle cx=""1276.0"" cy=""500.0"" r=""15.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#254
+00:04:13.000 --> 00:04:14.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""1305.0"" y=""509.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-s""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-s""&gt;S&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;1&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#255
+00:04:14.000 --> 00:04:15.000
+<c.HEAD>"&lt;svg:circle cx=""1260.0"" cy=""500.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#256
+00:04:15.000 --> 00:04:16.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#257
+00:04:16.000 --> 00:04:17.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#258
+00:04:17.000 --> 00:04:18.000
+<c.HEAD>"&lt;svg:path d=""M 950,630 L 999,630 L 999,690 L 950,690 C 940,690 920,680 921,660 C 921,640 940,630 950,630 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#259
+00:04:18.000 --> 00:04:19.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""680.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#260
+00:04:19.000 --> 00:04:20.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""640.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#261
+00:04:20.000 --> 00:04:21.000
+<c.HEAD>"&lt;svg:circle cx=""920.0"" cy=""660.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#262
+00:04:21.000 --> 00:04:22.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#263
+00:04:22.000 --> 00:04:23.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#264
+00:04:23.000 --> 00:04:24.000
+<c.HEAD>"&lt;svg:path d=""M 950,710 L 999,710 L 999,770 L 950,770 C 940,770 920,760 921,740 C 921,720 940,710 950,710 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#265
+00:04:24.000 --> 00:04:25.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""760.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#266
+00:04:25.000 --> 00:04:26.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""740.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#267
+00:04:26.000 --> 00:04:27.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""720.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#268
+00:04:27.000 --> 00:04:28.000
+<c.HEAD>"&lt;svg:circle cx=""920.0"" cy=""740.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#269
+00:04:28.000 --> 00:04:29.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#270
+00:04:29.000 --> 00:04:30.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#271
+00:04:30.000 --> 00:04:31.000
+<c.HEAD>"&lt;svg:path d=""M 750,670 L 780,670 C 770,686 770,714 780,730 L 760,730 C 730,730 710,720 700,700 C 710,680 730,670 750,670 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#272
+00:04:31.000 --> 00:04:32.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""720.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#273
+00:04:32.000 --> 00:04:33.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""700.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#274
+00:04:33.000 --> 00:04:34.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""680.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#275
+00:04:34.000 --> 00:04:35.000
+<c.HEAD>"&lt;svg:circle cx=""700.0"" cy=""700.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#276
+00:04:35.000 --> 00:04:36.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#277
+00:04:36.000 --> 00:04:37.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#278
+00:04:37.000 --> 00:04:38.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""382.0"" y=""741.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-c""&gt;C&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-c""&gt;2&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#279
+00:04:38.000 --> 00:04:39.000
+<c.HEAD>"&lt;svg:path d=""M 380,720 L 420,720 L 420,760 L 380,760 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#280
+00:04:39.000 --> 00:04:40.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#281
+00:04:40.000 --> 00:04:41.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#282
+00:04:41.000 --> 00:04:42.000
+<c.HEAD>"&lt;svg:path d=""M 490,830 L 470,830 C 480,814 480,786 470,770 L 490,770 C 510,770 530,780 540,800 C 530,820 510,830 490,830 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#283
+00:04:42.000 --> 00:04:43.000
+<c.HEAD>"&lt;svg:path d=""M 460,830 C 470,820 470,780 460,770"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#284
+00:04:43.000 --> 00:04:44.000
+<c.HEAD>"&lt;svg:circle cx=""460.0"" cy=""780.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#285
+00:04:44.000 --> 00:04:45.000
+<c.HEAD>"&lt;svg:circle cx=""460.0"" cy=""820.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#286
+00:04:45.000 --> 00:04:46.000
+<c.HEAD>"&lt;svg:circle cx=""540.0"" cy=""800.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#287
+00:04:46.000 --> 00:04:47.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#288
+00:04:47.000 --> 00:04:48.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#289
+00:04:48.000 --> 00:04:49.000
+<c.HEAD>"&lt;svg:circle cx=""1276.0"" cy=""800.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#290
+00:04:49.000 --> 00:04:50.000
+<c.HEAD>"&lt;svg:circle cx=""1276.0"" cy=""800.0"" r=""15.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#291
+00:04:50.000 --> 00:04:51.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""1305.0"" y=""809.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-s""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-s""&gt;S&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;2&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#292
+00:04:51.000 --> 00:04:52.000
+<c.HEAD>"&lt;svg:circle cx=""1260.0"" cy=""800.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#293
+00:04:52.000 --> 00:04:53.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#294
+00:04:53.000 --> 00:04:54.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#295
+00:04:54.000 --> 00:04:55.000
+<c.HEAD>"&lt;svg:path d=""M 169,925 L 199,925 L 199,955 L 169,955 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#296
+00:04:55.000 --> 00:04:56.000
+<c.HEAD>"&lt;svg:circle cx=""184.0"" cy=""940.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#297
+00:04:56.000 --> 00:04:57.000
+<c.HEAD>"&lt;svg:text text-anchor=""end"" x=""155.0"" y=""949.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-ab""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-ab""&gt;A&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;2&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#298
+00:04:57.000 --> 00:04:58.000
+<c.HEAD>"&lt;svg:circle cx=""200.0"" cy=""940.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#299
+00:04:58.000 --> 00:04:59.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#300
+00:04:59.000 --> 00:05:00.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#301
+00:05:00.000 --> 00:05:01.000
+<c.HEAD>"&lt;svg:path d=""M 169,965 L 199,965 L 199,995 L 169,995 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#302
+00:05:01.000 --> 00:05:02.000
+<c.HEAD>"&lt;svg:circle cx=""184.0"" cy=""980.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#303
+00:05:02.000 --> 00:05:03.000
+<c.HEAD>"&lt;svg:text text-anchor=""end"" x=""155.0"" y=""989.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-ab""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-ab""&gt;B&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;2&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#304
+00:05:03.000 --> 00:05:04.000
+<c.HEAD>"&lt;svg:circle cx=""200.0"" cy=""980.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#305
+00:05:04.000 --> 00:05:05.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#306
+00:05:05.000 --> 00:05:06.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#307
+00:05:06.000 --> 00:05:07.000
+<c.HEAD>"&lt;svg:path d=""M 330,990 L 281,990 L 281,930 L 330,930 C 340,930 360,940 359,960 C 359,980 340,990 330,990 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#308
+00:05:07.000 --> 00:05:08.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""940.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#309
+00:05:08.000 --> 00:05:09.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""980.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#310
+00:05:09.000 --> 00:05:10.000
+<c.HEAD>"&lt;svg:circle cx=""360.0"" cy=""960.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#311
+00:05:10.000 --> 00:05:11.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#312
+00:05:11.000 --> 00:05:12.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#313
+00:05:12.000 --> 00:05:13.000
+<c.HEAD>"&lt;svg:path d=""M 310,890 L 290,890 C 300,874 300,846 290,830 L 310,830 C 330,830 350,840 360,860 C 350,880 330,890 310,890 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#314
+00:05:13.000 --> 00:05:14.000
+<c.HEAD>"&lt;svg:path d=""M 280,890 C 290,880 290,840 280,830"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#315
+00:05:14.000 --> 00:05:15.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""840.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#316
+00:05:15.000 --> 00:05:16.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""880.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#317
+00:05:16.000 --> 00:05:17.000
+<c.HEAD>"&lt;svg:circle cx=""360.0"" cy=""860.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#318
+00:05:17.000 --> 00:05:18.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#319
+00:05:18.000 --> 00:05:19.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#320
+00:05:19.000 --> 00:05:20.000
+<c.HEAD>"&lt;svg:path d=""M 950,930 L 999,930 L 999,990 L 950,990 C 940,990 920,980 921,960 C 921,940 940,930 950,930 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#321
+00:05:20.000 --> 00:05:21.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""980.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#322
+00:05:21.000 --> 00:05:22.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""940.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#323
+00:05:22.000 --> 00:05:23.000
+<c.HEAD>"&lt;svg:circle cx=""920.0"" cy=""960.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#324
+00:05:23.000 --> 00:05:24.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#325
+00:05:24.000 --> 00:05:25.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#326
+00:05:25.000 --> 00:05:26.000
+<c.HEAD>"&lt;svg:path d=""M 950,1010 L 999,1010 L 999,1070 L 950,1070 C 940,1070 920,1060 921,1040 C 921,1020 940,1010 950,1010 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#327
+00:05:26.000 --> 00:05:27.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1060.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#328
+00:05:27.000 --> 00:05:28.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1040.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#329
+00:05:28.000 --> 00:05:29.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1020.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#330
+00:05:29.000 --> 00:05:30.000
+<c.HEAD>"&lt;svg:circle cx=""920.0"" cy=""1040.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#331
+00:05:30.000 --> 00:05:31.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#332
+00:05:31.000 --> 00:05:32.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#333
+00:05:32.000 --> 00:05:33.000
+<c.HEAD>"&lt;svg:path d=""M 950,1110 L 999,1110 L 999,1170 L 950,1170 C 940,1170 920,1160 921,1140 C 921,1120 940,1110 950,1110 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#334
+00:05:33.000 --> 00:05:34.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1180.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#335
+00:05:34.000 --> 00:05:35.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1160.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#336
+00:05:35.000 --> 00:05:36.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1120.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#337
+00:05:36.000 --> 00:05:37.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1100.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#338
+00:05:37.000 --> 00:05:38.000
+<c.HEAD>"&lt;svg:circle cx=""920.0"" cy=""1140.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#339
+00:05:38.000 --> 00:05:39.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#340
+00:05:39.000 --> 00:05:40.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#341
+00:05:40.000 --> 00:05:41.000
+<c.HEAD>"&lt;svg:path d=""M 750,990 L 780,990 C 770,1006 770,1034 780,1050 L 760,1050 C 730,1050 710,1040 700,1020 C 710,1000 730,990 750,990 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#342
+00:05:41.000 --> 00:05:42.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""1060.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#343
+00:05:42.000 --> 00:05:43.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""1040.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#344
+00:05:43.000 --> 00:05:44.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""1000.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#345
+00:05:44.000 --> 00:05:45.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""980.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#346
+00:05:45.000 --> 00:05:46.000
+<c.HEAD>"&lt;svg:circle cx=""700.0"" cy=""1020.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#347
+00:05:46.000 --> 00:05:47.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#348
+00:05:47.000 --> 00:05:48.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#349
+00:05:48.000 --> 00:05:49.000
+<c.HEAD>"&lt;svg:path d=""M 510,1250 L 490,1250 C 500,1234 500,1206 490,1190 L 510,1190 C 530,1190 550,1200 560,1220 C 550,1240 530,1250 510,1250 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#350
+00:05:49.000 --> 00:05:50.000
+<c.HEAD>"&lt;svg:path d=""M 480,1250 C 490,1240 490,1200 480,1190"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#351
+00:05:50.000 --> 00:05:51.000
+<c.HEAD>"&lt;svg:circle cx=""480.0"" cy=""1200.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#352
+00:05:51.000 --> 00:05:52.000
+<c.HEAD>"&lt;svg:circle cx=""480.0"" cy=""1240.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#353
+00:05:52.000 --> 00:05:53.000
+<c.HEAD>"&lt;svg:circle cx=""560.0"" cy=""1220.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#354
+00:05:53.000 --> 00:05:54.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#355
+00:05:54.000 --> 00:05:55.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#356
+00:05:55.000 --> 00:05:56.000
+<c.HEAD>"&lt;svg:path d=""M 169,1345 L 199,1345 L 199,1375 L 169,1375 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#357
+00:05:56.000 --> 00:05:57.000
+<c.HEAD>"&lt;svg:circle cx=""184.0"" cy=""1360.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#358
+00:05:57.000 --> 00:05:58.000
+<c.HEAD>"&lt;svg:text text-anchor=""end"" x=""155.0"" y=""1369.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-ab""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-ab""&gt;A&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;3&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#359
+00:05:58.000 --> 00:05:59.000
+<c.HEAD>"&lt;svg:circle cx=""200.0"" cy=""1360.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#360
+00:05:59.000 --> 00:06:00.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#361
+00:06:00.000 --> 00:06:01.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#362
+00:06:01.000 --> 00:06:02.000
+<c.HEAD>"&lt;svg:path d=""M 169,1385 L 199,1385 L 199,1415 L 169,1415 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#363
+00:06:02.000 --> 00:06:03.000
+<c.HEAD>"&lt;svg:circle cx=""184.0"" cy=""1400.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#364
+00:06:03.000 --> 00:06:04.000
+<c.HEAD>"&lt;svg:text text-anchor=""end"" x=""155.0"" y=""1409.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-ab""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-ab""&gt;B&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;3&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#365
+00:06:04.000 --> 00:06:05.000
+<c.HEAD>"&lt;svg:circle cx=""200.0"" cy=""1400.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#366
+00:06:05.000 --> 00:06:06.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#367
+00:06:06.000 --> 00:06:07.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#368
+00:06:07.000 --> 00:06:08.000
+<c.HEAD>"&lt;svg:path d=""M 330,1410 L 281,1410 L 281,1350 L 330,1350 C 340,1350 360,1360 359,1380 C 359,1400 340,1410 330,1410 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#369
+00:06:08.000 --> 00:06:09.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""1360.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#370
+00:06:09.000 --> 00:06:10.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""1400.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#371
+00:06:10.000 --> 00:06:11.000
+<c.HEAD>"&lt;svg:circle cx=""360.0"" cy=""1380.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#372
+00:06:11.000 --> 00:06:12.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#373
+00:06:12.000 --> 00:06:13.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#374
+00:06:13.000 --> 00:06:14.000
+<c.HEAD>"&lt;svg:path d=""M 310,1310 L 290,1310 C 300,1294 300,1266 290,1250 L 310,1250 C 330,1250 350,1260 360,1280 C 350,1300 330,1310 310,1310 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#375
+00:06:14.000 --> 00:06:15.000
+<c.HEAD>"&lt;svg:path d=""M 280,1310 C 290,1300 290,1260 280,1250"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#376
+00:06:15.000 --> 00:06:16.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""1260.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#377
+00:06:16.000 --> 00:06:17.000
+<c.HEAD>"&lt;svg:circle cx=""280.0"" cy=""1300.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#378
+00:06:17.000 --> 00:06:18.000
+<c.HEAD>"&lt;svg:circle cx=""360.0"" cy=""1280.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#379
+00:06:18.000 --> 00:06:19.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#380
+00:06:19.000 --> 00:06:20.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#381
+00:06:20.000 --> 00:06:21.000
+<c.HEAD>"&lt;svg:circle cx=""1276.0"" cy=""1220.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#382
+00:06:21.000 --> 00:06:22.000
+<c.HEAD>"&lt;svg:circle cx=""1276.0"" cy=""1220.0"" r=""15.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#383
+00:06:22.000 --> 00:06:23.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""1305.0"" y=""1229.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-s""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-s""&gt;S&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;3&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#384
+00:06:23.000 --> 00:06:24.000
+<c.HEAD>"&lt;svg:circle cx=""1260.0"" cy=""1220.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#385
+00:06:24.000 --> 00:06:25.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#386
+00:06:25.000 --> 00:06:26.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#387
+00:06:26.000 --> 00:06:27.000
+<c.HEAD>"&lt;svg:path d=""M 950,1310 L 999,1310 L 999,1370 L 950,1370 C 940,1370 920,1360 921,1340 C 921,1320 940,1310 950,1310 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#388
+00:06:27.000 --> 00:06:28.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1360.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#389
+00:06:28.000 --> 00:06:29.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1320.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#390
+00:06:29.000 --> 00:06:30.000
+<c.HEAD>"&lt;svg:circle cx=""920.0"" cy=""1340.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#391
+00:06:30.000 --> 00:06:31.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#392
+00:06:31.000 --> 00:06:32.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#393
+00:06:32.000 --> 00:06:33.000
+<c.HEAD>"&lt;svg:path d=""M 950,1390 L 999,1390 L 999,1450 L 950,1450 C 940,1450 920,1440 921,1420 C 921,1400 940,1390 950,1390 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#394
+00:06:33.000 --> 00:06:34.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1440.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#395
+00:06:34.000 --> 00:06:35.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1420.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#396
+00:06:35.000 --> 00:06:36.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1400.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#397
+00:06:36.000 --> 00:06:37.000
+<c.HEAD>"&lt;svg:circle cx=""920.0"" cy=""1420.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#398
+00:06:37.000 --> 00:06:38.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#399
+00:06:38.000 --> 00:06:39.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#400
+00:06:39.000 --> 00:06:40.000
+<c.HEAD>"&lt;svg:path d=""M 950,1490 L 999,1490 L 999,1550 L 950,1550 C 940,1550 920,1540 921,1520 C 921,1500 940,1490 950,1490 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#401
+00:06:40.000 --> 00:06:41.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1560.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#402
+00:06:41.000 --> 00:06:42.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1540.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#403
+00:06:42.000 --> 00:06:43.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1500.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#404
+00:06:43.000 --> 00:06:44.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1480.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#405
+00:06:44.000 --> 00:06:45.000
+<c.HEAD>"&lt;svg:circle cx=""920.0"" cy=""1520.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#406
+00:06:45.000 --> 00:06:46.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#407
+00:06:46.000 --> 00:06:47.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#408
+00:06:47.000 --> 00:06:48.000
+<c.HEAD>"&lt;svg:path d=""M 950,1610 L 999,1610 L 999,1670 L 950,1670 C 940,1670 920,1660 921,1640 C 921,1620 940,1610 950,1610 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#409
+00:06:48.000 --> 00:06:49.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1680.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#410
+00:06:49.000 --> 00:06:50.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1660.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#411
+00:06:50.000 --> 00:06:51.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1640.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#412
+00:06:51.000 --> 00:06:52.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1620.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#413
+00:06:52.000 --> 00:06:53.000
+<c.HEAD>"&lt;svg:circle cx=""1000.0"" cy=""1600.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#414
+00:06:53.000 --> 00:06:54.000
+<c.HEAD>"&lt;svg:circle cx=""920.0"" cy=""1640.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#415
+00:06:54.000 --> 00:06:55.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#416
+00:06:55.000 --> 00:06:56.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#417
+00:06:56.000 --> 00:06:57.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""622.0"" y=""221.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-p""&gt;P&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-p""&gt;0&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#418
+00:06:57.000 --> 00:06:58.000
+<c.HEAD>"&lt;svg:path d=""M 620,200 L 660,200 L 660,240 L 620,240 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#419
+00:06:58.000 --> 00:06:59.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#420
+00:06:59.000 --> 00:07:00.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#421
+00:07:00.000 --> 00:07:01.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""622.0"" y=""541.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-p""&gt;P&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-p""&gt;1&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#422
+00:07:01.000 --> 00:07:02.000
+<c.HEAD>"&lt;svg:path d=""M 620,520 L 660,520 L 660,560 L 620,560 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#423
+00:07:02.000 --> 00:07:03.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#424
+00:07:03.000 --> 00:07:04.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#425
+00:07:04.000 --> 00:07:05.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""622.0"" y=""841.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-p""&gt;P&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-p""&gt;2&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#426
+00:07:05.000 --> 00:07:06.000
+<c.HEAD>"&lt;svg:path d=""M 620,820 L 660,820 L 660,860 L 620,860 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#427
+00:07:06.000 --> 00:07:07.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#428
+00:07:07.000 --> 00:07:08.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#429
+00:07:08.000 --> 00:07:09.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""622.0"" y=""1261.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-p""&gt;P&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-p""&gt;3&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#430
+00:07:09.000 --> 00:07:10.000
+<c.HEAD>"&lt;svg:path d=""M 620,1240 L 660,1240 L 660,1280 L 620,1280 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#431
+00:07:10.000 --> 00:07:11.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#432
+00:07:11.000 --> 00:07:12.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#433
+00:07:12.000 --> 00:07:13.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""622.0"" y=""361.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-g""&gt;G&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-g""&gt;0&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#434
+00:07:13.000 --> 00:07:14.000
+<c.HEAD>"&lt;svg:path d=""M 620,340 L 660,340 L 660,380 L 620,380 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#435
+00:07:14.000 --> 00:07:15.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#436
+00:07:15.000 --> 00:07:16.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#437
+00:07:16.000 --> 00:07:17.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""622.0"" y=""621.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-g""&gt;G&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-g""&gt;1&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#438
+00:07:17.000 --> 00:07:18.000
+<c.HEAD>"&lt;svg:path d=""M 620,600 L 660,600 L 660,640 L 620,640 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#439
+00:07:18.000 --> 00:07:19.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#440
+00:07:19.000 --> 00:07:20.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#441
+00:07:20.000 --> 00:07:21.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""622.0"" y=""921.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-g""&gt;G&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-g""&gt;2&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#442
+00:07:21.000 --> 00:07:22.000
+<c.HEAD>"&lt;svg:path d=""M 620,900 L 660,900 L 660,940 L 620,940 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#443
+00:07:22.000 --> 00:07:23.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#444
+00:07:23.000 --> 00:07:24.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#445
+00:07:24.000 --> 00:07:25.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""622.0"" y=""1341.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-g""&gt;G&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-g""&gt;3&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#446
+00:07:25.000 --> 00:07:26.000
+<c.HEAD>"&lt;svg:path d=""M 620,1320 L 660,1320 L 660,1360 L 620,1360 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#447
+00:07:26.000 --> 00:07:27.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#448
+00:07:27.000 --> 00:07:28.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#449
+00:07:28.000 --> 00:07:29.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""382.0"" y=""1121.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-c""&gt;C&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;"" class=""sig-c""&gt;3&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#450
+00:07:29.000 --> 00:07:30.000
+<c.HEAD>"&lt;svg:path d=""M 380,1100 L 420,1100 L 420,1140 L 380,1140 Z"" stroke-dasharray=""4.0,4.0"" stroke=""#000000"" stroke-width=""1.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#451
+00:07:30.000 --> 00:07:31.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#452
+00:07:31.000 --> 00:07:32.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#453
+00:07:32.000 --> 00:07:33.000
+<c.HEAD>"&lt;svg:circle cx=""1276.0"" cy=""1720.0"" r=""9.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#454
+00:07:33.000 --> 00:07:34.000
+<c.HEAD>"&lt;svg:circle cx=""1276.0"" cy=""1720.0"" r=""15.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#455
+00:07:34.000 --> 00:07:35.000
+<c.HEAD>"&lt;svg:text text-anchor=""start"" x=""1305.0"" y=""1729.0"" fill=""#000000"" style=""font-size:24px"" class=""sig-c""&gt;&lt;svg:tspan style=""font-style:italic;"" class=""sig-c""&gt;C&lt;svg:tspan style=""font-size:80%;baseline-shift:sub;""&gt;4&lt;/svg:tspan&gt;&lt;/svg:tspan&gt;&lt;/svg:text&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#456
+00:07:35.000 --> 00:07:36.000
+<c.HEAD>"&lt;svg:circle cx=""1260.0"" cy=""1720.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#457
+00:07:36.000 --> 00:07:37.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#458
+00:07:37.000 --> 00:07:38.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#459
+00:07:38.000 --> 00:07:39.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#460
+00:07:39.000 --> 00:07:40.000
+<c.HEAD>"&lt;svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#461
+00:07:40.000 --> 00:07:41.000
+<c.HEAD>"&lt;svg:path d=""M 750,1390 L 780,1390 C 770,1406 770,1434 780,1450 L 760,1450 C 730,1450 710,1440 700,1420 C 710,1400 730,1390 750,1390 Z"" stroke=""#000000"" stroke-width=""4.0"" fill=""none""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#462
+00:07:41.000 --> 00:07:42.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""1460.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#463
+00:07:42.000 --> 00:07:43.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""1440.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#464
+00:07:43.000 --> 00:07:44.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""1420.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#465
+00:07:44.000 --> 00:07:45.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""1400.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#466
+00:07:45.000 --> 00:07:46.000
+<c.HEAD>"&lt;svg:circle cx=""780.0"" cy=""1380.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#467
+00:07:46.000 --> 00:07:47.000
+<c.HEAD>"&lt;svg:circle cx=""700.0"" cy=""1420.0"" r=""2.0"" stroke=""#000000"" stroke-width=""4.0"" fill=""#000000""/&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#468
+00:07:47.000 --> 00:07:48.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#469
+00:07:48.000 --> 00:07:49.000
+<c.HEAD>"&lt;/svg:g&gt;"</c>
+
+SVG/Four_bit_adder_with_carry_lookahead.svg#470
+00:07:49.000 --> 00:07:50.000
+<c.HEAD>"&lt;svg:g id=""cla-annotations""&gt;&lt;svg:g id=""tour-unit-0""&gt;&lt;svg:rect x=""121"" y=""140"" width=""1218"" height=""300"" class=""stage-band"" rx=""8""/&gt;&lt;svg:text x=""133"" y=""162"" class=""stage-label""&gt;unit 0  ·  nibble A  ·  orbit AA55  ·  G0P0→C1&lt;/svg:text&gt;&lt;svg:animate attributeName=""opacity"" values=""1;0.14;0.14;0.14;0.14"" keyTimes=""0.0000;0.2500;0.5000;0.7500;1.0000"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;&lt;/svg:g&gt;&lt;svg:g id=""tour-unit-1""&gt;&lt;svg:rect x=""121"" y=""450"" width=""1218"" height=""280"" class=""stage-band"" rx=""8""/&gt;&lt;svg:text x=""133"" y=""472"" class=""stage-label""&gt;unit 1  ·  nibble A  ·  orbit 718E  ·  G1P1→C2&lt;/svg:text&gt;&lt;svg:animate attributeName=""opacity"" values=""0.14;1;0.14;0.14;0.14"" keyTimes=""0.0000;0.2500;0.5000;0.7500;1.0000"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;&lt;/svg:g&gt;&lt;svg:g id=""tour-unit-2""&gt;&lt;svg:rect x=""121"" y=""750"" width=""1218"" height=""300"" class=""stage-band"" rx=""8""/&gt;&lt;svg:text x=""133"" y=""772"" class=""stage-label""&gt;unit 2  ·  nibble 5  ·  orbit EE11  ·  G2P2→C3&lt;/svg:text&gt;&lt;svg:animate attributeName=""opacity"" values=""0.14;0.14;1;0.14;0.14"" keyTimes=""0.0000;0.2500;0.5000;0.7500;1.0000"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;&lt;/svg:g&gt;&lt;svg:g id=""tour-unit-3""&gt;&lt;svg:rect x=""121"" y=""1100"" width=""1218"" height=""420"" class=""stage-band"" rx=""8""/&gt;&lt;svg:text x=""133"" y=""1122"" class=""stage-label""&gt;unit 3  ·  nibble 5  ·  orbit CA35  ·  G3P3→C4&lt;/svg:text&gt;&lt;svg:animate attributeName=""opacity"" values=""0.14;0.14;0.14;1;1"" keyTimes=""0.0000;0.2500;0.5000;0.7500;1.0000"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;&lt;/svg:g&gt;&lt;svg:g id=""tour-index"" transform=""translate(980, 130)""&gt;&lt;svg:text x=""0"" y=""0"" class=""legend-title""&gt;I-222 orbit  K(·,1D1D)&lt;/svg:text&gt;&lt;svg:text x=""0"" y=""22"" class=""tour-idx""&gt;Δ^0  AA55  →  unit 0&lt;svg:animate attributeName=""opacity"" values=""1;0.12;0.12;0.12;0.12"" keyTimes=""0.0000;0.2500;0.5000;0.7500;1.0000"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;&lt;/svg:text&gt;&lt;svg:text x=""0"" y=""42"" class=""tour-idx""&gt;Δ^1  718E  →  unit 1&lt;svg:animate attributeName=""opacity"" values=""0.12;1;0.12;0.12;0.12"" keyTimes=""0.0000;0.2500;0.5000;0.7500;1.0000"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;&lt;/svg:text&gt;&lt;svg:text x=""0"" y=""62"" class=""tour-idx""&gt;Δ^2  EE11  →  unit 2&lt;svg:animate attributeName=""opacity"" values=""0.12;0.12;1;0.12;0.12"" keyTimes=""0.0000;0.2500;0.5000;0.7500;1.0000"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;&lt;/svg:text&gt;&lt;svg:text x=""0"" y=""82"" class=""tour-idx""&gt;Δ^3  CA35  →  unit 3&lt;svg:animate attributeName=""opacity"" values=""0.12;0.12;0.12;1;1"" keyTimes=""0.0000;0.2500;0.5000;0.7500;1.0000"" dur=""8s"" calcMode=""discrete"" repeatCount=""indefinite""/&gt;&lt;/svg:text&gt;&lt;/svg:g&gt;&lt;/svg:g&gt;&lt;svg:g id=""cla-equations"" transform=""translate(140, 1535)""&gt;&lt;svg:rect x=""0"" y=""0"" width=""1180"" height=""195"" rx=""6"" fill=""#f4f6f8"" stroke=""#ccc"" stroke-width=""1""/&gt;&lt;svg:text x=""14"" y=""18"" class=""legend-title""&gt;octal dialectic 16-pairs → 65536&lt;/svg:text&gt;&lt;svg:text x=""14"" y=""38"" class=""octal""&gt;Aᵢ Bᵢ  (aₕ,aₗ)(bₕ,bₗ)  octal digits of the limb&lt;/svg:text&gt;&lt;svg:text x=""14"" y=""56"" class=""octal""&gt;Gᵢ=Aᵢ·Bᵢ   Pᵢ=Aᵢ⊕Bᵢ   Cᵢ Sᵢ close the pair&lt;/svg:text&gt;&lt;svg:text x=""14"" y=""74"" class=""octal""&gt;x ∈ 0…65535  one contiguous 16-bit address&lt;/svg:text&gt;&lt;svg:text x=""14"" y=""92"" class=""octal""&gt;pair spans 8×8=64; full space 65536 addresses&lt;/svg:text&gt;&lt;svg:text x=""14"" y=""110"" class=""octal""&gt;shape of 1/998001: linear index → structured runs&lt;/svg:text&gt;&lt;svg:text x=""14"" y=""132"" class=""eq""&gt;CLA: Cᵢ₊₁=Gᵢ+Pᵢ·Cᵢ   Sᵢ=Pᵢ⊕Cᵢ&lt;/svg:text&gt;&lt;svg:text x=""14"" y=""152"" class=""eq""&gt;look-ahead expands C on the G/P vector&lt;/svg:text&gt;&lt;svg:text x=""14"" y=""172"" class=""eq""&gt;n width = how many 16-pairs fit the word&lt;/svg:text&gt;&lt;svg:text x=""400"" y=""18"" class=""legend-title""&gt;I-222 proof roll-up&lt;/svg:text&gt;&lt;svg:text x=""400"" y=""38"" class=""proof""&gt;boot mark: sector ends 55 AA → word 0xAA55&lt;/svg:text&gt;&lt;svg:text x=""400"" y=""56"" class=""proof""&gt;AA XOR 55 = FF;  AA XNOR 55 = 00  (NULL)&lt;/svg:text&gt;&lt;svg:text x=""400"" y=""74"" class=""proof""&gt;word turned XNOR = 00 00  (NULL NULL)&lt;/svg:text&gt;&lt;svg:text x=""400"" y=""92"" class=""proof""&gt;still points of L: 0000 3333 5555 6666&lt;/svg:text&gt;&lt;svg:text x=""400"" y=""110"" class=""proof""&gt;               9999 AAAA CCCC FFFF&lt;/svg:text&gt;&lt;svg:text x=""400"" y=""128"" class=""proof""&gt;even-parity nibbles repeated (8 still words)&lt;/svg:text&gt;&lt;svg:text x=""400"" y=""146"" class=""proof""&gt;square(FF)=5555 — a still point (carry-less)&lt;/svg:text&gt;&lt;svg:text x=""400"" y=""168"" class=""proof""&gt;AA55 orbit under 1D1D: AA55→718E→EE11→CA35&lt;/svg:text&gt;&lt;svg:text x=""780"" y=""18"" class=""legend-title""&gt;adder path · kernel&lt;/svg:text&gt;&lt;svg:text x=""780"" y=""38"" class=""proof""&gt;AA55 nibbles [A,A,5,5] sum 30&lt;/svg:text&gt;&lt;svg:text x=""780"" y=""56"" class=""proof""&gt;YHWH [10,5,6,5] sum 26  (share 10,5)&lt;/svg:text&gt;&lt;svg:text x=""780"" y=""74"" class=""kernel""&gt;L(p)=rotl1⊕rotl3⊕rotl14  (linear part)&lt;/svg:text&gt;&lt;svg:text x=""780"" y=""92"" class=""kernel""&gt;K(p,C)=L(p)⊕C   delta = K(·, const)&lt;/svg:text&gt;&lt;svg:text x=""780"" y=""110"" class=""kernel""&gt;const 0x1D1D → AA55 period 4&lt;/svg:text&gt;&lt;svg:text x=""780"" y=""128"" class=""kernel""&gt;const 0x1D   → every word period 8&lt;/svg:text&gt;&lt;svg:text x=""780"" y=""146"" class=""kernel""&gt;tour lights unit s on orbit word s&lt;/svg:text&gt;&lt;svg:text x=""780"" y=""168"" class=""kernel""&gt;deterministic replay; mask keeps width&lt;/svg:text&gt;&lt;/svg:g&gt;&lt;svg:g id=""cla-legend"" transform=""translate(140, 118)""&gt;&lt;svg:text x=""0"" y=""0"" class=""sig-g""&gt;G generate&lt;/svg:text&gt;&lt;svg:text x=""110"" y=""0"" class=""sig-p""&gt;P propagate&lt;/svg:text&gt;&lt;svg:text x=""230"" y=""0"" class=""sig-c""&gt;C carry&lt;/svg:text&gt;&lt;svg:text x=""330"" y=""0"" class=""sig-s""&gt;S sum&lt;/svg:text&gt;&lt;svg:text x=""420"" y=""0"" class=""sig-ab""&gt;A/B data&lt;/svg:text&gt;&lt;/svg:g&gt;&lt;/svg:g&gt;&lt;svg:text x=""140"" y=""1755"" class=""small""&gt;I-222: variables as octal dialectic 16-pairs on 65536; tour follows AA55 orbit under K(·,1D1D) (period 4); each step lights one unit/nibble of the A A 5 5 path; still points of L and NULL NULL squared&lt;/svg:text&gt;&lt;/svg&gt;"</c>
+

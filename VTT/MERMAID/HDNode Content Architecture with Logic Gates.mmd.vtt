@@ -1,0 +1,120 @@
+WEBVTT - MERMAID/HDNode Content Architecture with Logic Gates.mmd
+
+NOTE
+Written by zcue in Plan 9 from MERMAID/HDNode Content Architecture with Logic Gates.mmd.wsn: one cue per LITERAL, one animation frame each.
+No position is written: a cue sits at its literal's offset in the source
+buffer, found when the track is read (exact: row and column of the 65,536;
+or the hypotenuse of the two).
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#1
+00:00:00.000 --> 00:00:01.000
+<c.HEAD>"graph TD"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#2
+00:00:01.000 --> 00:00:02.000
+<c.HEAD>"    subgraph HDNodeWallet"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#3
+00:00:02.000 --> 00:00:03.000
+<c.HEAD>"        HD[HDNode] --&gt; LC[Logic Controller]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#4
+00:00:03.000 --> 00:00:04.000
+<c.HEAD>"        LC --&gt; LG[Logic Gates]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#5
+00:00:04.000 --> 00:00:05.000
+<c.HEAD>"        LG --&gt; NAND[NAND Gate]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#6
+00:00:05.000 --> 00:00:06.000
+<c.HEAD>"        LG --&gt; NOR[NOR Gate]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#7
+00:00:06.000 --> 00:00:07.000
+<c.HEAD>"        HD --&gt; Content"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#8
+00:00:07.000 --> 00:00:08.000
+<c.HEAD>"        Content --&gt; Doc[Encrypted JSON Documents]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#9
+00:00:08.000 --> 00:00:09.000
+<c.HEAD>"        Content --&gt; Assets[Encrypted Binary Assets]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#10
+00:00:09.000 --> 00:00:10.000
+<c.HEAD>"        Content --&gt; Scripts[JSON Scripts]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#11
+00:00:10.000 --> 00:00:11.000
+<c.HEAD>"        HD --&gt; RPCInterface[RPC Interface]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#12
+00:00:11.000 --> 00:00:12.000
+<c.HEAD>"        RPCInterface --&gt; Methods[Method Definitions]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#13
+00:00:12.000 --> 00:00:13.000
+<c.HEAD>"        Methods --&gt; Retrieve[Retrieval Methods]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#14
+00:00:13.000 --> 00:00:14.000
+<c.HEAD>"        Methods --&gt; Validate[Validation Methods]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#15
+00:00:14.000 --> 00:00:15.000
+<c.HEAD>"        LC --&gt; ValidationEngine[Validation Engine]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#16
+00:00:15.000 --> 00:00:16.000
+<c.HEAD>"        ValidationEngine --&gt; GraphCompat[Graph Compatibility]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#17
+00:00:16.000 --> 00:00:17.000
+<c.HEAD>"        ValidationEngine --&gt; NodeCompat[Node Compatibility]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#18
+00:00:17.000 --> 00:00:18.000
+<c.HEAD>"        HD --&gt; ServiceDesc[Service Description]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#19
+00:00:18.000 --> 00:00:19.000
+<c.HEAD>"        ServiceDesc --&gt; PropRules[Propagation Rules]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#20
+00:00:19.000 --> 00:00:20.000
+<c.HEAD>"        ServiceDesc --&gt; ConnRules[Connection Rules]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#21
+00:00:20.000 --> 00:00:21.000
+<c.HEAD>"    end"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#22
+00:00:21.000 --> 00:00:22.000
+<c.HEAD>"    subgraph Networking"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#23
+00:00:22.000 --> 00:00:23.000
+<c.HEAD>"        RPCInterface --&gt; P2P[P2P Communication]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#24
+00:00:23.000 --> 00:00:24.000
+<c.HEAD>"        P2P --&gt; Online[Online Mode]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#25
+00:00:24.000 --> 00:00:25.000
+<c.HEAD>"        P2P --&gt; Offline[Offline Mode]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#26
+00:00:25.000 --> 00:00:26.000
+<c.HEAD>"        ServiceDesc --&gt; Discovery[Content Discovery]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#27
+00:00:26.000 --> 00:00:27.000
+<c.HEAD>"        Discovery --&gt; DHT[DHT Mapping]"</c>
+
+MERMAID/HDNode Content Architecture with Logic Gates.mmd#28
+00:00:27.000 --> 00:00:28.000
+<c.HEAD>"    end"</c>
+
