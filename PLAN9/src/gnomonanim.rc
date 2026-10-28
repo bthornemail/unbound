@@ -1,0 +1,18 @@
+#!/bin/rc
+# gnomonanim.rc - inside Plan 9: polytron's tetra-gnomon-anim (PLAN9/space/gnomon.c),
+# its eight frames drawn offscreen (gnomon -f), each to a GIF, and the eight
+# together as one animated GIF at the original's half second a frame
+# (togif -d 500), to the output disk as gnomon/. Needs /dev/draw (as the floor).
+rfork e
+w=/tmp/zga
+rm -rf $w
+mkdir -p $w/unbound $w/gnomon
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/space/gnomon.c} || exit tar
+@{cd $w/unbound/PLAN9/space && 8c gnomon.c && 8l -o $w/anim gnomon.8} || exit compile
+for(i in 0 1 2 3 4 5 6 7){
+	$w/anim -f $i $w/frame$i || exit frame
+	togif $w/frame$i > $w/gnomon/frame$i.gif || exit togif
+}
+togif -d 500 -l 0 $w/frame0 $w/frame1 $w/frame2 $w/frame3 $w/frame4 $w/frame5 $w/frame6 $w/frame7 > $w/gnomon/gnomon.gif || exit togif
+ls -l $w/gnomon
+@{cd $w && tar cf /dev/sd02/data gnomon} || exit tar

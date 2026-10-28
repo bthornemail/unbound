@@ -90,6 +90,17 @@ main(void)
 		odd += s != 0;
 	}
 	check(smprint("L^0 + ... + L^7 sends every constant to 0 (%d of 65536 otherwise): K^8 is the identity for every C", odd), odd == 0);
+	/* the cycle as tetra-gnomon-anim prints it and polytron's docs/GNOMON.md writes it */
+	{
+		static int printed[8] = { 0x4242, 0x061B, 0xFD75, 0x6E04, 0xB7B7, 0x3F22, 0x0880, 0x573D };
+
+		for(odd = 0, p = 0x4242, k = 0; k < 8; k++){
+			odd += p != printed[k];
+			p = L(p) ^ 0x1d;
+		}
+		check(smprint("GNOMON.md: 4242 061B FD75 6E04 B7B7 3F22 0880 573D, each K(p, 0x1D) the next, the eighth back to the seed (%d of 8 otherwise)", odd),
+			odd == 0 && p == 0x4242);
+	}
 	periods(0x1d, count);
 	check("0x1D: all 65,536 states of period 8 (I-195)", count[8] == 65536);
 	periods(0x1d1d, count);
