@@ -111,6 +111,10 @@ PLAN9/src/poly.rc
 PLAN9/in/poly/apply9
 PLAN9/in/poly/apply10
 PLAN9/in/poly/cascade
+PLAN9/src/zprobe.c
+PLAN9/src/probe.rc
+PLAN9/src/zbar.c
+PLAN9/src/bar.rc
 $(cd "$HERE" && ls in/grex/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/vtttime/* | sed 's|^|PLAN9/|')
 PLAN9/in/pcas/table

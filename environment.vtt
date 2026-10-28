@@ -94,3 +94,7 @@ A negated class ([^...]) needs a universe of characters, which WSN leaves undefi
 nibble-parity-deviation
 00:00:22.000 --> 00:00:23.000
 The author: the nibble parity is the deviation from YHWH. Measured (zpoly deviation): what apply leaves in place, with each value's nibble parity, is 16 values at 8 bits (one application; parities 0 3 12 15), 4 at 10 bits (two applications; 000 155 2AA 3FF, parities 0 1 2 3, the top two bits, since a repeated nibble cancels) and 4 at 11 bits (000 020 050 070, parities 0 2 5 7). Each set folds to zero by XOR, but that holds for any linear map (the set is a subspace), so the fold is no evidence. YHWH as ASCII folds to 0E, not zero. The reading is recorded, not checked.
+
+reading-binds
+00:00:23.000 --> 00:00:24.000
+The author: the YHWH reading binds an observer to the ZIGUAROTH codex and the Codice mapping, like a pop-up book restoring a variant of the Library of Alexandria by rebuilding the tower of Babel. So the reading is a binding, not a derivation: the port checks the values (000 155 2AA 3FF at 10 bits, a subspace of four, two of them fixed after one application), and the reading names them. The values are set by apply9, not chosen among the 174251 two-dimensional subspaces of GF(2)^10 (698027 of GF(2)^11); the name is the observer's.

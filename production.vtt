@@ -46,3 +46,7 @@ The omi-dom port, 2026-10-28: 7 of 48 shared modules in Plan 9 (unbound/PLAN9/sr
 omi-dom-port-9
 00:00:10.000 --> 00:00:11.000
 The omi-dom port, 2026-10-28: 9 of 48 shared modules in Plan 9, with polytope-9d-inject and polytope-10d-infer (zpoly): the polytope tower is two algebras, an involution at 8 bits and an order-6 map at 10, and at 11 bits apply10 is not a permutation. 39 remain; next system-probe, then worker-barrier.
+
+omi-dom-port-11
+00:00:11.000 --> 00:00:12.000
+The omi-dom port, 2026-10-28: 11 of 48 shared modules in Plan 9, with system-probe (zprobe; its health was a constant) and worker-barrier (zbar; a real barrier, raced, with a falsifier). 37 remain.
