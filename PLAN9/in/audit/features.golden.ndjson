@@ -1,0 +1,51 @@
+{"test":"wikipedia-adapter","core":true,"title":"Fano plane","expectedID":390404}
+{"test":"arxiv-adapter","core":true,"id":"2301.00001","expectedTitle":"Fano plane"}
+{"test":"archive-adapter","core":true,"id":"metadata/12345","expectedFormat":"JSON"}
+{"test":"adapter-to-fano","core":true,"source":"wikipedia","title":"Fano plane","expectedMatrix":[0,2,1,2,2,0,2]}
+{"test":"adapter-to-mnemonic","core":true,"source":"wikipedia","title":"Fano plane","expectedMnemonic":"observer-geometry-plane"}
+{"test":"document-adapters-golden-coverage-1","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847022}
+{"test":"document-adapters-golden-coverage-2","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847023}
+{"test":"document-adapters-golden-coverage-3","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847024}
+{"test":"document-adapters-golden-coverage-4","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847025}
+{"test":"document-adapters-golden-coverage-5","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847026}
+{"test":"seed-to-matrix","core":true,"seed":9069010,"expected":[0,2,1,2,2,0,2]}
+{"test":"matrix-to-seed","core":true,"matrix":[0,2,1,2,2,0,2],"expected":9069010}
+{"test":"angle-to-seed","core":true,"matrix":[0,2,1,2,2,0,2],"angle":164.3,"expected":9069010}
+{"test":"seed-to-mnemonic","core":true,"seed":9069010,"expected":"observer-geometry-plane"}
+{"test":"mnemonic-to-seed","core":true,"mnemonic":"observer-geometry-plane","expected":9069010}
+{"test":"matrix-rotation","core":true,"matrix":[0,2,1,2,2,0,2],"rotation":51.4,"expected":[2,0,2,1,2,2,0]}
+{"test":"fano-point","core":true,"matrix":[0,2,1,2,2,0,2],"expected":2}
+{"test":"quadrant-counts","core":true,"matrix":[0,2,1,2,2,0,2],"expected":{"KK":2,"KU":1,"UK":3,"UU":1}}
+{"test":"line-identification","core":true,"matrix":[0,2,1,2,2,0,2],"line":3,"expected":[0,2,1]}
+{"test":"geometric-encoding-golden-coverage-1","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847015}
+{"test":"geometric-encoding-golden-coverage-2","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847016}
+{"test":"geometric-encoding-golden-coverage-3","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847017}
+{"test":"7bit-render","core":true,"matrix":[0,2,1,2,2,0,2],"expectedLEDs":[255,0,0,0,0,0,0]}
+{"test":"61bit-render","core":true,"matrix":[0,2,1,2,2,0,2],"expectedRings":5}
+{"test":"241bit-render","core":true,"matrix":[0,2,1,2,2,0,2],"expectedRings":9}
+{"test":"16x16-render","core":true,"seed":9069010,"expectedPixels":47}
+{"test":"color-mapping","core":true,"point":2,"expectedColor":"#ff8800"}
+{"test":"brightness-distribution","core":true,"matrix":[0,2,1,2,2,0,2],"expected":[128,96,82,71,64,58,52]}
+{"test":"light-rendering-golden-coverage-1","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847019}
+{"test":"light-rendering-golden-coverage-2","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847020}
+{"test":"packet-format","core":true,"packet":{"source":1,"dest":7,"matrix":[0,2,1,2,2,0,2]},"expectedSize":24}
+{"test":"lora-transmission","core":true,"packetSize":24,"expectedRange":"10-40km"}
+{"test":"federation","core":true,"line":3,"expectedDifferential":"unique"}
+{"test":"relay-chain","core":true,"satellites":7,"expectedLatency":9100}
+{"test":"mesh-convergence","core":true,"nodes":7,"expectedTime":500}
+{"test":"mesh-networking-golden-coverage-1","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847021}
+{"test":"wordnet-lookup","core":true,"word":"wisdom","expected":5}
+{"test":"wordnet-synset","core":true,"offset":1234567,"expected":["wisdom","sapience"]}
+{"test":"wordnet-hypernyms","core":true,"word":"wisdom","expected":["content","cognition","knowledge"]}
+{"test":"wordnet-similarity","core":true,"word1":"wisdom","word2":"knowledge","expected":0.82}
+{"test":"knowledge-triple","core":true,"subject":"wisdom","object":"knowledge","expected":"is_a_form_of"}
+{"test":"fano-mapping","core":true,"word":"wisdom","expectedPoint":2}
+{"test":"synset-to-matrix","core":true,"word":"wisdom","expectedMatrix":[1,2,3,0,1,2,3]}
+{"test":"semantic-mapping-golden-coverage-1","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847018}
+{"test":"semantic-mapping-golden-coverage-2","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847019}
+{"test":"semantic-mapping-golden-coverage-3","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847020}
+{"test":"semantic-mapping-golden-coverage-4","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847021}
+{"test":"semantic-mapping-golden-coverage-5","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847022}
+{"test":"semantic-mapping-golden-coverage-6","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847023}
+{"test":"semantic-mapping-golden-coverage-7","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847024}
+{"test":"semantic-mapping-golden-coverage-8","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847025}

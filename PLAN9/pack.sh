@@ -96,6 +96,9 @@ PLAN9/src/zcast.c
 PLAN9/src/cast.rc
 PLAN9/src/stack.c
 PLAN9/src/stack.rc
+PLAN9/src/zaudit.c
+PLAN9/src/audit.rc
+$(cd "$HERE" && ls in/audit/* | sed 's|^|PLAN9/|')
 
 $(cd "$HERE" && ls in/narrative/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/tries/*.paths | sed 's|^|PLAN9/|')

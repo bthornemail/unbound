@@ -1,0 +1,39 @@
+{"test":"wikipedia-not-found","core":true,"title":"NonexistentArticle","expectedError":"404"}
+{"test":"arxiv-invalid-id","core":true,"id":"invalid","expectedError":"BAD_REQUEST"}
+{"test":"archive-rate-limit","core":true,"id":"metadata/12345","requests":100,"expectedError":"RATE_LIMIT"}
+{"test":"adapter-timeout","core":true,"source":"wikipedia","title":"Fano plane","delay":10000,"expectedError":"TIMEOUT"}
+{"test":"malformed-response","core":true,"source":"wikipedia","title":"Fano plane","expectedError":"PARSE_ERROR"}
+{"test":"document-adapters-negative-coverage-1","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847022}
+{"test":"document-adapters-negative-coverage-2","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847023}
+{"test":"invalid-matrix","core":true,"matrix":[0,2,1,2,2,0,9],"expectedError":"INVALID_QUADRANT"}
+{"test":"angle-outside-range","core":true,"matrix":[0,2,1,2,2,0,2],"angle":361,"expectedError":"ANGLE_RANGE"}
+{"test":"seed-overflow","core":true,"seed":16777216,"expectedError":"SEED_RANGE"}
+{"test":"point-outside-range","core":true,"point":9,"expectedError":"POINT_RANGE"}
+{"test":"matrix-too-short","core":true,"matrix":[0,2,1,2,2,0],"expectedError":"MATRIX_LENGTH"}
+{"test":"mnemonic-invalid","core":true,"mnemonic":"observer-geometry-xyz","expectedError":"WORD_NOT_IN_LIST"}
+{"test":"geometric-encoding-negative-coverage-1","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847015}
+{"test":"geometric-encoding-negative-coverage-2","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847016}
+{"test":"invalid-led-index","core":true,"index":8,"expectedError":"INDEX_RANGE"}
+{"test":"brightness-overflow","core":true,"brightness":256,"expectedError":"BRIGHTNESS_RANGE"}
+{"test":"color-format","core":true,"color":"not-a-color","expectedError":"INVALID_COLOR"}
+{"test":"ring-overflow","core":true,"ring":10,"expectedError":"RING_RANGE"}
+{"test":"power-exceeded","core":true,"leds":100,"expectedError":"POWER_LIMIT"}
+{"test":"light-rendering-negative-coverage-1","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847019}
+{"test":"packet-corruption","core":true,"packet":{"source":1,"matrix":[0,2,1,2,2,0,2]},"checksum":false,"expectedError":"CHECKSUM_FAIL"}
+{"test":"collision","core":true,"nodes":10,"expectedError":"COLLISION"}
+{"test":"out-of-range","core":true,"distance":"100km","expectedError":"SIGNAL_LOST"}
+{"test":"invalid-protocol","core":true,"protocol":"bluetooth","expectedError":"UNSUPPORTED"}
+{"test":"queue-overflow","core":true,"packets":1000,"expectedError":"QUEUE_FULL"}
+{"test":"mesh-networking-negative-coverage-1","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847021}
+{"test":"mesh-networking-negative-coverage-2","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847022}
+{"test":"mesh-networking-negative-coverage-3","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847023}
+{"test":"word-not-found","core":true,"word":"xyzabc123","expectedError":"NOT_FOUND"}
+{"test":"empty-word","core":true,"word":"","expectedError":"INVALID_INPUT"}
+{"test":"sql-injection","core":true,"word":"'; DROP TABLE synsets; --","expectedError":"SAFE"}
+{"test":"timeout","core":true,"word":"wisdom","delay":5000,"expectedError":"TIMEOUT"}
+{"test":"malformed-offset","core":true,"offset":"invalid","expectedError":"BAD_REQUEST"}
+{"test":"semantic-mapping-negative-coverage-1","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847018}
+{"test":"semantic-mapping-negative-coverage-2","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847019}
+{"test":"semantic-mapping-negative-coverage-3","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847020}
+{"test":"semantic-mapping-negative-coverage-4","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847021}
+{"test":"semantic-mapping-negative-coverage-5","core":false,"action":"auto-generated-coverage","expected":true,"timestamp":1771232847022}

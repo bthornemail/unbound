@@ -1,0 +1,24 @@
+{"test":"fano-invalid-matrix","node":"fano-core","action":"encode","matrix":[0,2,1,2,2,0,8],"expected_error":"INVALID_QUADRANT","timestamp":1771230062881}
+{"test":"fano-angle-outside","node":"fano-core","action":"encode","matrix":[0,2,1,2,2,0,2],"angle":450,"expected_error":"ANGLE_RANGE","timestamp":1771230063881}
+{"test":"fano-seed-overflow","node":"fano-core","action":"seed_to_matrix","seed":16777216,"expected_error":"SEED_RANGE","timestamp":1771230064881}
+{"test":"fano-point-outside","node":"fano-core","action":"point_details","point":9,"expected_error":"POINT_RANGE","timestamp":1771230065881}
+{"test":"docs-missing-file","node":"documentation","action":"check_file","path":"docs/nonexistent.md","expected_exists":false,"timestamp":1771293969736}
+{"test":"docs-broken-link","node":"documentation","action":"check_links","url":"https://nonexistent.example.com","expected_broken":true,"timestamp":1771293970736}
+{"test":"docs-orphaned-page","node":"documentation","action":"check_navigation","page":"docs/old-page.md","expected_in_nav":false,"timestamp":1771293971736}
+{"test":"docs-spelling","node":"documentation","action":"spell_check","expected_errors":0,"timestamp":1771293972736}
+{"test":"fano-invalid-matrix","node":"fano-core","action":"encode","matrix":[0,2,1,2,2,0,8],"expected_error":"INVALID_QUADRANT","timestamp":1771293957736}
+{"test":"fano-angle-outside","node":"fano-core","action":"encode","matrix":[0,2,1,2,2,0,2],"angle":450,"expected_error":"ANGLE_RANGE","timestamp":1771293958736}
+{"test":"fano-seed-overflow","node":"fano-core","action":"seed_to_matrix","seed":16777216,"expected_error":"SEED_RANGE","timestamp":1771293959736}
+{"test":"fano-point-outside","node":"fano-core","action":"point_details","point":9,"expected_error":"POINT_RANGE","timestamp":1771293960736}
+{"test":"firmware-sensor-fail","node":"esp32","action":"read_analog","pin":99,"expected_error":"INVALID_PIN","timestamp":1771293965736}
+{"test":"firmware-power-loss","node":"esp32","action":"simulate_brownout","voltage":3,"expected_reset":true,"timestamp":1771293966736}
+{"test":"firmware-lora-collision","node":"esp32","action":"send_packet","concurrent_nodes":10,"expected_collision_rate":0.3,"timestamp":1771293967736}
+{"test":"firmware-memory-leak","node":"esp32","action":"loop_iterations","count":10000,"expected_heap_stable":true,"timestamp":1771293968736}
+{"test":"server-path-traversal","node":"c-server","route":"/../../etc/passwd","expected_status":403,"timestamp":1771293961736}
+{"test":"server-large-payload","node":"wordnet-service","route":"/api/wordnet/lookup","payload_size_mb":100,"expected_status":413,"timestamp":1771293962736}
+{"test":"server-rate-limit","node":"c-server","route":"/","requests_per_second":1000,"expected_limit":100,"timestamp":1771293963736}
+{"test":"server-websocket-flood","node":"c-server","port":8081,"messages_per_second":10000,"expected_disconnect":true,"timestamp":1771293964736}
+{"test":"wordnet-nonexistent","node":"wordnet-service","action":"lookup","word":"xyzabc123","expected_error":"NOT_FOUND","timestamp":1771293953736}
+{"test":"wordnet-malformed","node":"wordnet-service","action":"lookup","word":"","expected_error":"INVALID_INPUT","timestamp":1771293954736}
+{"test":"wordnet-injection","node":"wordnet-service","action":"lookup","word":"'; DROP TABLE synsets; --","expected_error":"SAFE","timestamp":1771293955736,"note":"Must be sanitized; never executed."}
+{"test":"wordnet-timeout","node":"wordnet-service","action":"lookup","word":"wisdom","delay_ms":5000,"expected_timeout":true,"timestamp":1771293956736}

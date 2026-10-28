@@ -62,3 +62,19 @@ agent-numbering
 cue-length
 00:00:14.000 --> 00:00:15.000
 2026-10-28 the author: the cue length is the animation frame. A cue is one frame; its second is the frame, not a clock; how long a frame lasts is the renderer's.
+
+submodules
+00:00:15.000 --> 00:00:16.000
+2026-10-28 the author: boxedPINE's proofs/ (github omi-axioms) and types/ (github omi-types) are submodules, on main; the author asked Claude to manage them. A change is committed and pushed inside the submodule first, then its commit recorded in boxedPINE (git add types). AGENTS.md says how.
+
+haskell-normalizer
+00:00:16.000 --> 00:00:17.000
+2026-10-28 the author: "the haskell is like a normalizer now of the wirth notation". OMI.WSN's render is the normal form: Plan 9 writes WSN in it (zaudit), and render (parse text) == text is the check.
+
+one-import
+00:00:17.000 --> 00:00:18.000
+2026-10-28: OMI.Types carries every type exported in types/src/OMI (99). The three distinct Bools and Lisp's DecisionTable come as FanoBool, LispBool, RelationBool, LispDecisionTable.
+
+omi-files-port
+00:00:18.000 --> 00:00:19.000
+2026-10-28 the author: port boxed/omi-files to Plan 9 and remove each once finished. Settled: the contracts first (goldens and negatives to WSN, checked by zlazy and OMI.WSN), implementations project by project (the C projects port; TypeScript, Python, Emacs Lisp and Scheme have no Plan 9 runtime and would be rewrites). A folder is removed only when its work is on GitHub, another working copy exists, and its port is verified.

@@ -122,3 +122,19 @@ The stack element (CSP, E empty and F full) ported to Wirth syntax notation (PLA
 stack-server
 00:00:29.000 --> 00:00:30.000
 The stack element live (PLAN9/src/stack.c, stack.rc): a lib9p server at /n/stack with cast, in, out and state, the live form of cast.rc's grammar. Before a cast nothing is taken (letter undefined). 15 of 15 as expected: identity (Y in, Y out; a in, a out, not A), fullness (a second write while full refused, a read while empty refused), the cast (YHWH refuses a; YAHWEH takes a and refuses A, since its cast holds the vowel lowered 0x20), and each zeroth's sequence through the element: YHWH's under both casts, YAHWEH's only under its own. The element changes no character; the 0x20 is the cast's.
+
+omi-wsn
+00:00:30.000 --> 00:00:31.000
+types: OMI.WSN, Wirth syntax notation typed over Byte with hidden constructors: parse (Wirth's seven productions), render (one production a line), accepts (as zlazy), cast (terms.mjs's pipeline). Tests give Plan 9's answers: zcast's casts exactly, cast.rc's stack sentences, WSN in itself read back unchanged, lazy.rc's logic and adder. List operations are folds: right where the search stops at the first whole match, left where the zeroth's order is kept.
+
+accepts-memo
+00:00:31.000 --> 00:00:32.000
+OMI.WSN.accepts takes a step only when the question reaches it and never twice: a table keeps each production's ends at each place; expanded lists them. Their number equals zlazy's for all 8 stack sentences under both casts: 16 of 16 (4 to 26).
+
+zaudit
+00:00:32.000 --> 00:00:33.000
+zaudit (audit.rc) writes light-garden audit's contract as WSN: canonical JSON, the audit's 94 top-level keys only, ERRORRECORD a record with a key naming an error. All 138 features and traces records are in the contract; ERRORRECORD holds for 0 of 75 goldens and 39 of 63 negatives. OMI.WSN normalizes the grammar unchanged and gives the same 276 answers; an unknown key, white space and a leading zero are refused.
+
+audit-negatives
+00:00:33.000 --> 00:00:34.000
+24 of 63 audit negatives carry no error key: 11 trace negatives state negation by value (expected_exists false, expected_broken true), and 13 feature negatives are auto-generated-coverage filler with expected true, the same shape as golden filler: they assert nothing negative.

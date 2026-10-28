@@ -18,3 +18,11 @@ When a cue anywhere records a decision by the author, global.vtt gets the decisi
 author
 00:00:03.000 --> 00:00:04.000
 Observes production.vtt: what is placed, and what is waiting for a decision or a commit.
+
+codex
+00:00:04.000 --> 00:00:05.000
+Codex: the author hands it briefs. The WSN brief it receives says OMI.WSN already exists (parse, render, accepts, expanded, cast) under types/AGENTS.md's rules, and carries the corrections: no Name decided by a prefix, two readings of ADONAI, no self-referencing WORD production, nothing settled on which form is stronger.
+
+forwarded-replies
+00:00:05.000 --> 00:00:06.000
+Other assistants' replies the author forwards are read as claims and tested against the code, the spec or Plan 9 before anything is built on them.

@@ -1,0 +1,30 @@
+#!/bin/rc
+# audit.rc - inside Plan 9: light-garden's audit records (PLAN9/in/audit, read
+# from ~/devops/light-garden/audit) against their contract in Wirth syntax
+# notation (zaudit), each line asked of RECORD and of ERRORRECORD by zlazy.
+# Writes audit.wsn and one line per record (kind side RECORD ERRORRECORD
+# expansions record) to the output disk as audit/.
+rfork e
+ifs='
+'
+w=/tmp/za
+rm -rf $w
+mkdir -p $w/unbound $w/audit
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(t in zaudit zlazy zwsn){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+$w/zaudit $p/in/audit/KEYS > $w/audit/audit.wsn
+$w/zwsn $w/audit/audit.wsn || exit zwsn
+fn ask {
+	if($w/zlazy $w/audit/audit.wsn $1 $2 >/dev/null) echo yes
+	if not echo no
+}
+{ for(f in features.golden features.negative traces.golden traces.negative){
+	for(r in `{cat $p/in/audit/$f.ndjson}){
+		echo $f `{ask RECORD $r} `{ask ERRORRECORD $r} $r
+	}
+} } > $w/audit/answers
+@{cd $w && tar cf /dev/sd02/data audit} || exit tar

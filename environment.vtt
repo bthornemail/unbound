@@ -46,3 +46,15 @@ The guest's /tmp is on disk and outlives a reboot, so a tool built into /tmp is 
 rc-no-return
 00:00:10.000 --> 00:00:11.000
 9legacy's rc has no return: a function ends by falling through, so carry the answer in a variable. A backquote splits its output into words: join with $"var before comparing a phrase.
+
+rc-loop-redirect
+00:00:11.000 --> 00:00:12.000
+In rc, a redirection after a for loop's body applies to each pass: for(f in a b){...} &gt; out keeps only the last pass. Wrap the loop: { for(...){...} } &gt; out.
+
+tar-append
+00:00:12.000 --> 00:00:13.000
+tar rf /dev/sd02/data file appends to the output disk's tar instead of replacing it.
+
+boxed-push
+00:00:13.000 --> 00:00:14.000
+boxed is public with a 273 MB .git; a push carrying a binary archive (d2dc754) takes many minutes. fold.pdf (Hutton's paper) stays untracked there: a published paper is not redistributed.

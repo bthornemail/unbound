@@ -26,3 +26,11 @@ CONFIGURATION.yaml: rule P2 removed (66 rules); Y1 Y2 as the TIMELINE view; V1-V
 uncommitted
 00:00:05.000 --> 00:00:06.000
 Nothing committed in ZIGUAROTH or unbound since 2026-10-27. Waiting for the author: five scratch files from the interrupted template step (wsn/template.wsn, wsn/algol.wsn, in/template.txt, in/algol.txt, src/template.rc); SOURCES rows for the PL360 example and the B tutorial; the zkey.c comment.
+
+committed
+00:00:06.000 --> 00:00:07.000
+Replaces uncommitted: the five scratch files were committed by the author in unbound b7485f0. 2026-10-28 pushed: unbound main 7e81138 (stack element, logs, frame and key, text tracks, floor and Observer); boxedPINE main with proofs and types as submodules (2505658); omi-types a2726cc (OMI.WSN, OMI.Types); omi-canvas, polytron, meta-log-db their waiting commits. boxed: 5bb661f records types and meta-log-db, pushing.
+
+audit-contract
+00:00:07.000 --> 00:00:08.000
+unbound/PLAN9: zaudit.c, audit.rc and in/audit (the 138 records read from ~/devops/light-garden/audit) placed; the grammar and answers come out of Plan 9 as audit/audit.wsn and audit/answers.
