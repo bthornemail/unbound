@@ -82,3 +82,15 @@ omi-files-port
 turn-and-exchange
 00:00:19.000 --> 00:00:20.000
 2026-10-28 the author: stepd stays PL360 (IS and OF only), because the exchange is the observer or agent operation, not the turn. The turn is the even half of the three names' six orderings; an exchange of two registers is the other half and belongs to whoever interjects. Nothing exchanges stepd's registers yet; agentd's POST writes the floor's agent states, not stepd.
+
+claims-and-provenance
+00:00:20.000 --> 00:00:21.000
+2026-10-28 the author: "they are claims and proofs that we made which is why we keep provenance and compile findings to ZIGUAROTH when done for public scrutiny, we arent asking anyone to trust we did all the work they can follow all our steps and believe or modify the beliefs how they want, we have the unit test and WSN notation and even Haskell and Coq."
+
+with-or-without-ziguaroth
+00:00:21.000 --> 00:00:22.000
+2026-10-28 the author: "Once we build everything and can check everything we can compile a build with or without ZIGUAROTH from our Plan 9 ports." What the build takes from ZIGUAROTH today: pack.sh copies _CATALOG's YAML into run/catalog (read by catalog.rc, conv.rc, tries.rc), and witness.py reads each figure's name from _CATALOG. The z*.c checks, in/* and wsn/* build without it. The choice waits until everything is built.
+
+literal-codepoints
+00:00:22.000 --> 00:00:23.000
+2026-10-28 the author: "we removed physics from this and made it literal constant of code points or code point sequences for strict logic checking."

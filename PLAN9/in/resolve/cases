@@ -1,22 +1,88 @@
-	command not found		
-	Unknown Command: zz		zz
-	invalid input		
-	Invalid version 3		
-	broken stream		
-	write EPIPE		
-	ePIPE		
-	version 0.9		
-	state corrupt		
-	all is well		
-			
-	UNKNOWN COMMAND		
-	NOT FOUND		
-unknown_command	ignored message		ls
-weird			
-unknown			
-invalid_input		a<script>alert(1)</script>	
-invalid_input	x y　z!?		
-invalid_input		keep_this-one.ok (not) this	
-stream_broken			
-version_mismatch			
-state_corrupt			
+
+command not found
+
+
+
+Unknown Command: zz
+
+zz
+
+invalid input
+
+
+
+Invalid version 3
+
+
+
+broken stream
+
+
+
+write EPIPE
+
+
+
+ePIPE
+
+
+
+version 0.9
+
+
+
+state corrupt
+
+
+
+all is well
+
+
+
+
+
+
+
+UNKNOWN COMMAND
+
+
+
+NOT FOUND
+
+
+unknown_command
+ignored message
+
+ls
+weird
+
+
+
+unknown
+
+
+
+invalid_input
+
+a<script>alert(1)</script>
+
+invalid_input
+x y　z!?
+
+
+invalid_input
+
+keep_this-one.ok (not) this
+
+stream_broken
+
+
+
+version_mismatch
+
+
+
+state_corrupt
+
+
+

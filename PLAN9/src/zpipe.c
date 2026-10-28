@@ -5,6 +5,8 @@
  *	zpipe file...		for each file, as the module gives it: name, kind,
  *				bytes, the five layers' match counts, tokens, admissible
  *	zpipe -b file...	the binary path forced on every file, text or not
+ *	zpipe -c file...	how many of the text files give other counts
+ *				through the binary path
  * Text is what the host's TextDecoder (fatal) takes: strict UTF-8, a leading
  * byte order mark dropped. On text the layers count characters in UTF-16
  * units, as JavaScript does (a character past U+FFFF is two), over every
@@ -154,20 +156,24 @@ binary(uchar *b, int n, Count *k)
 void
 main(int argc, char *argv[])
 {
-	int i, fd, n, m, forced;
+	int i, fd, n, m, forced, compare, ntext, differ;
+	Count t;
 	uchar *b;
 	long *cp;
 	char *name;
 	Dir *d;
 	Count k;
 
-	forced = 0;
+	forced = compare = ntext = differ = 0;
 	ARGBEGIN{
 	case 'b':
 		forced = 1;
 		break;
+	case 'c':
+		compare = 1;
+		break;
 	default:
-		sysfatal("usage: zpipe [-b] file...");
+		sysfatal("usage: zpipe [-b | -c] file...");
 	}ARGEND
 	for(i = 0; i < argc; i++){
 		if((fd = open(argv[i], OREAD)) < 0 || (d = dirfstat(fd)) == nil)
@@ -180,6 +186,17 @@ main(int argc, char *argv[])
 			sysfatal("read %s: %r", argv[i]);
 		close(fd);
 		m = forced ? -1 : utf8(b, n, cp);
+		if(compare){
+			if(m >= 0){
+				text(cp, m, &t);
+				binary(b, n, &k);
+				ntext++;
+				differ += t.color != k.color || t.delim != k.delim || t.nonalnum != k.nonalnum || t.alnum != k.alnum;
+			}
+			free(b);
+			free(cp);
+			continue;
+		}
 		if(m >= 0)
 			text(cp, m, &k);
 		else
@@ -190,5 +207,7 @@ main(int argc, char *argv[])
 		free(b);
 		free(cp);
 	}
+	if(compare)
+		print("the same bytes through the binary path: %d of %d text inputs give other counts\n", differ, ntext);
 	exits(nil);
 }
