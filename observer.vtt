@@ -1,0 +1,20 @@
+WEBVTT - observer: who watches which log
+
+NOTE
+One cue per item, one second long, in the order the items were settled; the time is the order, not a clock. The identifier names the item; the text says what it is, when, and where it lives. A cue that is replaced is not deleted: a later cue says what replaced it. Here each cue registers an observer: its identifier is the observer, its text what it watches and when.
+
+claude
+00:00:00.000 --> 00:00:01.000
+Observes global.vtt and environment.vtt: read before acting, so settled decisions are not asked again.
+
+production-observes-development
+00:00:01.000 --> 00:00:02.000
+When a development cue writes into ZIGUAROTH, a production cue records the placement.
+
+global-observes-all
+00:00:02.000 --> 00:00:03.000
+When a cue anywhere records a decision by the author, global.vtt gets the decision as its own cue.
+
+author
+00:00:03.000 --> 00:00:04.000
+Observes production.vtt: what is placed, and what is waiting for a decision or a commit.

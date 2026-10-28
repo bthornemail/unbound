@@ -1,0 +1,64 @@
+WEBVTT - global: decisions settled
+
+NOTE
+One cue per item, one second long, in the order the items were settled; the time is the order, not a clock. The identifier names the item; the text says what it is, when, and where it lives. A cue that is replaced is not deleted: a later cue says what replaced it.
+
+wsn-only
+00:00:00.000 --> 00:00:01.000
+2026-10-27 the author: we are only using Wirth syntax notation; everything else is deprecated. Every uppercase character is an IDENTIFIER = letter { letter } .
+
+plan9-runtime
+00:00:01.000 --> 00:00:02.000
+2026-10-27 the author: Plan 9 is the runtime for everything; ports are Plan 9 C programs, not awk (rc has no arithmetic; awk was my choice and is being removed).
+
+numbers-are-literals
+00:00:02.000 --> 00:00:03.000
+2026-10-28 the author: numbers are meaningless; a digit is an index, a folder name like 28 is its characters. Values are interpretations.
+
+literal-and-reading
+00:00:03.000 --> 00:00:04.000
+A literal is what a script recomputes from a held witness; a reading is labelled as one. Who said what lives in ZIGUAROTH/SOURCES.md.
+
+the-zeroth
+00:00:04.000 --> 00:00:05.000
+YHWH, YAHWEH, GOD IS WORD, GOD OF WORD, WORD IS GOD, WORD OF GOD. Everything is compared to them first, independently (each file alone), then to each other, codependently (edges, faces, parity).
+
+yhwh-yahweh-adonai
+00:00:05.000 --> 00:00:06.000
+YHWH is YAHWEH with the vowels removed (consonant class, terms.mjs); ADONAI adds them: Leningrad Deut 9:26 points the Name with Adonai's vowels, and with Elohim's hiriq right after Adonai.
+
+question-mark
+00:00:06.000 --> 00:00:07.000
+? is the optional metacharacter: WSN [ ]. TEMPLATE = "GOD" [ " " SLOT ] " " "WORD" . SLOT = "IS" | "OF" .
+
+codices-and-codex
+00:00:07.000 --> 00:00:08.000
+_CODICES[0..3] = ALEPPO ROSETTA BEHISTUN LENINGRAD, each A-Z; a term renders to _CODICES/LLLL/&lt;path&gt;/&lt;term&gt;.wsn. _CODEX[0] is the braille and Aegean themselves (&lt;term&gt;), _CODEX[1] the same in WSN (&lt;term&gt;.wsn), at the literal path ending in the lowercase description.
+
+absent-codex
+00:00:08.000 --> 00:00:09.000
+A codex that lacks the term is optional whitespace: OPTWHITESPACE = { " " } . (as BNF written in WSN), not an undefined identifier.
+
+code-trie
+00:00:09.000 --> 00:00:10.000
+_CODE/U is an Aegean trie: separators 10100 10101 10102, each with the 45 Aegean signs; a code point is the path of its signs, highest place first, a zero digit an absent level. 28 is separate: the author's time scale. 05 was mine and is removed.
+
+patricia-tries
+00:00:10.000 --> 00:00:11.000
+Every ZIGUAROTH/_* folder is a WSN Patricia trie: one production, folders as alternatives, single-child chains as one LITERAL; its sentences are exactly the leaf paths.
+
+query-function
+00:00:11.000 --> 00:00:12.000
+The query is Wirth's PL360 rotation of R0 R1 R2 by FLAG, then RESET(FLAG). Registers hold words the way Kernighan's B printed hello, world: a b c, four characters each; FLAG declares which constant b holds.
+
+aegean-base
+00:00:12.000 --> 00:00:13.000
+Aegean numbers are decimal as a script. Sexagesimal (Babylonian) use is an overlay. OPEN: replace the decimal rendering, or add sexagesimal as a second declared view.
+
+agent-numbering
+00:00:13.000 --> 00:00:14.000
+2026-10-28 the author: the agent numbering is derived from colours and cameras. An agent keeps its hue (the dome's lights); its number is the hue's place in the order seen from the camera, a turn of 45 degrees keeping the order, a flip reversing it (agent-commons.js pov and flip). Seen from turn 0 clockwise: METATRON 1 SOLOMON 2 SOLON 3 ASABIYAH 4 ENOCH 5 SPEAKER 6 GENESIS 7; OBSERVER, the camera, has no hue. The canon manifest's fano-points are not the numbering.
+
+cue-length
+00:00:14.000 --> 00:00:15.000
+2026-10-28 the author: the cue length is the animation frame. A cue is one frame; its second is the frame, not a clock; how long a frame lasts is the renderer's.

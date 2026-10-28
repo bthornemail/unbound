@@ -1,0 +1,124 @@
+WEBVTT - development: tools built and what they verified
+
+NOTE
+One cue per item, one second long, in the order the items were settled; the time is the order, not a clock. The identifier names the item; the text says what it is, when, and where it lives. A cue that is replaced is not deleted: a later cue says what replaced it.
+
+zbuf
+00:00:00.000 --> 00:00:01.000
+Plan 9 C buffer framing: 117 unbound files byte-equal to ZIGUAROTH buffer.js.
+
+zwsn
+00:00:01.000 --> 00:00:02.000
+WSN parser by WSN's own grammar; every .wsn produced is read by it.
+
+conv
+00:00:02.000 --> 00:00:03.000
+proofs/js and unbound HTML JS MERMAID SH SVG to WSN: 447 files, each reads back line for line and parses.
+
+book
+00:00:03.000 --> 00:00:04.000
+Coq proof book: 70 registry modules compile; omi_pi_proof.v (dev-docs) breaks at line 3980, CD2_mul_matches_quaternion incomplete; all 71 in WSN with CHECKED [ BREAKS UNCHECKED ].
+
+proofs-port
+00:00:04.000 --> 00:00:05.000
+I-series checks to Plan 9 C, catalog.json as the register: I-108 to I-127b ported, 0 failing; JavaScript-host assertions reported as host, not ported. NEXT: the rest, from the standalone files (the catalogue owns them).
+
+busybox
+00:00:05.000 --> 00:00:06.000
+12 busybox checks as rc with Plan 9 C tools (rev, svgswitch, fano, wilson, tetra): 12 of 12 pass.
+
+manboy
+00:00:06.000 --> 00:00:07.000
+Knuth's man or boy in Plan 9 C: k = 0..10 gives 1 0 -2 0 1 0 1 -1 -10 -30 -67.
+
+zlazy
+00:00:07.000 --> 00:00:08.000
+Lazy WSN evaluator: wsn/logic.wsn (XOR XNOR AND OR FULLADDER, ADD as two carry states) and wsn/modal.wsn answer as expected.
+
+zrender
+00:00:08.000 --> 00:00:09.000
+Renders a term per codex index: _CODICES XOR/XNOR against the zeroth, _CODEX[0] braille and Aegean, _CODEX[1] WSN.
+
+euler
+00:00:09.000 --> 00:00:10.000
+tcll2wsn: the public-domain EULER compiler grammar (Christopher section 4.1) to WSN, 38 productions.
+
+tetra-ecc
+00:00:10.000 --> 00:00:11.000
+ztetra: four files as a tetrahedron; faces close, any file from any other and their edge, P recovers any one. zsync and distrib.rc: each file lost and rebuilt across ramfs 9P servers.
+
+handshake
+00:00:11.000 --> 00:00:12.000
+zhand: set parity (same blocks), positional parity (where), shortest rot/rev/swap to sync; zperm: n indices, n! configurations, (n-1)! rotation cycles; rotation and rev reach 2n.
+
+codependent
+00:00:12.000 --> 00:00:13.000
+zcodep: every edge between files is the XOR of their two independent signatures against a zeroth (the zeroth cancels).
+
+blob
+00:00:13.000 --> 00:00:14.000
+zblob: Leningrad Genesis 1 as one 65,536-bit card (6,486 bytes), braille and stars-and-bars read back; zplaces: 6 of the 4-cube's 16 place subsets used.
+
+tries
+00:00:14.000 --> 00:00:15.000
+ztrie: the seven ZIGUAROTH/_* folders as WSN Patricia tries; 485 leaf paths, each a sentence; NOT/ON/DISK none.
+
+frame
+00:00:15.000 --> 00:00:16.000
+zframe: 9P server at /n/frame, 8 segments (the characters, seeded by consonants XOR YHWH, folded to 16 bits), tick mod 60; returns at 8, 60, both at 120. OPEN: how a frame interpolates over HTML, verified, breadboard, public narrative.
+
+zkey
+00:00:16.000 --> 00:00:17.000
+Six keys from the zeroth (reversed, XNORed), agreed order: only it brings all 8 files back; histogram over 719 others 0:212 1:207 2:139 3:93 4:41 5:19 6:7 7:1. Agreement, not protection.
+
+zvtt
+00:00:17.000 --> 00:00:18.000
+zvtt (vtt.rc): light-garden's 11 canon series written as WebVTT in VTT/NARRATIVE, 2,439 cues, each count equal to its canon's events, all passing the WebVTT check. narrative.py reads the canon on the host. Voices: the manifest's fano-points promoted to tags. Colours: the light letters of their fano-lines. Cue identifier: canon file and line, as timeline.ndjson's node_id. Times: the canon's t/timestamp; seq order where only seq is given. OPEN: region layout (2 columns by point) is zvtt's, not the canon's.
+
+zvtt-tick
+00:00:18.000 --> 00:00:19.000
+Replaces zvtt's timing: the canon's t/timestamp is UTC, which I-79 rules out (rosetta/src/trace.vtt.ts, I-84: one cue per tick). Each cue is now one tick in canon order. The tick is the PL360 rotation over the predeclared R0 R1 R2 and FLAG, starting at the Aegean 10100 10101 10102; reading forward sets FLAG, RESET(FLAG) after each step, and each cue is wrapped in the register state as classes (&lt;c.𐄁.𐄂.𐄀&gt;). Checked on all 11 series: each cue is one FLAG-set step from the one before, and reading back by the ELSE branch returns 10100 10101 10102. OPEN: what FLAG holds besides the reading direction; 28 (the time scale) is not yet in the step.
+
+zvtt-slots
+00:00:19.000 --> 00:00:20.000
+zvtt tracks each agent on its 16 files the way rosetta/src/agent.ts tracks the conversation: cue n lands on slot 1 + (n-1) mod 14, named as a class on the voice (Fano_point_5 is public/characters/SOLOMON/Fano_point_5.svg); 14 lit closes a round with a NOTE at place 15, Hasse_XNOR. 2,179 voiced cues, every slot equal to agent.ts slotOf; only SPEAKER completes rounds (154). OPEN: cue length, 1 tick (trace.vtt.ts, I-84) or 8 seconds (walkthrough.ts CUE_SECONDS, one per ruler slot).
+
+zvtt-observation
+00:00:20.000 --> 00:00:21.000
+Replaces zvtt's registers: R0 R1 R2 are the Aegean separators 10100 10101 10102 observing YHWH, YAHWEH, ADONAI. Over each cue's first 11 code points (its window, before a line break), ruby: in Aegean the window XOR R0's zeroth code point by code point, joined by R0's separator; in braille the window's bytes XOR the nearest of GOD IS WORD, WORD IS GOD, GOD OF WORD, WORD OF GOD (fewest bits flipped, first on a tie). Its IS or OF sets FLAG for the turn, then RESET(FLAG). Literal code points, no letter class (WSN leaves letter undefined). All 2,439 cues recomputed independently on the host, alike. OPEN: the window (first 11, or sliding); the step difference between cues cancels the zeroth, (A⊕Z)⊕(B⊕Z) = A⊕B.
+
+zcue
+00:00:21.000 --> 00:00:22.000
+zcue (cues.rc): 17 WSN files as WebVTT in VTT/SVG, SH, JS, MERMAID, one cue per LITERAL, one tick each, 3,686 cues, all valid. No position written: JS/cue-position.js places each cue when the track is read, at its literal's offset in the source buffer (searched from where the one before ended): exact, line = row (offset &gt;&gt; 8 &amp; 255) and position = column (offset &amp; 255) of the 65,536, as Media Spectrum DevTools' grid; or hypotenuse, position = hypot(row, column). Every offset equals the source line's start. OPEN: offsets past 65,535 (visual-proofs, Difference_DNA_RNA) wrap to page 1, and the page is not shown.
+
+vtt-type
+00:00:22.000 --> 00:00:23.000
+PLAN9/src/TYPES gains vtt as text/vtt, with no charset: the WebVTT registration has no parameters and a track is always UTF-8. All 34 tracks begin 57 45 42 56 54 54 20 (WEBVTT and a space), a registered magic number; cue-position.js gives 7,372 placements, none outside 0..100 (no IndexSizeError).
+
+zvtt-window-timing
+00:00:23.000 --> 00:00:24.000
+The observation window plays inside its tick: position k of the 11 starts at k*1000/11 ms after the cue's start, as a timestamp tag before the k-th code point of the base, the k-th Aegean value and the k-th braille cell, so ::cue(:past) and ::cue(:future) follow it. All 2,439 cues checked: every sub-step at k/11 of its tick, strictly inside it, and the observation unchanged. Meant to be read by a canvas handed to OffscreenCanvas or to breadboard as well as by a video element.
+
+space-floor
+00:00:24.000 --> 00:00:25.000
+space/src/plane.ts's floor ported to Plan 9 C (PLAN9/space/floor.c, src/space.rc) with draw(2) and event(2), on the guest's own screen: the twelve sectors of 30, the rim, the eight characters at their hues (characters.ts), each stepping gnomon.ts's K once a second from its seed; button 1 selects the nearest (plane.ts nearest). All eight states at tick 12 equal gnomon.ts's. Follows space's numbering (5 ENOCH, 6 SPEAKER, 7 GENESIS), which differs from the canon manifest's (5 Genesis, 6 Enoch, 7 Speaker): OPEN.
+
+observer-mach
+00:00:25.000 --> 00:00:26.000
+The Observer (PLAN9/space/observe.c, src/observe.rc) attaches to the running floor with mach(2): crackhdr and syminit on /proc/pid/text, lookup of ch and tick, attachproc on /proc/pid/mem. Reads each character's state (equal to gnomon.ts at that tick); interjects by stop, put2, start. Checked: SOLON set to 0001 steps to 4017 = K(0001) and returns to it 8 ticks later, the others undisturbed.
+
+observer-constraints
+00:00:26.000 --> 00:00:27.000
+observe.c takes constraints as MediaStreamTrack.applyConstraints does, without writing: exact, min, max mandatory over the 8 states of the character's K orbit (none meets them: OverconstrainedError naming the constraint), ideal the nearest by bits flipped; prints constraints, settings (the state now) and the chosen state with its ticks. Checked against gnomon.ts on SOLOMON's orbit: ideal 0000 in 6 ticks, F5F5 the only state over F000, none in 6000-6FFF, E2B3 and 0001 not in the orbit. An interjection (a write) can move a character to another orbit; a constraint never does.
+
+zvtt-camera
+00:00:27.000 --> 00:00:28.000
+VOICES holds each agent's hue from dome-leds.ndjson (an unsaturated light: no hue, the camera); zvtt numbers the agents from the camera (-p turn, -f flip), places each REGION by that number, and colours each voice hsl(hue, 70%, 55%). All tracks' NOTEs say a cue is one animation frame. 28 tracks regenerated in Plan 9; every cue unchanged, only the headers. The dome lists one stray Observer light, violet 300 saturated, beside its white one: left out.
+
+zcast
+00:00:28.000 --> 00:00:29.000
+The stack element (CSP, E empty and F full) ported to Wirth syntax notation (PLAN9/wsn/stack.wsn) with its letters left undefined, so it executes nothing until cast. zcast writes a zeroth's cast through terms.mjs's feature pipeline (consonants upper, vowels lowered 0x20, digits kept): YHWH gives CONSONANT "Y" "H" "W" and no VOWEL; YAHWEH adds VOWEL "a" "e". zlazy runs each sentence under both (cast.rc): 14 of 14 as expected. YHWH's skeleton runs under both casts, YAHWEH's only under its own, and a vowel taken in under YHWH matches nothing. OPEN: the figure's exchange with the neighbouring element (get, put) is garbled in the paste and not ported.
+
+stack-server
+00:00:29.000 --> 00:00:30.000
+The stack element live (PLAN9/src/stack.c, stack.rc): a lib9p server at /n/stack with cast, in, out and state, the live form of cast.rc's grammar. Before a cast nothing is taken (letter undefined). 15 of 15 as expected: identity (Y in, Y out; a in, a out, not A), fullness (a second write while full refused, a read while empty refused), the cast (YHWH refuses a; YAHWEH takes a and refuses A, since its cast holds the vowel lowered 0x20), and each zeroth's sequence through the element: YHWH's under both casts, YAHWEH's only under its own. The element changes no character; the 0x20 is the cast's.

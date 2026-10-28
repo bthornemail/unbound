@@ -1,0 +1,48 @@
+WEBVTT - environment: the Plan 9 runtime and its gotchas
+
+NOTE
+One cue per item, one second long, in the order the items were settled; the time is the order, not a clock. The identifier names the item; the text says what it is, when, and where it lives. A cue that is replaced is not deleted: a later cue says what replaced it.
+
+vm
+00:00:00.000 --> 00:00:01.000
+unbound/PLAN9: 9legacy CPU server helix under QEMU; image 9legacy-qemu.img.bz2 from 9legacy.org (2019-04-21), SHA-256 in SHA256SUMS; sh build.sh, sh run.sh (ports on 127.0.0.1 only).
+
+disks
+00:00:01.000 --> 00:00:02.000
+pack.sh writes run/in.tar (padded to 32M) = /dev/sd01, the inputs; run/out.img (64M) = /dev/sd02, the outputs as a tar. A script is run in the guest as: tar xf /dev/sd01/data PLAN9/src/&lt;x&gt;.rc; rc it.
+
+console
+00:00:02.000 --> 00:00:03.000
+console.py types into the guest through the QEMU monitor and dumps the screen; braille does not show on the VGA console, so results go to the output disk and are read on the host.
+
+rc-keywords
+00:00:03.000 --> 00:00:04.000
+rc reserves in, path (the command search path), ^ (concatenation, quote it), and flattens list arguments to functions.
+
+plan9-c
+00:00:04.000 --> 00:00:05.000
+%.*s counts runes, not bytes; ARGBEGIN reads --rev as flags; isalpha needs &lt;ctype.h&gt;; cmp has no - for stdin (use /fd/0); du quotes names with spaces; ramfs -S name posts a named server; createfile leaves length 0 (set f-&gt;length).
+
+libhtml
+00:00:05.000 --> 00:00:06.000
+libhtml needs the program to define emalloc and erealloc; it gives items without layout (w=h=0) and does not run scripts.
+
+host-only
+00:00:06.000 --> 00:00:07.000
+Only reading private witnesses (JSON) and coqc run on the host; everything that translates, compares or renders runs in Plan 9.
+
+graphics
+00:00:07.000 --> 00:00:08.000
+The guest's screen goes graphic with aux/vga -m vesa -l 1024x768x16 (QEMU -vga std offers VESA 0x117, 1024x768 r5g6b5), then bind -a '#i' /dev (draw) and bind -a '#m' /dev (mouse); '#v' gives vgactl. A program using event(2) without rio reads the console keyboard itself, so floor -o leaves the keyboard to the shell. Console text is drawn over by the next redraw: collect output through /dev/sd02.
+
+proc-mem
+00:00:08.000 --> 00:00:09.000
+/proc/n/mem is read any time but written only while the process is stopped: write stop to /proc/n/ctl, write, then start (otherwise: bad process or channel control request).
+
+tmp-persists
+00:00:09.000 --> 00:00:10.000
+The guest's /tmp is on disk and outlives a reboot, so a tool built into /tmp is stale after its source changes: every rc driver compiles each run. rc reads a bare name=value argument as an assignment: quote it ('ideal=0000'). QEMU can stop from outside the session: run.sh restarts it, and the screen setup must be done again.
+
+rc-no-return
+00:00:10.000 --> 00:00:11.000
+9legacy's rc has no return: a function ends by falling through, so carry the answer in a variable. A backquote splits its output into words: join with $"var before comparing a phrase.
