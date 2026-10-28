@@ -121,6 +121,8 @@ PLAN9/src/resolve.rc
 PLAN9/src/zver.c
 PLAN9/src/zorch.c
 PLAN9/src/orch.rc
+PLAN9/src/zgnomon.c
+PLAN9/src/gnomon.rc
 $(cd "$HERE" && ls in/orch/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/resolve/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/pipe/* | sed 's|^|PLAN9/|')
