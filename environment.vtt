@@ -98,3 +98,7 @@ The author: the nibble parity is the deviation from YHWH. Measured (zpoly deviat
 reading-binds
 00:00:23.000 --> 00:00:24.000
 The author: the YHWH reading binds an observer to the ZIGUAROTH codex and the Codice mapping, like a pop-up book restoring a variant of the Library of Alexandria by rebuilding the tower of Babel. So the reading is a binding, not a derivation: the port checks the values (000 155 2AA 3FF at 10 bits, a subspace of four, two of them fixed after one application), and the reading names them. The values are set by apply9, not chosen among the 174251 two-dimensional subspaces of GF(2)^10 (698027 of GF(2)^11); the name is the observer's.
+
+exhte-correction
+00:00:24.000 --> 00:00:25.000
+Correction to reading-binds: EXHTE is no invention. It is I-207's: BRIAN XOR CODEX XOR DEEPS = 45 58 48 54 45, EXHTE, a tag; I-226 folds the three to it (all three close to the witness, two make only a control-code difference), I-228 routes universal://EXHTE, and space.test.ts checks it in the Commons. And YHWH as ASCII folds to 0E, the same literal as I-207's year line, 20 XOR 26 = 0E. Recorded as two equal literals, not as one derived from the other.
