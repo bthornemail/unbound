@@ -106,3 +106,7 @@ Correction to reading-binds: EXHTE is no invention. It is I-207's: BRIAN XOR COD
 polytron-precursor
 00:00:25.000 --> 00:00:26.000
 The author, of omi-files/polytron (docs/INDEX.md, the Tetragrammatron; OSI_MODEL.md): "this is the previous version of this project before I knew binary or hexadecimal encoding or how to read or understand logic operations". Its kernel K(p, C) = rotl(p,1) ^ rotl(p,3) ^ rotr(p,2) ^ C (kernel.c, holemap.c, tetra-viewer.c) is boxedPINE's delta16 (core/src/verified/delta.ts, its period 8 proved in Coq), and its CONSTITUTIONAL_C is 0x1D, GS, the group separator of FS GS RS US (1C 1D 1E 1F), as tetra-viewer.c names it ("GS - constitutional gray"); 0001 1101, four bits set.
+
+ladder-replaced
+00:00:26.000 --> 00:00:27.000
+omi-files/polytron/OSI_MODEL.md, the bootstrap ladder of the previous version (polytron-precursor): dot notation, a Lisp 1.5 reader and evaluator, a C runtime, Guix lowering, QEMU and GNOME Boxes, an Atom/Electron editor surface. Each rung since replaced by a settled decision (global.vtt): dot notation by Wirth syntax notation, its reader and evaluator by zlazy, zprec and OMI.WSN (wsn-only); the runtime by Plan 9 C, Guix by pack.sh and its tar, Boxes by 9legacy under QEMU (plan9-runtime); the editor surface by the browser rooms of boxedPINE's space/, a projection, not authority. Its split of canonical, realization and projection carries over unchanged.
