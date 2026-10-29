@@ -106,3 +106,7 @@ The HTML pages: ANSWERED by the author: already read through Plan 9's html runes
 mk-world
 00:00:25.000 --> 00:00:26.000
 OPEN, work, Metaverse Kit native on Plan 9 (mk-native, global.vtt; mk-port and mk-world, development.vtt): its grammar and fold are ported and checked against the kit, and the world is a 9P file server (mkfs) served over HTTP (mkd) that space/metaverse.html reads in place of a sibling path; left, the Commons reading it, and the narrative world compiler on Plan 9; the kit's unions as Haskell sum types in omi-types; proposal, accept_proposal and derived_feature32 are not yet in the grammar.
+
+two-transports
+00:00:26.000 --> 00:00:27.000
+OPEN, cite: which transport the atomic kernel's stream is: the tested control plane (control_plane.py, CONTROL_PLANE_SPEC.md: channel byte and mask, ported, ctl-port in development.vtt) or CANONICAL_MULTIPLEXING.md's FLAG-bit control word and NUMSYS context byte (no implementation; its section 8 example breaks its section 6 rule twice, ctl-port). Left after it (literal-templates, global.vtt): mkfs's append split into recognize, validate and receipt, per the Doctrine of Determinism; the knowledge archaeology's literal core (git log, six message patterns, headings) in WSN and Plan 9 C; the trie's Conway rule over triples sharing a word; the analyzer's composition relation in Haskell; the 112 matrix (genesis-frame narrative_data/agent112/proof_matrix_112.v0.json and tests/test_all.py) cell by cell.

@@ -1,0 +1,56 @@
+#!/bin/rc
+# ctl.rc - inside Plan 9: the atomic kernel's control plane (control_plane.py, after its
+# docs/CONTROL_PLANE_SPEC.md) ported native. wsn/ctl.wsn is a stream as a grammar: zlazy
+# must recognize every stream of in/ctl/streams and refuse every must-reject stream but
+# those refused by the tick (CT11_ALGO_MISMATCH), which it recognizes, the tick not being
+# in the stream; zctl is the parser and COBS: its events, refusal codes and frames must
+# be the kernel's (in/ctl, written on the host by in/ctl/gen.py with the kernel's code);
+# the falsifier: the same streams a tick later must not all be accepted.
+rfork e
+ifs='
+'
+w=/tmp/zctlw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zlazy.c PLAN9/src/zprec.c PLAN9/src/zctl.c PLAN9/wsn/ctl.wsn PLAN9/in/ctl} || exit tar
+p=$w/unbound/PLAN9
+c=$p/in/ctl
+cd $p/src
+for(t in zlazy zprec zctl){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+g=$p/wsn/ctl.wsn
+fail=0
+fn same {
+	if(cmp -s $1 $2) echo ok $3
+	if not { echo FAIL $3; fail=1 }
+}
+for(l in `{sed 's/^[0-9]* //' $c/streams}){
+	if(! $w/zlazy $g STREAM $l >/dev/null){ echo FAIL recognize $l; fail=1 }
+}
+echo the grammar recognizes `{wc -l <$c/streams} streams
+for(l in `{grep -v CT11_ALGO_MISMATCH $c/reject.codes | sed 's/^[0-9]* //; s/error .*//'}){
+	if($w/zlazy $g STREAM $l >/dev/null){ echo FAIL refuse $l; fail=1 }
+}
+echo the grammar refuses `{grep -v CT11_ALGO_MISMATCH $c/reject.codes | wc -l} must-reject streams
+for(l in `{grep CT11_ALGO_MISMATCH $c/reject.codes | sed 's/^[0-9]* //; s/error .*//'}){
+	if(! $w/zlazy $g STREAM $l >/dev/null){ echo FAIL recognize, the tick aside, $l; fail=1 }
+}
+echo the grammar recognizes the `{grep -c CT11_ALGO_MISMATCH $c/reject.codes} refused by the tick alone: recognition is not acceptance
+$w/zprec $g | sed 3q
+$w/zctl parse <$c/streams >$w/events
+same $w/events $c/events 'zctl parse: the events of the kernel'
+$w/zctl reject <$c/reject >$w/codes
+same $w/codes $c/reject.codes 'zctl reject: each refused with the code of the kernel'
+$w/zctl cobs <$c/cobs.payload >$w/wire
+same $w/wire $c/cobs.wire 'zctl cobs: the frames of the kernel'
+$w/zctl uncobs <$c/cobs.wire >$w/payload
+same $w/payload $c/cobs.payload 'zctl uncobs: the payloads back'
+sed 's/error .*//' $c/cobs.reject | $w/zctl uncobs >$w/bad
+same $w/bad $c/cobs.reject 'zctl uncobs: the refusals of the kernel'
+$w/zctl reject <$c/streams.next >$w/next
+if(grep -s error $w/next){
+	echo ok falsifier: a tick later, `{grep -c CT11_ALGO_MISMATCH $w/next} streams refused by their algorithm byte
+}
+if not { echo FAIL falsifier; fail=1 }
+if(~ $fail 0) echo 'ctl.rc: every answer as expected'
