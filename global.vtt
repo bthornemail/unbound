@@ -118,3 +118,7 @@ canon-documents
 questions
 00:00:28.000 --> 00:00:29.000
 2026-10-28 the author: "the only way i know were done when no more questions can be asked without having an answer or proof to point to", and correct and record whatever is confusing or out of date. unbound/questions.vtt is that ledger: one cue per question, ANSWERED with the cue or record that answers it, or OPEN with what it waits on (the author, or work). The work is done when no cue there says OPEN.
+
+runtime-resolves
+00:00:29.000 --> 00:00:30.000
+2026-10-28 the author, answering questions.vtt: "1 everything over strict logic is a view; 2 the frame is the input output input-output; 3 points are determined on lazy evaluation based on relation from query; 4 numbers are not objective they are a subjective interpretation", with Wirth's note that letter and character are left undefined, the language being defined deciding them; and "I'm seeing a pattern in your questions, you're wondering how someone uses this. plan9 resolves on runtime with lazy evaluation. we provide wirth notation, plan 9 resolves arrangements on runtime request." So a question of arrangement or use (a rendering, a layout, a window, a scale) is not fixed in the port: the port provides the notation and the checks; the arrangement is resolved when a request asks, lazily, as zlazy expands only what a question reaches.

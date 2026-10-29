@@ -5,19 +5,19 @@ The author, 2026-10-28: "whatever you find confusing or out of date correct it a
 
 aegean-base
 00:00:00.000 --> 00:00:01.000
-OPEN, the author: Aegean numbers are decimal as a script and sexagesimal use is an overlay; replace the decimal rendering, or add sexagesimal as a second declared view? (global.vtt)
+ANSWERED by runtime-resolves (global.vtt), the author: everything over strict logic is a view. Decimal and sexagesimal are both views over the literal; neither replaces it, and either is resolved on request.
 
 frame
 00:00:01.000 --> 00:00:02.000
-OPEN, the author: how a frame (zframe, /n/frame) interpolates over HTML, verified, breadboard and the public narrative. (development.vtt)
+ANSWERED by runtime-resolves, the author: the frame is the input, the output, the input-output. It does not interpolate over its consumers; HTML, the checks, the breadboard and the narrative each read or write through it.
 
 zvtt
 00:00:02.000 --> 00:00:03.000
-OPEN, the author: zvtt's region layout (two columns by point) is zvtt's own, not the canon's; keep it, or take one from the canon? (development.vtt)
+ANSWERED by runtime-resolves, the author: points are determined on lazy evaluation by their relation from the query. zvtt's two columns are one arrangement, resolved on request, not a fixed layout of the canon.
 
 zvtt-tick
 00:00:03.000 --> 00:00:04.000
-Two questions. What FLAG holds besides the reading direction: ANSWERED by turn-and-exchange (global.vtt): FLAG holds IS or OF only, and an exchange of registers belongs to whoever interjects. The time scale 28 is not yet in the step: OPEN, the author: where 28 enters the turn.
+Two questions. What FLAG holds besides the reading direction: ANSWERED by turn-and-exchange (global.vtt): FLAG holds IS or OF only, and an exchange of registers belongs to whoever interjects. The time scale 28: ANSWERED by runtime-resolves, the author: numbers are not objective, they are a subjective interpretation. 28 is a reading of the turn, not part of the literal step.
 
 zvtt-slots
 00:00:04.000 --> 00:00:05.000
@@ -25,7 +25,7 @@ Cue length, one tick or eight seconds: ANSWERED by cue-length (global.vtt): the 
 
 zvtt-observation
 00:00:05.000 --> 00:00:06.000
-OPEN, the author: the observation window, the first 11 code points of a cue or a sliding window. (development.vtt)
+ANSWERED by runtime-resolves: the window is an arrangement, resolved by the query on request; zvtt's first 11 code points are one such request.
 
 zcue
 00:00:06.000 --> 00:00:07.000
