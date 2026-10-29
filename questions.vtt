@@ -1,0 +1,96 @@
+WEBVTT - questions: every question asked, and its answer or proof, or what it waits on
+
+NOTE
+The author, 2026-10-28: "whatever you find confusing or out of date correct it and record it because if you cant understand and you helped me build this then that leaves little hope for the public. the only way i know were done when no more questions can be asked without having an answer or proof to point to." One cue per question; the identifier is the cue that asked it. ANSWERED points to the cue or record that answers it; OPEN says what it waits on: the author (a decision or a source), or work. A cue that asked is not edited; this file says what answered it. The work is done when no cue here says OPEN.
+
+aegean-base
+00:00:00.000 --> 00:00:01.000
+OPEN, the author: Aegean numbers are decimal as a script and sexagesimal use is an overlay; replace the decimal rendering, or add sexagesimal as a second declared view? (global.vtt)
+
+frame
+00:00:01.000 --> 00:00:02.000
+OPEN, the author: how a frame (zframe, /n/frame) interpolates over HTML, verified, breadboard and the public narrative. (development.vtt)
+
+zvtt
+00:00:02.000 --> 00:00:03.000
+OPEN, the author: zvtt's region layout (two columns by point) is zvtt's own, not the canon's; keep it, or take one from the canon? (development.vtt)
+
+zvtt-tick
+00:00:03.000 --> 00:00:04.000
+Two questions. What FLAG holds besides the reading direction: ANSWERED by turn-and-exchange (global.vtt): FLAG holds IS or OF only, and an exchange of registers belongs to whoever interjects. The time scale 28 is not yet in the step: OPEN, the author: where 28 enters the turn.
+
+zvtt-slots
+00:00:04.000 --> 00:00:05.000
+Cue length, one tick or eight seconds: ANSWERED by cue-length (global.vtt): the cue length is the animation frame; a cue is one frame, and how long a frame lasts is the renderer's.
+
+zvtt-observation
+00:00:05.000 --> 00:00:06.000
+OPEN, the author: the observation window, the first 11 code points of a cue or a sliding window. (development.vtt)
+
+zcue
+00:00:06.000 --> 00:00:07.000
+OPEN, work: offsets past 65,535 (visual-proofs, Difference_DNA_RNA) wrap to page 1 and the page is not shown; zcue should carry the page with the offset. (development.vtt)
+
+space-floor
+00:00:07.000 --> 00:00:08.000
+Space's numbering (5 ENOCH, 6 SPEAKER, 7 GENESIS) against the canon manifest's (5 Genesis, 6 Enoch, 7 Speaker): ANSWERED by agent-numbering (global.vtt): the numbering is each hue's place as seen from the camera, METATRON 1 to GENESIS 7, which is space's; the canon manifest's fano-points are not the numbering.
+
+zcast
+00:00:08.000 --> 00:00:09.000
+OPEN, the author (a source): the figure's exchange with its neighbouring element (get, put) is garbled in the paste and not ported; it needs the figure as written. (development.vtt)
+
+yhwh-six-pointings
+00:00:09.000 --> 00:00:10.000
+The six pointings from a second-hand table: ANSWERED by yhwh-pointings-read (development.vtt): all six read from the Westminster Leningrad Codex at their verses, the Name only (PLAN9/in/pointings/YHWH.txt).
+
+delta-period-every-width
+00:00:10.000 --> 00:00:11.000
+Widths 200, 216, 232, 248, which stepping did not reach: ANSWERED by delta-order-every-width (development.vtt): 200, 216 and 232 return (zak order); at 248 the law is no permutation, rank 243 of 248.
+
+canon-documents
+00:00:11.000 --> 00:00:12.000
+The period at widths that are not powers of two: ANSWERED by delta-period-every-width and delta-order-every-width (development.vtt): every byte width from 16 to 256, in Plan 9 (PLAN9/in/ak/period, PLAN9/in/ak/order).
+
+five-in-the-period
+00:00:12.000 --> 00:00:13.000
+Width 232, the exceptional set's fifth member (m = 29), open: ANSWERED by delta-order-every-width: 715,827,880, which 29 divides.
+
+nibble-parity-deviation
+00:00:13.000 --> 00:00:14.000
+The nibble parity as the deviation from YHWH, recorded and not checked: ANSWERED by reading-binds (environment.vtt), the author: the reading is a binding of an observer to the codex, not a derivation; the values are checked (zpoly deviation), the name is the observer's.
+
+pixelate-origin
+00:00:14.000 --> 00:00:15.000
+OPEN, the author: in "P8 xor R7 xnor P6 xor R5 xnor", P8 is PIXELATE (8 letters) and R7 REFLECT (7), but PROXY has 5 letters and REST 4; how are P6 and R5 counted? (environment.vtt)
+
+gate-021
+00:00:15.000 --> 00:00:16.000
+OPEN, the author: "the 1111 parity becomes hex": which cells or values the 1111 is, or which proof holds it, so it can be checked. (environment.vtt)
+
+two-implementations-status
+00:00:16.000 --> 00:00:17.000
+OPEN, work: only zlazy has a Haskell run beside it (OMI.WSN); the other Plan 9 ports have none yet. (environment.vtt)
+
+no-awk
+00:00:17.000 --> 00:00:18.000
+OPEN, work: book.rc, catalog.rc, conv.rc and compile.rc still use awk, from before plan9-runtime. (development.vtt)
+
+turn-and-exchange
+00:00:18.000 --> 00:00:19.000
+OPEN, work: nothing exchanges stepd's registers yet; an exchange for whoever interjects is unbuilt. (global.vtt)
+
+omi-dom-port-14
+00:00:19.000 --> 00:00:20.000
+OPEN, work: 34 of omi-dom's 48 shared modules are not yet ported; plugin-api is next. (production.vtt)
+
+omi-files-port
+00:00:20.000 --> 00:00:21.000
+OPEN, work: no omi-files folder has been removed; the rule (its work on GitHub, another working copy, its port verified) has not yet been met for any. (global.vtt)
+
+before-the-law
+00:00:21.000 --> 00:00:22.000
+OPEN, the author: Light_Garden_Protocol.pdf (14 MB) is recorded but not read; which part holds a law to check? (global.vtt)
+
+gnomon-anim
+00:00:22.000 --> 00:00:23.000
+OPEN, the author: commit the animated gnomon.gif (now only on the guest's output disk), or keep it generated? (development.vtt)
