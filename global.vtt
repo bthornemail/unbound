@@ -154,3 +154,7 @@ walk-to-verify
 commons-first
 00:00:37.000 --> 00:00:38.000
 2026-10-28 the author, shown the Metaverse Kit room (space/metaverse.html, the gateway to /home/main/omi/metaverse-kit on localhost:3000: append-only events, deterministic replay, 2D and 3D projections, presence): "I like the Agent Commons better because I can see the agents or workers moving around". So the digital twin is built from the Agent Commons (boxedPINE space/index.html, the 3D playground, and the Plan 9 floor behind space/guest.html), where the agents are seen moving; the Metaverse Kit stays a gateway.
+
+map-view
+00:00:38.000 --> 00:00:39.000
+2026-10-28 the author, of boxedPINE space/map.html: "this is so cool, it's like an overhead map and a state transition screen for the narrative". Its z-indexed maps (boxedPINE AGENTS.md): the 144 colour synsets on the colour wheel in 2D and 2.5D, a character's 128-byte state, the 65,536-pair mask, the story on the plane, the terms box and the witness recorder; it and the 3D Commons both derive a place from space/src/plane.ts, (u, v, layer) on the Commons plane, so the overhead map and the walked world are one place seen two ways. In the digital twin it is the narrative's state-transition view beside the Commons (commons-first).
