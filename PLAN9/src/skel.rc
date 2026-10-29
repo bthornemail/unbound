@@ -1,0 +1,24 @@
+#!/bin/rc
+# skel.rc - inside Plan 9: every converted .wsn (wsn/LIST, as conv.rc writes
+# them) against the skeleton, a regular expression (wsn/skeleton.re), by zskel
+# with regexp(2), no awk; and the falsifier: a literal with an unescaped quote
+# must fall off the skeleton.
+rfork e
+ifs='
+'
+w=/tmp/zsk
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zskel.c && 8l -o $w/zskel zskel.8 || exit compile
+cd $p/wsn
+$w/zskel skeleton.re `{cat LIST}
+echo 'FILE = HEAD .
+
+HEAD =
+  "a"b"
+  .' > $w/broken.wsn
+if($w/zskel skeleton.re $w/broken.wsn >/dev/null) echo FAIL the falsifier fits the skeleton
+if not echo ok the falsifier, a literal with an unescaped quote, falls off the skeleton

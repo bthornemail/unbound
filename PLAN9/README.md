@@ -24,7 +24,7 @@ the buffer rule of ZIGUAROTH is compiled twice, by two compilers that must agree
 
 | Step | Where | What |
 |---|---|---|
-| `sh pack.sh` | host | the author's 117 git-tracked files in `HTML JS MERMAID SH SVG TS TSX` (no `node_modules`), `MANIFEST` and `src/` into `run/in.tar` (reproducible: same SHA-256 on every run), a blank `run/out.img` |
+| `sh pack.sh` | host | the author's 119 git-tracked files in `HTML JS MERMAID SH SVG TS TSX` (no `node_modules`), `MANIFEST` and `src/` into `run/in.tar` (reproducible: same SHA-256 on every run), a blank `run/out.img` |
 | `sh run.sh` | host | the tar is `/dev/sd01` (read-only), the blank is `/dev/sd02` |
 | `rc compile.rc` | Plan 9 | unpacks `/dev/sd01`, compiles `src/zbuf.c` with `8c`/`8l`, frames every file as a buffer, writes them as a tar to `/dev/sd02` |
 | `node verify.mjs` | host | each buffer must equal ZIGUAROTH's `buffer.js wrap` of the same file, byte for byte, and pass `buffer.js check` |
