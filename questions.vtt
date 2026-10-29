@@ -98,3 +98,7 @@ ANSWERED by runtime-resolves and derived-order: gnomon.gif is an output, resolve
 digital-twin
 00:00:23.000 --> 00:00:24.000
 OPEN, work, the acceptance test (global.vtt): an environment in QEMU the author walks through as a digital avatar, a proper digital twin of the narrative; replayed, changed (Solomon's icon) and rebuilt, the two states separate (XOR on the icon) and the same (XNOR on the story), seen from inside and outside the frame. Until then: parse the narrative of the Bible and the codices.
+
+shared-view
+00:00:24.000 --> 00:00:25.000
+OPEN, work (global.vtt): every page of unbound/HTML rendered through Plan 9's html runes (libhtml, zhtml) to share one view over the same narrative, and the same codepoint literals shown in each module of the React showcase, unbound/TSX.

@@ -130,3 +130,7 @@ digital-twin
 derived-order
 00:00:31.000 --> 00:00:32.000
 2026-10-28 the author: "the arrangement is auto collated by ordering and precedence rules, we dont define anything, we derived everything; these are irrelevant if we cant source the method", with Wikipedia's account of simple precedence grammars (Wirth and Weber, 1966: no erasing rules, no useless rules, one Wirth-Weber relation per pair of symbols, uniquely invertible; the relations computed from Head+, Tail+, Head*), which zprec computes. So an order (which narrative first, which cue next) is derived by the ordering and precedence rules, never asked; and a question whose method cannot be sourced is set aside, not open.
+
+shared-view
+00:00:32.000 --> 00:00:33.000
+2026-10-28 the author: "a lot of these questions can be answered by rendering the /home/main/Programs/unbound/HTML using plan9 html runes to have all pages share a view over the same narrative. then if it can also be done in this react showcase over the same codepoint literals of a narrative then we can actually see it in each module /home/main/Programs/unbound/TSX". In place: PLAN9/src/zhtml.c reads a page through Plan 9's own libhtml (parsehtml, validitems, printitems; html.rc). Also the same day, by the author's request, ZIGUAROTH's VIEWS moved to Wirth syntax notation, _ARCHIVE/Configurations/VIEWS.wsn (ZIGUAROTH 739d75d), read by views.js exactly as the YAML was; CONFIGURATION.yaml's catalog rule and Configurations tier corrected to .wsn.
