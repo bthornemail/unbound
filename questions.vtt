@@ -94,3 +94,7 @@ OPEN, the author: Light_Garden_Protocol.pdf (14 MB) is recorded but not read; wh
 gnomon-anim
 00:00:22.000 --> 00:00:23.000
 OPEN, the author: commit the animated gnomon.gif (now only on the guest's output disk), or keep it generated? (development.vtt)
+
+digital-twin
+00:00:23.000 --> 00:00:24.000
+OPEN, work, the acceptance test (global.vtt): an environment in QEMU the author walks through as a digital avatar, a proper digital twin of the narrative; replayed, changed (Solomon's icon) and rebuilt, the two states separate (XOR on the icon) and the same (XNOR on the story), seen from inside and outside the frame. Until then: parse the narrative of the Bible and the codices.
