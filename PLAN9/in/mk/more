@@ -1,0 +1,1 @@
+event_id :5 timestamp 2000 space_id demo layer_id layout actor_id user:alice operation create_node scope personal derived boundary preserves_invariants adjacency exclusion consistency boundary_discipline authority_nontransfer previous_events tile z0/x0/y0 node_id Q9 kind primitive.rectangle transform 1 -2 -2 1e-7 1 100 3.25 1e-7 0.5 -2 properties color "gold"

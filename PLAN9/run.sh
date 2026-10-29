@@ -2,7 +2,7 @@
 
 # Boot the Plan 9 runtime headless. Every forwarded port is bound to
 # 127.0.0.1 only: 17010 cpu (drawterm), 564 9fs, 567 auth, as 1xxxx on the
-# host; 8000 agentd (src/agentd.rc) as 18000.
+# host; 8000 agentd (src/agentd.rc) as 18000; 8001 mkd (src/mkworld.rc -s) as 18001.
 # The QEMU monitor is a Unix socket in run/; screens are dumped there.
 
 set -eu
@@ -25,7 +25,7 @@ KVM=
 qemu-system-x86_64 $KVM -m 1024 -vga std -display none \
     -monitor "unix:$RUN/monitor,server,nowait" \
     -serial "file:$RUN/serial.log" \
-    -nic "user,model=virtio,hostfwd=tcp:127.0.0.1:17010-:17010,hostfwd=tcp:127.0.0.1:10564-:564,hostfwd=tcp:127.0.0.1:10567-:567,hostfwd=tcp:127.0.0.1:18000-:8000" \
+    -nic "user,model=virtio,hostfwd=tcp:127.0.0.1:17010-:17010,hostfwd=tcp:127.0.0.1:10564-:564,hostfwd=tcp:127.0.0.1:10567-:567,hostfwd=tcp:127.0.0.1:18000-:8000,hostfwd=tcp:127.0.0.1:18001-:8001" \
     -device virtio-scsi-pci,id=scsi \
     -device scsi-hd,drive=d0 \
     -drive "if=none,id=d0,file=$DISK,format=raw" \

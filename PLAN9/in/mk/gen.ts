@@ -101,6 +101,12 @@ writeFileSync(`${out}/events`, lines.join("\n") + "\n");
 writeFileSync(`${out}/events.rev`, [...lines].reverse().join("\n") + "\n");
 writeFileSync(`${out}/state`, golden);
 
+// one more event, appended to the world in the guest: a node made after all the others
+const more = { ...envelope("create_node"), timestamp: 2000, node_id: "Q9", kind: "primitive.rectangle", transform: transform(), properties: { color: "gold" } };
+validateWorldEvent(more);
+writeFileSync(`${out}/more`, line(more) + "\n");
+writeFileSync(`${out}/state.more`, stateLines(structuredClone([...events, more])));
+
 const ids = [...used];
 writeFileSync(`${out}/ids`, ids.join("\n") + "\n");
 writeFileSync(`${out}/ids.sorted`, [...ids].sort((a, b) => a.localeCompare(b)).join("\n") + "\n");

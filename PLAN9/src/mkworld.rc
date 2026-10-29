@@ -1,0 +1,54 @@
+#!/bin/rc
+# mkworld.rc - inside Plan 9: Metaverse Kit's world as a 9P file server (mkfs), its
+# tile demo z0/x0/y0 made from in/mk/events. The state read from /n/mk must be the
+# kit's (in/mk/state); a must-reject line appended must be refused and leave the
+# events as they were; in/mk/more appended must make the kit's state after it
+# (in/mk/state.more); the state and a truncation must be refused. With -s, the world
+# stays up and mkd serves it on tcp port 8001 (the host's 127.0.0.1:18001).
+rfork e
+ifs='
+'
+w=/tmp/zmkworld
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zlazy.c PLAN9/src/zmk.c PLAN9/src/mkfs.c PLAN9/src/mkd.c PLAN9/wsn/mkevent.wsn PLAN9/in/mk} || exit tar
+p=$w/unbound/PLAN9
+m=$p/in/mk
+cd $p/src
+for(t in zlazy zmk mkfs mkd){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+unmount /n/mk >[2]/dev/null
+rm -f /srv/mk
+$w/mkfs -g $p/wsn/mkevent.wsn -l $w/zlazy -f $w/zmk demo z0/x0/y0 $m/events || exit mkfs
+t=/n/mk/spaces/demo/tiles/z0/x0/y0
+fail=0
+fn same {
+	if(cmp -s $1 $2) echo ok $3
+	if not { echo FAIL $3; fail=1 }
+}
+cat $t/state >$w/state
+same $w/state $m/state 'the state read from /n/mk is the state of the kit'
+cat $t/events >$w/events
+same $w/events $m/events 'the events read back as written'
+sed 1q $m/reject >$w/bad
+if(cat $w/bad >>$t/events >[2]$w/err) { echo FAIL a must-reject line appended; fail=1 }
+if not echo ok a must-reject line refused: `{cat $w/err}
+cat $t/events >$w/events
+same $w/events $m/events 'the events unchanged by the refusal'
+# a refused open aborts rc itself, so each refusal is asked in a subshell
+if(@{echo x >$t/state} >[2]/dev/null) { echo FAIL a write to the state; fail=1 }
+if not echo ok a write to the state refused
+if(@{echo >$t/events} >[2]/dev/null) { echo FAIL a truncation of the events; fail=1 }
+if not echo ok a truncation of the events refused
+cat $m/more >>$t/events || { echo FAIL appending in/mk/more; fail=1 }
+cat $t/state >$w/state
+same $w/state $m/state.more 'in/mk/more appended: the state of the kit after it'
+echo tile demo z0/x1/y0 >/n/mk/ctl
+cat $m/more >>/n/mk/spaces/demo/tiles/z0/x1/y0/events
+echo a second tile: `{cat /n/mk/spaces/demo/tiles/z0/x1/y0/state | wc -l} node
+if(~ $fail 0) echo 'mkworld.rc: every answer as expected'
+if(~ $1 -s){
+	aux/listen1 -t tcp!*!8001 $w/mkd &
+	echo mkd on tcp 8001
+}

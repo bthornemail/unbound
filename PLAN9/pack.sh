@@ -137,6 +137,9 @@ PLAN9/src/skel.rc
 PLAN9/wsn/skeleton.re
 PLAN9/src/zmk.c
 PLAN9/src/mk.rc
+PLAN9/src/mkfs.c
+PLAN9/src/mkd.c
+PLAN9/src/mkworld.rc
 $(cd "$HERE" && ls in/mk/* | grep -v 'gen.ts$' | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/ak/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/border -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
