@@ -1,7 +1,7 @@
 WEBVTT - questions: every question asked, and its answer or proof, or what it waits on
 
 NOTE
-The author, 2026-10-28: "whatever you find confusing or out of date correct it and record it because if you cant understand and you helped me build this then that leaves little hope for the public. the only way i know were done when no more questions can be asked without having an answer or proof to point to." One cue per question; the identifier is the cue that asked it. ANSWERED points to the cue or record that answers it; OPEN says what it waits on (work); SET ASIDE marks a question whose method cannot be sourced, which is no question (derived-order, global.vtt). A cue that asked is not edited; this file says what answered it. The work is done when no cue here says OPEN.
+The author, 2026-10-28: "whatever you find confusing or out of date correct it and record it because if you cant understand and you helped me build this then that leaves little hope for the public. the only way i know were done when no more questions can be asked without having an answer or proof to point to." One cue per question; the identifier is the cue that asked it. ANSWERED points to the cue or record that answers it; OPEN says what it waits on (work); CITE marks a question the author has answered whose source is still to be cited (the author, 2026-10-28: "all the questions are answered, they just need to be cited and sourced"). A cue that asked is not edited; this file says what answered it. The work is done when no cue here says OPEN.
 
 aegean-base
 00:00:00.000 --> 00:00:01.000
@@ -37,7 +37,7 @@ Space's numbering (5 ENOCH, 6 SPEAKER, 7 GENESIS) against the canon manifest's (
 
 zcast
 00:00:08.000 --> 00:00:09.000
-SET ASIDE by derived-order: the figure's get/put exchange is garbled in the paste and no source for it is held, so there is no method to port.
+CITE: answered by the author; the figure's get/put exchange, garbled in the paste, is to be cited from its source and ported.
 
 yhwh-six-pointings
 00:00:09.000 --> 00:00:10.000
@@ -61,11 +61,11 @@ The nibble parity as the deviation from YHWH, recorded and not checked: ANSWERED
 
 pixelate-origin
 00:00:14.000 --> 00:00:15.000
-P8 and R7: ANSWERED by pixelate-origin (letter counts). P6 and R5: SET ASIDE by derived-order: no sourced method counts them.
+P8 and R7: ANSWERED by pixelate-origin (letter counts). P6 and R5: CITE: answered by the author; their count is to be cited from its source.
 
 gate-021
 00:00:15.000 --> 00:00:16.000
-The gate itself: ANSWERED by gate-021 (run over all 27 starts). "The 1111 parity becomes hex": SET ASIDE by derived-order until a sourced method names it.
+The gate itself: ANSWERED by gate-021 (run over all 27 starts). "The 1111 parity becomes hex": ANSWERED, cited: I-116 (boxedPINE proofs/js/catalog/I-122.ts, "index 60 pinned; 0,2,1 interchange"): readNibble(0x1F, false) is 0xF, the low nibble 1111 read as the hex digit F, beside [0, 2, 1] not equal to [0, 1, 2]; the same record holds the gate's ordering and the 1111 read as hex.
 
 two-implementations-status
 00:00:16.000 --> 00:00:17.000
@@ -89,7 +89,7 @@ OPEN, work: no omi-files folder has been removed; the rule (its work on GitHub, 
 
 before-the-law
 00:00:21.000 --> 00:00:22.000
-SET ASIDE by derived-order: the PDF is recorded as provenance; no method in it has been named to check.
+CITE: answered by the author; the law in Light_Garden_Protocol.pdf (a slide rule of ROYGBIV or A to G) is to be cited from the PDF.
 
 gnomon-anim
 00:00:22.000 --> 00:00:23.000
