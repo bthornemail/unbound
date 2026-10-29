@@ -1,0 +1,27 @@
+EMPTY.min|EMPTY|min|1|0|HALT: InvalidSchemaPrefix
+EMPTY.lines|EMPTY|lines|1|0|HALT: InvalidSchemaPrefix
+EMPTY.empty|EMPTY|empty|1|0|HALT: InvalidSchemaPrefix
+unknown.min|unknown|min|1|0|HALT: UnknownAuthority
+unknown.lines|unknown|lines|1|0|HALT: UnknownAuthority
+unknown.empty|unknown|empty|1|0|HALT: UnknownAuthority
+cross.min|cross|min|1|0|HALT: CrossDomainEscalation
+cross.lines|cross|lines|1|0|HALT: CrossDomainEscalation
+cross.empty|cross|empty|1|0|HALT: CrossDomainEscalation
+valid.min|valid|min|0|5|
+valid.lines|valid|lines|0|54|
+valid.empty|valid|empty|0|0|
+user.min|user|min|0|5|
+user.lines|user|lines|0|54|
+user.empty|user|empty|0|0|
+Unknown.min|Unknown|min|0|5|
+Unknown.lines|Unknown|lines|0|54|
+Unknown.empty|Unknown|empty|0|0|
+cross-domain.min|cross-domain|min|0|5|
+cross-domain.lines|cross-domain|lines|0|54|
+cross-domain.empty|cross-domain|empty|0|0|
+SPACE.min|SPACE|min|0|5|
+SPACE.lines|SPACE|lines|0|54|
+SPACE.empty|SPACE|empty|0|0|
+UNSET.min|UNSET|min|1|0|AuthorityGate.native: ID_PREFIX: getEnv: does not exist (no environment variable)
+UNSET.lines|UNSET|lines|1|0|AuthorityGate.native: ID_PREFIX: getEnv: does not exist (no environment variable)
+UNSET.empty|UNSET|empty|1|0|AuthorityGate.native: ID_PREFIX: getEnv: does not exist (no environment variable)

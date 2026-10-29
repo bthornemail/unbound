@@ -1,0 +1,52 @@
+#!/bin/rc
+# gate.rc - inside Plan 9: metaverse-build's authority gate ported (zgate.c). Each case of
+# in/gate/cases (written on the host by in/gate/gen.sh with the gate itself, AuthorityGate.native)
+# must give the gate's status, its first line on standard error and its bytes out, byte for byte
+# (in/gate/out); a halt emits zero bytes. The falsifier: zgate -e, which writes before it checks,
+# must emit bytes on a halt, and the zero-byte check must catch it.
+rfork e
+w=/tmp/zgatew
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zgate.c PLAN9/in/gate} || exit tar
+g=$w/unbound/PLAN9/in/gate
+cd $w/unbound/PLAN9/src
+8c zgate.c && 8l -o $w/zgate zgate.8 || exit compile
+fail=0
+ifs='
+'
+for(c in `{cat $g/cases}){
+	ifs='|' { f=`{echo -n $c} }
+	n=$f(1); p=$f(2); t=$f(3); st=$f(4); e=$f(6)
+	# each case in an environment of its own: a subshell shares /env, where a variable is a
+	# file, and in Plan 9 a variable not set is a file not there
+	@{
+		rfork e
+		switch($p){
+		case EMPTY; ID_PREFIX=''
+		case SPACE; ID_PREFIX=' '
+		case UNSET; rm -f /env/ID_PREFIX
+		case *; ID_PREFIX=$p
+		}
+		$w/zgate <$g/t.$t >$w/$n.out >[2]$w/$n.err
+	}
+	if(~ $status ''){ got=0 }
+	if not got=1
+	ok=yes
+	if(! ~ $got $st) ok=no
+	if(! cmp -s $w/$n.out $g/out/$n.out) ok=no
+	if(~ $p UNSET){ if(! grep -s 'ID_PREFIX: getEnv: does not exist' $w/$n.err) ok=no }
+	if not { err=`{cat $w/$n.err}; if(! ~ $"err $"e) ok=no }
+	if(~ $ok no){ echo FAIL $n; fail=1 }
+}
+echo the gate gives `{wc -l <$g/cases} cases as the gate of metaverse-build does
+ID_PREFIX=cross
+$w/zgate -e <$g/t.lines >$w/leak >[2]/dev/null
+b=`{wc -c <$w/leak}
+if(~ $b 0){ echo FAIL falsifier; fail=1 }
+if not echo ok falsifier: a gate that writes before it checks emits $b bytes on a halt, and the check sees them
+ID_PREFIX=cross
+$w/zgate <$g/t.lines >$w/held >[2]/dev/null
+if(test -s $w/held){ echo FAIL a halt emitted bytes; fail=1 }
+if not echo ok HALT produces zero downstream bytes
+if(~ $fail 0) echo 'gate.rc: every answer as expected'
