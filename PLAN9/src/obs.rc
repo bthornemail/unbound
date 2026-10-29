@@ -10,6 +10,7 @@ cd $w/unbound/PLAN9/src
 8c zobs.c && 8l -o $w/zobs zobs.8 || exit compile
 fail=0
 $w/zobs test || fail=1
-$w/zobs read || fail=1
-$w/zobs unchecked || fail=1
+# the counts of reads vary with the scheduling: kept apart from the verdicts, in $w/counts
+$w/zobs read >[2]$w/counts || fail=1
+$w/zobs unchecked >>[2]$w/counts || fail=1
 if(~ $fail 0) echo 'obs.rc: every answer as expected'

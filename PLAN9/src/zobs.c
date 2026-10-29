@@ -144,12 +144,16 @@ readers(int want)
 	proccreate(writer, nil, 8192);
 	for(i = 0; i < NOBS+1; i++)
 		recvul(finished);
-	if(want)	/* the check: no read may disagree */
-		print("%s %d observers made %ld reads of a ruler changed %d times: %ld disagreed with the writer\n",
-			wrong == 0 && reports > 0 ? "ok" : "FAIL", NOBS, reports, NWRITE, wrong);
-	else		/* the falsifier: without the second epoch read, some must */
-		print("%s without the second epoch read, %ld of %ld reads disagreed with the writer\n",
-			wrong > 0 ? "ok" : "FAIL (the check would prove nothing)", wrong, reports);
+	/* the verdicts on standard output; the counts, which vary with the scheduling, on standard error */
+	if(want){	/* the check: no read may disagree */
+		print("%s %d observers read a ruler changed %d times: none disagreed with the writer\n",
+			wrong == 0 && reports > 0 ? "ok" : "FAIL", NOBS, NWRITE);
+		fprint(2, "with the second epoch read, %ld of %ld reads disagreed\n", wrong, reports);
+	}else{		/* the falsifier: without the second epoch read, some must */
+		print("%s without the second epoch read, some reads disagreed with the writer\n",
+			wrong > 0 ? "ok" : "FAIL (the check would prove nothing)");
+		fprint(2, "without the second epoch read, %ld of %ld reads disagreed\n", wrong, reports);
+	}
 	fails += want ? (wrong != 0 || reports == 0) : wrong == 0;
 }
 

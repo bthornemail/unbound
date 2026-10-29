@@ -127,14 +127,17 @@ check(char *s, long n)
 	return nil;
 }
 
+/* the directory name in d, made if not there; the reference to d is spent, one to it returned */
 static File*
-dir(File *parent, char *name)
+sub(File *d, char *name)
 {
 	File *f;
 
-	if((f = walkfile(parent, name)) != nil)
-		return f;
-	return createfile(parent, name, nil, DMDIR|0555, (void*)Qdir);
+	incref(d);	/* walkfile spends a reference to the directory it walks from */
+	if((f = walkfile(d, name)) == nil)
+		f = createfile(d, name, nil, DMDIR|0555, (void*)Qdir);
+	closefile(d);
+	return f;
 }
 
 static char*
@@ -155,7 +158,8 @@ mktile(char *space, char *id)
 			free(s);
 			return nil;
 		}
-	d = dir(dir(dir(dir(dir(dir(fs.tree->root, "spaces"), space), "tiles"), f[0]), f[1]), f[2]);
+	incref(fs.tree->root);
+	d = sub(sub(sub(sub(sub(sub(fs.tree->root, "spaces"), space), "tiles"), f[0]), f[1]), f[2]);
 	free(s);
 	t = emalloc9p(sizeof *t);
 	t->space = estrdup9p(space);
@@ -163,6 +167,10 @@ mktile(char *space, char *id)
 	t->ev = estrdup9p("");
 	t->events = createfile(d, "events", nil, DMAPPEND|0666, t);
 	t->state = createfile(d, "state", nil, 0444, t);
+	/* the tree keeps them; the references createfile handed over are given back */
+	closefile(t->events);
+	closefile(t->state);
+	closefile(d);
 	tiles = erealloc9p(tiles, (ntiles+1) * sizeof(Tile*));
 	tiles[ntiles++] = t;
 	return nil;
@@ -327,8 +335,9 @@ main(int argc, char *argv[])
 	if(grammar == nil || zlazy == nil || zmk == nil || argc % 3 != 0)
 		sysfatal("usage: mkfs [-m mtpt] -g grammar -l zlazy -f zmk [space tile events]...");
 	fs.tree = alloctree(nil, nil, DMDIR|0555, nil);
-	createfile(fs.tree->root, "ctl", nil, 0222, (void*)Qctl);
-	dir(fs.tree->root, "spaces");
+	closefile(createfile(fs.tree->root, "ctl", nil, 0222, (void*)Qctl));
+	incref(fs.tree->root);
+	closefile(sub(fs.tree->root, "spaces"));
 	for(i = 0; i < argc; i += 3){
 		if((err = mktile(argv[i], argv[i+1])) != nil)
 			sysfatal("%s %s: %s", argv[i], argv[i+1], err);

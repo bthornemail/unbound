@@ -1,0 +1,31 @@
+#!/bin/rc
+# spine.rc - inside Plan 9: the spine of the ports, after ~/devops/scripts/closure-spine-smoke.sh
+# and its determinism-sweep.sh, in their shape, not line for line. Each phase is a driver of
+# src/ that checks a port against its source with a golden, a must-reject and a falsifier, and
+# says "NAME.rc: every answer as expected" when every answer is. Each runs twice: the phase
+# passes when the first run says so, and is deterministic when the two runs' output is the same,
+# byte for byte (cmp; no digest stands for the output). One receipt a phase, in
+# /tmp/spine/receipts: phase NAME pass|fail determinism same|differs bytes N. Adding a port to
+# the spine is adding its name to phases.
+rfork e
+# ifs is left as rc sets it: an ifs set here would be exported to every driver
+phases=(element mk mkworld ctl cons fano ak gnomon poly border pcas pss grex cast lazy orch probe template stack bar pe obs pipe resolve step)
+s=/tmp/spine
+rm -rf $s
+mkdir -p $s/src
+@{cd $s/src && tar xf /dev/sd01/data `{for(n in $phases) echo PLAN9/src/$n.rc}} || exit tar
+passed=()
+samed=()
+for(n in $phases){
+	for(r in 1 2)
+		rc $s/src/PLAN9/src/$n.rc >$s/$n.$r >[2=1]
+	if(grep -s '^'$n'.rc: every answer as expected$' $s/$n.1){ v=pass; passed=($passed $n) }
+	if not v=fail
+	if(cmp -s $s/$n.1 $s/$n.2){ d=same; samed=($samed $n) }
+	if not d=differs
+	b=`{wc -c <$s/$n.1}
+	echo phase $n $v determinism $d bytes $b >>$s/receipts
+}
+cat $s/receipts
+echo spine: $#passed of $#phases pass, $#samed of $#phases the same twice
+if(~ $#passed $#phases && ~ $#samed $#phases) echo 'spine.rc: every answer as expected'
