@@ -101,4 +101,4 @@ OPEN, work, the acceptance test (global.vtt): an environment in QEMU the author 
 
 shared-view
 00:00:24.000 --> 00:00:25.000
-OPEN, work (global.vtt): every page of unbound/HTML rendered through Plan 9's html runes (libhtml, zhtml) to share one view over the same narrative, and the same codepoint literals shown in each module of the React showcase, unbound/TSX.
+OPEN, work (global.vtt): every page of unbound/HTML read through Plan 9's html runes (libhtml, zhtml) and every module of unbound/TSX sharing the same code point literals of the narrative, separated by their cast of letter and character (zcast) and chosen by the turn (step.c, stepd): the method is sourced (shared-literals); applying it to the 33 pages and 15 modules remains.
