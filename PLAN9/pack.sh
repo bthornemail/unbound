@@ -131,6 +131,7 @@ PLAN9/src/zak.c
 PLAN9/src/ak.rc
 PLAN9/src/zconv.c
 PLAN9/src/convcheck.rc
+PLAN9/src/element.rc
 $(cd "$HERE" && ls in/ak/* | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/border -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/orch/* | sed 's|^|PLAN9/|')

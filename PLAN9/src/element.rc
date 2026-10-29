@@ -1,0 +1,38 @@
+#!/bin/rc
+# element.rc - inside Plan 9: Figure 1, "A CSP specification of a stack element",
+# as the author pasted it, its ? ! ; restored (three ?, three !, six ;, the count
+# the paste's loose rows hold): E [ in?! in?x F [] out?! get?x out!x E ] and
+# F [ out?! out!x E [] in?! put!x in?x F ], in wsn/element.wsn as the grammar of
+# an element's finite traces from empty. zlazy must accept the protocol's traces
+# and refuse the ones that break it; zprec reads the grammar.
+rfork e
+ifs='
+'
+w=/tmp/zel
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zlazy.c PLAN9/src/zprec.c PLAN9/wsn/element.wsn} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+for(t in zlazy zprec){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+g=$p/wsn/element.wsn
+fail=0
+fn want {
+	if($w/zlazy $g E $2 >/dev/null) got=yes
+	if not got=no
+	if(~ $got $1) echo ok $1 $2
+	if not { echo FAIL $1 $2; fail=1 }
+}
+want yes ''
+want yes 'in?! in?x '
+want yes 'in?! in?x out?! out!x '
+want yes 'out?! get?x out!x '
+want yes 'in?! in?x in?! put!x in?x out?! out!x out?! get?x out!x '
+want no 'out?! out!x '
+want no 'in?! put!x in?x '
+want no 'in?! in?x in?! in?x '
+want no 'in?! in?x out?! get?x out!x '
+$w/zprec $g
+if(~ $fail 0) echo 'element.rc: every answer as expected'

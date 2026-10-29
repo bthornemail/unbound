@@ -1,0 +1,8 @@
+E = [ INPROBE INX F | OUTPROBE GETX OUTX E ] .
+F = [ OUTPROBE OUTX E | INPROBE PUTX INX F ] .
+INPROBE = "in?! " .
+OUTPROBE = "out?! " .
+INX = "in?x " .
+OUTX = "out!x " .
+GETX = "get?x " .
+PUTX = "put!x " .
