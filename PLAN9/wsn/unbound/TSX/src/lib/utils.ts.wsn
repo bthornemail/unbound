@@ -1,0 +1,5 @@
+FILE = HEAD .
+
+HEAD =
+  "export { cn } from ""cn"""
+  .

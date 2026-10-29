@@ -43,7 +43,7 @@ for(f in `{ls $w/sa}){
 	if(! cmp -s $f $w/sc/`{basename $f}){ echo differs: split `{basename $f}; bad=`{echo $bad + 1 | hoc} }
 }
 cd $w/unbound
-for(f in `{grep '^(SVG|SH|MERMAID|JS|HTML)/' $p/MANIFEST})
+for(f in `{grep '^(SVG|SH|MERMAID|JS|HTML|TS|TSX)/' $p/MANIFEST})
 	if(test -f $f) cmpone $f FILE
 echo convcheck.rc: $n files and `{ls $w/sa | wc -l} split records, $bad differ
 if(~ $bad 0) echo 'convcheck.rc: zconv gives what the awk gave'

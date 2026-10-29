@@ -55,7 +55,7 @@ for(f in `{ls $w/split}){
 		one $f $w/zout/wsn/js/catalog/I-122/`{basename $f .ts}^.wsn RECORD
 }
 cd $w/unbound
-for(f in `{grep '^(SVG|SH|MERMAID|JS|HTML)/' $p/MANIFEST})
+for(f in `{grep '^(SVG|SH|MERMAID|JS|HTML|TS|TSX)/' $p/MANIFEST})
 	one $f $w/zout/wsn/unbound/$f.wsn FILE
 cd $w/zout
 $w/zwsn `{cat $w/list} | sed 's,^'$w'/zout/,,' >$w/zout/zwsn.txt
