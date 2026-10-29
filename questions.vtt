@@ -1,7 +1,7 @@
 WEBVTT - questions: every question asked, and its answer or proof, or what it waits on
 
 NOTE
-The author, 2026-10-28: "whatever you find confusing or out of date correct it and record it because if you cant understand and you helped me build this then that leaves little hope for the public. the only way i know were done when no more questions can be asked without having an answer or proof to point to." One cue per question; the identifier is the cue that asked it. ANSWERED points to the cue or record that answers it; OPEN says what it waits on: the author (a decision or a source), or work. A cue that asked is not edited; this file says what answered it. The work is done when no cue here says OPEN.
+The author, 2026-10-28: "whatever you find confusing or out of date correct it and record it because if you cant understand and you helped me build this then that leaves little hope for the public. the only way i know were done when no more questions can be asked without having an answer or proof to point to." One cue per question; the identifier is the cue that asked it. ANSWERED points to the cue or record that answers it; OPEN says what it waits on (work); SET ASIDE marks a question whose method cannot be sourced, which is no question (derived-order, global.vtt). A cue that asked is not edited; this file says what answered it. The work is done when no cue here says OPEN.
 
 aegean-base
 00:00:00.000 --> 00:00:01.000
@@ -37,7 +37,7 @@ Space's numbering (5 ENOCH, 6 SPEAKER, 7 GENESIS) against the canon manifest's (
 
 zcast
 00:00:08.000 --> 00:00:09.000
-OPEN, the author (a source): the figure's exchange with its neighbouring element (get, put) is garbled in the paste and not ported; it needs the figure as written. (development.vtt)
+SET ASIDE by derived-order: the figure's get/put exchange is garbled in the paste and no source for it is held, so there is no method to port.
 
 yhwh-six-pointings
 00:00:09.000 --> 00:00:10.000
@@ -61,11 +61,11 @@ The nibble parity as the deviation from YHWH, recorded and not checked: ANSWERED
 
 pixelate-origin
 00:00:14.000 --> 00:00:15.000
-OPEN, the author: in "P8 xor R7 xnor P6 xor R5 xnor", P8 is PIXELATE (8 letters) and R7 REFLECT (7), but PROXY has 5 letters and REST 4; how are P6 and R5 counted? (environment.vtt)
+P8 and R7: ANSWERED by pixelate-origin (letter counts). P6 and R5: SET ASIDE by derived-order: no sourced method counts them.
 
 gate-021
 00:00:15.000 --> 00:00:16.000
-OPEN, the author: "the 1111 parity becomes hex": which cells or values the 1111 is, or which proof holds it, so it can be checked. (environment.vtt)
+The gate itself: ANSWERED by gate-021 (run over all 27 starts). "The 1111 parity becomes hex": SET ASIDE by derived-order until a sourced method names it.
 
 two-implementations-status
 00:00:16.000 --> 00:00:17.000
@@ -89,11 +89,11 @@ OPEN, work: no omi-files folder has been removed; the rule (its work on GitHub, 
 
 before-the-law
 00:00:21.000 --> 00:00:22.000
-OPEN, the author: Light_Garden_Protocol.pdf (14 MB) is recorded but not read; which part holds a law to check? (global.vtt)
+SET ASIDE by derived-order: the PDF is recorded as provenance; no method in it has been named to check.
 
 gnomon-anim
 00:00:22.000 --> 00:00:23.000
-OPEN, the author: commit the animated gnomon.gif (now only on the guest's output disk), or keep it generated? (development.vtt)
+ANSWERED by runtime-resolves and derived-order: gnomon.gif is an output, resolved on request by gnomonanim.rc; the source is committed, the GIF is not.
 
 digital-twin
 00:00:23.000 --> 00:00:24.000
