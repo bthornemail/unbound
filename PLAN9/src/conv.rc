@@ -1,9 +1,9 @@
 #!/bin/rc
 # conv.rc - inside Plan 9: every file of boxedPINE's proofs/js to Wirth syntax
-# notation with wsn.awk (I-122's records split out first with split.awk, and
+# notation with zconv wsn (I-122's records split out first with zconv split, and
 # written under catalog/I-122/, since I-123 to I-151 are also checks of their own),
 # and unbound's SVG, SH, MERMAID, JS and HTML (from MANIFEST), each read back
-# against its source with back.awk and read by zwsn, and the
+# against its source with zconv back and read by zwsn, and the
 # .wsn files written to the output disk as a tar.
 rfork e
 ifs='
@@ -16,25 +16,27 @@ mkdir -p $w/unbound $w/zout/wsn $w/split
 @{cd $w/unbound && tar xf $src} || exit tar
 p=$w/unbound/PLAN9
 cd $p/src
-8c zwsn.c && 8l -o $w/zwsn zwsn.8 || exit compile
+for(t in zwsn zconv){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
 cd $p/run/js
-awk -v 'out='$w/split -f $p/src/split.awk catalog/I-122.ts
+$w/zconv split $w/split catalog/I-122.ts
 fail=0
 n=0
 fn one {
 	# one source $1, written as $2 with top production $3
 	mkdir -p `{basename -d $2}
-	awk -v 'top='$3 -f $p/src/wsn.awk $1 >$2
+	$w/zconv wsn $3 $1 >$2
 	echo $2 >>$w/list
-	awk -f $p/src/back.awk $2 >$w/back
-	awk '!/^[ 	]*$/' $1 >$w/want
+	$w/zconv back $2 >$w/back
+	$w/zconv lines $1 >$w/want
 	if(! cmp -s $w/back $w/want){
 		echo conv.rc: $1 does not read back
 		fail=1
 	}
 	n=`{echo $n + 1 | hoc}
 }
-for(f in `{du -a . | awk '{print $2}' | sed 's,^\./,,'}){
+for(f in `{du -a . | sed 's/^[0-9]+[ 	]+//; s,^\./,,'}){
 	if(test -f $f){
 		switch($f){
 		case catalog/I-122.ts

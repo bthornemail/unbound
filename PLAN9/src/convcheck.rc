@@ -1,0 +1,49 @@
+#!/bin/rc
+# convcheck.rc - inside Plan 9: zconv (wsn, back, split) against the awk it
+# replaces (wsn.awk, back.awk, split.awk), on every file conv.rc converts. The awk
+# stays only as the reference, as prec.awk does for prec.c (precheck.rc).
+rfork e
+ifs='
+'
+w=/tmp/zcc
+rm -rf $w
+mkdir -p $w/unbound $w/sa $w/sc
+@{cd $w/unbound && tar xf /dev/sd01/data} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zconv.c && 8l -o $w/zconv zconv.8 || exit compile
+n=0
+bad=0
+fn cmpone {
+	awk -v 'top='$2 -f $p/src/wsn.awk $1 >$w/a
+	$w/zconv wsn $2 $1 >$w/c
+	if(! cmp -s $w/a $w/c){ echo differs: wsn $1; bad=`{echo $bad + 1 | hoc} }
+	awk -f $p/src/back.awk $w/a >$w/ab
+	$w/zconv back $w/c >$w/cb
+	if(! cmp -s $w/ab $w/cb){ echo differs: back $1; bad=`{echo $bad + 1 | hoc} }
+	awk '!/^[ 	]*$/' $1 >$w/al
+	$w/zconv lines $1 >$w/cl
+	if(! cmp -s $w/al $w/cl){ echo differs: lines $1; bad=`{echo $bad + 1 | hoc} }
+	n=`{echo $n + 1 | hoc}
+}
+cd $p/run/js
+for(f in `{du -a . | sed 's/^[0-9]+[ 	]+//; s,^\./,,'}){
+	if(test -f $f && ! ~ $f catalog/I-122.ts){
+		switch($f){
+		case catalog/*.ts
+			cmpone $f RECORD
+		case *
+			cmpone $f FILE
+		}
+	}
+}
+awk -v 'out='$w/sa -f $p/src/split.awk catalog/I-122.ts
+$w/zconv split $w/sc catalog/I-122.ts
+for(f in `{ls $w/sa}){
+	if(! cmp -s $f $w/sc/`{basename $f}){ echo differs: split `{basename $f}; bad=`{echo $bad + 1 | hoc} }
+}
+cd $w/unbound
+for(f in `{grep '^(SVG|SH|MERMAID|JS|HTML)/' $p/MANIFEST})
+	if(test -f $f) cmpone $f FILE
+echo convcheck.rc: $n files and `{ls $w/sa | wc -l} split records, $bad differ
+if(~ $bad 0) echo 'convcheck.rc: zconv gives what the awk gave'
