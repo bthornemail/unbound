@@ -102,3 +102,7 @@ OPEN, work, the acceptance test (global.vtt; its first form built, twin in devel
 shared-view
 00:00:24.000 --> 00:00:25.000
 The HTML pages: ANSWERED by the author: already read through Plan 9's html runes (zhtml, html.rc: parsehtml, validitems, printitems). The TSX modules' literals: ANSWERED by tsx-literals (development.vtt): all 65 TS and TSX files in Plan 9 as WSN, read back, on the skeleton. OPEN, work: each module's rendering in Plan 9, sharing the same code point literals of the narrative, separated by their cast of letter and character (zcast) and chosen by the turn (step.c, stepd): the method is sourced (shared-literals); applying it to the TSX modules remains.
+
+mk-world
+00:00:25.000 --> 00:00:26.000
+OPEN, work, Metaverse Kit native on Plan 9 (mk-native, global.vtt; mk-port, development.vtt): its grammar and fold are ported and checked against the kit; left, the world as a 9P file server read by the Commons and space/metaverse.html in place of a sibling path, and the narrative world compiler on Plan 9; the kit's unions as Haskell sum types in omi-types; proposal, accept_proposal and derived_feature32 are not yet in the grammar.

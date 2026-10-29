@@ -1,0 +1,45 @@
+#!/bin/rc
+# mk.rc - inside Plan 9: Metaverse Kit's world (~/devops/metaverse-kit) ported native.
+# wsn/mkevent.wsn is its frame and event as a grammar: zlazy must accept every event
+# line in in/mk/events (written on the host from events the kit's validateWorldEvent
+# accepts) and refuse every line of in/mk/reject (each refused by the kit too); zprec
+# reads the grammar. zmk is its fold (shadow-canvas buildState): its state must be the
+# kit's, in/mk/state, in either arrival order, and must not be when event_ids are
+# ordered by bytes instead of localeCompare (the falsifier).
+rfork e
+ifs='
+'
+w=/tmp/zmkw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zlazy.c PLAN9/src/zprec.c PLAN9/src/zmk.c PLAN9/wsn/mkevent.wsn PLAN9/in/mk} || exit tar
+p=$w/unbound/PLAN9
+m=$p/in/mk
+cd $p/src
+for(t in zlazy zprec zmk){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+g=$p/wsn/mkevent.wsn
+fail=0
+for(l in `{cat $m/events}){
+	if(! $w/zlazy $g EVENT $l >/dev/null){ echo FAIL accept $l; fail=1 }
+}
+for(l in `{cat $m/reject}){
+	if($w/zlazy $g EVENT $l >/dev/null){ echo FAIL reject $l; fail=1 }
+}
+echo events `{wc -l <$m/events} reject `{wc -l <$m/reject}
+$w/zprec $g | sed 3q
+# Plan 9 cmp takes two files, not - for standard input
+$w/zmk <$m/events >$w/state
+$w/zmk <$m/events.rev >$w/state.rev
+$w/zmk -b <$m/events >$w/state.b
+$w/zmk -o <$m/ids >$w/ids
+if(cmp -s $w/state $m/state) echo ok fold, the state of the kit
+if not { echo FAIL fold; fail=1 }
+if(cmp -s $w/state.rev $m/state) echo ok fold, arrival reversed
+if not { echo FAIL reversed; fail=1 }
+if(cmp -s $w/state.b $m/state){ echo FAIL falsifier; fail=1 }
+if not echo ok falsifier, event_ids by bytes give another state
+if(cmp -s $w/ids $m/ids.sorted) echo ok ids in localeCompare order
+if not { echo FAIL ids; fail=1 }
+if(~ $fail 0) echo 'mk.rc: every answer as expected'

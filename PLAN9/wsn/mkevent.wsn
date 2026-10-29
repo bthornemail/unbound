@@ -1,0 +1,36 @@
+EVENT = "event_id " ID " timestamp " NUMBER " space_id " ID " layer_id " LAYER " actor_id " ID " operation " OPERATION .
+OPERATION = "create_node" ENV NODE " kind " ID TRANSFORM [ PROPERTIES ]
+  | "update_transform" ENV NODE TRANSFORM
+  | "set_properties" ENV NODE PROPERTIES
+  | "link_nodes" ENV LINK
+  | "unlink_nodes" ENV LINK
+  | "delete_node" ENV NODE
+  | "merge" SCOPED " previous_events " ID " " ID { " " ID } TILE
+  | "set_geometry" ENV NODE " geometry kind " ( "svg" | "obj" | "glb" ) REF [ " units " ( "m" | "cm" | "px" ) ]
+  | "set_media" ENV NODE " media kind " ( "svg" | "obj" | "mtl" | "glb" | "wav" | "mp4" ) REF [ " mime " ID ]
+  | "set_text" ENV NODE " text kind " ( "plain" | "markdown" | "code" | "json" | "yaml" ) REF [ " language " ID ]
+  | "set_document" ENV NODE " document kind " ( "pdf" | "md-page" | "canvas2d" | "html" ) REF [ " pages " NUMBER ]
+  | "set_physics" ENV NODE
+  | "physics_step" ENV " solver " ID " tick " NUMBER " delta_time " NUMBER " updates" { NODE TRANSFORM }
+  | "macro." ID ENV .
+ENV = SCOPED " previous_events" { " " ID } TILE .
+SCOPED = " scope " REALM " " AUTHORITY " " BOUNDARY [ " policy " POLICY ] " preserves_invariants adjacency exclusion consistency boundary_discipline authority_nontransfer" .
+TILE = " tile " ID .
+NODE = " node_id " ID .
+LINK = " from_node " ID " relation " ID " to_node " ID .
+REF = " ref " ID .
+TRANSFORM = " transform" N N N N N N N N N N .
+N = " " NUMBER .
+PROPERTIES = " properties" { " " ID " " VALUE } .
+VALUE = """" { CHAR } """" | NUMBER | "true" | "false" | "null" .
+LAYER = "layout" | "physics" | "presentation" | "meta" .
+REALM = "personal" | "team" | "public" .
+AUTHORITY = "source" | "derived" .
+BOUNDARY = "interior" | "boundary" | "exterior" .
+POLICY = "public" | "private" | "redacted" .
+NUMBER = [ "-" ] DIGIT { DIGIT } [ "." DIGIT { DIGIT } ] [ ( "e" | "E" ) [ "+" | "-" ] DIGIT { DIGIT } ] .
+ID = CHAR { CHAR } .
+CHAR = LETTER | DIGIT | "_" | "-" | ":" | "." | "/" .
+DIGIT = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" .
+LETTER = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+  | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" .
