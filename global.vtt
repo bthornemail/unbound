@@ -158,3 +158,7 @@ commons-first
 map-view
 00:00:38.000 --> 00:00:39.000
 2026-10-28 the author, of boxedPINE space/map.html: "this is so cool, it's like an overhead map and a state transition screen for the narrative". Its z-indexed maps (boxedPINE AGENTS.md): the 144 colour synsets on the colour wheel in 2D and 2.5D, a character's 128-byte state, the 65,536-pair mask, the story on the plane, the terms box and the witness recorder; it and the 3D Commons both derive a place from space/src/plane.ts, (u, v, layer) on the Commons plane, so the overhead map and the walked world are one place seen two ways. In the digital twin it is the narrative's state-transition view beside the Commons (commons-first).
+
+extrusion
+00:00:39.000 --> 00:00:40.000
+2026-10-28 the author, of space/map.html: "this shows how we can make structure from extrusions". The code behind it: boxedPINE space/src/polyform.ts, a polyform declared in one 16-bit word (basis, degree, dimension, group; unpackDeclaration) and grown from a seed one cell at a time, each next cell the free neighbour the delta law K picks (grow), so the law chooses the growth; a dimension-2 form grown flat, then extruded through three layers, polyform's DIM_2_5D (omi-files/polytron/polyform-env/include/barcode-frame.h; space/src/polytron.ts draws the extrusion at the Polytron station); and the Dali cross, the net of the tesseract, the same one dimension up. Tested in space.test.ts ("a MaxiCode declaration and a seed give one connected polyform").
