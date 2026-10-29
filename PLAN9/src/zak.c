@@ -264,5 +264,34 @@ main(int argc, char *argv[])
 		}
 		exits(fails ? "fail" : nil);
 	}
-	sysfatal("usage: zak delta W seed steps | kernel seed steps | law");
+	if(argc == 2 && strcmp(argv[1], "period") == 0){
+		/* at every width that holds whole bytes: the law commutes with rotation, so
+		 * L^k is 1 exactly when it returns the one bit e0; and K^k is the identity
+		 * when, besides, the constant has dropped out over those k steps */
+		for(width = 16; width <= MAXW; width += 8){
+			Word e0, y;
+			int lk;
+
+			memset(&e0, 0, sizeof e0);
+			e0.w[0] = 1;
+			for(y = lin(e0), lk = 1; !eq(y, e0) && lk < 65536; lk++)
+				y = lin(y);
+			for(n = width; n % 2 == 0; n /= 2)
+				;
+			if(!eq(y, e0)){
+				print("width %d = %d x %d: L does not return within 65536\n", width, width / n, n);
+				continue;
+			}
+			c = constant();
+			memset(&s, 0, sizeof s);
+			for(x = c, k = 0; k < lk; k++){
+				s = xor(s, x);
+				x = lin(x);
+			}
+			print("width %d = %d x %d: L returns in %d, and C %s\n", width, width / n, n, lk,
+				iszero(s) ? "drops out: every state returns in that many" : "does not drop out");
+		}
+		exits(nil);
+	}
+	sysfatal("usage: zak delta W seed steps | kernel seed steps | law | period");
 }

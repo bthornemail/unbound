@@ -25,4 +25,7 @@ $w/zak kernel 0x06AC 24 > $w/kernel
 if(cmp -s $w/kernel $a/kernel) echo ok kernel-v1: 24 ticks as kernel.py, state, position, orbit, offset, phase, B, band
 if not { echo FAIL kernel-v1 differs; fail=1 }
 $w/zak law || fail=1
+$w/zak period > $w/period
+if(cmp -s $w/period $a/period) echo ok the period at every byte width 16 to 256 as measured on the host, `{wc -l < $w/period} widths
+if not { echo FAIL the periods differ; diff $w/period $a/period; fail=1 }
 if(~ $fail 0) echo 'ak.rc: every answer as expected'
