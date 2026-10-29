@@ -1,0 +1,24 @@
+#!/bin/rc
+# cons.rc - inside Plan 9: h2gnn's geometric consensus (src/core/geometric-subsidiarity.ts)
+# ported native, each decision with its proof. zcons must give the 324 decisions of
+# in/cons/decisions (written on the host by in/cons/gen.ts with the engine itself: groups
+# of 1 to 24, every count of yes); the falsifier: by the thresholds the engine's header
+# states (5/8, 4/6, 11/20, 9/20) instead of its p/V, the decisions must differ.
+rfork e
+w=/tmp/zconsw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zcons.c PLAN9/in/cons} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c zcons.c && 8l -o $w/zcons zcons.8 || exit compile
+fail=0
+$w/zcons >$w/decisions
+if(cmp -s $w/decisions $p/in/cons/decisions) echo ok the 324 decisions of h2gnn, by yes V against p n
+if not { echo FAIL decisions; fail=1 }
+$w/zcons -d >$w/stated
+if(cmp -s $w/stated $p/in/cons/decisions){ echo FAIL falsifier; fail=1 }
+if not echo ok falsifier: by the stated thresholds, `{diff $w/stated $p/in/cons/decisions | grep -c '^<'} decisions differ
+$w/zcons -p 7 5
+$w/zcons -p 30 7
+if(~ $fail 0) echo 'cons.rc: every answer as expected'

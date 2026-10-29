@@ -142,6 +142,9 @@ PLAN9/src/mkd.c
 PLAN9/src/mkworld.rc
 PLAN9/src/zctl.c
 PLAN9/src/ctl.rc
+PLAN9/src/zcons.c
+PLAN9/src/cons.rc
+PLAN9/in/cons/decisions
 $(cd "$HERE" && ls in/ctl/* | grep -v 'gen.py$' | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/mk/* | grep -v 'gen.ts$' | sed 's|^|PLAN9/|')
 $(cd "$HERE" && ls in/ak/* | sed 's|^|PLAN9/|')
