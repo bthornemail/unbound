@@ -160,6 +160,126 @@ hex(Word x)
 	return s;
 }
 
+/*
+ * The law's order by algebra, where stepping cannot reach: L is multiplication
+ * by x + x^3 + x^(W-2) modulo x^W + 1, a product of polynomials being the XOR
+ * of the second rotated by each bit of the first. With W = 2^k m (m odd), the
+ * order divides 2^k (2^o - 1), o the order of 2 modulo m; raise L to that by
+ * squaring, then take out each prime while L^(N/p) is still 1. The constant
+ * rides along: (P, S) = (L^n, L^0 + ... + L^(n-1)) doubles to (P^2, S + P S)
+ * and steps to (P L, S + P), so S_N applied to C says whether every state
+ * returns in N.
+ */
+static Word
+mul(Word a, Word b)
+{
+	Word r;
+	int i;
+
+	memset(&r, 0, sizeof r);
+	for(i = 0; i < width; i++)
+		if(bit(&a, i))
+			r = xor(r, rotl(b, i));
+	return r;
+}
+
+static Word
+one(void)
+{
+	Word e;
+
+	memset(&e, 0, sizeof e);
+	e.w[0] = 1;
+	return e;
+}
+
+static Word
+lpoly(void)
+{
+	return xor(xor(rotl(one(), 1), rotl(one(), 3)), rotl(one(), width - 2));
+}
+
+/* L^n and L^0 + ... + L^(n-1) */
+static void
+power(uvlong n, Word *P, Word *S)
+{
+	Word p, s, l, z;
+	int i, top;
+
+	memset(&z, 0, sizeof z);
+	l = lpoly();
+	p = one();
+	s = z;
+	for(top = 63; top >= 0 && !(n >> top & 1); top--)
+		;
+	for(i = top; i >= 0; i--){
+		s = xor(s, mul(p, s));	/* double */
+		p = mul(p, p);
+		if(n >> i & 1){	/* step */
+			s = xor(s, p);
+			p = mul(p, l);
+		}
+	}
+	*P = p;
+	*S = s;
+}
+
+/* the rank of L over GF(2): its columns are L rotated, eliminated */
+static int
+rank(void)
+{
+	Word col[MAXW], t;
+	int i, j, r, piv;
+
+	for(i = 0; i < width; i++)
+		col[i] = rotl(lpoly(), i);
+	for(r = 0, piv = 0; piv < width && r < width; piv++){
+		for(i = r; i < width && !bit(&col[i], piv); i++)
+			;
+		if(i == width)
+			continue;
+		t = col[i]; col[i] = col[r]; col[r] = t;
+		for(j = 0; j < width; j++)
+			if(j != r && bit(&col[j], piv))
+				col[j] = xor(col[j], col[r]);
+		r++;
+	}
+	return r;
+}
+
+static void
+order(void)
+{
+	Word P, S;
+	uvlong N, q, f;
+	int m, k, o, t;
+
+	for(m = width, k = 0; m % 2 == 0; m /= 2)
+		k++;
+	for(o = 1, t = 2 % m; m > 1 && t != 1; o++)
+		t = t * 2 % m;
+	N = ((uvlong)1 << k) * (((uvlong)1 << o) - 1);
+	power(N, &P, &S);
+	if(!eq(P, one())){
+		print("width %d = %d x %d: L^%llud is not 1, so L is no unit: rank %d of %d, the law merges states and they cannot all return\n",
+			width, 1 << k, m, N, rank(), width);
+		return;
+	}
+	for(q = N, f = 2; q > 1; f++){
+		if(f * f > q)
+			f = q;
+		while(q % f == 0){
+			q /= f;
+			power(N / f, &P, &S);
+			if(eq(P, one()))
+				N /= f;
+		}
+	}
+	power(N, &P, &S);
+	print("width %d = %d x %d: L returns in %llud; %s\n", width, 1 << k, m, N,
+		iszero(mul(S, constant())) ? "every state with it" : "the constant does not drop out");
+}
+
 static int fails;
 
 static void
@@ -293,5 +413,10 @@ main(int argc, char *argv[])
 		}
 		exits(nil);
 	}
-	sysfatal("usage: zak delta W seed steps | kernel seed steps | law | period");
+	if(argc == 2 && strcmp(argv[1], "order") == 0){
+		for(width = 16; width <= MAXW; width += 8)
+			order();
+		exits(nil);
+	}
+	sysfatal("usage: zak delta W seed steps | kernel seed steps | law | period | order");
 }

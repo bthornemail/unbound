@@ -28,4 +28,7 @@ $w/zak law || fail=1
 $w/zak period > $w/period
 if(cmp -s $w/period $a/period) echo ok the period at every byte width 16 to 256 as measured on the host, `{wc -l < $w/period} widths
 if not { echo FAIL the periods differ; diff $w/period $a/period; fail=1 }
+$w/zak order > $w/order
+if(cmp -s $w/order $a/order) echo ok the order by algebra at every byte width, `{wc -l < $w/order} widths, 248 the one where L is no unit
+if not { echo FAIL the orders differ; diff $w/order $a/order; fail=1 }
 if(~ $fail 0) echo 'ak.rc: every answer as expected'
