@@ -162,3 +162,7 @@ map-view
 extrusion
 00:00:39.000 --> 00:00:40.000
 2026-10-28 the author, of space/map.html: "this shows how we can make structure from extrusions". The code behind it: boxedPINE space/src/polyform.ts, a polyform declared in one 16-bit word (basis, degree, dimension, group; unpackDeclaration) and grown from a seed one cell at a time, each next cell the free neighbour the delta law K picks (grow), so the law chooses the growth; a dimension-2 form grown flat, then extruded through three layers, polyform's DIM_2_5D (omi-files/polytron/polyform-env/include/barcode-frame.h; space/src/polytron.ts draws the extrusion at the Polytron station); and the Dali cross, the net of the tesseract, the same one dimension up. Tested in space.test.ts ("a MaxiCode declaration and a seed give one connected polyform").
+
+inner-state
+00:00:40.000 --> 00:00:41.000
+2026-10-28 the author, of space/map.html: "this was how to directly speak to the agents' inner state". There: a character's state is 128 bytes, each frame exchanged by Atomics.compareExchange(svg, 60 ^ frame, 127, 63), gold where it reads (127, XOR) and blue where it writes (63, XNOR); the terms box takes uppercase terms (METATRON P2 L6, CATCH 22) through the gate of space/src/exchange.ts, a Proxy and Reflect with Catch (rosetta's interface carrier), CATCH n moving the reset index from 22. It is the exchange for whoever interjects, which questions.vtt (turn-and-exchange) has open on the Plan 9 side: stepd turns but nothing exchanges its registers; boxedPINE's browser has the exchange, Plan 9 does not yet.
