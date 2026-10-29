@@ -1,0 +1,48 @@
+#!/bin/rc
+# border.rc - inside Plan 9: the proof of PIXELATE, the author's "the ability to
+# change a svg from the margins": boxedPINE's space/src/border.ts and trace.ts
+# ported (zborder.c), against what they give (in/border, written by them on the
+# host). For each of the eight characters: its name and cues written into the
+# border of Fano_full.svg, byte for byte as border.ts writes it; read back;
+# read with XOR 0x20 in lowercase; the image as drawn unchanged. Then METATRON's
+# 16 files: intact they trace to zero; one margin changed (place 5 written as
+# 6) shows at the four pairs ME TA TR ON, by 5 XOR 6.
+rfork e
+w=/tmp/zborder
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zborder.c PLAN9/in/border} || exit tar
+p=$w/unbound/PLAN9
+b=$p/in/border
+cd $p/src
+8c zborder.c && 8l -o $w/zborder zborder.8 || exit compile
+ifs='
+'
+fail=0
+for(line in `{cat $b/expected}){
+	ifs=' ' { f=`{echo $line} }
+	n=$f(1)
+	$w/zborder write $n $f(2) $b/Fano_full.svg > $w/$n.svg
+	if(cmp -s $w/$n.svg $b/framed/$n.svg) echo ok $n written into the border byte for byte as border.ts writes it
+	if not { echo FAIL $n written otherwise; fail=1 }
+	r=`{$w/zborder read $w/$n.svg}
+	l=`{$w/zborder read 0x20 $w/$n.svg}
+	if(~ $"r $f(3)^' '^$f(4) && ~ $"l $f(5)^' '^$f(4)) echo ok $n reads back as $"r, and XOR 0x20 as $"l
+	if not { echo FAIL $n reads $"r and $"l; fail=1 }
+	$w/zborder clear $w/$n.svg > $w/a
+	$w/zborder clear $b/Fano_full.svg > $w/c
+	if(cmp -s $w/a $w/c) echo ok $n leaves the image as drawn unchanged
+	if not { echo FAIL $n changes the image; fail=1 }
+}
+files=`{ls $b/METATRON/*.svg}
+$w/zborder write METATRON 6 $b/METATRON/05.svg > $w/05.svg
+changed=()
+for(x in $files){
+	if(~ $x */05.svg) changed=($changed $w/05.svg)
+	if not changed=($changed $x)
+}
+$w/zborder trace $files > $w/trace
+$w/zborder trace $changed >> $w/trace
+if(cmp -s $w/trace $b/trace.expected) echo ok METATRON: 16 intact files trace to zero, and the changed margin shows at ME TA TR ON by 5 XOR 6, which is 3, as trace.ts gives
+if not { echo FAIL the trace differs; cat $w/trace; fail=1 }
+if(~ $fail 0) echo 'border.rc: every answer as expected'

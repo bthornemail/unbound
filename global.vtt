@@ -94,3 +94,7 @@ with-or-without-ziguaroth
 literal-codepoints
 00:00:22.000 --> 00:00:23.000
 2026-10-28 the author: "we removed physics from this and made it literal constant of code points or code point sequences for strict logic checking."
+
+pixelate-proof
+00:00:23.000 --> 00:00:24.000
+2026-10-28 the author: "If we cant build the logic proof and reason for doing something from established rules or proof then we have to figure it out but the PIXELATE proof is the ability to change a svg from the margins. I cant code so every factor that I am leaning on was derived from a proof of concept but since i cant code i couldnt maintain it which is why there is an overburden of projects and documents." The proof is boxedPINE space/src/border.ts and trace.ts (space.test.ts, The border and The trace), now also PLAN9/src/zborder.c (border.rc).
