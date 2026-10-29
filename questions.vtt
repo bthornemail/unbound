@@ -73,7 +73,7 @@ OPEN, work: only zlazy has a Haskell run beside it (OMI.WSN); the other Plan 9 p
 
 no-awk
 00:00:17.000 --> 00:00:18.000
-conv.rc: ANSWERED by zconv (development.vtt): wsn.awk, back.awk and split.awk in Plan 9 C, 0 of 404 files differing from the awk. OPEN, work: book.rc (coq2wsn.awk), catalog.rc (yaml2wsn.awk) and compile.rc (a TYPES lookup) still use awk.
+conv.rc: ANSWERED by zconv (development.vtt): wsn.awk, back.awk and split.awk in Plan 9 C, 0 of 404 files differing from the awk. catalog.rc and compile.rc: ANSWERED by no-awk-drivers (development.vtt): the catalog is WSN at its source, read by zwsn; the TYPES lookup is grep and sed. OPEN, work: book.rc (coq2wsn.awk) still uses awk.
 
 turn-and-exchange
 00:00:18.000 --> 00:00:19.000

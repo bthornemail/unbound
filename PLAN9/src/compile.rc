@@ -17,7 +17,7 @@ cd $w/unbound
 n=0
 for(f in `{cat PLAN9/MANIFEST}){
 	ext=`{echo $f | sed 's/.*\.//'}
-	type=`{awk -F'	' '$1 == "'$ext'" { print $2 }' PLAN9/src/TYPES}
+	type=`{grep '^'$ext'	' PLAN9/src/TYPES | sed 's/^[^	]*	//'}
 	if(~ $#type 0) type=application/octet-stream
 	dir=`{basename -d $f}
 	mkdir -p $w/zout/$dir

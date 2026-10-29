@@ -2,7 +2,8 @@
 """Each catalogued figure, as written in each held witness: its words, letters and
 vowel marks kept, accents (U+0591-U+05AF), maqaf and verse marks removed.
 Writes in/figures/<FIGURE>.txt: one line per witness, CODEX<TAB>reference<TAB>literal,
-and <FIGURE>.path and <FIGURE>.name: its _CATALOG path and the catalog's own name for it.
+and <FIGURE>.path and <FIGURE>.name: its _CATALOG path and the catalog's own name for it
+(the NAME production of its entry, _CATALOG/<path>/<last>.wsn).
 Only reads the witnesses; Plan 9 does the rest."""
 import json, os, re, sys, unicodedata
 
@@ -38,7 +39,7 @@ for name, (cons, places) in FIGURES.items():
         lines.append(f"{codex}\t{book} {ch}:{v}\t{' '.join(words[hit:hit + n])}")
     open(f"{OUT}/{name}.txt", "w").write("\n".join(lines) + "\n")
     path = PATHS[name]
-    yaml = open(f"{CATALOG}/{path}/{path.split('/')[-1].lower()}.yaml", encoding="utf-8").read()
+    entry = open(f"{CATALOG}/{path}/{path.split('/')[-1].lower()}.wsn", encoding="utf-8").read()
     open(f"{OUT}/{name}.path", "w").write(path + "\n")
-    open(f"{OUT}/{name}.name", "w").write(re.search(r'^  name: "(.*)"$', yaml, re.M).group(1) + "\n")
+    open(f"{OUT}/{name}.name", "w").write(re.search(r'^NAME = "((?:[^"]|"")*)" \.$', entry, re.M).group(1).replace('""', '"') + "\n")
     print(name, *lines, sep="\n  ")

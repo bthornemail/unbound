@@ -16,9 +16,9 @@ mkdir -p "$RUN"
 JS=${JS:-/home/main/Programs/boxedPINE/proofs/js}
 rm -rf "$RUN/js" && cp -r "$JS" "$RUN/js"
 git -C "$JS" rev-parse HEAD > "$RUN/js.commit"
-# ZIGUAROTH's _CATALOG YAML, copied in for conversion to Wirth syntax notation
+# ZIGUAROTH's _CATALOG entries, Wirth syntax notation at their source, copied in to be read
 rm -rf "$RUN/catalog" && mkdir -p "$RUN/catalog"
-(cd /home/main/Programs/ZIGUAROTH/_CATALOG && find . -name '*.yaml' | cpio -pdm --quiet "$RUN/catalog" 2>/dev/null || tar cf - $(find . -name '*.yaml') | tar xf - -C "$RUN/catalog")
+(cd /home/main/Programs/ZIGUAROTH/_CATALOG && find . -name '*.wsn' | cpio -pdm --quiet "$RUN/catalog" 2>/dev/null || tar cf - $(find . -name '*.wsn') | tar xf - -C "$RUN/catalog")
 
 (cd "$HERE/wsn" && find js unbound -type f -name '*.wsn' | LC_ALL=C sort > LIST)
 
