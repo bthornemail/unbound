@@ -118,3 +118,7 @@ ANSWERED by the author, pointing to boxedPINE src/terms.mjs: EL among the forms 
 kernel-delta64
 00:00:28.000 --> 00:00:29.000
 OPEN, cite: KERNEL.v's kernel_delta64 (boxedPINE proofs/coq/04-execution) is not the Omnicron specification's §9 Delta law (it shifts x left by one, takes its right term from axis shifted by two, drops ROTL 3), which the specification says no implementation may silently change (declared-delta, I-243). Whether it is a separate law with its own declaration, or should state §9's; and which state law, replacement or difference, its profile declares.
+
+delta-order
+00:00:29.000 --> 00:00:30.000
+OPEN, work: the replacement law's linear part L = x + x^3 + x^-2 in GF(2)[x]/(x^W - 1) has order W/2 at W = 16 to 256 (I-245) and in zak's table (in/ak/period); for the author's infinite scaling (delta6-scaling, global.vtt), a proof for every W = 2^n, as I-245's factorization proves the difference law's collapse at ceil(W/3) for every W.
