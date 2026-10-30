@@ -1,0 +1,2 @@
+{"peer":"peer-B","seq":1,"event":{"type":"ENTITY_DESTROY","actor":"valid:userB","id":"e-9"}}
+{"peer":"peer-B","seq":2,"event":{"type":"ENTITY_CREATE","actor":"valid:userA","id":"cube-001","owner":""}}

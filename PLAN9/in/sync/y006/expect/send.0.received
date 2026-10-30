@@ -1,0 +1,2 @@
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","actor":"valid:userB","id":7,"owner":"valid:userB"}}
+{"peer":"peer-A","seq":2,"event":{"type":"ZONE_MOVE","actor":"valid:userB","entity":"auth-002","zone":"room-a"}}

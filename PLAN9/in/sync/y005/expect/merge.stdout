@@ -1,0 +1,10 @@
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}}
+{"peer":"peer-A","seq":2,"event":{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"tag","data":{"x":null,"on":true}}}
+{"peer":"peer-A","seq":3,"event":{"type":"ZONE_MOVE","actor":"valid:userA","entity":"auth-002","zone":"room-a"}}
+{"peer":"peer-A","seq":4,"event":{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"tag","data":{"position":[1,2,3]},"cid":"c-3"}}
+{"peer":"peer-B","seq":1,"event":{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}}
+{"peer":"peer-B","seq":2,"event":{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"test-001"}}
+{"peer":"peer-B","seq":3,"event":{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"test-001"}}
+{"peer":"peer-C","seq":1,"event":{"type":"COMPONENT_DETACH","actor":"valid:userA","entity":"test-001","component":"render"}}
+{"peer":"peer-C","seq":2,"event":{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"render","data":{"x":null,"on":true}}}
+{"peer":"peer-C","seq":3,"event":{"type":"ENTITY_CREATE","actor":"valid:userA","id":"auth-002","owner":"valid:userA"}}

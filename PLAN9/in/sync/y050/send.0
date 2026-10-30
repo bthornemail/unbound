@@ -1,0 +1,2 @@
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","actor":"valid:userB","id":"test-001","owner":""}}
+{"peer":"peer-B","seq":1,"event":{"type":"COMPONENT_ATTACH","entity":"cube-001","component":"transform","data":{"position":[1,2,3]}}}

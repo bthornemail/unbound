@@ -1,0 +1,2 @@
+{"peer":"peer-A","seq":2,"event":{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"render","data":{"position":[1,2,3]}}}
+{"peer":"peer-C","seq":1,"event":{"type":"COMPONENT_DETACH","actor":"valid:userA","entity":"auth-002","component":"tag"}}

@@ -1,0 +1,5 @@
+{"peer":"peer-A","seq":2,"event":{"type":"COMPONENT_UPDATE","actor":"","component":"tag","patch":{"label":"b","n":2}}}
+{"peer":"peer-A","seq":6,"event":{"type":"ENTITY_CREATE","actor":"valid:userA","id":"cube-001"}}
+{"peer":"peer-A","seq":6,"event":{"type":"ENTITY_CREATE","actor":"valid:userA","id":"cube-001"}}
+{"peer":"peer-A","seq":5,"event":{"type":"ENTITY_DESTROY","actor":"valid:userB","id":"e-9"}}
+{"peer":"peer-A","seq":4,"event":{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"auth-002","component":"transform","patch":{"label":"a"}}}

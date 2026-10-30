@@ -1,0 +1,2 @@
+{"peer":"peer-A","seq":2,"event":{"type":"COMPONENT_UPDATE","entity":"test-001","component":"transform","patch":{"label":"a"}}}
+{"peer":"peer-A","seq":2,"event":{"type":"COMPONENT_UPDATE","entity":"test-001","component":"transform","patch":{"label":"a"}}}

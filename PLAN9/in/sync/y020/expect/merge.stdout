@@ -1,0 +1,7 @@
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","actor":"","id":"cube-001","owner":"valid:userB"}}
+{"peer":"peer-A","seq":2,"event":{"type":"COMPONENT_ATTACH","entity":"cube-001","component":"transform","data":{"x":null,"on":true}}}
+{"peer":"peer-A","seq":3,"event":{"type":"ZONE_MOVE","entity":"test-001","zone":"room-b"}}
+{"peer":"peer-A","seq":4,"event":{"type":"COMPONENT_DETACH","actor":"valid:userB","component":"transform"}}
+{"peer":"peer-A","seq":5,"event":{"type":"ENTITY_CREATE","actor":"valid:userA","id":"cube-001","owner":""}}
+{"peer":"peer-A","seq":6,"event":{"type":"COMPONENT_ATTACH","entity":"cube-001","component":"tag"}}
+{"peer":"peer-A","seq":7,"event":{"type":"COMPONENT_DETACH","actor":"valid:userB","component":"render"}}

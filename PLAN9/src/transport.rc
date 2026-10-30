@@ -1,0 +1,37 @@
+#!/bin/rc
+# transport.rc - inside Plan 9: metaverse-build's sync transport (runtime/sync-transport) ported native
+# (zsyncw.c receive). Each send of in/sync (written on the host by in/sync/gen.py: the tools' own
+# receive.sh over a real fifo, its sender writing chaos into it: envelopes dropped, duplicated,
+# shuffled, a blank line, a last line without its newline) goes through a Plan 9 pipe into zsyncw
+# receive, and the log must be what receive.sh logged, byte for byte: blank lines and an unterminated
+# last line not kept, as `read -r` reads.
+rfork e
+w=/tmp/ztransw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zsyncw.c PLAN9/in/sync} || exit tar
+g=$w/unbound/PLAN9/in/sync
+cd $w/unbound/PLAN9/src
+8c zsyncw.c && 8l -o $w/zsyncw zsyncw.8 || exit compile
+Z=$w/zsyncw
+fail=0
+n=()
+ifs='
+'
+for(c in `{ls -d $g/y*}){
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t/logs
+	for(s in `{ls $c/send.[0-9]}){
+		log=`{cat $s.log}
+		i=`{echo $s | sed 's/.*\.//'}
+		@{ cd $t; cat $s | $Z receive $log }
+		if(test -e $c/expect/send.$i.received){
+			if(! cmp -s $t/$log $c/expect/send.$i.received){ echo FAIL $s; fail=1 }
+		}
+		if not if(test -e $t/$log){ echo FAIL $s logged; fail=1 }
+		n=($n x)
+	}
+}
+echo zsyncw receive logs $#n sends as receive.sh does
+if(~ $fail 0) echo 'transport.rc: every answer as expected'

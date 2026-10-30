@@ -161,6 +161,10 @@ PLAN9/src/zclock.c
 PLAN9/src/clock.rc
 PLAN9/src/zshard.c
 PLAN9/src/shard.rc
+PLAN9/src/zsyncw.c
+PLAN9/src/transport.rc
+PLAN9/src/sync.rc
+$(cd "$HERE" && find in/sync -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/shard -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/clock -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/time -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')

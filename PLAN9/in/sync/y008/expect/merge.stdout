@@ -1,0 +1,4 @@
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","actor":"","id":7,"owner":""}}
+{"peer":"peer-A","seq":3,"event":{"type":"ENTITY_CREATE","actor":"valid:userB","id":"e-9"}}
+{"peer":"peer-A","seq":4,"event":{"type":"ZONE_MOVE","actor":"valid:userB","entity":"e-9","zone":"room-b"}}
+{"peer":"peer-A","seq":5,"event":{"type":"COMPONENT_DETACH","actor":"valid:userA","entity":"cube-001","component":"render"}}

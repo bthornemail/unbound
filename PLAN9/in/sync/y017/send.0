@@ -1,0 +1,6 @@
+{"peer":"peer-C","seq":1,"event":{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"transform"}}
+{"peer":"peer-B","seq":2,"event":{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"test-001","component":"tag","patch":{"position":[1,2,3]}}}
+{"peer":"peer-B","seq":1,"event":{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}}
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}}
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}}
+

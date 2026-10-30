@@ -1,0 +1,84 @@
+#!/bin/rc
+# sync.rc - inside Plan 9: metaverse-build's sync world (runtime/sync-world merge.sh, apply-merged.sh)
+# ported native (zsyncw.c merge, apply; the fold zworld.c run as its own program for each event). Each
+# case of in/sync: its sends received, the logs merged (peer by bytes, then seq), the merged log
+# applied to the base twice, as for two peers; it must give the tools' merged log and merge's stdout,
+# apply's exit, stderr line and stdout (the snapshot where they print its sha256), and both peers'
+# snapshot and halts log byte for byte. Then two the tools do not: two logs with one peer and seq in
+# their names' order whichever is written first (merge.sh takes the directory's order; zsyncw -l, the
+# falsifier, does too, and in a ramfs, which lists files as they were made, gives two); and an
+# envelope holding a JSON escape, which apply-merged.sh, pasting it into
+# Python source, cannot read.
+rfork e
+w=/tmp/zsyncw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zsyncw.c PLAN9/src/zworld.c PLAN9/in/sync PLAN9/in/world/room.snapshot.json} || exit tar
+g=$w/unbound/PLAN9/in/sync
+cd $w/unbound/PLAN9/src
+for(t in zsyncw zworld){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+Z=($w/zsyncw -w $w/zworld)
+fail=0
+n=()
+h=()
+ifs='
+'
+for(c in `{ls -d $g/y*}){
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t/logs
+	cp $c/base.json $t/
+	for(s in `{ls $c/send.[0-9]}){
+		log=`{cat $s.log}
+		@{ cd $t; $Z receive $log <$s }
+	}
+	ok=yes
+	@{ cd $t; $Z merge logs merged.jsonl >.ms }
+	if(! cmp -s $t/merged.jsonl $c/expect/merged.jsonl) ok=no
+	if(! cmp -s $t/.ms $c/expect/merge.stdout) ok=no
+	for(p in a b){
+		@{ cd $t; $Z apply base.json merged.jsonl snap.$p.json halts.$p.log >.out >[2].err }
+		st=$status
+		for(f in snap.$p.json halts.$p.log){
+			if(! cmp -s $t/$f $c/expect/$f) ok=no
+		}
+	}
+	code=`{cat $c/expect/status}
+	if(~ $code 0){ if(! ~ $st '') ok=no }
+	if not { if(! ~ $st *$code) ok=no }
+	e=`{sed 1q $t/.err}
+	x=`{cat $c/expect/stderr}
+	if(! ~ $"e $"x) ok=no
+	if(! cmp -s $t/.out $c/expect/stdout) ok=no
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	if(test -s $t/halts.a.log) h=($h x)
+	n=($n x)
+}
+echo zsyncw gives $#n cases as merge.sh and apply-merged.sh do, $#h of them with halts, two peers one result
+t=$w/tie
+rm -rf $t
+mkdir -p $t $w/ties
+za='{"peer":"p","seq":1,"event":{"n":"from-z"}}'
+aa='{"peer":"p","seq":1,"event":{"n":"from-a"}}'
+@{
+	rfork n
+	ramfs -m $t	# ramfs lists a directory in the order its files were made
+	mkdir -p $t/one $t/two
+	echo $za >$t/one/z.jsonl; echo $aa >$t/one/a.jsonl
+	echo $aa >$t/two/a.jsonl; echo $za >$t/two/z.jsonl
+	$Z merge $t/one $w/ties/m1 >/dev/null; $Z merge $t/two $w/ties/m2 >/dev/null
+	$Z -l merge $t/one $w/ties/l1 >/dev/null; $Z -l merge $t/two $w/ties/l2 >/dev/null
+}
+t=$w/ties
+if(cmp -s $t/m1 $t/m2 && ~ `{sed 1q $t/m1} $aa) echo ok one peer and seq in two logs: in name order, whichever is written first
+if not { echo FAIL tie order; fail=1 }
+if(! cmp -s $t/l1 $t/l2) echo ok the falsifier zsyncw -l takes the directory order: in a ramfs two merged logs, by which log was written first
+if not { echo FAIL falsifier; fail=1 }
+cp $w/unbound/PLAN9/in/world/room.snapshot.json $t/base.json
+echo '{"peer":"p","seq":1,"event":{"type":"ENTITY_CREATE","id":"q\"x","owner":"valid:u","actor":"valid:u"}}' >$t/m.jsonl
+@{ cd $t; $Z apply base.json m.jsonl s.json h.log >/dev/null }
+if(~ $status '' && grep -s 'q\\"x' $t/s.json && ! test -s $t/h.log) echo ok an envelope holding a JSON escape is folded
+if not { echo FAIL escape; fail=1 }
+if(~ $fail 0) echo 'sync.rc: every answer as expected'

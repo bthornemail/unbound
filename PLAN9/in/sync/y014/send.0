@@ -1,0 +1,1 @@
+{"peer":"peer-B","seq":1,"event":{"type":"ENTITY_DESTROY","actor":"valid:userB","id":"cube-001"}}

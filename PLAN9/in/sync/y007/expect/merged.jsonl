@@ -1,0 +1,7 @@
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}}
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}}
+{"peer":"peer-A","seq":2,"event":{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"auth-002","component":"render","patch":{"label":"b","n":2}}}
+{"peer":"peer-A","seq":3,"event":{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"test-001"}}
+{"peer":"peer-B","seq":1,"event":{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}}
+{"peer":"peer-B","seq":2,"event":{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"auth-002","component":"transform"}}
+{"peer":"peer-B","seq":3,"event":{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"test-001","component":"render"}}

@@ -1,0 +1,5 @@
+{"peer":"peer-A","seq":7,"event":{"type":"ZONE_MOVE","actor":"valid:userA","entity":"test-001","zone":"room-a"}}
+{"peer":"peer-A","seq":4,"event":{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"transform","data":{"x":null,"on":true}}}
+{"peer":"peer-A","seq":3,"event":{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"e-9","component":"render"}}
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}}
+{"peer":"peer-A","seq":7,"event":{"type":"ZONE_MOVE","actor":"valid:userA","entity":"test-001","zone":"room-a"}}

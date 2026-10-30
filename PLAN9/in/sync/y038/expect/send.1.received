@@ -1,0 +1,7 @@
+{"peer":"peer-C","seq":3,"event":{"type":"COMPONENT_ATTACH","actor":"valid:userB","component":"render","data":{"position":[1,2,3]}}}
+{"peer":"peer-A","seq":3,"event":{"type":"COMPONENT_DETACH","actor":"","entity":"e-9","component":"render"}}
+{"peer":"peer-A","seq":2,"event":{"type":"ENTITY_CREATE","actor":"valid:userB","id":"auth-002","owner":""}}
+{"peer":"peer-B","seq":1,"event":{"type":"COMPONENT_DETACH","actor":"valid:userA","entity":"e-9","component":"render"}}
+{"peer":"peer-B","seq":3,"event":{"type":"ENTITY_CREATE","actor":"","id":"cube-001","owner":""}}
+{"peer":"peer-B","seq":1,"event":{"type":"COMPONENT_DETACH","actor":"valid:userA","entity":"e-9","component":"render"}}
+{"peer":"peer-C","seq":1,"event":{"type":"ENTITY_CREATE","id":"auth-002","owner":"valid:userA","internal":"e5"}}

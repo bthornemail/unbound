@@ -1,0 +1,5 @@
+{"peer":"peer-A","seq":1,"event":{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}}
+{"peer":"peer-A","seq":2,"event":{"type":"ENTITY_CREATE","actor":"valid:userA","id":"test-001","owner":"valid:userA"}}
+{"peer":"peer-A","seq":2,"event":{"type":"ENTITY_CREATE","actor":"valid:userA","id":"test-001","owner":"valid:userA"}}
+{"peer":"peer-B","seq":2,"event":{"type":"ZONE_MOVE","actor":"valid:userA","entity":"auth-002","zone":"room-a"}}
+{"peer":"peer-C","seq":1,"event":{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"e-9"}}

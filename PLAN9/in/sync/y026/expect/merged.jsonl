@@ -1,0 +1,1 @@
+{"peer":"peer-B","seq":1,"event":{"type":"COMPONENT_ATTACH","actor":"","component":"render","data":{"label":"a"}}}
