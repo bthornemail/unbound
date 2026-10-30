@@ -1,0 +1,1 @@
+migrate src.json nobody zone-b transfer.json src-out.json

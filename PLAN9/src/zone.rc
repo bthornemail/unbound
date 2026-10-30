@@ -1,0 +1,52 @@
+#!/bin/rc
+# zone.rc - inside Plan 9: metaverse-build's zones (runtime/zones, six tools) ported native (zzone.c).
+# Each case of in/zone (written on the host by in/zone/gen.py with the tools themselves) runs in a
+# fresh copy of its inputs and must give the tool's exit, its first line on standard error, its
+# stdout (for migrate and apply, the literal written, where the tools print its sha256) and every
+# file it wrote, byte for byte. The falsifier: zzone -n, the policy's wildcard not read, must
+# refuse the admin the wildcard admits.
+rfork e
+w=/tmp/zzonew
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zzone.c PLAN9/in/zone} || exit tar
+g=$w/unbound/PLAN9/in/zone
+cd $w/unbound/PLAN9/src
+8c zzone.c && 8l -o $w/zzone zzone.8 || exit compile
+fail=0
+n=()
+ifs='
+'
+for(c in `{ls -d $g/c*}){
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t
+	for(f in `{ls $c}){
+		if(! ~ $f */cmd */expect) cp $f $t/
+	}
+	@{ cd $t; ifs=' 	
+' { $w/zzone `{cat $c/cmd} >$t/.stdout >[2]$t/.stderr } }
+	st=$status
+	code=`{cat $c/expect/status}
+	ok=yes
+	if(~ $code 0){ if(! ~ $st '') ok=no }
+	if not { if(! ~ $st *$code) ok=no }
+	e=`{sed 1q $t/.stderr}
+	x=`{cat $c/expect/stderr}
+	if(! ~ $"e $"x) ok=no
+	if(! cmp -s $t/.stdout $c/expect/stdout) ok=no
+	for(rel in `{cat $c/expect/written}){
+		if(! cmp -s $t/$rel $c/expect/files/$rel) ok=no
+	}
+	if(~ $ok no){ echo FAIL $c `{cat $c/cmd}; fail=1 }
+	n=($n x)
+}
+echo zzone gives $#n cases as the zone tools of metaverse-build do
+t=$w/run
+rm -rf $t
+mkdir -p $t
+cp $g/c002/policy.json $t/
+@{ cd $t; $w/zzone -n authority policy.json zone-a valid:admin >$t/.stdout >[2]/dev/null }
+if(grep -s OK $t/.stdout){ echo FAIL falsifier; fail=1 }
+if not echo ok falsifier: without the wildcard the admin the policy admits through it is refused
+if(~ $fail 0) echo 'zone.rc: every answer as expected'

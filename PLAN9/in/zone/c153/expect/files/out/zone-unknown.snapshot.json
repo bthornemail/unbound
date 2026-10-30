@@ -1,0 +1,1 @@
+{"source_snapshot_hash":"5ead2a2ec3d828833640c4f9c1269cf11a5611eb3386db8adc8419de8e02e53e","state":{"entities":[{"components":[{"data":{},"id":"e2.c1","type":"transform"}],"id":"auth-002","internal":"e2","owner":"valid:userA","zone":null},{"components":[],"id":"e-9","internal":"e4","owner":"valid:userA","zone":null}]},"world":"room","zone":"zone-unknown"}

@@ -1,0 +1,1 @@
+{"entity":{"components":[{"data":{"position":[0,0,0]},"id":"e1.c1","type":"transform"},{"data":{"mesh":"cube"},"id":"e1.c2","type":"render"}],"id":"cube-001","internal":"e1","owner":null,"zone":"room-a"},"from":"room-a","to":"zone-b","source_snapshot_hash":"1dd30f339cdc3b47d9009e96a78c40750d93ccdb8d0e086cf357a1da075cd535"}

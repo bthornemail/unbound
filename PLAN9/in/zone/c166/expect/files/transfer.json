@@ -1,0 +1,1 @@
+{"entity":{"components":[{"data":{"label":"test2"},"id":"e2.c1","type":"tag"}],"id":"test-001","internal":"e2","owner":"valid:userA","zone":"room-b"},"from":"room-b","source_snapshot_hash":"4f24ccf2a840c0e256a98c38de58b9c7e35fd5f3e6f08ab1911490ff70b26d3f","to":"zone-b"}

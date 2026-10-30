@@ -1,0 +1,1 @@
+{"source_hash":"1dd30f339cdc3b47d9009e96a78c40750d93ccdb8d0e086cf357a1da075cd535","source_snapshot":"snap.json","zones":{"room-a":{"entity_count":2,"snapshot":"out/room-a.snapshot.json"},"zone-unknown":{"entity_count":2,"snapshot":"out/zone-unknown.snapshot.json"}}}

@@ -1,0 +1,1 @@
+{"source_snapshot_hash":"28f666a737f42dc2032c1440520303fde0e405e15adc0ab34984c8480f2fc025","state":{"entities":[{"components":[{"data":{"position":[0,0,0]},"id":"e1.c1","type":"transform"},{"data":{"mesh":"cube"},"id":"e1.c2","type":"render"}],"id":"cube-001","internal":"e1","owner":null,"zone":"room-a"}]},"world":"room","zone":"room-a"}
