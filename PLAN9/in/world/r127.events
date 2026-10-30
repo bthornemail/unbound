@@ -1,0 +1,5 @@
+{"type":"ENTITY_CREATE","id":7,"owner":"valid:userB"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"render","data":{"position":[1,2,3]}}
+{"type":"COMPONENT_DETACH","entity":"test-001","component":"render"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userB","entity":"test-001","component":"transform","data":{"position":[1,2,3]}}
+{"type":"ENTITY_DESTROY","actor":"","id":"auth-002"}

@@ -1,0 +1,7 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"test-001","component":"render","patch":{"position":[1,2,3]}}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"e-9","owner":"valid:userA"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"auth-002","component":"transform","patch":{"label":"b","n":2}}
+{"type":"ZONE_MOVE","actor":"valid:userA","entity":"test-001","zone":"room-a"}
+{"type":"ZONE_MOVE","actor":"valid:userA","entity":"auth-002","zone":"room-a"}

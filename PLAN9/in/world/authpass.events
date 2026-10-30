@@ -1,0 +1,2 @@
+{"type":"ENTITY_CREATE","id":"auth-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"COMPONENT_ATTACH","entity":"auth-001","component":"tag","data":{"label":"ok"},"actor":"valid:userA"}

@@ -1,0 +1,2 @@
+{"type":"ENTITY_CREATE","actor":"valid:userB","id":"e-9"}
+{"type":"ZONE_MOVE","actor":"valid:userA","entity":"cube-001","zone":5}

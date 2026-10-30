@@ -1,0 +1,3 @@
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":7,"owner":""}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"cube-001","component":"tag"}
+{"type":"COMPONENT_DETACH","actor":"","entity":"test-001","component":"tag"}

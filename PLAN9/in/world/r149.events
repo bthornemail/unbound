@@ -1,0 +1,4 @@
+{"type":"ENTITY_CREATE","actor":"valid:userB","id":"auth-002","owner":"valid:userB"}
+{"type":"ENTITY_CREATE","actor":"","id":"cube-001","owner":"valid:userB"}
+{"type":"ENTITY_CREATE","actor":"valid:userB","id":"test-001","owner":"valid:userB"}
+{"type":"ZONE_MOVE","actor":"","entity":"auth-002","zone":"room-b"}

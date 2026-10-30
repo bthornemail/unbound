@@ -1,0 +1,3 @@
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":7,"owner":"valid:userA"}
+{"type":"ENTITY_DESTROY","id":"auth-002"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA"}

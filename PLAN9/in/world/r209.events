@@ -1,0 +1,3 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA"}
+{"type":"COMPONENT_DETACH","entity":"auth-002","component":"render"}
+{"type":"ZONE_MOVE","actor":"valid:userB","entity":"auth-002","zone":5}

@@ -1,0 +1,2 @@
+{"type":"ENTITY_CREATE","actor":"valid:userB","id":"e-9","owner":"valid:userB"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","component":"transform","data":{"x":null,"on":true}}

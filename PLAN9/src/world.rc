@@ -1,0 +1,43 @@
+#!/bin/rc
+# world.rc - inside Plan 9: metaverse-build's world fold (runtime/world/apply-event.py) ported
+# native (zworld.c). Each case of in/world/cases (written on the host by in/world/gen.py with the
+# fold itself) must give the fold's exit (0, or 3 for a HALT, 2 for a malformed input), its first
+# line on standard error, and, when it writes, the snapshot the fold wrote, byte for byte; a HALT
+# writes nothing. The falsifier: zworld -n, without the owner check, must let the authority case
+# through that the fold halts.
+rfork e
+w=/tmp/zworldw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zworld.c PLAN9/in/world} || exit tar
+g=$w/unbound/PLAN9/in/world
+cd $w/unbound/PLAN9/src
+8c zworld.c && 8l -o $w/zworld zworld.8 || exit compile
+fail=0
+n=0
+ifs='
+'
+for(c in `{cat $g/cases}){
+	ifs='|' { f=`{echo -n $c} }
+	name=$f(1); snap=$f(2); code=$f(3); err=$f(4)
+	@{ cd $g; $w/zworld $snap $name.events >$w/out >[2]$w/err }
+	st=$status
+	ok=yes
+	if(~ $code 0){
+		if(! ~ $st '') ok=no
+		if(! cmp -s $w/out $g/$name.out) ok=no
+	}
+	if not {
+		if(! ~ $st *$code) ok=no
+		if(test -s $w/out) ok=no
+	}
+	e=`{sed 1q $w/err}
+	if(! ~ $"e $"err) ok=no
+	if(~ $ok no){ echo FAIL $name; fail=1 }
+	n=`{echo $n | sed 's/.*/&+1/' | hoc}
+}
+echo zworld gives $n cases as the fold of metaverse-build does
+@{ cd $g; $w/zworld -n room.authority.pre.json authfail.events >$w/leak >[2]/dev/null }
+if(test -s $w/leak) echo ok falsifier: without the owner check the halted authority case writes a snapshot
+if not { echo FAIL falsifier; fail=1 }
+if(~ $fail 0) echo 'world.rc: every answer as expected'

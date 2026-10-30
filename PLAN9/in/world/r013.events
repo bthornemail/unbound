@@ -1,0 +1,10 @@
+{"type":"ENTITY_CREATE","actor":"valid:userB","id":"test-001","owner":""}
+{"type":"COMPONENT_DETACH","actor":"valid:userA","entity":"cube-001","component":"transform"}
+{"type":"COMPONENT_ATTACH","component":"tag"}
+{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"test-001"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"transform","cid":"c-8"}
+{"type":"ENTITY_DESTROY","id":"test-001"}
+{"type":"WORLD_SPIN","actor":"valid:userA"}
+{"type":"ZONE_MOVE","actor":"valid:userA","entity":"auth-002","zone":"room-a"}
+{"type":"ENTITY_DESTROY","id":"cube-001"}
+{"type":"ZONE_MOVE","actor":"valid:userA","entity":"e-9","zone":"room-b"}

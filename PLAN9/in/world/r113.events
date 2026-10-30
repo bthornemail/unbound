@@ -1,0 +1,2 @@
+{"type":"ENTITY_CREATE","actor":"","id":"cube-001","owner":"valid:userA"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userB","entity":"auth-002","component":"transform","patch":{}}

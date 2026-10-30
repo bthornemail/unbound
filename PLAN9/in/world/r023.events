@@ -1,0 +1,3 @@
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"e-9","owner":""}
+{"type":"COMPONENT_ATTACH","actor":"","component":"render","data":{"label":"a"}}
+{"type":"COMPONENT_ATTACH","entity":"test-001","component":"render","data":{"label":"b","n":2},"cid":"c-1"}

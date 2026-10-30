@@ -1,0 +1,2 @@
+{"type":"ENTITY_CREATE","actor":"","id":"e-9","owner":"valid:userB","internal":"e5"}
+{"type":"ZONE_MOVE","actor":"valid:userA","entity":"auth-002","zone":5}

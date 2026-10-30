@@ -1,0 +1,7 @@
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA"}
+{"type":"COMPONENT_DETACH","entity":"test-001","component":"tag"}
+{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"auth-002"}
+{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"e-9"}
+{"type":"ENTITY_DESTROY","actor":"valid:userB","id":"auth-002"}
+{"type":"COMPONENT_ATTACH","entity":"auth-002","component":"transform","data":{}}
+{"type":"ZONE_MOVE","actor":"valid:userB","entity":"cube-001","zone":5}

@@ -1,0 +1,4 @@
+{"type":"ENTITY_CREATE","id":7,"owner":"valid:userA","internal":"e5"}
+{"type":"COMPONENT_DETACH","entity":"test-001","component":"render"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userB","entity":"e-9","component":"render","patch":{"x":null,"on":true}}
+{"type":"COMPONENT_DETACH","entity":"e-9","component":"render"}

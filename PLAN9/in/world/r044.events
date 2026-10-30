@@ -1,0 +1,6 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ZONE_MOVE","actor":"valid:userA","entity":"auth-002","zone":"room-b"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"transform","data":{"position":[1,2,3]}}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"render","data":{"position":[1,2,3]},"cid":"c-7"}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"test-001","owner":"valid:userA"}

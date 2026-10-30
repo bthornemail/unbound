@@ -1,0 +1,4 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"render","data":{"x":null,"on":true}}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"render","data":{"x":null,"on":true}}

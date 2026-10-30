@@ -1,0 +1,4 @@
+{"type":"ENTITY_CREATE","actor":"","id":"e-9","owner":"valid:userB"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userB","component":"render","patch":{}}
+{"type":"COMPONENT_ATTACH","actor":"","entity":"test-001","component":"tag","data":{"x":null,"on":true}}
+{"type":"ENTITY_DESTROY","actor":"valid:userB","id":"test-001"}

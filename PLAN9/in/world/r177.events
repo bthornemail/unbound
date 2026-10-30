@@ -1,0 +1,3 @@
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"cube-001","owner":"valid:userB"}
+{"type":"COMPONENT_DETACH","actor":"valid:userB","entity":"test-001","component":"transform"}
+{"type":"ENTITY_DESTROY","actor":"","id":"auth-002"}

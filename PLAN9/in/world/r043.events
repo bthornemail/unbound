@@ -1,0 +1,5 @@
+{"type":"ENTITY_CREATE","actor":"","id":"test-001","owner":"valid:userB"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"tag","data":{"x":null,"on":true}}
+{"type":"COMPONENT_DETACH","actor":"valid:userB","entity":"test-001","component":"tag"}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"test-001","owner":"valid:userB"}
+{"type":"ENTITY_CREATE","id":"cube-001","owner":""}

@@ -1,0 +1,6 @@
+{"type":"ENTITY_CREATE","id":"cube-001","internal":"x1"}
+{"type":"ZONE_MOVE","actor":"","entity":"test-001","zone":"room-b"}
+{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"auth-002"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userB","entity":"test-001","component":"tag","patch":{"label":"b","n":2}}
+{"type":"ENTITY_DESTROY","id":"auth-002"}
+{"type":"COMPONENT_ATTACH","actor":"","entity":"e-9","component":"render"}

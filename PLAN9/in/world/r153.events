@@ -1,0 +1,4 @@
+{"type":"ENTITY_CREATE","actor":"","id":7,"owner":""}
+{"type":"COMPONENT_ATTACH","actor":"","entity":"auth-002","component":"tag"}
+{"type":"ZONE_MOVE","entity":"e-9","zone":5}
+{"type":"COMPONENT_ATTACH","actor":"","entity":"auth-002","component":"tag","data":{},"cid":"c-5"}

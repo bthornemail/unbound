@@ -1,0 +1,3 @@
+{"type":"ENTITY_CREATE","actor":"","id":"cube-001"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userB","entity":"e-9","component":"transform","patch":{"position":[1,2,3]}}
+{"type":"ENTITY_DESTROY","id":"test-001"}

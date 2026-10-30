@@ -1,0 +1,8 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"transform","data":{}}
+{"type":"ZONE_MOVE","actor":"valid:userA","entity":"auth-002","zone":"room-b"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"render","data":{"x":null,"on":true},"cid":"c-1"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"auth-002","component":"transform","data":{"label":"a"}}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"transform","data":{"label":"a"},"cid":"c-2"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"render","cid":"c-5"}

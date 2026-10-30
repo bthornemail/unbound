@@ -1,0 +1,5 @@
+{"type":"ENTITY_CREATE","id":"e-9","internal":"x1"}
+{"type":"COMPONENT_ATTACH","entity":"cube-001","component":"transform"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userB","entity":"cube-001","component":"render","cid":"c-2"}
+{"type":"COMPONENT_DETACH","entity":"e-9","component":"tag"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userB"}

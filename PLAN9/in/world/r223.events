@@ -1,0 +1,5 @@
+{"type":"ENTITY_CREATE","actor":"valid:userB","id":"e-9","owner":"valid:userA"}
+{"type":"COMPONENT_ATTACH","entity":"auth-002","component":"transform","data":{}}
+{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"e-9"}
+{"type":"ENTITY_DESTROY","actor":"","id":"test-001"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userB","entity":"cube-001","component":"render","cid":"c-6"}

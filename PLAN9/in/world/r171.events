@@ -1,0 +1,4 @@
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userB"}
+{"type":"COMPONENT_ATTACH","actor":"","entity":"auth-002","component":"transform","data":{},"cid":"c-6"}
+{"type":"ZONE_MOVE","actor":"","entity":"e-9","zone":"room-b"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userB","entity":"cube-001","component":"transform","cid":"c-3"}

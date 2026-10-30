@@ -1,0 +1,243 @@
+lifecycle|room.snapshot.json|0|
+authpass|room.snapshot.json|0|
+authfail|room.authority.pre.json|3|HALT: NotOwner
+r000|room.snapshot.json|0|
+r001|room.snapshot.json|3|HALT: MissingActor
+r002|room.authority.pre.json|3|HALT: UnknownEntity
+r003|room.authority.pre.json|2|ENTITY_CREATE requires id
+r004|room.snapshot.json|3|HALT: UnknownEntity
+r005|room.snapshot.json|3|HALT: MissingActor
+r006|room.authority.pre.json|0|
+r007|room.authority.pre.json|3|HALT: MissingActor
+r008|room.snapshot.json|3|HALT: UnknownEntity
+r009|room.snapshot.json|2|COMPONENT_ATTACH requires entity and component
+r010|room.authority.pre.json|0|
+r011|room.authority.pre.json|3|HALT: MissingActor
+r012|room.snapshot.json|3|HALT: UnknownEntity
+r013|room.snapshot.json|3|HALT: MissingOwner
+r014|room.authority.pre.json|0|
+r015|room.authority.pre.json|3|HALT: UnknownEntity
+r016|room.snapshot.json|2|unknown event type: WORLD_SPIN
+r017|room.snapshot.json|3|HALT: MissingActor
+r018|room.authority.pre.json|0|
+r019|room.authority.pre.json|3|HALT: MissingActor
+r020|room.snapshot.json|3|HALT: UnknownEntity
+r021|room.snapshot.json|3|HALT: MissingActor
+r022|room.authority.pre.json|0|
+r023|room.authority.pre.json|3|HALT: MissingOwner
+r024|room.snapshot.json|0|
+r025|room.snapshot.json|3|HALT: MissingActor
+r026|room.authority.pre.json|0|
+r027|room.authority.pre.json|3|HALT: MissingActor
+r028|room.snapshot.json|3|HALT: UnknownEntity
+r029|room.snapshot.json|3|HALT: UnknownEntity
+r030|room.authority.pre.json|0|
+r031|room.authority.pre.json|3|HALT: MissingActor
+r032|room.snapshot.json|0|
+r033|room.snapshot.json|3|HALT: MissingActor
+r034|room.authority.pre.json|0|
+r035|room.authority.pre.json|3|HALT: MissingActor
+r036|room.snapshot.json|0|
+r037|room.snapshot.json|2|ENTITY_CREATE requires id
+r038|room.authority.pre.json|3|HALT: UnknownEntity
+r039|room.authority.pre.json|3|HALT: MissingActor
+r040|room.snapshot.json|3|HALT: UnknownEntity
+r041|room.snapshot.json|3|HALT: MissingActor
+r042|room.authority.pre.json|0|
+r043|room.authority.pre.json|3|HALT: MissingActor
+r044|room.snapshot.json|3|HALT: UnknownEntity
+r045|room.snapshot.json|3|HALT: MissingOwner
+r046|room.authority.pre.json|0|
+r047|room.authority.pre.json|3|HALT: MissingOwner
+r048|room.snapshot.json|0|
+r049|room.snapshot.json|3|HALT: MissingActor
+r050|room.authority.pre.json|0|
+r051|room.authority.pre.json|2|ENTITY_CREATE requires id
+r052|room.snapshot.json|3|HALT: UnknownEntity
+r053|room.snapshot.json|3|HALT: MissingActor
+r054|room.authority.pre.json|0|
+r055|room.authority.pre.json|3|HALT: MissingActor
+r056|room.snapshot.json|3|HALT: UnknownEntity
+r057|room.snapshot.json|3|HALT: MissingActor
+r058|room.authority.pre.json|0|
+r059|room.authority.pre.json|3|HALT: MissingOwner
+r060|room.snapshot.json|3|HALT: UnknownEntity
+r061|room.snapshot.json|3|HALT: UnknownEntity
+r062|room.authority.pre.json|0|
+r063|room.authority.pre.json|3|HALT: MissingActor
+r064|room.snapshot.json|3|HALT: UnknownEntity
+r065|room.snapshot.json|3|HALT: MissingActor
+r066|room.authority.pre.json|0|
+r067|room.authority.pre.json|3|HALT: MissingActor
+r068|room.snapshot.json|3|HALT: UnknownEntity
+r069|room.snapshot.json|3|HALT: MissingActor
+r070|room.authority.pre.json|0|
+r071|room.authority.pre.json|3|HALT: MissingActor
+r072|room.snapshot.json|0|
+r073|room.snapshot.json|2|ENTITY_CREATE requires id
+r074|room.authority.pre.json|0|
+r075|room.authority.pre.json|3|HALT: MissingOwner
+r076|room.snapshot.json|3|HALT: UnknownEntity
+r077|room.snapshot.json|3|HALT: MissingActor
+r078|room.authority.pre.json|3|HALT: UnknownEntity
+r079|room.authority.pre.json|3|HALT: MissingActor
+r080|room.snapshot.json|3|HALT: UnknownEntity
+r081|room.snapshot.json|3|HALT: MissingActor
+r082|room.authority.pre.json|3|HALT: UnknownEntity
+r083|room.authority.pre.json|3|HALT: MissingActor
+r084|room.snapshot.json|3|HALT: UnknownEntity
+r085|room.snapshot.json|3|HALT: MissingActor
+r086|room.authority.pre.json|0|
+r087|room.authority.pre.json|3|HALT: MissingActor
+r088|room.snapshot.json|3|HALT: UnknownEntity
+r089|room.snapshot.json|3|HALT: MissingActor
+r090|room.authority.pre.json|3|HALT: UnknownEntity
+r091|room.authority.pre.json|3|HALT: MissingOwner
+r092|room.snapshot.json|3|HALT: UnknownEntity
+r093|room.snapshot.json|2|ENTITY_CREATE requires id
+r094|room.authority.pre.json|3|HALT: UnknownEntity
+r095|room.authority.pre.json|3|HALT: MissingActor
+r096|room.snapshot.json|3|HALT: UnknownEntity
+r097|room.snapshot.json|2|ENTITY_CREATE requires id
+r098|room.authority.pre.json|0|
+r099|room.authority.pre.json|3|HALT: MissingOwner
+r100|room.snapshot.json|0|
+r101|room.snapshot.json|3|HALT: MissingActor
+r102|room.authority.pre.json|3|HALT: UnknownEntity
+r103|room.authority.pre.json|3|HALT: MissingActor
+r104|room.snapshot.json|0|
+r105|room.snapshot.json|3|HALT: MissingActor
+r106|room.authority.pre.json|0|
+r107|room.authority.pre.json|3|HALT: MissingActor
+r108|room.snapshot.json|3|HALT: UnknownEntity
+r109|room.snapshot.json|3|HALT: MissingOwner
+r110|room.authority.pre.json|3|HALT: UnknownEntity
+r111|room.authority.pre.json|3|HALT: MissingActor
+r112|room.snapshot.json|3|HALT: UnknownEntity
+r113|room.snapshot.json|3|HALT: MissingActor
+r114|room.authority.pre.json|0|
+r115|room.authority.pre.json|3|HALT: MissingOwner
+r116|room.snapshot.json|3|HALT: UnknownEntity
+r117|room.snapshot.json|3|HALT: MissingOwner
+r118|room.authority.pre.json|0|
+r119|room.authority.pre.json|3|HALT: MissingActor
+r120|room.snapshot.json|3|HALT: UnknownEntity
+r121|room.snapshot.json|3|HALT: MissingActor
+r122|room.authority.pre.json|0|
+r123|room.authority.pre.json|3|HALT: MissingActor
+r124|room.snapshot.json|0|
+r125|room.snapshot.json|3|HALT: MissingActor
+r126|room.authority.pre.json|3|HALT: UnknownEntity
+r127|room.authority.pre.json|3|HALT: MissingActor
+r128|room.snapshot.json|0|
+r129|room.snapshot.json|3|HALT: MissingActor
+r130|room.authority.pre.json|0|
+r131|room.authority.pre.json|3|HALT: MissingOwner
+r132|room.snapshot.json|0|
+r133|room.snapshot.json|3|HALT: MissingActor
+r134|room.authority.pre.json|0|
+r135|room.authority.pre.json|3|HALT: MissingActor
+r136|room.snapshot.json|3|HALT: UnknownEntity
+r137|room.snapshot.json|3|HALT: MissingOwner
+r138|room.authority.pre.json|3|HALT: UnknownEntity
+r139|room.authority.pre.json|3|HALT: MissingActor
+r140|room.snapshot.json|3|HALT: UnknownEntity
+r141|room.snapshot.json|2|ENTITY_CREATE requires id
+r142|room.authority.pre.json|0|
+r143|room.authority.pre.json|3|HALT: MissingActor
+r144|room.snapshot.json|3|HALT: UnknownEntity
+r145|room.snapshot.json|3|HALT: MissingOwner
+r146|room.authority.pre.json|0|
+r147|room.authority.pre.json|3|HALT: MissingActor
+r148|room.snapshot.json|3|HALT: UnknownEntity
+r149|room.snapshot.json|3|HALT: MissingActor
+r150|room.authority.pre.json|3|HALT: UnknownEntity
+r151|room.authority.pre.json|3|HALT: MissingActor
+r152|room.snapshot.json|3|HALT: UnknownEntity
+r153|room.snapshot.json|3|HALT: MissingActor
+r154|room.authority.pre.json|0|
+r155|room.authority.pre.json|3|HALT: MissingOwner
+r156|room.snapshot.json|3|HALT: UnknownEntity
+r157|room.snapshot.json|3|HALT: MissingActor
+r158|room.authority.pre.json|0|
+r159|room.authority.pre.json|3|HALT: NotOwner
+r160|room.snapshot.json|3|HALT: UnknownEntity
+r161|room.snapshot.json|3|HALT: MissingActor
+r162|room.authority.pre.json|3|HALT: UnknownEntity
+r163|room.authority.pre.json|3|HALT: MissingOwner
+r164|room.snapshot.json|3|HALT: UnknownEntity
+r165|room.snapshot.json|3|HALT: MissingOwner
+r166|room.authority.pre.json|3|HALT: UnknownEntity
+r167|room.authority.pre.json|3|HALT: UnknownEntity
+r168|room.snapshot.json|3|HALT: UnknownEntity
+r169|room.snapshot.json|3|HALT: MissingActor
+r170|room.authority.pre.json|2|unknown event type: WORLD_SPIN
+r171|room.authority.pre.json|3|HALT: MissingActor
+r172|room.snapshot.json|3|HALT: UnknownEntity
+r173|room.snapshot.json|3|HALT: MissingActor
+r174|room.authority.pre.json|0|
+r175|room.authority.pre.json|3|HALT: MissingActor
+r176|room.snapshot.json|3|HALT: UnknownEntity
+r177|room.snapshot.json|3|HALT: UnknownEntity
+r178|room.authority.pre.json|0|
+r179|room.authority.pre.json|3|HALT: MissingActor
+r180|room.snapshot.json|3|HALT: UnknownEntity
+r181|room.snapshot.json|3|HALT: MissingActor
+r182|room.authority.pre.json|3|HALT: UnknownEntity
+r183|room.authority.pre.json|3|HALT: NotOwner
+r184|room.snapshot.json|3|HALT: UnknownEntity
+r185|room.snapshot.json|3|HALT: MissingActor
+r186|room.authority.pre.json|0|
+r187|room.authority.pre.json|3|HALT: MissingActor
+r188|room.snapshot.json|3|HALT: UnknownEntity
+r189|room.snapshot.json|3|HALT: NotOwner
+r190|room.authority.pre.json|3|HALT: UnknownEntity
+r191|room.authority.pre.json|2|ENTITY_CREATE requires id
+r192|room.snapshot.json|3|HALT: UnknownEntity
+r193|room.snapshot.json|3|HALT: MissingActor
+r194|room.authority.pre.json|0|
+r195|room.authority.pre.json|3|HALT: MissingActor
+r196|room.snapshot.json|3|HALT: UnknownEntity
+r197|room.snapshot.json|3|HALT: MissingActor
+r198|room.authority.pre.json|0|
+r199|room.authority.pre.json|3|HALT: MissingActor
+r200|room.snapshot.json|0|
+r201|room.snapshot.json|3|HALT: MissingActor
+r202|room.authority.pre.json|3|HALT: UnknownEntity
+r203|room.authority.pre.json|3|HALT: MissingOwner
+r204|room.snapshot.json|3|HALT: UnknownEntity
+r205|room.snapshot.json|3|HALT: MissingActor
+r206|room.authority.pre.json|0|
+r207|room.authority.pre.json|2|ENTITY_CREATE requires id
+r208|room.snapshot.json|3|HALT: UnknownEntity
+r209|room.snapshot.json|3|HALT: MissingActor
+r210|room.authority.pre.json|0|
+r211|room.authority.pre.json|3|HALT: MissingActor
+r212|room.snapshot.json|3|HALT: UnknownEntity
+r213|room.snapshot.json|3|HALT: MissingActor
+r214|room.authority.pre.json|0|
+r215|room.authority.pre.json|3|HALT: MissingActor
+r216|room.snapshot.json|3|HALT: UnknownEntity
+r217|room.snapshot.json|3|HALT: MissingActor
+r218|room.authority.pre.json|0|
+r219|room.authority.pre.json|3|HALT: MissingOwner
+r220|room.snapshot.json|0|
+r221|room.snapshot.json|3|HALT: MissingActor
+r222|room.authority.pre.json|0|
+r223|room.authority.pre.json|3|HALT: MissingActor
+r224|room.snapshot.json|3|HALT: UnknownEntity
+r225|room.snapshot.json|3|HALT: MissingActor
+r226|room.authority.pre.json|0|
+r227|room.authority.pre.json|3|HALT: UnknownEntity
+r228|room.snapshot.json|0|
+r229|room.snapshot.json|3|HALT: MissingActor
+r230|room.authority.pre.json|0|
+r231|room.authority.pre.json|3|HALT: MissingActor
+r232|room.snapshot.json|0|
+r233|room.snapshot.json|3|HALT: UnknownEntity
+r234|room.authority.pre.json|0|
+r235|room.authority.pre.json|2|ZONE_MOVE requires entity and zone
+r236|room.snapshot.json|3|HALT: UnknownEntity
+r237|room.snapshot.json|3|HALT: MissingActor
+r238|room.authority.pre.json|0|
+r239|room.authority.pre.json|3|HALT: MissingActor

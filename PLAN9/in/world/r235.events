@@ -1,0 +1,6 @@
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"auth-002","owner":"valid:userA"}
+{"type":"ZONE_MOVE","actor":"valid:userA","entity":"auth-002","zone":5}
+{"type":"COMPONENT_ATTACH","actor":"valid:userB","component":"render","data":{"position":[1,2,3]},"cid":"c-0"}
+{"type":"ZONE_MOVE","actor":"valid:userB","entity":"e-9","zone":"room-b"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"cube-001","component":"transform"}
+{"type":"COMPONENT_ATTACH","entity":"cube-001","component":"tag","data":{"x":null,"on":true},"cid":"c-0"}

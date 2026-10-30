@@ -1,0 +1,7 @@
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"auth-002","owner":"valid:userA"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userB","entity":"e-9","component":"tag","data":{}}
+{"type":"COMPONENT_UPDATE","actor":"valid:userB","entity":"cube-001","component":"tag","patch":{"label":"b","n":2}}
+{"type":"COMPONENT_ATTACH","actor":"","entity":"auth-002","component":"transform","data":{"x":null,"on":true},"cid":"c-1"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userB","entity":"auth-002","component":"render","data":{"position":[1,2,3]}}
+{"type":"COMPONENT_ATTACH","actor":"valid:userB","entity":"e-9","component":"transform"}
+{"type":"ENTITY_DESTROY","actor":"","id":"cube-001"}

@@ -1,0 +1,9 @@
+{"type":"ENTITY_CREATE","actor":"valid:userB","id":7}
+{"type":"COMPONENT_DETACH","actor":"valid:userB","entity":"test-001","component":"transform"}
+{"type":"ENTITY_CREATE","id":"cube-001","owner":"valid:userA"}
+{"type":"COMPONENT_DETACH","entity":"e-9","component":"render"}
+{"type":"ZONE_MOVE","actor":"valid:userB","entity":"cube-001","zone":5}
+{"type":"COMPONENT_DETACH","actor":"","entity":"e-9","component":"tag"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"render"}
+{"type":"COMPONENT_DETACH","actor":"","entity":"cube-001","component":"render"}
+{"type":"ZONE_MOVE","actor":"","entity":"cube-001","zone":"room-b"}

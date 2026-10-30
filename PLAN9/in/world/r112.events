@@ -1,0 +1,11 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"auth-002","component":"transform","data":{"label":"b","n":2},"cid":"c-7"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"render","data":{"position":[1,2,3]}}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"auth-002","component":"tag"}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"e-9","owner":"valid:userA","internal":"e5"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"auth-002","component":"tag","data":{"x":null,"on":true}}
+{"type":"COMPONENT_DETACH","actor":"valid:userA","entity":"test-001","component":"render"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"transform","data":{},"cid":"c-3"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"tag","data":{"x":null,"on":true},"cid":"c-3"}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"e-9","owner":"valid:userA"}

@@ -1,0 +1,4 @@
+{"type":"ENTITY_CREATE","id":7,"owner":"valid:userB","internal":"e5"}
+{"type":"ENTITY_DESTROY","actor":"valid:userB","id":"cube-001"}
+{"type":"COMPONENT_ATTACH","entity":"test-001","component":"transform","data":{"label":"b","n":2},"cid":"c-7"}
+{"type":"ENTITY_CREATE","id":"cube-001","owner":""}
