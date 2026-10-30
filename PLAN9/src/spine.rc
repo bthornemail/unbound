@@ -9,7 +9,7 @@
 # the spine is adding its name to phases.
 rfork e
 # ifs is left as rc sets it: an ifs set here would be exported to every driver
-phases=(element mk mkworld ctl cons fano ak gnomon poly border pcas pss grex cast lazy orch probe template stack bar pe obs pipe resolve step gate order world zone)
+phases=(element mk mkworld ctl cons fano ak gnomon poly border pcas pss grex cast lazy orch probe template stack bar pe obs pipe resolve step gate order world zone check)
 s=/tmp/spine
 rm -rf $s
 mkdir -p $s/src

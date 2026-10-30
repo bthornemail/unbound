@@ -1,0 +1,3 @@
+checkpoint zone-a base.json trace.jsonl snap.json ck.json
+tamper trace.jsonl full.jsonl
+restore ck.json out.json

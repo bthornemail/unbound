@@ -153,6 +153,9 @@ PLAN9/src/zworld.c
 PLAN9/src/world.rc
 PLAN9/src/zzone.c
 PLAN9/src/zone.rc
+PLAN9/src/zcheck.c
+PLAN9/src/check.rc
+$(cd "$HERE" && find in/check -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/zone -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/world -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/gate -type f ! -name gen.sh | LC_ALL=C sort | sed 's|^|PLAN9/|')

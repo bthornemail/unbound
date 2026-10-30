@@ -400,6 +400,7 @@ unbound/HTML/Cryptocurrency Fano Plane Cycle Visualization.html.wsn
 unbound/HTML/Fano Constants.html.wsn
 unbound/HTML/GENESIS 3D Repo Visualizer.html.wsn
 unbound/HTML/God Mirror Embeddable Widget.html.wsn
+unbound/HTML/I-230 Sonar Closure.html.wsn
 unbound/HTML/Media Spectrum DevTools.html.wsn
 unbound/HTML/Mobile Security Camera App.html.wsn
 unbound/HTML/OMI-IMO DOM Protocol Bootstrap.html.wsn
@@ -426,6 +427,7 @@ unbound/HTML/omi-dom-stack-full.html.wsn
 unbound/HTML/slide_ruler.html.wsn
 unbound/HTML/wesiri.html.wsn
 unbound/JS/agent-commons.js.wsn
+unbound/JS/cue-position.js.wsn
 unbound/MERMAID/AI Agent Framework Diagram.mmd.wsn
 unbound/MERMAID/Abstract Layer and Protocol Implementation.mmd.wsn
 unbound/MERMAID/Complete TMHG System Structure.mmd.wsn
@@ -445,3 +447,68 @@ unbound/SH/tetra-mask.sh.wsn
 unbound/SVG/Difference_DNA_RNA-EN.svg.wsn
 unbound/SVG/Four_bit_adder_with_carry_lookahead.svg.wsn
 unbound/SVG/visual-proofs.svg.wsn
+unbound/TS/I-222.ts.wsn
+unbound/TS/atomic.ts.wsn
+unbound/TSX/README.md.wsn
+unbound/TSX/components.json.wsn
+unbound/TSX/eslint.config.js.wsn
+unbound/TSX/index.html.wsn
+unbound/TSX/package-lock.json.wsn
+unbound/TSX/package.json.wsn
+unbound/TSX/public/favicon.svg.wsn
+unbound/TSX/public/icons.svg.wsn
+unbound/TSX/src/App.css.wsn
+unbound/TSX/src/App.tsx.wsn
+unbound/TSX/src/assets/hero.png.wsn
+unbound/TSX/src/assets/react.svg.wsn
+unbound/TSX/src/assets/vite.svg.wsn
+unbound/TSX/src/components/ui/alert.tsx.wsn
+unbound/TSX/src/components/ui/button.tsx.wsn
+unbound/TSX/src/components/ui/card.tsx.wsn
+unbound/TSX/src/components/ui/scroll-area.tsx.wsn
+unbound/TSX/src/gallery/ExampleView.tsx.wsn
+unbound/TSX/src/gallery/GalleryHome.tsx.wsn
+unbound/TSX/src/gallery/examples.ts.wsn
+unbound/TSX/src/index.css.wsn
+unbound/TSX/src/lib/llm.ts.wsn
+unbound/TSX/src/lib/utils.ts.wsn
+unbound/TSX/src/main.tsx.wsn
+unbound/TSX/src/styles/globals.css.wsn
+unbound/TSX/src/templates/Atomic ALU Surface.tsx.wsn
+unbound/TSX/src/templates/Atomic Incidence Monitor.tsx.wsn
+unbound/TSX/src/templates/Atomic Incidence Surface.tsx.wsn
+unbound/TSX/src/templates/Atomic Tape Reader.tsx.wsn
+unbound/TSX/src/templates/Atomic Wallis Surface.tsx.wsn
+unbound/TSX/src/templates/Basic Incidents Graph.tsx.wsn
+unbound/TSX/src/templates/Feature Map Runtime.tsx.wsn
+unbound/TSX/src/templates/Feature Map Runtime.v2.tsx.wsn
+unbound/TSX/src/templates/Feature Map Runtime.v3.tsx.wsn
+unbound/TSX/src/templates/GENESIS Protocol Explorer.tsx.wsn
+unbound/TSX/src/templates/Geometric Hypergraph AI System.tsx.wsn
+unbound/TSX/src/templates/Harmonic Closure Editor.tsx.wsn
+unbound/TSX/src/templates/I Ching 256 Centroid.tsx.wsn
+unbound/TSX/src/templates/Incidence Hypergraph Visualization.tsx.wsn
+unbound/TSX/src/templates/NFT Upload Demo.tsx.wsn
+unbound/TSX/src/templates/Ollama Chat Interface Component.tsx.wsn
+unbound/TSX/src/templates/Omi-World Builder.tsx.wsn
+unbound/TSX/src/templates/Omicron Evaluator_ Polyform Truth Surface.tsx.wsn
+unbound/TSX/src/templates/Omnitron Multi-Axis Analyzer.tsx.wsn
+unbound/TSX/src/templates/P2P Marketplace Web App.tsx.wsn
+unbound/TSX/src/templates/Polyhedral Spin Explorer.tsx.wsn
+unbound/TSX/src/templates/React Swipe Container (TypeScript).tsx.wsn
+unbound/TSX/src/templates/SCGNN VM - Stateless Sacred Geometry Neural Network Virtual Mach.tsx.wsn
+unbound/TSX/src/templates/Semantic Merkle Tree Visualization.tsx.wsn
+unbound/TSX/src/templates/Semantic Merkle Tree Visualization.v2.tsx.wsn
+unbound/TSX/src/templates/Semantic Mnemonic Editor.tsx.wsn
+unbound/TSX/src/templates/Semantic Raycasting Through Platonic Space.tsx.wsn
+unbound/TSX/src/templates/Spectral Integration Closure.tsx.wsn
+unbound/TSX/src/templates/Tetrahedral Graph Visualization.tsx.wsn
+unbound/TSX/src/templates/UBHP Core Functions Demo.tsx.wsn
+unbound/TSX/src/templates/Unified Projective Workbench.tsx.wsn
+unbound/TSX/src/templates/Unified Projective Workbench.v2.tsx.wsn
+unbound/TSX/src/templates/WebAuthn Wallet QR Code App.tsx.wsn
+unbound/TSX/tsconfig.app.json.wsn
+unbound/TSX/tsconfig.json.wsn
+unbound/TSX/tsconfig.node.json.wsn
+unbound/TSX/tsconfig.tsbuildinfo.wsn
+unbound/TSX/vite.config.ts.wsn

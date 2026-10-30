@@ -1,0 +1,3 @@
+rolling zone-a base.json t1.jsonl cks c1
+rolling zone-a base.json t2.jsonl cks c2
+prune cks 2

@@ -1,0 +1,78 @@
+#!/bin/rc
+# check.rc - inside Plan 9: metaverse-build's checkpoints (runtime/checkpoint) ported native and literal
+# (zcheck.c, the fold zworld.c run as its own program). Each case of in/check (written on the host by
+# in/check/gen.py with the tools themselves) runs its steps in a fresh copy of its inputs and must give
+# the tools' exit, stderr line and stdout (the snapshot literal where they print a sha256), every
+# snapshot byte for byte, every checkpoint's zone, trace, snapshot, last_index and id, its literal its
+# snapshot's bytes, and what prune removes; a tampered snapshot is HALT: corruption. Then prune by trace
+# position: c9 from a shorter trace, c10 from a longer, keep 1: c10 stays (by name c9 would).
+rfork e
+w=/tmp/zcheckw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zcheck.c PLAN9/src/zworld.c PLAN9/in/check} || exit tar
+g=$w/unbound/PLAN9/in/check
+cd $w/unbound/PLAN9/src
+for(t in zcheck zworld){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+Z=($w/zcheck -w $w/zworld)
+fail=0
+n=()
+ifs='
+'
+for(c in `{ls -d $g/k*}){
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t
+	for(f in `{ls $c}){
+		if(! ~ $f */steps */expect) cp $f $t/
+	}
+	st=''
+	for(s in `{cat $c/steps}){
+		ifs=' ' { a=`{echo -n $s} }
+		if(~ $a(1) tamper) cp $t/$a(3) $t/$a(2)
+		if not {
+			@{ cd $t; $Z $a >$t/.stdout >[2]$t/.stderr }
+			st=$status
+		}
+	}
+	code=`{cat $c/expect/status}
+	ok=yes
+	if(~ $code 0){ if(! ~ $st '') ok=no }
+	if not { if(! ~ $st *$code) ok=no }
+	e=`{sed 1q $t/.stderr}
+	x=`{cat $c/expect/stderr}
+	if(! ~ $"e $"x) ok=no
+	if(! cmp -s $t/.stdout $c/expect/stdout) ok=no
+	for(l in `{cat $c/expect/checks}){
+		ifs=' ' { k=`{echo -n $l} }
+		switch($k(1)){
+		case bytes
+			if(! cmp -s $t/$k(2) $c/expect/files/$k(2)) ok=no
+		case ck
+			f=`{cd $t; $Z fields $k(2)}
+			x=`{cat $c/expect/files/$k(2)^.fields}
+			if(! ~ $"f $"x) ok=no
+			if(! @{cd $t; $Z verify $k(2) >/dev/null}) ok=no
+		case gone
+			if(test -e $t/$k(2)) ok=no
+		case kept
+			if(! test -e $t/$k(2)) ok=no
+		}
+	}
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+}
+echo zcheck gives $#n cases as the checkpoint tools of metaverse-build do
+t=$w/run
+rm -rf $t
+mkdir -p $t
+c=`{ls -d $g/k* | sed 1q}
+cp $c/base.json $t/
+sed 1q $c/trace.jsonl >$t/short.jsonl
+cp $c/trace.jsonl $t/long.jsonl
+@{ cd $t; $Z rolling zone-a base.json short.jsonl cks c9 >/dev/null; $Z rolling zone-a base.json long.jsonl cks c10 >/dev/null; $Z prune cks 1 >/dev/null }
+if(test -e $t/cks/c10.checkpoint.json && ! test -e $t/cks/c9.checkpoint.json) echo ok prune keeps by trace position: c10 stays, c9 goes
+if not { echo FAIL prune order; fail=1 }
+if(~ $fail 0) echo 'check.rc: every answer as expected'

@@ -1,0 +1,8 @@
+gone cks/c1.checkpoint.json
+kept cks/c2.checkpoint.json
+kept cks/c3.checkpoint.json
+kept cks/c4.checkpoint.json
+gone cks/c1.snapshot.json
+kept cks/c2.snapshot.json
+kept cks/c3.snapshot.json
+kept cks/c4.snapshot.json

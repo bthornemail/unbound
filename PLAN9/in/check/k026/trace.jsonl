@@ -1,0 +1,2 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"COMPONENT_ATTACH","entity":"test-001","component":"tag","data":{"label":"test"},"actor":"valid:userA"}

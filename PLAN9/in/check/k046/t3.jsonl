@@ -1,0 +1,3 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"COMPONENT_ATTACH","entity":"test-001","component":"tag","data":{"label":"test"},"actor":"valid:userA"}
+{"type":"COMPONENT_UPDATE","entity":"test-001","component":"tag","patch":{"label":"test2"},"actor":"valid:userA"}
