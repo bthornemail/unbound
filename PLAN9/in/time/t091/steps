@@ -1,0 +1,3 @@
+checkpoint zone-a base.json ta.jsonl sa.json cka.json
+checkpoint zone-a base.json tb.jsonl sb.json ckb.json
+merge tla.json tlb.json cka.json ckb.json

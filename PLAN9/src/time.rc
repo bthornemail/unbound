@@ -1,0 +1,83 @@
+#!/bin/rc
+# time.rc - inside Plan 9: metaverse-build's time engine (runtime/time) ported native and literal
+# (ztime.c; its checkpoints zcheck's, its fold zworld's, each run as its own program). Each case of
+# in/time (written on the host by in/time/gen.py with the tools themselves) runs its steps in a fresh
+# copy of its inputs and must give the tools' exit, stderr line and stdout in the port's words (a branch
+# named by its address, the snapshot literal where they print a sha256, "literal" where they say "hash"),
+# and every file byte for byte. Then the falsifier, ztime -n, which does not check a checkpoint's literal
+# against its snapshot: 17 of the 26 merges of a rewritten snapshot go through (the other 9 come from
+# two traces whose literals differ anyway; host and guest counted alike). Then materialize from a rewritten
+# snapshot: HALT: corruption, where materialize.py replays the rewritten file.
+rfork e
+w=/tmp/ztimew
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/ztime.c PLAN9/src/zcheck.c PLAN9/src/zworld.c PLAN9/in/time} || exit tar
+g=$w/unbound/PLAN9/in/time
+cd $w/unbound/PLAN9/src
+for(t in ztime zcheck zworld){
+	8c $t.c && 8l -o $w/$t $t.8 || exit compile
+}
+C=($w/zcheck -w $w/zworld)
+T=($w/ztime -c $w/zcheck -w $w/zworld)
+fail=0
+n=()
+lit=()
+let=()
+ifs='
+'
+for(c in `{ls -d $g/t*}){
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t
+	for(f in `{ls $c}){
+		if(! ~ $f */steps */expect) cp $f $t/
+	}
+	st=''
+	for(s in `{cat $c/steps}){
+		ifs=' ' { a=`{echo -n $s} }
+		switch($a(1)){
+		case tamper
+			cp $t/$a(3) $t/$a(2)
+		case checkpoint
+			@{ cd $t; $C $a >$t/.stdout >[2]$t/.stderr }
+			st=$status
+		case *
+			@{ cd $t; $T $a >$t/.stdout >[2]$t/.stderr }
+			st=$status
+			if(~ $a(1) merge) last=$a
+		}
+	}
+	code=`{cat $c/expect/status}
+	ok=yes
+	if(~ $code 0){ if(! ~ $st '') ok=no }
+	if not { if(! ~ $st *$code) ok=no }
+	e=`{sed 1q $t/.stderr}
+	x=`{cat $c/expect/stderr}
+	if(! ~ $"e $"x) ok=no
+	if(! cmp -s $t/.stdout $c/expect/stdout) ok=no
+	for(l in `{cat $c/expect/checks}){
+		ifs=' ' { k=`{echo -n $l} }
+		if(! cmp -s $t/$k(2) $c/expect/files/$k(2)) ok=no
+	}
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	if(~ $"x *'literal mismatch'){
+		lit=($lit x)
+		@{ cd $t; $w/ztime -n -c $w/zcheck -w $w/zworld $last >$t/.stdout >[2]$t/.stderr }
+		if(grep -s MERGE_OK $t/.stdout) let=($let x)
+	}
+}
+echo ztime gives $#n cases as the time tools of metaverse-build do
+if(~ $#let 17 && ~ $#lit 26) echo ok the falsifier ztime -n merges $#let of the $#lit rewritten snapshots ztime refuses, the rest two traces of two results
+if not { echo FAIL falsifier $#let of $#lit; fail=1 }
+t=$w/run
+rm -rf $t
+mkdir -p $t
+c=`{grep -l '^materialize ck.json trace.jsonl 0 0 ' $g/t*/steps | sed 1q}
+c=`{basename -d $c}
+cp $c/base.json $c/trace.jsonl $t/
+@{ cd $t; $C checkpoint zone-a base.json trace.jsonl snap.json ck.json >/dev/null; cp base.json snap.json; $T materialize ck.json trace.jsonl 0 0 out.json >.stdout >[2].stderr }
+if(~ `{cat $t/.stderr} 'HALT: corruption' && ! test -e $t/out.json) echo ok materialize from a rewritten snapshot: HALT: corruption, nothing written
+if not { echo FAIL materialize corruption; fail=1 }
+if(~ $fail 0) echo 'time.rc: every answer as expected'

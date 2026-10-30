@@ -1,0 +1,12 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}
+{"type":"COMPONENT_DETACH","actor":"valid:userA","entity":"test-001","component":"tag"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"transform","cid":"c-6"}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"e-9","owner":"valid:userA"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"test-001","component":"transform","patch":{"x":null,"on":true}}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"render","data":{"label":"b","n":2}}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"test-001","owner":"valid:userA"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"transform","data":{}}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"auth-002","owner":"valid:userA"}
+{"type":"COMPONENT_DETACH","actor":"valid:userA","entity":"e-9","component":"tag"}
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}

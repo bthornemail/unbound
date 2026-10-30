@@ -1,0 +1,4 @@
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"auth-002","component":"tag"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"transform","data":{"position":[1,2,3]}}
+{"type":"ZONE_MOVE","actor":"valid:userA","entity":"test-001","zone":"room-a"}
+{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"e-9"}

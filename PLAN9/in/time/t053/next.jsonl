@@ -1,0 +1,4 @@
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"auth-002","component":"transform"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"auth-002","component":"transform","patch":{}}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"auth-002","component":"transform","data":{"label":"b","n":2},"cid":"c-7"}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"auth-002","owner":"valid:userA"}

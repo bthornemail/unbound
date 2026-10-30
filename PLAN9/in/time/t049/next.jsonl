@@ -1,0 +1,3 @@
+{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"e-9"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"auth-002","component":"tag","cid":"c-0"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"render"}

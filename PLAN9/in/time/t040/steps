@@ -1,0 +1,2 @@
+checkpoint zone-a base.json trace.jsonl snap.json ck.json
+materialize ck.json trace.jsonl 0 3 out.json

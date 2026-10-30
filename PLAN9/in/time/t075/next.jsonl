@@ -1,0 +1,2 @@
+{"type":"ENTITY_DESTROY","actor":"valid:userA","id":"e-9"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"render"}

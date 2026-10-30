@@ -1,0 +1,1 @@
+materialize bare.json trace.jsonl 0 0 out.json

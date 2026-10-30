@@ -155,6 +155,12 @@ PLAN9/src/zzone.c
 PLAN9/src/zone.rc
 PLAN9/src/zcheck.c
 PLAN9/src/check.rc
+PLAN9/src/ztime.c
+PLAN9/src/time.rc
+PLAN9/src/zclock.c
+PLAN9/src/clock.rc
+$(cd "$HERE" && find in/clock -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
+$(cd "$HERE" && find in/time -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/check -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/zone -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/world -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')

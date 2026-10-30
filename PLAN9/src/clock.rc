@@ -1,0 +1,46 @@
+#!/bin/rc
+# clock.rc - inside Plan 9: the algorithmic clock (zclock.c, boxedPINE proofs I-248), checked against
+# in/clock, written on the host by in/clock/gen.py: replay and sweep by atomic-kernel's kernel.py itself,
+# spins and blocks by CyclicClock.v's definitions transcribed. Each seed's 40 ticks (state, position,
+# orbit, offset, phase, diff, band); the 65,536 states, none back after 8 ticks and all after 16; for each
+# prime below 1000 but 2 and 5 the steps recover_step gives back, every one but at 3 and 487; the cyclic
+# blocks of the whitepaper's table. The falsifier, zclock -b, no B injected: every replay differs, and
+# every state is back after 8.
+rfork e
+w=/tmp/zclockw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zclock.c PLAN9/in/clock} || exit tar
+g=$w/unbound/PLAN9/in/clock
+cd $w/unbound/PLAN9/src
+8c zclock.c && 8l -o $w/zclock zclock.8 || exit compile
+Z=$w/zclock
+fail=0
+n=()
+d=()
+for(s in `{cat $g/seeds}){
+	$Z replay $s 40 >$w/out
+	if(cmp -s $w/out $g/replay.$s) n=($n $s)
+	if not { echo FAIL replay $s; fail=1 }
+	$Z -b replay $s 40 >$w/out
+	if(! cmp -s $w/out $g/replay.$s) d=($d $s)
+}
+echo zclock replays $#n seeds 40 ticks as kernel.py does
+$Z sweep >$w/out
+if(cmp -s $w/out $g/sweep) echo ok of 65,536 states `{sed 1q $g/sweep | sed 's/^8 //'} back after 8 ticks, `{sed -n 2p $g/sweep | sed 's/^16 //'} after 16
+if not { echo FAIL sweep; fail=1 }
+$Z spins 1000 >$w/out
+if(cmp -s $w/out $g/spins) echo ok `{wc -l <$g/spins} primes, every step recovered but at `{grep ' 0$' $g/spins | sed 's/ .*//'}, none there
+if not { echo FAIL spins; fail=1 }
+ifs='
+'
+for(l in `{cat $g/blocks}){
+	ifs=' ' { a=`{echo -n $l} }
+	b=`{$Z block $a(1)}
+	if(! ~ $b $a(2)){ echo FAIL block $a(1); fail=1 }
+}
+echo ok the cyclic blocks of `{wc -l <$g/blocks} primes
+$Z -b sweep >$w/out
+if(~ $#d $#n && ~ `{sed 1q $w/out} '8 65536') echo ok the falsifier zclock -b differs on all $#d replays and brings every state back after 8
+if not { echo FAIL falsifier; fail=1 }
+if(~ $fail 0) echo 'clock.rc: every answer as expected'

@@ -1,0 +1,5 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"e-9","component":"tag"}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"test-001","owner":"valid:userA","internal":"x1"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"e-9","component":"render","patch":{"label":"a"}}
