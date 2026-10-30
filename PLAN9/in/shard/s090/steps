@@ -1,0 +1,5 @@
+bundle plaza-01 snap.json trace.jsonl ck.json nodeA
+move nodeA/plaza-01 nodeB/plaza-01
+tamper nodeB/plaza-01/zone.snapshot.json base.json
+tamper nodeB/plaza-01/zone.checkpoint.json other.json
+restore nodeB/plaza-01

@@ -1,0 +1,4 @@
+bundle plaza-01 snap.json trace.jsonl ck.json nodeA
+move nodeA/plaza-01 nodeB/plaza-01
+drop nodeB/plaza-01/zone.trace.jsonl
+restore nodeB/plaza-01

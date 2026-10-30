@@ -1,0 +1,2 @@
+bundle plaza-01 snap.json trace.jsonl ck.json nodeA
+restore nodeA/plaza-01

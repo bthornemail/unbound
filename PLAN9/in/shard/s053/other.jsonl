@@ -1,0 +1,10 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"e-9","owner":"valid:userA"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"e-9","component":"render"}
+{"type":"ENTITY_CREATE","actor":"valid:userA","id":"e-9","owner":"valid:userA"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"auth-002","component":"render","patch":{}}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"auth-002","component":"tag","data":{"label":"b","n":2}}
+{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"auth-002","component":"tag","patch":{}}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"transform","data":{}}
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}

@@ -1,0 +1,5 @@
+{"type":"ENTITY_CREATE","id":"test-001","owner":"valid:userA","actor":"valid:userA"}
+{"type":"ENTITY_CREATE","id":"e-9","owner":"valid:userA","actor":"valid:userA"}
+{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"test-001","component":"transform","patch":{"position":[1,2,3]}}
+{"type":"COMPONENT_UPDATE","actor":"valid:userA","entity":"e-9","component":"transform"}
+{"type":"COMPONENT_ATTACH","actor":"valid:userA","entity":"test-001","component":"render","data":{"label":"b","n":2},"cid":"c-7"}

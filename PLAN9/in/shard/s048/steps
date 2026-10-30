@@ -1,0 +1,2 @@
+bundle room snap.json trace.jsonl ck.json nodeA
+restore nodeA/room

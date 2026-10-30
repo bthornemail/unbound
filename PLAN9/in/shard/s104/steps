@@ -1,0 +1,4 @@
+bundle z1 snap.json trace.jsonl ck.json nodeA
+move nodeA/z1 nodeB/z1
+drop nodeB/z1/zone.checkpoint.json
+restore nodeB/z1

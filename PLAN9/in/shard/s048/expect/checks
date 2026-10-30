@@ -1,0 +1,4 @@
+bytes nodeA/room/zone.snapshot.json
+bytes nodeA/room/zone.trace.jsonl
+bytes nodeA/room/zone.checkpoint.json
+fields nodeA/room/manifest.json

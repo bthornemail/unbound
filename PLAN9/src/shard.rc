@@ -1,0 +1,82 @@
+#!/bin/rc
+# shard.rc - inside Plan 9: metaverse-build's shards (runtime/shards) ported native and literal
+# (zshard.c). Each case of in/shard (written on the host by in/shard/gen.py with the tools themselves)
+# runs its steps in a fresh copy of its inputs (bundle, restore, move a bundle to another node, tamper or
+# drop a file in transit) and must give the tools' exit, stderr line ("literal" where they say "hash")
+# and stdout, every bundled file byte for byte, each manifest's zone and file names, and nothing written
+# when an input is missing. Then the falsifier, zshard -n, which does not compare the literals: every
+# bundle rewritten in transit restores as OK.
+rfork e
+w=/tmp/zshardw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zshard.c PLAN9/in/shard} || exit tar
+g=$w/unbound/PLAN9/in/shard
+cd $w/unbound/PLAN9/src
+8c zshard.c && 8l -o $w/zshard zshard.8 || exit compile
+Z=$w/zshard
+fail=0
+n=()
+lit=()
+let=()
+ifs='
+'
+for(c in `{ls -d $g/s*}){
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t
+	for(f in `{ls $c}){
+		if(! ~ $f */steps */expect) cp $f $t/
+	}
+	st=''
+	for(s in `{cat $c/steps}){
+		ifs=' ' { a=`{echo -n $s} }
+		switch($a(1)){
+		case move
+			mkdir -p $t/$a(3)
+			@{ cd $t/$a(2); for(f in *) cp $f $t/$a(3)^/$f }
+		case tamper
+			cp $t/$a(3) $t/$a(2)
+		case drop
+			rm $t/$a(2)
+		case *
+			@{ cd $t; $Z $a >$t/.stdout >[2]$t/.stderr }
+			st=$status
+			last=$a
+		}
+	}
+	code=`{cat $c/expect/status}
+	ok=yes
+	if(~ $code 0){ if(! ~ $st '') ok=no }
+	if not { if(! ~ $st *$code) ok=no }
+	e=`{sed 1q $t/.stderr}
+	x=`{cat $c/expect/stderr}
+	if(! ~ $"e $"x) ok=no
+	if(! cmp -s $t/.stdout $c/expect/stdout) ok=no
+	for(l in `{cat $c/expect/checks}){
+		ifs=' ' { k=`{echo -n $l} }
+		switch($k(1)){
+		case bytes
+			if(! cmp -s $t/$k(2) $c/expect/files/$k(2)) ok=no
+		case fields
+			f=`{$Z fields $t/$k(2)}
+			y=`{cat $c/expect/files/$k(2)^.fields}
+			if(! ~ $"f $"y) ok=no
+		case gone
+			if(test -e $t/$k(2)) ok=no
+		case kept
+			if(! test -e $t/$k(2)) ok=no
+		}
+	}
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	if(~ $"x *'literal mismatch'){
+		lit=($lit x)
+		@{ cd $t; $Z -n $last >$t/.stdout >[2]$t/.stderr }
+		if(grep -s '^OK$' $t/.stdout) let=($let x)
+	}
+}
+echo zshard gives $#n cases as the shard tools of metaverse-build do
+if(! ~ $#lit 0 && ~ $#let $#lit) echo ok the falsifier zshard -n restores all $#let bundles rewritten in transit as OK
+if not { echo FAIL falsifier $#let of $#lit; fail=1 }
+if(~ $fail 0) echo 'shard.rc: every answer as expected'

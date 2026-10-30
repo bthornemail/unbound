@@ -1,0 +1,4 @@
+bytes nodes/A/plaza-01/zone.snapshot.json
+bytes nodes/A/plaza-01/zone.trace.jsonl
+bytes nodes/A/plaza-01/zone.checkpoint.json
+fields nodes/A/plaza-01/manifest.json

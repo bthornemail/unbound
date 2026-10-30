@@ -1,0 +1,5 @@
+bundle z1 snap.json trace.jsonl ck.json nodeA
+move nodeA/z1 nodeB/z1
+tamper nodeB/z1/zone.trace.jsonl other.jsonl
+tamper nodeB/z1/zone.checkpoint.json other.json
+restore nodeB/z1

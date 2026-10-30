@@ -1,0 +1,4 @@
+bundle zone-a snap.json trace.jsonl ck.json nodeA
+move nodeA/zone-a nodeB/zone-a
+tamper nodeB/zone-a/zone.snapshot.json base.json
+restore nodeB/zone-a

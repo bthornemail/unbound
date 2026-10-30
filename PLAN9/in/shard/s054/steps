@@ -1,0 +1,2 @@
+bundle z1 snap.json trace.jsonl ck.json nodeA
+restore nodeA/z1

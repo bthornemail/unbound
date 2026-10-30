@@ -1,0 +1,4 @@
+bytes shard/room/zone.snapshot.json
+bytes shard/room/zone.trace.jsonl
+bytes shard/room/zone.checkpoint.json
+fields shard/room/manifest.json
