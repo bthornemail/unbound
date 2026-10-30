@@ -1,0 +1,17 @@
+#!/bin/rc
+# order.rc - inside Plan 9: the delta law's period at every width W = 2^n (zorder.c, boxedPINE
+# proofs I-246). The certificate for n = 2 to 62: squaring L = x + x^3 + x^-2 over GF(2) doubles its
+# three exponents, so L^(W/2) = 1 and L^(W/4) != 1 are checked on three integers; the constant's
+# term (1 + L)^(W/2 - 1) is zero exactly when W >= 8. The law itself at 8, 16, 32 and 64 bits; the
+# falsifier: at W = 4 a constant survives.
+rfork e
+w=/tmp/zorderw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zorder.c} || exit tar
+cd $w/unbound/PLAN9/src
+8c zorder.c && 8l -o $w/zorder zorder.8 || exit compile
+fail=0
+for(m in cert run four)
+	$w/zorder $m || fail=1
+if(~ $fail 0) echo 'order.rc: every answer as expected'

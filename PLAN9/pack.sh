@@ -147,6 +147,8 @@ PLAN9/src/cons.rc
 PLAN9/src/spine.rc
 PLAN9/src/zgate.c
 PLAN9/src/gate.rc
+PLAN9/src/zorder.c
+PLAN9/src/order.rc
 $(cd "$HERE" && find in/gate -type f ! -name gen.sh | LC_ALL=C sort | sed 's|^|PLAN9/|')
 PLAN9/in/cons/decisions
 $(cd "$HERE" && ls in/ctl/* | grep -v 'gen.py$' | sed 's|^|PLAN9/|')

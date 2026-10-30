@@ -121,4 +121,4 @@ OPEN, cite: KERNEL.v's kernel_delta64 (boxedPINE proofs/coq/04-execution) is not
 
 delta-order
 00:00:29.000 --> 00:00:30.000
-OPEN, work: the replacement law's linear part L = x + x^3 + x^-2 in GF(2)[x]/(x^W - 1) has order W/2 at W = 16 to 256 (I-245) and in zak's table (in/ak/period); for the author's infinite scaling (delta64-scaling, global.vtt), a proof for every W = 2^n, as I-245's factorization proves the difference law's collapse at ceil(W/3) for every W.
+ANSWERED, proved (I-246, PLAN9 zorder.c): for every W = 2^n the replacement law's linear part L = x + x^3 + x^-2 has order exactly W/2, since squaring over GF(2) doubles its three exponents, which at W/2 are W/2, W/2 and 0 and cancel to 1, while at W/4 three distinct non-zero exponents remain; with a constant, Delta^(W/2)(x) = x + (1 + L)^(W/2 - 1) C and 1 + L = y^3 (1 + y + y^2) (I-245), so every constant drops out exactly when W >= 8. The author's request: "cool lets prove it, i think the proof is in coq but let s prove it agaign so we can port to plan9"; Coq has the 16-bit case (Delta16HasExactPeriodEight.v, constants 0x001D and 0x1337).
