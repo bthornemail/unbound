@@ -38,18 +38,23 @@ fail(char *status, char *why)
 	reply(status, "text/plain", smprint("%s\n", why));
 }
 
-/* the floor's pid: the process named floor in /proc */
+/*
+ * the floor's pid: the process named floor in /proc with the lowest pid. The event
+ * library's slaves (mouse, timer) are named floor too, each with its own copy of the
+ * floor's memory as it was when forked; the floor starts before them.
+ */
 static int
 findfloor(void)
 {
 	Dir *d;
-	int fd, n, i, f;
+	int fd, n, i, f, pid, low;
 	char buf[32], *p;
 
 	if((fd = open("/proc", OREAD)) < 0)
 		return -1;
 	n = dirreadall(fd, &d);
 	close(fd);
+	low = -1;
 	for(i = 0; i < n; i++){
 		p = smprint("/proc/%s/status", d[i].name);
 		f = open(p, OREAD);
@@ -59,10 +64,11 @@ findfloor(void)
 		memset(buf, 0, sizeof buf);
 		read(f, buf, sizeof buf - 1);
 		close(f);
-		if(strncmp(buf, "floor ", 6) == 0)
-			return atoi(d[i].name);
+		pid = atoi(d[i].name);
+		if(strncmp(buf, "floor ", 6) == 0 && (low < 0 || pid < low))
+			low = pid;
 	}
-	return -1;
+	return low;
 }
 
 static void
