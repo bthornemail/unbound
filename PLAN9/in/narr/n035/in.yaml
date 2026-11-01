@@ -1,0 +1,108 @@
+narrative:
+  id: "n33"
+  title: true
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA21"
+    role: "x"
+  char_1:
+    id: "CHA74"
+    role: "x"
+  char_2:
+    id: "CHA36"
+    role: "x"
+  char_3:
+    id: "CHA25"
+    role: "x"
+  char_4:
+    id: "CHA83"
+    role: "x"
+
+settings: {}
+
+objects: {}
+
+scenes:
+  scene_7:
+    id: "SC000"
+    title: +4
+    location: "nowhere::gate_position"
+    time: "名前"
+    characters_present: ["stranger"]
+    atmosphere: "gate"
+    next_scene: "SC001"
+  scene_5:
+    id: "SC001"
+    title: "αβγ"
+    location: "nowhere"
+    time: 2.5
+    characters_present:
+      - "char_0"
+      - "stranger"
+    atmosphere: 12.125
+    next_scene: "SC002"
+  scene_2:
+    id: "SC002"
+    title: "Revelation as Unveiling"
+    location: "nowhere::a::b"
+    time: "名前"
+    characters_present: []
+    next_scene: "SC003"
+  scene_4:
+    id: "SC003"
+    title: "名前"
+    location: "nowhere"
+    time: true
+    characters_present: ["char_0", "char_3", "char_4"]
+    atmosphere: -0.75
+    next_scene: "SC999"
+  scene_3:
+    id: "SC004"
+    title: "élan"
+    location: "nowhere"
+    time: -3
+    characters_present:
+      - "char_0"
+      - "char_4"
+      - "char_3"
+    atmosphere: False
+    next_scene: "SC005"
+  scene_1:
+    id: "SC005"
+    title: "SC007"
+    location: "nowhere"
+    time: true
+    characters_present:
+      - "char_4"
+      - "char_0"
+      - "char_1"
+      - "char_3"
+      - "char_2"
+      - "stranger"
+    atmosphere: "plain"
+    next_scene: "SC006"
+  scene_6:
+    id: "SC006"
+    title: "αβγ"
+    location: "nowhere::a::b"
+    time: OFF
+    characters_present:
+      - "char_4"
+      - "char_2"
+      - "char_0"
+      - "char_3"
+    atmosphere: False
+    next_scene: "SC005"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

@@ -1,0 +1,62 @@
+narrative:
+  id: "n1"
+  heading: "back\\slash"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA71"
+    role: "x"
+  char_1:
+    id: 7
+    role: "x"
+  char_2:
+    id: "CHA22"
+    role: "x"
+  char_3:
+    id: "CHA58"
+    role: "x"
+
+settings:
+  place_0:
+    name: "no id"
+  place_1:
+    id: "SET003"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: "breath"
+    location: "nowhere"
+    time: +4
+    characters_present: ["char_0", "char_2", "char_1", char_3]
+    atmosphere: "SC013"
+    next_scene: "SC001"
+  scene_3:
+    id: "SC001"
+    title: +4
+    location: "place_0::a::b"
+    time: +4
+    characters_present: []
+    atmosphere: 017
+    next_scene: "SC002"
+  scene_1:
+    id: "SC002"
+    title: the hour
+    location: "place_0"
+    time: -3
+    characters_present: [char_3, char_2, "char_0", "char_1", "stranger"]
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

@@ -1,0 +1,92 @@
+narrative:
+  id: "n27"
+  title: False
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA75"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET006"
+
+objects:
+  object_0:
+    id: "OBJ00"
+  object_1:
+    id: "OBJ01"
+  object_2:
+    id: "OBJ02"
+
+scenes:
+  scene_3:
+    id: "SC000"
+    title: "breath"
+    location: "nowhere::edge"
+    time: +4
+    characters_present:
+      - "char_0"
+      - "stranger"
+    atmosphere: "Revelation as Unveiling"
+    next_scene: "SC001"
+  scene_5:
+    id: "SC001"
+    title: "Revelation as Unveiling"
+    location: "nowhere::edge"
+    time: "plain"
+    characters_present: ["stranger"]
+    next_scene: "SC003"
+  scene_6:
+    id: "SC002"
+    title: 0.1
+    location: "place_0::a::b"
+    time: "gate"
+    characters_present: ["char_0"]
+    next_scene: "SC002"
+  scene_7:
+    id: "SC003"
+    title: 3.0
+    location: "place_0::a::b"
+    time: False
+    characters_present: ["stranger"]
+    atmosphere: on
+    next_scene: "SC004"
+  scene_4:
+    id: "SC004"
+    title: 12.125
+    location: "place_0::edge"
+    time: "Canticle of Reconciliation"
+    characters_present:
+      - "char_0"
+      - "stranger"
+    atmosphere: 0x1F
+    next_scene: "SC005"
+  scene_1:
+    id: "SC005"
+    title: "back\\slash"
+    location: "place_0"
+    time: "SC011"
+    characters_present: []
+    atmosphere: "say \"logos\""
+    next_scene: "SC006"
+  scene_2:
+    id: "SC006"
+    title: "say \"logos\""
+    location: "nowhere::a::b"
+    time: "SC020"
+    characters_present: []
+    atmosphere: "SC001"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

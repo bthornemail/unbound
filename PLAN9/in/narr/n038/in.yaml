@@ -1,0 +1,44 @@
+narrative:
+  id: "n36"
+  title: null
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA34"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET007"
+  place_1:
+    id: "SET003"
+  place_2:
+    id: "SET007"
+  place_3:
+    id: "SET005"
+
+objects:
+  object_0:
+    id: "OBJ00"
+
+scenes:
+  scene_1:
+    id: "SC000"
+    title: "αβγ"
+    location: "place_0"
+    time: False
+    characters_present: []
+    atmosphere: -3
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

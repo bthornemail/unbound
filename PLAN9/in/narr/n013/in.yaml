@@ -1,0 +1,68 @@
+narrative:
+  id: "n11"
+  title: 0x1F
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: yes
+    role: "x"
+  solomon:
+    id: 7
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET005"
+
+objects:
+  object_0:
+    id: "OBJ00"
+  object_1:
+    id: "OBJ01"
+  object_2:
+    id: "OBJ02"
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: "breath"
+    location: "nowhere"
+    time: OFF
+    characters_present: ["char_0", "solomon", "stranger"]
+    next_scene: "SC001"
+  scene_1:
+    id: "SC001"
+    title: "Canticle of Reconciliation"
+    location: "nowhere"
+    time: 7
+    characters_present:
+      - "char_0"
+    atmosphere: "SC006"
+    next_scene: "SC002"
+  scene_3:
+    id: "SC002"
+    title: -0.75
+    location: "place_0"
+    time: "Revelation as Unveiling"
+    characters_present: []
+    atmosphere: 3.0
+    next_scene: "END"
+  scene_4:
+    id: "SC003"
+    title: "logos & number"
+    location: "place_0::a::b"
+    time: null
+    characters_present: []
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

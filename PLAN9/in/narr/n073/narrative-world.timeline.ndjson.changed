@@ -1,0 +1,3 @@
+{"authority":"advisory","event":"scene_enter","location":"plain_of_babel::gate_position","next_scene":"SC002","scene_id":"SC001","t":"0","title":"The Call at the City Gate"}
+{"authority":"advisory","event":"scene_enter","location":"breath_space_yhwh","next_scene":"SC003","scene_id":"SC002","t":"1","title":"Kanticle of Reconciliation"}
+{"authority":"advisory","event":"scene_enter","location":"plain_of_babel::gate_position","next_scene":"SC001","scene_id":"SC003","t":"2","title":"Revelation as Unveiling"}

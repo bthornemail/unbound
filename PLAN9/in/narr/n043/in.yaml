@@ -1,0 +1,71 @@
+narrative:
+  id: "n41"
+  title: true
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA13"
+    role: "x"
+  char_1:
+    id: 2.5
+    role: "x"
+  char_2:
+    id: "CHA55"
+    role: "x"
+  char_3:
+    id: "CHA64"
+    role: "x"
+  char_4:
+    id: "CHA15"
+    role: "x"
+  char_5:
+    id: yes
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET004"
+  place_1:
+    id: "SET009"
+
+objects:
+  object_0:
+    id: "OBJ00"
+
+scenes:
+  Scene_2_0:
+    id: "SC000"
+    title: "back\\slash"
+    location: "place_1"
+    time: 2.5
+    characters_present: []
+    atmosphere: 2.5
+    next_scene: "SC001"
+  act_2:
+    id: "SC001"
+    title: "名前"
+    location: "place_1::gate_position"
+    time: "élan"
+    characters_present: ["char_0", "char_3", "char_2", "char_5", "char_1"]
+    atmosphere: true
+    next_scene: "SC002"
+  scene_x_1:
+    id: "SC002"
+    title: "αβγ"
+    location: "place_0::a::b"
+    time: "gate"
+    characters_present: ["char_3", "char_2", "char_5"]
+    atmosphere: 3.0
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

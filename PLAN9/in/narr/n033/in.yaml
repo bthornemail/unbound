@@ -1,0 +1,134 @@
+narrative:
+  id: "n31"
+  title: on
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA42"
+    role: "x"
+  char_1:
+    id: 7
+    role: "x"
+  char_2:
+    id: "CHA99"
+    role: "x"
+  char_3:
+    id: yes
+    role: "x"
+  char_4:
+    id: "CHA54"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET006"
+  place_1:
+    id: "SET006"
+  place_2:
+    id: "SET004"
+  place_3:
+    id: "SET007"
+
+objects: {}
+
+scenes:
+  scene_00:
+    id: "SC000"
+    title: "αβγ"
+    location: "place_3::edge"
+    time: "αβγ"
+    characters_present:
+      - "char_0"
+      - "char_4"
+      - "char_1"
+      - "char_3"
+      - "char_2"
+    atmosphere: "plain"
+    next_scene: "SC001"
+  scene_06:
+    id: "SC001"
+    title: "SC019"
+    location: "place_2"
+    time: yes
+    characters_present:
+      - "char_2"
+      - "char_1"
+      - "char_0"
+      - "char_3"
+      - "char_4"
+      - "stranger"
+    atmosphere: x-1
+    next_scene: "SC002"
+  scene_08:
+    id: "SC002"
+    title: "back\\slash"
+    location: "place_3"
+    time: "say \"logos\""
+    characters_present: ["char_0", "char_3"]
+    atmosphere: "plain"
+    next_scene: "SC003"
+  scene_03:
+    id: "SC003"
+    title: "名前"
+    location: "place_3"
+    time: "l'ordre"
+    characters_present: ["char_0", "char_3", "char_2", "char_1", char_4]
+    next_scene: "SC004"
+  scene_04:
+    id: "SC004"
+    title: False
+    location: "place_2::a::b"
+    time: 7
+    characters_present:
+      - "char_4"
+      - "char_1"
+      - "char_0"
+    atmosphere: "Canticle of Reconciliation"
+    next_scene: "SC005"
+  scene_05:
+    id: "SC005"
+    title: 3.0
+    location: "nowhere"
+    time: "back\\slash"
+    characters_present: []
+    next_scene: "SC001"
+  scene_01:
+    id: "SC006"
+    title: the hour
+    location: "place_0::edge"
+    time: true
+    characters_present:
+      - "stranger"
+    atmosphere: ~
+    next_scene: "SC007"
+  scene_07:
+    id: "SC007"
+    title: "breath"
+    location: "place_3"
+    time: 2.5
+    characters_present: ["char_4"]
+    atmosphere: dawn
+    next_scene: "SC008"
+  scene_02:
+    id: "SC008"
+    title: 12.125
+    location: "place_3::a::b"
+    time: "tab\there"
+    characters_present:
+      - "char_4"
+      - "char_3"
+      - "stranger"
+    atmosphere: true
+    next_scene: "SC002"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

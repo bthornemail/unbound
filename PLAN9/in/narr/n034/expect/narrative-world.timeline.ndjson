@@ -1,0 +1,7 @@
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC001","scene_id":"SC000","t":"0","title":"logos & number"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC002","scene_id":"SC001","t":"1","title":"12.125"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere::gate_position","next_scene":"SC003","scene_id":"SC002","t":"2","title":"名前"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC004","scene_id":"SC003","t":"3","title":"None"}
+{"authority":"advisory","event":"scene_enter","location":"place_0","next_scene":"SC005","scene_id":"SC004","t":"4","title":"False"}
+{"authority":"advisory","event":"scene_enter","location":"place_0::edge","next_scene":"SC006","scene_id":"SC005","t":"5","title":"dawn"}
+{"authority":"advisory","event":"scene_enter","location":"place_0","next_scene":"SC000","scene_id":"SC006","t":"6","title":"None"}

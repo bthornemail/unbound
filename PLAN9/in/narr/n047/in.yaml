@@ -1,0 +1,114 @@
+narrative:
+  id: dawn
+  title: "breath"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA23"
+    role: "x"
+  char_1:
+    id: "CHA84"
+    role: "x"
+  char_2:
+    id: "CHA8"
+    role: "x"
+  char_3:
+    id: "CHA71"
+    role: "x"
+  char_4:
+    id: "CHA85"
+    role: "x"
+  solomon:
+    id: "SOL8"
+    role: "x"
+
+settings: {}
+
+objects:
+  object_0:
+    id: "OBJ00"
+
+scenes:
+  scene_02:
+    id: "SC000"
+    title: on
+    location: "nowhere"
+    time: "SC009"
+    characters_present: ["stranger"]
+    atmosphere: "tab\there"
+    next_scene: "SC999"
+  scene_03:
+    id: "SC001"
+    title: x-1
+    location: "nowhere"
+    time: yes
+    characters_present: [char_1, char_2, "char_4", "char_0", "solomon", "char_3"]
+    atmosphere: 7
+    next_scene: "SC002"
+  scene_01:
+    id: "SC002"
+    title: "Canticle of Reconciliation"
+    location: "nowhere::a::b"
+    time: "plain"
+    characters_present: [char_4, "solomon", stranger]
+    atmosphere: "l'ordre"
+    next_scene: "SC000"
+  scene_05:
+    id: "SC003"
+    title: "breath"
+    location: "nowhere::edge"
+    time: "plain"
+    characters_present:
+      - "char_2"
+      - "char_0"
+      - "char_1"
+      - "solomon"
+      - "char_4"
+      - "char_3"
+    atmosphere: "Revelation as Unveiling"
+    next_scene: "SC004"
+  scene_04:
+    id: "SC004"
+    title: "αβγ"
+    location: "nowhere::a::b"
+    time: "breath"
+    characters_present:
+      - "char_3"
+      - "char_1"
+      - "char_2"
+      - "solomon"
+    atmosphere: "breath"
+    next_scene: "SC005"
+  scene_06:
+    id: "SC005"
+    title: 0x1F
+    location: "nowhere"
+    time: "αβγ"
+    characters_present:
+      - "char_1"
+      - "char_0"
+      - "solomon"
+      - "char_3"
+      - "char_2"
+      - "char_4"
+    next_scene: "SC006"
+  scene_00:
+    id: "SC006"
+    title: "l'ordre"
+    location: "nowhere"
+    time: 0o17
+    characters_present: ["char_4", char_2, "char_3", char_1, "char_0"]
+    atmosphere: "SC012"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

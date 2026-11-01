@@ -1,0 +1,82 @@
+narrative:
+  id: "n24"
+  title: 017
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA92"
+    role: "x"
+  char_1:
+    id: "CHA56"
+    role: "x"
+  char_2:
+    id: "CHA19"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET006"
+  place_1:
+    name: "no id"
+  place_2:
+    id: "SET009"
+
+objects: {}
+
+scenes:
+  scene_04:
+    id: "SC000"
+    title: "back\\slash"
+    location: "place_1"
+    time: No
+    characters_present:
+      - "char_1"
+    atmosphere: 007
+    next_scene: "SC001"
+  scene_02:
+    id: "SC001"
+    title: "breath"
+    location: "place_0"
+    time: "αβγ"
+    characters_present:
+      - "char_1"
+      - "char_2"
+      - "stranger"
+    next_scene: "SC004"
+  scene_01:
+    id: "SC002"
+    title: "l'ordre"
+    location: "place_1"
+    time: -3
+    characters_present: [stranger]
+    atmosphere: "élan"
+    next_scene: "SC003"
+  scene_03:
+    id: "SC003"
+    title: "back\\slash"
+    location: "place_2::edge"
+    time: 0o17
+    characters_present: ["char_2", char_1, "stranger"]
+    next_scene: "SC004"
+  scene_00:
+    id: "SC004"
+    title: 017
+    location: "nowhere"
+    time: true
+    characters_present:
+      - "char_0"
+      - "char_2"
+    atmosphere: "élan"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

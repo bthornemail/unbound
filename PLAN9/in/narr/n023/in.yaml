@@ -1,0 +1,71 @@
+narrative:
+  id: "n21"
+  title: 007
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA33"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET007"
+  place_1:
+    id: "SET003"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: "back\\slash"
+    location: "place_0"
+    time: 0o17
+    characters_present: ["char_0", stranger]
+    atmosphere: "breath"
+    next_scene: "SC001"
+  scene_3:
+    id: "SC001"
+    title: 2.5
+    location: "place_0::gate_position"
+    time: "Revelation as Unveiling"
+    characters_present:
+      - "stranger"
+    atmosphere: "gate"
+    next_scene: "SC002"
+  scene_4:
+    id: "SC002"
+    title: "αβγ"
+    location: "place_0::edge"
+    time: "breath"
+    characters_present: []
+    atmosphere: "Canticle of Reconciliation"
+    next_scene: "SC004"
+  scene_5:
+    id: "SC003"
+    title: 7
+    location: "place_0"
+    time: "l'ordre"
+    characters_present: []
+    atmosphere: False
+    next_scene: "SC003"
+  scene_1:
+    id: "SC004"
+    title: "say \"logos\""
+    location: "nowhere::edge"
+    time: -0.75
+    characters_present: []
+    atmosphere: null
+    next_scene: "SC999"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

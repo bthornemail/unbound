@@ -1,0 +1,73 @@
+narrative:
+  id: "n1"
+  title: False
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA32"
+    role: "x"
+  char_1:
+    id: "CHA65"
+    role: "x"
+  char_2:
+    id: "CHA87"
+    role: "x"
+  char_3:
+    id: "CHA18"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET002"
+  place_1:
+    name: "no id"
+  place_2:
+    id: "SET006"
+
+objects:
+  object_0:
+    id: "OBJ00"
+
+scenes:
+  scene_1:
+    id: "SC000"
+    title: "l'ordre"
+    location: "place_1"
+    time: "back\\slash"
+    characters_present: ["char_0", "char_1"]
+    next_scene: "SC001"
+  scene_3:
+    id: "SC001"
+    title: +4
+    location: "place_0"
+    time: dawn
+    characters_present: []
+    atmosphere: "say \"logos\""
+    next_scene: "SC003"
+  scene_2:
+    id: "SC002"
+    title: "breath"
+    location: "place_0"
+    time: dawn
+    characters_present: ["char_0", "char_3", "char_2", char_1, "stranger"]
+    next_scene: "SC003"
+  scene_4:
+    id: "SC003"
+    title: "Canticle of Reconciliation"
+    location: "nowhere"
+    time: "élan"
+    characters_present: ["char_0", "char_3", char_2, char_1]
+    atmosphere: "say \"logos\""
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

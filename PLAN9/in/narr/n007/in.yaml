@@ -1,0 +1,67 @@
+narrative:
+  id: 0x1F
+  title: "αβγ"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA7"
+    role: "x"
+  char_1:
+    id: "CHA98"
+    role: "x"
+  char_2:
+    id: "CHA2"
+    role: "x"
+  char_3:
+    id: "CHA70"
+    role: "x"
+  char_4:
+    id: "CHA85"
+    role: "x"
+  char_5:
+    id: yes
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET005"
+  place_1:
+    id: "SET005"
+  place_2:
+    id: "SET008"
+  place_3:
+    id: "SET001"
+
+objects: {}
+
+scenes:
+  Scene_2_1:
+    id: "SC000"
+    title: "tab\there"
+    location: "place_1::edge"
+    time: "say \"logos\""
+    characters_present:
+      - "char_5"
+      - "stranger"
+    atmosphere: ~
+    next_scene: "SC001"
+  scene_x_0:
+    id: "SC001"
+    title: "αβγ"
+    location: "place_2::gate_position"
+    time: 017
+    characters_present: ["char_5", "char_3", "char_0", "char_1", "char_4"]
+    atmosphere: "élan"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

@@ -1,0 +1,75 @@
+narrative:
+  id: "n16"
+  title: "breath"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA10"
+    role: "x"
+  char_1:
+    id: "CHA28"
+    role: "x"
+  solomon:
+    id: 2.5
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET008"
+  place_1:
+    id: "SET009"
+  place_2:
+    id: "SET007"
+  place_3:
+    name: "no id"
+
+objects:
+  object_0:
+    id: "OBJ00"
+  object_1:
+    id: "OBJ01"
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: -3
+    location: "place_0"
+    time: 017
+    characters_present: []
+    atmosphere: "Revelation as Unveiling"
+    next_scene: "SC001"
+  scene_1:
+    id: "SC001"
+    title: "l'ordre"
+    location: "nowhere"
+    time: yes
+    characters_present: ["char_1", "solomon", "char_0"]
+    next_scene: "SC002"
+  scene_3:
+    id: "SC002"
+    title: -0.75
+    location: "nowhere"
+    time: "breath"
+    characters_present: ["char_1", "char_0"]
+    atmosphere: "Revelation as Unveiling"
+    next_scene: "SC003"
+  scene_4:
+    id: "SC003"
+    title: "say \"logos\""
+    location: "place_2"
+    time: "gate"
+    characters_present: ["char_0", "solomon", "char_1"]
+    atmosphere: "αβγ"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

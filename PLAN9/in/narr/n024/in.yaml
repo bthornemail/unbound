@@ -1,0 +1,80 @@
+narrative:
+  id: "n22"
+  title: "breath"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA84"
+    role: "x"
+  char_1:
+    id: "CHA19"
+    role: "x"
+  char_2:
+    id: "CHA68"
+    role: "x"
+  solomon:
+    id: "SOL65"
+    role: "x"
+
+settings:
+  place_0:
+    name: "no id"
+  place_1:
+    id: "SET004"
+  place_2:
+    name: "no id"
+
+objects:
+  object_0:
+    id: "OBJ00"
+  object_1:
+    id: "OBJ01"
+
+scenes:
+  scene_4:
+    id: "SC000"
+    title: on
+    location: "nowhere"
+    time: No
+    characters_present:
+      - "solomon"
+      - "char_1"
+      - "stranger"
+    atmosphere: "l'ordre"
+    next_scene: "SC001"
+  scene_1:
+    id: "SC001"
+    title: the hour
+    location: "place_2"
+    time: "plain"
+    characters_present:
+      - "solomon"
+    atmosphere: on
+    next_scene: "SC002"
+  scene_2:
+    id: "SC002"
+    title: 12.125
+    location: "nowhere::a::b"
+    time: dawn
+    characters_present: ["char_1", char_0]
+    next_scene: "SC003"
+  scene_3:
+    id: "SC003"
+    title: "élan"
+    location: "place_0"
+    time: dawn
+    characters_present: [char_2]
+    atmosphere: "gate"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

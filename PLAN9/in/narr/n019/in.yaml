@@ -1,0 +1,73 @@
+narrative:
+  id: "n17"
+  title: "tab\there"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA42"
+    role: "x"
+  char_1:
+    id: 7
+    role: "x"
+  char_2:
+    id: yes
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET008"
+  place_1:
+    id: "SET002"
+  place_2:
+    id: "SET007"
+
+objects:
+  object_0:
+    id: "OBJ00"
+
+scenes:
+  scene_02:
+    id: "SC000"
+    title: "Canticle of Reconciliation"
+    location: "place_2"
+    time: 0.1
+    characters_present:
+      - "char_2"
+      - "stranger"
+    atmosphere: x-1
+    next_scene: "SC001"
+  scene_03:
+    id: "SC001"
+    title: "Revelation as Unveiling"
+    location: "place_1"
+    time: "say \"logos\""
+    characters_present: ["char_2", "char_0", "stranger"]
+    next_scene: "SC000"
+  scene_01:
+    id: "SC002"
+    title: "tab\there"
+    location: "nowhere::a::b"
+    time: "say \"logos\""
+    characters_present: []
+    atmosphere: "say \"logos\""
+    next_scene: "SC003"
+  scene_00:
+    id: "SC003"
+    title: "Canticle of Reconciliation"
+    location: "place_2"
+    time: 3.0
+    characters_present: [char_2]
+    atmosphere: +4
+    next_scene: "END"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

@@ -1,0 +1,116 @@
+narrative:
+  id: -0.75
+  title: x-1
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA47"
+    role: "x"
+  solomon:
+    id: "SOL58"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET003"
+  place_1:
+    id: "SET001"
+  place_2:
+    id: "SET001"
+  place_3:
+    id: "SET009"
+
+objects:
+  object_0:
+    id: "OBJ00"
+  object_1:
+    id: "OBJ01"
+  object_2:
+    id: "OBJ02"
+
+scenes:
+  scene_3:
+    id: "SC000"
+    title: "back\\slash"
+    location: "nowhere"
+    time: "breath"
+    characters_present:
+      - "solomon"
+    atmosphere: "say \"logos\""
+    next_scene: "SC001"
+  scene_9:
+    id: "SC001"
+    title: "Canticle of Reconciliation"
+    location: "place_1"
+    time: "breath"
+    characters_present:
+      - "stranger"
+    atmosphere: "breath"
+    next_scene: "SC003"
+  scene_2:
+    id: "SC002"
+    title: "tab\there"
+    location: "place_2"
+    time: "back\\slash"
+    characters_present: [solomon]
+    next_scene: "END"
+  scene_5:
+    id: "SC003"
+    title: "élan"
+    location: "place_2"
+    time: 0x1F
+    characters_present: ["stranger"]
+    next_scene: "SC004"
+  scene_1:
+    id: "SC004"
+    title: "名前"
+    location: "place_0"
+    time: "élan"
+    characters_present:
+      - "solomon"
+      - "char_0"
+    atmosphere: 2.5
+    next_scene: "SC005"
+  scene_4:
+    id: "SC005"
+    title: "plain"
+    location: "place_0"
+    time: 2.5
+    characters_present: ["solomon", stranger]
+    atmosphere: the hour
+    next_scene: "SC006"
+  scene_8:
+    id: "SC006"
+    title: dawn
+    location: "place_0"
+    time: No
+    characters_present: []
+    atmosphere: No
+    next_scene: "SC007"
+  scene_7:
+    id: "SC007"
+    title: "élan"
+    location: "place_0::a::b"
+    time: on
+    characters_present: ["char_0", "solomon", "stranger"]
+    atmosphere: "say \"logos\""
+    next_scene: "SC008"
+  scene_6:
+    id: "SC008"
+    title: "SC018"
+    location: "place_2::edge"
+    time: +4
+    characters_present: []
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

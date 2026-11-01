@@ -1,0 +1,93 @@
+narrative:
+  id: "n59"
+  title: "back\\slash"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA34"
+    role: "x"
+  char_1:
+    id: "CHA19"
+    role: "x"
+  char_2:
+    id: "CHA3"
+    role: "x"
+  char_3:
+    id: "CHA54"
+    role: "x"
+  char_4:
+    id: "CHA95"
+    role: "x"
+  char_5:
+    id: "CHA21"
+    role: "x"
+  solomon:
+    id: "SOL37"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET009"
+
+objects: {}
+
+scenes:
+  scene_x_0:
+    id: "SC000"
+    title: "SC014"
+    location: "place_0"
+    time: 007
+    characters_present: ["char_4", "char_2", "char_3", "solomon", char_5, char_1, "char_0", "stranger"]
+    atmosphere: "logos & number"
+    next_scene: "SC001"
+  Scene_2_1:
+    id: "SC001"
+    title: "tab\there"
+    location: "place_0::a::b"
+    time: "αβγ"
+    characters_present:
+      - "char_5"
+      - "solomon"
+      - "char_1"
+      - "char_2"
+      - "char_3"
+    atmosphere: 0x1F
+    next_scene: "SC000"
+  prologue_2:
+    id: "SC002"
+    title: "tab\there"
+    location: "nowhere"
+    time: No
+    characters_present:
+      - "char_3"
+      - "char_2"
+      - "char_0"
+      - "char_5"
+      - "char_4"
+    next_scene: "SC003"
+  Scene_2_3:
+    id: "SC003"
+    title: 017
+    location: "nowhere"
+    time: ~
+    characters_present:
+      - "char_1"
+      - "char_5"
+      - "solomon"
+      - "char_3"
+      - "char_2"
+      - "char_4"
+    atmosphere: x-1
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

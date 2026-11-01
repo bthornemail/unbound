@@ -1,0 +1,7 @@
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC000","scene_id":"SC006","t":"0","title":"say \"logos\""}
+{"authority":"advisory","event":"scene_enter","location":"place_0::a::b","next_scene":"SC001","scene_id":"SC000","t":"1","title":"0o17"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC002","scene_id":"SC001","t":"2","title":"7"}
+{"authority":"advisory","event":"scene_enter","location":"place_0::edge","next_scene":"SC003","scene_id":"SC002","t":"3","title":"3.0"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC004","scene_id":"SC003","t":"4","title":"gate"}
+{"authority":"advisory","event":"scene_enter","location":"place_0::gate_position","next_scene":"SC005","scene_id":"SC004","t":"5","title":"True"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC006","scene_id":"SC005","t":"6","title":"-3"}

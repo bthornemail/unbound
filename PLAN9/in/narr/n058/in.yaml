@@ -1,0 +1,54 @@
+narrative:
+  id: "n56"
+  title: "say \"logos\""
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA4"
+    role: "x"
+  char_1:
+    id: "CHA97"
+    role: "x"
+  char_2:
+    id: "CHA3"
+    role: "x"
+  char_3:
+    id: "CHA54"
+    role: "x"
+  char_4:
+    id: "CHA48"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET009"
+  place_1:
+    id: "SET005"
+  place_2:
+    name: "no id"
+
+objects:
+  object_0:
+    id: "OBJ00"
+
+scenes:
+  scene_1:
+    id: "SC000"
+    title: "SC019"
+    location: "place_2::a::b"
+    time: "back\\slash"
+    characters_present: []
+    atmosphere: x-1
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

@@ -1,0 +1,56 @@
+narrative:
+  id: "n48"
+  title: true
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA34"
+    role: "x"
+  char_1:
+    id: "CHA8"
+    role: "x"
+  char_2:
+    id: "CHA41"
+    role: "x"
+  char_3:
+    id: "CHA99"
+    role: "x"
+  char_4:
+    id: "CHA15"
+    role: "x"
+  solomon:
+    id: 2.5
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET004"
+  place_1:
+    id: "SET002"
+  place_2:
+    name: "no id"
+  place_3:
+    name: "no id"
+
+objects: {}
+
+scenes:
+  scene_1:
+    id: "SC000"
+    title: true
+    location: "place_1"
+    time: 0.1
+    characters_present: ["char_3", char_1, char_4, "solomon", char_2, "char_0"]
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

@@ -1,0 +1,8 @@
+{"authority":"advisory","event":"scene_enter","location":"plain_of_babel::gate_position","next_scene":"SC002","scene_id":"SC001","t":"0","title":"The Call at the City Gate"}
+{"authority":"advisory","event":"scene_enter","location":"plain_of_babel::speaking_stones","next_scene":"SC003","scene_id":"SC002","t":"1","title":"The Flood Memory Debate"}
+{"authority":"advisory","event":"scene_enter","location":"plain_of_babel::tower_foundation","next_scene":"SC004","scene_id":"SC003","t":"2","title":"Tower Analysis at Ruins"}
+{"authority":"advisory","event":"scene_enter","location":"world_of_number","next_scene":"SC005","scene_id":"SC004","t":"3","title":"The Beast's Emergence"}
+{"authority":"advisory","event":"scene_enter","location":"breath_space_yhwh","next_scene":"SC006","scene_id":"SC005","t":"4","title":"Canticle of Reconciliation"}
+{"authority":"advisory","event":"scene_enter","location":"spherical_cosmos","next_scene":"SC007","scene_id":"SC006","t":"5","title":"Humanity's Answer"}
+{"authority":"advisory","event":"scene_enter","location":"plain_of_babel::speaking_stones","next_scene":"SC008","scene_id":"SC007","t":"6","title":"The Departure"}
+{"authority":"advisory","event":"scene_enter","location":"plain_of_babel::gate_position","next_scene":"SC001","scene_id":"SC008","t":"7","title":"Revelation as Unveiling"}

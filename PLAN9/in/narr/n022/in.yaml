@@ -1,0 +1,80 @@
+narrative:
+  id: true
+  title: 1_000
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA20"
+    role: "x"
+  char_1:
+    id: "CHA36"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET004"
+  place_1:
+    id: "SET002"
+  place_2:
+    name: "no id"
+
+objects:
+  object_0:
+    id: "OBJ00"
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: x-1
+    location: "place_0::gate_position"
+    time: +4
+    characters_present: ["char_1", "char_0", stranger]
+    atmosphere: 0o17
+    next_scene: "END"
+  scene_1:
+    id: "SC001"
+    title: "名前"
+    location: "nowhere"
+    time: 7
+    characters_present:
+      - "char_0"
+      - "char_1"
+    atmosphere: "back\\slash"
+    next_scene: "SC002"
+  scene_3:
+    id: "SC002"
+    title: "Canticle of Reconciliation"
+    location: "place_2::a::b"
+    time: "say \"logos\""
+    characters_present: ["char_0"]
+    atmosphere: true
+    next_scene: "SC003"
+  scene_4:
+    id: "SC003"
+    title: true
+    location: "place_2"
+    time: "back\\slash"
+    characters_present:
+      - "stranger"
+    atmosphere: dawn
+    next_scene: "SC000"
+  scene_5:
+    id: "SC004"
+    title: ~
+    location: "place_0"
+    time: dawn
+    characters_present: [char_1, "char_0"]
+    atmosphere: ~
+    next_scene: "SC001"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

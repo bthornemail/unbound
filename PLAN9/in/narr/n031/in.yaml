@@ -1,0 +1,76 @@
+narrative:
+  id: "n29"
+  title: null
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA11"
+    role: "x"
+  char_1:
+    id: "CHA57"
+    role: "x"
+  char_2:
+    id: "CHA90"
+    role: "x"
+  char_3:
+    id: "CHA43"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET002"
+  place_1:
+    id: "SET006"
+
+objects:
+  object_0:
+    id: "OBJ00"
+
+scenes:
+  scene_3:
+    id: "SC000"
+    title: "back\\slash"
+    location: "place_0::a::b"
+    time: "名前"
+    characters_present:
+      - "char_2"
+    atmosphere: "Revelation as Unveiling"
+    next_scene: "SC001"
+  scene_1:
+    id: "SC001"
+    title: "tab\there"
+    location: "place_1"
+    time: -3
+    characters_present:
+      - "char_3"
+    atmosphere: "名前"
+    next_scene: "SC003"
+  scene_2:
+    id: "SC002"
+    title: "名前"
+    location: "nowhere::gate_position"
+    time: 017
+    characters_present:
+      - "char_2"
+    atmosphere: 2.5
+    next_scene: "SC003"
+  scene_4:
+    id: "SC003"
+    title: +4
+    location: "place_0"
+    time: dawn
+    characters_present: []
+    atmosphere: 007
+    next_scene: "SC001"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

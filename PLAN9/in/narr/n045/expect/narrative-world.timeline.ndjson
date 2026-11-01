@@ -1,0 +1,8 @@
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC007","scene_id":"SC006","t":"0","title":"SC012"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC000","scene_id":"SC007","t":"1","title":"None"}
+{"authority":"advisory","event":"scene_enter","location":"place_0::a::b","next_scene":"SC001","scene_id":"SC000","t":"2","title":"3.0"}
+{"authority":"advisory","event":"scene_enter","location":"place_3::gate_position","next_scene":"SC002","scene_id":"SC001","t":"3","title":"the hour"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC003","scene_id":"SC002","t":"4","title":"名前"}
+{"authority":"advisory","event":"scene_enter","location":"place_2","next_scene":"SC004","scene_id":"SC003","t":"5","title":"plain"}
+{"authority":"advisory","event":"scene_enter","location":"place_2::gate_position","next_scene":"SC005","scene_id":"SC004","t":"6","title":"False"}
+{"authority":"advisory","event":"scene_enter","location":"place_0","next_scene":"SC006","scene_id":"SC005","t":"7","title":"élan"}

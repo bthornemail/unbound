@@ -1,0 +1,77 @@
+narrative:
+  id: "n6"
+  title: 7
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: 2.5
+    role: "x"
+  char_1:
+    id: "CHA63"
+    role: "x"
+  char_2:
+    id: "CHA58"
+    role: "x"
+  char_3:
+    id: "CHA78"
+    role: "x"
+  char_4:
+    id: 2.5
+    role: "x"
+  solomon:
+    id: yes
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET003"
+  place_1:
+    id: "SET007"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: 7
+    location: "nowhere::gate_position"
+    time: "breath"
+    characters_present: ["stranger"]
+    atmosphere: "αβγ"
+    next_scene: "SC001"
+  scene_1:
+    id: "SC001"
+    title: "SC004"
+    location: "place_0::edge"
+    time: "say \"logos\""
+    characters_present:
+      - "char_2"
+      - "solomon"
+    atmosphere: 12.125
+    next_scene: "SC002"
+  scene_3:
+    id: "SC002"
+    title: "élan"
+    location: "place_0::edge"
+    time: "Canticle of Reconciliation"
+    characters_present:
+      - "char_0"
+      - "solomon"
+      - "char_1"
+      - "char_3"
+      - "char_2"
+      - "char_4"
+      - "stranger"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

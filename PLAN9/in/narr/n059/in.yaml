@@ -1,0 +1,91 @@
+narrative:
+  id: "n57"
+  title: "Revelation as Unveiling"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: 7
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET002"
+
+objects:
+  object_0:
+    id: "OBJ00"
+  object_1:
+    id: "OBJ01"
+  object_2:
+    id: "OBJ02"
+
+scenes:
+  scene_7:
+    id: "SC000"
+    title: dawn
+    location: "place_0::gate_position"
+    time: "αβγ"
+    characters_present:
+      - "char_0"
+      - "stranger"
+    atmosphere: "名前"
+    next_scene: "SC001"
+  scene_3:
+    id: "SC001"
+    title: "Canticle of Reconciliation"
+    location: "nowhere::edge"
+    time: true
+    characters_present: ["char_0"]
+    atmosphere: No
+    next_scene: "SC002"
+  scene_6:
+    id: "SC002"
+    title: x-1
+    location: "nowhere::gate_position"
+    time: 017
+    characters_present: []
+    atmosphere: "élan"
+    next_scene: "SC003"
+  scene_4:
+    id: "SC003"
+    title: 12.125
+    location: "nowhere"
+    time: ~
+    characters_present: []
+    next_scene: "SC004"
+  scene_5:
+    id: "SC004"
+    title: "breath"
+    location: "place_0"
+    time: "名前"
+    characters_present: []
+    atmosphere: "élan"
+    next_scene: "SC005"
+  scene_2:
+    id: "SC005"
+    title: 007
+    location: "nowhere::a::b"
+    time: "名前"
+    characters_present: []
+    atmosphere: true
+    next_scene: "SC006"
+  scene_1:
+    id: "SC006"
+    title: "Canticle of Reconciliation"
+    location: "nowhere::gate_position"
+    time: "tab\there"
+    characters_present: []
+    atmosphere: "Canticle of Reconciliation"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

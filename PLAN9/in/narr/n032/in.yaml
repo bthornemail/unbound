@@ -1,0 +1,59 @@
+narrative:
+  id: +4
+  title: "back\\slash"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA1"
+    role: "x"
+  char_1:
+    id: "CHA90"
+    role: "x"
+  char_2:
+    id: "CHA37"
+    role: "x"
+  char_3:
+    id: yes
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET004"
+  place_1:
+    name: "no id"
+  place_2:
+    name: "no id"
+  place_3:
+    id: "SET005"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: "breath"
+    location: "place_1::gate_position"
+    time: "tab\there"
+    characters_present: [char_0, char_3]
+    atmosphere: "SC003"
+    next_scene: "SC001"
+  scene_1:
+    id: "SC001"
+    title: dawn
+    location: "place_0::a::b"
+    time: "Canticle of Reconciliation"
+    characters_present: ["char_1"]
+    atmosphere: the hour
+    next_scene: "SC999"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

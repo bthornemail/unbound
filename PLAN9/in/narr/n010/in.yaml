@@ -1,0 +1,100 @@
+narrative:
+  id: "n8"
+  title: "back\\slash"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA59"
+    role: "x"
+  char_1:
+    id: yes
+    role: "x"
+  char_2:
+    id: "CHA30"
+    role: "x"
+  char_3:
+    id: "CHA32"
+    role: "x"
+  char_4:
+    id: 2.5
+    role: "x"
+  solomon:
+    id: "SOL5"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET003"
+  place_1:
+    id: "SET004"
+
+objects: {}
+
+scenes:
+  scene_5:
+    id: "SC000"
+    title: 12.125
+    location: "place_0"
+    time: 1_000
+    characters_present: ["solomon", "char_3"]
+    next_scene: "SC001"
+  scene_3:
+    id: "SC001"
+    title: "élan"
+    location: "place_0"
+    time: 007
+    characters_present: ["solomon", "char_3", "stranger"]
+    atmosphere: "l'ordre"
+    next_scene: "SC002"
+  scene_2:
+    id: "SC002"
+    title: "say \"logos\""
+    location: "place_0::a::b"
+    time: "SC020"
+    characters_present: ["solomon"]
+    atmosphere: dawn
+    next_scene: "SC003"
+  scene_4:
+    id: "SC003"
+    title: -3
+    location: "nowhere"
+    time: "名前"
+    characters_present:
+      - "char_3"
+      - "char_1"
+      - "stranger"
+    atmosphere: False
+    next_scene: "SC004"
+  scene_6:
+    id: "SC004"
+    title: "l'ordre"
+    location: "place_1::a::b"
+    time: "gate"
+    characters_present:
+      - "char_3"
+      - "char_1"
+      - "char_2"
+      - "char_4"
+      - "stranger"
+    atmosphere: 1_000
+    next_scene: "SC001"
+  scene_1:
+    id: "SC005"
+    title: "plain"
+    location: "nowhere"
+    time: -0.75
+    characters_present: [solomon, "char_2"]
+    atmosphere: "back\\slash"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

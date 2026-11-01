@@ -1,0 +1,2 @@
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC006","scene_id":"SC005","t":"0","title":"SC007"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere::a::b","next_scene":"SC005","scene_id":"SC006","t":"1","title":"αβγ"}

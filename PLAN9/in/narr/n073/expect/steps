@@ -1,0 +1,2 @@
+emit 0
+validate 1 ERROR: timeline literal mismatch

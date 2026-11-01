@@ -1,0 +1,74 @@
+narrative:
+  id: "n38"
+  title: ~
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA87"
+    role: "x"
+  char_1:
+    id: 7
+    role: "x"
+  char_2:
+    id: "CHA27"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET002"
+
+objects: {}
+
+scenes:
+  scene_03:
+    id: "SC000"
+    title: true
+    location: "place_0"
+    time: "plain"
+    characters_present:
+      - "char_0"
+      - "char_2"
+      - "stranger"
+    atmosphere: 2.5
+    next_scene: "SC001"
+  scene_02:
+    id: "SC001"
+    title: "élan"
+    location: "place_0"
+    time: dawn
+    characters_present:
+      - "char_2"
+      - "char_1"
+      - "stranger"
+    atmosphere: 0x1F
+    next_scene: "SC002"
+  scene_00:
+    id: "SC002"
+    title: "名前"
+    location: "place_0::gate_position"
+    time: ~
+    characters_present: [stranger]
+    atmosphere: "名前"
+    next_scene: "SC003"
+  scene_01:
+    id: "SC003"
+    title: "logos & number"
+    location: "place_0"
+    time: 0x1F
+    characters_present:
+      - "char_2"
+      - "char_0"
+    atmosphere: "say \"logos\""
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

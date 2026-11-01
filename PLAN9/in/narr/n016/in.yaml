@@ -1,0 +1,73 @@
+narrative:
+  id: "n14"
+  title: 2.5
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: 7
+    role: "x"
+  char_1:
+    id: 7
+    role: "x"
+  char_2:
+    id: "CHA89"
+    role: "x"
+  char_3:
+    id: "CHA39"
+    role: "x"
+  char_4:
+    id: "CHA6"
+    role: "x"
+  solomon:
+    id: 0x10
+    role: "x"
+
+settings:
+  place_0:
+    name: "no id"
+  place_1:
+    id: "SET004"
+  place_2:
+    id: "SET003"
+  place_3:
+    name: "no id"
+
+objects: {}
+
+scenes:
+  act_1:
+    id: "SC000"
+    title: "SC011"
+    location: "place_0::gate_position"
+    time: "Revelation as Unveiling"
+    characters_present: ["char_1", "char_0", char_2, "char_4"]
+    atmosphere: "SC008"
+    next_scene: "SC001"
+  prologue_2:
+    id: "SC001"
+    title: "back\\slash"
+    location: "nowhere"
+    time: "SC003"
+    characters_present: ["char_1", solomon]
+    atmosphere: "breath"
+    next_scene: "SC002"
+  scene_x_0:
+    id: "SC002"
+    title: ~
+    location: "nowhere::gate_position"
+    time: OFF
+    characters_present: [char_4, "char_2", char_3, char_0, solomon, "stranger"]
+    atmosphere: the hour
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

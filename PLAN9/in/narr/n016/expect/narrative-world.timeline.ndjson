@@ -1,0 +1,3 @@
+{"authority":"advisory","event":"scene_enter","location":"place_0::gate_position","next_scene":"SC001","scene_id":"SC000","t":"0","title":"SC011"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC002","scene_id":"SC001","t":"1","title":"back\\slash"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere::gate_position","next_scene":"SC000","scene_id":"SC002","t":"2","title":"None"}

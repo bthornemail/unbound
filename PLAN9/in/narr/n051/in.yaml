@@ -1,0 +1,67 @@
+narrative:
+  id: "n49"
+  title: "αβγ"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA85"
+    role: "x"
+  char_1:
+    id: "CHA27"
+    role: "x"
+  char_2:
+    id: "CHA75"
+    role: "x"
+  char_3:
+    id: 0x10
+    role: "x"
+  char_4:
+    id: "CHA62"
+    role: "x"
+  char_5:
+    id: "CHA66"
+    role: "x"
+  solomon:
+    id: "SOL65"
+    role: "x"
+
+settings:
+  place_0:
+    name: "no id"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: "say \"logos\""
+    location: "nowhere::gate_position"
+    time: No
+    characters_present:
+      - "char_2"
+      - "solomon"
+      - "char_3"
+      - "char_0"
+    atmosphere: False
+    next_scene: "SC001"
+  scene_1:
+    id: "SC001"
+    title: No
+    location: "nowhere::gate_position"
+    time: 017
+    characters_present:
+      - "char_3"
+      - "char_1"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

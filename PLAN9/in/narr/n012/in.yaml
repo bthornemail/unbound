@@ -1,0 +1,139 @@
+narrative:
+  id: dawn
+  title: "Revelation as Unveiling"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA83"
+    role: "x"
+  char_1:
+    id: "CHA87"
+    role: "x"
+  char_2:
+    id: "CHA59"
+    role: "x"
+  char_3:
+    id: 0x10
+    role: "x"
+  char_4:
+    id: "CHA11"
+    role: "x"
+  char_5:
+    id: "CHA21"
+    role: "x"
+  solomon:
+    id: "SOL75"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET006"
+  place_1:
+    name: "no id"
+
+objects: {}
+
+scenes:
+  scene_02:
+    id: "SC000"
+    title: 017
+    location: "place_1"
+    time: "gate"
+    characters_present: ["char_1", "stranger"]
+    next_scene: "SC001"
+  scene_08:
+    id: "SC001"
+    title: "tab\there"
+    location: "nowhere::gate_position"
+    time: yes
+    characters_present: ["char_5", "char_0", "solomon", "char_2", "char_3", "char_4", char_1]
+    atmosphere: x-1
+    next_scene: "SC002"
+  scene_07:
+    id: "SC002"
+    title: 0o17
+    location: "nowhere"
+    time: 7
+    characters_present: ["char_0"]
+    atmosphere: ~
+    next_scene: "SC000"
+  scene_05:
+    id: "SC003"
+    title: "élan"
+    location: "place_1"
+    time: 3.0
+    characters_present:
+      - "char_4"
+      - "char_2"
+      - "char_1"
+      - "solomon"
+      - "char_0"
+      - "char_5"
+      - "char_3"
+    atmosphere: true
+    next_scene: "SC004"
+  scene_01:
+    id: "SC004"
+    title: "Canticle of Reconciliation"
+    location: "place_1"
+    time: "back\\slash"
+    characters_present: ["solomon"]
+    atmosphere: 1_000
+    next_scene: "SC005"
+  scene_06:
+    id: "SC005"
+    title: "back\\slash"
+    location: "place_1"
+    time: 017
+    characters_present:
+      - "solomon"
+      - "char_2"
+      - "char_5"
+      - "char_1"
+      - "char_3"
+      - "char_0"
+      - "char_4"
+    atmosphere: the hour
+    next_scene: "SC006"
+  scene_03:
+    id: "SC006"
+    title: "gate"
+    location: "place_0::gate_position"
+    time: null
+    characters_present: [char_1, "char_4", "solomon"]
+    atmosphere: "l'ordre"
+    next_scene: "SC001"
+  scene_00:
+    id: "SC007"
+    title: "back\\slash"
+    location: "nowhere"
+    time: -0.75
+    characters_present:
+      - "stranger"
+    atmosphere: 0.1
+    next_scene: "SC008"
+  scene_04:
+    id: "SC008"
+    title: the hour
+    location: "place_0::a::b"
+    time: "say \"logos\""
+    characters_present:
+      - "char_1"
+      - "char_2"
+      - "char_5"
+      - "char_3"
+      - "stranger"
+    atmosphere: -0.75
+    next_scene: "SC001"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

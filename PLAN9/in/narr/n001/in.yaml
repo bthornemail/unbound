@@ -1,0 +1,57 @@
+narrative:
+  id: "post_babel_dialogues"
+  title: "The Post-Babel Dialogues"
+  version: "2.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  solomon:
+    id: "SOL001"
+  solon:
+    id: "SOL002"
+  asabiyyah:
+    id: "ASA001"
+  metatron_enoch:
+    id: "MET001"
+
+settings:
+  plain_of_babel:
+    id: "SET001"
+  breath_space_yhwh:
+    id: "SET004"
+
+objects:
+  mark_of_the_beast:
+    id: "OBJ001"
+
+scenes:
+  scene_1:
+    id: "SC001"
+    title: "The Call at the City Gate"
+    location: "plain_of_babel::gate_position"
+    time: "after_logos_reclaimed"
+    characters_present: ["solomon", "solon", "asabiyyah"]
+    atmosphere: "silence_of_recognition"
+    next_scene: "SC002"
+  scene_2:
+    id: "SC002"
+    title: "Canticle of Reconciliation"
+    location: "breath_space_yhwh"
+    time: "timeless_dialogue"
+    characters_present: ["solomon", "solon"]
+    atmosphere: "redemptive_intimacy"
+    next_scene: "SC003"
+  scene_3:
+    id: "SC003"
+    title: "Revelation as Unveiling"
+    location: "plain_of_babel::gate_position"
+    time: "eternal_present"
+    characters_present: ["metatron_enoch"]
+    atmosphere: "open_ended_presence"
+    next_scene: "SC001"
+
+transitions: {}
+relationships: {}
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

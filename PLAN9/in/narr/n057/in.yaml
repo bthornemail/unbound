@@ -1,0 +1,42 @@
+narrative:
+  id: -3
+  title: "αβγ"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA34"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET002"
+  place_1:
+    id: "SET009"
+  place_2:
+    id: "SET005"
+  place_3:
+    id: "SET001"
+
+objects: {}
+
+scenes:
+  scene_1:
+    id: "SC000"
+    title: "logos & number"
+    location: "place_2"
+    time: 007
+    characters_present: ["char_0"]
+    atmosphere: 007
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

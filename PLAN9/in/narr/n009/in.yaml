@@ -1,0 +1,99 @@
+narrative:
+  id: "n7"
+  title: "say \"logos\""
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA6"
+    role: "x"
+  char_1:
+    id: "CHA85"
+    role: "x"
+  solomon:
+    id: "SOL7"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET002"
+
+objects:
+  object_0:
+    id: "OBJ00"
+  object_1:
+    id: "OBJ01"
+  object_2:
+    id: "OBJ02"
+
+scenes:
+  scene_3:
+    id: "SC000"
+    title: 0o17
+    location: "place_0::a::b"
+    time: "back\\slash"
+    characters_present:
+      - "char_0"
+      - "stranger"
+    atmosphere: "plain"
+    next_scene: "SC001"
+  scene_6:
+    id: "SC001"
+    title: 7
+    location: "nowhere"
+    time: 0x1F
+    characters_present: ["char_0", "char_1", solomon]
+    atmosphere: "breath"
+    next_scene: "SC002"
+  scene_7:
+    id: "SC002"
+    title: 3.0
+    location: "place_0::edge"
+    time: the hour
+    characters_present:
+      - "solomon"
+      - "stranger"
+    atmosphere: "gate"
+    next_scene: "SC003"
+  scene_2:
+    id: "SC003"
+    title: "gate"
+    location: "nowhere"
+    time: "gate"
+    characters_present: [char_0, "solomon", char_1]
+    atmosphere: 12.125
+    next_scene: "SC004"
+  scene_5:
+    id: "SC004"
+    title: yes
+    location: "place_0::gate_position"
+    time: "SC003"
+    characters_present: [solomon, char_0, "char_1", "stranger"]
+    atmosphere: "tab\there"
+    next_scene: "SC005"
+  scene_4:
+    id: "SC005"
+    title: -3
+    location: "nowhere"
+    time: 0.1
+    characters_present: ["char_0", "stranger"]
+    atmosphere: "breath"
+    next_scene: "SC006"
+  scene_1:
+    id: "SC006"
+    title: "say \"logos\""
+    location: "nowhere"
+    time: "SC002"
+    characters_present: ["char_1", "char_0", "solomon"]
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

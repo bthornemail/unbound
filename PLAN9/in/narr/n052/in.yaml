@@ -1,0 +1,54 @@
+narrative:
+  id: 2.5
+  title: 0.1
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA49"
+    role: "x"
+  char_1:
+    id: yes
+    role: "x"
+  char_2:
+    id: 2.5
+    role: "x"
+  char_3:
+    id: 7
+    role: "x"
+  solomon:
+    id: yes
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET008"
+  place_1:
+    id: "SET003"
+
+objects: {}
+
+scenes:
+  act_0:
+    id: "SC000"
+    title: "αβγ"
+    location: "place_1"
+    time: dawn
+    characters_present:
+      - "char_3"
+      - "char_1"
+      - "char_2"
+      - "char_0"
+    atmosphere: False
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

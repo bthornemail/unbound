@@ -1,0 +1,106 @@
+narrative:
+  id: "n32"
+  title: "Canticle of Reconciliation"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA43"
+    role: "x"
+  char_1:
+    id: "CHA27"
+    role: "x"
+  char_2:
+    id: "CHA82"
+    role: "x"
+  char_3:
+    id: "CHA71"
+    role: "x"
+  char_4:
+    id: "CHA98"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET003"
+
+objects:
+  object_0:
+    id: "OBJ00"
+  object_1:
+    id: "OBJ01"
+
+scenes:
+  Scene_2_4:
+    id: "SC000"
+    title: "logos & number"
+    location: "nowhere"
+    time: 7
+    characters_present: []
+    atmosphere: "logos & number"
+    next_scene: "SC001"
+  Scene_2_5:
+    id: "SC001"
+    title: 12.125
+    location: "nowhere"
+    time: 1_000
+    characters_present:
+      - "char_1"
+      - "char_4"
+      - "stranger"
+    atmosphere: on
+    next_scene: "SC002"
+  scene_x_0:
+    id: "SC002"
+    title: "名前"
+    location: "nowhere::gate_position"
+    time: 2.5
+    characters_present:
+      - "char_2"
+      - "char_4"
+      - "char_0"
+    atmosphere: "logos & number"
+    next_scene: "SC003"
+  prologue_6:
+    id: "SC003"
+    title: ~
+    location: "nowhere"
+    time: 0.1
+    characters_present: ["char_3", "char_1"]
+    atmosphere: False
+    next_scene: "SC004"
+  scene_x_3:
+    id: "SC004"
+    title: OFF
+    location: "place_0"
+    time: False
+    characters_present: [char_4, "char_0"]
+    atmosphere: "Revelation as Unveiling"
+    next_scene: "SC005"
+  prologue_2:
+    id: "SC005"
+    title: dawn
+    location: "place_0::edge"
+    time: the hour
+    characters_present: ["char_3", stranger]
+    atmosphere: null
+    next_scene: "SC006"
+  scene_x_1:
+    id: "SC006"
+    title: ~
+    location: "place_0"
+    time: "tab\there"
+    characters_present: ["char_0", "char_4", "char_1"]
+    atmosphere: "αβγ"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

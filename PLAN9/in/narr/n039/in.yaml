@@ -1,0 +1,61 @@
+narrative:
+  id: "n37"
+  title: ~
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA51"
+    role: "x"
+  char_1:
+    id: "CHA77"
+    role: "x"
+  char_2:
+    id: "CHA6"
+    role: "x"
+  char_3:
+    id: "CHA8"
+    role: "x"
+  char_4:
+    id: yes
+    role: "x"
+  solomon:
+    id: "SOL66"
+    role: "x"
+
+settings:
+  place_0:
+    name: "no id"
+  place_1:
+    id: "SET006"
+  place_2:
+    name: "no id"
+  place_3:
+    id: "SET002"
+
+objects: {}
+
+scenes:
+  scene_1:
+    id: "SC000"
+    title: "élan"
+    location: "nowhere"
+    time: "logos & number"
+    characters_present:
+      - "char_2"
+      - "char_4"
+      - "char_3"
+      - "char_1"
+    atmosphere: +4
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

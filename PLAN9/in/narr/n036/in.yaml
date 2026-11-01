@@ -1,0 +1,43 @@
+narrative:
+  id: "n34"
+  title: "tab\there"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: 0x10
+    role: "x"
+  char_1:
+    id: 7
+    role: "x"
+  char_2:
+    id: "CHA89"
+    role: "x"
+  solomon:
+    id: 0x10
+    role: "x"
+
+settings: {}
+
+objects: {}
+
+scenes:
+  scene_1:
+    id: "SC000"
+    title: 1_000
+    location: "nowhere::edge"
+    time: 3.0
+    characters_present: []
+    atmosphere: 7
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

@@ -1,0 +1,76 @@
+narrative:
+  id: "n42"
+  title: the hour
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA9"
+    role: "x"
+  char_1:
+    id: "CHA66"
+    role: "x"
+  char_2:
+    id: "CHA33"
+    role: "x"
+  char_3:
+    id: "CHA97"
+    role: "x"
+  char_4:
+    id: "CHA37"
+    role: "x"
+  solomon:
+    id: "SOL4"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET005"
+  place_1:
+    name: "no id"
+  place_2:
+    id: "SET004"
+  place_3:
+    id: "SET006"
+
+objects:
+  object_0:
+    id: "OBJ00"
+  object_1:
+    id: "OBJ01"
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: "élan"
+    location: "place_2::edge"
+    time: "Revelation as Unveiling"
+    characters_present: ["char_1", "char_3", "char_4", "char_0", "char_2"]
+    next_scene: "SC001"
+  scene_3:
+    id: "SC001"
+    title: 017
+    location: "nowhere::a::b"
+    time: False
+    characters_present: ["char_3"]
+    atmosphere: 017
+    next_scene: "SC002"
+  scene_1:
+    id: "SC002"
+    title: "Canticle of Reconciliation"
+    location: "place_3"
+    time: "plain"
+    characters_present: ["char_2"]
+    atmosphere: 7
+    next_scene: "SC999"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

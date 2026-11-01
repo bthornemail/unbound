@@ -1,0 +1,82 @@
+narrative:
+  id: "n26"
+  title: "名前"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: yes
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET009"
+  place_1:
+    id: "SET002"
+  place_2:
+    id: "SET007"
+
+objects: {}
+
+scenes:
+  scene_3:
+    id: "SC000"
+    title: 12.125
+    location: "nowhere"
+    time: 3.0
+    characters_present:
+      - "char_0"
+    atmosphere: "say \"logos\""
+    next_scene: "SC001"
+  scene_4:
+    id: "SC001"
+    title: the hour
+    location: "nowhere::edge"
+    time: dawn
+    characters_present:
+      - "stranger"
+    atmosphere: "l'ordre"
+    next_scene: "SC002"
+  scene_1:
+    id: "SC002"
+    title: ~
+    location: "nowhere"
+    time: yes
+    characters_present: []
+    atmosphere: x-1
+    next_scene: "SC003"
+  scene_5:
+    id: "SC003"
+    title: 0.1
+    location: "place_1::a::b"
+    time: OFF
+    characters_present: ["char_0", "stranger"]
+    atmosphere: No
+    next_scene: "SC004"
+  scene_2:
+    id: "SC004"
+    title: "Revelation as Unveiling"
+    location: "nowhere::gate_position"
+    time: "αβγ"
+    characters_present: [char_0]
+    atmosphere: 7
+    next_scene: "SC005"
+  scene_6:
+    id: "SC005"
+    title: "say \"logos\""
+    location: "nowhere::gate_position"
+    time: 0.1
+    characters_present: [char_0]
+    atmosphere: "plain"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

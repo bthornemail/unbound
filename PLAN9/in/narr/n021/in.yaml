@@ -1,0 +1,93 @@
+narrative:
+  id: "n19"
+  title: 12.125
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: 7
+    role: "x"
+  char_1:
+    id: "CHA81"
+    role: "x"
+  char_2:
+    id: "CHA67"
+    role: "x"
+
+settings:
+  place_0:
+    name: "no id"
+  place_1:
+    id: "SET002"
+  place_2:
+    id: "SET005"
+
+objects:
+  object_0:
+    id: "OBJ00"
+
+scenes:
+  scene_6:
+    id: "SC000"
+    title: "gate"
+    location: "place_2::edge"
+    time: "αβγ"
+    characters_present: ["char_1", "stranger"]
+    atmosphere: "Canticle of Reconciliation"
+    next_scene: "SC001"
+  scene_5:
+    id: "SC001"
+    title: 0.1
+    location: "place_2"
+    time: "breath"
+    characters_present:
+      - "char_2"
+      - "char_1"
+      - "char_0"
+    atmosphere: 1_000
+    next_scene: "SC002"
+  scene_3:
+    id: "SC002"
+    title: 017
+    location: "place_2"
+    time: 0x1F
+    characters_present:
+      - "char_2"
+    atmosphere: +4
+    next_scene: "SC999"
+  scene_4:
+    id: "SC003"
+    title: "breath"
+    location: "place_0"
+    time: "say \"logos\""
+    characters_present: ["char_0", char_2, "char_1"]
+    atmosphere: yes
+    next_scene: "SC004"
+  scene_2:
+    id: "SC004"
+    title: "say \"logos\""
+    location: "place_1::gate_position"
+    time: yes
+    characters_present:
+      - "char_1"
+      - "char_0"
+    next_scene: "SC005"
+  scene_1:
+    id: "SC005"
+    title: "Canticle of Reconciliation"
+    location: "place_0::gate_position"
+    time: 3.0
+    characters_present: ["char_2", "char_1", "stranger"]
+    atmosphere: "Canticle of Reconciliation"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

@@ -1,0 +1,72 @@
+narrative:
+  id: "n47"
+  title: dawn
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA6"
+    role: "x"
+  char_1:
+    id: 0x10
+    role: "x"
+  char_2:
+    id: "CHA34"
+    role: "x"
+  char_3:
+    id: "CHA71"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET006"
+  place_1:
+    id: "SET001"
+  place_2:
+    name: "no id"
+  place_3:
+    id: "SET008"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: +4
+    location: "place_1::gate_position"
+    time: -0.75
+    characters_present:
+      - "char_3"
+      - "char_1"
+      - "char_0"
+      - "stranger"
+    atmosphere: +4
+    next_scene: "SC001"
+  scene_1:
+    id: "SC001"
+    title: 3.0
+    location: "place_2::gate_position"
+    time: 7
+    characters_present: [char_1, "char_3", "char_2", "char_0"]
+    atmosphere: "tab\there"
+    next_scene: "SC001"
+  scene_3:
+    id: "SC002"
+    title: "plain"
+    location: "nowhere"
+    time: true
+    characters_present:
+      - "char_2"
+    atmosphere: "breath"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

@@ -1,0 +1,54 @@
+narrative:
+  id: "n46"
+  title: False
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA5"
+    role: "x"
+  char_1:
+    id: "CHA48"
+    role: "x"
+  char_2:
+    id: "CHA80"
+    role: "x"
+  char_3:
+    id: "CHA61"
+    role: "x"
+  char_4:
+    id: "CHA21"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET002"
+  place_1:
+    id: "SET004"
+  place_2:
+    id: "SET008"
+  place_3:
+    name: "no id"
+
+objects: {}
+
+scenes:
+  scene_1:
+    id: "SC000"
+    title: "gate"
+    location: "place_2::gate_position"
+    time: "αβγ"
+    characters_present: [char_0, "stranger"]
+    atmosphere: yes
+    next_scene: "END"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

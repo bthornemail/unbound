@@ -1,0 +1,4 @@
+{"authority":"advisory","event":"scene_enter","location":"place_0::a::b","next_scene":"SC001","scene_id":"SC000","t":"0","title":"Revelation as Unveiling"}
+{"authority":"advisory","event":"scene_enter","location":"place_2::edge","next_scene":"SC002","scene_id":"SC001","t":"1","title":"True"}
+{"authority":"advisory","event":"scene_enter","location":"place_0","next_scene":"SC003","scene_id":"SC002","t":"2","title":"x-1"}
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC000","scene_id":"SC003","t":"3","title":"1000"}

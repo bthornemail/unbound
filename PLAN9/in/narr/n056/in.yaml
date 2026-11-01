@@ -1,0 +1,81 @@
+narrative:
+  id: "n54"
+  title: dawn
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: 2.5
+    role: "x"
+  solomon:
+    id: "SOL42"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET008"
+
+objects: {}
+
+scenes:
+  scene_5:
+    id: "SC000"
+    title: x-1
+    location: "place_0"
+    time: 0o17
+    characters_present:
+      - "stranger"
+    atmosphere: on
+    next_scene: "SC001"
+  scene_3:
+    id: "SC001"
+    title: "tab\there"
+    location: "place_0"
+    time: False
+    characters_present: ["stranger"]
+    next_scene: "SC002"
+  scene_6:
+    id: "SC002"
+    title: 2.5
+    location: "nowhere"
+    time: 7
+    characters_present: [solomon, char_0]
+    atmosphere: 0x1F
+    next_scene: "SC003"
+  scene_1:
+    id: "SC003"
+    title: "αβγ"
+    location: "place_0"
+    time: yes
+    characters_present:
+      - "char_0"
+      - "solomon"
+    atmosphere: 0.1
+    next_scene: "SC004"
+  scene_4:
+    id: "SC004"
+    title: -3
+    location: "place_0"
+    time: 017
+    characters_present: []
+    atmosphere: "élan"
+    next_scene: "SC005"
+  scene_2:
+    id: "SC005"
+    title: "Revelation as Unveiling"
+    location: "place_0::a::b"
+    time: "breath"
+    characters_present: [stranger]
+    atmosphere: "plain"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

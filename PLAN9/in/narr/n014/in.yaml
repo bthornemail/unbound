@@ -1,0 +1,69 @@
+narrative:
+  id: "n12"
+  title: true
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA24"
+    role: "x"
+  char_1:
+    id: "CHA31"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET008"
+  place_1:
+    id: "SET003"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: 3.0
+    location: "place_1::a::b"
+    time: "αβγ"
+    characters_present:
+      - "char_1"
+      - "char_0"
+    atmosphere: "back\\slash"
+    next_scene: "SC001"
+  scene_3:
+    id: "SC001"
+    title: +4
+    location: "nowhere"
+    time: "Canticle of Reconciliation"
+    characters_present: ["char_0", char_1]
+    atmosphere: "Canticle of Reconciliation"
+    next_scene: "SC002"
+  scene_4:
+    id: "SC002"
+    title: ~
+    location: "place_1::edge"
+    time: "gate"
+    characters_present: []
+    atmosphere: "élan"
+    next_scene: "SC003"
+  scene_1:
+    id: "SC003"
+    title: true
+    location: "nowhere"
+    time: No
+    characters_present:
+      - "char_1"
+      - "char_0"
+    atmosphere: "l'ordre"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

@@ -1,0 +1,99 @@
+narrative:
+  id: "n58"
+  title: "Canticle of Reconciliation"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA73"
+    role: "x"
+  char_1:
+    id: "CHA38"
+    role: "x"
+  char_2:
+    id: "CHA37"
+    role: "x"
+  char_3:
+    id: 2.5
+    role: "x"
+  char_4:
+    id: 2.5
+    role: "x"
+
+settings:
+  place_0:
+    name: "no id"
+  place_1:
+    id: "SET007"
+  place_2:
+    id: "SET008"
+
+objects:
+  object_0:
+    id: "OBJ00"
+
+scenes:
+  scene_1:
+    id: "SC000"
+    title: "logos & number"
+    location: "nowhere"
+    time: "plain"
+    characters_present: ["char_4", "char_2", char_1, "char_0"]
+    atmosphere: 0.1
+    next_scene: "SC003"
+  scene_3:
+    id: "SC001"
+    title: "Canticle of Reconciliation"
+    location: "place_0::gate_position"
+    time: on
+    characters_present: ["char_1", "char_4"]
+    next_scene: "SC005"
+  scene_6:
+    id: "SC002"
+    title: 0x1F
+    location: "place_0"
+    time: "gate"
+    characters_present:
+      - "char_3"
+      - "char_2"
+      - "char_4"
+      - "char_0"
+    atmosphere: "αβγ"
+    next_scene: "SC003"
+  scene_5:
+    id: "SC003"
+    title: "名前"
+    location: "place_0::a::b"
+    time: False
+    characters_present: [char_0]
+    atmosphere: "back\\slash"
+    next_scene: "SC004"
+  scene_2:
+    id: "SC004"
+    title: "élan"
+    location: "place_2::a::b"
+    time: 0x1F
+    characters_present: ["char_1", "char_2", char_0, char_4, stranger]
+    atmosphere: true
+    next_scene: "SC005"
+  scene_4:
+    id: "SC005"
+    title: "Revelation as Unveiling"
+    location: "place_1::edge"
+    time: on
+    characters_present:
+      - "char_1"
+      - "char_4"
+      - "stranger"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

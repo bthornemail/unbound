@@ -1,0 +1,71 @@
+narrative:
+  id: "n53"
+  title: "back\\slash"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA25"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET002"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: "breath"
+    location: "place_0::a::b"
+    time: "plain"
+    characters_present: [char_0]
+    next_scene: "SC001"
+  scene_1:
+    id: "SC001"
+    title: dawn
+    location: "nowhere"
+    time: 3.0
+    characters_present:
+      - "char_0"
+    atmosphere: ~
+    next_scene: "SC002"
+  scene_3:
+    id: "SC002"
+    title: No
+    location: "nowhere"
+    time: "SC014"
+    characters_present: ["char_0"]
+    next_scene: "SC004"
+  scene_5:
+    id: "SC003"
+    title: 007
+    location: "nowhere"
+    time: true
+    characters_present:
+      - "char_0"
+      - "stranger"
+    atmosphere: "αβγ"
+    next_scene: "SC999"
+  scene_4:
+    id: "SC004"
+    title: x-1
+    location: "nowhere"
+    time: 7
+    characters_present:
+      - "char_0"
+      - "stranger"
+    atmosphere: "breath"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

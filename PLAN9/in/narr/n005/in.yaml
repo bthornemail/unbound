@@ -1,0 +1,81 @@
+narrative:
+  id: "n3"
+  title: the hour
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA86"
+    role: "x"
+  char_1:
+    id: "CHA12"
+    role: "x"
+  char_2:
+    id: "CHA96"
+    role: "x"
+  char_3:
+    id: yes
+    role: "x"
+  char_4:
+    id: "CHA38"
+    role: "x"
+  char_5:
+    id: 2.5
+    role: "x"
+  solomon:
+    id: "SOL37"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET001"
+
+objects:
+  object_0:
+    id: "OBJ00"
+  object_1:
+    id: "OBJ01"
+  object_2:
+    id: "OBJ02"
+
+scenes:
+  scene_01:
+    id: "SC000"
+    title: False
+    location: "place_0::a::b"
+    time: "logos & number"
+    characters_present:
+      - "char_0"
+      - "char_2"
+      - "char_3"
+      - "char_5"
+      - "char_4"
+      - "char_1"
+    atmosphere: "back\\slash"
+    next_scene: "SC001"
+  scene_02:
+    id: "SC001"
+    title: 12.125
+    location: "place_0"
+    time: true
+    characters_present:
+      - "char_3"
+    next_scene: "SC002"
+  scene_00:
+    id: "SC002"
+    title: "αβγ"
+    location: "place_0::edge"
+    time: 2.5
+    characters_present: ["char_0", char_1, char_2, char_3, char_4, "char_5"]
+    next_scene: "SC999"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

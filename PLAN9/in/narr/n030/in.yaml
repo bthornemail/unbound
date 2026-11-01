@@ -1,0 +1,124 @@
+narrative:
+  id: "n28"
+  title: 007
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: yes
+    role: "x"
+  char_1:
+    id: "CHA88"
+    role: "x"
+  char_2:
+    id: "CHA10"
+    role: "x"
+  char_3:
+    id: "CHA83"
+    role: "x"
+  char_4:
+    id: "CHA85"
+    role: "x"
+  char_5:
+    id: yes
+    role: "x"
+  solomon:
+    id: "SOL96"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET003"
+  place_1:
+    name: "no id"
+  place_2:
+    name: "no id"
+
+objects: {}
+
+scenes:
+  scene_8:
+    id: "SC000"
+    title: "say \"logos\""
+    location: "place_0::a::b"
+    time: "say \"logos\""
+    characters_present:
+      - "solomon"
+      - "char_1"
+      - "char_4"
+      - "char_0"
+      - "char_5"
+      - "stranger"
+    atmosphere: "l'ordre"
+    next_scene: "SC001"
+  scene_5:
+    id: "SC001"
+    title: +4
+    location: "place_2::gate_position"
+    time: No
+    characters_present: ["char_1", "char_5", "char_4", "char_3", "char_0", solomon, char_2, stranger]
+    next_scene: "SC002"
+  scene_4:
+    id: "SC002"
+    title: "say \"logos\""
+    location: "place_2"
+    time: "logos & number"
+    characters_present: []
+    atmosphere: "l'ordre"
+    next_scene: "SC004"
+  scene_7:
+    id: "SC003"
+    title: -0.75
+    location: "nowhere"
+    time: "plain"
+    characters_present: []
+    next_scene: "SC004"
+  scene_2:
+    id: "SC004"
+    title: "l'ordre"
+    location: "place_2::a::b"
+    time: yes
+    characters_present:
+      - "char_2"
+    atmosphere: +4
+    next_scene: "SC005"
+  scene_3:
+    id: "SC005"
+    title: "logos & number"
+    location: "place_1"
+    time: 7
+    characters_present: ["char_3", char_5, "char_0"]
+    atmosphere: "名前"
+    next_scene: "SC006"
+  scene_6:
+    id: "SC006"
+    title: "plain"
+    location: "place_2"
+    time: true
+    characters_present:
+      - "char_1"
+      - "char_4"
+      - "char_0"
+      - "char_2"
+      - "char_5"
+    atmosphere: "plain"
+    next_scene: "SC007"
+  scene_1:
+    id: "SC007"
+    title: "say \"logos\""
+    location: "nowhere::a::b"
+    time: "tab\there"
+    characters_present: ["char_2", "solomon", "char_4", "char_3", "char_5"]
+    atmosphere: "l'ordre"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

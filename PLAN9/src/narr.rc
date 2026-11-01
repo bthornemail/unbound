@@ -1,0 +1,86 @@
+#!/bin/rc
+# narr.rc - inside Plan 9: Metaverse Kit's narrative world compiler (tools/mv-narrative-world-compile)
+# ported native and literal (znarr.c). Each case of in/narr (written on the host by in/narr/gen.py with
+# the kit's own compiler: the author's full narrative, the kit's sample, narratives drawn in the same
+# YAML, the compiler's refusals) is compiled in a fresh root and must give the tool's exit and message,
+# its line (counts where the tool prints digests), and the four files byte for byte, the digests taken
+# out and the root written ROOT; then validate after a file is changed or removed, the refusal naming
+# the file. The falsifier, znarr -n validate, the files' presence only: every changed output passes.
+# And what the tool's validate lets through: a world retitled, its digests recomputed, is refused here.
+rfork e
+w=/tmp/znarrw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/znarr.c PLAN9/in/narr} || exit tar
+g=$w/unbound/PLAN9/in/narr
+cd $w/unbound/PLAN9/src
+8c znarr.c && 8l -o $w/znarr znarr.8 || exit compile
+Z=$w/znarr
+F=(narrative-world.v0.json narrative-world.asg.json narrative-world.timeline.ndjson narrative-world.manifest.json)
+fail=0
+n=()
+f=()
+ifs='
+'
+fn status1 {
+	# the exit as the tool's: 0, or the number after the program's name
+	if(~ $1 '') echo 0
+	if not echo $1 | sed 's/.*: *//'
+}
+fn same {
+	# same expect-line actual-words: the step's line as the golden has it, words compared
+	ifs=' ' { x=`{echo -n $1} }
+	shift
+	y=$"*
+	test $"x '=' $"y	# test, not ~: a message may hold [ ], which ~ would read as a pattern
+}
+for(c in `{ls -d $g/n*}){
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t
+	cp $c/in.yaml $t/
+	ok=yes
+	@{ cd $t; $Z emit in.yaml out >$t/.out >[2]$t/.err }
+	st=`{status1 $status}
+	ifs=' 
+' { e=`{sed -n '$p' $t/.err | sed 's|'^$t^'|ROOT|g'} }
+	if(! same `{sed 1q $c/expect/steps} emit $st $e) ok=no
+	if(! cmp -s $t/.out $c/expect/emit.stdout) ok=no
+	for(x in $F){
+		if(test -e $c/expect/$x){
+			sed 's|'^$t^'|ROOT|g' $t/out/$x >$t/.f
+			if(! cmp -s $t/.f $c/expect/$x) ok=no
+		}
+	}
+	if(test -e $c/tamper){
+		ifs=' 
+' { tm=`{cat $c/tamper} }	# the newline too, or the last word keeps it
+		if(~ $tm(2) drop) rm $t/out/$tm(1)
+		if not {
+			sed 's|ROOT|'^$t^'|g' $c/$tm(1)^.changed >$t/out/$tm(1)
+			@{ cd $t; $Z -n validate out >/dev/null >[2]/dev/null }
+			if(~ $status '') f=($f x)
+		}
+	}
+	v=`{sed -n 2p $c/expect/steps}
+	if(! ~ $#v 0){
+		@{ cd $t; $Z validate out >$t/.vout >[2]$t/.verr }
+		st=`{status1 $status}
+		ifs=' 
+' { e=`{sed -n '$p' $t/.verr | sed 's|'^$t^'|ROOT|g'} }
+		if(! same $v validate $st $e) ok=no
+	}
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+}
+echo znarr gives $#n cases as the narrative world compiler of the kit does
+if(~ $#f 4) echo ok the falsifier znarr -n validate passes all $#f changed outputs
+if not { echo FAIL falsifier $#f; fail=1 }
+t=$w/run
+rm -rf $t
+mkdir -p $t
+cp $g/n001/in.yaml $t/
+@{ cd $t; $Z emit in.yaml out >/dev/null; sed 's/"title":"The Post-Babel Dialogues"/"title":"A Different Story"/' out/narrative-world.v0.json >out/w; mv out/w out/narrative-world.v0.json; $Z validate out >$t/.vout >[2]$t/.verr }
+if(grep -s 'world literal mismatch' $t/.verr) echo ok a world retitled is refused: world literal mismatch
+if not { echo FAIL retitled; fail=1 }
+if(~ $fail 0) echo 'narr.rc: every answer as expected'

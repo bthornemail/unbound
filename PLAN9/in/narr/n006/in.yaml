@@ -1,0 +1,116 @@
+narrative:
+  id: "n4"
+  title: "back\\slash"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA30"
+    role: "x"
+  char_1:
+    id: "CHA10"
+    role: "x"
+  char_2:
+    id: "CHA89"
+    role: "x"
+  char_3:
+    id: "CHA26"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET004"
+  place_1:
+    id: "SET004"
+  place_2:
+    id: "SET005"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: "plain"
+    location: "place_0::a::b"
+    time: +4
+    characters_present:
+      - "char_3"
+    atmosphere: "plain"
+    next_scene: "SC002"
+  scene_5:
+    id: "SC001"
+    title: the hour
+    location: "nowhere"
+    time: ~
+    characters_present: ["char_3", "char_2"]
+    next_scene: "SC002"
+  scene_3:
+    id: "SC002"
+    title: "名前"
+    location: "place_2"
+    time: "l'ordre"
+    characters_present: ["char_2", "char_0"]
+    atmosphere: 1_000
+    next_scene: "SC003"
+  scene_6:
+    id: "SC003"
+    title: "SC005"
+    location: "place_0::gate_position"
+    time: -0.75
+    characters_present:
+      - "char_0"
+      - "stranger"
+    atmosphere: true
+    next_scene: "SC002"
+  scene_8:
+    id: "SC004"
+    title: true
+    location: "nowhere"
+    time: "Revelation as Unveiling"
+    characters_present: []
+    atmosphere: 7
+    next_scene: "SC005"
+  scene_4:
+    id: "SC005"
+    title: "plain"
+    location: "place_0::gate_position"
+    time: dawn
+    characters_present:
+      - "char_1"
+      - "stranger"
+    next_scene: "SC006"
+  scene_9:
+    id: "SC006"
+    title: "Canticle of Reconciliation"
+    location: "place_2::a::b"
+    time: 1_000
+    characters_present: [char_3, char_2, char_0, "stranger"]
+    atmosphere: "tab\there"
+    next_scene: "SC007"
+  scene_7:
+    id: "SC007"
+    title: "gate"
+    location: "nowhere"
+    time: 0.1
+    characters_present: ["char_2", char_0, char_1, "char_3"]
+    atmosphere: -3
+    next_scene: "SC008"
+  scene_1:
+    id: "SC008"
+    title: "Canticle of Reconciliation"
+    location: "place_1"
+    time: "tab\there"
+    characters_present: ["char_1", char_2]
+    atmosphere: 2.5
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

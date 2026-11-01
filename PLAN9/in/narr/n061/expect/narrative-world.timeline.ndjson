@@ -1,0 +1,2 @@
+{"authority":"advisory","event":"scene_enter","location":"place_0::a::b","next_scene":"SC000","scene_id":"SC001","t":"0","title":"tab\there"}
+{"authority":"advisory","event":"scene_enter","location":"place_0","next_scene":"SC001","scene_id":"SC000","t":"1","title":"SC014"}

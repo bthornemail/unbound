@@ -1,0 +1,4 @@
+{"authority":"advisory","event":"scene_enter","location":"nowhere","next_scene":"SC003","scene_id":"SC000","t":"0","title":"logos & number"}
+{"authority":"advisory","event":"scene_enter","location":"place_0::a::b","next_scene":"SC004","scene_id":"SC003","t":"1","title":"名前"}
+{"authority":"advisory","event":"scene_enter","location":"place_2::a::b","next_scene":"SC005","scene_id":"SC004","t":"2","title":"élan"}
+{"authority":"advisory","event":"scene_enter","location":"place_1::edge","next_scene":"SC000","scene_id":"SC005","t":"3","title":"Revelation as Unveiling"}

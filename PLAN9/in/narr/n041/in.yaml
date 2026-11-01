@@ -1,0 +1,61 @@
+narrative:
+  id: "n39"
+  title: "back\\slash"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA95"
+    role: "x"
+  char_1:
+    id: "CHA40"
+    role: "x"
+  solomon:
+    id: "SOL15"
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET008"
+  place_1:
+    id: "SET002"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: 0.1
+    location: "nowhere"
+    time: "back\\slash"
+    characters_present:
+      - "char_1"
+      - "solomon"
+    atmosphere: 2.5
+    next_scene: "SC001"
+  scene_3:
+    id: "SC001"
+    title: "breath"
+    location: "place_1"
+    time: "plain"
+    characters_present: ["char_1"]
+    next_scene: "SC002"
+  scene_1:
+    id: "SC002"
+    title: No
+    location: "place_1::a::b"
+    time: 2.5
+    characters_present: ["char_0", solomon, stranger]
+    atmosphere: "breath"
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}

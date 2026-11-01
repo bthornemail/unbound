@@ -1,0 +1,65 @@
+narrative:
+  id: "n51"
+  title: "logos & number"
+  version: "1.0"
+  timestamp: "2024-01-01T00:00:00Z"
+
+characters:
+  char_0:
+    id: "CHA70"
+    role: "x"
+  char_1:
+    id: 0x10
+    role: "x"
+  char_2:
+    id: 2.5
+    role: "x"
+  char_3:
+    id: "CHA95"
+    role: "x"
+  char_4:
+    id: "CHA64"
+    role: "x"
+  solomon:
+    id: 0x10
+    role: "x"
+
+settings:
+  place_0:
+    id: "SET001"
+  place_1:
+    id: "SET007"
+  place_2:
+    id: "SET008"
+  place_3:
+    id: "SET004"
+
+objects: {}
+
+scenes:
+  scene_2:
+    id: "SC000"
+    title: "αβγ"
+    location: "place_0::edge"
+    time: 0o17
+    characters_present: []
+    atmosphere: 0o17
+    next_scene: "SC000"
+  scene_1:
+    id: "SC001"
+    title: dawn
+    location: "place_3"
+    time: true
+    characters_present: ["char_4", "char_3", "char_2", "char_1", "solomon"]
+    atmosphere: true
+    next_scene: "SC000"
+
+transitions: {}
+relationships:
+  bonds:
+    - from: "a"
+      to: "b"
+      weight: 0.5
+thematic_clusters: {}
+narrative_metadata: {}
+trace_system: {}
