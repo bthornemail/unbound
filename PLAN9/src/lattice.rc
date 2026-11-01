@@ -1,0 +1,63 @@
+#!/bin/rc
+# lattice.rc - inside Plan 9: metaverse-build's lattice (runtime/lattice) ported native and literal
+# (zlattice.c). Each case of in/lattice (written on the host by in/lattice/gen.py with the tools
+# themselves, under LC_ALL=C) runs in a root of its own named ROOT, as the golden writes the tools'
+# root: its seeds, then its steps, beacons observed and ticks with their MAX_PEERS. It must give each
+# step's exit (a tick with no seed file fails, as the tools' pipeline fails), and observed.jsonl,
+# discovery.log, peergraph.json, basis.json, connection-plan.json, device-plan.json and routing.log
+# byte for byte, the tools' clock "t" taken out; a file the tools did not write must not be written.
+# Then the falsifier, zlattice -n, which does not compare the plan with the last: a rebind on a tick
+# whose plan did not change, so those cases' routing.log differ.
+rfork e
+w=/tmp/zlatticew
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zlattice.c PLAN9/in/lattice} || exit tar
+g=$w/unbound/PLAN9/in/lattice
+cd $w/unbound/PLAN9/src
+8c zlattice.c && 8l -o $w/zlattice zlattice.8 || exit compile
+Z=$w/zlattice
+L=ROOT/runtime/lattice
+fail=0
+n=()
+f=()
+ifs='
+'
+fn rcase {
+	# rcase case flag: the case's steps in a fresh root; ok=no on an exit other than the tools'
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t/$L/peers/seeds.d
+	if(test -d $1/seeds.d) @{ cd $1/seeds.d; for(s in `{ls}) cp $s $t/$L/peers/seeds.d/ }	# a case with no seed has no seeds.d in the tar
+	for(s in `{cat $1/steps}){
+		ifs=' ' { a=`{echo -n $s} }
+		switch($a(1)){
+		case observe
+			@{ cd $t; $Z observe ROOT $1/$a(2) }
+		case tick
+			@{ cd $t; $Z $2 -m $a(2) tick ROOT }
+		}
+		st=$status
+		if(~ $st '') st=0
+		if not st=`{echo $st | sed 's/.*: *//'}
+		if(! ~ $st $a(3)) ok=no
+	}
+}
+for(c in `{ls -d $g/l*}){
+	ok=yes
+	rcase $c
+	for(p in peers/observe/observed.jsonl trace/discovery.log graph/peergraph.json graph/basis.json plan/connection-plan.json plan/device-plan.json trace/routing.log){
+		e=$c/expect/`{basename $p}
+		if(test -e $e){ if(! cmp -s $t/$L/$p $e) ok=no }
+		if not { if(test -e $t/$L/$p) ok=no }
+	}
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	ok=yes
+	rcase $c -n
+	if(test -e $c/expect/routing.log && ! cmp -s $t/$L/trace/routing.log $c/expect/routing.log) f=($f x)
+}
+echo zlattice gives $#n cases as the lattice tools of metaverse-build do
+if(~ $#f 15) echo ok the falsifier zlattice -n rebinds on an unchanged plan: $#f cases differ
+if not { echo FAIL falsifier $#f; fail=1 }
+if(~ $fail 0) echo 'lattice.rc: every answer as expected'

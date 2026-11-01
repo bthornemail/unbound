@@ -1,0 +1,9 @@
+{
+  "version": "basis-1",
+  "selected": [
+    {"peer":"host-c","transport":"bus","lane":"tcp","score":99999.00},
+    {"peer":"inner-2","transport":"bus","lane":"tcp","score":99000.00},
+    {"peer":"host-a","transport":"bus","lane":"tcp","score":0.00}
+  ],
+  "rejected": []
+}

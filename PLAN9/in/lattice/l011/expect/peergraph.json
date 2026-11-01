@@ -1,0 +1,16 @@
+{
+  "version": "peergraph-1",
+  "nodes": [
+    {"id":"Host-d","addr":"127.0.0.1","ports":{"bus":7100},"health":{"ok":true,"rtt_ms":150000}},
+    {"id":"host-001","addr":"127.0.0.1","ports":{"bus":7000},"health":{"ok":true,"rtt_ms":0}},
+    {"id":"host-002","addr":"127.0.0.1","ports":{"bus":7001},"health":{"ok":true,"rtt_ms":0}},
+    {"id":"host-003","addr":"127.0.0.1","ports":{"bus":7002},"health":{"ok":true,"rtt_ms":0}},
+    {"id":"host-1","addr":"127.0.0.1","ports":{"bus":7000},"health":{"ok":true,"rtt_ms":1000}},
+    {"id":"host-b","addr":"192.168.1.65","ports":{"bus":7001},"health":{"ok":true,"rtt_ms":1000}},
+    {"id":"host-c","addr":"127.0.0.1","ports":{"bus":7001},"health":{"ok":true,"rtt_ms":150000}},
+    {"id":"host_e","addr":"127.0.0.1","ports":{"bus":7100},"health":{"ok":true,"rtt_ms":120}},
+    {"id":"inner-2","addr":"127.0.0.1","ports":{"bus":7001},"health":{"ok":true,"rtt_ms":99999}}
+  ],
+  "edges": [],
+  "simplices": []
+}

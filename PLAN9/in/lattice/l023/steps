@@ -1,0 +1,6 @@
+observe beacons.0 0
+tick 3 0
+observe beacons.2 0
+tick 3 0
+observe beacons.4 0
+tick 3 0

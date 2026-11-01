@@ -1,0 +1,14 @@
+{"type":"beacon","node":"Host-d","profile":"kernel-v1","addr":"192.168.1.2","ports":{"ui":8080},"caps":["bus","ui"],"rtt_ms":99999,"epoch":1769892498}
+{"type":"beacon","id":"host-c","profile":"kernel-v1","ports":{"bus":7000,"ui":8080},"caps":["bus","ui"],"rtt_ms":50,"epoch":1769892475}
+{"type":"beacon","id":"host-b","profile":"kernel-v1","addr":"192.168.1.50","ports":{"bus":7001,"ui":8080},"caps":["bus","ui"],"rtt_ms":5,"epoch":1769892510}
+{"type":"beacon","node":"host-c","profile":"kernel-v1","addr":"192.168.1.60","ports":{"ui":8080},"caps":["bus","ui"],"rtt_ms":120,"epoch":1769892458}
+{"type":"beacon","node":"host-a","profile":"kernel-v1","addr":"127.0.0.1","ports":{"bus":7100,"ui":8080},"caps":["bus","ui"],"rtt_ms":1000,"epoch":1769892541}
+{"type":"beacon","node":"host-b","profile":"kernel-v1","addr":"192.168.1.44","ports":{"bus":7001,"ui":8080},"caps":["bus","ui"],"rtt_ms":1,"epoch":1769892549}
+{"type":"beacon","node":"Host-d","profile":"kernel-v1","addr":"10.0.0.6","ports":{"bus":7100,"ui":8080},"caps":["bus","ui"],"rtt_ms":100000,"epoch":1769892469,"meta":{"id":"inner-1"}}
+{"type":"beacon","node":"host-a","profile":"kernel-v1","addr":"127.0.0.1","ports":{"bus":7100,"ui":8080},"caps":["bus","ui"],"rtt_ms":120,"epoch":1769892522}
+{"type":"beacon","node":"host-1","profile":"kernel-v1","addr":"10.0.0.4","ports":{"bus":7001,"ui":8080},"caps":["bus","ui"],"rtt_ms":150000,"epoch":1769892509,"meta":{"id":"inner-1"}}
+{"type":"beacon","node":"host-c","profile":"kernel-v1","addr":"192.168.1.75","ports":{"ui":8080},"caps":["bus","ui"],"rtt_ms":99999,"epoch":1769892513}
+{"type":"beacon","node":"Host-d","profile":"kernel-v1","ports":{"bus":7001,"ui":8080},"caps":["bus","ui"],"rtt_ms":150000,"epoch":1769892470}
+{"type":"beacon","node":"host-c","profile":"kernel-v1","addr":"10.0.0.5","ports":{"bus":7000,"ui":8080},"caps":["bus","ui"],"rtt_ms":5,"epoch":1769892531}
+{"type":"beacon","node":"host-b","profile":"kernel-v1","ports":{"bus":7100,"ui":8080},"caps":["bus","ui"],"rtt_ms":99999,"epoch":1769892470}
+{"type":"beacon","node":"host-b","profile":"kernel-v1","addr":"10.0.0.3","ports":{"bus":7002,"ui":8080},"caps":["bus","ui"],"rtt_ms":1000,"epoch":1769892466}

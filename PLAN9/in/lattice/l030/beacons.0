@@ -1,0 +1,1 @@
+{"type":"beacon","node":"Host-d","profile":"kernel-v1","addr":"192.168.1.59","ports":{"ui":8080},"caps":["bus","ui"],"rtt_ms":5,"epoch":1769892508}

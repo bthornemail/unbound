@@ -1,0 +1,4 @@
+{"type":"beacon","id":"host-b","profile":"kernel-v1","addr":"10.0.0.5","ports":{"bus":7001,"ui":8080},"caps":["bus","ui"],"rtt_ms":99999,"epoch":1769892453}
+{"type":"beacon","node":"esp32-001","profile":"kernel-v1","addr":"127.0.0.1","ports":{"bus":7000,"ui":8080},"caps":["bus","ui"],"epoch":1769892522}
+{"type":"beacon","node":"esp32-001","profile":"kernel-v1","addr":"192.168.1.85","ports":{"ui":8080},"caps":["bus","ui"],"rtt_ms":120,"epoch":1769892493}
+{"type":"beacon","node":"host_e","profile":"kernel-v1","addr":"192.168.1.77","ports":{"bus":7100,"ui":8080},"caps":["bus","ui"],"rtt_ms":150000,"epoch":1769892543}

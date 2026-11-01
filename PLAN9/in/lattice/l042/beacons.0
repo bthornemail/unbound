@@ -1,0 +1,2 @@
+{"type":"beacon","node":"host-a","profile":"kernel-v1","ports":{"ui":8080},"caps":["bus","ui"],"rtt_ms":1000,"epoch":1769892548}
+{"type":"beacon","node":"host-b","profile":"kernel-v1","addr":"127.0.0.1","ports":{"ui":8080},"caps":["bus","ui"],"rtt_ms":100000,"epoch":1769892542}

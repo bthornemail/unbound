@@ -1,0 +1,7 @@
+{
+  "version": "basis-1",
+  "selected": [
+    {"peer":"host-c","transport":"bus","lane":"tcp","score":99000.00}
+  ],
+  "rejected": []
+}

@@ -1,0 +1,6 @@
+{"type":"beacon","node":"host-1","profile":"kernel-v1","addr":"10.0.0.3","ports":{"bus":7001,"ui":8080},"caps":["bus","ui"],"rtt_ms":120,"epoch":1769892464}
+{"type":"beacon","node":"host-1","profile":"kernel-v1","addr":"192.168.1.75","ports":{"bus":7100,"ui":8080},"caps":["bus","ui"],"rtt_ms":99999,"epoch":1769892517,"meta":{"id":"inner-3"}}
+{"type":"beacon","node":"host-1","profile":"kernel-v1","addr":"192.168.1.20","ports":{"ui":8080},"caps":["bus","ui"],"rtt_ms":1,"epoch":1769892475}
+{"type":"beacon","node":"host-a","profile":"kernel-v1","addr":"192.168.1.10","ports":{"bus":7000,"ui":8080},"caps":["bus","ui"],"rtt_ms":120,"epoch":1769892480}
+{"type":"beacon","node":"host-b","profile":"kernel-v1","addr":"127.0.0.1","ports":{"bus":7002,"ui":8080},"caps":["bus","ui"],"epoch":1769892462}
+{"type":"beacon","node":"Host-d","profile":"kernel-v1","addr":"192.168.1.11","ports":{"bus":7100,"ui":8080},"caps":["bus","ui"],"epoch":1769892454}

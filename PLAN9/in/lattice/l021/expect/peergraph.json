@@ -1,0 +1,11 @@
+{
+  "version": "peergraph-1",
+  "nodes": [
+    {"id":"host-001","addr":"127.0.0.1","ports":{"bus":7000},"health":{"ok":true,"rtt_ms":0}},
+    {"id":"host-b","addr":"192.168.1.22","ports":{"bus":7100},"health":{"ok":true,"rtt_ms":100000}},
+    {"id":"host-c","addr":"10.0.0.6","ports":{"bus":7100},"health":{"ok":true,"rtt_ms":5}},
+    {"id":"inner-3","addr":"7000","ports":{"bus":100000},"health":{"ok":true,"rtt_ms":0}}
+  ],
+  "edges": [],
+  "simplices": []
+}

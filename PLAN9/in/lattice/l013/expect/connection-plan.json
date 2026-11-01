@@ -1,0 +1,8 @@
+{
+  "version": "plan-1",
+  "attachments": [
+    {"name":"bus-host_e","kind":"bus","peer":"host_e","trace_fifo":"ROOT/pipelines/posix-bus/trace.fifo","trace_tcp":"tcp://192.168.1.78:7000"},
+    {"name":"bus-host-1","kind":"bus","peer":"host-1","trace_fifo":"ROOT/pipelines/posix-bus/trace.fifo","trace_tcp":"tcp://192.168.1.74:7000"},
+    {"name":"bus-host-b","kind":"bus","peer":"host-b","trace_fifo":"ROOT/pipelines/posix-bus/trace.fifo","trace_tcp":"tcp://10.0.0.3:7001"}
+  ]
+}
