@@ -1,0 +1,78 @@
+#!/bin/rc
+# kit.rc - inside Plan 9: Metaverse Kit's runtime CLIs that carry logic, mv-init and mv-replay, ported
+# native (zkit.c), replay literal. Each case of in/kit (written on the host by in/kit/gen.py with the
+# kit's own CLIs) runs in a fresh root: mv-init's stdout, root written ROOT, and every file it leaves,
+# no more (a file already there kept; a second run changing nothing); mv-replay over a tile's events as
+# one log, its stdout and --out file as the golden gives them (the tool's own where the two agree). The
+# falsifier, zkit -n: init writing over what is there, replay keeping the event named after.
+rfork e
+w=/tmp/zkitw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zkit.c PLAN9/in/kit} || exit tar
+g=$w/unbound/PLAN9/in/kit
+cd $w/unbound/PLAN9/src
+8c zkit.c && 8l -o $w/zkit zkit.8 || exit compile
+fail=0
+n=()
+f=()
+agree=()
+ifs='
+'
+fn files {
+	# the regular files under the root but the step's own
+	for(p in `{du -a $1 | sed 's/^[0-9]*.//'}) if(test -f $p && ! ~ $p */.out */.o */world.tar) echo $p
+}
+fn rcase {
+	# rcase case flag...: the case's steps in a fresh root; ok=no on any difference
+	c=$1
+	shift
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t
+	if(test -e $c/pre/LIST){
+		i=0
+		for(rel in `{cat $c/pre/LIST}){
+			mkdir -p `{basename -d $t/$rel}
+			cp $c/pre/$i $t/$rel
+			i=`{echo $i 1 + p | dc}
+		}
+	}
+	if(test -d $c/world){
+		@{ cd $c; tar c world } >$w/world.tar
+		@{ cd $t; tar x <$w/world.tar }
+	}
+	ifs=' 
+' { A=`{cat $c/args} }	# a space and a newline: the args are words
+	switch(`{basename $c}){
+	case i*
+		@{ cd $t; $w/zkit $* init $A >$t/.out }
+		if(~ `{basename $c} i008) @{ cd $t; $w/zkit $* init $A >$t/.out }
+		sed 's|'^$t^'|ROOT|g' $t/.out >$t/.o
+		if(! cmp -s $t/.o $c/expect/stdout) ok=no
+		i=0
+		for(x in `{cat $c/expect/LIST}){
+			if(! cmp -s $t/$x $c/expect/files/$i) ok=no
+			i=`{echo $i 1 + p | dc}
+		}
+		if(! ~ `{files $t | wc -l} `{wc -l <$c/expect/LIST}) ok=no
+	case r*
+		@{ cd $t; $w/zkit $* replay $A >$t/.out }
+		if(! cmp -s $t/.out $c/expect/stdout) ok=no
+		if(test -e $c/expect/out.jsonl && ! cmp -s $t/out.jsonl $c/expect/out.jsonl) ok=no
+	}
+}
+for(c in `{ls -d $g/i* $g/r*}){
+	ok=yes
+	rcase $c
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	if(test -e $c/expect/agree && ~ `{cat $c/expect/agree} yes) agree=($agree x)
+	ok=yes
+	rcase $c -n
+	if(~ $ok no) f=($f x)
+}
+echo zkit gives $#n cases as mv-init and mv-replay do, replay literal: $#agree replays the bytes of the tool
+if(~ $#f 25) echo ok the falsifier zkit -n differs in $#f cases
+if not { echo FAIL falsifier $#f; fail=1 }
+if(~ $fail 0) echo 'kit.rc: every answer as expected'

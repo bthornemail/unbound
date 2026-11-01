@@ -1,0 +1,10 @@
+invariants:
+  - adjacency
+  - exclusion
+  - consistency
+  - boundary_discipline
+  - authority_nontransfer
+scope:
+  realm: team
+  authority: source
+  boundary: interior

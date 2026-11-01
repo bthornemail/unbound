@@ -1,0 +1,4 @@
+scope:
+  realm: team
+  authority: source
+  boundary: interior

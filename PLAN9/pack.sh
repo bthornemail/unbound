@@ -169,6 +169,9 @@ PLAN9/src/zlattice.c
 PLAN9/src/lattice.rc
 PLAN9/src/znarr.c
 PLAN9/src/narr.rc
+PLAN9/src/zkit.c
+PLAN9/src/kit.rc
+$(cd "$HERE" && find in/kit -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/narr -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/lattice -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/shard -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
