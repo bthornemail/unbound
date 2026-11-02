@@ -1,0 +1,33 @@
+#!/bin/rc
+# views.rc - inside Plan 9: the pieces of unbound/HTML's pages asked of wsn/html.wsn by zlazy, the grammar of the
+# views (its cast alphabet and the rules a context-free grammar cannot say in wsn/html.rules). in/views written on
+# the host by in/views/gen.mjs (the pages read into pieces by in/views/pieces.mjs, each page given back byte for
+# byte, raw text checked by its rule): each distinct piece but raw text, its production and its cast. Every one
+# must be yes; the falsifier, each asked of the wrong production (a tag as TEXT, text as STARTTAG), every one no.
+rfork e
+w=/tmp/zviews
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zlazy.c PLAN9/wsn/html.wsn PLAN9/in/views} || exit tar
+g=$w/unbound/PLAN9
+cd $g/src
+8c zlazy.c && 8l -o $w/zlazy zlazy.8 || exit compile
+ifs='
+' {
+	p=`{cat $g/in/views/prods}
+	x=`{cat $g/in/views/wrong.prods}
+	c=`{cat $g/in/views/casts}
+}
+yes=()
+no=()
+wrong=()
+for(q in $p){
+	if($w/zlazy $g/wsn/html.wsn $q $c(1) >/dev/null) yes=($yes x)
+	if not { no=($no x); echo no: $q $c(1) }
+	if($w/zlazy $g/wsn/html.wsn $x(1) $c(1) >/dev/null) wrong=($wrong x)
+	c=$c(2-)
+	x=$x(2-)
+}
+echo html.wsn accepts $#yes of $#p pieces, each of its own production
+echo the falsifier: $#wrong accepted of the wrong production
+if(~ $#no 0 && ~ $#wrong 0) echo 'views.rc: every answer as expected'

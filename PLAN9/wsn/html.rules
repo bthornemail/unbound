@@ -1,0 +1,14 @@
+html.wsn's pieces are over a cast alphabet, each rune of a page cast before a piece is asked of its production:
+a letter is its lower case, a digit itself, each of < > / = " ' - _ : . # & ; ! itself, a space, tab, line feed,
+carriage return or form feed a space, and every other rune "~". The cast is for the question only; a piece is its
+span of the page's own runes, and the page is its pieces in order.
+What a context-free grammar cannot say, stated here as the reader's rules:
+1. A piece ends where it first can: a comment at its first "-->", a tag at the ">" that closes it (outside a
+   quoted value), text at the next "<" that begins a comment, a doctype or a tag; a "<" that begins none is text.
+2. After the start tag of script, style, title or textarea (not self-closing), the piece is RAWTEXT up to the first
+   "</" and that name, in any case, or to the end of the page; the raw text holds no such end.
+3. Nesting: a start tag opens an element, but not one of area base br col embed hr img input link meta param source
+   track wbr, nor one closed by "/>"; an end tag closes the nearest open element of its name (in any case) and every
+   element opened after it; an end tag with no open element of its name is a piece alone; elements open at the end of
+   the page stay open, the page ending inside them.
+4. An entity is read in TEXT or in a quoted value when a view asks for it; the runes stay as written.

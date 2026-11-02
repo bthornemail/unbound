@@ -1,0 +1,1739 @@
+<!--     plain-text friendly spa for busybox httpd / any http/1.1 server.     expected response headers when served:       content-type: text/html; charset=utf-8     linked resources ~svg~ vtt~ are fetched as:       image/svg~xml  ~  text/vtt  ~  text/plain     no cdn~ no imports~ no build. relative paths only.   -->
+<!-- 1. aegean plane header ~independent~ -->
+<!-- 13 canonical masks grid -->
+<!-- 16x16 window overlay ~outermost~ -->
+<!-- 2. substrate surfaces -->
+<!-- 4 fixed views -->
+<!-- 8-dot braille density -->
+<!-- active line indicator -->
+<!-- ascii & 6-dot braille -->
+<!-- background circles for reference -->
+<!-- basis hash -->
+<!-- bit visibility strip -->
+<!-- bottom control panel -->
+<!-- bottom: 16x16 window ~ ndjson schema ~ wordnet basis ~ spo narrative -->
+<!-- cas -->
+<!-- cascade -->
+<!-- center led -->
+<!-- center: quad camera views -->
+<!-- central projection display -->
+<!-- centre: main light ring canvas -->
+<!-- centroid -->
+<!-- checkboxes will be dynamically inserted here -->
+<!-- circuit -->
+<!-- console output box for logging -->
+<!-- controller view spanning top row -->
+<!-- crypto prices will be dynamically inserted here -->
+<!-- epistemic square overlay ~rotating~ -->
+<!-- epistemic state -->
+<!-- face invariants -->
+<!-- fano lines ~drawn first~ below leds~ -->
+<!-- footer: timeline = vtt-style cues -->
+<!-- generated js -->
+<!-- geometry / canonicalization -->
+<!-- google fonts: inter -->
+<!-- header -->
+<!-- hidden media element hosts texttrack; cues drive frame labels -->
+<!-- hidden video/audio element for mediaelementsource ~ texttrack -->
+<!-- home -->
+<!-- importmap for three.js modules -->
+<!-- js generated bits -->
+<!-- left sidebar for pipeline creation -->
+<!-- left: document graph ~ controls -->
+<!-- left: spectrum ~ ports -->
+<!-- main canvas for the three.js scene -->
+<!-- mini epistemic square -->
+<!-- navigator area -->
+<!-- new option for our new function -->
+<!-- observability -->
+<!-- orbitcontrols for camera interaction -->
+<!-- provenance -->
+<!-- q~ & rbac -->
+<!-- right sidebar for inspection -->
+<!-- right: adder control surface -->
+<!-- right: epistemic square ~ spo state -->
+<!-- ring groups -->
+<!-- side controls -->
+<!-- spectrum -->
+<!-- spo table -->
+<!-- status -->
+<!-- tailwind css cdn -->
+<!-- tailwind css for modern styling -->
+<!-- the constitutional map -->
+<!-- three.js cdn -->
+<!-- touchable points -->
+<!-- word list will be populated here -->
+<!doctype html>
+</a-entity>
+</a-scene>
+</a-sky>
+</a>
+</aside>
+</b>
+</body>
+</button>
+</canvas>
+</code>
+</dd>
+</defs>
+</div>
+</dl>
+</dt>
+</em>
+</femerge>
+</filter>
+</footer>
+</g>
+</h1>
+</h2>
+</h3>
+</h4>
+</head>
+</header>
+</html>
+</i>
+</label>
+</li>
+</main>
+</nav>
+</option>
+</output>
+</p>
+</pre>
+</script>
+</section>
+</select>
+</span>
+</strong>
+</style>
+</svg>
+</table>
+</tbody>
+</td>
+</text>
+</textarea>
+</th>
+</thead>
+</title>
+</tr>
+</u>
+</ul>
+</video>
+<a                  href="https://bthornemail.github.io/god-is-word/"                  target="_blank"                 class="btn btn-secondary"                 style="grid-column: span 2;"             >
+<a href="https://github.com/bthornemail/omi-axioms">
+<a href="https://github.com/bthornemail/omi-axioms/blob/main/js-docs/other/i-229.md">
+<a href="https://github.com/bthornemail/omi-axioms/blob/main/js/catalog/i-229.ts">
+<a-entity camera look-controls wasd-controls raycaster="objects: .clickable" cursor="rayorigin: mouse">
+<a-entity id="rig" position="0 1.6 5">
+<a-entity id="universe" universe-graph="depth: 3; radiusstep: 1.5">
+<a-entity light="type: ambient; intensity: 0.35; color: #bcd">
+<a-entity light="type: directional; intensity: 0.85; color: #fff" position="1 3 2">
+<a-scene renderer="colormanagement: true; antialias: true" background="color: #050510">
+<a-sky color="#050510">
+<aside class="sidebar">
+<b id="bttime">
+<b id="ratio">
+<b id="sptime">
+<b>
+<body class="p-4 md:p-8">
+<body class="text-white overflow-hidden">
+<body>
+<br>
+<button class="btn active" id="btn-rotate" onclick="togglerotate~~">
+<button class="btn btn-info" id="recordbtn" disabled>
+<button class="btn btn-info" id="screenshotbtn" disabled>
+<button class="btn btn-primary" id="startbtn">
+<button class="btn btn-primary" onclick="saveanswer~~">
+<button class="btn btn-primary" onclick="saveentry~~">
+<button class="btn btn-primary" style="width: 100~; margin-top: 12px;" onclick="copyembed~~">
+<button class="btn btn-secondary" id="stopbtn" disabled>
+<button class="btn btn-secondary" onclick="broadcastreflection~~">
+<button class="btn btn-secondary" onclick="shareanswer~~">
+<button class="btn btn-secondary" onclick="showembed~~">
+<button class="btn" id="btn-sabbath" onclick="seeksabbath~~">
+<button class="btn" onclick="runpattern~'fano_line_cycle'~">
+<button class="btn" onclick="runpattern~'tetrahedral_sweep'~">
+<button class="control-btn active" onclick="toggleview~'constellation'~">
+<button class="control-btn" onclick="togglelabels~~">
+<button class="control-btn" onclick="toggleview~'polygon'~">
+<button class="control-btn" onclick="toggleview~'radial'~">
+<button class="danger" onclick="clearpoints~~">
+<button class="modal-close" onclick="closeembed~~">
+<button class="nav-btn active" onclick="showview~'journal'~">
+<button class="nav-btn" onclick="showview~'calendar'~">
+<button class="nav-btn" onclick="showview~'collective'~">
+<button class="nav-btn" onclick="showview~'pattern'~">
+<button class="primary" id="cas-cascade">
+<button class="primary" id="cas-reset" style="background:#21262d;border-color:var~--border~;">
+<button class="primary" id="cas-step">
+<button class="primary" id="cir-next">
+<button class="primary" id="cir-prev">
+<button class="primary" id="cir-run">
+<button class="primary" onclick="addpoint~~">
+<button data-tab="cas">
+<button data-tab="cascade">
+<button data-tab="circuit">
+<button data-tab="home" class="active">
+<button data-tab="spectrum">
+<button data-tab="status">
+<button id="add-quantized-system-btn" class="bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+<button id="add-system-btn" class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+<button id="addbtn" class="pulse">
+<button id="addwordbtn">
+<button id="autopublish">
+<button id="bindbtn">
+<button id="bootstrap-btn">
+<button id="clear" type="button">
+<button id="clearbtn" style="background: linear-gradient~45deg~ #cc0066~ #990033~; margin-top: 1rem;">
+<button id="connectbtn">
+<button id="createsentencebtn">
+<button id="createwave">
+<button id="cyclefanoplanebtn">
+<button id="disconnectbtn" disabled>
+<button id="exportbtn">
+<button id="micbtn">
+<button id="playbtn" class="primary" disabled>
+<button id="publishviews">
+<button id="randomizestates">
+<button id="reset">
+<button id="run-sequence-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+<button id="showconnections">
+<button id="showfields">
+<button id="shownodes" class="active">
+<button id="startnodebtn">
+<button id="startstop">
+<button id="step">
+<button id="stopnodebtn" style="background: linear-gradient~45deg~ #cc0066~ #990033~;">
+<button id="syncbtn" style="background: linear-gradient~45deg~ #6600cc~ #4400aa~;">
+<button id="synchronize">
+<button id="unbindbtn">
+<button onclick="canonicalize~~">
+<button onclick="checkaccess~~">
+<button onclick="clearlog~~">
+<button onclick="computeq~~">
+<button onclick="document.getelementbyid~'inspector'~.classlist.remove~'visible'~" style="margin-top:8px;padding:6px 12px;background:#444;border:none;border-radius:6px;color:#fff;cursor:pointer">
+<button onclick="generatesignatures~~">
+<button onclick="loadsamples~~">
+<button onclick="randomizeepistemic~~">
+<button onclick="resetepistemic~~">
+<button type="button" id="b60" aria-pressed="false">
+<button type="button" id="b75" aria-pressed="true">
+<button type="button" id="btn-next" title="next page">
+<button type="button" id="btn-play" title="play cue track">
+<button type="button" id="btn-prev" title="previous page">
+<button type="button" id="btn-step" title="advance delta">
+<button type="button" id="jump">
+<button type="button" id="play">
+<canvas id="backview" class="fixed-view" width="160" height="160">
+<canvas id="c">
+<canvas id="cv0">
+<canvas id="cv1">
+<canvas id="cv2">
+<canvas id="cv3">
+<canvas id="frontview" class="fixed-view" width="160" height="160">
+<canvas id="leftview" class="fixed-view" width="160" height="160">
+<canvas id="main-canvas" class="absolute top-0 left-0 w-full h-full z-0">
+<canvas id="oscilloscope" width="400" height="110">
+<canvas id="page" width="960" height="540" aria-label="svg page canvas">
+<canvas id="rightview" class="fixed-view" width="160" height="160">
+<circle class="halo h2" cx="200" cy="40"  r="21" fill="var~--c1~" opacity=".2"/>
+<circle class="halo h3" cx="60"  cy="300" r="21" fill="var~--c2~" opacity=".2"/>
+<circle class="halo h4" cx="340" cy="300" r="21" fill="var~--c3~" opacity=".2"/>
+<circle class="halo h5" cx="200" cy="300" r="21" fill="var~--c4~" opacity=".2"/>
+<circle class="halo h6" cx="270" cy="170" r="21" fill="var~--c5~" opacity=".2"/>
+<circle class="halo h7" cx="130" cy="170" r="21" fill="var~--c6~" opacity=".2"/>
+<circle class="halo"    cx="200" cy="213" r="24" fill="var~--c7~" opacity=".24"/>
+<circle class="ring" cx="130" cy="170" r="15" fill="none" stroke="var~--c6~" stroke-width="2"/>
+<circle class="ring" cx="200" cy="213" r="17" fill="none" stroke="var~--c7~" stroke-width="2"/>
+<circle class="ring" cx="200" cy="300" r="15" fill="none" stroke="var~--c4~" stroke-width="2"/>
+<circle class="ring" cx="200" cy="40" r="15" fill="none" stroke="var~--c1~" stroke-width="2"/>
+<circle class="ring" cx="270" cy="170" r="15" fill="none" stroke="var~--c5~" stroke-width="2"/>
+<circle class="ring" cx="340" cy="300" r="15" fill="none" stroke="var~--c3~" stroke-width="2"/>
+<circle class="ring" cx="60" cy="300" r="15" fill="none" stroke="var~--c2~" stroke-width="2"/>
+<circle cx="100" cy="100" r="3" fill="var~--white~" opacity="0.6"/>
+<circle cx="130" cy="170" r="7" fill="var~--c6~"/>
+<circle cx="200" cy="213" r="8.5" fill="var~--c7~"/>
+<circle cx="200" cy="216" r="84"/>
+<circle cx="200" cy="300" r="7" fill="var~--c4~"/>
+<circle cx="200" cy="40" r="7" fill="var~--c1~"/>
+<circle cx="270" cy="170" r="7" fill="var~--c5~"/>
+<circle cx="340" cy="300" r="7" fill="var~--c3~"/>
+<circle cx="400" cy="350" r="100" fill="none" stroke="rgba~255~255~255~0.1~" stroke-width="1"/>
+<circle cx="400" cy="350" r="150" fill="none" stroke="rgba~255~255~255~0.1~" stroke-width="1"/>
+<circle cx="400" cy="350" r="200" fill="none" stroke="rgba~255~255~255~0.1~" stroke-width="1"/>
+<circle cx="400" cy="350" r="250" fill="none" stroke="rgba~255~255~255~0.1~" stroke-width="1"/>
+<circle cx="60" cy="300" r="7" fill="var~--c2~"/>
+<circle id="led-center" cx="0" cy="0" r="8" fill="var~--white~" class="led"                 data-path="m/240'/0'/0'/8'" data-fano="8"                 filter="url~#glow-md~"/>
+<code>
+<dd id="r-cl">
+<dd id="r-close">
+<dd id="r-cycle">
+<dd id="r-mod">
+<dd id="r-phase">
+<dd id="r-tick">
+<defs>
+<div class="bar-fill" id="bar-kk" style="width:40~">
+<div class="bar-fill" id="bar-ku" style="width:30~">
+<div class="bar-fill" id="bar-uk" style="width:50~">
+<div class="bar-fill" id="bar-uu" style="width:25~">
+<div class="bar-row kk">
+<div class="bar-row ku">
+<div class="bar-row uk">
+<div class="bar-row uu">
+<div class="bar-track">
+<div class="bars">
+<div class="bg-black px-4 py-2 rounded-lg border border-gray-800 mono text-sm text-blue-400 mt-4 md:mt-0">
+<div class="bg-black/50 p-4 rounded-xl border border-gray-800">
+<div class="bg-~#16161e~ p-3 rounded-lg border border-gray-800">
+<div class="bg-~#16161e~ p-5 rounded-xl border border-gray-800 shadow-xl">
+<div class="big" id="amask">
+<div class="big" id="bmask">
+<div class="big" id="xmask">
+<div class="bits" id="bits">
+<div class="bits" id="bitsa">
+<div class="bits" id="bitsb">
+<div class="bits" id="bitss">
+<div class="body">
+<div class="book">
+<div class="bottom-cell">
+<div class="bottom-cell-title">
+<div class="buttons">
+<div class="cam" id="cam0">
+<div class="cam" id="cam1">
+<div class="cam" id="cam2">
+<div class="cam" id="cam3">
+<div class="camera-container">
+<div class="canvas-wrap">
+<div class="card">
+<div class="centroid-bar-bg">
+<div class="centroid-bar-fill" id="cent-bar" style="width:0~">
+<div class="centroid-bar-wrap">
+<div class="code">
+<div class="compare">
+<div class="container">
+<div class="control-group">
+<div class="control-panel">
+<div class="controls" id="heb-samples">
+<div class="controls" id="name-samples">
+<div class="controls">
+<div class="controls-panel absolute bottom-5 left-1/2 -translate-x-1/2 z-10 p-4 rounded-xl glass-panel shadow-lg flex items-center flex-wrap justify-center gap-4">
+<div class="convergence-bar">
+<div class="convergence-indicator">
+<div class="convergence-progress" id="convergenceprogress" style="width: 0~">
+<div class="ctrl-row">
+<div class="cue-panel" id="cue-panel" aria-live="polite">
+<div class="dashboard">
+<div class="energy-bar" id="energybar">
+<div class="eq" id="eq">
+<div class="eyebrow">
+<div class="fig compass" aria-label="a difference compass: a needle that swings further right as backtracking grows more times slower than the single pass.">
+<div class="fig" aria-label="time to match versus input length~ on a logarithmic time axis. the backtracking curve climbs from milliseconds to a month; the single-pass line stays under a millisecond.">
+<div class="figtitle">
+<div class="file-input">
+<div class="flex flex-col gap-1 border-b border-yellow-900/50 pb-1">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 mb-2">
+<div class="flex justify-between border-b border-yellow-900/50 pb-1">
+<div class="form-group">
+<div class="form-section">
+<div class="forms-container">
+<div class="frame-label" aria-live="polite">
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+<div class="grid">
+<div class="header">
+<div class="hud">
+<div class="info">
+<div class="info-panel">
+<div class="input-section">
+<div class="instr">
+<div class="join">
+<div class="label" style="margin-bottom:4px">
+<div class="label">
+<div class="layout">
+<div class="leds" id="cas-leds" title="simplex leds">
+<div class="legend">
+<div class="lg:col-span-1 space-y-4">
+<div class="lg:col-span-3 space-y-4">
+<div class="lib" id="lib">
+<div class="log" id="log">
+<div class="log-window" id="log-window">
+<div class="loop" aria-label="the method in order">
+<div class="matrix-grid" id="matrix-grid">
+<div class="max-w-6xl mx-auto">
+<div class="mb-4">
+<div class="meta">
+<div class="metric">
+<div class="modal-body">
+<div class="modal-content">
+<div class="modal-header">
+<div class="modal-title">
+<div class="motion-alert" id="motionalert">
+<div class="name" id="aname">
+<div class="name" id="bname">
+<div class="nav">
+<div class="network-stats">
+<div class="num">
+<div class="nums">
+<div class="op-row">
+<div class="overlay">
+<div class="panel two">
+<div class="panel" id="preds">
+<div class="panel" style="grid-column: 1 / -1;">
+<div class="panel">
+<div class="panel-body">
+<div class="panel-title">
+<div class="peer-list" id="peerlist">
+<div class="peer-status">
+<div class="plane">
+<div class="protocol-badge">
+<div class="protocol-info">
+<div class="quad">
+<div class="question">
+<div class="readout">
+<div class="recording-indicator" id="recordingindicator">
+<div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+<div class="results" id="results">
+<div class="ro bt">
+<div class="ro df">
+<div class="ro sp">
+<div class="ros">
+<div class="row" style="margin-top:10px">
+<div class="row" style="margin-top:8px">
+<div class="row" style="margin: 0.75rem 0;">
+<div class="row">
+<div class="run">
+<div class="run-label">
+<div class="schematic" id="cir-schematic">
+<div class="section">
+<div class="setting-group">
+<div class="settings">
+<div class="sidebar absolute top-5 left-5 z-10 p-4 rounded-xl glass-panel shadow-lg flex flex-col gap-4 w-64">
+<div class="similarity-matrix" id="similarity-matrix">
+<div class="sl">
+<div class="slot">
+<div class="space-y-6">
+<div class="spectrum" aria-hidden="true">
+<div class="splits">
+<div class="stage-bar">
+<div class="stage-wrap">
+<div class="stats" id="info">
+<div class="stats">
+<div class="status" id="status">
+<div class="status">
+<div class="status-bar">
+<div class="status-dot" id="connectionstatus">
+<div class="status-dot" id="statusdot">
+<div class="step">
+<div class="strip" id="strip">
+<div class="sub">
+<div class="subtitle">
+<div class="table-wrap">
+<div class="text-center border-x border-gray-800/50 px-4">
+<div class="text-center md:text-left">
+<div class="text-center md:text-right">
+<div class="text-~0.5rem~ text-blue-500 uppercase font-bold mb-1">
+<div class="text-~0.5rem~ text-green-500 uppercase font-bold mb-1">
+<div class="text-~0.5rem~ text-orange-500 uppercase font-bold mb-1">
+<div class="text-~0.6rem~ text-gray-500 uppercase mb-1">
+<div class="ticks">
+<div class="title">
+<div class="toast" id="toast">
+<div class="trace" id="compare-out" aria-live="polite">
+<div class="trace" id="reduce-out" aria-live="polite">
+<div class="unicode-header p-6 rounded-xl border border-gray-800 shadow-2xl relative overflow-hidden">
+<div class="verdict" id="verdict">
+<div class="visualization-container">
+<div class="widget">
+<div class="word-list" id="wordlist">
+<div class="wrap">
+<div id="active-line-display" style="font-size:10px;color:var~--gold~;font-family:var~--serif~">
+<div id="aegeanheader" class="header-grid">
+<div id="app">
+<div id="asciigrid" class="substrate-grid border border-gray-800 p-1 bg-black rounded">
+<div id="asciigrid">
+<div id="basis-hash-text">
+<div id="binarystates">
+<div id="bitstrip" class="flex gap-1">
+<div id="bottom">
+<div id="braille8grid" class="substrate-grid border border-gray-800 p-1 bg-black rounded">
+<div id="calendarcontent">
+<div id="calendarview" class="card hidden">
+<div id="centre">
+<div id="centroiddisplay" style="font-family: 'courier new'~ monospace; font-size: 11px;">
+<div id="closure-status">
+<div id="collectivecontent" style="margin-top: 2rem;">
+<div id="collectiveview" class="card hidden">
+<div id="consciousnessnodes">
+<div id="container">
+<div id="controllerview" class="controller-view">
+<div id="controls">
+<div id="controls-panel">
+<div id="copymessage" class="message" style="margin-top: 12px;">
+<div id="crypto-prices-display">
+<div id="doc-graph">
+<div id="embedmodal" class="modal" onclick="if~event.target===this~ closeembed~~">
+<div id="esp-list">
+<div id="face-table">
+<div id="finalglyph" class="text-6xl text-green-400">
+<div id="function-checkboxes">
+<div id="heb-out" aria-live="polite" style="display:grid;gap:14px">
+<div id="info">
+<div id="info-display" class="bg-gray-900/50 p-2 rounded-lg text-sm flex flex-col text-center">
+<div id="info-panel" class="text-sm">
+<div id="inspector" class="sidebar">
+<div id="inspector-sidebar" class="sidebar hidden-right absolute top-5 right-5 z-10 p-4 rounded-xl glass-panel shadow-lg flex flex-col gap-4 w-72">
+<div id="journalview" class="card">
+<div id="legend" style="font-size:10px;color:var~--muted~;margin-top:10px">
+<div id="legend">
+<div id="loading-overlay">
+<div id="main-canvas-wrap">
+<div id="narrative-panel" style="font-size:8px;color:var~--gold2~;line-height:1.8;overflow-y:auto;max-height:150px;font-family:var~--serif~;font-style:italic">
+<div id="networktopology" style="font-family: 'courier new'~ monospace; font-size: 10px;">
+<div id="node-info" class="node-info">
+<div id="observer-status">
+<div id="oplabel" class="text-lg font-bold text-green-400 mono">
+<div id="oscilloscope-wrap">
+<div id="patterncontent">
+<div id="patternview" class="card hidden">
+<div id="pipeline-functions" class="mb-4">
+<div id="planelabel" class="text-xs text-blue-400 mono mt-2">
+<div id="ports">
+<div id="projaegean" class="text-6xl text-white">
+<div id="projbraille" class="text-6xl text-orange-400">
+<div id="resulthex" class="text-xs text-green-700 mono mt-2">
+<div id="savedmessage" class="message">
+<div id="schema-panel" style="font-size:7px;color:var~--gold2~;line-height:1.7;overflow-y:auto;max-height:150px">
+<div id="selected-info" class="flex flex-col gap-2 text-sm">
+<div id="sentence-display" style="background: #222; padding: 10px; border-radius: 4px; min-height: 20px;">
+<div id="sequence-display" class="mt-1 pt-1 border-t border-indigo-900/50">
+<div id="spo-table">
+<div id="stream-log">
+<div id="timeline">
+<div id="title">
+<div id="ui">
+<div id="window-grid">
+<div id="wordlabel" class="text-xs text-orange-600 mono mt-2">
+<div id="wordnet-panel">
+<div style="display:flex;justify-content:space-between;margin-bottom:3px">
+<div style="display:grid;gap:12px">
+<div style="font-size:10px;color:var~--muted~;line-height:1.4;margin-top:6px">
+<div style="font-size:11px;color:var~--muted~;margin-bottom:4px">
+<div style="margin-bottom:10px">
+<div style="margin-bottom:6px;font-size:7px;color:var~--dim~;letter-spacing:1px">
+<div style="margin-bottom:8px;font-size:7px;color:var~--dim~;letter-spacing:1px">
+<div style="margin-top: 15px;">
+<div style="margin-top:10px;margin-bottom:6px;font-size:7px;color:var~--dim~;letter-spacing:1px">
+<div style="margin-top:12px;margin-bottom:6px;font-size:7px;color:var~--dim~;letter-spacing:1px">
+<div style="margin-top:8px">
+<div style="overflow-x:auto">
+<div style="position:absolute;bottom:12px;left:50~;transform:translatex~-50~~;                 display:flex;gap:6px;align-items:center">
+<div>
+<dl class="readout" aria-live="polite">
+<dt>
+<em>
+<fegaussianblur stddeviation="2" result="blur"/>
+<fegaussianblur stddeviation="4" result="blur"/>
+<fegaussianblur stddeviation="8" result="blur"/>
+<femerge>
+<femergenode in="blur"/>
+<femergenode in="sourcegraphic"/>
+<filter id="glow-lg">
+<filter id="glow-md">
+<filter id="glow-sm">
+<footer class="mt-12 pt-4 border-t border-gray-900 text-~0.6rem~ text-gray-600 mono flex justify-between">
+<footer>
+<g class="pt" tabindex="0" role="button" data-name="enoch" data-role="the walker" data-tone="e ~ 659 hz" data-c="var~--c5~" aria-label="enoch~ the walker~ tone e">
+<g class="pt" tabindex="0" role="button" data-name="genesis" data-role="the gate" data-tone="g ~ 784 hz" data-c="var~--c7~" aria-label="genesis~ the gate~ tone g">
+<g class="pt" tabindex="0" role="button" data-name="metatron" data-role="the observer" data-tone="a ~ 440 hz" data-c="var~--c1~" aria-label="metatron~ the observer~ tone a">
+<g class="pt" tabindex="0" role="button" data-name="solomon" data-role="wisdom" data-tone="b ~ 494 hz" data-c="var~--c2~" aria-label="solomon~ wisdom~ tone b">
+<g class="pt" tabindex="0" role="button" data-name="solon" data-role="law" data-tone="d ~ 587 hz" data-c="var~--c4~" aria-label="solon~ law~ tone d">
+<g class="pt" tabindex="0" role="button" data-name="speaker" data-role="the voice" data-tone="f ~ 698 hz" data-c="var~--c6~" aria-label="speaker~ the voice~ tone f">
+<g class="pt" tabindex="0" role="button" data-name="~asabiyah" data-role="the tribe" data-tone="c ~ 523 hz" data-c="var~--c3~" aria-label="asabiyah~ the tribe~ tone c">
+<g id="ep-points-g">
+<g id="ep-square-overlay" opacity="0.15">
+<g id="points">
+<g id="svg-fano-lines">
+<g id="svg-rings">
+<g id="svg-window" opacity="0.4" transform="rotate~0~">
+<g stroke="var~--rule~" stroke-width="1.6" fill="none" stroke-linecap="round">
+<g>
+<h1 class="text-2xl font-bold text-white mb-1">
+<h1 class="title">
+<h1>
+<h2 class="text-blue-400 font-bold mb-4 uppercase tracking-tighter text-~0.7rem~">
+<h2 class="text-lg font-bold mb-2">
+<h2 id="h-cmp">
+<h2 id="h-lib">
+<h2 id="h-live">
+<h2 style="color: #00d4aa;">
+<h2 style="color: #00ffff; text-align: center;">
+<h2 style="font-size:1.1rem;margin:0">
+<h2 style="font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var~--muted~;margin:0 0 4px">
+<h2 style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var~--muted~;margin:0 0 4px;">
+<h2 style="margin-top:12px">
+<h2>
+<h3 class="text-lg font-bold text-indigo-300">
+<h3 class="text-lg font-bold text-teal-300">
+<h3 class="text-lg font-bold text-yellow-300">
+<h3 class="text-~0.6rem~ font-bold text-blue-400 uppercase mb-2 tracking-widest">
+<h3 class="text-~0.6rem~ font-bold text-gray-500 uppercase mb-2 tracking-widest">
+<h3 class="text-~0.6rem~ font-bold text-orange-400 uppercase mb-2 tracking-widest">
+<h3 style="color: #00ffff; margin-top: 0;">
+<h3>
+<h4 style="color: #00ffff;">
+<head>
+<header class="hero">
+<header class="mb-6 flex flex-col md:flex-row justify-between items-center border-b border-gray-800 pb-4">
+<header style="display:grid;gap:10px">
+<header style="display:grid;gap:8px">
+<header>
+<hr class="border-indigo-900/50 my-4" />
+<html lang="en">
+<html>
+<i style="background:var~--c1~">
+<i style="background:var~--c2~">
+<i style="background:var~--c3~">
+<i style="background:var~--c4~">
+<i style="background:var~--c5~">
+<i style="background:var~--c6~">
+<i style="background:var~--c7~">
+<i style="background:var~--hand~">
+<i style="background:var~--held~">
+<i style="background:var~--letter~">
+<i style="background:var~--marks~">
+<i style="background:var~--time~">
+<input                  type="text"                  id="godanswer"                  class="input"                  placeholder="your answer..."                 maxlength="50"             >
+<input id="cas-carry" type="text" value="0x00" size="8">
+<input id="cas-vertex" type="text" value="0x01" size="8">
+<input id="filter" type="search" placeholder="filter pages~" aria-label="filter pages">
+<input type="checkbox" id="motiondetection">
+<input type="checkbox" id="nightmode">
+<input type="file" id="fileinput" accept="audio/~~video/~">
+<input type="file" id="importfile" style="display: none;" accept=".json" />
+<input type="number" id="v-num" value="100" min="1" max="5000" onchange="updatev~this.value~">
+<input type="range" id="alpha" min="0.1" max="3.0" step="0.1" value="1.0">
+<input type="range" id="coupling" min="0.0" max="0.5" step="0.01" value="0.1">
+<input type="range" id="cslider" min="0" max="65535" value="73" class="w-full">
+<input type="range" id="evolutionspeed" min="50" max="1000" step="50" value="200">
+<input type="range" id="evolutionspeed" min="50" max="1000" step="50" value="300">
+<input type="range" id="interval" min="120" max="1500" step="30" value="400">
+<input type="range" id="interval" min="150" max="2000" step="50" value="500">
+<input type="range" id="meshsize" min="2" max="5" step="1" value="3">
+<input type="range" id="motionsensitivity" min="10" max="100" value="30">
+<input type="range" id="mutationrate" min="0.01" max="0.3" step="0.01" value="0.05">
+<input type="range" id="mutationrate" min="0.01" max="0.5" step="0.01" value="0.1">
+<input type="range" id="n" min="4" max="44" value="28" step="1" aria-describedby="bttime sptime ratio">
+<input type="range" id="pan" min="-1" max="1" step="0.05" value="0">
+<input type="range" id="scrub" min="0" max="25199" step="1" value="0" aria-label="tick">
+<input type="range" id="scrub" min="0" max="3" step="1" value="0" aria-label="witness">
+<input type="range" id="spin-speed" min="0.1" max="3" step="0.1" value="0.5">
+<input type="range" id="threshold" min="0" max="1" step="0.01" value="0.95">
+<input type="range" id="v-slider" min="1" max="2000" value="100" oninput="updatev~this.value~">
+<input type="range" id="xslider" min="0" max="65535" value="0" class="w-full">
+<input type="text" id="addinput" placeholder="type a word or phrase..." />
+<input type="text" id="connectpeer" placeholder="/ip4/127.0.0.1/tcp/4001/p2p/12d3ko..." />
+<input type="text" id="heb-a" class="heb-in" aria-label="first hebrew word" autocomplete="off" spellcheck="false">
+<input type="text" id="heb-b" class="heb-in" aria-label="second hebrew word" autocomplete="off" spellcheck="false">
+<input type="text" id="mqttbroker" placeholder="mqtt broker url" value="ws://localhost:8083/mqtt">
+<input type="text" id="name-in" value="jehovah" aria-label="a name to reduce and compare" autocomplete="off" spellcheck="false">
+<input type="text" id="searchinput" placeholder="type to search harmonically..." />
+<input type="text" id="topicprefix" placeholder="topic prefix" value="threejs/cube">
+<input type="text" id="word" placeholder="enter word">
+<input type="text" id="wordinput" placeholder="one word..." maxlength="50">
+<label class="flex justify-between text-~0.6rem~ mb-1 text-gray-500 uppercase font-bold">
+<label class="font-bold text-gray-300">
+<label for="addinput">
+<label for="adjective">
+<label for="alpha">
+<label for="connectpeer">
+<label for="coupling">
+<label for="definition">
+<label for="evolutionspeed">
+<label for="function-filter" class="text-sm">
+<label for="importfile">
+<label for="meshsize">
+<label for="mutationrate">
+<label for="n">
+<label for="noun">
+<label for="pipeline-input" class="font-bold text-gray-300">
+<label for="pos">
+<label for="pronoun">
+<label for="q-operator">
+<label for="searchinput">
+<label for="sentence-display">
+<label for="text-input" class="font-bold text-gray-300">
+<label for="threshold">
+<label for="verb">
+<label for="word">
+<label>
+<li>
+<line x1="-240" y1="0" x2="240" y2="0" stroke="var~--gold2~" stroke-width="0.5"/>
+<line x1="0" y1="-240" x2="0" y2="240" stroke="var~--gold2~" stroke-width="0.5"/>
+<line x1="0" y1="100" x2="200" y2="100" stroke="var~--dim~" stroke-width="1"/>
+<line x1="100" y1="0" x2="100" y2="200" stroke="var~--dim~" stroke-width="1"/>
+<link href="https://fonts.googleapis.com/css2~family=inter:wght~400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2~family=cormorant~garamond:wght~400;500;600&family=spectral:ital~wght~0~400;0~500;1~400&family=ibm~plex~mono:wght~400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2~family=frank~ruhl~libre:wght~400;500&family=ibm~plex~sans:wght~400;600&family=ibm~plex~mono:wght~400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2~family=fraunces:opsz~wght~9..144~500;9..144~600&family=ibm~plex~mono:wght~400;500&family=ibm~plex~sans:wght~400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2~family=fraunces:wght~600&family=ibm~plex~mono&family=source~sans~3:wght~400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2~family=newsreader:opsz~wght~6..72~400;6..72~600&family=jetbrains~mono:wght~400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2~family=spectral:wght~500;600&family=atkinson~hyperlegible:ital~wght~0~400;0~700;1~400&family=jetbrains~mono:wght~400;600&family=frank~ruhl~libre:wght~400;500&display=swap">
+<main id="groups">
+<main>
+<meta charset="utf-8" />
+<meta charset="utf-8">
+<meta charset=utf8>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width~ initial-scale=1" />
+<meta name="viewport" content="width=device-width~ initial-scale=1">
+<meta name="viewport" content="width=device-width~ initial-scale=1.0">
+<meta name="viewport" content="width=device-width~ initial-scale=1~ viewport-fit=cover">
+<meta name=viewport content="width=device-width~initial-scale=1~viewport-fit=cover">
+<nav class="paths" id="path-nav" aria-label="literal path index">
+<nav id="nav">
+<option value="">
+<option value="0">
+<option value="1">
+<option value="2">
+<option value="3">
+<option value="adjective">
+<option value="all">
+<option value="avg">
+<option value="data">
+<option value="geometric-mean">
+<option value="math">
+<option value="max">
+<option value="mcp">
+<option value="min">
+<option value="noun">
+<option value="other">
+<option value="product">
+<option value="pronoun">
+<option value="state">
+<option value="string">
+<option value="verb">
+<output id="nval">
+<p class="blank">
+<p class="caption">
+<p class="center-list">
+<p class="claim">
+<p class="coda">
+<p class="eyebrow">
+<p class="foot">
+<p class="free">
+<p class="hint" style="margin-top:8px">
+<p class="kicker">
+<p class="lede">
+<p class="modal-text">
+<p class="mt-4 text-xs text-gray-400">
+<p class="muted mono" id="strip-note">
+<p class="muted">
+<p class="note">
+<p class="readout" id="readout" aria-live="polite">
+<p class="story">
+<p class="sub">
+<p class="subtitle">
+<p class="tag">
+<p class="text-gray-500 mono text-xs">
+<p class="travel">
+<p id="count">
+<p id="empty" class="empty" hidden>
+<p style="color: #94a3b8; text-align: center;">
+<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+<p>
+<path d="m200 40 l200 300"/>
+<path d="m200 40 l60 300 l340 300 z"/>
+<path d="m340 300 l130 170"/>
+<path d="m60 300 l270 170"/>
+<pre id="cas-out">
+<pre id="cascade-out">
+<pre id="cir-log">
+<pre id="console-output">
+<pre id="node-data">
+<pre id="selected-result" class="font-mono text-gray-300 text-xs bg-gray-900/50 p-2 rounded-md max-h-48 overflow-auto">
+<pre id="spec-json">
+<pre id="status-out">
+<pre>
+<rect width="100" height="100" x="0"   y="0"   fill="rgba~68~85~255~0.08~"/>
+<rect width="100" height="100" x="0"   y="100" fill="rgba~255~238~0~0.08~"/>
+<rect width="100" height="100" x="100" y="0"   fill="rgba~255~136~0~0.08~"/>
+<rect width="100" height="100" x="100" y="100" fill="rgba~0~255~68~0.08~"/>
+<script async src="https://unpkg.com/es-module-shims~1.6.3/dist/es-module-shims.js">
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js">
+<script src="https://cdn.jsdelivr.net/npm/three~0.128.0/examples/js/controls/orbitcontrols.js">
+<script src="https://cdn.tailwindcss.com">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/it-pipe/3.0.1/it-pipe.min.js">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/libp2p/0.46.4/libp2p.min.js">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+<script type="importmap">
+<script type="module">
+<script>
+<section aria-labelledby="h-cmp">
+<section aria-labelledby="h-lib">
+<section class="bench" aria-labelledby="h-live">
+<section class="panel adder">
+<section class="panel" style="padding:6px">
+<section class="panel">
+<section class="stage" aria-label="treemap of the term">
+<section class="step" id="compare">
+<section class="step" id="fold">
+<section class="step" id="layers">
+<section class="step" id="literal">
+<section class="step" id="predict">
+<section class="step" id="record">
+<section class="step" id="reduce">
+<section id="cas">
+<section id="cascade">
+<section id="circuit">
+<section id="home" class="active">
+<section id="spectrum">
+<section id="status">
+<section style="display:grid;gap:10px">
+<section>
+<select class="camera-select" id="cameraselect">
+<select id="adjective">
+<select id="function-filter" class="bg-gray-900/50 text-white rounded-lg p-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-400">
+<select id="noun">
+<select id="opselect">
+<select id="pos">
+<select id="pronoun">
+<select id="q-operator">
+<select id="verb">
+<span class="active" id="cue-text">
+<span class="badge">
+<span class="bar-label">
+<span class="bar-val" id="val-kk">
+<span class="bar-val" id="val-ku">
+<span class="bar-val" id="val-uk">
+<span class="bar-val" id="val-uu">
+<span class="c">
+<span class="centroid-val" id="cent-metric">
+<span class="cool">
+<span class="ctrl-label">
+<span class="dot" style="background:var~--c1~">
+<span class="dot" style="background:var~--c4~">
+<span class="dot" style="background:var~--c5~">
+<span class="dot" style="background:var~--c7~">
+<span class="dot" style="background:var~--kk~">
+<span class="dot" style="background:var~--ku~">
+<span class="dot" style="background:var~--uk~">
+<span class="dot" style="background:var~--uu~">
+<span class="font-bold">
+<span class="font-mono text-indigo-300">
+<span class="glue">
+<span class="hint">
+<span class="hot">
+<span class="idx" id="f-idx">
+<span class="ip-address" id="ipaddress">
+<span class="label">
+<span class="lit" id="f-lit">
+<span class="muted" id="f-src">
+<span class="n">
+<span class="name" id="f-name">
+<span class="names">
+<span class="status-dot" style="background:var~--kk~">
+<span class="status-item">
+<span class="tag a">
+<span class="tag b">
+<span id="access-status">
+<span id="alphavalue">
+<span id="bound-status" style="color:var~--kk~">
+<span id="cent-sabbath" style="font-size:9px;color:var~--dim~">
+<span id="cir-status" class="muted">
+<span id="coherence">
+<span id="couplingvalue">
+<span id="currentday">
+<span id="currenttime">
+<span id="cval" class="text-orange-400">
+<span id="entropy">
+<span id="globalcoherence">
+<span id="hdr-angle">
+<span id="hdr-lc">
+<span id="hdr-metric">
+<span id="hdr-sabbath" style="color:var~--dim~">
+<span id="hdr-tick">
+<span id="informationflow">
+<span id="integration">
+<span id="meshsizevalue">
+<span id="modelabel">
+<span id="mutationvalue">
+<span id="networksize">
+<span id="node-alpha">
+<span id="node-id">
+<span id="node-kind">
+<span id="node-level">
+<span id="obs-val">
+<span id="page-range">
+<span id="phi-val">
+<span id="pos-x">
+<span id="pos-y">
+<span id="pos-z">
+<span id="q-cost">
+<span id="savedaynumber">
+<span id="searchactive">
+<span id="selected-id" class="font-mono text-gray-300">
+<span id="selected-pipeline" class="font-mono text-gray-300 text-xs break-all">
+<span id="sensitivityvalue">
+<span id="sequence-queue" class="font-mono text-gray-300">
+<span id="speedvalue">
+<span id="spin-val" style="font-size:8px;color:var~--gold~;width:28px">
+<span id="state-hex">
+<span id="statustext">
+<span id="synchronization">
+<span id="system-count" class="font-mono text-gray-300">
+<span id="threshold-value">
+<span id="timestep">
+<span id="totalcount">
+<span id="visiblecount">
+<span id="xval" class="text-blue-400">
+<span style="font-size: 0.875rem; color: #94a3b8;" id="convergencesteps">
+<span style="font-size: 0.875rem; color: #94a3b8;">
+<span style="font-size: 14px; color: #ffff00;">
+<span style="font-size:7px;color:var~--gold2~;letter-spacing:1px">
+<span style="font-size:8px;color:var~--gold2~;letter-spacing:2px">
+<span>
+<strong id="page-name">
+<strong>
+<style>
+<svg class="constellation" viewbox="0 0 400 362" role="group" aria-label="the fano plane~ drawn as a constellation of seven lights. tap a light to learn its name.">
+<svg id="chart" viewbox="0 0 560 300" font-family="ibm plex mono~ monospace">
+<svg id="compass" viewbox="0 0 300 186" font-family="ibm plex mono~ monospace">
+<svg id="constellation" viewbox="0 0 800 700">
+<svg id="dial" viewbox="-110 -110 220 220" role="img" aria-label="a ring of 64 slots. sixty are marked as positions and four~ numbered 60 to 63~ are marked as spare codes.">
+<svg id="dial" viewbox="-160 -160 320 320" role="img" aria-label="the sonar dial: five blocks of sixteen slots~ fifteen carrying time~ with the sonar hand">
+<svg id="ep-svg" viewbox="0 0 200 200" style="width:100~;height:160px;margin-bottom:8px">
+<svg id="live" viewbox="0 0 95 86" role="group" aria-label="interactive fano plane">
+<svg id="map" viewbox="0 0 800 420" role="img" aria-label="treemap of yhwh's letter cells for the selected witness">
+<svg id="rings-svg" viewbox="-300 -300 600 600" xmlns="http://www.w3.org/2000/svg">
+<table id="factors">
+<table id="fold-table">
+<table id="lines">
+<table id="masks">
+<table id="years">
+<table>
+<tbody>
+<td>
+<text x="0" y="16" text-anchor="middle" fill="var~--gold2~"               style="font-family:var~--mono~;font-size:7px">
+<text x="150" y="12"  text-anchor="middle" fill="var~--uk~" style="font-size:7px;font-family:var~--mono~">
+<text x="150" y="195" text-anchor="middle" fill="var~--kk~" style="font-size:7px;font-family:var~--mono~">
+<text x="50"  y="12"  text-anchor="middle" fill="var~--uu~" style="font-size:7px;font-family:var~--mono~">
+<text x="50"  y="195" text-anchor="middle" fill="var~--ku~" style="font-size:7px;font-family:var~--mono~">
+<textarea                      id="embedcode"                      class="textarea"                     readonly                     onclick="this.select~~"                 >
+<textarea id="contentinput" placeholder="your thoughts...">
+<textarea id="definition" rows="3" placeholder="enter definition">
+<textarea id="input1" placeholder="enter first text...">
+<textarea id="input2" placeholder="enter second text...">
+<textarea id="input3" placeholder="enter third text...">
+<textarea id="input4" placeholder="enter fourth text...">
+<textarea id="pipeline-input" class="w-full h-16 bg-gray-900/50 rounded-lg p-2 text-xs font-mono mt-2 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+<textarea id="text-input" class="w-full h-16 bg-gray-900/50 rounded-lg p-2 text-xs font-mono mt-2 focus:outline-none focus:ring-2 focus:ring-teal-400">
+<th>
+<thead>
+<title>
+<tr>
+<u>
+<ul class="seed">
+<ul id="entrieslist">
+<ul>
+<video id="cue-engine" muted playsinline>
+<video id="mediael" style="display:none" crossorigin="anonymous">
+<video id="videoelement" autoplay muted playsinline>
+ 
+  
+   
+    
+     
+      
+       
+        
+         
+          
+           
+             
+              
+                 
+                  
+                     
+                         
+                          
+                             
+                                 
+                                  
+                     broadcast your reflection to see collective patterns emerge                 
+                     copy and paste this code into your website:                 
+                     ~ copied!                 
+                     ~ copy to clipboard                 
+                 real-time geometric consensus using fano plane lottery mechanism.                 each reflection is a node in the distributed knowledge graph.             
+                 rotl~x~1~ ~ rotl~x~3~ ~ rotr~x~2~ ~ c             
+                 save day 
+                 the 0d observer is a point mapped transparently via the web audio pannernode. identity mapping: abstract position -> pannernode positionx/y/z.             
+                 the 7-day god mirror             
+                 using ramanujan's universal quadratic forms - guaranteed convergence in ~14 steps             
+                 validating the trigintaduonion and sexagintaquatronion gate formalization.             
+                 x: 
+                 y: 
+                 your sovereign ip: 
+                 z: 
+                 ~ broadcast to network             
+                 ~ embed             
+                 ~ save answer             
+                 ~ share             
+                 ~ view full app             
+                 ~ your reflection will be encoded using ip6 universal basis ~modulo 7~ basis 5~                 and signed with your sovereign identity             
+             add custom system         
+             collective consciousness mesh
+             complete all 7 days in the full app to see patterns.         
+             layer 0: spatial observation         
+             quantize and add system         
+             run selection sequence         
+             your answer is saved only on your device.
+             ~ saved to your device!         
+             ~ sizes of spheres reflect current market prices.             
+             ~ updates every 30 seconds.         
+         uppercase template-literal paths ~ nested lowercase codepoint children ~         canvas pages ~ texttrack / vttcue frames ~ media-query layout ~         http/1.1 relative fetches ~
+         ~ recording     
+         ~~ motion detected ~~     
+       low-band energy modulates a; mid-band modulates b.       high energy can auto-switch operation when a cue is bound.       double-click timeline to return to live.     
+       low-band energy ~bins 0-15~ modulates a; mid-band ~32-47~ modulates b.       high energy auto-switches operation when ~cue-bind~ is active.       double-click timeline to return to live.     
+       real fft ~analysernode fftsize 256 ~ 128 bins~ drives four offscreencanvas workers.       each worker models one transistor-count xor ~5 / 6 / 8 nand / 10 nor~ as a stage of a shared 4-bit adder.       spectrum snapshots become scrubbable vtt-style texttrack cues that bind css custom properties &amp; operation mode.     
+       real fft ~analysernode~ drives four offscreencanvas workers modelling the 5 / 6 / 8 / 10 transistor xor topologies.       spectrum snapshots become scrubbable vtt-style cues that bind css custom properties &amp; operation mode.     
+       timeline ~ scrubbable proto-cues ~click to inspect / bind~     
+       timeline ~ scrubbable proto-cues ~click to inspect / shift-click to bind~     
+      &nbsp;~ one or more a&#39;s 
+     omi-imo ~ single html ~ everything is xor ~ fixed point 0x0000 ~ observer is you   
+    ~ one or more 
+   .replace~/~aeiou~/g~ ""~;  
+  assert.equal~cons~wlc~~ cons~mam~~ "the consonant base is one literal: mirror"~; 
+ &nbsp;is where the reader stands and looks out.
+ &nbsp;keeps what's stored.
+ &nbsp;tells the known from the unknown.
+ &nbsp;translates one thing across its forms.
+ and re2 cannot be made to blow up.
+ are ~1~ 0~ ~1~:
+ assert.deepequal~extra~ ~"~"~~ "the vowel layers differ by exactly one mark: holam"~;
+ assert.equal~verdict~"yhwh"~ fold~base~"jehovah"~~~~ "mirror"~; 
+ assert.equal~verdict~"yhwh"~ fold~base~"the lord"~~~~ "raise"~; 
+ assert.equal~verdict~n~ base~"iou"~~~ "raise"~ "an empty base does not mirror yhwh"~; assert.equal~verdict~n~ base~"1234"~~~ "raise"~ "nor does a base of digits only"~; assert.equal~verdict~base~"iou"~~ base~"1234"~~~ "mirror"~ "the empty base mirrors only the empty base"~;  ~ node js/catalog/i-229.ts i-229: yhwh and its renderings ~ which keep the literal and which replace it ~ passed   raise ~replace the base~: adonai ~dn~~ the lord ~thlrd~   mirror ~keep the base~: yahweh ~yhwh~~ yah ~yh~ a prefix~   jah~ jehovah: raise letter for letter ~jh~ jhvh~; mirror only under the declared fold j-&gt;y~ v-&gt;w   leningrad ~~~~~~ and mam ~~~~~~~: one consonant literal; one mark apart~ holam~ the o of jehovah  ~ make -c proofs js-docs 116 records ~116 holding~
+ buffered ~ 6 bjt
+ const mam = "~~~~~~~";   
+ const marks = ~s: string~ =&gt; ~...s~.filter~~c~ =&gt; !~c &gt;= "~" &amp;&amp; c &lt;= "~"~~;         
+ const yah = "~~~~";      
+ core:
+ decides how the slots are labelled~ including where the spare codes sit.
+ decides which position is current.
+ discrete ~ 5 bjt
+ from the workspace.
+ gives every number from 0 to 5039 exactly once. what the 7-part and 3-part stand for is yours to define.
+ in 
+ in the component.
+ is marked. your numbering is the xor numbering~ so on every line 
+ is on when point 
+ kk
+ ku
+ motion detection                 
+ ms
+ ms~ which passes through them. beyond length 28 the times are that model~s projection~ shown dashed. reproduce the measured points in any language with a backtracking regex engine.
+ nand ~4 ~ 8 bjt
+ nested ~ uppercase = mpt node ~template literal name~~ lowercase = child codepoint list
+ night mode                 
+ nor ~5 ~ 10 bjt
+ of 7
+ of every place the pattern could be at once~ and advance the whole set by one character at a time. each step is one bounded move; when the input ends~ check whether any live place accepts.
+ of one or more a&#39;s
+ ticks~ everything closes. the reason is one extra 5.
+ uk
+ unit 0 ~ xor-5
+ unit 1 ~ xor-6
+ unit 2 ~ xor-8
+ unit 3 ~ xor-10
+ uses.
+ uu
+ ~ 
+ ~ bind / apply / eval / digest ~8-bit ~ law~
+ ~ cb / murs / ism-915 reference ~no transmit~
+ ~ cues 
+ ~ interference / inference labels
+ ~ pages 
+ ~ same law as probe / agent-commons
+ ~ vtt-style steps ~ busybox applets
+ ~ ~d~~~~ = 1 ~ q~~~ = ~c~~   
+ ~commit aae9768~ merged cbac392~~ tag 6e~ 117 records holding. claim: ziguaroth 
+ ~fftsize 256 ~ 128 frequency bins~~ laid out as an 8~16 grid. no plugins~ no external libraries.
+ ~its comment: 
+!
+"aaaa~!"
+&copy; kernel protocol v17.0
+&times;
+.
+. a record also keeps its origin: who asked~ when~ and in their words~ in 
+. all six predictions held. when a flaw turns up later~ as the empty base did~ the fix goes in as a new commit with a dated note in the file and a check of its own~ so the first filing stays readable in the history.
+. sources: unbound 
+. the eight predictions below were written before the checks first ran.
+. the first says ~no~ at once. the second must prove no arrangement works first~ and that is the fall.
+//   p1  yhwh vs adonai~ yhwh vs the lord ........ raise  ~the base is replaced~ //   p2  yhwh vs yahweh ............................ mirror ~same base~ vowels supplied~ //   p3  yhwh vs yah ............................... mirror ~prefix~ //   p4  yhwh vs jah~ jehovah ...................... raise letter for letter; //       mirror only under the declared fold j -&gt; y~ v -&gt; w //   p5  leningrad vs mam .......................... same consonants; one mark apart //   p6  hebrew yah vs yhwh ........................ mirror ~prefix~
+// a-z only: digits~ spaces and punctuation go
+// alef to tav
+// everything else
+// exodus 15:2   u~05d9 05b8 05d4 05bc
+// extra = the marks mam has more of than leningrad
+// leningrad~ deut 29:1   u~05d9 05b0 05d4 05d5 05b8 05d4
+// mam ~aleppo~~ deut 29:1   u~05d9 05b0 05d4 05b9 05d5 05b8 05d4
+// the fold rescues no substitution
+// the vowels go
+// with it
+// without the fold
+// ~~ 7. the empty base heads nothing but itself ~~
+/~a~~/
+/~~a~~~~/
+0
+0.00
+0.000
+0.05
+0.0~
+0.1
+0.25
+0.30
+0.40
+0.50
+0.5~
+0.95
+0/14
+0123456789:;&lt;=&gt;~
+0x0000
+0x0000  everything reduces to xor. terminal dual-break = 0x04 ~the 4~. centroid when eval ~ == 0x04.
+0x0049
+0x01
+0x02
+0x45
+0x8a
+1
+1 w
+1. one dial: blocks of 16~ fifteen carry time
+1. select functions:
+1.0
+100
+10101
+10102
+13-step closure: pending
+15 / 16
+15 ~ 7.58e-6 ~ 2.14~
+151.82 / 88 / 94 ~ 154.57 / 60
+16-bit kernel slide ruler
+16~16 shared array buffer ~ w-depth
+2
+2 w
+2. initial data ~json~:
+2. the precession
+20.00
+200
+240 = 15 ~ 16~ which lines up with the 16 spare codes and the 15/16 share.
+240 = 60 ~ 4~ so each position of the small dial can appear in four phases on the large one.
+240 ~ 16 = 256
+256 ~ 16 = 240~ and 64 ~ 4 = 60~ so the large dial is the small dial scaled by four.
+25~200 = 7 ~ 3 ~ 5 ~ 240
+26.965~27.405 mhz
+28
+3
+3. why: count the fives
+30
+3x3
+4
+4 channels ~ 60
+4 w am
+4-bit adder control surface
+4. the eight predictions~ checked now
+40
+5
+5 channels ~ 15 lanes
+5 channels ~ 75
+5. on the year axis
+5040 mod 75 = 15~ exactly one channel. so the first tick of each master cycle finds the sonar one channel further on. switch to the 60 above and every cycle starts on channel 0~ because 5040 = 84 ~ 60.
+6
+60 ~ 4 = 64
+60-in-64 clock
+7
+7-part ~ 720 ~ 3-part ~ 240 ~ position
+8-polytope cas
+8/9/10d
+8d / 9d / 10d cascade
+8d base  --inject-->  9d interference  --infer-->  10d inference  interference9 = ~9 ~ eval9_old ~ 0x004 inference10   = ~10 ~ eval10_old ~ 0x004 isometric_lock when both low bytes == 0x04  practical: 8d on breadboard ~74hc86/74hc74~; 9d/10d in software; rf optional for digests.
+8~9~10d cascade
+9 nodes
+902~928 mhz
+: 64 slots~ 60 for time and 4 held back. at 256 slots~ 240 and 16. the sonar is the same dial with five blocks: 80 slots~ 75 for time~ 5 held back.
+: a name with no consonants left~ such as "iou" or "1234"~ reduces to the empty base~ and every string starts with the empty string. the first filing of i-229 left this check out~ so an empty base mirrored everything. it was corrected on 2026-10-25~ and section 7 of the record now checks that the empty base mirrors only another empty base. try iou in step 3.
+; boxed 
+; its generated document is 
+_archive/the 60-in-64 clock.md
+_articles/sonar/sonar.mime
+_code/u/10100
+_codices~0~
+a
+a backtracking engine tries one split~ walks to the end~ hits the 
+a dial of 64 slots where 60 carry time and 4 are held back for control. the same shape repeats at 256 slots~ with 240 for time and 16 for control.
+a documented difficulty~ measured ~ and live
+a geometric mapping of consciousness and existence
+a hundred and forty-four stories
+a one-line pattern that should finish instantly can take minutes~ then hours~ then years ~ on a tiny input. drag the length and watch the gap open.
+a popup book you open to 
+a self-contained html snapshot of the 
+a story is written down once~ in its own plain order. you read it with two switches you control: which direction it runs~ and which encoding it uses. flip them however you like. the story never changes. it waits in its own order for the next reader to open it their way.
+a story stays its author's. reading it never alters it.
+a word on screen can look the same and still be different bytes. so each hebrew form goes into the file as its exact unicode codepoints~ copied from the codex text with the cantillation accents removed. the proof then carries its own evidence~ and anyone can check it without trusting a font or a website.
+a ~ b
+a ~ b shows the points where the two files differ. the count of 1s is the hamming distance. zero means both files hold the same constant.
+a ~ b ~ c = 0
+aa
+aaa
+aaaa
+access
+active line
+add
+add entry
+add point
+add word / text:
+add word point
+add word-definition pair
+adjective
+adjective:
+after the animated treemap in observable's d3 gallery: one hierarchy~ keyframes that change only the values~ laid out with d3.treemapresquarify so the tiles keep their places.
+aleppo
+all
+all six names~ both ways
+allocation
+analysernode
+and-mask
+answer honestly. just one word.
+as v grows~ uk variance would explode. multiplying by euler~s totient ~~v~ keeps the observable state bounded.
+atomic incidence surface
+atomics.compareexchange ~ bind ~ apply ~ eval ~ digest
+auto publish: off
+auto-rotate
+avg
+a~b~c
+a~~
+b
+backtracking 
+band
+basis
+basis ~ hash
+binary states:
+bind current cue ~ css / mode
+boolean operator ~index res ~ 16~
+bootstrap environment ~-5d to 10d pipeline~
+both match ~one or more 
+bound status
+build on what can say no
+c
+c ~constant~
+calendar
+camera offline
+canonicalize
+canvas a
+canvas b
+canvas c
+canvas model ~ v1.0
+carry 
+catastrophic backtracking
+cb 95d
+centroid ~ stop metric
+centroid:
+ch
+channel ~ lane
+check access
+circuit
+circuit walkthrough
+clear
+clear all entries
+clear log
+clear selection
+click a node to explore its properties
+click canvas to place points. canonicalize runs successive reflections toward the dominant chamber ~x~0~ y~0~.
+click once to set view a~ again on another file for view b. the mask under each image comes from the file's text~ not from its name.
+close
+closes after
+codepoint popup book
+coherence:
+collective
+collective consciousness network
+compare
+compare the bases: mirror or raise
+connect
+connect to peer:
+connections
+consciousness controls
+consciousness focus ~~~: 
+consciousness metrics
+const base = ~s: string~ =&gt; s.touppercase~~   .replace~/~~a-z~/g~ ""~    
+const cons  = ~s: string~ =&gt; ~...s~.filter~~c~ =&gt; c &gt;= "~" &amp;&amp; c &lt;= "~"~.join~""~;   
+const fold = ~s: string~ =&gt; s.replace~/j/g~ "y"~.replace~/v/g~ "w"~;  assert.equal~verdict~"yhwh"~ base~"jehovah"~~~ "raise"~;        
+const verdict = ~a: string~ b: string~ =&gt; ~   if ~a === b~ return "mirror";   const ~short~ long~ = a.length &lt;= b.length ~ ~a~ b~ : ~b~ a~;   return short.length &gt; 0 &amp;&amp; long.startswith~short~ ~ "mirror" : "raise"; ~;
+const wlc = "~~~~~~";    
+constellation
+constitutional substrate & unicode plane navigator
+controls
+convergence:
+counter:
+create sentence
+create sentence tetrahedron
+create wave
+cryptocurrency values
+cycle fano plane lines
+data
+day 
+declare any fold out loud
+declare folds
+definition:
+delta: 
+difference
+digital minds interacting
+disconnect
+disconnected
+dna ~ aa55
+dna ~ ee11
+document graph ~ federated svgs
+don~t commit to a path and back up. keep the 
+each block of 15 lanes already carries one 5. four channels keep one 5 ~60~~ and 7! = 5040 has one 5~ so the 60 closes. five channels bring a second 5 ~75 = 3 ~ 5~~~ which 5040 cannot absorb. the closure has to take the 5 in once more: 25~200 = 5 ~ 5040. the whole 80-slot dial closes ~5040 = 63 ~ 80~; only the 75 that carry time do not.
+each concept is positioned based on its mathematical signature - combining length~ trigonometric values~ and distance from center.
+each keeper has one. a story is a small drawing that is~ at once~ the thing you see~ the thing that's kept~ and the way in. four such drawings are the seed the rest grows from.
+each svg you made is read as text~ its marked dots are located~ and the result becomes a 7-bit mask: bit 
+embed this widget
+embedded self-checks
+english renderings need a common ground before they can be compared. the base keeps the letters a to z only~ in upper case~ and removes the vowels a~ e~ i~ o and u. that copies what hebrew writing does with the name: the consonants are written and the vowels are supplied. case makes no difference~ and digits are dropped along with spaces and punctuation.
+enter a phrase to quantize:
+entropy:
+epistemic observability engine
+epistemic state ~ rumsfeldian
+epistemic vector
+esp32 lattice
+evaluate q~
+every file is one constant
+every number on this page is computed here~ live~ by the same checks as 
+every period resets at index 0~ because every count starts there. what belongs to 75 is that ad 525~ dionysius' year~ shares the reset: 525 = 7 ~ 75~ the fano period against the sonar~ and the 
+export harmonic database
+face invariants ~ l1~l7
+fano plane ~ gf~2~~ ~ 7 points ~ 7 lines
+federated light protocol
+feed each a run of 
+fields
+filter:
+five runs were measured directly ~16~16 ms~ 20~44 ms~ 24~703 ms~ 26~2 951 ms~ 28~13 502 ms~; the curve is 
+fix the literal
+fix the literal as codepoints
+fixed point
+for the complete node stack ~server~ workers~ tests~ docs~~ use the project zip 
+free ~ forkable ~ cc&nbsp;by-sa ~ asks no one's permission
+freedom ~ autonomy ~ sovereignty ~ reciprocity
+full dom stack
+full project
+g
+generate harmonic signatures
+generated sentence:
+generating...
+genesis protocol
+genesis~gate
+geometric-mean
+geometry & canonicalization
+global coherence:
+god is
+god is 
+god is _____~
+grep
+groups
+harmonic entries
+harmonic signature demo
+hebrew texts: westminster leningrad codex ~public domain~~ and miqra according to the masorah~ based on the aleppo codex ~cc by-sa 4.0~~ both via sefaria. the one mam word quoted here~ ~~~~~~~ from deuteronomy 29:1~ is shared under cc by-sa.
+held through&nbsp; grace ~ love ~ understanding ~ empathy
+hf
+hold the set; step once per character
+home
+how to join
+how you read it
+html gallery
+i-229 ~ tag 6d ~ js proof catalog
+i. ordinal header ~aegean planes 0-16~
+id:
+identity
+ii. control & 6-dot witness ~0x00 - 0x3f~
+iii. dense state surface ~8-dot patterns~
+image/svg~xml
+in unbound's 
+individual consciousness nodes:
+information flow:
+initialize 0d observer & protocol bootstrap
+initializing p2p node...
+initializing threejs wrapper...
+input length 
+input vectors
+integration:
+ism-915
+it points~ and leaves it open
+jehovah reduces to jhvh~ and jhvh is not yhwh letter for letter. it matches only if j is read as y and v as w~ which is how latin and german spelling carried the name into english. that reading is a choice~ so the proof writes it down as a function and tests both ways. it also tests that the fold doesn't rescue the lord~ so the fold can't hide a substitution.
+join a commons
+journal
+js-docs/other/i-229.md
+js/catalog/i-229.ts
+js/catalog/i-230.ts
+js/pending/
+kernel ~ canonicalization ~ observability parameterizer ~ q~ ~ geometric rbac
+kind:
+kk
+knowledge empowers~ but knowledge itself isn't power ~ it becomes leverage only when it's withheld. so nothing here is withheld. knowledge is kept~ checked~ translated~ and shared freely~ so that better decisions never have to start from nothing.
+ku
+large dial
+latest result:
+lc:0
+leave one of your own. the garden keeps growing while the pages stay open.
+left out on purpose
+legal-by-rule us-style ceilings ~ this page does not transmit
+leningrad: westminster leningrad codex~ deuteronomy 29:1 ~sefaria's hebrew numbering; 29:2 in most english bibles~~ public domain~ via sefaria. aleppo: miqra according to the masorah ~mam~~ based on the aleppo codex~ he.wikisource via sefaria~ cc by-sa; its one word here~ ~~~~~~~~ is shared under that licence. accents removed. rosetta and behistun do not contain this passage.
+letter layer ~the consonant~
+level:
+line
+linear
+lines
+load a path ~ cues bind to texttrack
+load sample data
+loading cryptocurrency data and setting up visualization...
+logic kernel & closure ring
+mark layer ~vowel points; size = how many~
+master cycle
+math
+max
+max power
+mcp
+media spectrum devtools
+media spectrum ~ 4-bit xor adder
+mesh size: 
+mime when served over http/1.1: document 
+min
+mode driven by cue energy ~ 
+motion sensitivity:
+ms
+murs 95j
+n
+narrative ~ spo triple stream
+ndjson commit log
+ndjson commitevent ~ schema
+network consciousness
+network coupling: 
+network size:
+network topology:
+next
+next master cycle
+no
+no source loaded.
+no source ~ workers ready
+node inspector
+node server~ webrtc~ and wasm modules are in the full zip project; this file runs entirely in the browser.
+nodes
+none
+nothing here is trusted unless a plain test could prove it wrong. the test weighs the work~ never the person. what's written is kept exactly; what you make of it is yours; the two are never confused.
+noun
+noun:
+n~1
+observability ~ uk ~ ~~v~
+offset: u~0000
+omi-axioms
+omi-axioms ~ i-230 ~ tag 6e ~ a visual proof
+omi-dom-stack-full.zip
+omi-imo full dom stack
+omi-imo protocol
+on
+one bit per letter cell~ read right to left with the hebrew: 1 where the pair differs. an absent witness holds the empty base~ so against a reading every cell differs~ and two absent witnesses show no difference.
+one function~ one literal~ read every way~ altered by none
+one limit is on the record. two of these~ the lord and yahweh~ had already been run by the earlier audit in 
+op       
+open it
+open the book. there's no sign-up and no password ~ opening it is the welcome.
+operand a ~click bits~
+operand b
+operator
+orbital ~xor~:
+origins.json
+oscilloscope ~time domain~
+other
+p2p network status
+page 
+pan 
+part of speech:
+paste or pick hebrew
+path grammar: 
+pattern
+philosophical constellation
+pick two files.
+pick two points
+pipeline
+pipeline:
+plane 0: bmp
+plane limit: 17 ~utf-16~ ~ state depth: 16-bit
+plane selection ~aegean header~
+play
+play cues
+polygon
+polytope cas
+ports ~128 channels~
+ports ~ch000~ch127~
+position:
+predict
+prev
+product
+pronoun
+pronoun:
+proof: omi-axioms 
+provenance log ~merkle-style~
+publish all views
+quad camera views ~ dna/rna helices ~ cla orbit pulses ~one worker per stage~
+quad camera views ~ one offscreencanvas worker per xor topology
+quantum noise: 
+q~ cost & geometric rbac
+q~ cost j
+q~ minimizes ~~uk~~ ~ observation~~. access is granted when euclidean distance to grant point &lt; threshold.
+r
+radial
+randomize
+randomize states
+range / channels
+range 20~7e
+read a story in your own direction and your own encoding.
+read in order~ mam's marks are sheva~ holam and qamatz. under the declared reading sheva as e~ holam as o and qamatz as a~ that is e~ o~ a: the vowels of jehovah in order. leningrad's pointing has no holam~ so it reads e~ a.
+reading i-229: yhwh and its renderings
+readout
+ready.
+real fft via web audio's 
+reality quantizer
+recursive consensus universe
+reduce
+reduce a name to its base
+reflection ~optional~
+reset
+reset network
+reset universe
+resolved codepoint
+rf spectrum
+rf spectrum map
+rna ~ 718e
+rna ~ ca35
+rotl16~1~ ~ rotl16~3~ ~ rotl16~14~ ~ 0x1d1d
+row legend
+run and record
+run applet
+run cascade demo
+run it
+run it on the name from step 3~ against yhwh
+run it~ record it~ and correct it in the open
+run the 16-row orbit from base 60 and it produces exactly the sixteen characters 
+running~
+sabbath:~
+same pattern~ same input ~ years collapses to under a millisecond~ just by refusing to guess.
+screenshot
+search active: 
+search similarity:
+seek ~
+select camera
+separate layers
+separate the layers of the hebrew
+sequence: 
+set
+seven points~ seven lines. read them as people~ as tones~ or as colors. one shape~ and everyone reads it their own way.
+share used for time~ both sizes
+short.length &gt; 0
+simulated spectral build ~ educational ~ not a radio transmitter
+single pass 
+single step
+single-file canvas model of the epistemic observability engine
+single-file offline build ~ xor ~ cas ~ circuit walkthrough ~ spectrum map ~ fixed point 0x0000
+slot held back
+slot that carries time
+small dial
+snap every 
+snapshot every 
+so the blowup is diagnostic. if a matcher ~ or any step-by-step process ~ explodes~ it is chasing paths one at a time. if it stays linear~ it is holding the whole set and advancing it by one step. you can tell which from the clock alone.
+sonar phase
+sonar_period = 75
+source 
+source: 
+sovereign svg ~ literal loop ~ double-barrel ~ sovereignty scalar
+spectrum grid ~8 rows ~ 16 cols~
+spectrum ~8~16 = 128 bins~
+spin speed
+spo context
+src/terms.mjs
+stable
+start camera
+start evolution
+start p2p node
+start recording
+state
+state 0x0000
+status
+status: offline ~awaiting audio context~
+step
+stop camera
+stop node
+string
+sub ~xor ~ invert~
+sum / result ~ carry
+svg document nodes
+sweep
+sync with p2p network
+synchronization:
+synchronize all
+system creator
+system inspector
+systems active: 
+take 64 slots~ numbered 0 to 63. the first 60 ~0 to 59~ are the positions~ like the minute marks on a clock face. the last four ~60 to 63~ are spare.
+tap a light
+test content:
+tetrahedral consciousness universe
+text/html
+text/html; charset=utf-8
+text/vtt
+the 60-in-64 clock
+the bigger version works the same way: 256 slots~ 240 positions~ 16 spare. in both~ 15 of every 16 slots carry time.
+the blank is drawn~ and left empty. it isn't filled from the outside. that space stays open for whoever opens the book.
+the blowup is the test
+the center
+the charter
+the check either holds or it doesn't. if it fails~ the failure gets recorded~ not hidden~ and a check that doesn't hold moves to 
+the codices write the same hebrew word in layers. the consonants are the oldest layer. the vowel points ~niqqud~ were added later by the masoretes~ and the cantillation accents ~te'amim~ after them. the proof splits each word into consonants and marks~ then compares the layers separately.
+the constellation
+the counter
+the curve is a model fit to five measured runs ~ exact at the dots~ projected between and beyond. solid to length 28 ~measured~~ dashed past it.
+the dial
+the difference
+the dome
+the engine chases every path
+the file stores the characters themselves. the codepoints are shown in the comments here~ and step 6 breaks each word into one codepoint per row.
+the fix
+the gate
+the light garden
+the masks between witnesses
+the nested form is ambiguous: there are exponentially many ways to split a run of 
+the neuron
+the observer ~pannernode~
+the one rule
+the open question
+the pattern
+the principle
+the proof asserts how the letters relate. what a rendering means~ and whether the fold is fair~ are readings~ and they stay open.
+the question came from the author: what happens to the literal when yhwh becomes the lord~ yahweh~ yah~ jah or jehovah~ the predictions go into the file's header first~ so the result can prove them wrong. a check written after seeing the answer can't fail~ and a check that can't fail tests nothing.
+the seven lines~ checked
+the sonar
+the sonar's 75 is the 60-in-64 dial with five blocks
+the spare codes
+the spare slots are what turn a list of 60 numbers into a dial. they stand outside the count~ so they can mark events: where a lap starts~ where it wraps~ or where a new cycle begins. which job each spare code gets is your design choice. the structure only guarantees that there are four on the small dial and sixteen on the large one.
+the structure is fixed: the name~ its four letter cells~ and in each cell a letter layer and a mark layer. only the values change from witness to witness. a tile that grows or shrinks is where two witnesses differ. no witness is taken as right.
+the third point on their line is computed as a ~ b~ then the line is lit. use tab and enter~ or tap.
+the ticking comes from a counter that adds one at each step and wraps from 59 back to 0 ~or from 239 back to 0 on the large dial~. xor alone only swaps slots back and forth~ so it cannot advance a hand. the two jobs divide cleanly:
+the xor orbital moves them around. use 60 as the base and the 64 slots are rearranged so the four spare codes land on slots 0 to 3~ and positions 0 to 3 land on 60 to 63. nothing is lost or doubled. the rearrangement is its own undo: apply it twice and every slot is back where it started.
+there is never anything to back up from~ because you never chose a single path ~ you carried them all together. the work is one pass: 
+this is not a platform~ a product~ an institution~ or an owner. it's a free~ forkable reference anyone can learn from~ build on~ and adapt ~ and no one is judged by a standard beyond their own best decision.
+this is the shape of every search that explodes: pick one possibility and plan to back up if it fails~ and the failures multiply. carry all the possibilities together and move them in lockstep~ and the explosion flattens into a walk.
+this page follows one proof from start to finish~ in the order the work was done. each step gives the reason~ the actual lines from 
+this page is one file. pin it~ fork it~ host it anywhere ~ ipfs~ a chain~ a thumb drive. it asks no permission to exist~ and none to persist.
+this page uses only what holds up as arithmetic or was checked directly. it makes no claim that 240 is the size of a geometric rotation group~ that the spare codes are the first unicode control codes~ or that the dial produces ~.
+three came to the gate of the city ~ wisdom~ law~ and the tribe. they did not arrive together~ and they did not agree. two scribes wrote it down. the question they came to ask is the one you're invited into: how shall we live together~
+three.js mqtt controller
+tick
+tick mod 5040
+tick:0
+time flow: 
+time step:
+time to match
+timeline ~click a snapshot to inspect it~
+to cover more than one dial~ stack counters like hours~ minutes and seconds. for example~ 7 ~ 3 ~ 240 = 5040~ and numbering them as 
+toggle labels
+total entries: 
+trace log
+trichromatic rf map ~reference only~
+tsx/src/templates/atomic incidence surface.tsx
+two bases mirror when they are the same literal~ or when one is a non-empty head of the other. otherwise the rendering raises: it puts a different literal in place of the original. this is the guard 
+two patterns that accept the same strings
+two switches~ and they're yours
+two views~ one check
+uhf
+uk
+uk ~ ~~v~
+unbind all
+universal binary hypergraph protocol ~ubhp~
+universal ip basis protocol - geometric consensus edition
+unzip omi-dom-stack-full.zip cd omi-dom-stack && npm install && node server/server.js # http://localhost:8742
+uu
+verb
+verb:
+verification table ~carry = 0~
+vertex
+vertex 
+vertices v
+vhf
+view a
+view b
+visible: 
+visualization mode:
+wesiri
+what holds it together
+what is proved is arithmetic. that the fifth channel is the hidden 5 of 5!~ a time zone~ or the 6000 years is the author's reading~ held open.
+what this file is
+what's inside
+why
+why 
+why 240 and 60 fit together
+with the astronomical year index as the tick ~
+word pointer ~braille offset~
+word:
+wordnet basis ~ signed spo simplex
+write the prediction before anything runs
+x ~state~
+xor-10
+xor-5
+xor-6
+xor-8
+xor-only
+yhwh across the four witnesses
+you own only your decisions
+your 
+your files
+zero-graph harmonic client
+ziguaroth ~ _catalog/yhwh
+~
+~ 
+~       
+~ 525
+~ 7-day journey
+~ and a live panel that runs the same code in your browser~ so you can try your own inputs and watch each transformation.
+~ and more
+~ binomial pattern analysis
+~ collective consensus
+~ fails~ backs up~ and tries the next ~ all of them ~ before it can answer ~no.~ the count roughly doubles with each character added. that is the climbing curve~ and the compass needle swinging right.
+~ however ambiguous the pattern. that is the flat line~ and it is the idea ken thompson published in 1968 ~ why tools like 
+~ import harmonic database ~json~
+~ in four groups of four. that is the same four-block pattern you use elsewhere.
+~ mic
+~ monitoring active
+~ play
+~ security camera
+~ so those two predictions were not blind. the others were.
+~ step
+~ the 7-day god mirror
+~ ~ ~ = ~
+~. it does not divide the 5~040-tick master clock. each master cycle it starts one channel later~ and after five cycles~ 
+~/~:uppercase:~~:lowercase:~~/~
+~0~ aleppo
+~1~ rosetta
+~2~ behistun
+~3~ leningrad
+~:
+~:0.00
+~a~~~~
+~d threshold: 
+~s ending in one character that can~t match ~ 
+~s into ~groups of a~s.~ for four a~s alone:
+~s~ and nothing else~ ~ exactly the same strings. one is a trap.
+~~ use microphone
+~~v~
