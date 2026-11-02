@@ -1,0 +1,38 @@
+#!/bin/rc
+# runes.rc - inside Plan 9, a check rather than a port: libc's rune routines against UTF-8 read another way
+# (zrunes.c; in/runes written on the host by in/runes/gen.mjs: node's TextEncoder of every scalar value and its
+# TextDecoder's reading of 143,768 byte strings, and the prediction of chartorune from its source, filed first).
+# runetochar writes every scalar value as node does; chartorune reads them back in order; runetochar and runelen
+# make Runeerror of surrogates and runes past Runemax; fullrune as predicted; chartorune reads the strings as
+# predicted, a bad byte one Runeerror; and zrunes -n, the WHATWG reading (a prefix that cannot be completed
+# replaced once), reads them as node does: the two readings differ exactly where the prediction said.
+rfork e
+w=/tmp/zrunesw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zrunes.c PLAN9/in/runes} || exit tar
+g=$w/unbound/PLAN9/in/runes
+cd $w/unbound/PLAN9/src
+8c zrunes.c && 8l -o $w/zrunes zrunes.8 || exit compile
+fail=0
+$w/zrunes encode >$w/all.utf8
+if(cmp -s $w/all.utf8 $g/all.utf8) echo ok runetochar writes every scalar value as node TextEncoder does
+if not { echo FAIL encode; fail=1 }
+$w/zrunes decode $g/all.utf8 >$w/decode
+cat $w/decode
+echo 'decode 1112064 runes, every scalar value in order, the last 10ffff; utfnlen 0 at U+0000, 1112063 after it' >$w/decode.want
+if(! cmp -s $w/decode $w/decode.want){ echo FAIL decode; fail=1 }
+for(t in odd fullrune){
+	$w/zrunes $t >$w/$t
+	if(cmp -s $w/$t $g/$t) echo ok $t as predicted from the source
+	if not { echo FAIL $t; fail=1 }
+}
+$w/zrunes seqs >$w/plan9
+if(cmp -s $w/plan9 $g/plan9) echo ok chartorune reads the 143768 strings as predicted from its source
+if not { echo FAIL chartorune; fail=1 }
+$w/zrunes -n seqs >$w/whatwg
+if(cmp -s $w/whatwg $g/node) echo ok zrunes -n, the WHATWG reading, reads them as node TextDecoder does
+if not { echo FAIL whatwg; fail=1 }
+if(cmp -s $w/plan9 $w/whatwg){ echo FAIL the falsifier reads as chartorune; fail=1 }
+if not echo ok the falsifier differs: chartorune and the WHATWG reading part
+if(~ $fail 0) echo 'runes.rc: every answer as expected'
