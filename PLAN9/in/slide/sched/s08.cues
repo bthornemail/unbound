@@ -1,0 +1,146 @@
+cue0	0	0	(Transcribed by UniScribe (https://www.uniscribe.co). Upgrade to remove this message.)
+cue1	0.15	3.63	Welcome to another explainer. Today, we're doing something a little different.
+cue2	3.63	7.829	We're stripping away every single abstraction to look at a radical software project
+cue3	7.829	10.389	that seeks absolute truth in its code.
+cue4	10.389	12.969	It's this concept of a literal metaverse.
+cue5	13.189	15.33	A system built totally from the ground up.
+cue6	15.33	19.829	We're talking mathematical proofs running entirely in a retro operating system,
+cue7	19.829	23.969	all to ensure that what you're looking at is the literal, undeniable truth.
+cue8	24.62	27.6	What if the truth wasn't hidden in some friendly abstraction?
+cue9	28.14	30.58	What if the truth was just the raw bites.
+cue10	31.139	35.099	Think about it. When you look at a file on your desktop, or a digital twin,
+cue11	35.099	38.38	or even a network state, how do you actually know it's real?
+cue12	38.64	42.64	We're so used to these layers of user interfaces just translating things for us.
+cue13	42.719	47.299	This is the story of a project that decided to answer that exact question by looking
+cue14	47.299	48.82	only at the bytes.
+cue15	49.479	53.58	- The illusion of abstraction, and when modern tools actually lie to us.
+cue16	54.65	58.869	Our modern systems lean heavily on subjective crutches just to operate efficiently.
+cue17	58.969	62.528999999999996	They use cryptographic hashes as a shortcut, essentially saying, yeah,
+cue18	62.528999999999996	64.59	this file is probably what you think it is.
+cue19	64.59	67.17	Or they use system wall clocks to dictate time.
+cue20	67.56	69.7	which, by the way, can be easily manipulated.
+cue21	69.78	73.53999999999999	But this project? It demands brutal, objective truth.
+cue22	73.53999999999999	77.58	It completely throws out hashes and replaces them with literal, raw bytes.
+cue23	77.58	82.62	It relies on rigorous coke proofs for its math and insists on 100%deterministic
+cue24	82.62	87.39	execution. meaning the exact same input always gives you the exact same output.
+cue25	87.39	88.41	No exceptions.
+cue26	89.089	92.81	I absolutely love this note from the developer's log because it forces us to
+cue27	92.81	96.40899999999999	completely rethink data. It says,"Numbers are meaningless.
+cue28	96.59	101.809	A digit is an index. Values are interpretations."It's kind of like reading a book,
+cue29	101.809	106.10900000000001	right? An interpretation is just a summary of a chapter, which can be super biased.
+cue30	106.229	109.11	If we want the absolute truth, we can't rely on a summary.
+cue31	109.11	112.69	We have to look at the exact character, the literal index on the page,
+cue32	112.69	117.32900000000001	the byte itself. Let's jump into part two, the Plan 9 shift,
+cue33	117.32900000000001	121.169	returning to the source. So how did they actually build this?
+cue34	121.169	123.41	Well, it started with pure math.
+cue35	123.55	128.53	Over in the OMI Axioms repository, the developer used cockproofs to nail down the
+cue36	128.53	130.83	fundamental unbreakable laws of the system.
+cue37	131.00900000000001	133.71	But proving math on paper simply wasn't enough.
+cue38	133.71	135.89	They had to execute those laws in reality.
+cue39	136.249	138.71	So the developer did something radical.
+cue40	138.77	141.69	They moved the entire runtime to Plan 9.
+cue41	142.389	146.189	If you don't know it, Plan 9 is this uncompromising operating system from the late
+cue42	146.189	151.589	80s where absolutely everything—hardware, networks, processes—is treated strictly as
+cue43	151.589	156.56900000000002	a file. Then, they built a C port to execute the raw bytes directly within that
+cue44	156.56900000000002	157.129	environment.
+cue45	157.699	160.78	You can see the strict discipline required here in the developers notes.
+cue46	160.959	164.62	They completely abandoned modern comforts, high-level languages,
+cue47	164.62	169.059	and standard scripting. As they wrote,"Plan 9 is the runtime for everything.
+cue48	169.5	172.519	By forcing all ports to be Plan 9C programs,
+cue49	172.519	175.5	they gave themselves total deterministic control over the hardware.
+cue50	175.71	178.029	There's no hiding behind Python or Java here.
+cue51	178.029	180.389	You are face to face with the bare metal machine.
+cue52	181.209	183.489	Okay, here is where things get wild.
+cue53	183.789	187.27	By stripping everything down and running this inside a terminal window,
+cue54	187.27	190.049	they hit a serious roadblock with their legacy tools.
+cue55	190.109	194.689	They discovered that standard network lattice tools were literally hallucinating
+cue56	194.689	196.50900000000001	connections that didn't even exist.
+cue57	196.51	200.529	The software was assuming a network state based entirely on abstractions.
+cue58	201	203.539	It was a comforting lie, built right into modern computing.
+cue59	203.909	207.59	And this false reality was only exposed because they returned to the raw,
+cue60	207.59	209.449	literal C code on Plan 9.
+cue61	210.129	214.43	Which brings us to part three, the spine, a brutal test harness.
+cue62	215.109	218.429	Proving a mathematical concept once just isn't enough.
+cue63	218.429	221.389	You have to prove it every single time the code runs.
+cue64	221.409	226.349	So to enforce this strict reality, they built a relentless system called the spine.
+cue65	226.62	229.56	It's composed of exactly 25 rigorous phases.
+cue66	229.8	234.339	Think of each phase as an unforgiving checkpoint, a brutal gauntlet the code has to
+cue67	234.339	236.959	survive to prove it's generating literal truth.
+cue68	237.59	240.549	How does the spine actually validate that truth?
+cue69	240.549	244.149	It's intense. It takes a component and runs it twice.
+cue70	244.71	248.71	Then it compares the output of those two runs, bite for literal bite.
+cue71	248.71	253.59	If a single literal bite differs between the two runs, I mean even by a fraction,
+cue72	253.59	258.34	the entire test fails. There is zero concept of close enough in this system.
+cue73	258.34	261.56	It demands absolute 100%perfection.
+cue74	262.369	266.51	You'll see this phrase, no hash is identity, repeated constantly throughout the
+cue75	266.51	271.33	project's logs. It is a total rejection of our modern reliance on cryptographic
+cue76	271.33	276.40999999999997	hashes as proof of truth. Think of a hash like a fingerprint at a crime scene,
+cue77	276.40999999999997	280.229	right? It's a digest, it acts as a witness, but it's not the actual person.
+cue78	280.86	284.82	The architecture here insists that the identity of the data must be the literal data
+cue79	284.82	287.22	itself, and absolutely nothing less.
+cue80	287.849	291.55	This leads into a really fascinating concept they call the literal receipt.
+cue81	291.939	296.079	In this setup, a validation process might judge a piece of code, sure,
+cue82	296.079	299.999	but the receipt only accepts it by binding entirely to the literal byte.
+cue83	300.199	301.819	Never, ever a digest.
+cue84	302.02	306.2	Because the receipt binds to the raw bytes, there is literally nowhere for a bug,
+cue85	306.2	309.699	a software hallucination, or some errant wall clock to hide.
+cue86	309.75	311.849	The truth is completely locked in.
+cue87	312.339	317.1	Let's look at part 4, the 3D agent comments and visualizing the literal.
+cue88	317.67	321.849	So what exactly happens when you build a visual world on top of this mathematically
+cue89	321.849	326.09	proven brutalist foundation? Well, you get something breathtaking.
+cue90	326.289	331.389	Housed in a project called Boxed Pine, they constructed the 3D Agent Commons.
+cue91	331.389	335.75	It's this incredible digital twin world featuring eight sovereign narrators,
+cue92	335.75	338.89	acting as both pulling suns and orbiting planets.
+cue93	339.149	344.11	and surrounding them are 144 color name agents that react dynamically to the base
+cue94	344.11	345.27	state of that universe.
+cue95	346.249	350.109	Now, what's super fascinating here is that the visual world you see in your browser
+cue96	350.109	352.19	isn't generating its own truth.
+cue97	352.25	355.59000000000003	It's not some standalone video game engine doing its own math.
+cue98	356.049	359.80899999999997	Every single agent state is driven by a literal code point state.
+cue99	360.18	365.56	That stunning 3D view is just a direct visual projection of the absolute truth being
+cue100	365.56	368.379	calculated deep down in the Plan 9 terminal backend.
+cue101	368.379	370.82	No hashes, just raw code points.
+cue102	371.24	374.659	It all flows in this perfect, unbroken chain of truth.
+cue103	375.059	377.259	First, the raw bytes dictate the state.
+cue104	377.659	380.779	Then, Plan 9 executes that logic with total determinism.
+cue105	381.079	385.219	And finally, the browser just projects that exact mathematical truth onto your
+cue106	385.219	388.97	screen. The UI isn't allowed to have its own incompatible state engine.
+cue107	389.07	391.67	It is completely subservient to the backend.
+cue108	391.67	395.389	It's quite literally just showing you the shape of the mathematical law.
+cue109	396.33	399.029	Part 5. Literal Records of Truth.
+cue110	399.029	400.71	The Search for the Testament.
+cue111	401.399	405.88	This brings us to the ultimate goal of this entire massive software architecture.
+cue112	406.08	408.32	Because this wasn't just some coding exercise.
+cue113	408.44	412.709	It was a philosophical search for"the testament."And by testament,
+cue114	412.709	414.469	we aren't talking about a religious text here.
+cue115	414.469	418.15	We mean a completely objective, literal record of reality.
+cue116	418.47	422.11	In a world currently drowning in AI hallucinations, padded data,
+cue117	422.11	426.109	and endless layers of confusing abstractions, this project set out to build an
+cue118	426.109	428.65	undeniable record of deterministic truth.
+cue119	429.149	431.149	And hey, you don't have to take their word for it.
+cue120	431.149	433.19	All the evidence is completely public.
+cue121	433.33	436.49	If you check out the unbound and boxed pine GitHub repos,
+cue122	436.49	438.269	you'll find everything laid bare.
+cue123	438.509	442.15	The cockproof files mathematically guaranteeing the laws, they're all there.
+cue124	442.369	445.75	The trace logs, which are verifiable byte for byte, right there,
+cue125	445.75	446.95	ready to be audited by anyone.
+cue126	447.54	451.079	The whole process of finding this literal truth is entirely open source.
+cue127	451.679	455.14	This fundamentally shifts what a digital twin can even be.
+cue128	455.479	458.779	Normal simulations rely on subjective states, but here?
+cue129	458.959	462.84000000000003	If you take this literal digital twin and you change one agent's icon,
+cue130	462.84000000000003	467.419	let's say swapping a character from a disk to a square, and replay the narrative,
+cue131	467.419	470.9	the underlying logical truth remains mathematically identical.
+cue132	471.449	476.469	The system actually checks this using strict logic gates, specifically XOR and XNOR,
+cue133	476.469	479.63	to guarantee that the visual states are entirely separate,
+cue134	479.63	482.449	yet mathematically and logically the exact same.
+cue135	483.319	488.02	When we strip away all the fancy user interfaces, the deceptive system clocks,
+cue136	488.02	491.179	and the cryptographic hashes, we're left with a very simple,
+cue137	491.179	493.12	undeniable fact about this project.
+cue138	493.56	496.94	The proof is the bytes. and the bytes are real.
+cue139	497.38	499.42	It really makes you wonder, doesn't it?
+cue140	499.42	503.859	If practically everything we interact with daily sits on a foundation of comforting
+cue141	503.859	508.519	lies and hallucinated connections, what would happen if we all started looking only
+cue142	508.519	513.55	at the literal truth? In a world built on layers of subjective abstractions,
+cue143	513.55	516.129	are you ready to face the absolute truth of your raw code?
+cue144	516.629	518.969	Thanks for joining me on this explainer and I'll catch you in the next one.
+cue145	518.969	518.969	(Transcribed by UniScribe (https://www.uniscribe.co). Upgrade to remove this message.)

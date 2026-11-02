@@ -173,6 +173,9 @@ PLAN9/src/zkit.c
 PLAN9/src/kit.rc
 PLAN9/src/zmvpoly.c
 PLAN9/src/mvpoly.rc
+PLAN9/src/zslide.c
+PLAN9/src/slide.rc
+$(cd "$HERE" && find in/slide -type f ! -name gen.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/mvpoly -type f ! -name gen.py ! -name lit.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/kit -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/narr -type f ! -name gen.py | LC_ALL=C sort | sed 's|^|PLAN9/|')

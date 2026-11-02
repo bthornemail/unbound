@@ -1,0 +1,65 @@
+#!/bin/rc
+# slide.rc - inside Plan 9: omi-dom-stack's 240-clock and 5040 slide rule (shared/clock-sliderule.js)
+# ported native (zslide.c). Checked against in/slide, written on the host by in/slide/gen.mjs with the
+# module itself: the codex's 24 colours; every tick of the 5040 rule; cue times on the 240 grid; clocks and
+# rules driven step by step; and the schedules and windows of 30 cue sets, the four podcasts' among them.
+# The falsifier, zslide -n, 239 ticks a cycle in place of 240.
+rfork e
+w=/tmp/zslidew
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zslide.c PLAN9/in/slide} || exit tar
+g=$w/unbound/PLAN9/in/slide
+cd $w/unbound/PLAN9/src
+8c zslide.c && 8l -o $w/zslide zslide.8 || exit compile
+Z=$w/zslide
+fail=0
+n=()
+f=()
+fn check {
+	# check expected flag op args...: the port's output against the module's
+	e=$1; flag=$2; shift; shift
+	if(~ $flag '') flag=()	# no flag: an empty list, not an empty word
+	$Z $flag $* >$w/out
+	if(cmp -s $w/out $e) echo same
+	if not echo differs
+}
+fn cue {
+	# cue expected flag: a schedule from the case's cues
+	flag=$2
+	if(~ $flag '') flag=()
+	ifs=' 
+' { a=`{cat $1} }	# the case's arguments are words
+	$Z $flag sched $a <$1.cues >$w/out
+	if(cmp -s $w/out $1.expect) echo same
+	if not echo differs
+}
+ifs='
+'
+for(x in colors ticks){
+	if(~ `{check $g/$x.expect '' $x} same) n=($n x)
+	if not { echo FAIL $x; fail=1 }
+}
+ifs=' 
+' { args=`{cat $g/cues.args} }
+if(~ `{check $g/cues.expect '' cues $args} same) n=($n x)
+if not { echo FAIL cues; fail=1 }
+for(c in `{ls $g/clock/k?? $g/rule/r??}){
+	op=clock
+	if(~ $c */rule/*) op=rule
+	ifs=' 
+' { a=`{cat $c} }
+	if(~ `{check $c.expect '' $op $a} same) n=($n x)
+	if not { echo FAIL $c; fail=1 }
+	if(~ `{check $c.expect -n $op $a} differs) f=($f x)
+}
+for(c in `{ls $g/sched/s?? }){
+	if(~ `{cue $c ''} same) n=($n x)
+	if not { echo FAIL $c; fail=1 }
+	if(~ `{cue $c -n} differs) f=($f x)
+}
+if(~ `{check $g/ticks.expect -n ticks} differs) f=($f x)
+echo zslide gives $#n answers as clock-sliderule.js does: colours, ticks, cue times, 20 clocks, 20 rules, 30 schedules
+if(~ $#f 51) echo ok the falsifier zslide -n, 239 ticks a cycle, differs in $#f
+if not { echo FAIL falsifier $#f; fail=1 }
+if(~ $fail 0) echo 'slide.rc: every answer as expected'

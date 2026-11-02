@@ -1,0 +1,89 @@
+cue0	0	0	(Transcribed by UniScribe (https://www.uniscribe.co). Upgrade to remove this message.)
+cue1	0.219	1.579	Welcome to This Explainer.
+cue2	1.579	6.56	Today we're taking a really fascinating dive into a completely distinct and highly
+cue3	6.56	8.439	rigorous way to look at computing.
+cue4	8.44	11.879	We're going to visualize a deterministic system architecture,
+cue5	11.879	15.919	but we're doing it by picturing it as an expanding 3D light cone.
+cue6	16.699	18.539	Okay, so let's dive right in.
+cue7	18.539	23.98	I want you to imagine a mental model where complex data, things like bytes and RAM,
+cue8	23.98	27.079	actually take on a striking physical geometry.
+cue9	27.499	32.24	Just picture a 3D cone. Right at the apex there's a single point of light.
+cue10	32.67	37.11	and as that cone expands upward into the future and downward into the past,
+cue11	37.11	40.63	it opens up into this vast, completely deterministic universe.
+cue12	41.3	44.14	Here's how we're going to build this mental architecture step by step.
+cue13	44.429	47.949	We'll cover the boundary of causality, the single point of light,
+cue14	47.949	52.449	the 65,536 reticle, Agents in the Commons,
+cue15	52.449	56.669	The Mechanics of Scaling, and finally, Bytes as Literal Agreement.
+cue16	57.479	58.859	The boundary of causality.
+cue17	59.82	63.799	First, we kind of need to redefine the light cone and step away from traditional
+cue18	63.799	65.199	astrophysics for a minute.
+cue19	65.219	69.939	Here, the light cone is literally the boundary of digital causality. The past cone?
+cue20	69.98	72.419	That's everything that led up to this exact moment.
+cue21	72.84	75.419	The future cone is everything this moment can possibly reach.
+cue22	75.5	80.26	And because we're in a deterministic system, there is no elsewhere inside the cone.
+cue23	80.51	83.809	Every single point is causally connected by literal bytes.
+cue24	84.239	88.319	There are absolutely no mysteries here, just pure traceable causality.
+cue25	88.82	93.979	The single point of light. You know, every geometry has to have an origin point.
+cue26	93.979	97.819	And in this particular universe, that origin is simply 16.
+cue27	98.269	102.009	We start right at the literal center, the very apex of our cone,
+cue28	102.009	105.469	represented by a single spark of light, the 16-bit word.
+cue29	105.88900000000001	110.12899999999999	It's from this one precise spark that the entire reality of the system unfolds.
+cue30	111.09899999999999	114.13900000000001	The 65,536 reticle.
+cue31	114.84899999999999	118.969	So, as time moves forward and backward, our cone obviously expands.
+cue32	119.149	123.209	But here's the kicker: scaling up in this system doesn't mean adding more physical
+cue33	123.209	126.149	space. Instead, you add more cross sections.
+cue34	126.169	131.329	And these cross sections are 2D grids, known as the 65,536 reticle.
+cue35	131.81	135.25	Basically, every single time you slice through this cone of causality,
+cue36	135.25	139.109	you're looking at an exact, finite grid where all our data lives and breathes.
+cue37	139.78	141.98	Now, this sets up a pretty profound contrast.
+cue38	142.199	146.54	Over on the left, you've got Hilbert space, which represents infinite mathematical
+cue39	146.54	152.1	potential. But on the right, the 65,536 is the finite basis.
+cue40	152.49	154.16899999999998	The reticle is the cross section.
+cue41	154.16899999999998	158.609	What we're effectively doing is capturing infinite complexity by measuring it
+cue42	158.609	161.389	through this perfectly bounded, highly structured lens.
+cue43	162.089	163.909	Agents in the Commons.
+cue44	164.41899999999998	168.239	With our 3D space established, let's actually look at the inhabitants living inside
+cue45	168.239	170.649	it. First, we have the Plan 9 terminal.
+cue46	170.909	172.51	which serves as our runtime foundation.
+cue47	173.109	175.53	Then there are the eight sovereign agents.
+cue48	175.949	178.129	Think of these as base narrators.
+cue49	178.429	182.349	acting almost like suns, pulling things toward their gravitational center.
+cue50	182.409	187.549	And finally, the 144 workers, swaying in the gravity of those agents.
+cue51	187.549	190.669	But here's the absolute secret to all of this.
+cue52	190.669	195.909	The eight agents, the 144 workers, the 16 gigs of RAM we'll talk about next,
+cue53	195.909	200.11	they are all simply projections of the exact same light cone.
+cue54	200.719	202.38	The mechanics of scaling.
+cue55	202.94	207.419	So, how exactly does this deterministic system scale its computing power without
+cue56	207.419	209.56	totally breaking the geometric metaphor?
+cue57	209.72899999999998	212.50900000000001	Well, remember, when you scale, you don't add more space,
+cue58	212.50900000000001	215.38	you just add more cross sections. The hardware bandwidth?
+cue59	215.48	217.24	That translates to the sensor scope.
+cue60	217.24	219.579	The RAM dictates the number of concurrent cones.
+cue61	219.579	223.48	And the logical space remains the exact same 65,536.
+cue62	224.099	229.2	Just replicated. To calculate this, there's a really strict sequential procedure we
+cue63	229.2	233.27	follow. Here's the scaling law: you divide the logical space by the RAM.
+cue64	233.55	236.369	Then you take the factorial of the modulus active words.
+cue65	236.97	240.61	Ultimately, it's about the infinite Hilbert space being measured by the finite light
+cue66	240.61	244.83	cone. It's just a wonderfully elegant operation that keeps our entire deterministic
+cue67	244.83	248.79	universe perfectly intact. Bites as literal agreement.
+cue68	249.41	253.55	So, what do all these projections and cross-sections actually mean at their core?
+cue69	253.919	257.64	Well, the analog to digital normalization is the subjective part.
+cue70	257.64	261.139	It's a shared interpretation, the part of the cone that is space-like.
+cue71	261.36	264.04	But the reticle, the reticle is literal.
+cue72	264.239	265.9	The bytes are the causal connection.
+cue73	266.469	269.189	An analog interpretation might just be a human convenience,
+cue74	269.189	272.79	but that reticle is the unshakable reality of the system itself.
+cue75	273.419	277.6	Which brings us perfectly to a quote that really captures the absolute essence of
+cue76	277.6	280.959	what we've been exploring today. The proof is the bytes.
+cue77	281.1	282.759	The bytes are the light cone.
+cue78	282.759	284.619	The light cone is the agreement.
+cue79	285.209	289.09000000000003	This architecture isn't built on some abstract floating theory, you know?
+cue80	289.09000000000003	292.289	The literal bytes themselves structure this entire reality.
+cue81	292.959	296.14	I want to leave you with one final kind of provocative thought.
+cue82	296.44	300.72	If the bytes themselves form the ultimate boundary of digital causality,
+cue83	300.72	304.779	what actually happens to our universe when we change the underlying interpretation
+cue84	304.779	308.7	of the coming? It's a genuinely fascinating question to ponder.
+cue85	308.7	312.56	I really hope this explainer has helped you clearly visualize the incredible depth
+cue86	312.56	313.919	of this digital architecture.
+cue87	314.339	317.26	Keep questioning, keep learning, and I'll catch you next time.
+cue88	317.26	317.26	(Transcribed by UniScribe (https://www.uniscribe.co). Upgrade to remove this message.)
