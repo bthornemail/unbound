@@ -17,7 +17,12 @@ export function pieces(text) {
   const push = (prod, a, b, extra = {}) => { out.push({ prod, a, b, ...extra }); };
   const tagEnd = (j) => {	// j after the name: attributes, quoted values skipped, to the closing ">"
     let q = null;
-    for (; j < n; j++) { const c = r[j]; if (q) { if (c === q) q = null; } else if (c === '"' || c === "'") { const prev = r[j - 1]; if (prev === "=" || (SP(prev) && /=\s*$/.test(r.slice(0, j).join("").slice(-8)))) q = c; } else if (c === ">") return j + 1; }
+    for (; j < n; j++) {	// a quote opens a value when the nearest rune before it, spaces aside, is "="
+      const c = r[j];
+      if (q) { if (c === q) q = null; }
+      else if (c === '"' || c === "'") { let k = j - 1; while (SP(r[k])) k--; if (r[k] === "=") q = c; }
+      else if (c === ">") return j + 1;
+    }
     return -1;
   };
   while (i < n) {
