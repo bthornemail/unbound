@@ -1,0 +1,51 @@
+#!/bin/rc
+# portmat.rc - inside Plan 9: Metaverse Kit's mv-portmatroid-project ported native (zportmat.c). Each case
+# of in/portmat (written on the host by in/portmat/gen.mjs with the kit's own tool: port-matroid's test
+# snapshots through its --snapshot path, and drawn snapshots) runs in a fresh directory: the projection on
+# stdout or in the --out file, byte for byte, the exit (ok or not) and a refusal's first line as the tool
+# gives them. The falsifier, zportmat -n: a missing field left out in place of the tool's "undefined".
+rfork e
+w=/tmp/zportmatw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zportmat.c PLAN9/in/portmat} || exit tar
+g=$w/unbound/PLAN9/in/portmat
+cd $w/unbound/PLAN9/src
+8c zportmat.c && 8l -o $w/zportmat zportmat.8 || exit compile
+fail=0
+n=()
+f=()
+fn pcase {
+	# pcase case flag...: the case in a fresh directory; ok=no on any difference
+	c=$1
+	shift
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t
+	cp $c/snap.json $t/snap.json
+	ifs=' 
+' { A=`{cat $c/args} }	# a space and a newline: the args are words
+	@{ cd $t; $w/zportmat $* $A >$t/.out >[2]$t/.err }
+	st=$status
+	if(! cmp -s $t/.out $c/expect.stdout) ok=no
+	if(test -e $c/expect.out && ! cmp -s $t/proj.json $c/expect.out) ok=no
+	if(~ `{cat $c/expect.status} 0){ if(! ~ $st '') ok=no }
+	if not {
+		if(~ $st '') ok=no
+		sed 1q $t/.err >$t/.e1
+		if(! cmp -s $t/.e1 $c/expect.stderr) ok=no
+	}
+}
+for(c in `{ls -d $g/m*}){
+	ok=yes
+	pcase $c
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	ok=yes
+	pcase $c -n
+	if(~ $ok no) f=($f x)
+}
+echo zportmat gives $#n cases as mv-portmatroid-project does
+if(~ $#f 31) echo ok the falsifier zportmat -n differs in $#f cases
+if not { echo FAIL falsifier $#f; fail=1 }
+if(~ $fail 0) echo 'portmat.rc: every answer as expected'

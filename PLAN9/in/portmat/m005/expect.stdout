@@ -1,0 +1,1 @@
+{"kind":"metaverse-kit.projector.port_matroid.v0","nodes":[{"components":{"name":{"t":"string","v":"test"}},"etype":"test","node_id":"ent:1"}],"snapshot":{"entity_count":1,"hash_hex":"128bf33513e9be14d8d9f839b694eee1670750d40c7f933fc533f937b7d2a9f5","tick":0}}

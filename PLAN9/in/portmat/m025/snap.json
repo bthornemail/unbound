@@ -1,0 +1,1 @@
+{"tick":1e+21,"entity_count":4,"entities":[{"components":null},{"components":{"name":"é"}},{"components":{"A":123456789012}},{"components":{"A":{"b":123456789012,"a":{"t":"u64","v":"255"},"αβγ":"é"}}}]}
