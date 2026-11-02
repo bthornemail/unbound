@@ -1,0 +1,2 @@
+mv-evidence-bundle build --subject <subject.json> --claim-type <type> --evidence <artifact.json>... --out <bundle.json>
+mv-evidence-bundle verify --in <bundle.json>

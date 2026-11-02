@@ -1,0 +1,1 @@
+bundle build --subject subject.json --claim-type x --out out.json

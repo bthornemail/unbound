@@ -1,0 +1,47 @@
+#!/bin/rc
+# mvevid.rc - inside Plan 9: Metaverse Kit's mv-evidence-bundle and mv-alignment ported
+# native and literal (zmvevid.c). Each case of in/mvevid (written on the host by in/mvevid/gen.mjs with the
+# kit's own tools: an emit's literal read off the tool's artifact, a validate's answer the tool's own on the
+# literal digested back, and for a report the tool's emit on the inputs it holds) runs in its directory:
+# stdout, stderr, the exit (ok or not) and the emitted literal, byte for byte. The falsifier, zmvevid -n:
+# verify and validate check the form and trust what is written, as a digest does.
+rfork e
+w=/tmp/zmvevidw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zmvevid.c PLAN9/in/mvevid} || exit tar
+g=$w/unbound/PLAN9/in/mvevid
+cd $w/unbound/PLAN9/src
+8c zmvevid.c && 8l -o $w/zmvevid zmvevid.8 || exit compile
+fail=0
+n=()
+f=()
+fn wcase {
+	# wcase case flag...: the case in its directory; ok=no on any difference
+	c=$1
+	shift
+	ifs=' 
+' { A=`{cat $c/args} }	# a space and a newline: the args are words
+	rm -f $c/out.json
+	@{ cd $c; $w/zmvevid $* $A >$w/.out >[2]$w/.err }
+	st=$status
+	if(! cmp -s $w/.out $c/expect.stdout) ok=no
+	if(! cmp -s $w/.err $c/expect.stderr) ok=no
+	if(~ `{cat $c/expect.status} 0){ if(! ~ $st '') ok=no }
+	if not { if(~ $st '') ok=no }
+	if(test -e $c/expect.out && ! cmp -s $c/out.json $c/expect.out) ok=no
+	rm -f $c/out.json
+}
+for(c in `{ls -d $g/[ab]*}){
+	ok=yes
+	wcase $c
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	ok=yes
+	wcase $c -n
+	if(~ $ok no) f=($f x)
+}
+echo zmvevid gives $#n cases as mv-evidence-bundle and mv-alignment do, literal
+if(~ $#f 11) echo ok the falsifier zmvevid -n differs in $#f cases
+if not { echo FAIL falsifier $#f; fail=1 }
+if(~ $fail 0) echo 'mvevid.rc: every answer as expected'

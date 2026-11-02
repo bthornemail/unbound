@@ -1,0 +1,2 @@
+validate 0 ok mv-alignment validate digest=sha256:311ce456adf4cb07a58b9ae920debcdc481ba38ffe80243c1f8c02e6e628da3d
+emit on the inputs held 2 ERROR: world_graph version mismatch

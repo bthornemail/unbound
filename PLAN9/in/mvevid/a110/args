@@ -1,0 +1,1 @@
+align emit --narrative-state narrative.json --world-entities entities.json --world-graph graph.json --behavior-grammar behavior.json --out out.json

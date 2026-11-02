@@ -1,0 +1,2 @@
+mv-alignment emit --narrative-state <...> --world-entities <...> --world-graph <...> --behavior-grammar <...> --out <alignment.json>
+mv-alignment validate --alignment <alignment.json>

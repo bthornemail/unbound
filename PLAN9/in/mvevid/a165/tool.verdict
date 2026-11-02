@@ -1,0 +1,2 @@
+validate 0 ok mv-alignment validate digest=sha256:9cc8f54527d547558ed8dde8682200672d08437e4b7beab5a16d608939624ea0
+emit on the inputs held 2 ERROR: alignment failed checks: {"behavior_targets_resolve":"0","behavior_effects_supported":"1","narrative_roles_resolve":"1","acyclic_behavior_graph":"1","projection_order_commutes":"1"}

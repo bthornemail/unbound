@@ -179,6 +179,9 @@ PLAN9/src/zportmat.c
 PLAN9/src/portmat.rc
 PLAN9/src/zmvwave.c
 PLAN9/src/mvwave.rc
+PLAN9/src/zmvevid.c
+PLAN9/src/mvevid.rc
+$(cd "$HERE" && find in/mvevid -type f ! -name gen.mjs ! -name 'tool.*' | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/mvwave -type f ! -name gen.mjs ! -name 'tool.*' | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/portmat -type f ! -name gen.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/slide -type f ! -name gen.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')

@@ -1,0 +1,1 @@
+bundle build --subject subject.json --claim-type witness --evidence e0.json --evidence e1.json --evidence e2.json --evidence e3.json --evidence e4.json --evidence e5.json --out out.json

@@ -1,0 +1,1 @@
+bundle verify --in bundle.json
