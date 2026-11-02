@@ -63,7 +63,13 @@ export default function ExampleView() {
 
   return (
     <div className="min-h-screen">
-      <nav className="sticky top-0 z-50 flex items-center gap-3 bg-gray-900 px-4 py-2 text-white shadow">
+
+      <ExampleErrorBoundary key={example.slug}>
+        <Suspense fallback={<p className="p-8 text-center text-gray-500">Loading {example.title}…</p>}>
+          <example.Component />
+        </Suspense>
+      </ExampleErrorBoundary>
+      {/* <nav id="nav" className="sticky top-0 z-50 flex items-center gap-3 bg-gray-900 px-4 py-2 text-white shadow hide">
         <Link to="/" className={navButton}>
           ← Gallery
         </Link>
@@ -79,13 +85,7 @@ export default function ExampleView() {
         <Link to={`/examples/${next.slug}`} className={navButton} title={next.title}>
           Next →
         </Link>
-      </nav>
-
-      <ExampleErrorBoundary key={example.slug}>
-        <Suspense fallback={<p className="p-8 text-center text-gray-500">Loading {example.title}…</p>}>
-          <example.Component />
-        </Suspense>
-      </ExampleErrorBoundary>
+      </nav> */}
     </div>
   );
 }
