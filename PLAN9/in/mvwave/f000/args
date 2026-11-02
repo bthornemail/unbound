@@ -1,0 +1,1 @@
+federate emit --left left.json --right right.json --out out.json

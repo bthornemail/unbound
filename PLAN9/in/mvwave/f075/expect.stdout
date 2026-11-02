@@ -1,0 +1,2 @@
+mv-federate emit --left <world_graph_a.json> --right <world_graph_b.json> [--strategy lexicographic] --out <federation_merge.v0.json>
+mv-federate validate --left <world_graph_a.json> --right <world_graph_b.json> --merge <federation_merge.v0.json>

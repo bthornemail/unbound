@@ -1,0 +1,1 @@
+consumer emit --seed seed.json --world-graph world.json --provider-extension prov.json --out out.json

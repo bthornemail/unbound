@@ -1,0 +1,1 @@
+federate validate --left left.json --right right.json

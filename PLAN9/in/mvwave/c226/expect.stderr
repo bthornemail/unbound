@@ -1,0 +1,2 @@
+WARN: wave26 q_value<0 q=-1.1111111011111112e+31
+ERROR: q_value must be integer string

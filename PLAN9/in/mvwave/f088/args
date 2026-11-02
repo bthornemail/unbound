@@ -1,0 +1,1 @@
+federate emit --left left.json --right right.json --strategy left_preferred --out out.json

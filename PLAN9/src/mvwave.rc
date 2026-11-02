@@ -1,0 +1,49 @@
+#!/bin/rc
+# mvwave.rc - inside Plan 9: Metaverse Kit's mv-federate, mv-provider-metric and mv-consumer-metric ported
+# native and literal (zmvwave.c). Each case of in/mvwave (written on the host by in/mvwave/gen.mjs with the
+# kit's own tools: an emit's literal read off the tool's artifact, a validate's answer the tool's own on the
+# literal digested back) runs in its directory, WAVE26_Q_LOG_LEVEL as the case gives it: stdout, stderr, the
+# exit (ok or not) and the emitted literal, byte for byte. The falsifier, zmvwave -n: validate checks the
+# form and trusts what is written, as a digest does.
+rfork e
+w=/tmp/zmvwavew
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zmvwave.c PLAN9/in/mvwave} || exit tar
+g=$w/unbound/PLAN9/in/mvwave
+cd $w/unbound/PLAN9/src
+8c zmvwave.c && 8l -o $w/zmvwave zmvwave.8 || exit compile
+fail=0
+n=()
+f=()
+fn wcase {
+	# wcase case flag...: the case in its directory; ok=no on any difference
+	c=$1
+	shift
+	ifs=' 
+' { A=`{cat $c/args} }	# a space and a newline: the args are words
+	e=`{cat $c/env}
+	rm -f $c/out.json
+	if(~ $e -) @{ cd $c; $w/zmvwave $* $A >$w/.out >[2]$w/.err }
+	if not @{ cd $c; WAVE26_Q_LOG_LEVEL=$e $w/zmvwave $* $A >$w/.out >[2]$w/.err }
+	st=$status
+	if(! cmp -s $w/.out $c/expect.stdout) ok=no
+	if(! cmp -s $w/.err $c/expect.stderr) ok=no
+	if(~ `{cat $c/expect.status} 0){ if(! ~ $st '') ok=no }
+	if not { if(~ $st '') ok=no }
+	if(test -e $c/expect.out && ! cmp -s $c/out.json $c/expect.out) ok=no
+	rm -f $c/out.json
+}
+for(c in `{ls -d $g/[fpc]*}){
+	ok=yes
+	wcase $c
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	ok=yes
+	wcase $c -n
+	if(~ $ok no) f=($f x)
+}
+echo zmvwave gives $#n cases as mv-federate, mv-provider-metric and mv-consumer-metric do, literal
+if(~ $#f 23) echo ok the falsifier zmvwave -n differs in $#f cases
+if not { echo FAIL falsifier $#f; fail=1 }
+if(~ $fail 0) echo 'mvwave.rc: every answer as expected'

@@ -1,0 +1,1 @@
+consumer validate --consumer-trace trace.json --world-graph world.json --provider-extension prov.json

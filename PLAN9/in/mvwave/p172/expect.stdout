@@ -1,0 +1,2 @@
+mv-provider-metric emit --seed <provider.seed.json> --world-graph <world_graph.v0.json> --out <provider_extension.v0.json>
+mv-provider-metric validate --provider-extension <provider_extension.v0.json> --world-graph <world_graph.v0.json>

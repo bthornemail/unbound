@@ -1,0 +1,1 @@
+provider emit --seed seed.json --world-graph world.json --out out.json

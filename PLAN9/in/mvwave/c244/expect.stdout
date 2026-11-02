@@ -1,0 +1,2 @@
+mv-consumer-metric emit --seed <consumer.seed.json> --world-graph <world_graph.v0.json> --provider-extension <wave25.provider_extension.v0.json> --out <wave26.consumer_trace.v0.json>
+mv-consumer-metric validate --consumer-trace <wave26.consumer_trace.v0.json> --world-graph <world_graph.v0.json> --provider-extension <wave25.provider_extension.v0.json>
