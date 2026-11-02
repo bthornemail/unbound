@@ -1,0 +1,4 @@
+mv-runtime-handoff build-world-ir-wave30 --surface <surface.json> --frames <frames.ndjson> --out <world.ir.json> [--bundle <bundle.json>] [--emitter <emitter.ndjson>] [--uart <packets.ndjson>] [--wave31-receipt <receipt.json> --wave31-frame-verify <verify.json>] [--world <id>]
+mv-runtime-handoff build-world-ir --surface <surface.json> --frames <frames.ndjson> --out <world.ir.json> [--world <id>]  # alias for build-world-ir-wave30
+mv-runtime-handoff build-world-ir-wave31 --receipt <receipt.json> --frame-verify <verify.json> --out <world.ir.json> [--world <id>]
+mv-runtime-handoff verify-world-ir --in <world.ir.json>

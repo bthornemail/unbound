@@ -1,0 +1,1 @@
+build-world-ir-wave31 --receipt receipt.json --frame-verify verify.json --out world.json

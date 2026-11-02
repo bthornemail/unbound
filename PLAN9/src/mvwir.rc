@@ -1,0 +1,54 @@
+#!/bin/rc
+# mvwir.rc - inside Plan 9: Metaverse Kit's mv-runtime-handoff ported native and literal (zmvwir.c): the wave30
+# surface's outputs, or the wave31 pair, into a world.ir.v0 holding literals where the tool's holds digests, and
+# a world IR's shape verified. Each case of in/mvwir (written on the host by in/mvwir/gen.mjs with the kit's own
+# tools: an output's literal read off the tool's own, an input's answer the tool's own on the literals digested
+# back) runs in its directory: stdout, stderr, the exit (ok or not) and each expect.NAME as the file NAME the
+# port writes, byte for byte. The falsifier, zmvwir -n: the inputs trusted as written (no seed, frame or
+# mapping compared).
+rfork e
+w=/tmp/zmvwirw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zmvwir.c PLAN9/in/mvwir} || exit tar
+g=$w/unbound/PLAN9/in/mvwir
+cd $w/unbound/PLAN9/src
+8c zmvwir.c && 8l -o $w/zmvwir zmvwir.8 || exit compile
+fail=0
+n=()
+f=()
+fn outs {
+	# the files the case expects the port to write
+	@{ cd $1; ls } | grep '^expect\.' | grep -v '^expect\.(stdout|stderr|status)$' | sed 's/^expect\.//'
+}
+fn scase {
+	# scase case flag...: the case in its directory; ok=no on any difference
+	c=$1
+	shift
+	ifs=' 
+' { A=`{cat $c/args}; O=`{outs $c} }	# a space and a newline: the args are words
+	for(o in $O) rm -f $c/$o
+	@{ cd $c; $w/zmvwir $* $A >$w/.out >[2]$w/.err }
+	st=$status
+	if(! cmp -s $w/.out $c/expect.stdout) ok=no
+	if(! cmp -s $w/.err $c/expect.stderr) ok=no
+	if(~ `{cat $c/expect.status} 0){ if(! ~ $st '') ok=no }
+	if not { if(~ $st '') ok=no }
+	for(o in $O){
+		if(! cmp -s $c/$o $c/expect.$o) ok=no
+		rm -f $c/$o
+	}
+}
+for(c in `{ls -d $g/[a-z][0-9]*}){
+	ok=yes
+	scase $c
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	ok=yes
+	scase $c -n
+	if(~ $ok no) f=($f x)
+}
+echo zmvwir gives $#n cases as mv-runtime-handoff does, literal
+if(~ $#f 9) echo ok the falsifier zmvwir -n differs in $#f cases
+if not { echo FAIL falsifier $#f; fail=1 }
+if(~ $fail 0) echo 'mvwir.rc: every answer as expected'

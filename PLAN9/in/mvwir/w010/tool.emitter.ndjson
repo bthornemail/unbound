@@ -1,0 +1,1 @@
+{"authority":"advisory","digest":"sha256:1c778113c97e04431b789042122f438a022163766472baf3af862487d32a9c81","dim":[],"frame_ms":"50","mode":"leds240","on":["0","1","239"],"pointer":["0"],"profile":"esp32.v0","ring_size":"240","surface_digest":"sha256:509a3fc770d58255085c307c1c9dfa0957686a37121b50546d9b8fafcedd9da6","t":"0","v":"wave30.evidence_surface_emitter_frame.esp32.v0"}

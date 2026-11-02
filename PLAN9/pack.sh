@@ -183,6 +183,9 @@ PLAN9/src/zmvevid.c
 PLAN9/src/mvevid.rc
 PLAN9/src/zmvsurf.c
 PLAN9/src/mvsurf.rc
+PLAN9/src/zmvwir.c
+PLAN9/src/mvwir.rc
+$(cd "$HERE" && find in/mvwir -type f ! -name gen.mjs ! -name 'tool.*' | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/mvsurf -type f ! -name gen.mjs ! -name 'tool.*' | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/mvevid -type f ! -name gen.mjs ! -name 'tool.*' | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/mvwave -type f ! -name gen.mjs ! -name 'tool.*' | LC_ALL=C sort | sed 's|^|PLAN9/|')
