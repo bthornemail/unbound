@@ -1,0 +1,1 @@
+render-leds240 --surface surface.json --pointer-trace bad.ndjson --out frames.ndjson

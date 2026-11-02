@@ -1,0 +1,1 @@
+wave31-verify --surface surface.json --emitter emitter.ndjson --in-bin packets.bin --receipt-out receipt.json --verify-out verify.json --uart-crc none

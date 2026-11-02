@@ -181,6 +181,9 @@ PLAN9/src/zmvwave.c
 PLAN9/src/mvwave.rc
 PLAN9/src/zmvevid.c
 PLAN9/src/mvevid.rc
+PLAN9/src/zmvsurf.c
+PLAN9/src/mvsurf.rc
+$(cd "$HERE" && find in/mvsurf -type f ! -name gen.mjs ! -name 'tool.*' | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/mvevid -type f ! -name gen.mjs ! -name 'tool.*' | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/mvwave -type f ! -name gen.mjs ! -name 'tool.*' | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/portmat -type f ! -name gen.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')
@@ -259,7 +262,8 @@ LIST
 tar --create --file "$RUN/in.tar" --format=ustar --no-recursion \
     --mtime=@0 --owner=0 --group=0 --numeric-owner --mode='a+r,u+w' \
     --verbatim-files-from --files-from "$RUN/files"
-truncate -s 32M "$RUN/in.tar"   # one fixed size, so a running guest sees the whole tar
+[ "$(stat -c %s "$RUN/in.tar")" -le $((64 * 1024 * 1024)) ] || { printf 'FAIL: in.tar is past 64M; truncating would cut it\n' >&2; exit 1; }
+truncate -s 64M "$RUN/in.tar"   # one fixed size, so a running guest sees the whole tar
 truncate -s 0 "$RUN/out.img" 2>/dev/null || :   # in place: a running guest keeps the same file
 truncate -s 64M "$RUN/out.img"
 printf 'PASS: %s files in %s; %s blank\n' "$(wc -l < "$HERE/MANIFEST")" "$RUN/in.tar" "$RUN/out.img"

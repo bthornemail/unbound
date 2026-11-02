@@ -1,0 +1,1 @@
+render-leds240-esp32 --surface surface.json --pointer-trace none.ndjson --out emitter.ndjson

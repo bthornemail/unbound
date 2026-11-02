@@ -1,0 +1,1 @@
+decode-esp32-uart --surface surface.json --emitter emitter.ndjson --in-bin packets.bin --out decoded.ndjson --uart-crc crc8-xor-v0

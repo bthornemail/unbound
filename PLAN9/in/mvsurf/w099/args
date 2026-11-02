@@ -1,0 +1,1 @@
+verify-leds240-esp32 --surface surface.json --in emitter.ndjson --frame-ms 50 --pointer-trace trace.ndjson

@@ -1,0 +1,1 @@
+verify-leds240 --surface surface.json --in frames.ndjson --pointer-trace trace.ndjson

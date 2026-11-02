@@ -1,0 +1,11 @@
+0 mv-evidence-surface build --seed-digest <sha256:...> --out <surface.json>
+mv-evidence-surface verify --in <surface.json>
+mv-evidence-surface render --in <surface.json> --mode chords|spiral --out <render.json>
+mv-evidence-surface render-leds240 --surface <surface.json> --out <frames.ndjson> [--frames 12] [--pointer-trace <wave27.ndjson>]
+mv-evidence-surface verify-leds240 --surface <surface.json> --in <frames.ndjson> [--pointer-trace <wave27.ndjson>]
+mv-evidence-surface render-leds240-esp32 --surface <surface.json> --out <emitter.ndjson> [--frames 12] [--frame-ms 50] [--pointer-trace <wave27.ndjson>]
+mv-evidence-surface verify-leds240-esp32 --surface <surface.json> --in <emitter.ndjson> [--frame-ms 50] [--pointer-trace <wave27.ndjson>]
+mv-evidence-surface emit-esp32-uart --surface <surface.json> --emitter <emitter.ndjson> --out <packets.ndjson> [--out-bin <packets.bin>] [--uart-crc none|crc8-xor-v0]
+mv-evidence-surface verify-esp32-uart --surface <surface.json> --emitter <emitter.ndjson> --in <packets.ndjson> [--in-bin <packets.bin>] [--uart-crc none|crc8-xor-v0]
+mv-evidence-surface decode-esp32-uart --surface <surface.json> --emitter <emitter.ndjson> --in-bin <packets.bin> --out <packets.ndjson> [--uart-crc none|crc8-xor-v0]
+mv-evidence-surface wave31-verify --surface <surface.json> --emitter <emitter.ndjson> --in-bin <packets.bin> --receipt-out <decode-receipt.json> --verify-out <frame-verify.json> [--uart-crc none|crc8-xor-v0]

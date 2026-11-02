@@ -1,0 +1,54 @@
+#!/bin/rc
+# mvsurf.rc - inside Plan 9: Metaverse Kit's mv-evidence-surface ported native and literal (zmvsurf.c), the seed
+# the three numbers p0, d and k_max. Each case of in/mvsurf (written on the host by in/mvsurf/gen.mjs with the
+# kit's own tool, given a seed digest whose first bytes derive the same three numbers: an output's literal read
+# off the tool's own, an input's answer the tool's own on the literal digested back) runs in its directory:
+# stdout, stderr, the exit (ok or not), and each expect.NAME beside them as the file NAME the port writes (the
+# surface, renders, frames, emitter frames, packets, the .bin, the wave31 receipt and verify), byte for byte.
+# The falsifier, zmvsurf -n: verify trusts what is written (no chords, frames or packets recomputed).
+rfork e
+w=/tmp/zmvsurfw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zmvsurf.c PLAN9/in/mvsurf} || exit tar
+g=$w/unbound/PLAN9/in/mvsurf
+cd $w/unbound/PLAN9/src
+8c zmvsurf.c && 8l -o $w/zmvsurf zmvsurf.8 || exit compile
+fail=0
+n=()
+f=()
+fn outs {
+	# the files the case expects the port to write
+	@{ cd $1; ls } | grep '^expect\.' | grep -v '^expect\.(stdout|stderr|status)$' | sed 's/^expect\.//'
+}
+fn scase {
+	# scase case flag...: the case in its directory; ok=no on any difference
+	c=$1
+	shift
+	ifs=' 
+' { A=`{cat $c/args}; O=`{outs $c} }	# a space and a newline: the args are words
+	for(o in $O) rm -f $c/$o
+	@{ cd $c; $w/zmvsurf $* $A >$w/.out >[2]$w/.err }
+	st=$status
+	if(! cmp -s $w/.out $c/expect.stdout) ok=no
+	if(! cmp -s $w/.err $c/expect.stderr) ok=no
+	if(~ `{cat $c/expect.status} 0){ if(! ~ $st '') ok=no }
+	if not { if(~ $st '') ok=no }
+	for(o in $O){
+		if(! cmp -s $c/$o $c/expect.$o) ok=no
+		rm -f $c/$o
+	}
+}
+for(c in `{ls -d $g/[a-z][0-9]*}){
+	ok=yes
+	scase $c
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	ok=yes
+	scase $c -n
+	if(~ $ok no) f=($f x)
+}
+echo zmvsurf gives $#n cases as mv-evidence-surface does, literal, seeded by three numbers
+if(~ $#f 17) echo ok the falsifier zmvsurf -n differs in $#f cases
+if not { echo FAIL falsifier $#f; fail=1 }
+if(~ $fail 0) echo 'mvsurf.rc: every answer as expected'

@@ -1,0 +1,1 @@
+render --in surface.json --mode spiral --out render.json

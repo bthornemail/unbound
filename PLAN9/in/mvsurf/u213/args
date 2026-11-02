@@ -1,0 +1,1 @@
+emit-esp32-uart --surface surface.json --emitter emitter.ndjson --out p.ndjson --uart-crc crc16

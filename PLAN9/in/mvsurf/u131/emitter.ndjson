@@ -1,0 +1,1 @@
+{"authority":"advisory","dim":[],"frame_ms":"1","mode":"leds240","on":["1","239"],"pointer":["1"],"profile":"esp32.v0","ring_size":"240","seed":{"d":"1","k_max":"1","p0":"0"},"t":"0","v":"wave30.evidence_surface_emitter_frame.esp32.v0"}
