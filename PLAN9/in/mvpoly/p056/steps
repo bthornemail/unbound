@@ -1,0 +1,2 @@
+tamper carrier.json
+closed build --basis basis.json --constraints constraints.json --carrier carrier.json --out closed.json

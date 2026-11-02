@@ -1,0 +1,2 @@
+basis emit --out basis.json
+basis validate --in basis.json

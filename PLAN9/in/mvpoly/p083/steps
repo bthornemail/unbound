@@ -1,0 +1,2 @@
+signal project --out s.json
+signal project --txrx a --pointer-trace b --out s.json

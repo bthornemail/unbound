@@ -1,0 +1,75 @@
+#!/bin/rc
+# mvpoly.rc - inside Plan 9: Metaverse Kit's poly tools (mv-poly-basis, mv-poly-closed-config,
+# mv-poly-decompose, mv-poly-signal-project, and wave28-poly-lib.js) ported native and literal (zmvpoly.c).
+# Each case of in/mvpoly (written on the host by in/mvpoly/gen.py with the kit's own tools) runs its steps in
+# a fresh copy of its literal inputs: each step's exit, stderr line and stdout (the tools' lines without
+# their digests), and every artifact it writes, byte for byte, in literal form. The falsifier, zmvpoly -n,
+# the matrix rows not rotated by the carrier. And what the tools' validate lets through: a closed config
+# of full rank relabelled degenerate, its digest recomputed, passes theirs; here it is refused.
+rfork e
+w=/tmp/zmvpolyw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zmvpoly.c PLAN9/in/mvpoly} || exit tar
+g=$w/unbound/PLAN9/in/mvpoly
+cd $w/unbound/PLAN9/src
+8c zmvpoly.c && 8l -o $w/zmvpoly zmvpoly.8 || exit compile
+fail=0
+n=()
+f=()
+art=()
+ifs='
+'
+fn status1 {
+	if(~ $1 '') echo 0
+	if not echo $1 | sed 's/.*: *//'
+}
+fn rcase {
+	# rcase case [flag]: the case's steps in a fresh root; ok=no on any difference
+	c=$1
+	shift
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t
+	if(test -d $c/in) @{ cd $c/in; for(x in `{ls}) cp $x $t/ }
+	k=0
+	for(s in `{cat $c/steps}){
+		ifs=' ' { A=`{echo -n $s} }
+		if(~ $A(1) tamper) cp $c/expect/$k.tamper $t/$A(2)
+		if not {
+			@{ cd $t; $w/zmvpoly $* $A >$t/.out >[2]$t/.err }
+			st=`{status1 $status}
+			if(! ~ $st `{cat $c/expect/$k.status}) ok=no
+			x=`{cat $c/expect/$k.stderr}
+			y=`{sed -n '$p' $t/.err}
+			if(! test $"x '=' $"y) ok=no
+			if(! cmp -s $t/.out $c/expect/$k.stdout) ok=no
+			for(e in `{cd $c/expect; ls | grep '^'$k'\..*\.json$'}){	# ls in the directory: ls DIR prints DIR/name
+				a=`{echo $e | sed 's/^[0-9]*\.//'}
+				if(~ $#* 0) art=($art x)
+				if(! cmp -s $t/$a $c/expect/$e) ok=no
+			}
+		}
+		k=`{echo $k 1 + p | dc}
+	}
+}
+for(c in `{ls -d $g/p*}){
+	ok=yes
+	rcase $c
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	ok=yes
+	rcase $c -n
+	if(~ $ok no) f=($f x)
+}
+echo zmvpoly gives $#n cases as the poly tools of the kit do, $#art artifacts byte for byte
+if(~ $#f 36) echo ok the falsifier zmvpoly -n differs in $#f cases
+if not { echo FAIL falsifier $#f; fail=1 }
+t=$w/run
+rm -rf $t
+mkdir -p $t
+@{ cd $g/p018/in; for(x in `{ls}) cp $x $t/ }
+@{ cd $t; $w/zmvpoly closed build --basis basis.json --constraints constraints.json --carrier carrier.json --out closed.json >/dev/null; sed 's/"non_degenerate":"1"/"non_degenerate":"0"/' closed.json >c2; mv c2 closed.json; $w/zmvpoly closed validate --in closed.json --basis basis.json >/dev/null >[2]$t/.err }
+if(grep -s 'closed_config non_degenerate mismatch' $t/.err) echo ok a full-rank config relabelled degenerate is refused: closed_config non_degenerate mismatch
+if not { echo FAIL relabelled; fail=1 }
+if(~ $fail 0) echo 'mvpoly.rc: every answer as expected'

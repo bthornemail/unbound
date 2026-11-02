@@ -1,0 +1,4 @@
+closed build --basis basis.json --constraints constraints.json --carrier carrier.json --out closed.json
+closed validate --in closed.json --basis basis.json
+decompose run --basis basis.json --closed closed.json --poly x1*x4*x6 --out decomp0.json
+decompose validate --in decomp0.json --basis basis.json --closed closed.json

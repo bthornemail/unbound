@@ -1,0 +1,2 @@
+mv-poly-basis emit --out <zero-poly-basis.v0.json>
+mv-poly-basis validate --in <zero-poly-basis.v0.json>

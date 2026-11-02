@@ -1,0 +1,1 @@
+signal project --txrx txrx.ndjson --out signal.json

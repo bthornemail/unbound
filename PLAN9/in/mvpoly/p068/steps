@@ -1,0 +1,2 @@
+signal project --txrx txrx.ndjson --out signal.json
+signal validate --in signal.json

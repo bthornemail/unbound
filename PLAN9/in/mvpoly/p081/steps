@@ -1,0 +1,1 @@
+signal project --pointer-trace trace.ndjson --out signal.json
