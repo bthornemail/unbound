@@ -1,0 +1,10 @@
+{
+  "v": "asg.v0",
+  "nodes": [
+    {"id": "m:kernel", "label": "kernel.py", "type": "Module"},
+    {"id": "m:observer", "label": "observer.py", "type": "Module"}
+  ],
+  "edges": [
+    {"from": "m:observer", "to": "m:kernel", "kind": "Imports"}
+  ]
+}

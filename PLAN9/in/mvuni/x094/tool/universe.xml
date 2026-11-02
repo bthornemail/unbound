@@ -1,0 +1,1 @@
+<universe><node id="名前" label="𝔸"/><node id="b" id="c"/><edge from="名前" to="c" relation="x"/></universe>

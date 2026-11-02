@@ -1,0 +1,1 @@
+readiness --out reports/integration/readiness.json

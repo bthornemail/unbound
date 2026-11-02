@@ -1,0 +1,65 @@
+#!/bin/rc
+# mvuni.rc - inside Plan 9: Metaverse Kit's mv-universe-ingest ported native and literal (zmvuni.c): payloads
+# built into packages, packages carried as Aztec bundles (libflate at level 9), and packages, bundles, universe
+# XML, ASGs and media references ingested into scenes, with no hash: a package node is "package:" and its
+# law_version, a bundle is named by it, a scene holds its source and canonical form. Each case of in/mvuni
+# (written on the host by in/mvuni/gen.mjs with the kit's own tool: an output's literal read off the tool's own,
+# an input's answer the tool's own on the literal digested back; the bundles given made by zlib, the kit's own
+# call) runs in a fresh copy of its directory: stdout, stderr, the exit (ok or not) and each expect.NAME as the
+# file NAME the port writes (@ for /), byte for byte; a build is checked by its manifest and by its second step,
+# then: the port's own bundle ingested again (expect2.*), libflate's bytes not being zlib's. The falsifier, zmvuni
+# -n: a package and a bundle trusted in what they say of themselves.
+rfork e
+w=/tmp/zmvuniw
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zmvuni.c PLAN9/in/mvuni} || exit tar
+g=$w/unbound/PLAN9/in/mvuni
+cd $w/unbound/PLAN9/src
+8c zmvuni.c && 8l -o $w/zmvuni zmvuni.8 || exit compile
+fail=0
+n=()
+f=()
+fn step {
+	# step ARGSFILE PREFIX flag...: one command in $t; ok=no on any difference
+	a=$1
+	p=$2
+	shift 2
+	ifs=' 
+' { A=`{cat $t/$a}; O=`{@{ cd $t; ls } | grep '^'$p'\.' | grep -v '^'$p'\.(stdout|stderr|status)$' | sed 's/^'$p'\.//'} }
+	@{ cd $t; $w/zmvuni $* $A >$w/.out >[2]$w/.err }
+	st=$status
+	if(! cmp -s $w/.out $t/$p.stdout) ok=no
+	if(! cmp -s $w/.err $t/$p.stderr) ok=no
+	if(~ `{cat $t/$p.status} 0){ if(! ~ $st '') ok=no }
+	if not { if(~ $st '') ok=no }
+	for(o in $O){
+		file=`{echo $o | sed 's/@/\//g'}
+		if(! cmp -s $t/$file $t/$p.$o) ok=no
+	}
+}
+fn ucase {
+	# ucase case flag...: the case in a fresh copy of its directory
+	c=$1
+	shift
+	t=$w/run
+	rm -rf $t
+	mkdir -p $t
+	@{ cd $c; tar c . } >$w/case.tar
+	@{ cd $t; tar x <$w/case.tar }
+	step args expect $*
+	if(test -e $t/then) step then expect2 $*
+}
+for(c in `{ls -d $g/[a-z][0-9]*}){
+	ok=yes
+	ucase $c
+	if(~ $ok no){ echo FAIL $c; fail=1 }
+	n=($n x)
+	ok=yes
+	ucase $c -n
+	if(~ $ok no) f=($f x)
+}
+echo zmvuni gives $#n cases as mv-universe-ingest does, literal, its bundles read back
+if(~ $#f 7) echo ok the falsifier zmvuni -n differs in $#f cases
+if not { echo FAIL falsifier $#f; fail=1 }
+if(~ $fail 0) echo 'mvuni.rc: every answer as expected'

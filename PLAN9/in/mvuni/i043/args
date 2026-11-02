@@ -1,0 +1,1 @@
+ingest --in package.json --type package --out scene.json

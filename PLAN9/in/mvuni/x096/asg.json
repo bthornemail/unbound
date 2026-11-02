@@ -1,0 +1,1 @@
+{"edges":[{"from":"a","to":"b"},{"from":"c","kind":0,"to":"d"},{"from":"e","kind":"K","to":"a"}],"nodes":[{"id":"a","label":3},{"id":"b","label":{"x":1},"type":7},{"id":"c","label":[1,[2,null]],"type":null},{"id":"d","label":0},{"id":"e","label":1e+21}]}

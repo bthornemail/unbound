@@ -1,0 +1,7 @@
+<universe id="demo-space" version="xml.universe.v0">
+  <node id="n:kernel" label="Atomic Kernel" type="kernel"/>
+  <node id="n:graph" label="Semantic Graph" type="graph"/>
+  <node id="n:canvas" label="Canvas" type="projection"/>
+  <edge from="n:kernel" to="n:graph" relation="grounds"/>
+  <edge from="n:graph" to="n:canvas" relation="projects"/>
+</universe>

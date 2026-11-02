@@ -1,0 +1,1 @@
+ingest --in bundle/manifest.json --type aztec --out scene.json

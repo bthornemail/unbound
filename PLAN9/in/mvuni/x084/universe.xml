@@ -1,0 +1,1 @@
+  <universe id="u"><node id="a" label="A &amp; B"/><node id="c" x.y-z="1" label="C"/><edge from="c" to="a" relation="up" extra="1"/><edge from="a" to="a" relation="self"/></universe>  

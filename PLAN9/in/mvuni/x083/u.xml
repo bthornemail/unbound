@@ -1,0 +1,5 @@
+<universe>
+<node id="a"/>
+<node   id="b" label="" type="t"  />
+<edge from="a" to="b" relation="r"/>
+</universe>

@@ -1,0 +1,1 @@
+build-package-v2 --payload p.json --out x.json --hash-algo sha256

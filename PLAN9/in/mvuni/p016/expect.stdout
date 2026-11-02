@@ -1,0 +1,4 @@
+mv-universe-ingest build-package-v2 --payload <payload.json> --out <package.v2.json> [--law-version <v>]
+mv-universe-ingest build-aztec-v2 --package <package.v2.json> --outdir <dir> [--chunk-bytes <n>]
+mv-universe-ingest ingest --in <input> --type auto|package|xml|aztec|asg|media --out <scene.json>
+mv-universe-ingest readiness --fixtures <fixtures/universe-integration> --out reports/integration/universe-integration-readiness.json

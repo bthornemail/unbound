@@ -1,0 +1,1 @@
+build-package-v2 --payload payload.json --out package.json --law-version 16d-v1

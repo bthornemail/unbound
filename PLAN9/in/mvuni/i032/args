@@ -1,0 +1,1 @@
+ingest --in package.json --type auto --out scene.json

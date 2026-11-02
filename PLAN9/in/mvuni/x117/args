@@ -1,0 +1,1 @@
+ingest --in broken.json --type auto --out scene.json

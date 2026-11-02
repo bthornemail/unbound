@@ -1,0 +1,1 @@
+ingest --in media.json --type media --out scene.json

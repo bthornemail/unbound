@@ -1,0 +1,1 @@
+ingest --in bundle --type auto --out scene.json
