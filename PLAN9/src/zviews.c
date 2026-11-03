@@ -4,6 +4,11 @@
  * spaces a level, the production, a space, the piece's bytes (a line feed written \n, a backslash \\), an element
  * left open marked "OPEN" at its children's level. The goldens are OMI.View's outlines (in/views/gen.mjs).
  *	zviews page		the page's outline
+ *	zviews -w page		the second reading set beside it: the tree's words as Plan 9's libhtml renders them (a
+ *				word a line, split at white space and U+00A0, entities read), a textarea's raw text
+ *				as text, none within a table, a bullet before each list item; -T, -B, -A each leave
+ *				one of the three out, the falsifier
+ *	zviews -s file		any text's words, the same split (libhtml's text, as htmlfs serves it)
  * A rune is the bytes its lead byte calls for, as OMI.View reads: under 0x80 alone, 110xxxxx one more, 1110xxxx
  * two, 11110xxx three, any other alone; its cast in html.wsn's alphabet a letter's lower case, a digit and each of
  * < > / = " ' - _ : . # & ; ! itself, white space a space, any other rune "~".
@@ -17,6 +22,9 @@ static char *prod[] = { "COMMENT", "DOCTYPE", "STARTTAG", "ENDTAG", "TEXT", "RAW
 static char *rawnames[] = { "script", "style", "title", "textarea", nil };
 static char *voidnames[] = { "area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param",
 	"source", "track", "wbr", nil };
+static char *linames[] = { "li", nil };
+static char *tablenames[] = { "table", nil };
+static char *textareanames[] = { "textarea", nil };
 
 typedef struct Piece Piece;
 struct Piece
@@ -285,17 +293,156 @@ forest(int d)
 	}
 }
 
+/* words: split at white space and U+00A0, a word a line */
+static int inword;
+
+static void
+wordbyte(int c)
+{
+	if(c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f'){
+		if(inword)
+			Bputc(&out, '\n');
+		inword = 0;
+		return;
+	}
+	Bputc(&out, c);
+	inword = 1;
+}
+
+static void
+split(uchar *s, long n)
+{
+	long i;
+
+	for(i = 0; i < n; i++){
+		if(s[i] == 0xC2 && i + 1 < n && s[i+1] == 0xA0){
+			if(inword)
+				Bputc(&out, '\n');
+			inword = 0;
+			i++;
+			continue;
+		}
+		wordbyte(s[i]);
+	}
+}
+
+static void
+endword(void)
+{
+	if(inword)
+		Bputc(&out, '\n');
+	inword = 0;
+}
+
+/* a text piece's words, its entities read: &#n; and &gt; &lt; &amp; &nbsp; &times; &copy;, any other as written */
+static char *ents[] = { "gt", ">", "lt", "<", "amp", "&", "nbsp", "\xC2\xA0", "times", "\xC3\x97", "copy", "\xC2\xA9", nil };
+
+static void
+textwords(long a, long b)
+{
+	uchar *s, *e, *t;
+	char r[UTFmax];
+	char **x;
+	Rune v;
+	long m;
+
+	s = buf + a;
+	e = buf + b;
+	while(s < e){
+		if(*s == '&'){
+			t = s + 1;
+			if(t < e && *t == '#'){
+				for(t++, v = 0; t < e && *t >= '0' && *t <= '9' && v <= Runemax; t++)
+					v = v * 10 + *t - '0';
+				if(t > s + 2 && t < e && *t == ';' && v <= Runemax){
+					m = runetochar(r, &v);
+					split((uchar*)r, m);
+					s = t + 1;
+					continue;
+				}
+			}else{
+				for(; t < e && *t >= 'a' && *t <= 'z'; t++)
+					;
+				if(t > s + 1 && t < e && *t == ';')
+					for(x = ents; *x; x += 2)
+						if(strlen(x[0]) == t - s - 1 && memcmp(x[0], s + 1, t - s - 1) == 0){
+							split((uchar*)x[1], strlen(x[1]));
+							s = t + 1;
+							goto next;
+						}
+			}
+		}
+		split(s, 1);
+		s++;
+	next:;
+	}
+	endword();
+}
+
+/* the tree's words as libhtml renders them: a text piece's words, a textarea's raw text as text, none within a
+ * table (libhtml's table item holds its cells), and a bullet "•" before each list item's */
+static int notable, nobullet, notextarea;
+
+static void
+words(void)
+{
+	Piece *p;
+	long i, k, t;
+
+	for(i = 0; i < np; i++){
+		p = &ps[i];
+		if(p->kind == Starttag){
+			if(!nobullet && named(p->na, p->nb, linames))
+				Bprint(&out, "\xE2\x80\xA2\n");
+			if(!named(p->na, p->nb, voidnames) && !selfclosed(p->a, p->b))
+				opened[nopen++] = i;
+		}else if(p->kind == Endtag){
+			for(k = nopen - 1; k >= 0 && !samename(p, &ps[opened[k]]); k--)
+				;
+			if(k >= 0)
+				nopen = k;
+		}else if(p->kind == Text || p->kind == Rawtext && !notextarea && named(ps[i-1].na, ps[i-1].nb, textareanames)){
+			for(k = 0, t = 0; !notable && k < nopen; k++)
+				if(named(ps[opened[k]].na, ps[opened[k]].nb, tablenames))
+					t = 1;
+			if(!t)
+				textwords(start[p->a], start[p->b]);
+		}
+	}
+}
+
 void
 main(int argc, char **argv)
 {
-	int fd, n;
+	int fd, n, w, s;
 	long k, i;
 
-	if(argc != 2){
-		fprint(2, "usage: zviews page\n");
+	w = s = 0;
+	ARGBEGIN{
+	case 'w':
+		w = 1;
+		break;
+	case 's':
+		s = 1;
+		break;
+	case 'T':
+		notable = 1;
+		break;
+	case 'B':
+		nobullet = 1;
+		break;
+	case 'A':
+		notextarea = 1;
+		break;
+	default:
+		fprint(2, "usage: zviews [-w [-TBA] | -s] file\n");
+		exits("usage");
+	}ARGEND
+	if(argc != 1){
+		fprint(2, "usage: zviews [-w [-TBA] | -s] file\n");
 		exits("usage");
 	}
-	if((fd = open(argv[1], OREAD)) < 0)
+	if((fd = open(argv[0], OREAD)) < 0)
 		sysfatal("open: %r");
 	cap = 0;
 	for(;;){
@@ -309,6 +456,13 @@ main(int argc, char **argv)
 		len += n;
 	}
 	close(fd);
+	Binit(&out, 1, OWRITE);
+	if(s){
+		split(buf, len);
+		endword();
+		Bterm(&out);
+		exits(nil);
+	}
 	start = malloc((len + 1) * sizeof start[0]);
 	castv = malloc(len + 1);
 	if(start == nil || castv == nil)
@@ -336,9 +490,11 @@ main(int argc, char **argv)
 	opened = malloc((np + 1) * sizeof opened[0]);
 	if(opened == nil)
 		sysfatal("malloc: %r");
-	Binit(&out, 1, OWRITE);
 	pi = 0;
-	forest(0);
+	if(w)
+		words();
+	else
+		forest(0);
 	Bterm(&out);
 	exits(nil);
 }

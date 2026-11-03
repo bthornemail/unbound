@@ -1,0 +1,41 @@
+#!/bin/rc
+# libhtml.rc - inside Plan 9: the second reading of the views set beside the tree. Each page of unbound/HTML read by
+# Plan 9's libhtml, a rendering model (htmlfs serves its text runs at /n/html), and by zviews -w, the tree's words as
+# libhtml renders them: a text piece's words, entities read; a textarea's raw text as text (html.rules reads it raw,
+# libhtml as text); none within a table (libhtml's table item holds its cells); a bullet before each list item. The
+# two must give the same words, a word a line, split at white space and U+00A0. The falsifier, filed on the host
+# first (in/views/libhtml): each of the three left out (-T, -B, -A) must differ on exactly the pages it names.
+rfork ne
+w=/tmp/zlibhtml
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data HTML PLAN9/src/zviews.c PLAN9/src/htmlfs.c PLAN9/in/views/tree/pages PLAN9/in/views/libhtml} || exit tar
+g=$w/unbound/PLAN9
+cd $g/src
+8c zviews.c && 8l -o $w/zviews zviews.8 || exit compile
+8c htmlfs.c && 8l -o $w/htmlfs htmlfs.8 || exit compile
+ifs='
+' pages=`{cat $g/in/views/tree/pages}
+cd $w/unbound/HTML
+$w/htmlfs -m /n/html $pages || exit htmlfs
+same=()
+for(p in $pages){
+	$w/zviews -s /n/html/$p/text >$w/lib
+	$w/zviews -w $p >$w/tree
+	if(cmp -s $w/tree $w/lib) same=($same x)
+	if not echo differs: $p
+	for(f in T B A){
+		$w/zviews -w -$f $p >$w/tree
+		if(! cmp -s $w/tree $w/lib) echo $p >>$w/$f
+	}
+}
+unmount /n/html
+echo libhtml and the tree give the same words on $#same of $#pages pages
+falsified=()
+for(f in T B A){
+	touch $w/$f
+	if(cmp -s $w/$f $g/in/views/libhtml/$f) falsified=($falsified $f)
+	if not echo '-'$f differs on other pages than filed
+	echo '-'$f: `{wc -l <$w/$f} pages differ
+}
+if(~ $#same $#pages && ~ $#falsified 3) echo 'libhtml.rc: every answer as expected'
