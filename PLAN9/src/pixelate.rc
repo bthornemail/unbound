@@ -1,0 +1,25 @@
+#!/bin/rc
+# pixelate.rc - inside Plan 9: PIXELATE, a polynomial's pixels and spectrum together (the author: "both together its
+# like the pi being resolved from the inceide in the omi pi proof, its casual"), by zpixelate. in/pixelate written on
+# the host by in/pixelate/gen.mjs with Metaverse Kit's own tools/wave28-poly-lib.js reading each line: the 4,506 lines
+# of in/polywsn, each written (its 64 pixels, each term lighting its light cone, and its 64 Walsh-Hadamard bins) or
+# refused (not written, out of order, repeated, as the library refuses). zpixelate must give every line byte for byte;
+# omi-types' OMI.Poly is checked against the same file. The falsifier: zpixelate -n, the cones taken downward, must
+# give the lines filed for it, which differ on every written polynomial.
+rfork e
+w=/tmp/zpixelate
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zpixelate.c PLAN9/in/pixelate} || exit tar
+g=$w/unbound/PLAN9
+d=$g/in/pixelate
+cd $g/src
+8c zpixelate.c && 8l -o $w/zpixelate zpixelate.8 || exit compile
+$w/zpixelate $d/polys >$w/cast
+$w/zpixelate -n $d/polys >$w/cast.n
+written=`{grep -c '	' $w/cast}
+if(cmp -s $w/cast $d/cast) echo zpixelate gives the filed pixels and spectra, and refusals, on `{wc -l <$d/polys} lines, $written written
+if not echo cast differs
+if(cmp -s $w/cast.n $d/cast.n) echo the falsifier, -n: the filed lines, and not the cast on `{cmp -l $w/cast $w/cast.n | wc -l} bytes
+if not echo cast.n differs
+if(cmp -s $w/cast $d/cast && cmp -s $w/cast.n $d/cast.n && ! cmp -s $w/cast $w/cast.n) echo 'pixelate.rc: every answer as expected'
