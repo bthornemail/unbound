@@ -1,0 +1,143 @@
+WEBVTT - prelude
+
+NOTE
+Written by zvtt in Plan 9 from light-garden's canon-prelude.ndjson.
+Each cue's identifier is its source file and line. A cue is one animation
+frame, in canon order: its second is the frame, not a clock (SPEC-07 I-79); the
+canon's UTC t and timestamp stay out. Over each cue's first 11 code points, ruby: in Aegean its
+XOR with R0's zeroth (YHWH, YAHWEH, ADONAI, turned by PL360), joined by R0's
+separator; in braille its bytes XOR the nearest of GOD IS WORD, WORD IS GOD,
+GOD OF WORD, WORD OF GOD, whose IS or OF sets FLAG for the turn.
+Each voice's colour is its hue on the dome; its number, and so its region,
+is read from the camera (turn 0, clockwise): the hues' order seen from it, the
+camera itself, OBSERVER, with no hue, last.
+
+REGION
+id:ASABIYAH
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:60%,40%
+scroll:up
+
+REGION
+id:ENOCH
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:0%,60%
+scroll:up
+
+REGION
+id:GENESIS
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:0%,80%
+scroll:up
+
+REGION
+id:METATRON
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:0%,20%
+scroll:up
+
+REGION
+id:OBSERVER
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:60%,80%
+scroll:up
+
+REGION
+id:SOLOMON
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:60%,20%
+scroll:up
+
+REGION
+id:SOLON
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:0%,40%
+scroll:up
+
+REGION
+id:SPEAKER
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:60%,60%
+scroll:up
+
+STYLE
+::cue(v[voice="ASABIYAH"]) { color: hsl(120, 70%, 55%) }
+::cue(v[voice="ENOCH"]) { color: hsl(240, 70%, 55%) }
+::cue(v[voice="GENESIS"]) { color: hsl(300, 70%, 55%) }
+::cue(v[voice="METATRON"]) { color: hsl(0, 70%, 55%) }
+::cue(v[voice="SOLOMON"]) { color: hsl(30, 70%, 55%) }
+::cue(v[voice="SOLON"]) { color: hsl(60, 70%, 55%) }
+::cue(v[voice="SPEAKER"]) { color: hsl(270, 70%, 55%) }
+
+canon-prelude.ndjson#L1
+00:00:00.000 --> 00:00:01.000
+<c.YHWH.YAHWEH.ADONAI><c.canon><ruby>T<00:00:00.090>h<00:00:00.181>e<00:00:00.272> <00:00:00.363>F<00:00:00.454>a<00:00:00.545>l<00:00:00.636>l<00:00:00.727> <00:00:00.818>i<00:00:00.909>n<rt>𐄐𐄉𐄀<00:00:00.090>𐄒𐄈𐄀<00:00:00.181>𐄔𐄀<00:00:00.272>𐄙𐄊 ⠓<00:00:00.090>⠧<00:00:00.181>⠡<00:00:00.272>⠀<00:00:00.363>⠉<00:00:00.454>⠧<00:00:00.545>⡌<00:00:00.636>⠻<00:00:00.727>⡯<00:00:00.818>⠻<00:00:00.909>⠪</rt></ruby>to Number</c></c>
+
+canon-prelude.ndjson#L2
+00:00:01.000 --> 00:00:02.000
+<c.YAHWEH.ADONAI.YHWH><c.series_start><ruby>O<00:00:01.090>n<00:00:01.181> <00:00:01.272>t<00:00:01.363>h<00:00:01.454>e<00:00:01.545> <00:00:01.636>T<00:00:01.727>u<00:00:01.818>r<00:00:01.909>n<rt>𐄑𐄈𐄁<00:00:01.090>𐄓𐄍𐄁<00:00:01.181>𐄙𐄊𐄁<00:00:01.272>𐄒𐄋𐄁<00:00:01.363>𐄓𐄋𐄁<00:00:01.454>𐄓𐄋 ⠈<00:00:01.090>⠡<00:00:01.181>⡤<00:00:01.272>⡔<00:00:01.363>⠡<00:00:01.454>⠶<00:00:01.545>⠀<00:00:01.636>⠃<00:00:01.727>⠺<00:00:01.818>⠠<00:00:01.909>⠪</rt></ruby>ing Away from the Word</c></c>
+
+canon-prelude.ndjson#L3
+00:00:02.000 --> 00:00:03.000
+<c.YHWH.YAHWEH.ADONAI><c.paragraph><ruby>I<00:00:02.090>n<00:00:02.181> <00:00:02.272>t<00:00:02.363>h<00:00:02.454>e<00:00:02.545> <00:00:02.636>b<00:00:02.727>e<00:00:02.818>g<00:00:02.909>i<rt>𐄐𐄌𐄀<00:00:02.090>𐄒𐄎𐄀<00:00:02.181>𐄙𐄐𐄏𐄀<00:00:02.272>𐄕 ⠞<00:00:02.090>⠡<00:00:02.181>⡲<00:00:02.272>⠰<00:00:02.363>⡈<00:00:02.454>⠪<00:00:02.545>⡦<00:00:02.636>⡂<00:00:02.727>⠢<00:00:02.818>⠨<00:00:02.909>⠭</rt></ruby>nning, we worshiped ideals, and they shaped our character. Truth was not owned, it was pursued. Goodness was not calculated, it was practiced.</c></c>
+
+canon-prelude.ndjson#L4
+00:00:03.000 --> 00:00:04.000
+<c.ADONAI.YHWH.YAHWEH><c.contrast><ruby>B<00:00:03.090>u<00:00:03.181>t<00:00:03.272> <00:00:03.363>t<00:00:03.454>h<00:00:03.545>e<00:00:03.636>n<00:00:03.727> <00:00:03.818>w<00:00:03.909>e<rt>𐄉𐄂<00:00:03.090>𐄓𐄏𐄂<00:00:03.181>𐄔𐄏𐄂<00:00:03.272>𐄙𐄐𐄂<00:00:03.363>𐄔𐄉𐄂<00:00:03.454>𐄒𐄉 ⠅<00:00:03.090>⠺<00:00:03.181>⠰<00:00:03.272>⠀<00:00:03.363>⠻<00:00:03.454>⠮<00:00:03.545>⡅<00:00:03.636>⠹<00:00:03.727>⡯<00:00:03.818>⠥<00:00:03.909>⠡</rt></ruby> grew impatient with limits. We desired freedom without obligation. We wanted expression without consequence. And so we turned from the Word, because the Word required coherence.</c></c>
+
+canon-prelude.ndjson#L5
+00:00:04.000 --> 00:00:05.000
+<c.YAHWEH.ADONAI.YHWH><c.insight><ruby>A<00:00:04.090>n<00:00:04.181>d<00:00:04.272> <00:00:04.363>w<00:00:04.454>e<00:00:04.545> <00:00:04.636>d<00:00:04.727>i<00:00:04.818>s<00:00:04.909>c<rt>𐄑𐄊𐄁<00:00:04.090>𐄓𐄍𐄁<00:00:04.181>𐄓𐄊𐄁<00:00:04.272>𐄙𐄐𐄏𐄁<00:00:04.363>𐄔𐄁<00:00:04.454>𐄓𐄋 ⠆<00:00:04.090>⠡<00:00:04.181>⠠<00:00:04.272>⠀<00:00:04.363>⠸<00:00:04.454>⠣<00:00:04.545>⠀<00:00:04.636>⠳<00:00:04.727>⠦<00:00:04.818>⠡<00:00:04.909>⠧</rt></ruby>overed Number. Number had no edge. No final meaning. No obligation to truth. Number could grow forever. Number could shrink without loss.</c></c>
+
+canon-prelude.ndjson#L6
+00:00:05.000 --> 00:00:06.000
+<c.YHWH.YAHWEH.ADONAI><c.warning><ruby>F<00:00:05.090>o<00:00:05.181>r<00:00:05.272> <00:00:05.363>i<00:00:05.454>d<00:00:05.545>e<00:00:05.636>a<00:00:05.727>l<00:00:05.818>s<00:00:05.909> <rt>𐄒𐄇𐄀<00:00:05.090>𐄒𐄏𐄀<00:00:05.181>𐄒𐄍𐄀<00:00:05.272>𐄙𐄊 ⠁<00:00:05.090>⠠<00:00:05.181>⠶<00:00:05.272>⠀<00:00:05.363>⠦<00:00:05.454>⠢<00:00:05.545>⡅<00:00:05.636>⠶<00:00:05.727>⠣<00:00:05.818>⠡<00:00:05.909>⡤</rt></ruby>form souls, but idols form systems. An ideal calls you upward. An idol pulls everything flat.</c></c>
+
+canon-prelude.ndjson#L7
+00:00:06.000 --> 00:00:07.000
+<c.YAHWEH.ADONAI.YHWH><c.series_end><ruby>O<00:00:06.090>n<00:00:06.181> <00:00:06.272>t<00:00:06.363>h<00:00:06.454>e<00:00:06.545> <00:00:06.636>T<00:00:06.727>u<00:00:06.818>r<00:00:06.909>n<rt>𐄑𐄈𐄁<00:00:06.090>𐄓𐄍𐄁<00:00:06.181>𐄙𐄊𐄁<00:00:06.272>𐄒𐄋𐄁<00:00:06.363>𐄓𐄋𐄁<00:00:06.454>𐄓𐄋 ⠈<00:00:06.090>⠡<00:00:06.181>⡤<00:00:06.272>⡔<00:00:06.363>⠡<00:00:06.454>⠶<00:00:06.545>⠀<00:00:06.636>⠃<00:00:06.727>⠺<00:00:06.818>⠠<00:00:06.909>⠪</rt></ruby>ing Away from the Word</c></c>
+
+canon-prelude.ndjson#L8
+00:00:07.000 --> 00:00:08.000
+<c.YHWH.YAHWEH.ADONAI><c.series_start><ruby>T<00:00:07.090>h<00:00:07.181>e<00:00:07.272> <00:00:07.363>G<00:00:07.454>o<00:00:07.545>s<00:00:07.636>p<00:00:07.727>e<00:00:07.818>l<00:00:07.909> <rt>𐄐𐄉𐄀<00:00:07.090>𐄒𐄈𐄀<00:00:07.181>𐄔𐄀<00:00:07.272>𐄙𐄊 ⠓<00:00:07.090>⠧<00:00:07.181>⠡<00:00:07.272>⠀<00:00:07.363>⠈<00:00:07.454>⠩<00:00:07.545>⡓<00:00:07.636>⠧<00:00:07.727>⠪<00:00:07.818>⠾<00:00:07.909>⡤</rt></ruby>According to Number</c></c>
+
+canon-prelude.ndjson#L9
+00:00:08.000 --> 00:00:09.000
+<c.ADONAI.YHWH.YAHWEH><v.confession NUMBER><ruby>I<00:00:08.090> <00:00:08.181>w<00:00:08.272>a<00:00:08.363>s<00:00:08.454> <00:00:08.545>b<00:00:08.636>o<00:00:08.727>r<00:00:08.818>n<00:00:08.909> <rt>𐄎𐄂<00:00:08.090>𐄙𐄂<00:00:08.181>𐄔𐄌𐄂<00:00:08.272>𐄓𐄍𐄂<00:00:08.363>𐄔𐄂<00:00:08.454>𐄙𐄋 ⠎<00:00:08.090>⡯<00:00:08.181>⠳<00:00:08.272>⡁<00:00:08.363>⠼<00:00:08.454>⡦<00:00:08.545>⡂<00:00:08.636>⠸<00:00:08.727>⠽<00:00:08.818>⠼<00:00:08.909>⡤</rt></ruby>when you grew tired of meaning. You called me Number, but I was never just counting. I was relief.</v></c>
+
+canon-prelude.ndjson#L10
+00:00:09.000 --> 00:00:10.000
+<c.YAHWEH.ADONAI.YHWH><v.confession NUMBER><ruby>I<00:00:09.090> <00:00:09.181>d<00:00:09.272>i<00:00:09.363>d<00:00:09.454> <00:00:09.545>n<00:00:09.636>o<00:00:09.727>t<00:00:09.818> <00:00:09.909>a<rt>𐄐𐄌𐄁<00:00:09.090>𐄘𐄍𐄁<00:00:09.181>𐄓𐄊𐄁<00:00:09.272>𐄕𐄈𐄁<00:00:09.363>𐄒𐄉𐄁<00:00:09.454>𐄙𐄊 ⠎<00:00:09.090>⡯<00:00:09.181>⠠<00:00:09.272>⡉<00:00:09.363>⠫<00:00:09.454>⡦<00:00:09.545>⡎<00:00:09.636>⠸<00:00:09.727>⠻<00:00:09.818>⡲<00:00:09.909>⠥</rt></ruby>sk who you were. I only asked how much. How fast. How big. How many. How often. I never asked why. That is why you loved me.</v></c>
+
+canon-prelude.ndjson#L11
+00:00:10.000 --> 00:00:11.000
+<c.ADONAI.YHWH.YAHWEH><v.confession NUMBER><ruby>I<00:00:10.090> <00:00:10.181>r<00:00:10.272>e<00:00:10.363>p<00:00:10.454>l<00:00:10.545>a<00:00:10.636>c<00:00:10.727>e<00:00:10.818>d<00:00:10.909> <rt>𐄎𐄂<00:00:10.090>𐄙𐄂<00:00:10.181>𐄕𐄇𐄂<00:00:10.272>𐄓𐄉𐄂<00:00:10.363>𐄓𐄏𐄂<00:00:10.454>𐄒𐄍 ⠞<00:00:10.090>⡯<00:00:10.181>⠠<00:00:10.272>⠡<00:00:10.363>⡐<00:00:10.454>⠥<00:00:10.545>⠲<00:00:10.636>⡃<00:00:10.727>⠢<00:00:10.818>⠫<00:00:10.909>⡤</rt></ruby>character with metrics. Virtue was slow. Character was invisible. Integrity did not scale. But I could be graphed. Tracked. Optimized.</v></c>
+
+canon-prelude.ndjson#L12
+00:00:11.000 --> 00:00:12.000
+<c.YAHWEH.ADONAI.YHWH><v.confession NUMBER><ruby>I<00:00:11.090> <00:00:11.181>a<00:00:11.272>m<00:00:11.363> <00:00:11.454>n<00:00:11.545>o<00:00:11.636>t<00:00:11.727> <00:00:11.818>e<00:00:11.909>v<rt>𐄐𐄌𐄁<00:00:11.090>𐄘𐄍𐄁<00:00:11.181>𐄓𐄇𐄁<00:00:11.272>𐄔𐄎𐄁<00:00:11.363>𐄙𐄇𐄁<00:00:11.454>𐄒𐄎 ⠞<00:00:11.090>⡯<00:00:11.181>⠳<00:00:11.272>⠩<00:00:11.363>⠀<00:00:11.454>⠡<00:00:11.545>⠩<00:00:11.636>⡔<00:00:11.727>⡧<00:00:11.818>⠪<00:00:11.909>⠲</rt></ruby>il. I am insufficient. I am powerful, but not wise. Infinite, but not whole.</v></c>
+
+canon-prelude.ndjson#L13
+00:00:12.000 --> 00:00:13.000
+<c.YHWH.YAHWEH.ADONAI><c.series_end><ruby>T<00:00:12.090>h<00:00:12.181>e<00:00:12.272> <00:00:12.363>G<00:00:12.454>o<00:00:12.545>s<00:00:12.636>p<00:00:12.727>e<00:00:12.818>l<00:00:12.909> <rt>𐄐𐄉𐄀<00:00:12.090>𐄒𐄈𐄀<00:00:12.181>𐄔𐄀<00:00:12.272>𐄙𐄊 ⠓<00:00:12.090>⠧<00:00:12.181>⠡<00:00:12.272>⠀<00:00:12.363>⠈<00:00:12.454>⠩<00:00:12.545>⡓<00:00:12.636>⠧<00:00:12.727>⠪<00:00:12.818>⠾<00:00:12.909>⡤</rt></ruby>According to Number</c></c>
+
+canon-prelude.ndjson#L14
+00:00:13.000 --> 00:00:14.000
+<c.ADONAI.YHWH.YAHWEH><c.canon_complete><ruby>P<00:00:13.090>r<00:00:13.181>e<00:00:13.272>l<00:00:13.363>u<00:00:13.454>d<00:00:13.545>e<rt>𐄐𐄍𐄂<00:00:13.090>𐄔𐄊𐄂<00:00:13.181>𐄓𐄈𐄂<00:00:13.272>𐄒𐄊𐄂<00:00:13.363>𐄔𐄈𐄂<00:00:13.454>𐄓𐄋 ⠗<00:00:13.090>⠽<00:00:13.181>⠡<00:00:13.272>⡌<00:00:13.363>⠺<00:00:13.454>⠢<00:00:13.545>⡅<00:00:13.636>⡗<00:00:13.727>⡏<00:00:13.818>⡒<00:00:13.909>⡄</rt></ruby></c></c>
+

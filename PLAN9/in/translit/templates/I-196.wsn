@@ -1,0 +1,55 @@
+RECORD = HEAD BRAILLEFOURDECADESONONEBASEOFTEN DOTISASCIISCASEBIT OCTALPRECISIONCOLUMNSOF EBCDICSZONESTHREEDECADESOFLETTERS .
+
+HEAD =
+  "// i196.ts — I-196: the decades: braille's dots, EBCDIC's zones, ASCII's columns"
+  "//"
+  "// The author, 2026-10-13: braille as Morse and tap code in polytron is how they"
+  "// learned they needed binary, and ""the 20 40 60 80 was why, because then if I"
+  "// had a byte represent that like UTF-EBCDIC then I could have character"
+  "// encoding of octal precision"", with Wikipedia's braille derivation: a-j on the"
+  "// upper four dots, k-t the same with dot 3, u-z (French u v x y z ç é à è ù)"
+  "// with dots 3 and 6, and the fourth decade (â ê î ô û ë ï ü œ w) with dot 6."
+  "// Found here: in the Unicode braille block (U+2800 + a byte, dot n = bit n-1)"
+  "// the decades are fixed additions, +0x00, +0x04, +0x24, +0x20, and dot 6 is"
+  "// 0x20, the bit that parts ASCII's capitals from its lowercase. Stepping a byte"
+  "// by 0x20 gives 8 columns of 32: the top three bits, one octal digit, name the"
+  "// column, and ASCII's first four are control, punctuation and digits, capitals,"
+  "// lowercase. EBCDIC (code page 037) has decades too, from the punched card's"
+  "// zones: A-I C1-C9, J-R D1-D9, S-Z E2-E9, the zone the high nibble."
+  "import assert from ""node:assert"";"
+  .
+
+BRAILLEFOURDECADESONONEBASEOFTEN =
+  "// ── 1. Braille: four decades on one base of ten ──────────────"
+  "const decade = (s: string) => [...s].map((c) => c.codePointAt(0)! - 0x2800);"
+  "const base = decade(""⠁⠃⠉⠙⠑⠋⠛⠓⠊⠚""); // a-j, 1-9 and 0"
+  "const decades = { ""k-t"": ""⠅⠇⠍⠝⠕⠏⠟⠗⠎⠞"", ""u-ù"": ""⠥⠧⠭⠽⠵⠯⠿⠷⠮⠾"", ""â-w"": ""⠡⠣⠩⠹⠱⠫⠻⠳⠪⠺"" };"
+  "assert.ok(base.every((b) => (b & ~0x1b) === 0), ""a-j use only the upper four dots (1, 2, 4, 5: bits 0, 1, 3, 4)"");"
+  "const added = Object.values(decades).map((s) => [...new Set(decade(s).map((b, i) => b ^ base[i]!))]);"
+  "assert.deepStrictEqual(added, [[0x04], [0x24], [0x20]], ""each decade adds one fixed pattern: dot 3 (0x04), dots 3 and 6 (0x24), dot 6 (0x20)"");"
+  "assert.ok(Object.values(decades).every((s) => decade(s).every((b, i) => (b & base[i]!) === base[i])), ""adding, not changing: every decade keeps the base's dots"");"
+  .
+
+DOTISASCIISCASEBIT =
+  "// ── 2. Dot 6 is ASCII's case bit ─────────────────────────────"
+  "assert.strictEqual(decade(""⠠"")[0], 0x20, ""dot 6 alone is 0x20"");"
+  "for (let c = 0x41; c <= 0x5a; c++) assert.strictEqual(c ^ 0x20, c + 0x20, `${String.fromCharCode(c)} and ${String.fromCharCode(c + 0x20)} differ by 0x20`);"
+  .
+
+OCTALPRECISIONCOLUMNSOF =
+  "// ── 3. Octal precision: 8 columns of 32 ──────────────────────"
+  "const column = (b: number) => b >> 5;"
+  "assert.deepStrictEqual([0x00, 0x20, 0x40, 0x60, 0x80, 0xa0, 0xc0, 0xe0].map(column), [0, 1, 2, 3, 4, 5, 6, 7], ""the top three bits are one octal digit"");"
+  "assert.deepStrictEqual([0x07, 0x30, 0x41, 0x61].map(column), [0, 1, 2, 3], ""ASCII: BEL in control, '0' in punctuation and digits, 'A' in capitals, 'a' in lowercase"");"
+  "assert.strictEqual(0o101, 0x41, ""in octal 'A' is 101: column 1 of 64, place 01 (the octal digits are 2, 3, 3 bits)"");"
+  .
+
+EBCDICSZONESTHREEDECADESOFLETTERS =
+  "// ── 4. EBCDIC's zones: three decades of letters ──────────────"
+  "const EBCDIC_037: Record<string, number> = { A: 0xc1, I: 0xc9, J: 0xd1, R: 0xd9, S: 0xe2, Z: 0xe9 }; // iconv -t IBM037"
+  "assert.deepStrictEqual([EBCDIC_037.A, EBCDIC_037.J, EBCDIC_037.S].map((b) => b! >> 4), [0xc, 0xd, 0xe], ""zones C, D, E: three decades"");"
+  "assert.deepStrictEqual([EBCDIC_037.I! - EBCDIC_037.A!, EBCDIC_037.R! - EBCDIC_037.J!, EBCDIC_037.Z! - EBCDIC_037.S!], [8, 8, 7], ""A-I and J-R nine each, S-Z eight (starting at 2)"");"
+  "console.log(""I-196: the decades: braille's dots, EBCDIC's zones, ASCII's columns — passed"");"
+  "console.log(""  braille decades add 0x00, 0x04, 0x24, 0x20; dot 6 is ASCII's case bit 0x20"");"
+  "console.log(""  a byte's top three bits are one octal digit: 8 columns of 32; EBCDIC zones C, D, E"");"
+  .

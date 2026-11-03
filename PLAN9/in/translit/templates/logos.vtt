@@ -1,0 +1,119 @@
+WEBVTT - logos
+
+NOTE
+Written by zvtt in Plan 9 from light-garden's canon-logos.ndjson.
+Each cue's identifier is its source file and line. A cue is one animation
+frame, in canon order: its second is the frame, not a clock (SPEC-07 I-79); the
+canon's UTC t and timestamp stay out. Over each cue's first 11 code points, ruby: in Aegean its
+XOR with R0's zeroth (YHWH, YAHWEH, ADONAI, turned by PL360), joined by R0's
+separator; in braille its bytes XOR the nearest of GOD IS WORD, WORD IS GOD,
+GOD OF WORD, WORD OF GOD, whose IS or OF sets FLAG for the turn.
+Each voice's colour is its hue on the dome; its number, and so its region,
+is read from the camera (turn 0, clockwise): the hues' order seen from it, the
+camera itself, OBSERVER, with no hue, last.
+
+REGION
+id:ASABIYAH
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:60%,40%
+scroll:up
+
+REGION
+id:ENOCH
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:0%,60%
+scroll:up
+
+REGION
+id:GENESIS
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:0%,80%
+scroll:up
+
+REGION
+id:METATRON
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:0%,20%
+scroll:up
+
+REGION
+id:OBSERVER
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:60%,80%
+scroll:up
+
+REGION
+id:SOLOMON
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:60%,20%
+scroll:up
+
+REGION
+id:SOLON
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:0%,40%
+scroll:up
+
+REGION
+id:SPEAKER
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:60%,60%
+scroll:up
+
+STYLE
+::cue(v[voice="ASABIYAH"]) { color: hsl(120, 70%, 55%) }
+::cue(v[voice="ENOCH"]) { color: hsl(240, 70%, 55%) }
+::cue(v[voice="GENESIS"]) { color: hsl(300, 70%, 55%) }
+::cue(v[voice="METATRON"]) { color: hsl(0, 70%, 55%) }
+::cue(v[voice="SOLOMON"]) { color: hsl(30, 70%, 55%) }
+::cue(v[voice="SOLON"]) { color: hsl(60, 70%, 55%) }
+::cue(v[voice="SPEAKER"]) { color: hsl(270, 70%, 55%) }
+
+canon-logos.ndjson#L1
+00:00:00.000 --> 00:00:01.000
+<c.YHWH.YAHWEH.ADONAI><c.series><ruby>N<00:00:00.090>U<00:00:00.181>L<00:00:00.272>L<00:00:00.363>,<00:00:00.454> <00:00:00.545>0<00:00:00.636>!<00:00:00.727> <00:00:00.818>=<00:00:00.909> <rt>𐄑𐄉𐄀<00:00:00.090>𐄑𐄏𐄀<00:00:00.181>𐄑𐄍𐄀<00:00:00.272>𐄊 ⠙<00:00:00.090>⠚<00:00:00.181>⠞<00:00:00.272>⠈<00:00:00.363>⠌<00:00:00.454>⡩<00:00:00.545>⡣<00:00:00.636>⠁<00:00:00.727>⡧<00:00:00.818>⡲<00:00:00.909>⡤</rt></ruby>1, and the Logos</c></c>
+
+canon-logos.ndjson#L2
+00:00:01.000 --> 00:00:02.000
+<c.YAHWEH.ADONAI.YHWH><c.insight><ruby>N<00:00:01.090>U<00:00:01.181>L<00:00:01.272>L<00:00:01.363> <00:00:01.454>≠<00:00:01.545> <00:00:01.636>z<00:00:01.727>e<00:00:01.818>r<00:00:01.909>o<rt>𐄑𐄉𐄁<00:00:01.090>𐄑𐄁<00:00:01.181>𐄊𐄁<00:00:01.272>𐄑𐄍𐄁<00:00:01.363>𐄙𐄇𐄁<00:00:01.454>𐄩𐄟𐄓𐄊 ⠙<00:00:01.090>⠚<00:00:01.181>⠞<00:00:01.272>⠈<00:00:01.363>⠀<00:00:01.454>⢫<00:00:01.545>⣚<00:00:01.636>⢀<00:00:01.727>⡧<00:00:01.818>⠵<00:00:01.909>⠡</rt></ruby> as a value. NULL is the absence of operands, not the presence of a quantity. In computation, NULL means no input. In mathematics, NULL corresponds to the empty permutation.</c></c>
+
+canon-logos.ndjson#L3
+00:00:02.000 --> 00:00:03.000
+<c.YHWH.YAHWEH.ADONAI><c.equation><ruby>0<00:00:02.090>!<00:00:02.181> <00:00:02.272>=<00:00:02.363> <00:00:02.454>1<00:00:02.545>.<00:00:02.636> <00:00:02.727>U<00:00:02.818>n<00:00:02.909>c<rt>𐄙𐄋𐄀<00:00:02.090>𐄙𐄋𐄀<00:00:02.181>𐄙𐄐𐄏𐄀<00:00:02.272>𐄙𐄐𐄍 ⡧<00:00:02.090>⡮<00:00:02.181>⡲<00:00:02.272>⡹<00:00:02.363>⠀<00:00:02.454>⡾<00:00:02.545>⡨<00:00:02.636>⠀<00:00:02.727>⠒<00:00:02.818>⠡<00:00:02.909>⠧</rt></ruby>onstrained action resolves to identity.</c></c>
+
+canon-logos.ndjson#L4
+00:00:03.000 --> 00:00:04.000
+<c.YAHWEH.ADONAI.YHWH><c.correspondence><ruby>G<00:00:03.090>o<00:00:03.181>d<00:00:03.272> <00:00:03.363>i<00:00:03.454>s<00:00:03.545> <00:00:03.636>W<00:00:03.727>o<00:00:03.818>r<00:00:03.909>d<rt>𐄒𐄁<00:00:03.090>𐄓𐄌𐄁<00:00:03.181>𐄓𐄊𐄁<00:00:03.272>𐄙𐄐𐄏𐄁<00:00:03.363>𐄓𐄊𐄁<00:00:03.454>𐄔𐄏 ⠀<00:00:03.090>⠠<00:00:03.181>⠠<00:00:03.272>⠀<00:00:03.363>⠠<00:00:03.454>⠠<00:00:03.545>⠀<00:00:03.636>⠀<00:00:03.727>⠠<00:00:03.818>⠠<00:00:03.909>⠠</rt></ruby>: Infinite action is identical to infinite possibility.</c></c>
+
+canon-logos.ndjson#L5
+00:00:04.000 --> 00:00:05.000
+<c.YHWH.YAHWEH.ADONAI><c.formal><ruby>T<00:00:04.090>h<00:00:04.181>e<00:00:04.272> <00:00:04.363>f<00:00:04.454>a<00:00:04.545>c<00:00:04.636>t<00:00:04.727>o<00:00:04.818>r<00:00:04.909>i<rt>𐄐𐄉𐄀<00:00:04.090>𐄒𐄈𐄀<00:00:04.181>𐄔𐄀<00:00:04.272>𐄙𐄊 ⠓<00:00:04.090>⠧<00:00:04.181>⠡<00:00:04.272>⠀<00:00:04.363>⠩<00:00:04.454>⠧<00:00:04.545>⡃<00:00:04.636>⠣<00:00:04.727>⠠<00:00:04.818>⠠<00:00:04.909>⠭</rt></ruby>al of NULL (0!) represents pure, unconstrained action. Its value (1) represents identity, the generative reference that preserves all structure.</c></c>
+
+canon-logos.ndjson#L6
+00:00:05.000 --> 00:00:06.000
+<c.YAHWEH.ADONAI.YHWH><c.conclusion><ruby>T<00:00:05.090>h<00:00:05.181>i<00:00:05.272>s<00:00:05.363> <00:00:05.454>i<00:00:05.545>s<00:00:05.636> <00:00:05.727>n<00:00:05.818>o<00:00:05.909>t<rt>𐄐𐄉𐄁<00:00:05.090>𐄓𐄇𐄁<00:00:05.181>𐄒𐄉𐄁<00:00:05.272>𐄒𐄌𐄁<00:00:05.363>𐄙𐄇𐄁<00:00:05.454>𐄒𐄉 ⠃<00:00:05.090>⠧<00:00:05.181>⠻<00:00:05.272>⠷<00:00:05.363>⠀<00:00:05.454>⠠<00:00:05.545>⠠<00:00:05.636>⠀<00:00:05.727>⠩<00:00:05.818>⠠<00:00:05.909>⠰</rt></ruby> metaphor. This is formal identity.</c></c>
+
+canon-logos.ndjson#L7
+00:00:06.000 --> 00:00:07.000
+<c.YHWH.YAHWEH.ADONAI><c.insight><ruby>T<00:00:06.090>h<00:00:06.181>e<00:00:06.272> <00:00:06.363>W<00:00:06.454>o<00:00:06.545>r<00:00:06.636>d<00:00:06.727> <00:00:06.818>b<00:00:06.909>e<rt>𐄐𐄉𐄀<00:00:06.090>𐄒𐄈𐄀<00:00:06.181>𐄔𐄀<00:00:06.272>𐄙𐄊 ⠓<00:00:06.090>⠧<00:00:06.181>⠡<00:00:06.272>⠀<00:00:06.363>⠘<00:00:06.454>⠩<00:00:06.545>⡒<00:00:06.636>⠳<00:00:06.727>⡯<00:00:06.818>⠰<00:00:06.909>⠡</rt></ruby>haves like this: BEGIN STATE = NULL; IF Word IS spoken THEN STATE := UNITY; END.</c></c>
+
+canon-logos.ndjson#L8
+00:00:07.000 --> 00:00:08.000
+<c.YAHWEH.ADONAI.YHWH><c.teaching><ruby>N<00:00:07.090>U<00:00:07.181>L<00:00:07.272>L<00:00:07.363> <00:00:07.454>a<00:00:07.545>c<00:00:07.636>t<00:00:07.727>e<00:00:07.818>d<00:00:07.909> <rt>𐄑𐄉𐄁<00:00:07.090>𐄑𐄁<00:00:07.181>𐄊𐄁<00:00:07.272>𐄑𐄍𐄁<00:00:07.363>𐄙𐄇𐄁<00:00:07.454>𐄓𐄇 ⠙<00:00:07.090>⠚<00:00:07.181>⠞<00:00:07.272>⠈<00:00:07.363>⠀<00:00:07.454>⠨<00:00:07.545>⠰<00:00:07.636>⡔<00:00:07.727>⠢<00:00:07.818>⠫<00:00:07.909>⡤</rt></ruby>upon by Word resolves to Unity. The Word does not add something. The Word collapses indeterminacy into coherence.</c></c>
+

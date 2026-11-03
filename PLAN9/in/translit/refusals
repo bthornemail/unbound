@@ -1,0 +1,8 @@
+ascii.yaml: mappings/ascii.yaml:1: ASCII is the template's syntax and is never mapped
+ascii-target.yaml: mappings/ascii-target.yaml:1: ASCII is the template's syntax and is never mapped
+twice.yaml: mappings/twice.yaml:3: U+2800 is mapped twice
+form.yaml: mappings/form.yaml:2: not "U+XXXX": "U+XXXX"
+lower.yaml: mappings/lower.yaml:1: not "U+XXXX": "U+XXXX"
+surrogate.yaml: mappings/surrogate.yaml:1: not a code point
+past.yaml: mappings/past.yaml:1: not a code point
+short.yaml: mappings/short.yaml:1: not "U+XXXX": "U+XXXX"

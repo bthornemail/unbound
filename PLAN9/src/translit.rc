@@ -1,0 +1,47 @@
+#!/bin/rc
+# translit.rc - inside Plan 9: the first of the wiki template bindings, ZIGUAROTH's transliterate.js as ztranslit
+# (the codex's rules T1 to T6: a template's ASCII is its syntax and never changes, a mapping is static code-point
+# pairs, each mapped once, and every change is a mapped one), through the author's first mapping, Braille dark and
+# light (each cell to its complement). in/translit written on the host by in/translit/gen.mjs with transliterate.js
+# itself: the 15 templates of unbound holding Braille and ZIGUAROTH's term.html, each mapped (its output and its
+# message), 8 mappings it refuses (its messages), and the falsifier's lines. ztranslit must give each output byte for
+# byte and each message as written, map each output back to its template (the complement undoes itself), refuse the
+# 8 in the same words, and, the falsifier, ztranslit -n (the ASCII guard dropped, the mapping naming "A") must be
+# refused by its own check at each template's first "A".
+rfork e
+w=/tmp/ztranslit
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/ztranslit.c PLAN9/in/translit} || exit tar
+g=$w/unbound/PLAN9
+cd $g/src
+8c ztranslit.c && 8l -o $w/ztranslit ztranslit.8 || exit compile
+cd $g/in/translit
+ifs='
+' names=`{cat templates.list}
+rm -f $w/msgs
+same=()
+back=()
+for(n in $names){
+	$w/ztranslit templates/$n mappings/braille-complement.yaml $w/out >>[2]$w/msgs
+	if(cmp -s $w/out out/$n) same=($same x)
+	if not echo differs: $n
+	$w/ztranslit $w/out mappings/braille-complement.yaml $w/twice >[2]/dev/null
+	if(cmp -s $w/twice templates/$n) back=($back x)
+	if not echo not back: $n
+}
+rm -f $w/ref
+for(m in ascii ascii-target twice form lower surrogate past short){
+	echo -n $m^'.yaml: ' >>$w/ref
+	$w/ztranslit templates/term.html mappings/$m.yaml >/dev/null >>[2]$w/ref
+}
+rm -f $w/fal
+for(n in $names) $w/ztranslit -n templates/$n mappings/ascii.yaml >/dev/null >>[2]$w/fal
+echo 'ztranslit gives transliterate.js''s output on' $#same of $#names templates, and each maps back to itself on $#back
+if(cmp -s $w/msgs messages) echo and its messages, as written
+if not echo the messages differ
+if(cmp -s $w/ref refusals) echo it refuses the 8 mappings transliterate.js refuses, in its words
+if not echo the refusals differ
+if(cmp -s $w/fal falsified) echo 'the falsifier, -n: refused by its own check at each template''s first A'
+if not echo the falsifier differs
+if(~ $#same $#names && ~ $#back $#names && cmp -s $w/msgs messages && cmp -s $w/ref refusals && cmp -s $w/fal falsified) echo 'translit.rc: every answer as expected'

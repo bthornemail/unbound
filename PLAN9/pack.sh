@@ -217,6 +217,9 @@ PLAN9/in/translate/wrong
 PLAN9/in/translate/counts.table
 PLAN9/in/translate/counts.wrong
 PLAN9/in/translate/counts.page
+PLAN9/src/ztranslit.c
+PLAN9/src/translit.rc
+$(cd "$HERE" && find in/translit -type f ! -name gen.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/views/match -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/views/tree -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/runes -type f ! -name gen.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')

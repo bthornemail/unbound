@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16-Bit Kernel Slide Ruler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;700&display=swap');
+        
+        :root {
+            --kernel-bg: #0a0a0c;
+            --substrate-card: #16161e;
+        }
+
+        body {
+            background-color: var(--kernel-bg);
+            color: #d1d1d1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .mono { font-family: 'Fira+Code', monospace; }
+
+        /* Grid Layouts */
+        .header-grid {
+            display: grid;
+            grid-template-columns: repeat(17, 1fr);
+            gap: 4px;
+        }
+
+        .substrate-grid {
+            display: grid;
+            grid-template-columns: repeat(16, 1fr);
+            gap: 2px;
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            border: 1px solid #222;
+            position: relative;
+        }
+
+        .cell:hover {
+            background: #3b82f6 !important;
+            color: white;
+            z-index: 10;
+            transform: scale(1.1);
+        }
+
+        .header-cell {
+            background: #222;
+            border: 1px solid #444;
+            padding: 8px 0;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .header-cell.active {
+            border-color: #3b82f6;
+            background: #1e3a8a;
+        }
+
+        /* Substrate Coloring */
+        .sub-ascii { background: #1a202c; color: #63b3ed; }
+        .sub-braille-6 { background: #2d3748; color: #f6ad55; }
+        .sub-braille-8 { background: #1e293b; color: #fbbf24; }
+        .sub-aegean { background: #333; color: #a0aec0; }
+        
+        .active-kernel {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
+            background: #1e40af !important;
+        }
+
+        input[type=range] {
+            accent-color: #3b82f6;
+        }
+
+        .unicode-header {
+            background: linear-gradient(135deg, #1e1e2e 0%, #000 100%);
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="mb-6 flex flex-col md:flex-row justify-between items-center border-b border-gray-800 pb-4">
+            <div>
+                <h1 class="text-2xl font-bold text-white mb-1">16-Bit Kernel Slide Ruler</h1>
+                <p class="text-gray-500 mono text-xs">Constitutional Substrate & Unicode Plane Navigator</p>
+            </div>
+            <div class="bg-black px-4 py-2 rounded-lg border border-gray-800 mono text-sm text-blue-400 mt-4 md:mt-0">
+                rotl(x,1) ^ rotl(x,3) ^ rotr(x,2) ^ C
+            </div>
+        </header>
+
+        <!-- Navigator Area -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+            
+            <!-- Side Controls -->
+            <div class="lg:col-span-1 space-y-4">
+                <div class="bg-[#16161e] p-5 rounded-xl border border-gray-800 shadow-xl">
+                    <h2 class="text-blue-400 font-bold mb-4 uppercase tracking-tighter text-[0.7rem]">Input Vectors</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="flex justify-between text-[0.6rem] mb-1 text-gray-500 uppercase font-bold">
+                                <span>X (State)</span>
+                                <span id="xVal" class="text-blue-400">0x0000</span>
+                            </label>
+                            <input type="range" id="xSlider" min="0" max="65535" value="0" class="w-full">
+                        </div>
+                        <div>
+                            <label class="flex justify-between text-[0.6rem] mb-1 text-gray-500 uppercase font-bold">
+                                <span>C (Constant)</span>
+                                <span id="cVal" class="text-orange-400">0x0049</span>
+                            </label>
+                            <input type="range" id="cSlider" min="0" max="65535" value="73" class="w-full">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-black/50 p-4 rounded-xl border border-gray-800">
+                    <div class="text-[0.6rem] text-gray-500 uppercase mb-1">Boolean Operator (Index res % 16)</div>
+                    <div id="opLabel" class="text-lg font-bold text-green-400 mono">IDENTITY</div>
+                </div>
+            </div>
+
+            <!-- Central Projection Display -->
+            <div class="lg:col-span-3 space-y-4">
+                <div class="unicode-header p-6 rounded-xl border border-gray-800 shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                        <div class="text-center md:text-left">
+                            <div class="text-[0.5rem] text-blue-500 uppercase font-bold mb-1">Plane Selection (Aegean Header)</div>
+                            <div id="projAegean" class="text-6xl text-white">𐄇</div>
+                            <div id="planeLabel" class="text-xs text-blue-400 mono mt-2">PLANE 0: BMP</div>
+                        </div>
+                        <div class="text-center border-x border-gray-800/50 px-4">
+                            <div class="text-[0.5rem] text-orange-500 uppercase font-bold mb-1">Word Pointer (Braille Offset)</div>
+                            <div id="projBraille" class="text-6xl text-orange-400">⠀</div>
+                            <div id="wordLabel" class="text-xs text-orange-600 mono mt-2">OFFSET: U+0000</div>
+                        </div>
+                        <div class="text-center md:text-right">
+                            <div class="text-[0.5rem] text-green-500 uppercase font-bold mb-1">Resolved Codepoint</div>
+                            <div id="finalGlyph" class="text-6xl text-green-400">?</div>
+                            <div id="resultHex" class="text-xs text-green-700 mono mt-2">0x0000</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bit Visibility Strip -->
+                <div class="bg-[#16161e] p-3 rounded-lg border border-gray-800">
+                    <div id="bitStrip" class="flex gap-1">
+                        <!-- JS generated bits -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Constitutional Map -->
+        <div class="space-y-6">
+            <!-- 1. Aegean Plane Header (Independent) -->
+            <section>
+                <h3 class="text-[0.6rem] font-bold text-gray-500 uppercase mb-2 tracking-widest">I. Ordinal Header (Aegean Planes 0-16)</h3>
+                <div id="aegeanHeader" class="header-grid">
+                    <!-- Generated JS -->
+                </div>
+            </section>
+
+            <!-- 2. Substrate Surfaces -->
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                <!-- ASCII & 6-Dot Braille -->
+                <section>
+                    <h3 class="text-[0.6rem] font-bold text-blue-400 uppercase mb-2 tracking-widest">II. Control & 6-Dot Witness (0x00 - 0x3F)</h3>
+                    <div id="asciiGrid" class="substrate-grid border border-gray-800 p-1 bg-black rounded"></div>
+                </section>
+
+                <!-- 8-Dot Braille Density -->
+                <section>
+                    <h3 class="text-[0.6rem] font-bold text-orange-400 uppercase mb-2 tracking-widest">III. Dense State Surface (8-Dot patterns)</h3>
+                    <div id="braille8Grid" class="substrate-grid border border-gray-800 p-1 bg-black rounded"></div>
+                </section>
+            </div>
+        </div>
+
+        <footer class="mt-12 pt-4 border-t border-gray-900 text-[0.6rem] text-gray-600 mono flex justify-between">
+            <span>&copy; KERNEL PROTOCOL v17.0</span>
+            <span>PLANE LIMIT: 17 (UTF-16) | STATE DEPTH: 16-BIT</span>
+        </footer>
+    </div>
+
+    <script>
+        const xSlider = document.getElementById('xSlider');
+        const cSlider = document.getElementById('cSlider');
+        const xValDisplay = document.getElementById('xVal');
+        const cValDisplay = document.getElementById('cVal');
+        const resultHex = document.getElementById('resultHex');
+        const projBraille = document.getElementById('projBraille');
+        const projAegean = document.getElementById('projAegean');
+        const finalGlyph = document.getElementById('finalGlyph');
+        const planeLabel = document.getElementById('planeLabel');
+        const wordLabel = document.getElementById('wordLabel');
+        const bitStrip = document.getElementById('bitStrip');
+
+        const AEGEAN_START = 0x10107;
+        const BRAILLE_START = 0x2800;
+        const OP_NAMES = ["ZERO", "AND", "A_NOT_B", "A", "NOT_A_AND_B", "B", "XOR", "OR", "NOR", "XNOR", "NOT_B", "IF_B_THEN_A", "NOT_A", "IF_A_THEN_B", "NAND", "ONE"];
+
+        const ASCII_MAP = [
+            "NUL","SOH","STX","ETX","EOT","ENQ","ACK","BEL","BS","HT","LF","VT","FF","CR","SO","SI",
+            "DLE","DC1","DC2","DC3","DC4","NAK","SYN","ETB","CAN","EM","SUB","ESC","FS","GS","RS","US",
+            "SP","!","\"","#","$","%","&","'","(",")","*","+",",","-",".","/",
+            "0","1","2","3","4","5","6","7","8","9",":",";","<","=","?","@"
+        ];
+
+        function rotl(val, n) { return ((val << n) | (val >>> (16 - n))) & 0xFFFF; }
+        function rotr(val, n) { return ((val >>> n) | (val << (16 - n))) & 0xFFFF; }
+        function kernel(x, c) { return (rotl(x, 1) ^ rotl(x, 3) ^ rotr(x, 2) ^ c) & 0xFFFF; }
+
+        function update() {
+            const x = parseInt(xSlider.value);
+            const c = parseInt(cSlider.value);
+            const res = kernel(x, c);
+
+            xValDisplay.textContent = '0x' + x.toString(16).padStart(4, '0').toUpperCase();
+            cValDisplay.textContent = '0x' + c.toString(16).padStart(4, '0').toUpperCase();
+            resultHex.textContent = '0x' + res.toString(16).padStart(4, '0').toUpperCase();
+
+            // Unicode Plane Navigation
+            const planeIdx = x % 17;
+            const unicodePoint = (planeIdx << 16) | res;
+
+            projAegean.textContent = String.fromCodePoint(AEGEAN_START + planeIdx);
+            projBraille.textContent = String.fromCodePoint(BRAILLE_START + (res % 256));
+            planeLabel.textContent = `PLANE ${planeIdx}`;
+            wordLabel.textContent = `OFFSET: U+${res.toString(16).padStart(4, '0').toUpperCase()}`;
+            
+            try {
+                finalGlyph.textContent = String.fromCodePoint(unicodePoint);
+            } catch(e) {
+                finalGlyph.textContent = "";
+            }
+
+            // Update Boolean Operator
+            document.getElementById('opLabel').textContent = OP_NAMES[res % 16];
+
+            // Render bit strip
+            bitStrip.innerHTML = '';
+            for(let i=15; i>=0; i--) {
+                const bit = (res >> i) & 1;
+                const div = document.createElement('div');
+                div.className = `flex-grow h-4 rounded-sm ${bit ? 'bg-blue-500' : 'bg-gray-800'}`;
+                bitStrip.appendChild(div);
+            }
+
+            // Highlight Aegean Header
+            document.querySelectorAll('.header-cell').forEach((cell, idx) => {
+                cell.classList.toggle('active', idx === planeIdx);
+            });
+
+            // Highlight Grid Matches
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.classList.remove('active-kernel');
+                if (parseInt(cell.dataset.addr) === (res % 256)) {
+                    cell.classList.add('active-kernel');
+                }
+            });
+        }
+
+        function initGrids() {
+            // 1. Aegean Header (0-16)
+            const hGrid = document.getElementById('aegeanHeader');
+            for(let i=0; i<17; i++) {
+                const div = document.createElement('div');
+                div.className = 'header-cell mono text-xs';
+                div.innerHTML = `<div class="text-white text-lg">${String.fromCodePoint(AEGEAN_START + i)}</div><div class="text-[0.5rem] opacity-50">${i}</div>`;
+                div.onclick = () => { xSlider.value = i * 3855; update(); }; // Jump X to plane markers
+                hGrid.appendChild(div);
+            }
+
+            // 2. ASCII / 6-Dot (0-63)
+            const aGrid = document.getElementById('asciiGrid');
+            for(let i=0; i<64; i++) {
+                const cell = document.createElement('div');
+                cell.dataset.addr = i;
+                cell.className = 'cell sub-ascii';
+                cell.innerHTML = `
+                    <span class="text-[0.4rem] opacity-40">${i.toString(16).toUpperCase()}</span>
+                    <span class="font-bold text-[0.7rem]">${ASCII_MAP[i]}</span>
+                    <span class="text-[0.6rem] text-orange-400/50">${String.fromCodePoint(BRAILLE_START + i)}</span>
+                `;
+                cell.onclick = () => { xSlider.value = i; update(); };
+                aGrid.appendChild(cell);
+            }
+
+            // 3. Braille 8-Dot (0-255)
+            const bGrid = document.getElementById('braille8Grid');
+            for(let i=0; i<256; i++) {
+                const cell = document.createElement('div');
+                cell.dataset.addr = i;
+                cell.className = 'cell sub-braille-8';
+                cell.innerHTML = `
+                    <span class="text-[0.4rem] opacity-30">${i.toString(16).toUpperCase()}</span>
+                    <span class="text-lg">${String.fromCodePoint(BRAILLE_START + i)}</span>
+                `;
+                cell.onclick = () => { xSlider.value = i; update(); };
+                bGrid.appendChild(cell);
+            }
+        }
+
+        xSlider.oninput = update;
+        cSlider.oninput = update;
+        initGrids();
+        update();
+    </script>
+</body>
+</html>
