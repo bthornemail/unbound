@@ -1,0 +1,33 @@
+#!/bin/rc
+# translate.rc - inside Plan 9: the second Unicode address, by ztranslate, after unbound/HTML/slide_ruler.html (the
+# 16-Bit Kernel Slide Ruler): every code point an Aegean sign for its plane and two Braille cells for its offset's
+# bytes, where the page shows the low byte's cell alone. in/translate written on the host by in/translate/gen.mjs with
+# the page's own constants: the table of all 1,114,112 addresses, ten lines that are no address, and what reading
+# back gives. ztranslate must write the table byte for byte and read every address back to its own place, refuse
+# the ten, and, the falsifier, its -n (the page's one cell, the high byte read as the blank cell) must read back to
+# its own place only the 4,352 code points whose high byte is 0.
+rfork e
+w=/tmp/ztranslate
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/ztranslate.c PLAN9/in/translate} || exit tar
+g=$w/unbound/PLAN9
+d=$g/in/translate
+cd $g/src
+8c ztranslate.c && 8l -o $w/ztranslate ztranslate.8 || exit compile
+ok=()
+gunzip <$d/table.gz >$w/golden
+$w/ztranslate >$w/table
+if(cmp -s $w/table $w/golden){ ok=($ok table); echo the table: `{wc -l <$w/table} addresses, byte for byte }
+if not echo the table differs
+$w/ztranslate -d $w/table >$w/out
+if(cmp -s $w/out $d/counts.table){ ok=($ok back); echo read back: `{cat $w/out} }
+if not echo read back differs: `{cat $w/out}
+$w/ztranslate -d $d/wrong >$w/out
+if(cmp -s $w/out $d/counts.wrong){ ok=($ok wrong); echo no address: `{cat $w/out} }
+if not echo no address differs: `{cat $w/out}
+$w/ztranslate -n >$w/page
+$w/ztranslate -d $w/page >$w/out
+if(cmp -s $w/out $d/counts.page){ ok=($ok page); echo 'the falsifier, the page''s one cell:' `{cat $w/out} }
+if not echo the falsifier differs: `{cat $w/out}
+if(~ $#ok 4) echo 'translate.rc: every answer as expected'

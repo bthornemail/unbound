@@ -210,6 +210,13 @@ PLAN9/src/pixelate.rc
 PLAN9/in/pixelate/polys
 PLAN9/in/pixelate/cast
 PLAN9/in/pixelate/cast.n
+PLAN9/src/ztranslate.c
+PLAN9/src/translate.rc
+PLAN9/in/translate/table.gz
+PLAN9/in/translate/wrong
+PLAN9/in/translate/counts.table
+PLAN9/in/translate/counts.wrong
+PLAN9/in/translate/counts.page
 $(cd "$HERE" && find in/views/match -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/views/tree -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/runes -type f ! -name gen.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')
