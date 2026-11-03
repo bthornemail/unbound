@@ -1,0 +1,33 @@
+#!/bin/rc
+# expand.rc - inside Plan 9: the language-feature binding of the wiki template bindings, a MediaWiki template call
+# filling its template's parameters, by zexpand. in/wiki: 73 cases written on the host (in/wiki/cases.mjs), each a
+# template body and a page that calls it, expanded once by Wikipedia's own parser (in/wiki/fetch.mjs, its
+# expandtemplates, the body given by TemplateSandbox for that request only) and kept as literals; 72 checked (list),
+# one left out (excluded: it calls Wikipedia's own Template:1). The mechanism, not the parser: zexpand must give
+# Wikipedia's expansion of every case byte for byte. The falsifier, zexpand -n, a positional value trimmed as a named
+# one is: it must differ on exactly the cases filed before the guest ran (falsified: 03 and 06, the only positional
+# values with spaces or a line break).
+rfork e
+w=/tmp/zexpand
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zexpand.c PLAN9/in/wiki} || exit tar
+g=$w/unbound/PLAN9
+d=$g/in/wiki
+cd $g/src
+8c zexpand.c && 8l -o $w/zexpand zexpand.8 || exit compile
+cases=`{cat $d/list}
+same=()
+rm -f $w/differ
+for(i in $cases){
+	$w/zexpand $d/cases/$i.body $d/cases/$i.call >$w/out
+	if(cmp -s $w/out $d/cases/$i.expanded) same=($same x)
+	if not echo differs: $i
+	$w/zexpand -n $d/cases/$i.body $d/cases/$i.call >$w/out
+	if(! cmp -s $w/out $d/cases/$i.expanded) echo $i >>$w/differ
+}
+touch $w/differ
+echo 'zexpand gives Wikipedia''s expansion on' $#same of $#cases cases
+if(cmp -s $w/differ $d/falsified) echo the falsifier, -n: differs on exactly `{cat $w/differ}, as filed
+if not echo the falsifier differs on `{cat $w/differ}
+if(~ $#same $#cases && cmp -s $w/differ $d/falsified) echo 'expand.rc: every answer as expected'

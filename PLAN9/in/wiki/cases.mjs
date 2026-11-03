@@ -1,0 +1,92 @@
+// cases.mjs - the template calls of MediaWiki's template bindings (Wikipedia's Help:Template, the author's pages),
+// each a template body and a page text that calls it: [body, call]. The template's name, for every case,
+// UnboundBindTest; Wikipedia's TemplateSandbox gives it the body for one request, nothing created or edited.
+const T = "UnboundBindTest";
+const P = "[{{{1}}}][{{{2}}}][{{{3}}}]";
+export const cases = [
+  // positional
+  [P, `{{${T}|a|b|c}}`],
+  [P, `{{${T}|a}}`],
+  [P, `{{${T}| a | b |c }}`],
+  [P, `{{${T}|||}}`],
+  [P, `{{${T}}}`],
+  [P, `{{${T}|a\n|b\n}}`],
+  // named
+  ["[{{{k}}}][{{{j}}}]", `{{${T}|k=v|j=w}}`],
+  ["[{{{k}}}]", `{{${T}| k = v }}`],
+  ["[{{{k}}}]", `{{${T}|k=\n v \n}}`],
+  ["[{{{k}}}]", `{{${T}|k=}}`],
+  ["[{{{k}}}]", `{{${T}|k=1|k=2}}`],
+  ["[{{{k}}}]", `{{${T}|k=a=b}}`],
+  ["[{{{k}}}][{{{1}}}]", `{{${T}|x|k=y}}`],
+  ["[{{{1}}}]", `{{${T}|a|1=b}}`],
+  ["[{{{1}}}]", `{{${T}|1=b|a}}`],
+  ["[{{{2}}}]", `{{${T}|2=b|a|c}}`],
+  ["[{{{k}}}]", `{{${T}|K=v}}`],
+  ["[{{{a b}}}]", `{{${T}|a b=v}}`],
+  ["[{{{a b}}}]", `{{${T}| a b =v}}`],
+  // defaults
+  ["[{{{1|d}}}]", `{{${T}}}`],
+  ["[{{{1|d}}}]", `{{${T}|}}`],
+  ["[{{{1|d}}}]", `{{${T}|x}}`],
+  ["[{{{k|d}}}]", `{{${T}|k=}}`],
+  ["[{{{k|}}}]", `{{${T}}}`],
+  ["[{{{k| d }}}]", `{{${T}}}`],
+  ["[{{{k|d|e}}}]", `{{${T}}}`],
+  ["[{{{a|{{{b|x}}}}}}]", `{{${T}}}`],
+  ["[{{{a|{{{b|x}}}}}}]", `{{${T}|b=y}}`],
+  ["[{{{a|{{{b|x}}}}}}]", `{{${T}|a=z|b=y}}`],
+  ["[{{{ k }}}]", `{{${T}|k=v}}`],
+  ["[{{{ 1 |d}}}]", `{{${T}|v}}`],
+  ["[{{{{{{1}}}}}}]", `{{${T}|k|k=v}}`],
+  ["[{{{{{{1}}}|z}}}]", `{{${T}|k}}`],
+  // missing, no default
+  ["[{{{9}}}][{{{k}}}]", `{{${T}|a}}`],
+  ["no parameters here", `{{${T}|a|b}}`],
+  ["", `{{${T}|a}}`],
+  // nested calls and text around them
+  [P, `x{{${T}|a}}y{{${T}|b}}z`],
+  [P, `{{${T}|{{${T}|a|b}}|c}}`],
+  ["<{{{1}}}>", `{{${T}|{{${T}|{{${T}|a}}}}}}`],
+  [P, `{{${T}|{{{1}}}|b}}`],
+  [P, `{{${T}|{{{1|q}}}}}`],
+  ["[{{{1}}}]", `{{{1}}} {{${T}|a}}`],
+  // links: a pipe inside [[ ]] does not split
+  [P, `{{${T}|[[a|b]]|c}}`],
+  [P, `{{${T}|[[a|b|c]]}}`],
+  ["[{{{k}}}]", `{{${T}|k=[[x|y]]}}`],
+  [P, `{{${T}|[a|b]}}`],
+  // the name
+  [P, `{{ ${T} |a}}`],
+  [P, `{{${T[0].toLowerCase()}${T.slice(1)}|a}}`],
+  [P, `{{Template:${T}|a}}`],
+  [P, `{{${T}\n|a}}`],
+  // comments and the inclusion tags
+  ["[{{{1}}}]<!-- note -->", `{{${T}|a}}`],
+  ["[{{{1<!-- c -->}}}]", `{{${T}|a}}`],
+  [P, `{{${T}|a<!-- c -->|b}}`],
+  ["[{{{1}}}]<noinclude>doc</noinclude>", `{{${T}|a}}`],
+  ["[{{{1}}}]<includeonly>inc</includeonly>", `{{${T}|a}}`],
+  ["pre<onlyinclude>[{{{1}}}]</onlyinclude>post", `{{${T}|a}}`],
+  ["<onlyinclude>A</onlyinclude>x<onlyinclude>B{{{1}}}</onlyinclude>", `{{${T}|a}}`],
+  ["<noinclude>a</noinclude>[{{{1}}}]<noinclude>b</noinclude>", `{{${T}|a}}`],
+  ["[{{{1}}}]", `<includeonly>gone</includeonly>{{${T}|a}}<noinclude>kept</noinclude>`],
+  // braces that are not calls
+  [P, `{ {${T}|a} }`],
+  [P, `{{${T}|a}`],
+  [P, `{{${T}|a}}}`],
+  [P, `{{{{${T}|a}}`],
+  ["[{{{1}}}", `{{${T}|a}}`],
+  ["[{{1}}]", `{{${T}|a}}`],
+  ["{{{1}}}}", `{{${T}|a}}`],
+  // the values carry braces, equals, pipes as text
+  [P, `{{${T}|a=b}}`],
+  [P, `{{${T}|=b}}`],
+  ["[{{{}}}]", `{{${T}|=b}}`],
+  [P, `{{${T}|a{b}c|d}e}}`],
+  // the substitution form, as expandtemplates gives it
+  [P, `{{subst:${T}|a}}`],
+  // Unicode in names and values
+  ["[{{{π}}}][{{{1}}}]", `{{${T}|π=⠿|⠁}}`],
+  ["[{{{1}}}]", `{{${T}|𐄇}}`],
+];

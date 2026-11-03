@@ -1,0 +1,1 @@
+65: its body [{{1}}] calls Wikipedia's own Template:1, not the binding; its expansion depends on that page, and is kept but not checked
