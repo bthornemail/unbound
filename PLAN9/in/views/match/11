@@ -1,0 +1,63 @@
+7	STARTTAG	3362	3368	<body>
+8	STARTTAG	3817	3821	<br>
+8	STARTTAG	3866	3870	<br>
+8	STARTTAG	3915	3919	<br>
+8	STARTTAG	3964	3968	<br>
+9	STARTTAG	3462	3489	<button id="bootstrap-btn">
+15	STARTTAG	3547	3570	<div class="dashboard">
+15	STARTTAG	3579	3598	<div class="panel">
+15	STARTTAG	3658	3684	<div id="observer-status">
+15	STARTTAG	3743	3774	<div style="margin-top: 15px;">
+15	STARTTAG	4265	4284	<div class="panel">
+15	STARTTAG	4346	4371	<div id="closure-status">
+15	STARTTAG	4414	4456	<div class="matrix-grid" id="matrix-grid">
+15	STARTTAG	4734	4782	<div class="panel" style="grid-column: 1 / -1;">
+15	STARTTAG	4826	4866	<div class="log-window" id="log-window">
+25	STARTTAG	3374	3378	<h1>
+26	STARTTAG	3404	3408	<h2>
+27	STARTTAG	3611	3615	<h3>
+27	STARTTAG	4297	4301	<h3>
+27	STARTTAG	4795	4799	<h3>
+29	STARTTAG	33	39	<head>
+32	STARTTAG	16	32	<html lang="en">
+40	STARTTAG	44	66	<meta charset="UTF-8">
+40	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+44	STARTTAG	4000	4064	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+44	STARTTAG	4537	4601	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+48	STARTTAG	4904	4912	<script>
+51	STARTTAG	3841	3858	<span id="pos-x">
+51	STARTTAG	3890	3907	<span id="pos-y">
+51	STARTTAG	3939	3956	<span id="pos-z">
+52	STARTTAG	3791	3799	<strong>
+53	STARTTAG	186	193	<style>
+62	STARTTAG	146	153	<title>
+79	ATTRNAME	50	57	charset
+80	ATTRNAME	3552	3557	class
+80	ATTRNAME	3584	3589	class
+80	ATTRNAME	4270	4275	class
+80	ATTRNAME	4419	4424	class
+80	ATTRNAME	4739	4744	class
+80	ATTRNAME	4831	4836	class
+82	ATTRNAME	93	100	content
+103	ATTRNAME	3470	3472	id
+103	ATTRNAME	3663	3665	id
+103	ATTRNAME	3847	3849	id
+103	ATTRNAME	3896	3898	id
+103	ATTRNAME	3945	3947	id
+103	ATTRNAME	4351	4353	id
+103	ATTRNAME	4439	4441	id
+103	ATTRNAME	4850	4852	id
+105	ATTRNAME	22	26	lang
+112	ATTRNAME	77	81	name
+136	ATTRNAME	3748	3753	style
+136	ATTRNAME	4003	4008	style
+136	ATTRNAME	4540	4545	style
+136	ATTRNAME	4753	4758	style
+221	VALUE	27	31	"en"
+251	VALUE	3754	3773	"margin-top: 15px;"
+275	VALUE	3590	3597	"panel"
+275	VALUE	4276	4283	"panel"
+275	VALUE	4745	4752	"panel"
+310	VALUE	58	65	"UTF-8"
+311	VALUE	82	92	"viewport"
+313	VALUE	101	140	"width=device-width, initial-scale=1.0"

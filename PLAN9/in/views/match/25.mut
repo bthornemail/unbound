@@ -1,0 +1,95 @@
+2	STARTTAG	4093	4108	<p class="sub">
+12	STARTTAG	4093	4108	<p class="sub">
+14	STARTTAG	4022	4028	<body>
+18	STARTTAG	4685	4743	<button type="button" id="btn-prev" title="Previous page">
+18	STARTTAG	4764	4818	<button type="button" id="btn-next" title="Next page">
+18	STARTTAG	4839	4897	<button type="button" id="btn-step" title="Advance delta">
+18	STARTTAG	4923	4982	<button type="button" id="btn-play" title="Play cue track">
+20	STARTTAG	5075	5147	<canvas id="page" width="960" height="540" aria-label="SVG page canvas">
+24	STARTTAG	4297	4303	<code>
+24	STARTTAG	4321	4327	<code>
+24	STARTTAG	4349	4355	<code>
+24	STARTTAG	5400	5406	<code>
+24	STARTTAG	5557	5563	<code>
+24	STARTTAG	5708	5714	<code>
+24	STARTTAG	5754	5760	<code>
+24	STARTTAG	5788	5794	<code>
+30	STARTTAG	4402	4420	<div class="book">
+30	STARTTAG	4505	4529	<div class="stage-wrap">
+30	STARTTAG	4538	4561	<div class="stage-bar">
+30	STARTTAG	5165	5222	<div class="cue-panel" id="cue-panel" aria-live="polite">
+30	STARTTAG	5356	5374	<div class="meta">
+30	STARTTAG	5381	5386	<div>
+30	STARTTAG	5545	5550	<div>
+30	STARTTAG	5662	5667	<div>
+48	STARTTAG	4093	4108	<p class="sub">
+50	STARTTAG	4057	4061	<h1>
+58	STARTTAG	33	39	<head>
+60	STARTTAG	4042	4050	<header>
+64	STARTTAG	16	32	<html lang="en">
+66	STARTTAG	4093	4108	<p class="sub">
+78	STARTTAG	4031	4037	<main>
+80	STARTTAG	42	64	<meta charset="utf-8">
+80	STARTTAG	67	135	<meta name="viewport" content="width=device-width, initial-scale=1">
+82	STARTTAG	4427	4492	<nav class="paths" id="path-nav" aria-label="Literal path index">
+88	STARTTAG	4093	4108	<p class="sub">
+96	STARTTAG	5966	5974	<script>
+102	STARTTAG	4572	4578	<span>
+102	STARTTAG	4634	4656	<span id="page-range">
+102	STARTTAG	5011	5032	<span id="state-hex">
+102	STARTTAG	5233	5268	<span class="active" id="cue-text">
+104	STARTTAG	4583	4606	<strong id="page-name">
+106	STARTTAG	513	520	<style>
+124	STARTTAG	138	145	<title>
+128	STARTTAG	4093	4108	<p class="sub">
+132	STARTTAG	5913	5954	<video id="cue-engine" muted playsinline>
+140	ATTRNAME	4460	4470	aria-label
+140	ATTRNAME	5118	5128	aria-label
+144	ATTRNAME	5203	5212	aria-live
+158	ATTRNAME	48	55	charset
+160	ATTRNAME	4096	4101	class
+160	ATTRNAME	4407	4412	class
+160	ATTRNAME	4432	4437	class
+160	ATTRNAME	4510	4515	class
+160	ATTRNAME	4543	4548	class
+160	ATTRNAME	5170	5175	class
+160	ATTRNAME	5239	5244	class
+160	ATTRNAME	5361	5366	class
+164	ATTRNAME	89	96	content
+200	ATTRNAME	5105	5111	height
+206	ATTRNAME	4446	4448	id
+206	ATTRNAME	4591	4593	id
+206	ATTRNAME	4640	4642	id
+206	ATTRNAME	4707	4709	id
+206	ATTRNAME	4786	4788	id
+206	ATTRNAME	4861	4863	id
+206	ATTRNAME	4945	4947	id
+206	ATTRNAME	5017	5019	id
+206	ATTRNAME	5083	5085	id
+206	ATTRNAME	5188	5190	id
+206	ATTRNAME	5254	5256	id
+206	ATTRNAME	5920	5922	id
+210	ATTRNAME	22	26	lang
+222	ATTRNAME	5936	5941	muted
+224	ATTRNAME	73	77	name
+236	ATTRNAME	5942	5953	playsinline
+280	ATTRNAME	4721	4726	title
+280	ATTRNAME	4800	4805	title
+280	ATTRNAME	4875	4880	title
+280	ATTRNAME	4959	4964	title
+284	ATTRNAME	4693	4697	type
+284	ATTRNAME	4772	4776	type
+284	ATTRNAME	4847	4851	type
+284	ATTRNAME	4931	4935	type
+294	ATTRNAME	5093	5098	width
+360	VALUE	5245	5253	"active"
+388	VALUE	4698	4706	"button"
+388	VALUE	4777	4785	"button"
+388	VALUE	4852	4860	"button"
+388	VALUE	4936	4944	"button"
+442	VALUE	27	31	"en"
+556	VALUE	5213	5221	"polite"
+598	VALUE	4102	4107	"sub"
+620	VALUE	56	63	"utf-8"
+622	VALUE	78	88	"viewport"
+624	VALUE	97	134	"width=device-width, initial-scale=1"

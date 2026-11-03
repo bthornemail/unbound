@@ -1,0 +1,90 @@
+7	STARTTAG	4022	4028	<body>
+9	STARTTAG	4685	4743	<button type="button" id="btn-prev" title="Previous page">
+9	STARTTAG	4764	4818	<button type="button" id="btn-next" title="Next page">
+9	STARTTAG	4839	4897	<button type="button" id="btn-step" title="Advance delta">
+9	STARTTAG	4923	4982	<button type="button" id="btn-play" title="Play cue track">
+10	STARTTAG	5075	5147	<canvas id="page" width="960" height="540" aria-label="SVG page canvas">
+12	STARTTAG	4297	4303	<code>
+12	STARTTAG	4321	4327	<code>
+12	STARTTAG	4349	4355	<code>
+12	STARTTAG	5400	5406	<code>
+12	STARTTAG	5557	5563	<code>
+12	STARTTAG	5708	5714	<code>
+12	STARTTAG	5754	5760	<code>
+12	STARTTAG	5788	5794	<code>
+15	STARTTAG	4402	4420	<div class="book">
+15	STARTTAG	4505	4529	<div class="stage-wrap">
+15	STARTTAG	4538	4561	<div class="stage-bar">
+15	STARTTAG	5165	5222	<div class="cue-panel" id="cue-panel" aria-live="polite">
+15	STARTTAG	5356	5374	<div class="meta">
+15	STARTTAG	5381	5386	<div>
+15	STARTTAG	5545	5550	<div>
+15	STARTTAG	5662	5667	<div>
+25	STARTTAG	4057	4061	<h1>
+29	STARTTAG	33	39	<head>
+30	STARTTAG	4042	4050	<header>
+32	STARTTAG	16	32	<html lang="en">
+39	STARTTAG	4031	4037	<main>
+40	STARTTAG	42	64	<meta charset="utf-8">
+40	STARTTAG	67	135	<meta name="viewport" content="width=device-width, initial-scale=1">
+41	STARTTAG	4427	4492	<nav class="paths" id="path-nav" aria-label="Literal path index">
+44	STARTTAG	4093	4108	<p class="sub">
+48	STARTTAG	5966	5974	<script>
+51	STARTTAG	4572	4578	<span>
+51	STARTTAG	4634	4656	<span id="page-range">
+51	STARTTAG	5011	5032	<span id="state-hex">
+51	STARTTAG	5233	5268	<span class="active" id="cue-text">
+52	STARTTAG	4583	4606	<strong id="page-name">
+53	STARTTAG	513	520	<style>
+62	STARTTAG	138	145	<title>
+66	STARTTAG	5913	5954	<video id="cue-engine" muted playsinline>
+70	ATTRNAME	4460	4470	aria-label
+70	ATTRNAME	5118	5128	aria-label
+72	ATTRNAME	5203	5212	aria-live
+79	ATTRNAME	48	55	charset
+80	ATTRNAME	4096	4101	class
+80	ATTRNAME	4407	4412	class
+80	ATTRNAME	4432	4437	class
+80	ATTRNAME	4510	4515	class
+80	ATTRNAME	4543	4548	class
+80	ATTRNAME	5170	5175	class
+80	ATTRNAME	5239	5244	class
+80	ATTRNAME	5361	5366	class
+82	ATTRNAME	89	96	content
+100	ATTRNAME	5105	5111	height
+103	ATTRNAME	4446	4448	id
+103	ATTRNAME	4591	4593	id
+103	ATTRNAME	4640	4642	id
+103	ATTRNAME	4707	4709	id
+103	ATTRNAME	4786	4788	id
+103	ATTRNAME	4861	4863	id
+103	ATTRNAME	4945	4947	id
+103	ATTRNAME	5017	5019	id
+103	ATTRNAME	5083	5085	id
+103	ATTRNAME	5188	5190	id
+103	ATTRNAME	5254	5256	id
+103	ATTRNAME	5920	5922	id
+105	ATTRNAME	22	26	lang
+111	ATTRNAME	5936	5941	muted
+112	ATTRNAME	73	77	name
+118	ATTRNAME	5942	5953	playsinline
+140	ATTRNAME	4721	4726	title
+140	ATTRNAME	4800	4805	title
+140	ATTRNAME	4875	4880	title
+140	ATTRNAME	4959	4964	title
+142	ATTRNAME	4693	4697	type
+142	ATTRNAME	4772	4776	type
+142	ATTRNAME	4847	4851	type
+142	ATTRNAME	4931	4935	type
+147	ATTRNAME	5093	5098	width
+180	VALUE	5245	5253	"active"
+194	VALUE	4698	4706	"button"
+194	VALUE	4777	4785	"button"
+194	VALUE	4852	4860	"button"
+194	VALUE	4936	4944	"button"
+221	VALUE	27	31	"en"
+278	VALUE	5213	5221	"polite"
+299	VALUE	4102	4107	"sub"
+310	VALUE	56	63	"utf-8"
+311	VALUE	78	88	"viewport"
+312	VALUE	97	134	"width=device-width, initial-scale=1"

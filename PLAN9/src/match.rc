@@ -1,0 +1,36 @@
+#!/bin/rc
+# match.rc - inside Plan 9: templates over the bound pieces of the views, literal regular expressions, regexp(2) as
+# it is. The spans are each page's pieces (wsn/html.rules) and each start tag's ATTR, ATTRNAME and VALUE (wsn/html.wsn);
+# a template is its production and a pattern over the cast, and names each span of its production its pattern
+# matches, by its rune offsets and its runes. The 317 templates were taken from the pages, not written (each element's
+# start tag, each attribute name, each value on two pages or more), and what each names on each page was found on the
+# host by JavaScript's RegExp (in/views/match, by in/views/match.mjs): zviews -m must name the same spans with the same
+# runes, byte for byte. The falsifier: two mutants of each template (its last symbol the next, its first "."), their
+# spans filed on the host before the guest ran, fewer, more or the same; zviews -m must name exactly those.
+rfork e
+w=/tmp/zmatch
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data HTML PLAN9/src/zviews.c PLAN9/in/views/match} || exit tar
+g=$w/unbound/PLAN9
+m=$g/in/views/match
+cd $g/src
+8c zviews.c && 8l -o $w/zviews zviews.8 || exit compile
+ifs='
+' pages=`{cat $m/pages}
+same=()
+mut=()
+i=0
+for(p in $pages){
+	i=`{echo $i + 1 | hoc}
+	n=`{echo $i | sed 's/^.$/0&/'}
+	$w/zviews -m $m/templates $w/unbound/HTML/$p >$w/out
+	if(cmp -s $w/out $m/$n) same=($same x)
+	if not echo differs: $p
+	$w/zviews -m $m/mutants $w/unbound/HTML/$p >$w/out
+	if(cmp -s $w/out $m/$n.mut) mut=($mut x)
+	if not echo mutants differ: $p
+}
+echo 'regexp(2) names RegExp''s spans' for `{wc -l <$m/templates} templates on $#same of $#pages pages
+echo the falsifier: `{wc -l <$m/mutants} mutants name the filed spans on $#mut of $#pages pages
+if(~ $#same $#pages && ~ $#mut $#pages) echo 'match.rc: every answer as expected'

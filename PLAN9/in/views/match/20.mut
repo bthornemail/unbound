@@ -1,0 +1,137 @@
+2	STARTTAG	7480	7500	<p class="subtitle">
+2	STARTTAG	10485	10532	<p style="color: #94a3b8; text-align: center;">
+12	STARTTAG	7480	7500	<p class="subtitle">
+12	STARTTAG	10485	10532	<p style="color: #94a3b8; text-align: center;">
+14	STARTTAG	7346	7352	<body>
+18	STARTTAG	7772	7833	<button class="nav-btn active" onclick="showView('journal')">
+18	STARTTAG	7862	7916	<button class="nav-btn" onclick="showView('pattern')">
+18	STARTTAG	7945	8000	<button class="nav-btn" onclick="showView('calendar')">
+18	STARTTAG	8030	8087	<button class="nav-btn" onclick="showView('collective')">
+18	STARTTAG	9285	9339	<button class="btn btn-primary" onclick="saveEntry()">
+18	STARTTAG	10261	10327	<button class="btn btn-secondary" onclick="broadcastReflection()">
+30	STARTTAG	7357	7380	<div class="container">
+30	STARTTAG	7389	7409	<div class="header">
+30	STARTTAG	7574	7602	<div class="protocol-badge">
+30	STARTTAG	7742	7759	<div class="nav">
+30	STARTTAG	8131	8166	<div id="journalView" class="card">
+30	STARTTAG	8253	8280	<div class="protocol-info">
+30	STARTTAG	8465	8489	<div class="form-group">
+30	STARTTAG	8659	8683	<div class="form-group">
+30	STARTTAG	8856	8891	<div class="convergence-indicator">
+30	STARTTAG	8995	9024	<div class="convergence-bar">
+30	STARTTAG	9045	9122	<div class="convergence-progress" id="convergenceProgress" style="width: 0%">
+30	STARTTAG	9445	9487	<div id="patternView" class="card hidden">
+30	STARTTAG	9562	9589	<div class="protocol-info">
+30	STARTTAG	9720	9745	<div id="patternContent">
+30	STARTTAG	9776	9819	<div id="calendarView" class="card hidden">
+30	STARTTAG	9869	9895	<div id="calendarContent">
+30	STARTTAG	9926	9971	<div id="collectiveView" class="card hidden">
+30	STARTTAG	10041	10068	<div class="protocol-info">
+30	STARTTAG	10414	10468	<div id="collectiveContent" style="margin-top: 2rem;">
+48	STARTTAG	7480	7500	<p class="subtitle">
+48	STARTTAG	10485	10532	<p style="color: #94a3b8; text-align: center;">
+49	STARTTAG	8179	8183	<h2>
+49	STARTTAG	9500	9504	<h2>
+49	STARTTAG	9832	9836	<h2>
+49	STARTTAG	9984	9988	<h2>
+50	STARTTAG	7422	7440	<h1 class="title">
+52	STARTTAG	8179	8183	<h2>
+52	STARTTAG	9500	9504	<h2>
+52	STARTTAG	9832	9836	<h2>
+52	STARTTAG	9984	9988	<h2>
+58	STARTTAG	33	39	<head>
+64	STARTTAG	16	32	<html lang="en">
+66	STARTTAG	7480	7500	<p class="subtitle">
+66	STARTTAG	10485	10532	<p style="color: #94a3b8; text-align: center;">
+68	STARTTAG	8551	8626	<input type="text" id="wordInput" placeholder="One word..." maxlength="50">
+70	STARTTAG	8506	8513	<label>
+70	STARTTAG	8700	8707	<label>
+80	STARTTAG	44	66	<meta charset="UTF-8">
+80	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+88	STARTTAG	7480	7500	<p class="subtitle">
+88	STARTTAG	10485	10532	<p style="color: #94a3b8; text-align: center;">
+96	STARTTAG	10684	10692	<script>
+102	STARTTAG	7638	7678	<span class="ip-address" id="ipAddress">
+102	STARTTAG	8187	8209	<span id="currentDay">
+102	STARTTAG	8908	8959	<span style="font-size: 0.875rem; color: #94a3b8;">
+102	STARTTAG	9168	9241	<span style="font-size: 0.875rem; color: #94a3b8;" id="convergenceSteps">
+102	STARTTAG	9365	9390	<span id="saveDayNumber">
+106	STARTTAG	205	212	<style>
+118	STARTTAG	8753	8812	<textarea id="contentInput" placeholder="Your thoughts...">
+124	STARTTAG	146	153	<title>
+128	STARTTAG	7480	7500	<p class="subtitle">
+128	STARTTAG	10485	10532	<p style="color: #94a3b8; text-align: center;">
+158	ATTRNAME	50	57	charset
+160	ATTRNAME	7362	7367	class
+160	ATTRNAME	7394	7399	class
+160	ATTRNAME	7426	7431	class
+160	ATTRNAME	7483	7488	class
+160	ATTRNAME	7579	7584	class
+160	ATTRNAME	7644	7649	class
+160	ATTRNAME	7747	7752	class
+160	ATTRNAME	7780	7785	class
+160	ATTRNAME	7870	7875	class
+160	ATTRNAME	7953	7958	class
+160	ATTRNAME	8038	8043	class
+160	ATTRNAME	8153	8158	class
+160	ATTRNAME	8258	8263	class
+160	ATTRNAME	8470	8475	class
+160	ATTRNAME	8664	8669	class
+160	ATTRNAME	8861	8866	class
+160	ATTRNAME	9000	9005	class
+160	ATTRNAME	9050	9055	class
+160	ATTRNAME	9293	9298	class
+160	ATTRNAME	9467	9472	class
+160	ATTRNAME	9567	9572	class
+160	ATTRNAME	9799	9804	class
+160	ATTRNAME	9951	9956	class
+160	ATTRNAME	10046	10051	class
+160	ATTRNAME	10269	10274	class
+164	ATTRNAME	93	100	content
+206	ATTRNAME	7663	7665	id
+206	ATTRNAME	8136	8138	id
+206	ATTRNAME	8193	8195	id
+206	ATTRNAME	8570	8572	id
+206	ATTRNAME	8763	8765	id
+206	ATTRNAME	9079	9081	id
+206	ATTRNAME	9219	9221	id
+206	ATTRNAME	9371	9373	id
+206	ATTRNAME	9450	9452	id
+206	ATTRNAME	9725	9727	id
+206	ATTRNAME	9781	9783	id
+206	ATTRNAME	9874	9876	id
+206	ATTRNAME	9931	9933	id
+206	ATTRNAME	10419	10421	id
+210	ATTRNAME	22	26	lang
+218	ATTRNAME	8611	8620	maxlength
+224	ATTRNAME	77	81	name
+228	ATTRNAME	7803	7810	onclick
+228	ATTRNAME	7886	7893	onclick
+228	ATTRNAME	7969	7976	onclick
+228	ATTRNAME	8054	8061	onclick
+228	ATTRNAME	9317	9324	onclick
+228	ATTRNAME	10295	10302	onclick
+234	ATTRNAME	8585	8596	placeholder
+234	ATTRNAME	8781	8792	placeholder
+272	ATTRNAME	8914	8919	style
+272	ATTRNAME	9104	9109	style
+272	ATTRNAME	9174	9179	style
+272	ATTRNAME	10442	10447	style
+272	ATTRNAME	10488	10493	style
+284	ATTRNAME	8558	8562	type
+356	VALUE	8621	8625	"50"
+384	VALUE	9299	9316	"btn btn-primary"
+386	VALUE	10275	10294	"btn btn-secondary"
+402	VALUE	8159	8165	"card"
+416	VALUE	7368	7379	"container"
+442	VALUE	27	31	"en"
+466	VALUE	8476	8488	"form-group"
+466	VALUE	8670	8682	"form-group"
+472	VALUE	7400	7408	"header"
+530	VALUE	7753	7758	"nav"
+600	VALUE	7489	7499	"subtitle"
+604	VALUE	8563	8569	"text"
+614	VALUE	7432	7439	"title"
+620	VALUE	58	65	"UTF-8"
+622	VALUE	82	92	"viewport"
+626	VALUE	101	140	"width=device-width, initial-scale=1.0"

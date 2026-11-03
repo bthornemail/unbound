@@ -1,0 +1,160 @@
+14	STARTTAG	1971	2012	<body class="text-white overflow-hidden">
+16	STARTTAG	3885	3925	<hr class="border-indigo-900/50 my-4" />
+18	STARTTAG	3679	3827	<button id="add-system-btn" class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+18	STARTTAG	4354	4510	<button id="add-quantized-system-btn" class="bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+18	STARTTAG	5914	6066	<button id="run-sequence-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+20	STARTTAG	2065	2138	<canvas id="main-canvas" class="absolute top-0 left-0 w-full h-full z-0">
+30	STARTTAG	2201	2311	<div class="sidebar absolute top-5 left-5 z-10 p-4 rounded-xl glass-panel shadow-lg flex flex-col gap-4 w-64">
+30	STARTTAG	2403	2445	<div id="pipeline-functions" class="mb-4">
+30	STARTTAG	2538	2580	<div class="flex items-center gap-2 mb-2">
+30	STARTTAG	3270	3300	<div id="function-checkboxes">
+30	STARTTAG	3331	3349	<div class="mb-4">
+30	STARTTAG	4010	4028	<div class="mb-4">
+30	STARTTAG	4623	4770	<div id="inspector-sidebar" class="sidebar hidden-right absolute top-5 right-5 z-10 p-4 rounded-xl glass-panel shadow-lg flex flex-col gap-4 w-72">
+30	STARTTAG	4855	4915	<div id="selected-info" class="flex flex-col gap-2 text-sm">
+30	STARTTAG	4928	4997	<div class="flex justify-between border-b border-yellow-900/50 pb-1">
+30	STARTTAG	5159	5227	<div class="flex flex-col gap-1 border-b border-yellow-900/50 pb-1">
+30	STARTTAG	5419	5452	<div class="flex flex-col gap-1">
+30	STARTTAG	5742	5905	<div class="controls-panel absolute bottom-5 left-1/2 -translate-x-1/2 z-10 p-4 rounded-xl glass-panel shadow-lg flex items-center flex-wrap justify-center gap-4">
+30	STARTTAG	6128	6223	<div id="info-display" class="bg-gray-900/50 p-2 rounded-lg text-sm flex flex-col text-center">
+30	STARTTAG	6237	6242	<div>
+30	STARTTAG	6439	6514	<div id="sequence-display" class="mt-1 pt-1 border-t border-indigo-900/50">
+51	STARTTAG	2320	2366	<h3 class="text-lg font-bold text-indigo-300">
+51	STARTTAG	3935	3979	<h3 class="text-lg font-bold text-teal-300">
+51	STARTTAG	4779	4825	<h3 class="text-lg font-bold text-yellow-300">
+54	STARTTAG	2320	2366	<h3 class="text-lg font-bold text-indigo-300">
+54	STARTTAG	3935	3979	<h3 class="text-lg font-bold text-teal-300">
+54	STARTTAG	4779	4825	<h3 class="text-lg font-bold text-yellow-300">
+58	STARTTAG	33	39	<head>
+62	STARTTAG	3885	3925	<hr class="border-indigo-900/50 my-4" />
+64	STARTTAG	16	32	<html lang="en">
+70	STARTTAG	2458	2497	<label class="font-bold text-gray-300">
+70	STARTTAG	2597	2642	<label for="function-filter" class="text-sm">
+70	STARTTAG	3362	3422	<label for="pipeline-input" class="font-bold text-gray-300">
+70	STARTTAG	4041	4097	<label for="text-input" class="font-bold text-gray-300">
+76	STARTTAG	345	404	<link rel="preconnect" href="https://fonts.googleapis.com">
+76	STARTTAG	409	477	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+76	STARTTAG	482	589	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+80	STARTTAG	44	66	<meta charset="UTF-8">
+80	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+84	STARTTAG	2835	2855	<option value="All">
+84	STARTTAG	2888	2909	<option value="Math">
+84	STARTTAG	2943	2964	<option value="Data">
+84	STARTTAG	2998	3020	<option value="State">
+84	STARTTAG	3055	3078	<option value="String">
+84	STARTTAG	3114	3134	<option value="MCP">
+92	STARTTAG	5531	5650	<pre id="selected-result" class="font-mono text-gray-300 text-xs bg-gray-900/50 p-2 rounded-md max-h-48 overflow-auto">
+92	STARTTAG	6772	6797	<pre id="console-output">
+96	STARTTAG	256	298	<script src="https://cdn.tailwindcss.com">
+96	STARTTAG	1605	1689	<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js">
+96	STARTTAG	1703	1728	<script type="importmap">
+96	STARTTAG	6809	6831	<script type="module">
+100	STARTTAG	2674	2814	<select id="function-filter" class="bg-gray-900/50 text-white rounded-lg p-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-400">
+102	STARTTAG	5014	5038	<span class="font-bold">
+102	STARTTAG	5065	5120	<span id="selected-id" class="font-mono text-gray-300">
+102	STARTTAG	5244	5268	<span class="font-bold">
+102	STARTTAG	5301	5380	<span id="selected-pipeline" class="font-mono text-gray-300 text-xs break-all">
+102	STARTTAG	5469	5493	<span class="font-bold">
+102	STARTTAG	6260	6300	<span class="font-mono text-indigo-300">
+102	STARTTAG	6341	6397	<span id="system-count" class="font-mono text-gray-300">
+102	STARTTAG	6532	6572	<span class="font-mono text-indigo-300">
+102	STARTTAG	6607	6665	<span id="sequence-queue" class="font-mono text-gray-300">
+106	STARTTAG	594	601	<style>
+118	STARTTAG	3466	3623	<textarea id="pipeline-input" class="w-full h-16 bg-gray-900/50 rounded-lg p-2 text-xs font-mono mt-2 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+118	STARTTAG	4145	4296	<textarea id="text-input" class="w-full h-16 bg-gray-900/50 rounded-lg p-2 text-xs font-mono mt-2 focus:outline-none focus:ring-2 focus:ring-teal-400">
+124	STARTTAG	146	153	<title>
+126	STARTTAG	3885	3925	<hr class="border-indigo-900/50 my-4" />
+148	ATTRNAME	1613	1618	async
+158	ATTRNAME	50	57	charset
+160	ATTRNAME	1977	1982	class
+160	ATTRNAME	2090	2095	class
+160	ATTRNAME	2206	2211	class
+160	ATTRNAME	2324	2329	class
+160	ATTRNAME	2432	2437	class
+160	ATTRNAME	2465	2470	class
+160	ATTRNAME	2543	2548	class
+160	ATTRNAME	2626	2631	class
+160	ATTRNAME	2703	2708	class
+160	ATTRNAME	3336	3341	class
+160	ATTRNAME	3390	3395	class
+160	ATTRNAME	3496	3501	class
+160	ATTRNAME	3707	3712	class
+160	ATTRNAME	3889	3894	class
+160	ATTRNAME	3939	3944	class
+160	ATTRNAME	4015	4020	class
+160	ATTRNAME	4065	4070	class
+160	ATTRNAME	4171	4176	class
+160	ATTRNAME	4392	4397	class
+160	ATTRNAME	4651	4656	class
+160	ATTRNAME	4783	4788	class
+160	ATTRNAME	4879	4884	class
+160	ATTRNAME	4933	4938	class
+160	ATTRNAME	5020	5025	class
+160	ATTRNAME	5088	5093	class
+160	ATTRNAME	5164	5169	class
+160	ATTRNAME	5250	5255	class
+160	ATTRNAME	5330	5335	class
+160	ATTRNAME	5424	5429	class
+160	ATTRNAME	5475	5480	class
+160	ATTRNAME	5557	5562	class
+160	ATTRNAME	5747	5752	class
+160	ATTRNAME	5944	5949	class
+160	ATTRNAME	6151	6156	class
+160	ATTRNAME	6266	6271	class
+160	ATTRNAME	6365	6370	class
+160	ATTRNAME	6466	6471	class
+160	ATTRNAME	6538	6543	class
+160	ATTRNAME	6633	6638	class
+164	ATTRNAME	93	100	content
+166	ATTRNAME	465	476	crossorigin
+198	ATTRNAME	2604	2607	for
+198	ATTRNAME	3369	3372	for
+198	ATTRNAME	4048	4051	for
+204	ATTRNAME	368	372	href
+204	ATTRNAME	432	436	href
+204	ATTRNAME	488	492	href
+206	ATTRNAME	2073	2075	id
+206	ATTRNAME	2408	2410	id
+206	ATTRNAME	2682	2684	id
+206	ATTRNAME	3275	3277	id
+206	ATTRNAME	3476	3478	id
+206	ATTRNAME	3687	3689	id
+206	ATTRNAME	4155	4157	id
+206	ATTRNAME	4362	4364	id
+206	ATTRNAME	4628	4630	id
+206	ATTRNAME	4860	4862	id
+206	ATTRNAME	5071	5073	id
+206	ATTRNAME	5307	5309	id
+206	ATTRNAME	5536	5538	id
+206	ATTRNAME	5922	5924	id
+206	ATTRNAME	6133	6135	id
+206	ATTRNAME	6347	6349	id
+206	ATTRNAME	6444	6446	id
+206	ATTRNAME	6613	6615	id
+206	ATTRNAME	6777	6779	id
+210	ATTRNAME	22	26	lang
+224	ATTRNAME	77	81	name
+246	ATTRNAME	351	354	rel
+246	ATTRNAME	415	418	rel
+246	ATTRNAME	572	575	rel
+260	ATTRNAME	264	267	src
+260	ATTRNAME	1619	1622	src
+284	ATTRNAME	1711	1715	type
+284	ATTRNAME	6817	6821	type
+288	ATTRNAME	2843	2848	value
+288	ATTRNAME	2896	2901	value
+288	ATTRNAME	2951	2956	value
+288	ATTRNAME	3006	3011	value
+288	ATTRNAME	3063	3068	value
+288	ATTRNAME	3122	3127	value
+442	VALUE	27	31	"en"
+480	VALUE	268	297	"https://cdn.tailwindcss.com"
+484	VALUE	373	403	"https://fonts.googleapis.com"
+516	VALUE	6822	6830	"module"
+560	VALUE	355	367	"preconnect"
+560	VALUE	419	431	"preconnect"
+596	VALUE	576	588	"stylesheet"
+608	VALUE	2632	2641	"text-sm"
+620	VALUE	58	65	"UTF-8"
+622	VALUE	82	92	"viewport"
+626	VALUE	101	140	"width=device-width, initial-scale=1.0"

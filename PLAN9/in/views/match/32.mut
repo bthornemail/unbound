@@ -1,0 +1,158 @@
+2	STARTTAG	2920	2958	<p class="text-gray-500 mono text-xs">
+12	STARTTAG	2920	2958	<p class="text-gray-500 mono text-xs">
+14	STARTTAG	2591	2616	<body class="p-4 md:p-8">
+30	STARTTAG	2621	2652	<div class="max-w-6xl mx-auto">
+30	STARTTAG	2804	2809	<div>
+30	STARTTAG	3044	3150	<div class="bg-black px-4 py-2 rounded-lg border border-gray-800 mono text-sm text-blue-400 mt-4 md:mt-0">
+30	STARTTAG	3283	3339	<div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+30	STARTTAG	3400	3437	<div class="lg:col-span-1 space-y-4">
+30	STARTTAG	3454	3528	<div class="bg-[#16161e] p-5 rounded-xl border border-gray-800 shadow-xl">
+30	STARTTAG	3670	3693	<div class="space-y-6">
+30	STARTTAG	3718	3723	<div>
+30	STARTTAG	4180	4185	<div>
+30	STARTTAG	4691	4754	<div class="bg-black/50 p-4 rounded-xl border border-gray-800">
+30	STARTTAG	4775	4831	<div class="text-[0.6rem] text-gray-500 uppercase mb-1">
+30	STARTTAG	4891	4955	<div id="opLabel" class="text-lg font-bold text-green-400 mono">
+30	STARTTAG	5073	5110	<div class="lg:col-span-3 space-y-4">
+30	STARTTAG	5127	5229	<div class="unicode-header p-6 rounded-xl border border-gray-800 shadow-2xl relative overflow-hidden">
+30	STARTTAG	5250	5328	<div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+30	STARTTAG	5353	5391	<div class="text-center md:text-left">
+30	STARTTAG	5420	5486	<div class="text-[0.5rem] text-blue-500 uppercase font-bold mb-1">
+30	STARTTAG	5552	5601	<div id="projAegean" class="text-6xl text-white">
+30	STARTTAG	5637	5698	<div id="planeLabel" class="text-xs text-blue-400 mono mt-2">
+30	STARTTAG	5772	5830	<div class="text-center border-x border-gray-800/50 px-4">
+30	STARTTAG	5859	5927	<div class="text-[0.5rem] text-orange-500 uppercase font-bold mb-1">
+30	STARTTAG	5991	6046	<div id="projBraille" class="text-6xl text-orange-400">
+30	STARTTAG	6082	6144	<div id="wordLabel" class="text-xs text-orange-600 mono mt-2">
+30	STARTTAG	6220	6259	<div class="text-center md:text-right">
+30	STARTTAG	6288	6355	<div class="text-[0.5rem] text-green-500 uppercase font-bold mb-1">
+30	STARTTAG	6408	6461	<div id="finalGlyph" class="text-6xl text-green-400">
+30	STARTTAG	6497	6558	<div id="resultHex" class="text-xs text-green-700 mono mt-2">
+30	STARTTAG	6731	6795	<div class="bg-[#16161e] p-3 rounded-lg border border-gray-800">
+30	STARTTAG	6816	6854	<div id="bitStrip" class="flex gap-1">
+30	STARTTAG	7039	7062	<div class="space-y-6">
+30	STARTTAG	7300	7343	<div id="aegeanHeader" class="header-grid">
+30	STARTTAG	7488	7539	<div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+30	STARTTAG	7781	7868	<div id="asciiGrid" class="substrate-grid border border-gray-800 p-1 bg-black rounded">
+30	STARTTAG	8146	8236	<div id="braille8Grid" class="substrate-grid border border-gray-800 p-1 bg-black rounded">
+46	STARTTAG	8313	8419	<footer class="mt-12 pt-4 border-t border-gray-900 text-[0.6rem] text-gray-600 mono flex justify-between">
+48	STARTTAG	2920	2958	<p class="text-gray-500 mono text-xs">
+49	STARTTAG	3549	3631	<h2 class="text-blue-400 font-bold mb-4 uppercase tracking-tighter text-[0.7rem]">
+50	STARTTAG	2826	2873	<h1 class="text-2xl font-bold text-white mb-1">
+51	STARTTAG	7159	7240	<h3 class="text-[0.6rem] font-bold text-gray-500 uppercase mb-2 tracking-widest">
+51	STARTTAG	7633	7714	<h3 class="text-[0.6rem] font-bold text-blue-400 uppercase mb-2 tracking-widest">
+51	STARTTAG	7996	8079	<h3 class="text-[0.6rem] font-bold text-orange-400 uppercase mb-2 tracking-widest">
+52	STARTTAG	3549	3631	<h2 class="text-blue-400 font-bold mb-4 uppercase tracking-tighter text-[0.7rem]">
+54	STARTTAG	7159	7240	<h3 class="text-[0.6rem] font-bold text-gray-500 uppercase mb-2 tracking-widest">
+54	STARTTAG	7633	7714	<h3 class="text-[0.6rem] font-bold text-blue-400 uppercase mb-2 tracking-widest">
+54	STARTTAG	7996	8079	<h3 class="text-[0.6rem] font-bold text-orange-400 uppercase mb-2 tracking-widest">
+58	STARTTAG	33	39	<head>
+60	STARTTAG	2685	2791	<header class="mb-6 flex flex-col md:flex-row justify-between items-center border-b border-gray-800 pb-4">
+64	STARTTAG	16	32	<html lang="en">
+66	STARTTAG	2920	2958	<p class="text-gray-500 mono text-xs">
+68	STARTTAG	4046	4124	<input type="range" id="xSlider" min="0" max="65535" value="0" class="w-full">
+68	STARTTAG	4513	4592	<input type="range" id="cSlider" min="0" max="65535" value="73" class="w-full">
+70	STARTTAG	3752	3841	<label class="flex justify-between text-[0.6rem] mb-1 text-gray-500 uppercase font-bold">
+70	STARTTAG	4214	4303	<label class="flex justify-between text-[0.6rem] mb-1 text-gray-500 uppercase font-bold">
+80	STARTTAG	44	66	<meta charset="UTF-8">
+80	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+88	STARTTAG	2920	2958	<p class="text-gray-500 mono text-xs">
+96	STARTTAG	191	233	<script src="https://cdn.tailwindcss.com">
+96	STARTTAG	8580	8588	<script>
+98	STARTTAG	7133	7142	<section>
+98	STARTTAG	7603	7612	<section>
+98	STARTTAG	7966	7975	<section>
+102	STARTTAG	3874	3880	<span>
+102	STARTTAG	3929	3967	<span id="xVal" class="text-blue-400">
+102	STARTTAG	4336	4342	<span>
+102	STARTTAG	4394	4434	<span id="cVal" class="text-orange-400">
+102	STARTTAG	8432	8438	<span>
+102	STARTTAG	8486	8492	<span>
+106	STARTTAG	247	254	<style>
+124	STARTTAG	146	153	<title>
+128	STARTTAG	2920	2958	<p class="text-gray-500 mono text-xs">
+158	ATTRNAME	50	57	charset
+160	ATTRNAME	2597	2602	class
+160	ATTRNAME	2626	2631	class
+160	ATTRNAME	2693	2698	class
+160	ATTRNAME	2830	2835	class
+160	ATTRNAME	2923	2928	class
+160	ATTRNAME	3049	3054	class
+160	ATTRNAME	3288	3293	class
+160	ATTRNAME	3405	3410	class
+160	ATTRNAME	3459	3464	class
+160	ATTRNAME	3553	3558	class
+160	ATTRNAME	3675	3680	class
+160	ATTRNAME	3759	3764	class
+160	ATTRNAME	3945	3950	class
+160	ATTRNAME	4109	4114	class
+160	ATTRNAME	4221	4226	class
+160	ATTRNAME	4410	4415	class
+160	ATTRNAME	4577	4582	class
+160	ATTRNAME	4696	4701	class
+160	ATTRNAME	4780	4785	class
+160	ATTRNAME	4909	4914	class
+160	ATTRNAME	5078	5083	class
+160	ATTRNAME	5132	5137	class
+160	ATTRNAME	5255	5260	class
+160	ATTRNAME	5358	5363	class
+160	ATTRNAME	5425	5430	class
+160	ATTRNAME	5573	5578	class
+160	ATTRNAME	5658	5663	class
+160	ATTRNAME	5777	5782	class
+160	ATTRNAME	5864	5869	class
+160	ATTRNAME	6013	6018	class
+160	ATTRNAME	6102	6107	class
+160	ATTRNAME	6225	6230	class
+160	ATTRNAME	6293	6298	class
+160	ATTRNAME	6429	6434	class
+160	ATTRNAME	6517	6522	class
+160	ATTRNAME	6736	6741	class
+160	ATTRNAME	6835	6840	class
+160	ATTRNAME	7044	7049	class
+160	ATTRNAME	7163	7168	class
+160	ATTRNAME	7323	7328	class
+160	ATTRNAME	7493	7498	class
+160	ATTRNAME	7637	7642	class
+160	ATTRNAME	7801	7806	class
+160	ATTRNAME	8000	8005	class
+160	ATTRNAME	8169	8174	class
+160	ATTRNAME	8321	8326	class
+164	ATTRNAME	93	100	content
+206	ATTRNAME	3935	3937	id
+206	ATTRNAME	4066	4068	id
+206	ATTRNAME	4400	4402	id
+206	ATTRNAME	4533	4535	id
+206	ATTRNAME	4896	4898	id
+206	ATTRNAME	5557	5559	id
+206	ATTRNAME	5642	5644	id
+206	ATTRNAME	5996	5998	id
+206	ATTRNAME	6087	6089	id
+206	ATTRNAME	6413	6415	id
+206	ATTRNAME	6502	6504	id
+206	ATTRNAME	6821	6823	id
+206	ATTRNAME	7305	7307	id
+206	ATTRNAME	7786	7788	id
+206	ATTRNAME	8151	8153	id
+210	ATTRNAME	22	26	lang
+216	ATTRNAME	4087	4090	max
+216	ATTRNAME	4554	4557	max
+220	ATTRNAME	4079	4082	min
+220	ATTRNAME	4546	4549	min
+224	ATTRNAME	77	81	name
+260	ATTRNAME	199	202	src
+284	ATTRNAME	4053	4057	type
+284	ATTRNAME	4520	4524	type
+288	ATTRNAME	4099	4104	value
+288	ATTRNAME	4566	4571	value
+312	VALUE	4083	4086	"0"
+312	VALUE	4105	4108	"0"
+312	VALUE	4550	4553	"0"
+368	VALUE	7789	7800	"asciiGrid"
+442	VALUE	27	31	"en"
+480	VALUE	203	232	"https://cdn.tailwindcss.com"
+566	VALUE	4058	4065	"range"
+566	VALUE	4525	4532	"range"
+620	VALUE	58	65	"UTF-8"
+622	VALUE	82	92	"viewport"
+626	VALUE	101	140	"width=device-width, initial-scale=1.0"

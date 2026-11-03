@@ -1,0 +1,262 @@
+1	STARTTAG	5063	5066	<b>
+2	STARTTAG	4802	4819	<p class="claim">
+2	STARTTAG	5063	5066	<b>
+2	STARTTAG	5154	5171	<p class="muted">
+2	STARTTAG	5431	5434	<p>
+2	STARTTAG	6708	6742	<i style="background:var(--time)">
+2	STARTTAG	6781	6815	<i style="background:var(--held)">
+2	STARTTAG	6846	6880	<i style="background:var(--hand)">
+2	STARTTAG	6980	6983	<p>
+2	STARTTAG	7256	7294	<p class="muted mono" id="strip-note">
+2	STARTTAG	7454	7457	<p>
+2	STARTTAG	7974	7977	<p>
+2	STARTTAG	8192	8209	<p class="muted">
+2	STARTTAG	8472	8475	<p>
+2	STARTTAG	8782	8785	<p>
+12	STARTTAG	4802	4819	<p class="claim">
+12	STARTTAG	5063	5066	<b>
+12	STARTTAG	5154	5171	<p class="muted">
+12	STARTTAG	5431	5434	<p>
+12	STARTTAG	6708	6742	<i style="background:var(--time)">
+12	STARTTAG	6781	6815	<i style="background:var(--held)">
+12	STARTTAG	6846	6880	<i style="background:var(--hand)">
+12	STARTTAG	6980	6983	<p>
+12	STARTTAG	7256	7294	<p class="muted mono" id="strip-note">
+12	STARTTAG	7454	7457	<p>
+12	STARTTAG	7974	7977	<p>
+12	STARTTAG	8192	8209	<p class="muted">
+12	STARTTAG	8472	8475	<p>
+12	STARTTAG	8782	8785	<p>
+14	STARTTAG	4596	4602	<body>
+18	STARTTAG	5884	5935	<button type="button" id="b75" aria-pressed="true">
+18	STARTTAG	5968	6020	<button type="button" id="b60" aria-pressed="false">
+18	STARTTAG	6453	6485	<button type="button" id="play">
+18	STARTTAG	6507	6539	<button type="button" id="jump">
+24	STARTTAG	4867	4873	<code>
+24	STARTTAG	5243	5249	<code>
+24	STARTTAG	8023	8029	<code>
+24	STARTTAG	8051	8057	<code>
+24	STARTTAG	8071	8077	<code>
+24	STARTTAG	8402	8408	<code>
+24	STARTTAG	8493	8499	<code>
+24	STARTTAG	8606	8612	<code>
+24	STARTTAG	8664	8670	<code>
+24	STARTTAG	8731	8737	<code>
+26	STARTTAG	6125	6141	<dd id="r-tick">
+26	STARTTAG	6176	6193	<dd id="r-cycle">
+26	STARTTAG	6229	6244	<dd id="r-mod">
+26	STARTTAG	6278	6295	<dd id="r-phase">
+26	STARTTAG	6332	6346	<dd id="r-cl">
+26	STARTTAG	6381	6398	<dd id="r-close">
+30	STARTTAG	4603	4621	<div class="wrap">
+30	STARTTAG	4664	4685	<div class="eyebrow">
+30	STARTTAG	5616	5639	<div class="panel two">
+30	STARTTAG	5811	5846	<div style="display:grid;gap:12px">
+30	STARTTAG	5853	5875	<div class="controls">
+30	STARTTAG	6422	6444	<div class="controls">
+30	STARTTAG	6682	6702	<div class="legend">
+30	STARTTAG	7191	7210	<div class="panel">
+30	STARTTAG	7215	7245	<div class="strip" id="strip">
+30	STARTTAG	7367	7386	<div class="panel">
+30	STARTTAG	7391	7415	<div class="table-wrap">
+30	STARTTAG	7882	7912	<div class="panel" id="preds">
+30	STARTTAG	8112	8131	<div class="panel">
+30	STARTTAG	8131	8155	<div class="table-wrap">
+32	STARTTAG	6064	6103	<dl class="readout" aria-live="polite">
+34	STARTTAG	6112	6116	<dt>
+34	STARTTAG	6155	6159	<dt>
+34	STARTTAG	6207	6211	<dt>
+34	STARTTAG	6258	6262	<dt>
+34	STARTTAG	6309	6313	<dt>
+34	STARTTAG	6360	6364	<dt>
+36	STARTTAG	4832	4836	<em>
+36	STARTTAG	4912	4916	<em>
+36	STARTTAG	5439	5443	<em>
+46	STARTTAG	8461	8469	<footer>
+48	STARTTAG	4802	4819	<p class="claim">
+48	STARTTAG	5063	5066	<b>
+48	STARTTAG	5154	5171	<p class="muted">
+48	STARTTAG	5431	5434	<p>
+48	STARTTAG	6708	6742	<i style="background:var(--time)">
+48	STARTTAG	6781	6815	<i style="background:var(--held)">
+48	STARTTAG	6846	6880	<i style="background:var(--hand)">
+48	STARTTAG	6980	6983	<p>
+48	STARTTAG	7256	7294	<p class="muted mono" id="strip-note">
+48	STARTTAG	7454	7457	<p>
+48	STARTTAG	7974	7977	<p>
+48	STARTTAG	8192	8209	<p class="muted">
+48	STARTTAG	8472	8475	<p>
+48	STARTTAG	8782	8785	<p>
+49	STARTTAG	5374	5378	<h2>
+49	STARTTAG	6951	6955	<h2>
+49	STARTTAG	7332	7336	<h2>
+49	STARTTAG	7833	7837	<h2>
+49	STARTTAG	7943	7947	<h2>
+50	STARTTAG	4738	4742	<h1>
+52	STARTTAG	5374	5378	<h2>
+52	STARTTAG	6951	6955	<h2>
+52	STARTTAG	7332	7336	<h2>
+52	STARTTAG	7833	7837	<h2>
+52	STARTTAG	7943	7947	<h2>
+58	STARTTAG	33	39	<head>
+60	STARTTAG	4623	4661	<header style="display:grid;gap:10px">
+64	STARTTAG	16	32	<html lang="en">
+66	STARTTAG	4802	4819	<p class="claim">
+66	STARTTAG	5063	5066	<b>
+66	STARTTAG	5154	5171	<p class="muted">
+66	STARTTAG	5431	5434	<p>
+66	STARTTAG	6708	6742	<i style="background:var(--time)">
+66	STARTTAG	6781	6815	<i style="background:var(--held)">
+66	STARTTAG	6846	6880	<i style="background:var(--hand)">
+66	STARTTAG	6980	6983	<p>
+66	STARTTAG	7256	7294	<p class="muted mono" id="strip-note">
+66	STARTTAG	7454	7457	<p>
+66	STARTTAG	7974	7977	<p>
+66	STARTTAG	8192	8209	<p class="muted">
+66	STARTTAG	8472	8475	<p>
+66	STARTTAG	8782	8785	<p>
+68	STARTTAG	6574	6662	<input type="range" id="scrub" min="0" max="25199" step="1" value="0" aria-label="Tick">
+80	STARTTAG	40	62	<meta charset="utf-8">
+80	STARTTAG	63	151	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+88	STARTTAG	4802	4819	<p class="claim">
+88	STARTTAG	5063	5066	<b>
+88	STARTTAG	5154	5171	<p class="muted">
+88	STARTTAG	5431	5434	<p>
+88	STARTTAG	6708	6742	<i style="background:var(--time)">
+88	STARTTAG	6781	6815	<i style="background:var(--held)">
+88	STARTTAG	6846	6880	<i style="background:var(--hand)">
+88	STARTTAG	6980	6983	<p>
+88	STARTTAG	7256	7294	<p class="muted mono" id="strip-note">
+88	STARTTAG	7454	7457	<p>
+88	STARTTAG	7974	7977	<p>
+88	STARTTAG	8192	8209	<p class="muted">
+88	STARTTAG	8472	8475	<p>
+88	STARTTAG	8782	8785	<p>
+96	STARTTAG	8950	8958	<script>
+98	STARTTAG	5362	5371	<section>
+98	STARTTAG	6939	6948	<section>
+98	STARTTAG	7320	7329	<section>
+98	STARTTAG	7821	7830	<section>
+98	STARTTAG	7931	7940	<section>
+102	STARTTAG	6702	6708	<span>
+102	STARTTAG	6775	6781	<span>
+102	STARTTAG	6840	6846	<span>
+106	STARTTAG	187	194	<style>
+108	STARTTAG	5644	5800	<svg id="dial" viewBox="-160 -160 320 320" role="img" aria-label="The sonar dial: five blocks of sixteen slots, fifteen carrying time, with the sonar hand">
+110	STARTTAG	7415	7435	<table id="factors">
+110	STARTTAG	8155	8173	<table id="years">
+114	STARTTAG	6125	6141	<dd id="r-tick">
+114	STARTTAG	6176	6193	<dd id="r-cycle">
+114	STARTTAG	6229	6244	<dd id="r-mod">
+114	STARTTAG	6278	6295	<dd id="r-phase">
+114	STARTTAG	6332	6346	<dd id="r-cl">
+114	STARTTAG	6381	6398	<dd id="r-close">
+124	STARTTAG	152	159	<title>
+128	STARTTAG	4802	4819	<p class="claim">
+128	STARTTAG	5063	5066	<b>
+128	STARTTAG	5154	5171	<p class="muted">
+128	STARTTAG	5431	5434	<p>
+128	STARTTAG	6708	6742	<i style="background:var(--time)">
+128	STARTTAG	6781	6815	<i style="background:var(--held)">
+128	STARTTAG	6846	6880	<i style="background:var(--hand)">
+128	STARTTAG	6980	6983	<p>
+128	STARTTAG	7256	7294	<p class="muted mono" id="strip-note">
+128	STARTTAG	7454	7457	<p>
+128	STARTTAG	7974	7977	<p>
+128	STARTTAG	8192	8209	<p class="muted">
+128	STARTTAG	8472	8475	<p>
+128	STARTTAG	8782	8785	<p>
+130	STARTTAG	6064	6103	<dl class="readout" aria-live="polite">
+140	ATTRNAME	5698	5708	aria-label
+140	ATTRNAME	6644	6654	aria-label
+144	ATTRNAME	6084	6093	aria-live
+146	ATTRNAME	5915	5927	aria-pressed
+146	ATTRNAME	5999	6011	aria-pressed
+158	ATTRNAME	46	53	charset
+160	ATTRNAME	4608	4613	class
+160	ATTRNAME	4669	4674	class
+160	ATTRNAME	4805	4810	class
+160	ATTRNAME	5157	5162	class
+160	ATTRNAME	5621	5626	class
+160	ATTRNAME	5858	5863	class
+160	ATTRNAME	6068	6073	class
+160	ATTRNAME	6427	6432	class
+160	ATTRNAME	6687	6692	class
+160	ATTRNAME	7196	7201	class
+160	ATTRNAME	7220	7225	class
+160	ATTRNAME	7259	7264	class
+160	ATTRNAME	7372	7377	class
+160	ATTRNAME	7396	7401	class
+160	ATTRNAME	7887	7892	class
+160	ATTRNAME	8117	8122	class
+160	ATTRNAME	8136	8141	class
+160	ATTRNAME	8195	8200	class
+164	ATTRNAME	85	92	content
+206	ATTRNAME	5649	5651	id
+206	ATTRNAME	5906	5908	id
+206	ATTRNAME	5990	5992	id
+206	ATTRNAME	6129	6131	id
+206	ATTRNAME	6180	6182	id
+206	ATTRNAME	6233	6235	id
+206	ATTRNAME	6282	6284	id
+206	ATTRNAME	6336	6338	id
+206	ATTRNAME	6385	6387	id
+206	ATTRNAME	6475	6477	id
+206	ATTRNAME	6529	6531	id
+206	ATTRNAME	6594	6596	id
+206	ATTRNAME	7234	7236	id
+206	ATTRNAME	7278	7280	id
+206	ATTRNAME	7422	7424	id
+206	ATTRNAME	7901	7903	id
+206	ATTRNAME	8162	8164	id
+210	ATTRNAME	22	26	lang
+216	ATTRNAME	6613	6616	max
+220	ATTRNAME	6605	6608	min
+224	ATTRNAME	69	73	name
+252	ATTRNAME	5687	5691	role
+264	ATTRNAME	6625	6629	step
+272	ATTRNAME	4631	4636	style
+272	ATTRNAME	5816	5821	style
+272	ATTRNAME	6711	6716	style
+272	ATTRNAME	6784	6789	style
+272	ATTRNAME	6849	6854	style
+284	ATTRNAME	5892	5896	type
+284	ATTRNAME	5976	5980	type
+284	ATTRNAME	6461	6465	type
+284	ATTRNAME	6515	6519	type
+284	ATTRNAME	6581	6585	type
+288	ATTRNAME	6634	6639	value
+290	ATTRNAME	5659	5666	viewBox
+312	VALUE	6609	6612	"0"
+312	VALUE	6640	6643	"0"
+322	VALUE	6630	6633	"1"
+388	VALUE	5897	5905	"button"
+388	VALUE	5981	5989	"button"
+388	VALUE	6466	6474	"button"
+388	VALUE	6520	6528	"button"
+420	VALUE	5864	5874	"controls"
+420	VALUE	6433	6443	"controls"
+434	VALUE	5652	5658	"dial"
+436	VALUE	4637	4660	"display:grid;gap:10px"
+442	VALUE	27	31	"en"
+450	VALUE	4675	4684	"eyebrow"
+452	VALUE	6012	6019	"false"
+486	VALUE	5692	5697	"img"
+498	VALUE	6693	6701	"legend"
+524	VALUE	5163	5170	"muted"
+524	VALUE	8201	8208	"muted"
+550	VALUE	7202	7209	"panel"
+550	VALUE	7378	7385	"panel"
+550	VALUE	7893	7900	"panel"
+550	VALUE	8123	8130	"panel"
+552	VALUE	6478	6484	"play"
+556	VALUE	6094	6102	"polite"
+566	VALUE	6586	6593	"range"
+568	VALUE	6074	6083	"readout"
+574	VALUE	6597	6604	"scrub"
+602	VALUE	7402	7414	"table-wrap"
+602	VALUE	8142	8154	"table-wrap"
+616	VALUE	5928	5934	"true"
+620	VALUE	54	61	"utf-8"
+622	VALUE	74	84	"viewport"
+630	VALUE	4614	4620	"wrap"

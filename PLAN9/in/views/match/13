@@ -1,0 +1,272 @@
+1	STARTTAG	15626	15708	<a href="https://github.com/bthornemail/omi-axioms/blob/main/js/catalog/I-229.ts">
+1	STARTTAG	15735	15787	<a href="https://github.com/bthornemail/omi-axioms">
+1	STARTTAG	15829	15914	<a href="https://github.com/bthornemail/omi-axioms/blob/main/js-docs/other/I-229.md">
+7	STARTTAG	524	530	<body>
+12	STARTTAG	6154	6160	<code>
+12	STARTTAG	7714	7720	<code>
+12	STARTTAG	10227	10233	<code>
+12	STARTTAG	10714	10720	<code>
+12	STARTTAG	14237	14243	<code>
+12	STARTTAG	14335	14341	<code>
+15	STARTTAG	5863	5881	<div class="wrap">
+15	STARTTAG	5893	5914	<div class="eyebrow">
+15	STARTTAG	6314	6365	<div class="loop" aria-label="The method in order">
+15	STARTTAG	6603	6620	<div class="num">
+15	STARTTAG	6630	6648	<div class="body">
+15	STARTTAG	7863	7880	<div class="num">
+15	STARTTAG	7890	7908	<div class="body">
+15	STARTTAG	8815	8832	<div class="num">
+15	STARTTAG	8842	8860	<div class="body">
+15	STARTTAG	9498	9515	<div class="run">
+15	STARTTAG	9522	9545	<div class="run-label">
+15	STARTTAG	9564	9586	<div class="controls">
+15	STARTTAG	9743	9783	<div class="controls" id="name-samples">
+15	STARTTAG	9796	9850	<div class="trace" id="reduce-out" aria-live="polite">
+15	STARTTAG	9927	9944	<div class="num">
+15	STARTTAG	9954	9972	<div class="body">
+15	STARTTAG	10513	10530	<div class="run">
+15	STARTTAG	10537	10560	<div class="run-label">
+15	STARTTAG	10617	10672	<div class="trace" id="compare-out" aria-live="polite">
+15	STARTTAG	11167	11184	<div class="num">
+15	STARTTAG	11194	11212	<div class="body">
+15	STARTTAG	12041	12058	<div class="run">
+15	STARTTAG	12065	12088	<div class="run-label">
+15	STARTTAG	12125	12149	<div class="table-wrap">
+15	STARTTAG	12256	12273	<div class="num">
+15	STARTTAG	12283	12301	<div class="body">
+15	STARTTAG	13196	13213	<div class="run">
+15	STARTTAG	13220	13243	<div class="run-label">
+15	STARTTAG	13276	13298	<div class="controls">
+15	STARTTAG	13565	13604	<div class="controls" id="heb-samples">
+15	STARTTAG	13617	13684	<div id="heb-out" aria-live="polite" style="display:grid;gap:14px">
+15	STARTTAG	13996	14013	<div class="num">
+15	STARTTAG	14023	14041	<div class="body">
+23	STARTTAG	15604	15612	<footer>
+25	STARTTAG	5956	5960	<h1>
+26	STARTTAG	6653	6657	<h2>
+26	STARTTAG	7913	7917	<h2>
+26	STARTTAG	8865	8869	<h2>
+26	STARTTAG	9977	9981	<h2>
+26	STARTTAG	11217	11221	<h2>
+26	STARTTAG	12306	12310	<h2>
+26	STARTTAG	14046	14050	<h2>
+29	STARTTAG	21	27	<head>
+30	STARTTAG	5882	5890	<header>
+32	STARTTAG	15	21	<html>
+34	STARTTAG	9595	9723	<input type="text" id="name-in" value="JEHOVAH" aria-label="A name to reduce and compare" autocomplete="off" spellcheck="false">
+34	STARTTAG	13307	13421	<input type="text" id="heb-a" class="heb-in" aria-label="First Hebrew word" autocomplete="off" spellcheck="false">
+34	STARTTAG	13430	13545	<input type="text" id="heb-b" class="heb-in" aria-label="Second Hebrew word" autocomplete="off" spellcheck="false">
+38	STARTTAG	616	675	<link rel="preconnect" href="https://fonts.googleapis.com">
+38	STARTTAG	676	911	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Frank+Ruhl+Libre:wght@400;500&display=swap">
+40	STARTTAG	27	46	<meta charset=utf8>
+40	STARTTAG	46	130	<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+40	STARTTAG	560	615	<meta name="claude:viewport-fit-sides" content="cover">
+44	STARTTAG	6006	6022	<p class="lede">
+44	STARTTAG	6708	6711	<p>
+44	STARTTAG	7590	7606	<p class="note">
+44	STARTTAG	7956	7959	<p>
+44	STARTTAG	8591	8607	<p class="note">
+44	STARTTAG	8904	8907	<p>
+44	STARTTAG	10025	10028	<p>
+44	STARTTAG	10694	10710	<p class="note">
+44	STARTTAG	11256	11259	<p>
+44	STARTTAG	12353	12356	<p>
+44	STARTTAG	13706	13709	<p>
+44	STARTTAG	14105	14108	<p>
+44	STARTTAG	15433	15449	<p class="note">
+44	STARTTAG	15615	15618	<p>
+44	STARTTAG	15948	15951	<p>
+46	STARTTAG	7015	7020	<pre>
+46	STARTTAG	8269	8274	<pre>
+46	STARTTAG	9268	9273	<pre>
+46	STARTTAG	10264	10269	<pre>
+46	STARTTAG	11625	11630	<pre>
+46	STARTTAG	12650	12655	<pre>
+46	STARTTAG	14580	14585	<pre>
+48	STARTTAG	16215	16223	<script>
+49	STARTTAG	6565	6600	<section class="step" id="predict">
+49	STARTTAG	7825	7860	<section class="step" id="literal">
+49	STARTTAG	8778	8812	<section class="step" id="reduce">
+49	STARTTAG	9889	9924	<section class="step" id="compare">
+49	STARTTAG	11132	11164	<section class="step" id="fold">
+49	STARTTAG	12219	12253	<section class="step" id="layers">
+49	STARTTAG	13959	13993	<section class="step" id="record">
+51	STARTTAG	6370	6376	<span>
+51	STARTTAG	6391	6397	<span>
+51	STARTTAG	6420	6426	<span>
+51	STARTTAG	6440	6446	<span>
+51	STARTTAG	6461	6467	<span>
+51	STARTTAG	6488	6494	<span>
+51	STARTTAG	6517	6523	<span>
+51	STARTTAG	7020	7036	<span class="c">
+51	STARTTAG	8299	8315	<span class="c">
+51	STARTTAG	8405	8421	<span class="c">
+51	STARTTAG	8519	8535	<span class="c">
+51	STARTTAG	9349	9365	<span class="c">
+51	STARTTAG	9448	9464	<span class="c">
+51	STARTTAG	11767	11783	<span class="c">
+51	STARTTAG	11874	11890	<span class="c">
+51	STARTTAG	11972	11988	<span class="c">
+51	STARTTAG	12759	12775	<span class="c">
+51	STARTTAG	12901	12917	<span class="c">
+51	STARTTAG	13025	13041	<span class="c">
+51	STARTTAG	14585	14601	<span class="c">
+53	STARTTAG	130	137	<style>
+53	STARTTAG	912	919	<style>
+55	STARTTAG	12149	12172	<table id="fold-table">
+62	STARTTAG	531	538	<title>
+70	ATTRNAME	6332	6342	aria-label
+70	ATTRNAME	9643	9653	aria-label
+70	ATTRNAME	13352	13362	aria-label
+70	ATTRNAME	13475	13485	aria-label
+72	ATTRNAME	9831	9840	aria-live
+72	ATTRNAME	10653	10662	aria-live
+72	ATTRNAME	13635	13644	aria-live
+75	ATTRNAME	9685	9697	autocomplete
+75	ATTRNAME	13383	13395	autocomplete
+75	ATTRNAME	13507	13519	autocomplete
+79	ATTRNAME	33	40	charset
+80	ATTRNAME	5868	5873	class
+80	ATTRNAME	5898	5903	class
+80	ATTRNAME	6009	6014	class
+80	ATTRNAME	6319	6324	class
+80	ATTRNAME	6574	6579	class
+80	ATTRNAME	6608	6613	class
+80	ATTRNAME	6635	6640	class
+80	ATTRNAME	7026	7031	class
+80	ATTRNAME	7593	7598	class
+80	ATTRNAME	7834	7839	class
+80	ATTRNAME	7868	7873	class
+80	ATTRNAME	7895	7900	class
+80	ATTRNAME	8305	8310	class
+80	ATTRNAME	8411	8416	class
+80	ATTRNAME	8525	8530	class
+80	ATTRNAME	8594	8599	class
+80	ATTRNAME	8787	8792	class
+80	ATTRNAME	8820	8825	class
+80	ATTRNAME	8847	8852	class
+80	ATTRNAME	9355	9360	class
+80	ATTRNAME	9454	9459	class
+80	ATTRNAME	9503	9508	class
+80	ATTRNAME	9527	9532	class
+80	ATTRNAME	9569	9574	class
+80	ATTRNAME	9748	9753	class
+80	ATTRNAME	9801	9806	class
+80	ATTRNAME	9898	9903	class
+80	ATTRNAME	9932	9937	class
+80	ATTRNAME	9959	9964	class
+80	ATTRNAME	10518	10523	class
+80	ATTRNAME	10542	10547	class
+80	ATTRNAME	10622	10627	class
+80	ATTRNAME	10697	10702	class
+80	ATTRNAME	11141	11146	class
+80	ATTRNAME	11172	11177	class
+80	ATTRNAME	11199	11204	class
+80	ATTRNAME	11773	11778	class
+80	ATTRNAME	11880	11885	class
+80	ATTRNAME	11978	11983	class
+80	ATTRNAME	12046	12051	class
+80	ATTRNAME	12070	12075	class
+80	ATTRNAME	12130	12135	class
+80	ATTRNAME	12228	12233	class
+80	ATTRNAME	12261	12266	class
+80	ATTRNAME	12288	12293	class
+80	ATTRNAME	12765	12770	class
+80	ATTRNAME	12907	12912	class
+80	ATTRNAME	13031	13036	class
+80	ATTRNAME	13201	13206	class
+80	ATTRNAME	13225	13230	class
+80	ATTRNAME	13281	13286	class
+80	ATTRNAME	13337	13342	class
+80	ATTRNAME	13460	13465	class
+80	ATTRNAME	13570	13575	class
+80	ATTRNAME	13968	13973	class
+80	ATTRNAME	14001	14006	class
+80	ATTRNAME	14028	14033	class
+80	ATTRNAME	14591	14596	class
+80	ATTRNAME	15436	15441	class
+82	ATTRNAME	66	73	content
+82	ATTRNAME	599	606	content
+102	ATTRNAME	639	643	href
+102	ATTRNAME	699	703	href
+102	ATTRNAME	15629	15633	href
+102	ATTRNAME	15738	15742	href
+102	ATTRNAME	15832	15836	href
+103	ATTRNAME	6587	6589	id
+103	ATTRNAME	7847	7849	id
+103	ATTRNAME	8800	8802	id
+103	ATTRNAME	9614	9616	id
+103	ATTRNAME	9765	9767	id
+103	ATTRNAME	9815	9817	id
+103	ATTRNAME	9911	9913	id
+103	ATTRNAME	10636	10638	id
+103	ATTRNAME	11154	11156	id
+103	ATTRNAME	12156	12158	id
+103	ATTRNAME	12241	12243	id
+103	ATTRNAME	13326	13328	id
+103	ATTRNAME	13449	13451	id
+103	ATTRNAME	13587	13589	id
+103	ATTRNAME	13622	13624	id
+103	ATTRNAME	13981	13983	id
+112	ATTRNAME	52	56	name
+112	ATTRNAME	566	570	name
+123	ATTRNAME	622	625	rel
+123	ATTRNAME	682	685	rel
+129	ATTRNAME	9704	9714	spellcheck
+129	ATTRNAME	13402	13412	spellcheck
+129	ATTRNAME	13526	13536	spellcheck
+136	ATTRNAME	13654	13659	style
+142	ATTRNAME	9602	9606	type
+142	ATTRNAME	13314	13318	type
+142	ATTRNAME	13437	13441	type
+144	ATTRNAME	9627	9632	value
+195	VALUE	7032	7035	"c"
+195	VALUE	8311	8314	"c"
+195	VALUE	8417	8420	"c"
+195	VALUE	8531	8534	"c"
+195	VALUE	9361	9364	"c"
+195	VALUE	9460	9463	"c"
+195	VALUE	11779	11782	"c"
+195	VALUE	11886	11889	"c"
+195	VALUE	11984	11987	"c"
+195	VALUE	12771	12774	"c"
+195	VALUE	12913	12916	"c"
+195	VALUE	13037	13040	"c"
+195	VALUE	14597	14600	"c"
+202	VALUE	571	598	"claude:viewport-fit-sides"
+205	VALUE	9914	9923	"compare"
+210	VALUE	9575	9585	"controls"
+210	VALUE	9754	9764	"controls"
+210	VALUE	13287	13297	"controls"
+210	VALUE	13576	13586	"controls"
+211	VALUE	607	614	"cover"
+225	VALUE	5904	5913	"eyebrow"
+226	VALUE	9715	9722	"false"
+226	VALUE	13413	13420	"false"
+226	VALUE	13537	13544	"false"
+242	VALUE	644	674	"https://fonts.googleapis.com"
+248	VALUE	6015	6021	"lede"
+267	VALUE	7599	7605	"note"
+267	VALUE	8600	8606	"note"
+267	VALUE	10703	10709	"note"
+267	VALUE	15442	15448	"note"
+278	VALUE	9841	9849	"polite"
+278	VALUE	10663	10671	"polite"
+278	VALUE	13645	13653	"polite"
+280	VALUE	626	638	"preconnect"
+297	VALUE	6580	6586	"step"
+297	VALUE	7840	7846	"step"
+297	VALUE	8793	8799	"step"
+297	VALUE	9904	9910	"step"
+297	VALUE	11147	11153	"step"
+297	VALUE	12234	12240	"step"
+297	VALUE	13974	13980	"step"
+298	VALUE	686	698	"stylesheet"
+301	VALUE	12136	12148	"table-wrap"
+302	VALUE	9607	9613	"text"
+302	VALUE	13319	13325	"text"
+302	VALUE	13442	13448	"text"
+314	VALUE	74	129	"width=device-width,initial-scale=1,viewport-fit=cover"
+315	VALUE	5874	5880	"wrap"
+316	VALUE	41	45	utf8
+317	VALUE	57	65	viewport

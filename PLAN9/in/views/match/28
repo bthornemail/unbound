@@ -1,0 +1,249 @@
+6	STARTTAG	6896	6899	<b>
+6	STARTTAG	7041	7044	<b>
+6	STARTTAG	7186	7189	<b>
+6	STARTTAG	7330	7333	<b>
+7	STARTTAG	5185	5191	<body>
+9	STARTTAG	5646	5666	<button id="micBtn">
+9	STARTTAG	5685	5731	<button id="playBtn" class="primary" disabled>
+9	STARTTAG	8420	8441	<button id="bindBtn">
+9	STARTTAG	8486	8509	<button id="unbindBtn">
+10	STARTTAG	6413	6464	<canvas id="oscilloscope" width="400" height="110">
+10	STARTTAG	6842	6859	<canvas id="cv0">
+10	STARTTAG	6987	7004	<canvas id="cv1">
+10	STARTTAG	7132	7149	<canvas id="cv2">
+10	STARTTAG	7276	7293	<canvas id="cv3">
+15	STARTTAG	5203	5208	<div>
+15	STARTTAG	5259	5276	<div class="sub">
+15	STARTTAG	5533	5555	<div class="controls">
+15	STARTTAG	6214	6246	<div class="status" id="status">
+15	STARTTAG	6289	6307	<div class="grid">
+15	STARTTAG	6378	6406	<div id="oscilloscope-wrap">
+15	STARTTAG	6529	6549	<div id="asciiGrid">
+15	STARTTAG	6617	6633	<div id="ports">
+15	STARTTAG	6781	6799	<div class="quad">
+15	STARTTAG	6806	6833	<div class="cam" id="cam0">
+15	STARTTAG	6877	6896	<div class="label">
+15	STARTTAG	6951	6978	<div class="cam" id="cam1">
+15	STARTTAG	7022	7041	<div class="label">
+15	STARTTAG	7096	7123	<div class="cam" id="cam2">
+15	STARTTAG	7167	7186	<div class="label">
+15	STARTTAG	7240	7267	<div class="cam" id="cam3">
+15	STARTTAG	7311	7330	<div class="label">
+15	STARTTAG	7481	7486	<div>
+15	STARTTAG	7493	7558	<div style="font-size:11px;color:var(--muted);margin-bottom:4px">
+15	STARTTAG	7593	7622	<div class="bits" id="bitsA">
+15	STARTTAG	7644	7649	<div>
+15	STARTTAG	7656	7721	<div style="font-size:11px;color:var(--muted);margin-bottom:4px">
+15	STARTTAG	7743	7772	<div class="bits" id="bitsB">
+15	STARTTAG	7794	7799	<div>
+15	STARTTAG	7806	7871	<div style="font-size:11px;color:var(--muted);margin-bottom:4px">
+15	STARTTAG	7904	7933	<div class="bits" id="bitsS">
+15	STARTTAG	7955	7975	<div class="op-row">
+15	STARTTAG	8072	8111	<div class="energy-bar" id="energyBar">
+15	STARTTAG	8122	8200	<div style="font-size:10px;color:var(--muted);line-height:1.4;margin-top:6px">
+15	STARTTAG	8385	8413	<div style="margin-top:8px">
+15	STARTTAG	8544	8619	<div id="legend" style="font-size:10px;color:var(--muted);margin-top:10px">
+15	STARTTAG	8857	8876	<div id="timeline">
+23	STARTTAG	8642	8650	<footer>
+25	STARTTAG	5213	5217	<h1>
+26	STARTTAG	6338	6342	<h2>
+26	STARTTAG	6489	6493	<h2>
+26	STARTTAG	6560	6588	<h2 style="margin-top:12px">
+26	STARTTAG	6704	6708	<h2>
+26	STARTTAG	7440	7444	<h2>
+26	STARTTAG	8655	8762	<h2 style="font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:0 0 4px">
+29	STARTTAG	33	39	<head>
+30	STARTTAG	5192	5200	<header>
+32	STARTTAG	16	32	<html lang="en">
+34	STARTTAG	5574	5633	<input type="file" id="fileInput" accept="audio/*,video/*">
+34	STARTTAG	5762	5830	<input type="range" id="pan" min="-1" max="1" step="0.05" value="0">
+34	STARTTAG	5861	5938	<input type="range" id="interval" min="120" max="1500" step="30" value="400">
+35	STARTTAG	5560	5567	<label>
+35	STARTTAG	5751	5758	<label>
+35	STARTTAG	5843	5850	<label>
+35	STARTTAG	5954	5961	<label>
+35	STARTTAG	7982	7989	<label>
+40	STARTTAG	40	62	<meta charset="UTF-8">
+40	STARTTAG	63	133	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+42	STARTTAG	6001	6019	<option value="0">
+42	STARTTAG	6040	6058	<option value="1">
+42	STARTTAG	6094	6112	<option value="2">
+42	STARTTAG	6138	6156	<option value="3">
+48	STARTTAG	8978	8986	<script>
+49	STARTTAG	6310	6333	<section class="panel">
+49	STARTTAG	6656	6699	<section class="panel" style="padding:6px">
+49	STARTTAG	7406	7435	<section class="panel adder">
+50	STARTTAG	5970	5992	<select id="opSelect">
+51	STARTTAG	8017	8038	<span id="modeLabel">
+53	STARTTAG	207	214	<style>
+62	STARTTAG	134	141	<title>
+66	STARTTAG	8903	8968	<video id="mediaEl" style="display:none" crossorigin="anonymous">
+67	ATTRNAME	5608	5614	accept
+79	ATTRNAME	46	53	charset
+80	ATTRNAME	5264	5269	class
+80	ATTRNAME	5538	5543	class
+80	ATTRNAME	5706	5711	class
+80	ATTRNAME	6219	6224	class
+80	ATTRNAME	6294	6299	class
+80	ATTRNAME	6319	6324	class
+80	ATTRNAME	6665	6670	class
+80	ATTRNAME	6786	6791	class
+80	ATTRNAME	6811	6816	class
+80	ATTRNAME	6882	6887	class
+80	ATTRNAME	6956	6961	class
+80	ATTRNAME	7027	7032	class
+80	ATTRNAME	7101	7106	class
+80	ATTRNAME	7172	7177	class
+80	ATTRNAME	7245	7250	class
+80	ATTRNAME	7316	7321	class
+80	ATTRNAME	7415	7420	class
+80	ATTRNAME	7598	7603	class
+80	ATTRNAME	7748	7753	class
+80	ATTRNAME	7909	7914	class
+80	ATTRNAME	7960	7965	class
+80	ATTRNAME	8077	8082	class
+82	ATTRNAME	85	92	content
+83	ATTRNAME	8944	8955	crossorigin
+95	ATTRNAME	5722	5730	disabled
+100	ATTRNAME	6451	6457	height
+103	ATTRNAME	5593	5595	id
+103	ATTRNAME	5654	5656	id
+103	ATTRNAME	5693	5695	id
+103	ATTRNAME	5782	5784	id
+103	ATTRNAME	5881	5883	id
+103	ATTRNAME	5978	5980	id
+103	ATTRNAME	6234	6236	id
+103	ATTRNAME	6383	6385	id
+103	ATTRNAME	6421	6423	id
+103	ATTRNAME	6534	6536	id
+103	ATTRNAME	6622	6624	id
+103	ATTRNAME	6823	6825	id
+103	ATTRNAME	6850	6852	id
+103	ATTRNAME	6968	6970	id
+103	ATTRNAME	6995	6997	id
+103	ATTRNAME	7113	7115	id
+103	ATTRNAME	7140	7142	id
+103	ATTRNAME	7257	7259	id
+103	ATTRNAME	7284	7286	id
+103	ATTRNAME	7611	7613	id
+103	ATTRNAME	7761	7763	id
+103	ATTRNAME	7922	7924	id
+103	ATTRNAME	8023	8025	id
+103	ATTRNAME	8096	8098	id
+103	ATTRNAME	8428	8430	id
+103	ATTRNAME	8494	8496	id
+103	ATTRNAME	8549	8551	id
+103	ATTRNAME	8862	8864	id
+103	ATTRNAME	8910	8912	id
+105	ATTRNAME	22	26	lang
+108	ATTRNAME	5800	5803	max
+108	ATTRNAME	5905	5908	max
+110	ATTRNAME	5791	5794	min
+110	ATTRNAME	5895	5898	min
+112	ATTRNAME	69	73	name
+132	ATTRNAME	5808	5812	step
+132	ATTRNAME	5916	5920	step
+136	ATTRNAME	6564	6569	style
+136	ATTRNAME	6679	6684	style
+136	ATTRNAME	7498	7503	style
+136	ATTRNAME	7661	7666	style
+136	ATTRNAME	7811	7816	style
+136	ATTRNAME	8127	8132	style
+136	ATTRNAME	8390	8395	style
+136	ATTRNAME	8561	8566	style
+136	ATTRNAME	8659	8664	style
+136	ATTRNAME	8923	8928	style
+142	ATTRNAME	5581	5585	type
+142	ATTRNAME	5769	5773	type
+142	ATTRNAME	5868	5872	type
+144	ATTRNAME	5820	5825	value
+144	ATTRNAME	5926	5931	value
+144	ATTRNAME	6009	6014	value
+144	ATTRNAME	6048	6053	value
+144	ATTRNAME	6102	6107	value
+144	ATTRNAME	6146	6151	value
+147	ATTRNAME	6439	6444	width
+155	VALUE	5795	5799	"-1"
+156	VALUE	5826	5829	"0"
+156	VALUE	6015	6018	"0"
+158	VALUE	5813	5819	"0.05"
+161	VALUE	5804	5807	"1"
+161	VALUE	6054	6057	"1"
+165	VALUE	6458	6463	"110"
+166	VALUE	5899	5904	"120"
+168	VALUE	5909	5915	"1500"
+169	VALUE	6108	6111	"2"
+172	VALUE	6152	6155	"3"
+174	VALUE	5921	5925	"30"
+177	VALUE	5932	5937	"400"
+177	VALUE	6445	6450	"400"
+183	VALUE	8956	8967	"anonymous"
+184	VALUE	6537	6548	"asciiGrid"
+185	VALUE	5615	5632	"audio/*,video/*"
+187	VALUE	8431	8440	"bindBtn"
+188	VALUE	7604	7610	"bits"
+188	VALUE	7754	7760	"bits"
+188	VALUE	7915	7921	"bits"
+189	VALUE	7614	7621	"bitsA"
+190	VALUE	7764	7771	"bitsB"
+191	VALUE	7925	7932	"bitsS"
+196	VALUE	6817	6822	"cam"
+196	VALUE	6962	6967	"cam"
+196	VALUE	7107	7112	"cam"
+196	VALUE	7251	7256	"cam"
+197	VALUE	6826	6832	"cam0"
+198	VALUE	6971	6977	"cam1"
+199	VALUE	7116	7122	"cam2"
+200	VALUE	7260	7266	"cam3"
+210	VALUE	5544	5554	"controls"
+213	VALUE	6853	6858	"cv0"
+214	VALUE	6998	7003	"cv1"
+215	VALUE	7143	7148	"cv2"
+216	VALUE	7287	7292	"cv3"
+219	VALUE	8929	8943	"display:none"
+221	VALUE	27	31	"en"
+222	VALUE	8083	8095	"energy-bar"
+223	VALUE	8099	8110	"energyBar"
+227	VALUE	5586	5592	"file"
+228	VALUE	5596	5607	"fileInput"
+229	VALUE	8133	8199	"font-size:10px;color:var(--muted);line-height:1.4;margin-top:6px"
+230	VALUE	8567	8618	"font-size:10px;color:var(--muted);margin-top:10px"
+231	VALUE	8665	8761	"font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:0 0 4px"
+232	VALUE	7504	7557	"font-size:11px;color:var(--muted);margin-bottom:4px"
+232	VALUE	7667	7720	"font-size:11px;color:var(--muted);margin-bottom:4px"
+232	VALUE	7817	7870	"font-size:11px;color:var(--muted);margin-bottom:4px"
+234	VALUE	6300	6306	"grid"
+246	VALUE	5884	5894	"interval"
+247	VALUE	6888	6895	"label"
+247	VALUE	7033	7040	"label"
+247	VALUE	7178	7185	"label"
+247	VALUE	7322	7329	"label"
+249	VALUE	8552	8560	"legend"
+252	VALUE	6570	6587	"margin-top:12px"
+253	VALUE	8396	8412	"margin-top:8px"
+254	VALUE	8913	8922	"mediaEl"
+256	VALUE	5657	5665	"micBtn"
+257	VALUE	8026	8037	"modeLabel"
+268	VALUE	7966	7974	"op-row"
+269	VALUE	5981	5991	"opSelect"
+270	VALUE	6424	6438	"oscilloscope"
+271	VALUE	6386	6405	"oscilloscope-wrap"
+272	VALUE	6685	6698	"padding:6px"
+273	VALUE	5785	5790	"pan"
+274	VALUE	7421	7434	"panel adder"
+275	VALUE	6325	6332	"panel"
+275	VALUE	6671	6678	"panel"
+277	VALUE	5696	5705	"playBtn"
+279	VALUE	6625	6632	"ports"
+281	VALUE	5712	5721	"primary"
+282	VALUE	6792	6798	"quad"
+283	VALUE	5774	5781	"range"
+283	VALUE	5873	5880	"range"
+294	VALUE	6225	6233	"status"
+294	VALUE	6237	6245	"status"
+299	VALUE	5270	5275	"sub"
+305	VALUE	8865	8875	"timeline"
+309	VALUE	8497	8508	"unbindBtn"
+310	VALUE	54	61	"UTF-8"
+311	VALUE	74	84	"viewport"
+313	VALUE	93	132	"width=device-width, initial-scale=1.0"

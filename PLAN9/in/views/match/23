@@ -1,0 +1,47 @@
+7	STARTTAG	2318	2324	<body>
+9	STARTTAG	2988	3027	<button onclick="generateSignatures()">
+9	STARTTAG	3077	3109	<button onclick="loadSamples()">
+15	STARTTAG	2329	2352	<div class="container">
+15	STARTTAG	2516	2543	<div class="input-section">
+15	STARTTAG	3167	3201	<div class="results" id="results">
+15	STARTTAG	3225	3279	<div class="similarity-matrix" id="similarity-matrix">
+25	STARTTAG	2361	2365	<h1>
+26	STARTTAG	2422	2470	<h2 style="color: #00ffff; text-align: center;">
+27	STARTTAG	2556	2560	<h3>
+29	STARTTAG	33	39	<head>
+32	STARTTAG	16	32	<html lang="en">
+40	STARTTAG	44	66	<meta charset="UTF-8">
+40	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+48	STARTTAG	3302	3310	<script>
+53	STARTTAG	194	201	<style>
+59	STARTTAG	2591	2647	<textarea id="input1" placeholder="Enter first text...">
+59	STARTTAG	2682	2739	<textarea id="input2" placeholder="Enter second text...">
+59	STARTTAG	2775	2831	<textarea id="input3" placeholder="Enter third text...">
+59	STARTTAG	2871	2928	<textarea id="input4" placeholder="Enter fourth text...">
+62	STARTTAG	146	153	<title>
+79	ATTRNAME	50	57	charset
+80	ATTRNAME	2334	2339	class
+80	ATTRNAME	2521	2526	class
+80	ATTRNAME	3172	3177	class
+80	ATTRNAME	3230	3235	class
+82	ATTRNAME	93	100	content
+103	ATTRNAME	2601	2603	id
+103	ATTRNAME	2692	2694	id
+103	ATTRNAME	2785	2787	id
+103	ATTRNAME	2881	2883	id
+103	ATTRNAME	3188	3190	id
+103	ATTRNAME	3256	3258	id
+105	ATTRNAME	22	26	lang
+112	ATTRNAME	77	81	name
+114	ATTRNAME	2996	3003	onclick
+114	ATTRNAME	3085	3092	onclick
+117	ATTRNAME	2613	2624	placeholder
+117	ATTRNAME	2704	2715	placeholder
+117	ATTRNAME	2797	2808	placeholder
+117	ATTRNAME	2893	2904	placeholder
+136	ATTRNAME	2426	2431	style
+208	VALUE	2340	2351	"container"
+221	VALUE	27	31	"en"
+310	VALUE	58	65	"UTF-8"
+311	VALUE	82	92	"viewport"
+313	VALUE	101	140	"width=device-width, initial-scale=1.0"

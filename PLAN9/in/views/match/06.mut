@@ -1,0 +1,33 @@
+14	STARTTAG	752	758	<body>
+16	STARTTAG	850	854	<br>
+30	STARTTAG	763	776	<div id="ui">
+30	STARTTAG	785	804	<div class="label">
+30	STARTTAG	919	948	<div class="stats" id="info">
+58	STARTTAG	33	39	<head>
+62	STARTTAG	850	854	<br>
+64	STARTTAG	16	32	<html lang="en">
+80	STARTTAG	44	66	<meta charset="UTF-8">
+80	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+96	STARTTAG	202	282	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+96	STARTTAG	1002	1010	<script>
+104	STARTTAG	817	825	<strong>
+106	STARTTAG	296	303	<style>
+124	STARTTAG	146	153	<title>
+126	STARTTAG	850	854	<br>
+158	ATTRNAME	50	57	charset
+160	ATTRNAME	790	795	class
+160	ATTRNAME	924	929	class
+164	ATTRNAME	93	100	content
+206	ATTRNAME	768	770	id
+206	ATTRNAME	938	940	id
+210	ATTRNAME	22	26	lang
+224	ATTRNAME	77	81	name
+260	ATTRNAME	210	213	src
+442	VALUE	27	31	"en"
+482	VALUE	214	281	"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+488	VALUE	941	947	"info"
+494	VALUE	796	803	"label"
+586	VALUE	930	937	"stats"
+620	VALUE	58	65	"UTF-8"
+622	VALUE	82	92	"viewport"
+626	VALUE	101	140	"width=device-width, initial-scale=1.0"

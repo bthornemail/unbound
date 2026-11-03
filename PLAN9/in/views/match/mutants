@@ -1,0 +1,634 @@
+STARTTAG	^<b[ />]
+STARTTAG	^<.[ />]
+STARTTAG	^<a-entitz[ />]
+STARTTAG	^<.-entity[ />]
+STARTTAG	^<a-scenf[ />]
+STARTTAG	^<.-scene[ />]
+STARTTAG	^<a-skz[ />]
+STARTTAG	^<.-sky[ />]
+STARTTAG	^<asidf[ />]
+STARTTAG	^<.side[ />]
+STARTTAG	^<c[ />]
+STARTTAG	^<.[ />]
+STARTTAG	^<bodz[ />]
+STARTTAG	^<.ody[ />]
+STARTTAG	^<bs[ />]
+STARTTAG	^<.r[ />]
+STARTTAG	^<buttoo[ />]
+STARTTAG	^<.utton[ />]
+STARTTAG	^<canvat[ />]
+STARTTAG	^<.anvas[ />]
+STARTTAG	^<circlf[ />]
+STARTTAG	^<.ircle[ />]
+STARTTAG	^<codf[ />]
+STARTTAG	^<.ode[ />]
+STARTTAG	^<de[ />]
+STARTTAG	^<.d[ />]
+STARTTAG	^<deft[ />]
+STARTTAG	^<.efs[ />]
+STARTTAG	^<diw[ />]
+STARTTAG	^<.iv[ />]
+STARTTAG	^<dm[ />]
+STARTTAG	^<.l[ />]
+STARTTAG	^<du[ />]
+STARTTAG	^<.t[ />]
+STARTTAG	^<en[ />]
+STARTTAG	^<.m[ />]
+STARTTAG	^<fegaussianblus[ />]
+STARTTAG	^<.egaussianblur[ />]
+STARTTAG	^<femergf[ />]
+STARTTAG	^<.emerge[ />]
+STARTTAG	^<femergenodf[ />]
+STARTTAG	^<.emergenode[ />]
+STARTTAG	^<filtes[ />]
+STARTTAG	^<.ilter[ />]
+STARTTAG	^<footes[ />]
+STARTTAG	^<.ooter[ />]
+STARTTAG	^<h[ />]
+STARTTAG	^<.[ />]
+STARTTAG	^<h2[ />]
+STARTTAG	^<.1[ />]
+STARTTAG	^<h3[ />]
+STARTTAG	^<.2[ />]
+STARTTAG	^<h4[ />]
+STARTTAG	^<.3[ />]
+STARTTAG	^<h5[ />]
+STARTTAG	^<.4[ />]
+STARTTAG	^<heae[ />]
+STARTTAG	^<.ead[ />]
+STARTTAG	^<heades[ />]
+STARTTAG	^<.eader[ />]
+STARTTAG	^<hs[ />]
+STARTTAG	^<.r[ />]
+STARTTAG	^<htmm[ />]
+STARTTAG	^<.tml[ />]
+STARTTAG	^<j[ />]
+STARTTAG	^<.[ />]
+STARTTAG	^<inpuu[ />]
+STARTTAG	^<.nput[ />]
+STARTTAG	^<labem[ />]
+STARTTAG	^<.abel[ />]
+STARTTAG	^<lj[ />]
+STARTTAG	^<.i[ />]
+STARTTAG	^<linf[ />]
+STARTTAG	^<.ine[ />]
+STARTTAG	^<linl[ />]
+STARTTAG	^<.ink[ />]
+STARTTAG	^<maio[ />]
+STARTTAG	^<.ain[ />]
+STARTTAG	^<metb[ />]
+STARTTAG	^<.eta[ />]
+STARTTAG	^<naw[ />]
+STARTTAG	^<.av[ />]
+STARTTAG	^<optioo[ />]
+STARTTAG	^<.ption[ />]
+STARTTAG	^<outpuu[ />]
+STARTTAG	^<.utput[ />]
+STARTTAG	^<q[ />]
+STARTTAG	^<.[ />]
+STARTTAG	^<pati[ />]
+STARTTAG	^<.ath[ />]
+STARTTAG	^<prf[ />]
+STARTTAG	^<.re[ />]
+STARTTAG	^<recu[ />]
+STARTTAG	^<.ect[ />]
+STARTTAG	^<scripu[ />]
+STARTTAG	^<.cript[ />]
+STARTTAG	^<sectioo[ />]
+STARTTAG	^<.ection[ />]
+STARTTAG	^<selecu[ />]
+STARTTAG	^<.elect[ />]
+STARTTAG	^<spao[ />]
+STARTTAG	^<.pan[ />]
+STARTTAG	^<stronh[ />]
+STARTTAG	^<.trong[ />]
+STARTTAG	^<stylf[ />]
+STARTTAG	^<.tyle[ />]
+STARTTAG	^<svh[ />]
+STARTTAG	^<.vg[ />]
+STARTTAG	^<tablf[ />]
+STARTTAG	^<.able[ />]
+STARTTAG	^<tbodz[ />]
+STARTTAG	^<.body[ />]
+STARTTAG	^<te[ />]
+STARTTAG	^<.d[ />]
+STARTTAG	^<texu[ />]
+STARTTAG	^<.ext[ />]
+STARTTAG	^<textareb[ />]
+STARTTAG	^<.extarea[ />]
+STARTTAG	^<ti[ />]
+STARTTAG	^<.h[ />]
+STARTTAG	^<theae[ />]
+STARTTAG	^<.head[ />]
+STARTTAG	^<titlf[ />]
+STARTTAG	^<.itle[ />]
+STARTTAG	^<ts[ />]
+STARTTAG	^<.r[ />]
+STARTTAG	^<v[ />]
+STARTTAG	^<.[ />]
+STARTTAG	^<um[ />]
+STARTTAG	^<.l[ />]
+STARTTAG	^<videp[ />]
+STARTTAG	^<.ideo[ />]
+ATTRNAME	^accepu$
+ATTRNAME	^.ccept$
+ATTRNAME	^aria-describedbz$
+ATTRNAME	^.ria-describedby$
+ATTRNAME	^aria-hiddeo$
+ATTRNAME	^.ria-hidden$
+ATTRNAME	^aria-labem$
+ATTRNAME	^.ria-label$
+ATTRNAME	^aria-labelledbz$
+ATTRNAME	^.ria-labelledby$
+ATTRNAME	^aria-livf$
+ATTRNAME	^.ria-live$
+ATTRNAME	^aria-pressee$
+ATTRNAME	^.ria-pressed$
+ATTRNAME	^asynd$
+ATTRNAME	^.sync$
+ATTRNAME	^autocompletf$
+ATTRNAME	^.utocomplete$
+ATTRNAME	^autoplaz$
+ATTRNAME	^.utoplay$
+ATTRNAME	^backgroune$
+ATTRNAME	^.ackground$
+ATTRNAME	^camerb$
+ATTRNAME	^.amera$
+ATTRNAME	^charseu$
+ATTRNAME	^.harset$
+ATTRNAME	^clast$
+ATTRNAME	^.lass$
+ATTRNAME	^colos$
+ATTRNAME	^.olor$
+ATTRNAME	^contenu$
+ATTRNAME	^.ontent$
+ATTRNAME	^crossorigio$
+ATTRNAME	^.rossorigin$
+ATTRNAME	^cursos$
+ATTRNAME	^.ursor$
+ATTRNAME	^cy$
+ATTRNAME	^.x$
+ATTRNAME	^cz$
+ATTRNAME	^.y$
+ATTRNAME	^e$
+ATTRNAME	^.$
+ATTRNAME	^data-d$
+ATTRNAME	^.ata-c$
+ATTRNAME	^data-fanp$
+ATTRNAME	^.ata-fano$
+ATTRNAME	^data-namf$
+ATTRNAME	^.ata-name$
+ATTRNAME	^data-pati$
+ATTRNAME	^.ata-path$
+ATTRNAME	^data-rolf$
+ATTRNAME	^.ata-role$
+ATTRNAME	^data-tac$
+ATTRNAME	^.ata-tab$
+ATTRNAME	^data-tonf$
+ATTRNAME	^.ata-tone$
+ATTRNAME	^disablee$
+ATTRNAME	^.isabled$
+ATTRNAME	^film$
+ATTRNAME	^.ill$
+ATTRNAME	^filtes$
+ATTRNAME	^.ilter$
+ATTRNAME	^font-familz$
+ATTRNAME	^.ont-family$
+ATTRNAME	^fos$
+ATTRNAME	^.or$
+ATTRNAME	^heighu$
+ATTRNAME	^.eight$
+ATTRNAME	^hiddeo$
+ATTRNAME	^.idden$
+ATTRNAME	^hreg$
+ATTRNAME	^.ref$
+ATTRNAME	^ie$
+ATTRNAME	^.d$
+ATTRNAME	^io$
+ATTRNAME	^.n$
+ATTRNAME	^lanh$
+ATTRNAME	^.ang$
+ATTRNAME	^lighu$
+ATTRNAME	^.ight$
+ATTRNAME	^look-controlt$
+ATTRNAME	^.ook-controls$
+ATTRNAME	^may$
+ATTRNAME	^.ax$
+ATTRNAME	^maxlengti$
+ATTRNAME	^.axlength$
+ATTRNAME	^mio$
+ATTRNAME	^.in$
+ATTRNAME	^mutee$
+ATTRNAME	^.uted$
+ATTRNAME	^namf$
+ATTRNAME	^.ame$
+ATTRNAME	^onchangf$
+ATTRNAME	^.nchange$
+ATTRNAME	^onclicl$
+ATTRNAME	^.nclick$
+ATTRNAME	^oninpuu$
+ATTRNAME	^.ninput$
+ATTRNAME	^opacitz$
+ATTRNAME	^.pacity$
+ATTRNAME	^placeholdes$
+ATTRNAME	^.laceholder$
+ATTRNAME	^playsinlinf$
+ATTRNAME	^.laysinline$
+ATTRNAME	^positioo$
+ATTRNAME	^.osition$
+ATTRNAME	^s$
+ATTRNAME	^.$
+ATTRNAME	^raycastes$
+ATTRNAME	^.aycaster$
+ATTRNAME	^readonlz$
+ATTRNAME	^.eadonly$
+ATTRNAME	^rem$
+ATTRNAME	^.el$
+ATTRNAME	^renderes$
+ATTRNAME	^.enderer$
+ATTRNAME	^resulu$
+ATTRNAME	^.esult$
+ATTRNAME	^rolf$
+ATTRNAME	^.ole$
+ATTRNAME	^rowt$
+ATTRNAME	^.ows$
+ATTRNAME	^sizf$
+ATTRNAME	^.ize$
+ATTRNAME	^spellchecl$
+ATTRNAME	^.pellcheck$
+ATTRNAME	^srd$
+ATTRNAME	^.rc$
+ATTRNAME	^stddeviatioo$
+ATTRNAME	^.tddeviation$
+ATTRNAME	^steq$
+ATTRNAME	^.tep$
+ATTRNAME	^strokf$
+ATTRNAME	^.troke$
+ATTRNAME	^stroke-linecaq$
+ATTRNAME	^.troke-linecap$
+ATTRNAME	^stroke-widti$
+ATTRNAME	^.troke-width$
+ATTRNAME	^stylf$
+ATTRNAME	^.tyle$
+ATTRNAME	^tabindey$
+ATTRNAME	^.abindex$
+ATTRNAME	^targeu$
+ATTRNAME	^.arget$
+ATTRNAME	^text-anchos$
+ATTRNAME	^.ext-anchor$
+ATTRNAME	^titlf$
+ATTRNAME	^.itle$
+ATTRNAME	^transforn$
+ATTRNAME	^.ransform$
+ATTRNAME	^typf$
+ATTRNAME	^.ype$
+ATTRNAME	^universe-grapi$
+ATTRNAME	^.niverse-graph$
+ATTRNAME	^valuf$
+ATTRNAME	^.alue$
+ATTRNAME	^viewboy$
+ATTRNAME	^.iewbox$
+ATTRNAME	^wasd-controlt$
+ATTRNAME	^.asd-controls$
+ATTRNAME	^widti$
+ATTRNAME	^.idth$
+ATTRNAME	^y$
+ATTRNAME	^.$
+ATTRNAME	^x2$
+ATTRNAME	^.1$
+ATTRNAME	^x3$
+ATTRNAME	^.2$
+ATTRNAME	^xmlnt$
+ATTRNAME	^.mlns$
+ATTRNAME	^z$
+ATTRNAME	^.$
+ATTRNAME	^y2$
+ATTRNAME	^.1$
+ATTRNAME	^y3$
+ATTRNAME	^.2$
+VALUE	^"-1'$
+VALUE	^.-1"$
+VALUE	^"0'$
+VALUE	^.0"$
+VALUE	^"0\.01'$
+VALUE	^.0\.01"$
+VALUE	^"0\.05'$
+VALUE	^.0\.05"$
+VALUE	^"0\.1'$
+VALUE	^.0\.1"$
+VALUE	^"0\.5'$
+VALUE	^.0\.5"$
+VALUE	^"1'$
+VALUE	^.1"$
+VALUE	^"1\.0'$
+VALUE	^.1\.0"$
+VALUE	^"100'$
+VALUE	^.100"$
+VALUE	^"1000'$
+VALUE	^.1000"$
+VALUE	^"110'$
+VALUE	^.110"$
+VALUE	^"120'$
+VALUE	^.120"$
+VALUE	^"150'$
+VALUE	^.150"$
+VALUE	^"1500'$
+VALUE	^.1500"$
+VALUE	^"2'$
+VALUE	^.2"$
+VALUE	^"200'$
+VALUE	^.200"$
+VALUE	^"2000'$
+VALUE	^.2000"$
+VALUE	^"3'$
+VALUE	^.3"$
+VALUE	^"3\.0'$
+VALUE	^.3\.0"$
+VALUE	^"30'$
+VALUE	^.30"$
+VALUE	^"300'$
+VALUE	^.300"$
+VALUE	^"4'$
+VALUE	^.4"$
+VALUE	^"400'$
+VALUE	^.400"$
+VALUE	^"50'$
+VALUE	^.50"$
+VALUE	^"8'$
+VALUE	^.8"$
+VALUE	^"active'$
+VALUE	^.active"$
+VALUE	^"alpha'$
+VALUE	^.alpha"$
+VALUE	^"alphavalue'$
+VALUE	^.alphavalue"$
+VALUE	^"anonymous'$
+VALUE	^.anonymous"$
+VALUE	^"asciigrid'$
+VALUE	^.asciigrid"$
+VALUE	^"audio/~~video/~'$
+VALUE	^.audio/~~video/~"$
+VALUE	^"background:var~--kk~'$
+VALUE	^.background:var~--kk~"$
+VALUE	^"bindbtn'$
+VALUE	^.bindbtn"$
+VALUE	^"bits'$
+VALUE	^.bits"$
+VALUE	^"bitsa'$
+VALUE	^.bitsa"$
+VALUE	^"bitsb'$
+VALUE	^.bitsb"$
+VALUE	^"bitss'$
+VALUE	^.bitss"$
+VALUE	^"btn btn-primary'$
+VALUE	^.btn btn-primary"$
+VALUE	^"btn btn-secondary'$
+VALUE	^.btn btn-secondary"$
+VALUE	^"button'$
+VALUE	^.button"$
+VALUE	^"c'$
+VALUE	^.c"$
+VALUE	^"cam'$
+VALUE	^.cam"$
+VALUE	^"cam0'$
+VALUE	^.cam0"$
+VALUE	^"cam1'$
+VALUE	^.cam1"$
+VALUE	^"cam2'$
+VALUE	^.cam2"$
+VALUE	^"cam3'$
+VALUE	^.cam3"$
+VALUE	^"card'$
+VALUE	^.card"$
+VALUE	^"claude:viewport-fit-sides'$
+VALUE	^.claude:viewport-fit-sides"$
+VALUE	^"color: #00ffff; margin-top: 0;'$
+VALUE	^.color: #00ffff; margin-top: 0;"$
+VALUE	^"color: #00ffff;'$
+VALUE	^.color: #00ffff;"$
+VALUE	^"compare'$
+VALUE	^.compare"$
+VALUE	^"connectbtn'$
+VALUE	^.connectbtn"$
+VALUE	^"constellation'$
+VALUE	^.constellation"$
+VALUE	^"container'$
+VALUE	^.container"$
+VALUE	^"control-group'$
+VALUE	^.control-group"$
+VALUE	^"controls'$
+VALUE	^.controls"$
+VALUE	^"cover'$
+VALUE	^.cover"$
+VALUE	^"crypto-prices-display'$
+VALUE	^.crypto-prices-display"$
+VALUE	^"cv0'$
+VALUE	^.cv0"$
+VALUE	^"cv1'$
+VALUE	^.cv1"$
+VALUE	^"cv2'$
+VALUE	^.cv2"$
+VALUE	^"cv3'$
+VALUE	^.cv3"$
+VALUE	^"dial'$
+VALUE	^.dial"$
+VALUE	^"display:grid;gap:10px'$
+VALUE	^.display:grid;gap:10px"$
+VALUE	^"display:none'$
+VALUE	^.display:none"$
+VALUE	^"dot'$
+VALUE	^.dot"$
+VALUE	^"en'$
+VALUE	^.en"$
+VALUE	^"energy-bar'$
+VALUE	^.energy-bar"$
+VALUE	^"energybar'$
+VALUE	^.energybar"$
+VALUE	^"evolutionspeed'$
+VALUE	^.evolutionspeed"$
+VALUE	^"eyebrow'$
+VALUE	^.eyebrow"$
+VALUE	^"false'$
+VALUE	^.false"$
+VALUE	^"file'$
+VALUE	^.file"$
+VALUE	^"fileinput'$
+VALUE	^.fileinput"$
+VALUE	^"font-size:10px;color:var~--muted~;line-height:1\.4;margin-top:6px'$
+VALUE	^.font-size:10px;color:var~--muted~;line-height:1\.4;margin-top:6px"$
+VALUE	^"font-size:10px;color:var~--muted~;margin-top:10px'$
+VALUE	^.font-size:10px;color:var~--muted~;margin-top:10px"$
+VALUE	^"font-size:10px;text-transform:uppercase;letter-spacing:\.04em;color:var~--muted~;margin:0 0 4px'$
+VALUE	^.font-size:10px;text-transform:uppercase;letter-spacing:\.04em;color:var~--muted~;margin:0 0 4px"$
+VALUE	^"font-size:11px;color:var~--muted~;margin-bottom:4px'$
+VALUE	^.font-size:11px;color:var~--muted~;margin-bottom:4px"$
+VALUE	^"form-group'$
+VALUE	^.form-group"$
+VALUE	^"grid'$
+VALUE	^.grid"$
+VALUE	^"group'$
+VALUE	^.group"$
+VALUE	^"header'$
+VALUE	^.header"$
+VALUE	^"hero'$
+VALUE	^.hero"$
+VALUE	^"hint'$
+VALUE	^.hint"$
+VALUE	^"https://cdn\.jsdelivr\.net/npm/three~0\.128\.0/examples/js/controls/orbitcontrols\.js'$
+VALUE	^.https://cdn\.jsdelivr\.net/npm/three~0\.128\.0/examples/js/controls/orbitcontrols\.js"$
+VALUE	^"https://cdn\.tailwindcss\.com'$
+VALUE	^.https://cdn\.tailwindcss\.com"$
+VALUE	^"https://cdnjs\.cloudflare\.com/ajax/libs/three\.js/r128/three\.min\.js'$
+VALUE	^.https://cdnjs\.cloudflare\.com/ajax/libs/three\.js/r128/three\.min\.js"$
+VALUE	^"https://fonts\.googleapis\.com'$
+VALUE	^.https://fonts\.googleapis\.com"$
+VALUE	^"img'$
+VALUE	^.img"$
+VALUE	^"info'$
+VALUE	^.info"$
+VALUE	^"info-panel'$
+VALUE	^.info-panel"$
+VALUE	^"interval'$
+VALUE	^.interval"$
+VALUE	^"label'$
+VALUE	^.label"$
+VALUE	^"lede'$
+VALUE	^.lede"$
+VALUE	^"legend'$
+VALUE	^.legend"$
+VALUE	^"loading-overlay'$
+VALUE	^.loading-overlay"$
+VALUE	^"margin-top: 15px;'$
+VALUE	^.margin-top: 15px;"$
+VALUE	^"margin-top:12px'$
+VALUE	^.margin-top:12px"$
+VALUE	^"margin-top:8px'$
+VALUE	^.margin-top:8px"$
+VALUE	^"mediael'$
+VALUE	^.mediael"$
+VALUE	^"metric'$
+VALUE	^.metric"$
+VALUE	^"micbtn'$
+VALUE	^.micbtn"$
+VALUE	^"modelabel'$
+VALUE	^.modelabel"$
+VALUE	^"module'$
+VALUE	^.module"$
+VALUE	^"mt-4 text-xs text-gray-400'$
+VALUE	^.mt-4 text-xs text-gray-400"$
+VALUE	^"mutationrate'$
+VALUE	^.mutationrate"$
+VALUE	^"mutationvalue'$
+VALUE	^.mutationvalue"$
+VALUE	^"muted'$
+VALUE	^.muted"$
+VALUE	^"n'$
+VALUE	^.n"$
+VALUE	^"name'$
+VALUE	^.name"$
+VALUE	^"nav'$
+VALUE	^.nav"$
+VALUE	^"none'$
+VALUE	^.none"$
+VALUE	^"note'$
+VALUE	^.note"$
+VALUE	^"op-row'$
+VALUE	^.op-row"$
+VALUE	^"opselect'$
+VALUE	^.opselect"$
+VALUE	^"oscilloscope'$
+VALUE	^.oscilloscope"$
+VALUE	^"oscilloscope-wrap'$
+VALUE	^.oscilloscope-wrap"$
+VALUE	^"padding:6px'$
+VALUE	^.padding:6px"$
+VALUE	^"pan'$
+VALUE	^.pan"$
+VALUE	^"panel adder'$
+VALUE	^.panel adder"$
+VALUE	^"panel'$
+VALUE	^.panel"$
+VALUE	^"play'$
+VALUE	^.play"$
+VALUE	^"playbtn'$
+VALUE	^.playbtn"$
+VALUE	^"polite'$
+VALUE	^.polite"$
+VALUE	^"ports'$
+VALUE	^.ports"$
+VALUE	^"preconnect'$
+VALUE	^.preconnect"$
+VALUE	^"primary'$
+VALUE	^.primary"$
+VALUE	^"quad'$
+VALUE	^.quad"$
+VALUE	^"range'$
+VALUE	^.range"$
+VALUE	^"readout'$
+VALUE	^.readout"$
+VALUE	^"reset'$
+VALUE	^.reset"$
+VALUE	^"row'$
+VALUE	^.row"$
+VALUE	^"scrub'$
+VALUE	^.scrub"$
+VALUE	^"section'$
+VALUE	^.section"$
+VALUE	^"sidebar'$
+VALUE	^.sidebar"$
+VALUE	^"spectrum'$
+VALUE	^.spectrum"$
+VALUE	^"speedvalue'$
+VALUE	^.speedvalue"$
+VALUE	^"startstop'$
+VALUE	^.startstop"$
+VALUE	^"stats'$
+VALUE	^.stats"$
+VALUE	^"status'$
+VALUE	^.status"$
+VALUE	^"status-dot'$
+VALUE	^.status-dot"$
+VALUE	^"statustext'$
+VALUE	^.statustext"$
+VALUE	^"step'$
+VALUE	^.step"$
+VALUE	^"stylesheet'$
+VALUE	^.stylesheet"$
+VALUE	^"sub'$
+VALUE	^.sub"$
+VALUE	^"subtitle'$
+VALUE	^.subtitle"$
+VALUE	^"table-wrap'$
+VALUE	^.table-wrap"$
+VALUE	^"text'$
+VALUE	^.text"$
+VALUE	^"text-lg font-bold mb-2'$
+VALUE	^.text-lg font-bold mb-2"$
+VALUE	^"text-sm'$
+VALUE	^.text-sm"$
+VALUE	^"timeline'$
+VALUE	^.timeline"$
+VALUE	^"timestep'$
+VALUE	^.timestep"$
+VALUE	^"title'$
+VALUE	^.title"$
+VALUE	^"true'$
+VALUE	^.true"$
+VALUE	^"unbindbtn'$
+VALUE	^.unbindbtn"$
+VALUE	^"utf-8'$
+VALUE	^.utf-8"$
+VALUE	^"viewport'$
+VALUE	^.viewport"$
+VALUE	^"width=device-width~ initial-scale=1'$
+VALUE	^.width=device-width~ initial-scale=1"$
+VALUE	^"width=device-width~ initial-scale=1\.0'$
+VALUE	^.width=device-width~ initial-scale=1\.0"$
+VALUE	^"width=device-width~initial-scale=1~viewport-fit=cover'$
+VALUE	^.width=device-width~initial-scale=1~viewport-fit=cover"$
+VALUE	^"wrap'$
+VALUE	^.wrap"$
+VALUE	^utf9$
+VALUE	^.tf8$
+VALUE	^viewporu$
+VALUE	^.iewport$

@@ -1,0 +1,57 @@
+2	STARTTAG	2414	2417	<p>
+2	STARTTAG	2738	2776	<p class="mt-4 text-xs text-gray-400">
+12	STARTTAG	2414	2417	<p>
+12	STARTTAG	2738	2776	<p class="mt-4 text-xs text-gray-400">
+14	STARTTAG	2368	2374	<body>
+16	STARTTAG	2851	2855	<br>
+30	STARTTAG	2379	2405	<div id="loading-overlay">
+30	STARTTAG	2497	2534	<div id="info-panel" class="text-sm">
+30	STARTTAG	2613	2645	<div id="crypto-prices-display">
+48	STARTTAG	2414	2417	<p>
+48	STARTTAG	2738	2776	<p class="mt-4 text-xs text-gray-400">
+49	STARTTAG	2543	2578	<h2 class="text-lg font-bold mb-2">
+52	STARTTAG	2543	2578	<h2 class="text-lg font-bold mb-2">
+58	STARTTAG	33	39	<head>
+62	STARTTAG	2851	2855	<br>
+64	STARTTAG	16	32	<html lang="en">
+66	STARTTAG	2414	2417	<p>
+66	STARTTAG	2738	2776	<p class="mt-4 text-xs text-gray-400">
+80	STARTTAG	44	66	<meta charset="UTF-8">
+80	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+88	STARTTAG	2414	2417	<p>
+88	STARTTAG	2738	2776	<p class="mt-4 text-xs text-gray-400">
+96	STARTTAG	234	276	<script src="https://cdn.tailwindcss.com">
+96	STARTTAG	316	396	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+96	STARTTAG	460	555	<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js">
+96	STARTTAG	2925	2933	<script>
+106	STARTTAG	569	576	<style>
+124	STARTTAG	146	153	<title>
+126	STARTTAG	2851	2855	<br>
+128	STARTTAG	2414	2417	<p>
+128	STARTTAG	2738	2776	<p class="mt-4 text-xs text-gray-400">
+158	ATTRNAME	50	57	charset
+160	ATTRNAME	2518	2523	class
+160	ATTRNAME	2547	2552	class
+160	ATTRNAME	2741	2746	class
+164	ATTRNAME	93	100	content
+206	ATTRNAME	2384	2386	id
+206	ATTRNAME	2502	2504	id
+206	ATTRNAME	2618	2620	id
+210	ATTRNAME	22	26	lang
+224	ATTRNAME	77	81	name
+260	ATTRNAME	242	245	src
+260	ATTRNAME	324	327	src
+260	ATTRNAME	468	471	src
+424	VALUE	2621	2644	"crypto-prices-display"
+442	VALUE	27	31	"en"
+478	VALUE	472	554	"https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"
+480	VALUE	246	275	"https://cdn.tailwindcss.com"
+482	VALUE	328	395	"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+490	VALUE	2505	2517	"info-panel"
+500	VALUE	2387	2404	"loading-overlay"
+518	VALUE	2747	2775	"mt-4 text-xs text-gray-400"
+606	VALUE	2553	2577	"text-lg font-bold mb-2"
+608	VALUE	2524	2533	"text-sm"
+620	VALUE	58	65	"UTF-8"
+622	VALUE	82	92	"viewport"
+626	VALUE	101	140	"width=device-width, initial-scale=1.0"

@@ -1,0 +1,121 @@
+7	STARTTAG	4096	4102	<body>
+9	STARTTAG	4323	4357	<button id="addBtn" class="pulse">
+9	STARTTAG	4820	4846	<button id="startNodeBtn">
+9	STARTTAG	4876	4963	<button id="stopNodeBtn" style="background: linear-gradient(45deg, #cc0066, #990033);">
+9	STARTTAG	5162	5186	<button id="connectBtn">
+9	STARTTAG	5648	5671	<button id="exportBtn">
+9	STARTTAG	5709	5792	<button id="syncBtn" style="background: linear-gradient(45deg, #6600cc, #4400aa);">
+9	STARTTAG	6021	6123	<button id="clearBtn" style="background: linear-gradient(45deg, #cc0066, #990033); margin-top: 1rem;">
+15	STARTTAG	4141	4164	<div class="container">
+15	STARTTAG	4167	4188	<div class="section">
+15	STARTTAG	4388	4409	<div class="section">
+15	STARTTAG	4566	4587	<div class="section">
+15	STARTTAG	4648	4673	<div class="peer-status">
+15	STARTTAG	4680	4726	<div class="status-dot" id="connectionStatus">
+15	STARTTAG	4808	4813	<div>
+15	STARTTAG	4997	5002	<div>
+15	STARTTAG	5218	5255	<div class="peer-list" id="peerList">
+15	STARTTAG	5274	5295	<div class="section">
+15	STARTTAG	5354	5373	<div class="stats">
+15	STARTTAG	5622	5643	<div class="section">
+15	STARTTAG	5827	5851	<div class="file-input">
+25	STARTTAG	4104	4108	<h1>
+26	STARTTAG	4592	4620	<h2 style="color: #00d4aa;">
+26	STARTTAG	5300	5328	<h2 style="color: #00d4aa;">
+29	STARTTAG	33	39	<head>
+32	STARTTAG	16	32	<html lang="en">
+34	STARTTAG	4244	4318	<input type="text" id="addInput" placeholder="Type a word or phrase..." />
+34	STARTTAG	4470	4553	<input type="text" id="searchInput" placeholder="Type to search harmonically..." />
+34	STARTTAG	5065	5155	<input type="text" id="connectPeer" placeholder="/ip4/127.0.0.1/tcp/4001/p2p/12D3Ko..." />
+34	STARTTAG	5858	5933	<input type="file" id="importFile" style="display: none;" accept=".json" />
+35	STARTTAG	4193	4215	<label for="addInput">
+35	STARTTAG	4414	4439	<label for="searchInput">
+35	STARTTAG	5009	5034	<label for="connectPeer">
+35	STARTTAG	5940	5964	<label for="importFile">
+40	STARTTAG	40	64	<meta charset="UTF-8" />
+40	STARTTAG	65	135	<meta name="viewport" content="width=device-width, initial-scale=1" />
+48	STARTTAG	6167	6248	<script src="https://cdnjs.cloudflare.com/ajax/libs/libp2p/0.46.4/libp2p.min.js">
+48	STARTTAG	6258	6340	<script src="https://cdnjs.cloudflare.com/ajax/libs/it-pipe/3.0.1/it-pipe.min.js">
+48	STARTTAG	6350	6358	<script>
+51	STARTTAG	4739	4761	<span id="statusText">
+51	STARTTAG	5380	5386	<span>
+51	STARTTAG	5401	5423	<span id="totalCount">
+51	STARTTAG	5445	5451	<span>
+51	STARTTAG	5460	5484	<span id="visibleCount">
+51	STARTTAG	5506	5512	<span>
+51	STARTTAG	5527	5551	<span id="searchActive">
+53	STARTTAG	178	185	<style>
+62	STARTTAG	136	143	<title>
+65	STARTTAG	5583	5604	<ul id="entriesList">
+67	ATTRNAME	5916	5922	accept
+79	ATTRNAME	46	53	charset
+80	ATTRNAME	4146	4151	class
+80	ATTRNAME	4172	4177	class
+80	ATTRNAME	4343	4348	class
+80	ATTRNAME	4393	4398	class
+80	ATTRNAME	4571	4576	class
+80	ATTRNAME	4653	4658	class
+80	ATTRNAME	4685	4690	class
+80	ATTRNAME	5223	5228	class
+80	ATTRNAME	5279	5284	class
+80	ATTRNAME	5359	5364	class
+80	ATTRNAME	5627	5632	class
+80	ATTRNAME	5832	5837	class
+82	ATTRNAME	87	94	content
+99	ATTRNAME	4200	4203	for
+99	ATTRNAME	4421	4424	for
+99	ATTRNAME	5016	5019	for
+99	ATTRNAME	5947	5950	for
+103	ATTRNAME	4263	4265	id
+103	ATTRNAME	4331	4333	id
+103	ATTRNAME	4489	4491	id
+103	ATTRNAME	4704	4706	id
+103	ATTRNAME	4745	4747	id
+103	ATTRNAME	4828	4830	id
+103	ATTRNAME	4884	4886	id
+103	ATTRNAME	5084	5086	id
+103	ATTRNAME	5170	5172	id
+103	ATTRNAME	5241	5243	id
+103	ATTRNAME	5407	5409	id
+103	ATTRNAME	5466	5468	id
+103	ATTRNAME	5533	5535	id
+103	ATTRNAME	5587	5589	id
+103	ATTRNAME	5656	5658	id
+103	ATTRNAME	5717	5719	id
+103	ATTRNAME	5877	5879	id
+103	ATTRNAME	6029	6031	id
+105	ATTRNAME	22	26	lang
+112	ATTRNAME	71	75	name
+117	ATTRNAME	4277	4288	placeholder
+117	ATTRNAME	4506	4517	placeholder
+117	ATTRNAME	5101	5112	placeholder
+130	ATTRNAME	6175	6178	src
+130	ATTRNAME	6266	6269	src
+136	ATTRNAME	4596	4601	style
+136	ATTRNAME	4901	4906	style
+136	ATTRNAME	5304	5309	style
+136	ATTRNAME	5730	5735	style
+136	ATTRNAME	5893	5898	style
+136	ATTRNAME	6043	6048	style
+142	ATTRNAME	4251	4255	type
+142	ATTRNAME	4477	4481	type
+142	ATTRNAME	5072	5076	type
+142	ATTRNAME	5865	5869	type
+206	VALUE	5173	5185	"connectBtn"
+208	VALUE	4152	4163	"container"
+221	VALUE	27	31	"en"
+227	VALUE	5870	5876	"file"
+288	VALUE	4178	4187	"section"
+288	VALUE	4399	4408	"section"
+288	VALUE	4577	4586	"section"
+288	VALUE	5285	5294	"section"
+288	VALUE	5633	5642	"section"
+293	VALUE	5365	5372	"stats"
+295	VALUE	4691	4703	"status-dot"
+296	VALUE	4748	4760	"statusText"
+302	VALUE	4256	4262	"text"
+302	VALUE	4482	4488	"text"
+302	VALUE	5077	5083	"text"
+310	VALUE	54	61	"UTF-8"
+311	VALUE	76	86	"viewport"
+312	VALUE	95	132	"width=device-width, initial-scale=1"

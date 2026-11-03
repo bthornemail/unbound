@@ -1,0 +1,84 @@
+14	STARTTAG	1994	2000	<body>
+18	STARTTAG	2207	2231	<button id="connectBtn">
+18	STARTTAG	2260	2296	<button id="disconnectBtn" disabled>
+18	STARTTAG	3087	3113	<button id="publishViews">
+18	STARTTAG	3148	3173	<button id="autoPublish">
+20	STARTTAG	2710	2777	<canvas id="frontView" class="fixed-view" width="160" height="160">
+20	STARTTAG	2795	2861	<canvas id="backView" class="fixed-view" width="160" height="160">
+20	STARTTAG	2879	2945	<canvas id="leftView" class="fixed-view" width="160" height="160">
+20	STARTTAG	2963	3030	<canvas id="rightView" class="fixed-view" width="160" height="160">
+30	STARTTAG	2005	2027	<div class="controls">
+30	STARTTAG	2078	2083	<div>
+30	STARTTAG	2339	2344	<div>
+30	STARTTAG	2465	2497	<div class="status" id="status">
+30	STARTTAG	2532	2555	<div class="container">
+30	STARTTAG	2614	2663	<div id="controllerView" class="controller-view">
+30	STARTTAG	3056	3078	<div class="controls">
+49	STARTTAG	2036	2040	<h2>
+52	STARTTAG	2036	2040	<h2>
+58	STARTTAG	33	39	<head>
+64	STARTTAG	16	32	<html lang="en">
+68	STARTTAG	2096	2194	<input type="text" id="mqttBroker" placeholder="MQTT Broker URL" value="ws://localhost:8083/mqtt">
+68	STARTTAG	2357	2441	<input type="text" id="topicPrefix" placeholder="Topic Prefix" value="threejs/cube">
+80	STARTTAG	44	66	<meta charset="UTF-8">
+80	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+96	STARTTAG	3216	3296	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+96	STARTTAG	3310	3395	<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js">
+96	STARTTAG	3409	3417	<script>
+106	STARTTAG	190	197	<style>
+124	STARTTAG	146	153	<title>
+158	ATTRNAME	50	57	charset
+160	ATTRNAME	2010	2015	class
+160	ATTRNAME	2470	2475	class
+160	ATTRNAME	2537	2542	class
+160	ATTRNAME	2639	2644	class
+160	ATTRNAME	2733	2738	class
+160	ATTRNAME	2817	2822	class
+160	ATTRNAME	2901	2906	class
+160	ATTRNAME	2986	2991	class
+160	ATTRNAME	3061	3066	class
+164	ATTRNAME	93	100	content
+190	ATTRNAME	2287	2295	disabled
+200	ATTRNAME	2764	2770	height
+200	ATTRNAME	2848	2854	height
+200	ATTRNAME	2932	2938	height
+200	ATTRNAME	3017	3023	height
+206	ATTRNAME	2115	2117	id
+206	ATTRNAME	2215	2217	id
+206	ATTRNAME	2268	2270	id
+206	ATTRNAME	2376	2378	id
+206	ATTRNAME	2485	2487	id
+206	ATTRNAME	2619	2621	id
+206	ATTRNAME	2718	2720	id
+206	ATTRNAME	2803	2805	id
+206	ATTRNAME	2887	2889	id
+206	ATTRNAME	2971	2973	id
+206	ATTRNAME	3095	3097	id
+206	ATTRNAME	3156	3158	id
+210	ATTRNAME	22	26	lang
+224	ATTRNAME	77	81	name
+234	ATTRNAME	2131	2142	placeholder
+234	ATTRNAME	2393	2404	placeholder
+260	ATTRNAME	3224	3227	src
+260	ATTRNAME	3318	3321	src
+284	ATTRNAME	2103	2107	type
+284	ATTRNAME	2364	2368	type
+288	ATTRNAME	2161	2166	value
+288	ATTRNAME	2420	2425	value
+294	ATTRNAME	2752	2757	width
+294	ATTRNAME	2836	2841	width
+294	ATTRNAME	2920	2925	width
+294	ATTRNAME	3005	3010	width
+412	VALUE	2218	2230	"connectBtn"
+416	VALUE	2543	2554	"container"
+420	VALUE	2016	2026	"controls"
+420	VALUE	3067	3077	"controls"
+442	VALUE	27	31	"en"
+482	VALUE	3228	3295	"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+588	VALUE	2476	2484	"status"
+588	VALUE	2488	2496	"status"
+604	VALUE	2108	2114	"text"
+604	VALUE	2369	2375	"text"
+620	VALUE	58	65	"UTF-8"
+622	VALUE	82	92	"viewport"
+626	VALUE	101	140	"width=device-width, initial-scale=1.0"

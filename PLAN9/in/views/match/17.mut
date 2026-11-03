@@ -1,0 +1,161 @@
+14	STARTTAG	2963	2969	<body>
+18	STARTTAG	3981	4004	<button id="startStop">
+18	STARTTAG	4045	4064	<button id="reset">
+18	STARTTAG	4104	4122	<button id="step">
+30	STARTTAG	2974	2994	<div id="container">
+30	STARTTAG	3003	3022	<div id="controls">
+30	STARTTAG	3131	3158	<div class="control-group">
+30	STARTTAG	3395	3422	<div class="control-group">
+30	STARTTAG	3668	3695	<div class="control-group">
+30	STARTTAG	3937	3964	<div class="control-group">
+30	STARTTAG	4194	4209	<div id="info">
+30	STARTTAG	4317	4337	<div class="metric">
+30	STARTTAG	4467	4487	<div class="metric">
+30	STARTTAG	4618	4638	<div class="metric">
+30	STARTTAG	4773	4793	<div class="metric">
+30	STARTTAG	4932	4963	<div style="margin-top: 15px;">
+30	STARTTAG	5044	5067	<div id="binaryStates">
+30	STARTTAG	5118	5149	<div style="margin-top: 15px;">
+30	STARTTAG	5225	5315	<div id="centroidDisplay" style="font-family: 'Courier New', monospace; font-size: 11px;">
+30	STARTTAG	5373	5389	<div id="title">
+51	STARTTAG	3035	3078	<h3 style="color: #00ffff; margin-top: 0;">
+51	STARTTAG	4222	4265	<h3 style="color: #00ffff; margin-top: 0;">
+53	STARTTAG	4980	5008	<h4 style="color: #00ffff;">
+53	STARTTAG	5166	5194	<h4 style="color: #00ffff;">
+54	STARTTAG	3035	3078	<h3 style="color: #00ffff; margin-top: 0;">
+54	STARTTAG	4222	4265	<h3 style="color: #00ffff; margin-top: 0;">
+56	STARTTAG	4980	5008	<h4 style="color: #00ffff;">
+56	STARTTAG	5166	5194	<h4 style="color: #00ffff;">
+58	STARTTAG	33	39	<head>
+64	STARTTAG	16	32	<html lang="en">
+68	STARTTAG	3276	3350	<input type="range" id="alpha" min="0.1" max="3.0" step="0.1" value="1.0">
+68	STARTTAG	3540	3623	<input type="range" id="mutationRate" min="0.01" max="0.5" step="0.01" value="0.1">
+68	STARTTAG	3810	3892	<input type="range" id="evolutionSpeed" min="50" max="1000" step="50" value="300">
+70	STARTTAG	3175	3194	<label for="alpha">
+70	STARTTAG	3439	3465	<label for="mutationRate">
+70	STARTTAG	3712	3740	<label for="evolutionSpeed">
+80	STARTTAG	44	66	<meta charset="UTF-8">
+80	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+96	STARTTAG	200	280	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+96	STARTTAG	5446	5454	<script>
+102	STARTTAG	3219	3241	<span id="alphaValue">
+102	STARTTAG	3480	3505	<span id="mutationValue">
+102	STARTTAG	3751	3773	<span id="speedValue">
+102	STARTTAG	4354	4360	<span>
+102	STARTTAG	4394	4414	<span id="timeStep">
+102	STARTTAG	4504	4510	<span>
+102	STARTTAG	4542	4561	<span id="entropy">
+102	STARTTAG	4655	4661	<span>
+102	STARTTAG	4695	4716	<span id="coherence">
+102	STARTTAG	4810	4816	<span>
+102	STARTTAG	4852	4875	<span id="integration">
+106	STARTTAG	294	301	<style>
+124	STARTTAG	146	153	<title>
+158	ATTRNAME	50	57	charset
+160	ATTRNAME	3136	3141	class
+160	ATTRNAME	3400	3405	class
+160	ATTRNAME	3673	3678	class
+160	ATTRNAME	3942	3947	class
+160	ATTRNAME	4322	4327	class
+160	ATTRNAME	4472	4477	class
+160	ATTRNAME	4623	4628	class
+160	ATTRNAME	4778	4783	class
+164	ATTRNAME	93	100	content
+198	ATTRNAME	3182	3185	for
+198	ATTRNAME	3446	3449	for
+198	ATTRNAME	3719	3722	for
+206	ATTRNAME	2979	2981	id
+206	ATTRNAME	3008	3010	id
+206	ATTRNAME	3225	3227	id
+206	ATTRNAME	3296	3298	id
+206	ATTRNAME	3486	3488	id
+206	ATTRNAME	3560	3562	id
+206	ATTRNAME	3757	3759	id
+206	ATTRNAME	3830	3832	id
+206	ATTRNAME	3989	3991	id
+206	ATTRNAME	4053	4055	id
+206	ATTRNAME	4112	4114	id
+206	ATTRNAME	4199	4201	id
+206	ATTRNAME	4400	4402	id
+206	ATTRNAME	4548	4550	id
+206	ATTRNAME	4701	4703	id
+206	ATTRNAME	4858	4860	id
+206	ATTRNAME	5049	5051	id
+206	ATTRNAME	5230	5232	id
+206	ATTRNAME	5378	5380	id
+210	ATTRNAME	22	26	lang
+216	ATTRNAME	3317	3320	max
+216	ATTRNAME	3589	3592	max
+216	ATTRNAME	3859	3862	max
+220	ATTRNAME	3307	3310	min
+220	ATTRNAME	3578	3581	min
+220	ATTRNAME	3850	3853	min
+224	ATTRNAME	77	81	name
+260	ATTRNAME	208	211	src
+264	ATTRNAME	3327	3331	step
+264	ATTRNAME	3599	3603	step
+264	ATTRNAME	3870	3874	step
+272	ATTRNAME	3039	3044	style
+272	ATTRNAME	4226	4231	style
+272	ATTRNAME	4937	4942	style
+272	ATTRNAME	4984	4989	style
+272	ATTRNAME	5123	5128	style
+272	ATTRNAME	5170	5175	style
+272	ATTRNAME	5251	5256	style
+284	ATTRNAME	3283	3287	type
+284	ATTRNAME	3547	3551	type
+284	ATTRNAME	3817	3821	type
+288	ATTRNAME	3338	3343	value
+288	ATTRNAME	3611	3616	value
+288	ATTRNAME	3880	3885	value
+314	VALUE	3582	3588	"0.01"
+314	VALUE	3604	3610	"0.01"
+318	VALUE	3311	3316	"0.1"
+318	VALUE	3332	3337	"0.1"
+318	VALUE	3617	3622	"0.1"
+320	VALUE	3593	3598	"0.5"
+324	VALUE	3344	3349	"1.0"
+328	VALUE	3863	3869	"1000"
+346	VALUE	3321	3326	"3.0"
+350	VALUE	3886	3891	"300"
+356	VALUE	3854	3858	"50"
+356	VALUE	3875	3879	"50"
+362	VALUE	3186	3193	"alpha"
+362	VALUE	3299	3306	"alpha"
+364	VALUE	3228	3240	"alphaValue"
+406	VALUE	3045	3077	"color: #00ffff; margin-top: 0;"
+406	VALUE	4232	4264	"color: #00ffff; margin-top: 0;"
+408	VALUE	4990	5007	"color: #00ffff;"
+408	VALUE	5176	5193	"color: #00ffff;"
+416	VALUE	2982	2993	"container"
+418	VALUE	3142	3157	"control-group"
+418	VALUE	3406	3421	"control-group"
+418	VALUE	3679	3694	"control-group"
+418	VALUE	3948	3963	"control-group"
+420	VALUE	3011	3021	"controls"
+442	VALUE	27	31	"en"
+448	VALUE	3723	3739	"evolutionSpeed"
+448	VALUE	3833	3849	"evolutionSpeed"
+482	VALUE	212	279	"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+488	VALUE	4202	4208	"info"
+502	VALUE	4943	4962	"margin-top: 15px;"
+502	VALUE	5129	5148	"margin-top: 15px;"
+510	VALUE	4328	4336	"metric"
+510	VALUE	4478	4486	"metric"
+510	VALUE	4629	4637	"metric"
+510	VALUE	4784	4792	"metric"
+520	VALUE	3450	3464	"mutationRate"
+520	VALUE	3563	3577	"mutationRate"
+522	VALUE	3489	3504	"mutationValue"
+566	VALUE	3288	3295	"range"
+566	VALUE	3552	3559	"range"
+566	VALUE	3822	3829	"range"
+570	VALUE	4056	4063	"reset"
+582	VALUE	3760	3772	"speedValue"
+584	VALUE	3992	4003	"startStop"
+594	VALUE	4115	4121	"step"
+612	VALUE	4403	4413	"timeStep"
+614	VALUE	5381	5388	"title"
+620	VALUE	58	65	"UTF-8"
+622	VALUE	82	92	"viewport"
+626	VALUE	101	140	"width=device-width, initial-scale=1.0"

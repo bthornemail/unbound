@@ -1,0 +1,45 @@
+2	STARTTAG	3106	3120	<p id="count">
+2	STARTTAG	3270	3305	<p id="empty" class="empty" hidden>
+12	STARTTAG	3106	3120	<p id="count">
+12	STARTTAG	3270	3305	<p id="empty" class="empty" hidden>
+14	STARTTAG	3025	3031	<body>
+30	STARTTAG	3032	3050	<div class="wrap">
+30	STARTTAG	3066	3071	<div>
+48	STARTTAG	3106	3120	<p id="count">
+48	STARTTAG	3270	3305	<p id="empty" class="empty" hidden>
+50	STARTTAG	3078	3082	<h1>
+58	STARTTAG	33	39	<head>
+60	STARTTAG	3053	3061	<header>
+64	STARTTAG	16	32	<html lang="en">
+66	STARTTAG	3106	3120	<p id="count">
+66	STARTTAG	3270	3305	<p id="empty" class="empty" hidden>
+68	STARTTAG	3140	3227	<input id="filter" type="search" placeholder="Filter pages…" aria-label="Filter pages">
+78	STARTTAG	3242	3260	<main id="groups">
+80	STARTTAG	40	62	<meta charset="utf-8">
+80	STARTTAG	63	131	<meta name="viewport" content="width=device-width, initial-scale=1">
+88	STARTTAG	3106	3120	<p id="count">
+88	STARTTAG	3270	3305	<p id="empty" class="empty" hidden>
+96	STARTTAG	3318	3326	<script>
+106	STARTTAG	160	167	<style>
+124	STARTTAG	132	139	<title>
+128	STARTTAG	3106	3120	<p id="count">
+128	STARTTAG	3270	3305	<p id="empty" class="empty" hidden>
+140	ATTRNAME	3201	3211	aria-label
+158	ATTRNAME	46	53	charset
+160	ATTRNAME	3037	3042	class
+160	ATTRNAME	3284	3289	class
+164	ATTRNAME	85	92	content
+202	ATTRNAME	3298	3304	hidden
+206	ATTRNAME	3109	3111	id
+206	ATTRNAME	3147	3149	id
+206	ATTRNAME	3248	3250	id
+206	ATTRNAME	3273	3275	id
+210	ATTRNAME	22	26	lang
+224	ATTRNAME	69	73	name
+234	ATTRNAME	3173	3184	placeholder
+284	ATTRNAME	3159	3163	type
+442	VALUE	27	31	"en"
+620	VALUE	54	61	"utf-8"
+622	VALUE	74	84	"viewport"
+624	VALUE	93	130	"width=device-width, initial-scale=1"
+630	VALUE	3043	3049	"wrap"

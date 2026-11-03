@@ -1,0 +1,109 @@
+7	STARTTAG	1603	1609	<body>
+9	STARTTAG	2497	2521	<button id="addWordBtn">
+9	STARTTAG	3303	3334	<button id="createSentenceBtn">
+15	STARTTAG	1612	1634	<div class="controls">
+15	STARTTAG	1639	1668	<div class="forms-container">
+15	STARTTAG	1675	1701	<div class="form-section">
+15	STARTTAG	1752	1776	<div class="form-group">
+15	STARTTAG	1907	1931	<div class="form-group">
+15	STARTTAG	2097	2121	<div class="form-group">
+15	STARTTAG	2562	2599	<div class="word-list" id="wordList">
+15	STARTTAG	2687	2713	<div class="form-section">
+15	STARTTAG	2767	2791	<div class="form-group">
+15	STARTTAG	2895	2919	<div class="form-group">
+15	STARTTAG	3023	3047	<div class="form-group">
+15	STARTTAG	3166	3190	<div class="form-group">
+15	STARTTAG	3376	3400	<div class="form-group">
+15	STARTTAG	3479	3585	<div id="sentence-display" style="background: #222; padding: 10px; border-radius: 4px; min-height: 20px;">
+27	STARTTAG	1710	1714	<h3>
+27	STARTTAG	2722	2726	<h3>
+29	STARTTAG	33	39	<head>
+32	STARTTAG	16	32	<html lang="en">
+34	STARTTAG	1829	1883	<input type="text" id="word" placeholder="Enter word">
+35	STARTTAG	1787	1805	<label for="word">
+35	STARTTAG	1942	1966	<label for="definition">
+35	STARTTAG	2132	2149	<label for="pos">
+35	STARTTAG	2802	2820	<label for="noun">
+35	STARTTAG	2930	2948	<label for="verb">
+35	STARTTAG	3058	3081	<label for="adjective">
+35	STARTTAG	3201	3222	<label for="pronoun">
+35	STARTTAG	3411	3441	<label for="sentence-display">
+40	STARTTAG	42	64	<meta charset="UTF-8">
+40	STARTTAG	67	137	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+42	STARTTAG	2213	2234	<option value="noun">
+42	STARTTAG	2260	2281	<option value="verb">
+42	STARTTAG	2307	2333	<option value="adjective">
+42	STARTTAG	2364	2388	<option value="pronoun">
+42	STARTTAG	2417	2439	<option value="other">
+48	STARTTAG	3643	3665	<script type="module">
+50	STARTTAG	2183	2200	<select id="pos">
+50	STARTTAG	2844	2862	<select id="noun">
+50	STARTTAG	2972	2990	<select id="verb">
+50	STARTTAG	3110	3133	<select id="adjective">
+50	STARTTAG	3249	3270	<select id="pronoun">
+53	STARTTAG	175	182	<style>
+59	STARTTAG	1996	2062	<textarea id="definition" rows="3" placeholder="Enter definition">
+62	STARTTAG	140	147	<title>
+79	ATTRNAME	48	55	charset
+80	ATTRNAME	1617	1622	class
+80	ATTRNAME	1644	1649	class
+80	ATTRNAME	1680	1685	class
+80	ATTRNAME	1757	1762	class
+80	ATTRNAME	1912	1917	class
+80	ATTRNAME	2102	2107	class
+80	ATTRNAME	2567	2572	class
+80	ATTRNAME	2692	2697	class
+80	ATTRNAME	2772	2777	class
+80	ATTRNAME	2900	2905	class
+80	ATTRNAME	3028	3033	class
+80	ATTRNAME	3171	3176	class
+80	ATTRNAME	3381	3386	class
+82	ATTRNAME	89	96	content
+99	ATTRNAME	1794	1797	for
+99	ATTRNAME	1949	1952	for
+99	ATTRNAME	2139	2142	for
+99	ATTRNAME	2809	2812	for
+99	ATTRNAME	2937	2940	for
+99	ATTRNAME	3065	3068	for
+99	ATTRNAME	3208	3211	for
+99	ATTRNAME	3418	3421	for
+103	ATTRNAME	1848	1850	id
+103	ATTRNAME	2006	2008	id
+103	ATTRNAME	2191	2193	id
+103	ATTRNAME	2505	2507	id
+103	ATTRNAME	2585	2587	id
+103	ATTRNAME	2852	2854	id
+103	ATTRNAME	2980	2982	id
+103	ATTRNAME	3118	3120	id
+103	ATTRNAME	3257	3259	id
+103	ATTRNAME	3311	3313	id
+103	ATTRNAME	3484	3486	id
+105	ATTRNAME	22	26	lang
+112	ATTRNAME	73	77	name
+117	ATTRNAME	1858	1869	placeholder
+117	ATTRNAME	2031	2042	placeholder
+127	ATTRNAME	2022	2026	rows
+136	ATTRNAME	3506	3511	style
+142	ATTRNAME	1836	1840	type
+142	ATTRNAME	3651	3655	type
+144	ATTRNAME	2221	2226	value
+144	ATTRNAME	2268	2273	value
+144	ATTRNAME	2315	2320	value
+144	ATTRNAME	2372	2377	value
+144	ATTRNAME	2425	2430	value
+172	VALUE	2027	2030	"3"
+210	VALUE	1623	1633	"controls"
+221	VALUE	27	31	"en"
+233	VALUE	1763	1775	"form-group"
+233	VALUE	1918	1930	"form-group"
+233	VALUE	2108	2120	"form-group"
+233	VALUE	2778	2790	"form-group"
+233	VALUE	2906	2918	"form-group"
+233	VALUE	3034	3046	"form-group"
+233	VALUE	3177	3189	"form-group"
+233	VALUE	3387	3399	"form-group"
+258	VALUE	3656	3664	"module"
+302	VALUE	1841	1847	"text"
+310	VALUE	56	63	"UTF-8"
+311	VALUE	78	88	"viewport"
+313	VALUE	97	136	"width=device-width, initial-scale=1.0"

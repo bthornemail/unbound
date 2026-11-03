@@ -1,0 +1,99 @@
+1	STARTTAG	8201	8404	<a \n                href="https://bthornemail.github.io/god-is-word/" \n                target="_blank"\n                class="btn btn-secondary"\n                style="grid-column: span 2;"\n            >
+7	STARTTAG	7120	7126	<body>
+8	STARTTAG	8558	8562	<br>
+9	STARTTAG	7849	7904	<button class="btn btn-primary" onclick="saveAnswer()">
+9	STARTTAG	7969	8027	<button class="btn btn-secondary" onclick="shareAnswer()">
+9	STARTTAG	8086	8142	<button class="btn btn-secondary" onclick="showEmbed()">
+9	STARTTAG	8898	8949	<button class="modal-close" onclick="closeEmbed()">
+9	STARTTAG	9364	9457	<button class="btn btn-primary" style="width: 100%; margin-top: 12px;" onclick="copyEmbed()">
+15	STARTTAG	7131	7151	<div class="widget">
+15	STARTTAG	7160	7180	<div class="header">
+15	STARTTAG	7193	7212	<div class="title">
+15	STARTTAG	7312	7334	<div class="subtitle">
+15	STARTTAG	7404	7426	<div class="question">
+15	STARTTAG	7707	7746	<div id="savedMessage" class="message">
+15	STARTTAG	7815	7836	<div class="buttons">
+15	STARTTAG	8486	8504	<div class="info">
+15	STARTTAG	8659	8741	<div id="embedModal" class="modal" onclick="if(event.target===this) closeEmbed()">
+15	STARTTAG	8750	8777	<div class="modal-content">
+15	STARTTAG	8790	8816	<div class="modal-header">
+15	STARTTAG	8833	8858	<div class="modal-title">
+15	STARTTAG	8997	9021	<div class="modal-body">
+15	STARTTAG	9540	9604	<div id="copyMessage" class="message" style="margin-top: 12px;">
+29	STARTTAG	33	39	<head>
+32	STARTTAG	16	32	<html lang="en">
+34	STARTTAG	7485	7674	<input \n                type="text" \n                id="godAnswer" \n                class="input" \n                placeholder="your answer..."\n                maxlength="50"\n            >
+40	STARTTAG	44	66	<meta charset="UTF-8">
+40	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+44	STARTTAG	9038	9060	<p class="modal-text">
+48	STARTTAG	9708	9716	<script>
+51	STARTTAG	7229	7235	<span>
+51	STARTTAG	7439	7459	<span class="label">
+53	STARTTAG	186	193	<style>
+59	STARTTAG	9162	9336	<textarea \n                    id="embedCode" \n                    class="textarea"\n                    readonly\n                    onclick="this.select()"\n                >
+62	STARTTAG	146	153	<title>
+79	ATTRNAME	50	57	charset
+80	ATTRNAME	7136	7141	class
+80	ATTRNAME	7165	7170	class
+80	ATTRNAME	7198	7203	class
+80	ATTRNAME	7317	7322	class
+80	ATTRNAME	7409	7414	class
+80	ATTRNAME	7445	7450	class
+80	ATTRNAME	7570	7575	class
+80	ATTRNAME	7730	7735	class
+80	ATTRNAME	7820	7825	class
+80	ATTRNAME	7857	7862	class
+80	ATTRNAME	7977	7982	class
+80	ATTRNAME	8094	8099	class
+80	ATTRNAME	8320	8325	class
+80	ATTRNAME	8491	8496	class
+80	ATTRNAME	8680	8685	class
+80	ATTRNAME	8755	8760	class
+80	ATTRNAME	8795	8800	class
+80	ATTRNAME	8838	8843	class
+80	ATTRNAME	8906	8911	class
+80	ATTRNAME	9002	9007	class
+80	ATTRNAME	9041	9046	class
+80	ATTRNAME	9229	9234	class
+80	ATTRNAME	9372	9377	class
+80	ATTRNAME	9562	9567	class
+82	ATTRNAME	93	100	content
+102	ATTRNAME	8221	8225	href
+103	ATTRNAME	7538	7540	id
+103	ATTRNAME	7712	7714	id
+103	ATTRNAME	8664	8666	id
+103	ATTRNAME	9193	9195	id
+103	ATTRNAME	9545	9547	id
+105	ATTRNAME	22	26	lang
+109	ATTRNAME	7646	7655	maxlength
+112	ATTRNAME	77	81	name
+114	ATTRNAME	7881	7888	onclick
+114	ATTRNAME	8003	8010	onclick
+114	ATTRNAME	8120	8127	onclick
+114	ATTRNAME	8694	8701	onclick
+114	ATTRNAME	8926	8933	onclick
+114	ATTRNAME	9295	9302	onclick
+114	ATTRNAME	9435	9442	onclick
+117	ATTRNAME	7601	7612	placeholder
+122	ATTRNAME	9266	9274	readonly
+136	ATTRNAME	8362	8367	style
+136	ATTRNAME	9396	9401	style
+136	ATTRNAME	9578	9583	style
+138	ATTRNAME	8288	8294	target
+142	ATTRNAME	7509	7513	type
+178	VALUE	7656	7660	"50"
+192	VALUE	7863	7880	"btn btn-primary"
+192	VALUE	9378	9395	"btn btn-primary"
+193	VALUE	7983	8002	"btn btn-secondary"
+193	VALUE	8100	8119	"btn btn-secondary"
+193	VALUE	8326	8345	"btn btn-secondary"
+221	VALUE	27	31	"en"
+236	VALUE	7171	7179	"header"
+244	VALUE	8497	8503	"info"
+247	VALUE	7451	7458	"label"
+300	VALUE	7323	7333	"subtitle"
+302	VALUE	7514	7520	"text"
+307	VALUE	7204	7211	"title"
+310	VALUE	58	65	"UTF-8"
+311	VALUE	82	92	"viewport"
+313	VALUE	101	140	"width=device-width, initial-scale=1.0"

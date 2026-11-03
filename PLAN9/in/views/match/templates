@@ -1,0 +1,317 @@
+STARTTAG	^<a[ />]
+STARTTAG	^<a-entity[ />]
+STARTTAG	^<a-scene[ />]
+STARTTAG	^<a-sky[ />]
+STARTTAG	^<aside[ />]
+STARTTAG	^<b[ />]
+STARTTAG	^<body[ />]
+STARTTAG	^<br[ />]
+STARTTAG	^<button[ />]
+STARTTAG	^<canvas[ />]
+STARTTAG	^<circle[ />]
+STARTTAG	^<code[ />]
+STARTTAG	^<dd[ />]
+STARTTAG	^<defs[ />]
+STARTTAG	^<div[ />]
+STARTTAG	^<dl[ />]
+STARTTAG	^<dt[ />]
+STARTTAG	^<em[ />]
+STARTTAG	^<fegaussianblur[ />]
+STARTTAG	^<femerge[ />]
+STARTTAG	^<femergenode[ />]
+STARTTAG	^<filter[ />]
+STARTTAG	^<footer[ />]
+STARTTAG	^<g[ />]
+STARTTAG	^<h1[ />]
+STARTTAG	^<h2[ />]
+STARTTAG	^<h3[ />]
+STARTTAG	^<h4[ />]
+STARTTAG	^<head[ />]
+STARTTAG	^<header[ />]
+STARTTAG	^<hr[ />]
+STARTTAG	^<html[ />]
+STARTTAG	^<i[ />]
+STARTTAG	^<input[ />]
+STARTTAG	^<label[ />]
+STARTTAG	^<li[ />]
+STARTTAG	^<line[ />]
+STARTTAG	^<link[ />]
+STARTTAG	^<main[ />]
+STARTTAG	^<meta[ />]
+STARTTAG	^<nav[ />]
+STARTTAG	^<option[ />]
+STARTTAG	^<output[ />]
+STARTTAG	^<p[ />]
+STARTTAG	^<path[ />]
+STARTTAG	^<pre[ />]
+STARTTAG	^<rect[ />]
+STARTTAG	^<script[ />]
+STARTTAG	^<section[ />]
+STARTTAG	^<select[ />]
+STARTTAG	^<span[ />]
+STARTTAG	^<strong[ />]
+STARTTAG	^<style[ />]
+STARTTAG	^<svg[ />]
+STARTTAG	^<table[ />]
+STARTTAG	^<tbody[ />]
+STARTTAG	^<td[ />]
+STARTTAG	^<text[ />]
+STARTTAG	^<textarea[ />]
+STARTTAG	^<th[ />]
+STARTTAG	^<thead[ />]
+STARTTAG	^<title[ />]
+STARTTAG	^<tr[ />]
+STARTTAG	^<u[ />]
+STARTTAG	^<ul[ />]
+STARTTAG	^<video[ />]
+ATTRNAME	^accept$
+ATTRNAME	^aria-describedby$
+ATTRNAME	^aria-hidden$
+ATTRNAME	^aria-label$
+ATTRNAME	^aria-labelledby$
+ATTRNAME	^aria-live$
+ATTRNAME	^aria-pressed$
+ATTRNAME	^async$
+ATTRNAME	^autocomplete$
+ATTRNAME	^autoplay$
+ATTRNAME	^background$
+ATTRNAME	^camera$
+ATTRNAME	^charset$
+ATTRNAME	^class$
+ATTRNAME	^color$
+ATTRNAME	^content$
+ATTRNAME	^crossorigin$
+ATTRNAME	^cursor$
+ATTRNAME	^cx$
+ATTRNAME	^cy$
+ATTRNAME	^d$
+ATTRNAME	^data-c$
+ATTRNAME	^data-fano$
+ATTRNAME	^data-name$
+ATTRNAME	^data-path$
+ATTRNAME	^data-role$
+ATTRNAME	^data-tab$
+ATTRNAME	^data-tone$
+ATTRNAME	^disabled$
+ATTRNAME	^fill$
+ATTRNAME	^filter$
+ATTRNAME	^font-family$
+ATTRNAME	^for$
+ATTRNAME	^height$
+ATTRNAME	^hidden$
+ATTRNAME	^href$
+ATTRNAME	^id$
+ATTRNAME	^in$
+ATTRNAME	^lang$
+ATTRNAME	^light$
+ATTRNAME	^look-controls$
+ATTRNAME	^max$
+ATTRNAME	^maxlength$
+ATTRNAME	^min$
+ATTRNAME	^muted$
+ATTRNAME	^name$
+ATTRNAME	^onchange$
+ATTRNAME	^onclick$
+ATTRNAME	^oninput$
+ATTRNAME	^opacity$
+ATTRNAME	^placeholder$
+ATTRNAME	^playsinline$
+ATTRNAME	^position$
+ATTRNAME	^r$
+ATTRNAME	^raycaster$
+ATTRNAME	^readonly$
+ATTRNAME	^rel$
+ATTRNAME	^renderer$
+ATTRNAME	^result$
+ATTRNAME	^role$
+ATTRNAME	^rows$
+ATTRNAME	^size$
+ATTRNAME	^spellcheck$
+ATTRNAME	^src$
+ATTRNAME	^stddeviation$
+ATTRNAME	^step$
+ATTRNAME	^stroke$
+ATTRNAME	^stroke-linecap$
+ATTRNAME	^stroke-width$
+ATTRNAME	^style$
+ATTRNAME	^tabindex$
+ATTRNAME	^target$
+ATTRNAME	^text-anchor$
+ATTRNAME	^title$
+ATTRNAME	^transform$
+ATTRNAME	^type$
+ATTRNAME	^universe-graph$
+ATTRNAME	^value$
+ATTRNAME	^viewbox$
+ATTRNAME	^wasd-controls$
+ATTRNAME	^width$
+ATTRNAME	^x$
+ATTRNAME	^x1$
+ATTRNAME	^x2$
+ATTRNAME	^xmlns$
+ATTRNAME	^y$
+ATTRNAME	^y1$
+ATTRNAME	^y2$
+VALUE	^"-1"$
+VALUE	^"0"$
+VALUE	^"0\.01"$
+VALUE	^"0\.05"$
+VALUE	^"0\.1"$
+VALUE	^"0\.5"$
+VALUE	^"1"$
+VALUE	^"1\.0"$
+VALUE	^"100"$
+VALUE	^"1000"$
+VALUE	^"110"$
+VALUE	^"120"$
+VALUE	^"150"$
+VALUE	^"1500"$
+VALUE	^"2"$
+VALUE	^"200"$
+VALUE	^"2000"$
+VALUE	^"3"$
+VALUE	^"3\.0"$
+VALUE	^"30"$
+VALUE	^"300"$
+VALUE	^"4"$
+VALUE	^"400"$
+VALUE	^"50"$
+VALUE	^"8"$
+VALUE	^"active"$
+VALUE	^"alpha"$
+VALUE	^"alphavalue"$
+VALUE	^"anonymous"$
+VALUE	^"asciigrid"$
+VALUE	^"audio/~~video/~"$
+VALUE	^"background:var~--kk~"$
+VALUE	^"bindbtn"$
+VALUE	^"bits"$
+VALUE	^"bitsa"$
+VALUE	^"bitsb"$
+VALUE	^"bitss"$
+VALUE	^"btn btn-primary"$
+VALUE	^"btn btn-secondary"$
+VALUE	^"button"$
+VALUE	^"c"$
+VALUE	^"cam"$
+VALUE	^"cam0"$
+VALUE	^"cam1"$
+VALUE	^"cam2"$
+VALUE	^"cam3"$
+VALUE	^"card"$
+VALUE	^"claude:viewport-fit-sides"$
+VALUE	^"color: #00ffff; margin-top: 0;"$
+VALUE	^"color: #00ffff;"$
+VALUE	^"compare"$
+VALUE	^"connectbtn"$
+VALUE	^"constellation"$
+VALUE	^"container"$
+VALUE	^"control-group"$
+VALUE	^"controls"$
+VALUE	^"cover"$
+VALUE	^"crypto-prices-display"$
+VALUE	^"cv0"$
+VALUE	^"cv1"$
+VALUE	^"cv2"$
+VALUE	^"cv3"$
+VALUE	^"dial"$
+VALUE	^"display:grid;gap:10px"$
+VALUE	^"display:none"$
+VALUE	^"dot"$
+VALUE	^"en"$
+VALUE	^"energy-bar"$
+VALUE	^"energybar"$
+VALUE	^"evolutionspeed"$
+VALUE	^"eyebrow"$
+VALUE	^"false"$
+VALUE	^"file"$
+VALUE	^"fileinput"$
+VALUE	^"font-size:10px;color:var~--muted~;line-height:1\.4;margin-top:6px"$
+VALUE	^"font-size:10px;color:var~--muted~;margin-top:10px"$
+VALUE	^"font-size:10px;text-transform:uppercase;letter-spacing:\.04em;color:var~--muted~;margin:0 0 4px"$
+VALUE	^"font-size:11px;color:var~--muted~;margin-bottom:4px"$
+VALUE	^"form-group"$
+VALUE	^"grid"$
+VALUE	^"group"$
+VALUE	^"header"$
+VALUE	^"hero"$
+VALUE	^"hint"$
+VALUE	^"https://cdn\.jsdelivr\.net/npm/three~0\.128\.0/examples/js/controls/orbitcontrols\.js"$
+VALUE	^"https://cdn\.tailwindcss\.com"$
+VALUE	^"https://cdnjs\.cloudflare\.com/ajax/libs/three\.js/r128/three\.min\.js"$
+VALUE	^"https://fonts\.googleapis\.com"$
+VALUE	^"img"$
+VALUE	^"info"$
+VALUE	^"info-panel"$
+VALUE	^"interval"$
+VALUE	^"label"$
+VALUE	^"lede"$
+VALUE	^"legend"$
+VALUE	^"loading-overlay"$
+VALUE	^"margin-top: 15px;"$
+VALUE	^"margin-top:12px"$
+VALUE	^"margin-top:8px"$
+VALUE	^"mediael"$
+VALUE	^"metric"$
+VALUE	^"micbtn"$
+VALUE	^"modelabel"$
+VALUE	^"module"$
+VALUE	^"mt-4 text-xs text-gray-400"$
+VALUE	^"mutationrate"$
+VALUE	^"mutationvalue"$
+VALUE	^"muted"$
+VALUE	^"n"$
+VALUE	^"name"$
+VALUE	^"nav"$
+VALUE	^"none"$
+VALUE	^"note"$
+VALUE	^"op-row"$
+VALUE	^"opselect"$
+VALUE	^"oscilloscope"$
+VALUE	^"oscilloscope-wrap"$
+VALUE	^"padding:6px"$
+VALUE	^"pan"$
+VALUE	^"panel adder"$
+VALUE	^"panel"$
+VALUE	^"play"$
+VALUE	^"playbtn"$
+VALUE	^"polite"$
+VALUE	^"ports"$
+VALUE	^"preconnect"$
+VALUE	^"primary"$
+VALUE	^"quad"$
+VALUE	^"range"$
+VALUE	^"readout"$
+VALUE	^"reset"$
+VALUE	^"row"$
+VALUE	^"scrub"$
+VALUE	^"section"$
+VALUE	^"sidebar"$
+VALUE	^"spectrum"$
+VALUE	^"speedvalue"$
+VALUE	^"startstop"$
+VALUE	^"stats"$
+VALUE	^"status"$
+VALUE	^"status-dot"$
+VALUE	^"statustext"$
+VALUE	^"step"$
+VALUE	^"stylesheet"$
+VALUE	^"sub"$
+VALUE	^"subtitle"$
+VALUE	^"table-wrap"$
+VALUE	^"text"$
+VALUE	^"text-lg font-bold mb-2"$
+VALUE	^"text-sm"$
+VALUE	^"timeline"$
+VALUE	^"timestep"$
+VALUE	^"title"$
+VALUE	^"true"$
+VALUE	^"unbindbtn"$
+VALUE	^"utf-8"$
+VALUE	^"viewport"$
+VALUE	^"width=device-width~ initial-scale=1"$
+VALUE	^"width=device-width~ initial-scale=1\.0"$
+VALUE	^"width=device-width~initial-scale=1~viewport-fit=cover"$
+VALUE	^"wrap"$
+VALUE	^utf8$
+VALUE	^viewport$

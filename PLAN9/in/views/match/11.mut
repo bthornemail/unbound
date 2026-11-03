@@ -1,0 +1,85 @@
+2	STARTTAG	4000	4064	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+2	STARTTAG	4537	4601	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+12	STARTTAG	4000	4064	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+12	STARTTAG	4537	4601	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+14	STARTTAG	3362	3368	<body>
+16	STARTTAG	3817	3821	<br>
+16	STARTTAG	3866	3870	<br>
+16	STARTTAG	3915	3919	<br>
+16	STARTTAG	3964	3968	<br>
+18	STARTTAG	3462	3489	<button id="bootstrap-btn">
+30	STARTTAG	3547	3570	<div class="dashboard">
+30	STARTTAG	3579	3598	<div class="panel">
+30	STARTTAG	3658	3684	<div id="observer-status">
+30	STARTTAG	3743	3774	<div style="margin-top: 15px;">
+30	STARTTAG	4265	4284	<div class="panel">
+30	STARTTAG	4346	4371	<div id="closure-status">
+30	STARTTAG	4414	4456	<div class="matrix-grid" id="matrix-grid">
+30	STARTTAG	4734	4782	<div class="panel" style="grid-column: 1 / -1;">
+30	STARTTAG	4826	4866	<div class="log-window" id="log-window">
+48	STARTTAG	4000	4064	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+48	STARTTAG	4537	4601	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+49	STARTTAG	3404	3408	<h2>
+50	STARTTAG	3374	3378	<h1>
+51	STARTTAG	3611	3615	<h3>
+51	STARTTAG	4297	4301	<h3>
+51	STARTTAG	4795	4799	<h3>
+52	STARTTAG	3404	3408	<h2>
+54	STARTTAG	3611	3615	<h3>
+54	STARTTAG	4297	4301	<h3>
+54	STARTTAG	4795	4799	<h3>
+58	STARTTAG	33	39	<head>
+62	STARTTAG	3817	3821	<br>
+62	STARTTAG	3866	3870	<br>
+62	STARTTAG	3915	3919	<br>
+62	STARTTAG	3964	3968	<br>
+64	STARTTAG	16	32	<html lang="en">
+66	STARTTAG	4000	4064	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+66	STARTTAG	4537	4601	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+80	STARTTAG	44	66	<meta charset="UTF-8">
+80	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+88	STARTTAG	4000	4064	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+88	STARTTAG	4537	4601	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+96	STARTTAG	4904	4912	<script>
+102	STARTTAG	3841	3858	<span id="pos-x">
+102	STARTTAG	3890	3907	<span id="pos-y">
+102	STARTTAG	3939	3956	<span id="pos-z">
+104	STARTTAG	3791	3799	<strong>
+106	STARTTAG	186	193	<style>
+124	STARTTAG	146	153	<title>
+126	STARTTAG	3817	3821	<br>
+126	STARTTAG	3866	3870	<br>
+126	STARTTAG	3915	3919	<br>
+126	STARTTAG	3964	3968	<br>
+128	STARTTAG	4000	4064	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+128	STARTTAG	4537	4601	<p style="font-size: 0.8rem; color: #8b949e; margin-top: 20px;">
+158	ATTRNAME	50	57	charset
+160	ATTRNAME	3552	3557	class
+160	ATTRNAME	3584	3589	class
+160	ATTRNAME	4270	4275	class
+160	ATTRNAME	4419	4424	class
+160	ATTRNAME	4739	4744	class
+160	ATTRNAME	4831	4836	class
+164	ATTRNAME	93	100	content
+206	ATTRNAME	3470	3472	id
+206	ATTRNAME	3663	3665	id
+206	ATTRNAME	3847	3849	id
+206	ATTRNAME	3896	3898	id
+206	ATTRNAME	3945	3947	id
+206	ATTRNAME	4351	4353	id
+206	ATTRNAME	4439	4441	id
+206	ATTRNAME	4850	4852	id
+210	ATTRNAME	22	26	lang
+224	ATTRNAME	77	81	name
+272	ATTRNAME	3748	3753	style
+272	ATTRNAME	4003	4008	style
+272	ATTRNAME	4540	4545	style
+272	ATTRNAME	4753	4758	style
+442	VALUE	27	31	"en"
+502	VALUE	3754	3773	"margin-top: 15px;"
+550	VALUE	3590	3597	"panel"
+550	VALUE	4276	4283	"panel"
+550	VALUE	4745	4752	"panel"
+620	VALUE	58	65	"UTF-8"
+622	VALUE	82	92	"viewport"
+626	VALUE	101	140	"width=device-width, initial-scale=1.0"

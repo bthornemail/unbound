@@ -1,0 +1,139 @@
+1	STARTTAG	1720	1723	<b>
+1	STARTTAG	1868	1871	<b>
+1	STARTTAG	1921	1924	<b>
+1	STARTTAG	1978	1981	<b>
+1	STARTTAG	2037	2040	<b>
+2	STARTTAG	1720	1723	<b>
+2	STARTTAG	1868	1871	<b>
+2	STARTTAG	1921	1924	<b>
+2	STARTTAG	1978	1981	<b>
+2	STARTTAG	2037	2040	<b>
+4	STARTTAG	3121	3159	<a-entity id="rig" position="0 1.6 5">
+4	STARTTAG	3166	3269	<a-entity camera look-controls wasd-controls raycaster="objects: .clickable" cursor="rayOrigin: mouse">
+4	STARTTAG	3301	3363	<a-entity light="type: ambient; intensity: 0.35; color: #bcd">
+4	STARTTAG	3379	3462	<a-entity light="type: directional; intensity: 0.85; color: #fff" position="1 3 2">
+4	STARTTAG	3478	3545	<a-entity id="universe" universe-graph="depth: 3; radiusStep: 1.5">
+6	STARTTAG	3029	3116	<a-scene renderer="colorManagement: true; antialias: true" background="color: #050510">
+8	STARTTAG	3561	3584	<a-sky color="#050510">
+12	STARTTAG	1720	1723	<b>
+12	STARTTAG	1868	1871	<b>
+12	STARTTAG	1921	1924	<b>
+12	STARTTAG	1978	1981	<b>
+12	STARTTAG	2037	2040	<b>
+14	STARTTAG	1689	1695	<body>
+18	STARTTAG	2118	2313	<button onclick="document.getElementById('inspector').classList.remove('visible')" style="margin-top:8px;padding:6px 12px;background:#444;border:none;border-radius:6px;color:#fff;cursor:pointer">
+30	STARTTAG	1698	1715	<div class="hud">
+30	STARTTAG	1794	1830	<div id="inspector" class="sidebar">
+30	STARTTAG	1863	1868	<div>
+30	STARTTAG	1916	1921	<div>
+30	STARTTAG	1973	1978	<div>
+30	STARTTAG	2032	2037	<div>
+30	STARTTAG	2339	2366	<div class="control-panel">
+30	STARTTAG	2393	2420	<div class="control-group">
+30	STARTTAG	2806	2833	<div class="control-group">
+48	STARTTAG	1720	1723	<b>
+48	STARTTAG	1868	1871	<b>
+48	STARTTAG	1921	1924	<b>
+48	STARTTAG	1978	1981	<b>
+48	STARTTAG	2037	2040	<b>
+51	STARTTAG	1835	1839	<h3>
+51	STARTTAG	2371	2375	<h3>
+54	STARTTAG	1835	1839	<h3>
+54	STARTTAG	2371	2375	<h3>
+58	STARTTAG	33	39	<head>
+64	STARTTAG	16	32	<html lang="en">
+66	STARTTAG	1720	1723	<b>
+66	STARTTAG	1868	1871	<b>
+66	STARTTAG	1921	1924	<b>
+66	STARTTAG	1978	1981	<b>
+66	STARTTAG	2037	2040	<b>
+68	STARTTAG	2930	3006	<input type="range" id="threshold" min="0" max="1" step="0.01" value="0.95">
+70	STARTTAG	2427	2451	<label for="q-operator">
+70	STARTTAG	2840	2863	<label for="threshold">
+80	STARTTAG	42	66	<meta charset="utf-8" />
+80	STARTTAG	69	139	<meta name="viewport" content="width=device-width, initial-scale=1" />
+84	STARTTAG	2507	2527	<option value="min">
+84	STARTTAG	2548	2568	<option value="max">
+84	STARTTAG	2589	2609	<option value="avg">
+84	STARTTAG	2630	2654	<option value="product">
+84	STARTTAG	2679	2710	<option value="geometric-mean">
+88	STARTTAG	1720	1723	<b>
+88	STARTTAG	1868	1871	<b>
+88	STARTTAG	1921	1924	<b>
+88	STARTTAG	1978	1981	<b>
+88	STARTTAG	2037	2040	<b>
+92	STARTTAG	2087	2107	<pre id="node-data">
+96	STARTTAG	202	263	<script src="https://aframe.io/releases/1.5.0/aframe.min.js">
+96	STARTTAG	3608	3616	<script>
+100	STARTTAG	2474	2498	<select id="q-operator">
+102	STARTTAG	1879	1898	<span id="node-id">
+102	STARTTAG	1934	1955	<span id="node-kind">
+102	STARTTAG	1992	2014	<span id="node-level">
+102	STARTTAG	2047	2069	<span id="node-alpha">
+102	STARTTAG	2877	2904	<span id="threshold-value">
+106	STARTTAG	275	282	<style>
+124	STARTTAG	142	149	<title>
+128	STARTTAG	1720	1723	<b>
+128	STARTTAG	1868	1871	<b>
+128	STARTTAG	1921	1924	<b>
+128	STARTTAG	1978	1981	<b>
+128	STARTTAG	2037	2040	<b>
+154	ATTRNAME	3088	3098	background
+156	ATTRNAME	3176	3182	camera
+158	ATTRNAME	48	55	charset
+160	ATTRNAME	1703	1708	class
+160	ATTRNAME	1814	1819	class
+160	ATTRNAME	2344	2349	class
+160	ATTRNAME	2398	2403	class
+160	ATTRNAME	2811	2816	class
+162	ATTRNAME	3568	3573	color
+164	ATTRNAME	91	98	content
+168	ATTRNAME	3243	3249	cursor
+198	ATTRNAME	2434	2437	for
+198	ATTRNAME	2847	2850	for
+206	ATTRNAME	1799	1801	id
+206	ATTRNAME	1885	1887	id
+206	ATTRNAME	1940	1942	id
+206	ATTRNAME	1998	2000	id
+206	ATTRNAME	2053	2055	id
+206	ATTRNAME	2092	2094	id
+206	ATTRNAME	2482	2484	id
+206	ATTRNAME	2883	2885	id
+206	ATTRNAME	2950	2952	id
+206	ATTRNAME	3131	3133	id
+206	ATTRNAME	3488	3490	id
+210	ATTRNAME	22	26	lang
+212	ATTRNAME	3311	3316	light
+212	ATTRNAME	3389	3394	light
+214	ATTRNAME	3183	3196	look-controls
+216	ATTRNAME	2973	2976	max
+220	ATTRNAME	2965	2968	min
+224	ATTRNAME	75	79	name
+228	ATTRNAME	2126	2133	onclick
+238	ATTRNAME	3140	3148	position
+238	ATTRNAME	3445	3453	position
+242	ATTRNAME	3211	3220	raycaster
+248	ATTRNAME	3038	3046	renderer
+260	ATTRNAME	210	213	src
+264	ATTRNAME	2981	2985	step
+272	ATTRNAME	2201	2206	style
+284	ATTRNAME	2937	2941	type
+286	ATTRNAME	3502	3516	universe-graph
+288	ATTRNAME	2515	2520	value
+288	ATTRNAME	2556	2561	value
+288	ATTRNAME	2597	2602	value
+288	ATTRNAME	2638	2643	value
+288	ATTRNAME	2687	2692	value
+288	ATTRNAME	2993	2998	value
+292	ATTRNAME	3197	3210	wasd-controls
+312	VALUE	2969	2972	"0"
+314	VALUE	2986	2992	"0.01"
+322	VALUE	2977	2980	"1"
+418	VALUE	2404	2419	"control-group"
+418	VALUE	2817	2832	"control-group"
+442	VALUE	27	31	"en"
+566	VALUE	2942	2949	"range"
+578	VALUE	1820	1829	"sidebar"
+620	VALUE	56	63	"utf-8"
+622	VALUE	80	90	"viewport"
+624	VALUE	99	136	"width=device-width, initial-scale=1"

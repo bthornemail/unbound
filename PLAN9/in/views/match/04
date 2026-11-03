@@ -1,0 +1,48 @@
+7	STARTTAG	2930	2936	<body>
+8	STARTTAG	3413	3417	<br>
+9	STARTTAG	3521	3552	<button id="cycleFanoPlaneBtn">
+15	STARTTAG	2941	2967	<div id="loading-overlay">
+15	STARTTAG	3059	3096	<div id="info-panel" class="text-sm">
+15	STARTTAG	3175	3207	<div id="crypto-prices-display">
+15	STARTTAG	3487	3512	<div id="controls-panel">
+26	STARTTAG	3105	3140	<h2 class="text-lg font-bold mb-2">
+29	STARTTAG	33	39	<head>
+32	STARTTAG	16	32	<html lang="en">
+40	STARTTAG	44	66	<meta charset="UTF-8">
+40	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+44	STARTTAG	2976	2979	<p>
+44	STARTTAG	3300	3338	<p class="mt-4 text-xs text-gray-400">
+48	STARTTAG	227	269	<script src="https://cdn.tailwindcss.com">
+48	STARTTAG	309	389	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+48	STARTTAG	453	548	<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js">
+48	STARTTAG	3600	3608	<script>
+53	STARTTAG	562	569	<style>
+62	STARTTAG	146	153	<title>
+79	ATTRNAME	50	57	charset
+80	ATTRNAME	3080	3085	class
+80	ATTRNAME	3109	3114	class
+80	ATTRNAME	3303	3308	class
+82	ATTRNAME	93	100	content
+103	ATTRNAME	2946	2948	id
+103	ATTRNAME	3064	3066	id
+103	ATTRNAME	3180	3182	id
+103	ATTRNAME	3492	3494	id
+103	ATTRNAME	3529	3531	id
+105	ATTRNAME	22	26	lang
+112	ATTRNAME	77	81	name
+130	ATTRNAME	235	238	src
+130	ATTRNAME	317	320	src
+130	ATTRNAME	461	464	src
+212	VALUE	3183	3206	"crypto-prices-display"
+221	VALUE	27	31	"en"
+239	VALUE	465	547	"https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"
+240	VALUE	239	268	"https://cdn.tailwindcss.com"
+241	VALUE	321	388	"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+245	VALUE	3067	3079	"info-panel"
+250	VALUE	2949	2966	"loading-overlay"
+259	VALUE	3309	3337	"mt-4 text-xs text-gray-400"
+303	VALUE	3115	3139	"text-lg font-bold mb-2"
+304	VALUE	3086	3095	"text-sm"
+310	VALUE	58	65	"UTF-8"
+311	VALUE	82	92	"viewport"
+313	VALUE	101	140	"width=device-width, initial-scale=1.0"

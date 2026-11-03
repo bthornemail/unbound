@@ -56,3 +56,36 @@ export function pieces(text) {
   for (const p of out) p.cast = r.slice(p.a, p.b).map(cast).join("");
   return { runes: r, pieces: out };
 }
+// A start tag's attributes, by html.wsn: STARTTAG = "<" NAME { SPACES ATTR } [ SPACES ] [ "/" ] ">", ATTR = ATTRNAME
+// [ [ SPACES ] "=" [ SPACES ] VALUE ], VALUE a quoted run (its quotes in it) or UQ { UQ }, read over the cast: each
+// attribute an ATTR span, its ATTRNAME, its VALUE when it has one, at the page's rune offsets.
+const AN = (c) => c !== undefined && !" =\"'/>".includes(c);
+const UQ = (c) => c !== undefined && !" =\"'<>".includes(c);
+export function attrs(runes, p) {
+  const c = runes.slice(p.a, p.b).map(cast), out = [];
+  let j = 1 + p.name.length;
+  for (;;) {
+    const s0 = j;
+    while (c[j] === " ") j++;
+    if (c[j] === ">" || (c[j] === "/" && c[j + 1] === ">")) break;
+    if (j === s0 || !AN(c[j])) throw new Error(`not an attribute at ${p.a + j}`);
+    const a = j;
+    while (AN(c[j])) j++;
+    const ne = j;
+    let k = j, v = null;
+    while (c[k] === " ") k++;
+    if (c[k] === "=") {
+      k++;
+      while (c[k] === " ") k++;
+      const vs = k;
+      if (c[k] === '"' || c[k] === "'") { const q = c[k++]; while (c[k] !== q) k++; k++; } else while (UQ(c[k])) k++;
+      if (k === vs) throw new Error(`no value at ${p.a + k}`);
+      v = [vs, k];
+      j = k;
+    }
+    out.push({ prod: "ATTR", a: p.a + a, b: p.a + (v ? v[1] : ne) }, { prod: "ATTRNAME", a: p.a + a, b: p.a + ne });
+    if (v) out.push({ prod: "VALUE", a: p.a + v[0], b: p.a + v[1] });
+  }
+  for (const s of out) s.cast = runes.slice(s.a, s.b).map(cast).join("");
+  return out;
+}

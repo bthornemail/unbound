@@ -1,0 +1,105 @@
+7	STARTTAG	6158	6164	<body>
+9	STARTTAG	6874	6920	<button class="btn btn-primary" id="startBtn">
+9	STARTTAG	6950	7006	<button class="btn btn-secondary" id="stopBtn" disabled>
+9	STARTTAG	7035	7088	<button class="btn btn-info" id="recordBtn" disabled>
+9	STARTTAG	7121	7178	<button class="btn btn-info" id="screenshotBtn" disabled>
+15	STARTTAG	6169	6189	<div class="header">
+15	STARTTAG	6233	6253	<div class="status">
+15	STARTTAG	6266	6305	<div class="status-dot" id="statusDot">
+15	STARTTAG	6399	6429	<div class="camera-container">
+15	STARTTAG	6507	6528	<div class="overlay">
+15	STARTTAG	6541	6546	<div>
+15	STARTTAG	6597	6602	<div>
+15	STARTTAG	6659	6716	<div class="recording-indicator" id="recordingIndicator">
+15	STARTTAG	6753	6796	<div class="motion-alert" id="motionAlert">
+15	STARTTAG	6843	6865	<div class="controls">
+15	STARTTAG	7343	7365	<div class="settings">
+15	STARTTAG	7378	7405	<div class="setting-group">
+15	STARTTAG	7645	7672	<div class="setting-group">
+15	STARTTAG	7848	7875	<div class="setting-group">
+15	STARTTAG	8045	8075	<div class="toast" id="toast">
+25	STARTTAG	6198	6202	<h1>
+29	STARTTAG	33	39	<head>
+32	STARTTAG	16	32	<html lang="en">
+34	STARTTAG	7473	7546	<input type="range" id="motionSensitivity" min="10" max="100" value="30">
+34	STARTTAG	7717	7761	<input type="checkbox" id="motionDetection">
+34	STARTTAG	7920	7958	<input type="checkbox" id="nightMode">
+35	STARTTAG	7422	7429	<label>
+35	STARTTAG	7689	7696	<label>
+35	STARTTAG	7892	7899	<label>
+40	STARTTAG	44	66	<meta charset="UTF-8">
+40	STARTTAG	71	141	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+42	STARTTAG	7276	7293	<option value="">
+48	STARTTAG	8087	8095	<script>
+50	STARTTAG	7215	7263	<select class="camera-select" id="cameraSelect">
+51	STARTTAG	6324	6346	<span id="statusText">
+51	STARTTAG	6548	6571	<span id="currentTime">
+51	STARTTAG	7563	7591	<span id="sensitivityValue">
+53	STARTTAG	181	188	<style>
+62	STARTTAG	146	153	<title>
+66	STARTTAG	6438	6490	<video id="videoElement" autoplay muted playsinline>
+76	ATTRNAME	6463	6471	autoplay
+79	ATTRNAME	50	57	charset
+80	ATTRNAME	6174	6179	class
+80	ATTRNAME	6238	6243	class
+80	ATTRNAME	6271	6276	class
+80	ATTRNAME	6404	6409	class
+80	ATTRNAME	6512	6517	class
+80	ATTRNAME	6664	6669	class
+80	ATTRNAME	6758	6763	class
+80	ATTRNAME	6848	6853	class
+80	ATTRNAME	6882	6887	class
+80	ATTRNAME	6958	6963	class
+80	ATTRNAME	7043	7048	class
+80	ATTRNAME	7129	7134	class
+80	ATTRNAME	7223	7228	class
+80	ATTRNAME	7348	7353	class
+80	ATTRNAME	7383	7388	class
+80	ATTRNAME	7650	7655	class
+80	ATTRNAME	7853	7858	class
+80	ATTRNAME	8050	8055	class
+82	ATTRNAME	93	100	content
+95	ATTRNAME	6997	7005	disabled
+95	ATTRNAME	7079	7087	disabled
+95	ATTRNAME	7169	7177	disabled
+103	ATTRNAME	6290	6292	id
+103	ATTRNAME	6330	6332	id
+103	ATTRNAME	6445	6447	id
+103	ATTRNAME	6554	6556	id
+103	ATTRNAME	6692	6694	id
+103	ATTRNAME	6779	6781	id
+103	ATTRNAME	6906	6908	id
+103	ATTRNAME	6984	6986	id
+103	ATTRNAME	7064	7066	id
+103	ATTRNAME	7150	7152	id
+103	ATTRNAME	7245	7247	id
+103	ATTRNAME	7493	7495	id
+103	ATTRNAME	7569	7571	id
+103	ATTRNAME	7740	7742	id
+103	ATTRNAME	7943	7945	id
+103	ATTRNAME	8064	8066	id
+105	ATTRNAME	22	26	lang
+108	ATTRNAME	7525	7528	max
+110	ATTRNAME	7516	7519	min
+111	ATTRNAME	6472	6477	muted
+112	ATTRNAME	77	81	name
+118	ATTRNAME	6478	6489	playsinline
+142	ATTRNAME	7480	7484	type
+142	ATTRNAME	7724	7728	type
+142	ATTRNAME	7927	7931	type
+144	ATTRNAME	7284	7289	value
+144	ATTRNAME	7535	7540	value
+163	VALUE	7529	7534	"100"
+174	VALUE	7541	7545	"30"
+192	VALUE	6888	6905	"btn btn-primary"
+193	VALUE	6964	6983	"btn btn-secondary"
+210	VALUE	6854	6864	"controls"
+221	VALUE	27	31	"en"
+236	VALUE	6180	6188	"header"
+283	VALUE	7485	7492	"range"
+294	VALUE	6244	6252	"status"
+295	VALUE	6277	6289	"status-dot"
+296	VALUE	6333	6345	"statusText"
+310	VALUE	58	65	"UTF-8"
+311	VALUE	82	92	"viewport"
+313	VALUE	101	140	"width=device-width, initial-scale=1.0"

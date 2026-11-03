@@ -1,0 +1,264 @@
+2	STARTTAG	7246	7285	<p class="hint" style="margin-top:8px">
+2	STARTTAG	7770	7809	<p class="hint" style="margin-top:8px">
+2	STARTTAG	8377	8416	<p class="hint" style="margin-top:8px">
+10	STARTTAG	5255	5278	<aside class="sidebar">
+12	STARTTAG	7246	7285	<p class="hint" style="margin-top:8px">
+12	STARTTAG	7770	7809	<p class="hint" style="margin-top:8px">
+12	STARTTAG	8377	8416	<p class="hint" style="margin-top:8px">
+14	STARTTAG	4633	4639	<body>
+18	STARTTAG	6444	6483	<button onclick="randomizeEpistemic()">
+18	STARTTAG	6510	6545	<button onclick="resetEpistemic()">
+18	STARTTAG	7554	7599	<button class="primary" onclick="addPoint()">
+18	STARTTAG	7626	7659	<button onclick="canonicalize()">
+18	STARTTAG	7689	7736	<button class="danger" onclick="clearPoints()">
+18	STARTTAG	8246	8275	<button onclick="computeQ()">
+18	STARTTAG	8304	8336	<button onclick="checkAccess()">
+18	STARTTAG	8731	8760	<button onclick="clearLog()">
+20	STARTTAG	5218	5233	<canvas id="c">
+30	STARTTAG	4693	4713	<div class="status">
+30	STARTTAG	5165	5185	<div class="layout">
+30	STARTTAG	5188	5213	<div class="canvas-wrap">
+30	STARTTAG	5312	5333	<div class="section">
+30	STARTTAG	5372	5390	<div class="bars">
+30	STARTTAG	5399	5423	<div class="bar-row kk">
+30	STARTTAG	5478	5501	<div class="bar-track">
+30	STARTTAG	5501	5553	<div class="bar-fill" id="bar-kk" style="width:40%">
+30	STARTTAG	5645	5669	<div class="bar-row ku">
+30	STARTTAG	5724	5747	<div class="bar-track">
+30	STARTTAG	5747	5799	<div class="bar-fill" id="bar-ku" style="width:30%">
+30	STARTTAG	5891	5915	<div class="bar-row uk">
+30	STARTTAG	5970	5993	<div class="bar-track">
+30	STARTTAG	5993	6045	<div class="bar-fill" id="bar-uk" style="width:50%">
+30	STARTTAG	6137	6161	<div class="bar-row uu">
+30	STARTTAG	6216	6239	<div class="bar-track">
+30	STARTTAG	6239	6291	<div class="bar-fill" id="bar-uu" style="width:25%">
+30	STARTTAG	6394	6435	<div class="row" style="margin-top:10px">
+30	STARTTAG	6616	6637	<div class="section">
+30	STARTTAG	6685	6702	<div class="row">
+30	STARTTAG	6963	6983	<div class="metric">
+30	STARTTAG	7041	7061	<div class="metric">
+30	STARTTAG	7127	7147	<div class="metric">
+30	STARTTAG	7457	7478	<div class="section">
+30	STARTTAG	7528	7545	<div class="row">
+30	STARTTAG	7963	7984	<div class="section">
+30	STARTTAG	8031	8051	<div class="metric">
+30	STARTTAG	8112	8132	<div class="metric">
+30	STARTTAG	8197	8237	<div class="row" style="margin-top:8px">
+30	STARTTAG	8570	8591	<div class="section">
+30	STARTTAG	8643	8669	<div class="log" id="log">
+30	STARTTAG	8682	8722	<div class="row" style="margin-top:8px">
+46	STARTTAG	8822	8830	<footer>
+48	STARTTAG	7246	7285	<p class="hint" style="margin-top:8px">
+48	STARTTAG	7770	7809	<p class="hint" style="margin-top:8px">
+48	STARTTAG	8377	8416	<p class="hint" style="margin-top:8px">
+49	STARTTAG	5340	5344	<h2>
+49	STARTTAG	6644	6648	<h2>
+49	STARTTAG	7485	7489	<h2>
+49	STARTTAG	7991	7995	<h2>
+49	STARTTAG	8598	8602	<h2>
+50	STARTTAG	4651	4655	<h1>
+52	STARTTAG	5340	5344	<h2>
+52	STARTTAG	6644	6648	<h2>
+52	STARTTAG	7485	7489	<h2>
+52	STARTTAG	7991	7995	<h2>
+52	STARTTAG	8598	8602	<h2>
+58	STARTTAG	33	39	<head>
+60	STARTTAG	4640	4648	<header>
+64	STARTTAG	16	32	<html lang="en">
+66	STARTTAG	7246	7285	<p class="hint" style="margin-top:8px">
+66	STARTTAG	7770	7809	<p class="hint" style="margin-top:8px">
+66	STARTTAG	8377	8416	<p class="hint" style="margin-top:8px">
+68	STARTTAG	6745	6840	<input type="range" id="v-slider" min="1" max="2000" value="100" oninput="updateV(this.value)">
+68	STARTTAG	6849	6943	<input type="number" id="v-num" value="100" min="1" max="5000" onchange="updateV(this.value)">
+70	STARTTAG	6711	6718	<label>
+80	STARTTAG	40	62	<meta charset="UTF-8">
+80	STARTTAG	63	133	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+88	STARTTAG	7246	7285	<p class="hint" style="margin-top:8px">
+88	STARTTAG	7770	7809	<p class="hint" style="margin-top:8px">
+88	STARTTAG	8377	8416	<p class="hint" style="margin-top:8px">
+96	STARTTAG	9013	9021	<script>
+102	STARTTAG	4718	4744	<span class="status-item">
+102	STARTTAG	4744	4791	<span class="dot" style="background:var(--kk)">
+102	STARTTAG	4813	4839	<span class="status-item">
+102	STARTTAG	4839	4886	<span class="dot" style="background:var(--ku)">
+102	STARTTAG	4908	4934	<span class="status-item">
+102	STARTTAG	4934	4981	<span class="dot" style="background:var(--uk)">
+102	STARTTAG	5003	5029	<span class="status-item">
+102	STARTTAG	5029	5076	<span class="dot" style="background:var(--uu)">
+102	STARTTAG	5098	5118	<span class="badge">
+102	STARTTAG	5434	5458	<span class="bar-label">
+102	STARTTAG	5576	5610	<span class="bar-val" id="val-kk">
+102	STARTTAG	5680	5704	<span class="bar-label">
+102	STARTTAG	5822	5856	<span class="bar-val" id="val-ku">
+102	STARTTAG	5926	5950	<span class="bar-label">
+102	STARTTAG	6068	6102	<span class="bar-val" id="val-uk">
+102	STARTTAG	6172	6196	<span class="bar-label">
+102	STARTTAG	6314	6348	<span class="bar-val" id="val-uu">
+102	STARTTAG	6983	6989	<span>
+102	STARTTAG	7000	7019	<span id="phi-val">
+102	STARTTAG	7061	7067	<span>
+102	STARTTAG	7083	7102	<span id="obs-val">
+102	STARTTAG	7147	7153	<span>
+102	STARTTAG	7172	7220	<span id="bound-status" style="color:var(--kk)">
+102	STARTTAG	8051	8057	<span>
+102	STARTTAG	8073	8091	<span id="q-cost">
+102	STARTTAG	8132	8138	<span>
+102	STARTTAG	8151	8176	<span id="access-status">
+102	STARTTAG	8833	8839	<span>
+102	STARTTAG	8926	8932	<span>
+106	STARTTAG	195	202	<style>
+124	STARTTAG	134	141	<title>
+128	STARTTAG	7246	7285	<p class="hint" style="margin-top:8px">
+128	STARTTAG	7770	7809	<p class="hint" style="margin-top:8px">
+128	STARTTAG	8377	8416	<p class="hint" style="margin-top:8px">
+158	ATTRNAME	46	53	charset
+160	ATTRNAME	4698	4703	class
+160	ATTRNAME	4724	4729	class
+160	ATTRNAME	4750	4755	class
+160	ATTRNAME	4819	4824	class
+160	ATTRNAME	4845	4850	class
+160	ATTRNAME	4914	4919	class
+160	ATTRNAME	4940	4945	class
+160	ATTRNAME	5009	5014	class
+160	ATTRNAME	5035	5040	class
+160	ATTRNAME	5104	5109	class
+160	ATTRNAME	5170	5175	class
+160	ATTRNAME	5193	5198	class
+160	ATTRNAME	5262	5267	class
+160	ATTRNAME	5317	5322	class
+160	ATTRNAME	5377	5382	class
+160	ATTRNAME	5404	5409	class
+160	ATTRNAME	5440	5445	class
+160	ATTRNAME	5483	5488	class
+160	ATTRNAME	5506	5511	class
+160	ATTRNAME	5582	5587	class
+160	ATTRNAME	5650	5655	class
+160	ATTRNAME	5686	5691	class
+160	ATTRNAME	5729	5734	class
+160	ATTRNAME	5752	5757	class
+160	ATTRNAME	5828	5833	class
+160	ATTRNAME	5896	5901	class
+160	ATTRNAME	5932	5937	class
+160	ATTRNAME	5975	5980	class
+160	ATTRNAME	5998	6003	class
+160	ATTRNAME	6074	6079	class
+160	ATTRNAME	6142	6147	class
+160	ATTRNAME	6178	6183	class
+160	ATTRNAME	6221	6226	class
+160	ATTRNAME	6244	6249	class
+160	ATTRNAME	6320	6325	class
+160	ATTRNAME	6399	6404	class
+160	ATTRNAME	6621	6626	class
+160	ATTRNAME	6690	6695	class
+160	ATTRNAME	6968	6973	class
+160	ATTRNAME	7046	7051	class
+160	ATTRNAME	7132	7137	class
+160	ATTRNAME	7249	7254	class
+160	ATTRNAME	7462	7467	class
+160	ATTRNAME	7533	7538	class
+160	ATTRNAME	7562	7567	class
+160	ATTRNAME	7697	7702	class
+160	ATTRNAME	7773	7778	class
+160	ATTRNAME	7968	7973	class
+160	ATTRNAME	8036	8041	class
+160	ATTRNAME	8117	8122	class
+160	ATTRNAME	8202	8207	class
+160	ATTRNAME	8380	8385	class
+160	ATTRNAME	8575	8580	class
+160	ATTRNAME	8648	8653	class
+160	ATTRNAME	8687	8692	class
+164	ATTRNAME	85	92	content
+206	ATTRNAME	5226	5228	id
+206	ATTRNAME	5523	5525	id
+206	ATTRNAME	5598	5600	id
+206	ATTRNAME	5769	5771	id
+206	ATTRNAME	5844	5846	id
+206	ATTRNAME	6015	6017	id
+206	ATTRNAME	6090	6092	id
+206	ATTRNAME	6261	6263	id
+206	ATTRNAME	6336	6338	id
+206	ATTRNAME	6765	6767	id
+206	ATTRNAME	6870	6872	id
+206	ATTRNAME	7006	7008	id
+206	ATTRNAME	7089	7091	id
+206	ATTRNAME	7178	7180	id
+206	ATTRNAME	8079	8081	id
+206	ATTRNAME	8157	8159	id
+206	ATTRNAME	8660	8662	id
+210	ATTRNAME	22	26	lang
+216	ATTRNAME	6787	6790	max
+216	ATTRNAME	6901	6904	max
+220	ATTRNAME	6779	6782	min
+220	ATTRNAME	6893	6896	min
+224	ATTRNAME	69	73	name
+226	ATTRNAME	6912	6920	onchange
+228	ATTRNAME	6452	6459	onclick
+228	ATTRNAME	6518	6525	onclick
+228	ATTRNAME	7578	7585	onclick
+228	ATTRNAME	7634	7641	onclick
+228	ATTRNAME	7712	7719	onclick
+228	ATTRNAME	8254	8261	onclick
+228	ATTRNAME	8312	8319	onclick
+228	ATTRNAME	8739	8746	onclick
+230	ATTRNAME	6810	6817	oninput
+272	ATTRNAME	4762	4767	style
+272	ATTRNAME	4857	4862	style
+272	ATTRNAME	4952	4957	style
+272	ATTRNAME	5047	5052	style
+272	ATTRNAME	5535	5540	style
+272	ATTRNAME	5781	5786	style
+272	ATTRNAME	6027	6032	style
+272	ATTRNAME	6273	6278	style
+272	ATTRNAME	6411	6416	style
+272	ATTRNAME	7196	7201	style
+272	ATTRNAME	7262	7267	style
+272	ATTRNAME	7786	7791	style
+272	ATTRNAME	8214	8219	style
+272	ATTRNAME	8393	8398	style
+272	ATTRNAME	8699	8704	style
+284	ATTRNAME	6752	6756	type
+284	ATTRNAME	6856	6860	type
+288	ATTRNAME	6798	6803	value
+288	ATTRNAME	6881	6886	value
+322	VALUE	6783	6786	"1"
+322	VALUE	6897	6900	"1"
+326	VALUE	6804	6809	"100"
+326	VALUE	6887	6892	"100"
+342	VALUE	6791	6797	"2000"
+372	VALUE	4768	4790	"background:var(--kk)"
+390	VALUE	5229	5232	"c"
+440	VALUE	4756	4761	"dot"
+440	VALUE	4851	4856	"dot"
+440	VALUE	4946	4951	"dot"
+440	VALUE	5041	5046	"dot"
+442	VALUE	27	31	"en"
+476	VALUE	7255	7261	"hint"
+476	VALUE	7779	7785	"hint"
+476	VALUE	8386	8392	"hint"
+506	VALUE	7268	7284	"margin-top:8px"
+506	VALUE	7792	7808	"margin-top:8px"
+506	VALUE	8220	8236	"margin-top:8px"
+506	VALUE	8399	8415	"margin-top:8px"
+506	VALUE	8705	8721	"margin-top:8px"
+510	VALUE	6974	6982	"metric"
+510	VALUE	7052	7060	"metric"
+510	VALUE	7138	7146	"metric"
+510	VALUE	8042	8050	"metric"
+510	VALUE	8123	8131	"metric"
+562	VALUE	7568	7577	"primary"
+566	VALUE	6757	6764	"range"
+572	VALUE	6405	6410	"row"
+572	VALUE	6696	6701	"row"
+572	VALUE	7539	7544	"row"
+572	VALUE	8208	8213	"row"
+572	VALUE	8693	8698	"row"
+576	VALUE	5323	5332	"section"
+576	VALUE	6627	6636	"section"
+576	VALUE	7468	7477	"section"
+576	VALUE	7974	7983	"section"
+576	VALUE	8581	8590	"section"
+578	VALUE	5268	5277	"sidebar"
+588	VALUE	4704	4712	"status"
+620	VALUE	54	61	"UTF-8"
+622	VALUE	74	84	"viewport"
+626	VALUE	93	132	"width=device-width, initial-scale=1.0"

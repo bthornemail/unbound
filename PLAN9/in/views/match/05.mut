@@ -1,0 +1,163 @@
+2	STARTTAG	5221	5237	<p class="lede">
+2	STARTTAG	5625	5641	<p class="note">
+2	STARTTAG	6456	6472	<p class="note">
+2	STARTTAG	6745	6761	<p class="note">
+12	STARTTAG	5221	5237	<p class="lede">
+12	STARTTAG	5625	5641	<p class="note">
+12	STARTTAG	6456	6472	<p class="note">
+12	STARTTAG	6745	6761	<p class="note">
+14	STARTTAG	524	530	<body>
+16	STARTTAG	6239	6243	<tr>
+18	STARTTAG	6017	6050	<button id="clear" type="button">
+24	STARTTAG	5342	5348	<code>
+24	STARTTAG	5376	5382	<code>
+24	STARTTAG	5456	5462	<code>
+30	STARTTAG	5077	5095	<div class="wrap">
+30	STARTTAG	5111	5130	<div class="label">
+30	STARTTAG	5556	5575	<div class="plane">
+30	STARTTAG	5858	5879	<div class="readout">
+30	STARTTAG	5886	5905	<div class="label">
+30	STARTTAG	5925	5949	<div class="eq" id="eq">
+30	STARTTAG	5971	5999	<div class="bits" id="bits">
+30	STARTTAG	6012	6017	<div>
+30	STARTTAG	6087	6092	<div>
+30	STARTTAG	6101	6146	<div class="label" style="margin-bottom:4px">
+30	STARTTAG	6185	6214	<div style="overflow-x:auto">
+30	STARTTAG	6613	6639	<div class="lib" id="lib">
+30	STARTTAG	6907	6928	<div class="compare">
+30	STARTTAG	6935	6953	<div class="slot">
+30	STARTTAG	6986	7015	<div class="name" id="aName">
+30	STARTTAG	7022	7050	<div class="big" id="aMask">
+30	STARTTAG	7070	7088	<div class="slot">
+30	STARTTAG	7121	7150	<div class="name" id="bName">
+30	STARTTAG	7157	7185	<div class="big" id="bMask">
+30	STARTTAG	7205	7223	<div class="slot">
+30	STARTTAG	7255	7283	<div class="big" id="xMask">
+30	STARTTAG	7290	7324	<div class="verdict" id="verdict">
+48	STARTTAG	5221	5237	<p class="lede">
+48	STARTTAG	5625	5641	<p class="note">
+48	STARTTAG	6456	6472	<p class="note">
+48	STARTTAG	6745	6761	<p class="note">
+49	STARTTAG	5582	5598	<h2 id="h-live">
+49	STARTTAG	6421	6436	<h2 id="h-lib">
+49	STARTTAG	6700	6715	<h2 id="h-cmp">
+50	STARTTAG	5181	5185	<h1>
+52	STARTTAG	5582	5598	<h2 id="h-live">
+52	STARTTAG	6421	6436	<h2 id="h-lib">
+52	STARTTAG	6700	6715	<h2 id="h-cmp">
+58	STARTTAG	21	27	<head>
+60	STARTTAG	5098	5106	<header>
+62	STARTTAG	6239	6243	<tr>
+64	STARTTAG	15	21	<html>
+66	STARTTAG	5221	5237	<p class="lede">
+66	STARTTAG	5625	5641	<p class="note">
+66	STARTTAG	6456	6472	<p class="note">
+66	STARTTAG	6745	6761	<p class="note">
+76	STARTTAG	561	721	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=JetBrains+Mono:wght@400;600&display=swap">
+80	STARTTAG	27	46	<meta charset=utf8>
+80	STARTTAG	46	130	<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+88	STARTTAG	5221	5237	<p class="lede">
+88	STARTTAG	5625	5641	<p class="note">
+88	STARTTAG	6456	6472	<p class="note">
+88	STARTTAG	6745	6761	<p class="note">
+96	STARTTAG	7384	7392	<script>
+98	STARTTAG	5503	5551	<section class="bench" aria-labelledby="h-live">
+98	STARTTAG	6383	6416	<section aria-labelledby="h-lib">
+98	STARTTAG	6662	6695	<section aria-labelledby="h-cmp">
+102	STARTTAG	6953	6973	<span class="tag A">
+102	STARTTAG	7088	7108	<span class="tag B">
+102	STARTTAG	7223	7243	<span class="label">
+106	STARTTAG	130	137	<style>
+106	STARTTAG	722	729	<style>
+108	STARTTAG	5752	5836	<svg id="live" viewBox="0 0 95 86" role="group" aria-label="Interactive Fano plane">
+110	STARTTAG	6214	6232	<table id="lines">
+112	STARTTAG	6313	6320	<tbody>
+120	STARTTAG	6243	6247	<th>
+120	STARTTAG	6256	6260	<th>
+120	STARTTAG	6266	6270	<th>
+120	STARTTAG	6276	6280	<th>
+120	STARTTAG	6286	6290	<th>
+122	STARTTAG	6232	6239	<thead>
+124	STARTTAG	531	538	<title>
+126	STARTTAG	6239	6243	<tr>
+128	STARTTAG	5221	5237	<p class="lede">
+128	STARTTAG	5625	5641	<p class="note">
+128	STARTTAG	6456	6472	<p class="note">
+128	STARTTAG	6745	6761	<p class="note">
+140	ATTRNAME	5800	5810	aria-label
+142	ATTRNAME	5526	5541	aria-labelledby
+142	ATTRNAME	6392	6407	aria-labelledby
+142	ATTRNAME	6671	6686	aria-labelledby
+158	ATTRNAME	33	40	charset
+160	ATTRNAME	5082	5087	class
+160	ATTRNAME	5116	5121	class
+160	ATTRNAME	5224	5229	class
+160	ATTRNAME	5512	5517	class
+160	ATTRNAME	5561	5566	class
+160	ATTRNAME	5628	5633	class
+160	ATTRNAME	5863	5868	class
+160	ATTRNAME	5891	5896	class
+160	ATTRNAME	5930	5935	class
+160	ATTRNAME	5976	5981	class
+160	ATTRNAME	6106	6111	class
+160	ATTRNAME	6459	6464	class
+160	ATTRNAME	6618	6623	class
+160	ATTRNAME	6748	6753	class
+160	ATTRNAME	6912	6917	class
+160	ATTRNAME	6940	6945	class
+160	ATTRNAME	6959	6964	class
+160	ATTRNAME	6991	6996	class
+160	ATTRNAME	7027	7032	class
+160	ATTRNAME	7075	7080	class
+160	ATTRNAME	7094	7099	class
+160	ATTRNAME	7126	7131	class
+160	ATTRNAME	7162	7167	class
+160	ATTRNAME	7210	7215	class
+160	ATTRNAME	7229	7234	class
+160	ATTRNAME	7260	7265	class
+160	ATTRNAME	7295	7300	class
+164	ATTRNAME	66	73	content
+204	ATTRNAME	584	588	href
+206	ATTRNAME	5586	5588	id
+206	ATTRNAME	5757	5759	id
+206	ATTRNAME	5941	5943	id
+206	ATTRNAME	5989	5991	id
+206	ATTRNAME	6025	6027	id
+206	ATTRNAME	6221	6223	id
+206	ATTRNAME	6425	6427	id
+206	ATTRNAME	6630	6632	id
+206	ATTRNAME	6704	6706	id
+206	ATTRNAME	7004	7006	id
+206	ATTRNAME	7039	7041	id
+206	ATTRNAME	7139	7141	id
+206	ATTRNAME	7174	7176	id
+206	ATTRNAME	7272	7274	id
+206	ATTRNAME	7311	7313	id
+224	ATTRNAME	52	56	name
+246	ATTRNAME	567	570	rel
+252	ATTRNAME	5787	5791	role
+272	ATTRNAME	6120	6125	style
+272	ATTRNAME	6190	6195	style
+284	ATTRNAME	6036	6040	type
+290	ATTRNAME	5767	5774	viewBox
+376	VALUE	5982	5988	"bits"
+376	VALUE	5992	5998	"bits"
+388	VALUE	6041	6049	"button"
+410	VALUE	6918	6927	"compare"
+470	VALUE	5792	5799	"group"
+494	VALUE	5122	5129	"label"
+494	VALUE	5897	5904	"label"
+494	VALUE	6112	6119	"label"
+494	VALUE	7235	7242	"label"
+496	VALUE	5230	5236	"lede"
+528	VALUE	6997	7003	"name"
+528	VALUE	7132	7138	"name"
+534	VALUE	5634	5640	"note"
+534	VALUE	6465	6471	"note"
+534	VALUE	6754	6760	"note"
+568	VALUE	5869	5878	"readout"
+596	VALUE	571	583	"stylesheet"
+628	VALUE	74	129	"width=device-width,initial-scale=1,viewport-fit=cover"
+630	VALUE	5088	5094	"wrap"
+632	VALUE	41	45	utf8
+634	VALUE	57	65	viewport

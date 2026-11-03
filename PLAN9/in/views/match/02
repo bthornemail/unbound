@@ -1,0 +1,166 @@
+6	STARTTAG	6091	6106	<b id="btTime">
+6	STARTTAG	6186	6201	<b id="spTime">
+6	STARTTAG	6263	6277	<b id="ratio">
+6	STARTTAG	8147	8150	<b>
+6	STARTTAG	8171	8174	<b>
+6	STARTTAG	8184	8187	<b>
+6	STARTTAG	8205	8208	<b>
+6	STARTTAG	8217	8220	<b>
+6	STARTTAG	8246	8249	<b>
+6	STARTTAG	8257	8260	<b>
+6	STARTTAG	8280	8283	<b>
+6	STARTTAG	8292	8295	<b>
+6	STARTTAG	8303	8306	<b>
+7	STARTTAG	524	530	<body>
+12	STARTTAG	6065	6071	<code>
+12	STARTTAG	6163	6169	<code>
+12	STARTTAG	7377	7383	<code>
+12	STARTTAG	7671	7677	<code>
+12	STARTTAG	7731	7737	<code>
+12	STARTTAG	8047	8053	<code>
+12	STARTTAG	8426	8432	<code>
+12	STARTTAG	9302	9308	<code>
+12	STARTTAG	10214	10220	<code>
+15	STARTTAG	5421	5439	<div class="wrap">
+15	STARTTAG	5753	5772	<div class="panel">
+15	STARTTAG	5779	5795	<div class="sl">
+15	STARTTAG	6001	6018	<div class="ros">
+15	STARTTAG	6027	6046	<div class="ro bt">
+15	STARTTAG	6126	6145	<div class="ro sp">
+15	STARTTAG	6221	6240	<div class="ro df">
+15	STARTTAG	6308	6327	<div class="instr">
+15	STARTTAG	6336	6537	<div class="fig" aria-label="Time to match versus input length, on a logarithmic time axis. The backtracking curve climbs from milliseconds to a month; the single-pass line stays under a millisecond.">
+15	STARTTAG	6548	6570	<div class="figtitle">
+15	STARTTAG	6707	6864	<div class="fig compass" aria-label="A difference compass: a needle that swings further right as backtracking grows more times slower than the single pass.">
+15	STARTTAG	6875	6897	<div class="figtitle">
+15	STARTTAG	7464	7482	<div class="code">
+15	STARTTAG	8114	8134	<div class="splits">
+18	STARTTAG	7600	7604	<em>
+18	STARTTAG	8809	8813	<em>
+25	STARTTAG	5541	5545	<h1>
+26	STARTTAG	7295	7299	<h2>
+26	STARTTAG	7920	7924	<h2>
+26	STARTTAG	8710	8714	<h2>
+26	STARTTAG	9550	9554	<h2>
+29	STARTTAG	21	27	<head>
+30	STARTTAG	5443	5464	<header class="hero">
+32	STARTTAG	15	21	<html>
+34	STARTTAG	5878	5981	<input type="range" id="n" min="4" max="44" value="28" step="1" aria-describedby="btTime spTime ratio">
+35	STARTTAG	5804	5819	<label for="n">
+38	STARTTAG	628	825	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+40	STARTTAG	27	46	<meta charset=utf8>
+40	STARTTAG	46	130	<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+40	STARTTAG	531	586	<meta name="claude:viewport-fit-sides" content="cover">
+43	STARTTAG	5832	5850	<output id="nval">
+44	STARTTAG	5469	5488	<p class="eyebrow">
+44	STARTTAG	5580	5596	<p class="lede">
+44	STARTTAG	7048	7067	<p class="caption">
+44	STARTTAG	7256	7275	<p class="eyebrow">
+44	STARTTAG	7350	7353	<p>
+44	STARTTAG	7649	7652	<p>
+44	STARTTAG	7889	7908	<p class="eyebrow">
+44	STARTTAG	7962	7965	<p>
+44	STARTTAG	8357	8360	<p>
+44	STARTTAG	8675	8694	<p class="eyebrow">
+44	STARTTAG	8761	8764	<p>
+44	STARTTAG	9019	9022	<p>
+44	STARTTAG	9363	9381	<p class="kicker">
+44	STARTTAG	9509	9528	<p class="eyebrow">
+44	STARTTAG	9586	9589	<p>
+44	STARTTAG	9831	9834	<p>
+44	STARTTAG	10092	10108	<p class="foot">
+48	STARTTAG	10442	10450	<script>
+49	STARTTAG	7242	7251	<section>
+49	STARTTAG	7875	7884	<section>
+49	STARTTAG	8661	8670	<section>
+49	STARTTAG	9495	9504	<section>
+51	STARTTAG	6046	6052	<span>
+51	STARTTAG	6145	6151	<span>
+51	STARTTAG	6240	6246	<span>
+51	STARTTAG	7482	7501	<span class="cool">
+51	STARTTAG	7548	7566	<span class="hot">
+51	STARTTAG	8141	8147	<span>
+51	STARTTAG	8165	8171	<span>
+51	STARTTAG	8199	8205	<span>
+51	STARTTAG	8240	8246	<span>
+51	STARTTAG	8274	8280	<span>
+51	STARTTAG	8318	8324	<span>
+52	STARTTAG	9156	9164	<strong>
+53	STARTTAG	130	137	<style>
+53	STARTTAG	826	833	<style>
+54	STARTTAG	6600	6677	<svg id="chart" viewBox="0 0 560 300" font-family="IBM Plex Mono, monospace">
+54	STARTTAG	6928	7007	<svg id="compass" viewBox="0 0 300 186" font-family="IBM Plex Mono, monospace">
+62	STARTTAG	587	594	<title>
+68	ATTRNAME	5942	5958	aria-describedby
+70	ATTRNAME	6353	6363	aria-label
+70	ATTRNAME	6732	6742	aria-label
+79	ATTRNAME	33	40	charset
+80	ATTRNAME	5426	5431	class
+80	ATTRNAME	5451	5456	class
+80	ATTRNAME	5472	5477	class
+80	ATTRNAME	5583	5588	class
+80	ATTRNAME	5758	5763	class
+80	ATTRNAME	5784	5789	class
+80	ATTRNAME	6006	6011	class
+80	ATTRNAME	6032	6037	class
+80	ATTRNAME	6131	6136	class
+80	ATTRNAME	6226	6231	class
+80	ATTRNAME	6313	6318	class
+80	ATTRNAME	6341	6346	class
+80	ATTRNAME	6553	6558	class
+80	ATTRNAME	6712	6717	class
+80	ATTRNAME	6880	6885	class
+80	ATTRNAME	7051	7056	class
+80	ATTRNAME	7259	7264	class
+80	ATTRNAME	7469	7474	class
+80	ATTRNAME	7488	7493	class
+80	ATTRNAME	7554	7559	class
+80	ATTRNAME	7892	7897	class
+80	ATTRNAME	8119	8124	class
+80	ATTRNAME	8678	8683	class
+80	ATTRNAME	9366	9371	class
+80	ATTRNAME	9512	9517	class
+80	ATTRNAME	10095	10100	class
+82	ATTRNAME	66	73	content
+82	ATTRNAME	570	577	content
+98	ATTRNAME	6638	6649	font-family
+98	ATTRNAME	6968	6979	font-family
+99	ATTRNAME	5811	5814	for
+102	ATTRNAME	651	655	href
+103	ATTRNAME	5840	5842	id
+103	ATTRNAME	5898	5900	id
+103	ATTRNAME	6094	6096	id
+103	ATTRNAME	6189	6191	id
+103	ATTRNAME	6266	6268	id
+103	ATTRNAME	6605	6607	id
+103	ATTRNAME	6933	6935	id
+108	ATTRNAME	5913	5916	max
+110	ATTRNAME	5905	5908	min
+112	ATTRNAME	52	56	name
+112	ATTRNAME	537	541	name
+123	ATTRNAME	634	637	rel
+132	ATTRNAME	5933	5937	step
+142	ATTRNAME	5885	5889	type
+144	ATTRNAME	5922	5927	value
+145	ATTRNAME	6616	6623	viewBox
+145	ATTRNAME	6946	6953	viewBox
+161	VALUE	5938	5941	"1"
+176	VALUE	5909	5912	"4"
+202	VALUE	542	569	"claude:viewport-fit-sides"
+211	VALUE	578	585	"cover"
+225	VALUE	5478	5487	"eyebrow"
+225	VALUE	7265	7274	"eyebrow"
+225	VALUE	7898	7907	"eyebrow"
+225	VALUE	8684	8693	"eyebrow"
+225	VALUE	9518	9527	"eyebrow"
+237	VALUE	5457	5463	"hero"
+248	VALUE	5589	5595	"lede"
+263	VALUE	5815	5818	"n"
+263	VALUE	5901	5904	"n"
+275	VALUE	5764	5771	"panel"
+283	VALUE	5890	5897	"range"
+298	VALUE	638	650	"stylesheet"
+314	VALUE	74	129	"width=device-width,initial-scale=1,viewport-fit=cover"
+315	VALUE	5432	5438	"wrap"
+316	VALUE	41	45	utf8
+317	VALUE	57	65	viewport

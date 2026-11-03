@@ -1,0 +1,118 @@
+7	STARTTAG	524	530	<body>
+9	STARTTAG	5308	5340	<button type="button" id="play">
+15	STARTTAG	4393	4411	<div class="wrap">
+15	STARTTAG	4456	4477	<div class="eyebrow">
+15	STARTTAG	4899	4943	<div class="frame-label" aria-live="polite">
+15	STARTTAG	5279	5301	<div class="controls">
+15	STARTTAG	5463	5482	<div class="ticks">
+15	STARTTAG	5591	5611	<div class="legend">
+15	STARTTAG	6185	6209	<div class="table-wrap">
+23	STARTTAG	6258	6266	<footer>
+25	STARTTAG	4513	4517	<h1>
+26	STARTTAG	5872	5910	<h2 style="font-size:1.1rem;margin:0">
+29	STARTTAG	21	27	<head>
+30	STARTTAG	4414	4451	<header style="display:grid;gap:8px">
+32	STARTTAG	15	21	<html>
+33	STARTTAG	5624	5660	<i style="background:var(--letter)">
+33	STARTTAG	5712	5747	<i style="background:var(--marks)">
+34	STARTTAG	5360	5447	<input type="range" id="scrub" min="0" max="3" step="1" value="0" aria-label="Witness">
+38	STARTTAG	615	797	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+40	STARTTAG	27	46	<meta charset=utf8>
+40	STARTTAG	46	130	<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+40	STARTTAG	559	614	<meta name="claude:viewport-fit-sides" content="cover">
+44	STARTTAG	4557	4574	<p class="muted">
+44	STARTTAG	5947	5964	<p class="muted">
+44	STARTTAG	6271	6274	<p>
+44	STARTTAG	6661	6664	<p>
+48	STARTTAG	6864	6936	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js">
+48	STARTTAG	6946	6954	<script>
+49	STARTTAG	4838	4894	<section class="stage" aria-label="Treemap of the term">
+49	STARTTAG	5828	5867	<section style="display:grid;gap:10px">
+51	STARTTAG	4950	4979	<span class="idx" id="f-idx">
+51	STARTTAG	5004	5035	<span class="name" id="f-name">
+51	STARTTAG	5055	5084	<span class="lit" id="f-lit">
+51	STARTTAG	5098	5129	<span class="muted" id="f-src">
+51	STARTTAG	5482	5488	<span>
+51	STARTTAG	5505	5511	<span>
+51	STARTTAG	5529	5535	<span>
+51	STARTTAG	5554	5560	<span>
+51	STARTTAG	5618	5624	<span>
+51	STARTTAG	5706	5712	<span>
+53	STARTTAG	130	137	<style>
+53	STARTTAG	798	805	<style>
+54	STARTTAG	5152	5268	<svg id="map" viewBox="0 0 800 420" role="img" aria-label="Treemap of YHWH's letter cells for the selected witness">
+55	STARTTAG	6209	6227	<table id="masks">
+62	STARTTAG	531	538	<title>
+70	ATTRNAME	4861	4871	aria-label
+70	ATTRNAME	5199	5209	aria-label
+70	ATTRNAME	5426	5436	aria-label
+72	ATTRNAME	4924	4933	aria-live
+79	ATTRNAME	33	40	charset
+80	ATTRNAME	4398	4403	class
+80	ATTRNAME	4461	4466	class
+80	ATTRNAME	4560	4565	class
+80	ATTRNAME	4847	4852	class
+80	ATTRNAME	4904	4909	class
+80	ATTRNAME	4956	4961	class
+80	ATTRNAME	5010	5015	class
+80	ATTRNAME	5061	5066	class
+80	ATTRNAME	5104	5109	class
+80	ATTRNAME	5284	5289	class
+80	ATTRNAME	5468	5473	class
+80	ATTRNAME	5596	5601	class
+80	ATTRNAME	5950	5955	class
+80	ATTRNAME	6190	6195	class
+82	ATTRNAME	66	73	content
+82	ATTRNAME	598	605	content
+102	ATTRNAME	638	642	href
+103	ATTRNAME	4968	4970	id
+103	ATTRNAME	5023	5025	id
+103	ATTRNAME	5073	5075	id
+103	ATTRNAME	5118	5120	id
+103	ATTRNAME	5157	5159	id
+103	ATTRNAME	5330	5332	id
+103	ATTRNAME	5380	5382	id
+103	ATTRNAME	6216	6218	id
+108	ATTRNAME	5399	5402	max
+110	ATTRNAME	5391	5394	min
+112	ATTRNAME	52	56	name
+112	ATTRNAME	565	569	name
+123	ATTRNAME	621	624	rel
+126	ATTRNAME	5188	5192	role
+130	ATTRNAME	6872	6875	src
+132	ATTRNAME	5407	5411	step
+136	ATTRNAME	4422	4427	style
+136	ATTRNAME	5627	5632	style
+136	ATTRNAME	5715	5720	style
+136	ATTRNAME	5837	5842	style
+136	ATTRNAME	5876	5881	style
+142	ATTRNAME	5316	5320	type
+142	ATTRNAME	5367	5371	type
+144	ATTRNAME	5416	5421	value
+145	ATTRNAME	5166	5173	viewBox
+156	VALUE	5395	5398	"0"
+156	VALUE	5422	5425	"0"
+161	VALUE	5412	5415	"1"
+172	VALUE	5403	5406	"3"
+194	VALUE	5321	5329	"button"
+202	VALUE	570	597	"claude:viewport-fit-sides"
+210	VALUE	5290	5300	"controls"
+211	VALUE	606	613	"cover"
+218	VALUE	5843	5866	"display:grid;gap:10px"
+225	VALUE	4467	4476	"eyebrow"
+243	VALUE	5193	5198	"img"
+249	VALUE	5602	5610	"legend"
+262	VALUE	4566	4573	"muted"
+262	VALUE	5110	5117	"muted"
+262	VALUE	5956	5963	"muted"
+264	VALUE	5016	5022	"name"
+276	VALUE	5333	5339	"play"
+278	VALUE	4934	4942	"polite"
+283	VALUE	5372	5379	"range"
+287	VALUE	5383	5390	"scrub"
+298	VALUE	625	637	"stylesheet"
+301	VALUE	6196	6208	"table-wrap"
+314	VALUE	74	129	"width=device-width,initial-scale=1,viewport-fit=cover"
+315	VALUE	4404	4410	"wrap"
+316	VALUE	41	45	utf8
+317	VALUE	57	65	viewport

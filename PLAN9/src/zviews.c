@@ -9,6 +9,10 @@
  *				as text, none within a table, a bullet before each list item; -T, -B, -A each leave
  *				one of the three out, the falsifier
  *	zviews -s file		any text's words, the same split (libhtml's text, as htmlfs serves it)
+ *	zviews -m templates page	the spans each template names: a template a line, its production, a tab, its
+ *				pattern, regexp(2) as it is, over the span's cast; the spans the pieces and each start
+ *				tag's ATTR, ATTRNAME and VALUE by html.wsn, a tag before its attributes; a match a line,
+ *				the template's ordinal, the production, the span's rune offsets, its runes (\n \t \\)
  * A rune is the bytes its lead byte calls for, as OMI.View reads: under 0x80 alone, 110xxxxx one more, 1110xxxx
  * two, 11110xxx three, any other alone; its cast in html.wsn's alphabet a letter's lower case, a digit and each of
  * < > / = " ' - _ : . # & ; ! itself, white space a space, any other rune "~".
@@ -16,9 +20,10 @@
 #include <u.h>
 #include <libc.h>
 #include <bio.h>
+#include <regexp.h>
 
-enum { Comment, Doctype, Starttag, Endtag, Text, Rawtext };
-static char *prod[] = { "COMMENT", "DOCTYPE", "STARTTAG", "ENDTAG", "TEXT", "RAWTEXT" };
+enum { Comment, Doctype, Starttag, Endtag, Text, Rawtext, Attr, Attrname, Value, Nprod };
+static char *prod[] = { "COMMENT", "DOCTYPE", "STARTTAG", "ENDTAG", "TEXT", "RAWTEXT", "ATTR", "ATTRNAME", "VALUE" };
 static char *rawnames[] = { "script", "style", "title", "textarea", nil };
 static char *voidnames[] = { "area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param",
 	"source", "track", "wbr", nil };
@@ -411,14 +416,152 @@ words(void)
 	}
 }
 
+/* a start tag's attributes by html.wsn, over the cast: ATTR = ATTRNAME [ [ SPACES ] "=" [ SPACES ] VALUE ] */
+static int
+an(long k, long e)
+{
+	return k < e && strchr(" =\"'/>", castv[k]) == nil;
+}
+
+static int
+uq(long k, long e)
+{
+	return k < e && strchr(" =\"'<>", castv[k]) == nil;
+}
+
+static Piece *sp;
+static long nsp, capsp;
+
+static void
+addspan(int kind, long a, long b)
+{
+	if(nsp == capsp){
+		capsp = capsp ? 2 * capsp : 4096;
+		if((sp = realloc(sp, capsp * sizeof sp[0])) == nil)
+			sysfatal("realloc: %r");
+	}
+	memset(&sp[nsp], 0, sizeof sp[0]);
+	sp[nsp].kind = kind;
+	sp[nsp].a = a;
+	sp[nsp].b = b;
+	nsp++;
+}
+
+static void
+attrs(Piece *p)
+{
+	long j, s0, a, ne, k, vs, e;
+	int q;
+
+	e = p->b;
+	j = p->nb;
+	for(;;){
+		s0 = j;
+		while(j < e && castv[j] == ' ')
+			j++;
+		if(j < e && (castv[j] == '>' || castv[j] == '/' && j + 1 < e && castv[j+1] == '>'))
+			break;
+		if(j == s0 || !an(j, e))
+			sysfatal("not an attribute at %ld", j);
+		for(a = j; an(j, e); j++)
+			;
+		ne = j;
+		for(k = j; k < e && castv[k] == ' '; k++)
+			;
+		vs = -1;
+		if(k < e && castv[k] == '='){
+			for(k++; k < e && castv[k] == ' '; k++)
+				;
+			vs = k;
+			if(k < e && (castv[k] == '"' || castv[k] == '\'')){
+				q = castv[k++];
+				while(k < e && castv[k] != q)
+					k++;
+				k++;
+			}else
+				while(uq(k, e))
+					k++;
+			if(k == vs)
+				sysfatal("no value at %ld", k);
+			j = k;
+		}
+		addspan(Attr, a, vs >= 0 ? j : ne);
+		addspan(Attrname, a, ne);
+		if(vs >= 0)
+			addspan(Value, vs, j);
+	}
+}
+
+static void
+match(char *file)
+{
+	Biobuf *t;
+	char *l, *tab, *c;
+	Reprog *re;
+	Resub m[1];
+	long i, k, n, ord;
+	int kind;
+
+	for(i = 0; i < np; i++){
+		addspan(ps[i].kind, ps[i].a, ps[i].b);
+		if(ps[i].kind == Starttag)
+			attrs(&ps[i]);
+	}
+	if((t = Bopen(file, OREAD)) == nil)
+		sysfatal("open %s: %r", file);
+	c = malloc(nr + 1);
+	if(c == nil)
+		sysfatal("malloc: %r");
+	for(ord = 1; (l = Brdstr(t, '\n', 1)) != nil; ord++){
+		if((tab = strchr(l, '\t')) == nil)
+			sysfatal("template %ld: no tab", ord);
+		*tab++ = 0;
+		for(kind = 0; kind < Nprod && strcmp(prod[kind], l) != 0; kind++)
+			;
+		if(kind == Nprod)
+			sysfatal("template %ld: no production %s", ord, l);
+		if((re = regcomp(tab)) == nil)
+			sysfatal("template %ld: %s", ord, tab);
+		for(i = 0; i < nsp; i++){
+			if(sp[i].kind != kind)
+				continue;
+			n = sp[i].b - sp[i].a;
+			memmove(c, castv + sp[i].a, n);
+			c[n] = 0;
+			memset(m, 0, sizeof m);
+			if(!regexec(re, c, m, 1))
+				continue;
+			Bprint(&out, "%ld\t%s\t%ld\t%ld\t", ord, prod[kind], sp[i].a, sp[i].b);
+			for(k = start[sp[i].a]; k < start[sp[i].b]; k++)
+				if(buf[k] == '\n')
+					Bprint(&out, "\\n");
+				else if(buf[k] == '\t')
+					Bprint(&out, "\\t");
+				else if(buf[k] == '\\')
+					Bprint(&out, "\\\\");
+				else
+					Bputc(&out, buf[k]);
+			Bputc(&out, '\n');
+		}
+		free(re);
+		free(l);
+	}
+	Bterm(t);
+}
+
 void
 main(int argc, char **argv)
 {
 	int fd, n, w, s;
+	char *m;
 	long k, i;
 
 	w = s = 0;
+	m = nil;
 	ARGBEGIN{
+	case 'm':
+		m = ARGF();
+		break;
 	case 'w':
 		w = 1;
 		break;
@@ -435,11 +578,11 @@ main(int argc, char **argv)
 		notextarea = 1;
 		break;
 	default:
-		fprint(2, "usage: zviews [-w [-TBA] | -s] file\n");
+		fprint(2, "usage: zviews [-w [-TBA] | -s | -m templates] file\n");
 		exits("usage");
 	}ARGEND
 	if(argc != 1){
-		fprint(2, "usage: zviews [-w [-TBA] | -s] file\n");
+		fprint(2, "usage: zviews [-w [-TBA] | -s | -m templates] file\n");
 		exits("usage");
 	}
 	if((fd = open(argv[0], OREAD)) < 0)
@@ -491,7 +634,9 @@ main(int argc, char **argv)
 	if(opened == nil)
 		sysfatal("malloc: %r");
 	pi = 0;
-	if(w)
+	if(m != nil)
+		match(m);
+	else if(w)
 		words();
 	else
 		forest(0);
