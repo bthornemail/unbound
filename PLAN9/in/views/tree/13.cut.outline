@@ -1,0 +1,416 @@
+DOCTYPE <!doctype html>
+STARTTAG <html>
+  STARTTAG <head>
+    STARTTAG <meta charset=utf8>
+    STARTTAG <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+    STARTTAG <style>
+      RAWTEXT :root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</head><body>\n<title>Reading I-229</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Frank+Ruhl+Libre:wght@400;500&display=swap">\n<style>\n/* Layout: a single reading column of numbered steps; each step pairs the words with the code and a live run beneath it. */\n:root {\n  --bg: #f4f6f8; --panel: #ffffff; --ink: #18202b; --muted: #5b6676; --rule: #d9dfe6;\n  --accent: #1f5a73; --code-bg: #eef2f5;\n  --mirror: #24704a; --mirror-bg: #e3f2ea; --raise: #9a5a10; --raise-bg: #f8ecd9;\n  --f-display: "Spectral", Georgia, serif;\n  --f-body: "Atkinson Hyperlegible", system-ui, sans-serif;\n  --f-code: "JetBrains Mono", ui-monospace, Menlo, monospace;\n  --f-heb: "Frank Ruhl Libre", "SBL Hebrew", "Times New Roman", serif;\n}\n@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {\n  --bg: #11161d; --panel: #18202a; --ink: #e4e9ef; --muted: #9aa6b4; --rule: #2b3643;\n  --accent: #7cc0dc; --code-bg: #0d1218;\n  --mirror: #7fd3a4; --mirror-bg: #173326; --raise: #f0b866; --raise-bg: #3a2a14; color-scheme: dark } }\n:root[data-theme="dark"] {\n  --bg: #11161d; --panel: #18202a; --ink: #e4e9ef; --muted: #9aa6b4; --rule: #2b3643;\n  --accent: #7cc0dc; --code-bg: #0d1218;\n  --mirror: #7fd3a4; --mirror-bg: #173326; --raise: #f0b866; --raise-bg: #3a2a14; color-scheme: dark }\nbody { background: var(--bg); color: var(--ink); font: 17px/1.6 var(--f-body); }\n.wrap { max-width: 860px; margin: 0 auto; padding-block: 40px 80px;\n  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }\nh1, h2 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; line-height: 1.2; margin: 0; }\nh1 { font-size: 2.3rem; }\nh2 { font-size: 1.45rem; }\np { margin: 0; max-width: 65ch; }\na { color: var(--accent); }\n.lede { color: var(--muted); font-size: 1.05rem; }\nheader { display: grid; gap: 14px; margin-bottom: 36px; }\n.eyebrow { font: 600 .78rem var(--f-code); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }\n.loop { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font: .85rem var(--f-code); color: var(--muted); }\n.loop span { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 8px; color: var(--ink); }\nsection.step { display: grid; grid-template-columns: 3rem 1fr; gap: 0 14px; padding-block: 28px; border-top: 1px solid var(--rule); }\n.num { font: 600 1.45rem/1.2 var(--f-display); color: var(--accent); }\n.body { display: grid; gap: 14px; min-width: 0; }\npre { margin: 0; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; overflow-x: auto;\n  font: .82rem/1.55 var(--f-code); }\npre .c { color: var(--muted); }\ncode { font-family: var(--f-code); font-size: .88em; }\n.heb { font-family: var(--f-heb); font-size: 1.35em; direction: rtl; unicode-bidi: isolate; }\n.run { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 14px; display: grid; gap: 12px; min-width: 0; }\n.run-label { font: 600 .72rem var(--f-code); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }\n.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }\ninput[type=text] { font: 1rem var(--f-code); padding: 7px 10px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--ink); min-width: 0; flex: 1 1 12rem; }\ninput.heb-in { font-family: var(--f-heb); font-size: 1.3rem; direction: rtl; }\nbutton { font: .85rem var(--f-code); padding: 6px 10px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--ink); cursor: pointer; }\nbutton:hover { border-color: var(--accent); }\nbutton:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }\n.trace { display: grid; gap: 4px; font: .88rem/1.5 var(--f-code); overflow-x: auto; }\n.trace .row { display: grid; grid-template-columns: 11rem 1fr; gap: 10px; }\n.trace .k { color: var(--muted); }\n.trace .v { word-break: break-all; }\n.pill { display: inline-block; font: 600 .78rem var(--f-code); padding: 2px 8px; border-radius: 999px; letter-spacing: .04em; }\n.pill.MIRROR { color: var(--mirror); background: var(--mirror-bg); }\n.pill.RAISE { color: var(--raise); background: var(--raise-bg); }\n.table-wrap { overflow-x: auto; }\ntable { border-collapse: collapse; font: .85rem var(--f-code); font-variant-numeric: tabular-nums; }\nth, td { text-align: left; padding: 5px 10px; border-bottom: 1px solid var(--rule); white-space: nowrap; }\nth { color: var(--muted); font-weight: 600; }\ntd.g { font-family: var(--f-heb); font-size: 1.3rem; }\ntr.mark td { color: var(--accent); }\ntr.accent td { color: var(--muted); }\n.note { font-size: .9rem; color: var(--muted); }\nfooter { border-top: 1px solid var(--rule); padding-top: 24px; display: grid; gap: 10px; font-size: .9rem; color: var(--muted); }\n@media (max-width: 520px) {\n  section.step { grid-template-columns: 1fr; gap: 6px; }\n  .trace .row { grid-template-columns: 1fr; gap: 0; }\n  .trace .k { margin-top: 6px; }\n  h1 { font-size: 1.8rem; }\n}\n
+    ENDTAG </style>
+    TEXT \n\n
+    STARTTAG <div class="wrap">
+      TEXT \n
+      STARTTAG <header>
+        TEXT \n  
+        STARTTAG <div class="eyebrow">
+          TEXT I-229 · tag 6D · JS proof catalog
+        ENDTAG </div>
+        TEXT \n  
+        STARTTAG <h1>
+          TEXT Reading I-229: YHWH and its renderings
+        ENDTAG </h1>
+        TEXT \n  
+        STARTTAG <p class="lede">
+          TEXT This page follows one proof from start to finish, in the order the work was done. Each step gives the reason, the actual lines from 
+          STARTTAG <code>
+            TEXT js/catalog/I-229.ts
+          ENDTAG </code>
+          TEXT , and a live panel that runs the same code in your browser, so you can try your own inputs and watch each transformation.
+        ENDTAG </p>
+        TEXT \n  
+        STARTTAG <div class="loop" aria-label="The method in order">
+          TEXT \n    
+          STARTTAG <span>
+            TEXT predict
+          ENDTAG </span>
+          TEXT →
+          STARTTAG <span>
+            TEXT fix the literal
+          ENDTAG </span>
+          TEXT →
+          STARTTAG <span>
+            TEXT reduce
+          ENDTAG </span>
+          TEXT →
+          STARTTAG <span>
+            TEXT compare
+          ENDTAG </span>
+          TEXT →
+          STARTTAG <span>
+            TEXT declare folds
+          ENDTAG </span>
+          TEXT →
+          STARTTAG <span>
+            TEXT separate layers
+          ENDTAG </span>
+          TEXT →
+          STARTTAG <span>
+            TEXT run and record
+          ENDTAG </span>
+          TEXT \n  
+        ENDTAG </div>
+        TEXT \n
+      ENDTAG </header>
+      TEXT \n\n
+      STARTTAG <section class="step" id="predict">
+        TEXT \n  
+        STARTTAG <div class="num">
+          TEXT 1
+        ENDTAG </div>
+        TEXT \n  
+        STARTTAG <div class="body">
+          TEXT \n    
+          STARTTAG <h2>
+            TEXT Write the prediction before anything runs
+          ENDTAG </h2>
+          TEXT \n    
+          STARTTAG <p>
+            TEXT The question came from the author: what happens to the literal when YHWH becomes THE LORD, Yahweh, Yah, Jah or Jehovah? The predictions go into the file's header first, so the result can prove them wrong. A check written after seeing the answer can't fail, and a check that can't fail tests nothing.
+          ENDTAG </p>
+          TEXT \n
+          STARTTAG <pre>
+            STARTTAG <span class="c">
+              TEXT //   P1  YHWH vs ADONAI, YHWH vs THE LORD ........ RAISE  (the base is replaced)\n//   P2  YHWH vs YAHWEH ............................ MIRROR (same base, vowels supplied)\n//   P3  YHWH vs YAH ............................... MIRROR (prefix)\n//   P4  YHWH vs JAH, JEHOVAH ...................... RAISE letter for letter;\n//       MIRROR only under the declared fold J -&gt; Y, V -&gt; W\n//   P5  Leningrad vs MAM .......................... same consonants; one mark apart\n//   P6  Hebrew Yah vs YHWH ........................ MIRROR (prefix)
+            ENDTAG </span>
+          ENDTAG </pre>
+          TEXT \n    
+          STARTTAG <p class="note">
+            TEXT One limit is on the record. Two of these, THE LORD and YAHWEH, had already been run by the earlier audit in 
+            STARTTAG <code>
+              TEXT src/terms.mjs
+            ENDTAG </code>
+            TEXT , so those two predictions were not blind. The others were.
+          ENDTAG </p>
+          TEXT \n  
+        ENDTAG </div>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <section class="step" id="literal">
+        TEXT \n  
+        STARTTAG <div class="num">
+          TEXT 2
+        ENDTAG </div>
+        TEXT \n  
+        STARTTAG <div class="body">
+          TEXT \n    
+          STARTTAG <h2>
+            TEXT Fix the literal as codepoints
+          ENDTAG </h2>
+          TEXT \n    
+          STARTTAG <p>
+            TEXT A word on screen can look the same and still be different bytes. So each Hebrew form goes into the file as its exact Unicode codepoints, copied from the codex text with the cantillation accents removed. The proof then carries its own evidence, and anyone can check it without trusting a font or a website.
+          ENDTAG </p>
+          TEXT \n
+          STARTTAG <pre>
+            TEXT const wlc = "יְהוָה";    
+            STARTTAG <span class="c">
+              TEXT // Leningrad, Deut 29:1   U+05D9 05B0 05D4 05D5 05B8 05D4
+            ENDTAG </span>
+            TEXT \nconst mam = "יְהֹוָה";   
+            STARTTAG <span class="c">
+              TEXT // MAM (Aleppo), Deut 29:1   U+05D9 05B0 05D4 05B9 05D5 05B8 05D4
+            ENDTAG </span>
+            TEXT \nconst yah = "יָהּ";      
+            STARTTAG <span class="c">
+              TEXT // Exodus 15:2   U+05D9 05B8 05D4 05BC
+            ENDTAG </span>
+          ENDTAG </pre>
+          TEXT \n    
+          STARTTAG <p class="note">
+            TEXT The file stores the characters themselves. The codepoints are shown in the comments here, and step 6 breaks each word into one codepoint per row.
+          ENDTAG </p>
+          TEXT \n  
+        ENDTAG </div>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <section class="step" id="reduce">
+        TEXT \n  
+        STARTTAG <div class="num">
+          TEXT 3
+        ENDTAG </div>
+        TEXT \n  
+        STARTTAG <div class="body">
+          TEXT \n    
+          STARTTAG <h2>
+            TEXT Reduce a name to its base
+          ENDTAG </h2>
+          TEXT \n    
+          STARTTAG <p>
+            TEXT English renderings need a common ground before they can be compared. The base keeps the letters A to Z only, in upper case, and removes the vowels A, E, I, O and U. That copies what Hebrew writing does with the Name: the consonants are written and the vowels are supplied. Case makes no difference, and digits are dropped along with spaces and punctuation.
+          ENDTAG </p>
+          TEXT \n
+          STARTTAG <pre>
+            TEXT const base = (s: string) =&gt; s.toUpperCase()\n  .replace(/[^A-Z]/g, "")    
+            STARTTAG <span class="c">
+              TEXT // A-Z only: digits, spaces and punctuation go
+            ENDTAG </span>
+            TEXT \n  .replace(/[AEIOU]/g, "");  
+            STARTTAG <span class="c">
+              TEXT // the vowels go
+            ENDTAG </span>
+          ENDTAG </pre>
+          TEXT \n    
+          STARTTAG <div class="run">
+            TEXT \n      
+            STARTTAG <div class="run-label">
+              TEXT Run it
+            ENDTAG </div>
+            TEXT \n      
+            STARTTAG <div class="controls">
+              TEXT \n        
+              STARTTAG <input type="text" id="name-in" value="JEHOVAH" aria-label="A name to reduce and compare" autocomplete="off" spellcheck="false">
+              TEXT \n      
+            ENDTAG </div>
+            TEXT \n      
+            STARTTAG <div class="controls" id="name-samples">
+            ENDTAG </div>
+            TEXT \n      
+            STARTTAG <div class="trace" id="reduce-out" aria-live="polite">
+            ENDTAG </div>
+            TEXT \n    
+          ENDTAG </div>
+          TEXT \n  
+        ENDTAG </div>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <section class="step" id="compare">
+        TEXT \n  
+        STARTTAG <div class="num">
+          TEXT 4
+        ENDTAG </div>
+        TEXT \n  
+        STARTTAG <div class="body">
+          TEXT \n    
+          STARTTAG <h2>
+            TEXT Compare the bases: MIRROR or RAISE
+          ENDTAG </h2>
+          TEXT \n    
+          STARTTAG <p>
+            TEXT Two bases MIRROR when they are the same literal, or when one is a non-empty head of the other. Otherwise the rendering RAISES: it puts a different literal in place of the original. This is the guard 
+            STARTTAG <code>
+              TEXT src/terms.mjs
+            ENDTAG </code>
+            TEXT  uses.
+          ENDTAG </p>
+          TEXT \n
+          STARTTAG <pre>
+            TEXT const verdict = (a: string, b: string) =&gt; {\n  if (a === b) return "MIRROR";\n  const [short, long] = a.length &lt;= b.length ? [a, b] : [b, a];\n  return short.length &gt; 0 &amp;&amp; long.startsWith(short) ? "MIRROR" : "RAISE";\n};
+          ENDTAG </pre>
+          TEXT \n    
+          STARTTAG <div class="run">
+            TEXT \n      
+            STARTTAG <div class="run-label">
+              TEXT Run it on the name from step 3, against YHWH
+            ENDTAG </div>
+            TEXT \n      
+            STARTTAG <div class="trace" id="compare-out" aria-live="polite">
+            ENDTAG </div>
+            TEXT \n    
+          ENDTAG </div>
+          TEXT \n    
+          STARTTAG <p class="note">
+            TEXT Why 
+            STARTTAG <code>
+              TEXT short.length &gt; 0
+            ENDTAG </code>
+            TEXT : a name with no consonants left, such as "IOU" or "1234", reduces to the empty base, and every string starts with the empty string. The first filing of I-229 left this check out, so an empty base mirrored everything. It was corrected on 2026-10-25, and section 7 of the record now checks that the empty base mirrors only another empty base. Try IOU in step 3.
+          ENDTAG </p>
+          TEXT \n  
+        ENDTAG </div>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <section class="step" id="fold">
+        TEXT \n  
+        STARTTAG <div class="num">
+          TEXT 5
+        ENDTAG </div>
+        TEXT \n  
+        STARTTAG <div class="body">
+          TEXT \n    
+          STARTTAG <h2>
+            TEXT Declare any fold out loud
+          ENDTAG </h2>
+          TEXT \n    
+          STARTTAG <p>
+            TEXT JEHOVAH reduces to JHVH, and JHVH is not YHWH letter for letter. It matches only if J is read as Y and V as W, which is how Latin and German spelling carried the Name into English. That reading is a choice, so the proof writes it down as a function and tests both ways. It also tests that the fold doesn't rescue THE LORD, so the fold can't hide a substitution.
+          ENDTAG </p>
+          TEXT \n
+          STARTTAG <pre>
+            TEXT const fold = (s: string) =&gt; s.replace(/J/g, "Y").replace(/V/g, "W");\n\nassert.equal(verdict("YHWH", base("JEHOVAH")), "RAISE");        
+            STARTTAG <span class="c">
+              TEXT // without the fold
+            ENDTAG </span>
+            TEXT \nassert.equal(verdict("YHWH", fold(base("JEHOVAH"))), "MIRROR"); 
+            STARTTAG <span class="c">
+              TEXT // with it
+            ENDTAG </span>
+            TEXT \nassert.equal(verdict("YHWH", fold(base("THE LORD"))), "RAISE"); 
+            STARTTAG <span class="c">
+              TEXT // the fold rescues no substitution
+            ENDTAG </span>
+          ENDTAG </pre>
+          TEXT \n    
+          STARTTAG <div class="run">
+            TEXT \n      
+            STARTTAG <div class="run-label">
+              TEXT All six names, both ways
+            ENDTAG </div>
+            TEXT \n      
+            STARTTAG <div class="table-wrap">
+              STARTTAG <table id="fold-table">
+              ENDTAG </table>
+            ENDTAG </div>
+            TEXT \n    
+          ENDTAG </div>
+          TEXT \n  
+        ENDTAG </div>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <section class="step" id="layers">
+        TEXT \n  
+        STARTTAG <div class="num">
+          TEXT 6
+        ENDTAG </div>
+        TEXT \n  
+        STARTTAG <div class="body">
+          TEXT \n    
+          STARTTAG <h2>
+            TEXT Separate the layers of the Hebrew
+          ENDTAG </h2>
+          TEXT \n    
+          STARTTAG <p>
+            TEXT The codices write the same Hebrew word in layers. The consonants are the oldest layer. The vowel points (niqqud) were added later by the Masoretes, and the cantillation accents (te'amim) after them. The proof splits each word into consonants and marks, then compares the layers separately.
+          ENDTAG </p>
+          TEXT \n
+          STARTTAG <pre>
+            TEXT const cons  = (s: string) =&gt; [...s].filter((c) =&gt; c &gt;= "א" &amp;&amp; c &lt;= "ת").join("");   
+            STARTTAG <span class="c">
+              TEXT // alef to tav
+            ENDTAG </span>
+            TEXT \nconst marks = (s: string) =&gt; [...s].filter((c) =&gt; !(c &gt;= "א" &amp;&amp; c &lt;= "ת"));         
+            STARTTAG <span class="c">
+              TEXT // everything else
+            ENDTAG </span>
+            TEXT \n\nassert.equal(cons(wlc), cons(mam), "the consonant base is one literal: MIRROR");\n
+            STARTTAG <span class="c">
+              TEXT // extra = the marks MAM has more of than Leningrad
+            ENDTAG </span>
+            TEXT \nassert.deepEqual(extra, ["ֹ"], "the vowel layers differ by exactly one mark: holam");
+          ENDTAG </pre>
+          TEXT \n    
+          STARTTAG <div class="run">
+            TEXT \n      
+            STARTTAG <div class="run-label">
+              TEXT Paste or pick Hebrew
+            ENDTAG </div>
+            TEXT \n      
+            STARTTAG <div class="controls">
+              TEXT \n        
+              STARTTAG <input type="text" id="heb-a" class="heb-in" aria-label="First Hebrew word" autocomplete="off" spellcheck="false">
+              TEXT \n        
+              STARTTAG <input type="text" id="heb-b" class="heb-in" aria-label="Second Hebrew word" autocomplete="off" spellcheck="false">
+              TEXT \n      
+            ENDTAG </div>
+            TEXT \n      
+            STARTTAG <div class="controls" id="heb-samples">
+            ENDTAG </div>
+            TEXT \n      
+            STARTTAG <div id="heb-out" aria-live="polite" style="display:grid;gap:14px">
+            ENDTAG </div>
+            TEXT \n    
+          ENDTAG </div>
+          TEXT \n    
+          STARTTAG <p>
+            TEXT Read in order, MAM's marks are sheva, holam and qamatz. Under the declared reading sheva as E, holam as O and qamatz as A, that is E, O, A: the vowels of JEHOVAH in order. Leningrad's pointing has no holam, so it reads E, A.
+          ENDTAG </p>
+          TEXT \n  
+        ENDTAG </div>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <section class="step" id="record">
+        TEXT \n  
+        STARTTAG <div class="num">
+          TEXT 7
+        ENDTAG </div>
+        TEXT \n  
+        STARTTAG <div class="body">
+          TEXT \n    
+          STARTTAG <h2>
+            TEXT Run it, record it, and correct it in the open
+          ENDTAG </h2>
+          TEXT \n    
+          STARTTAG <p>
+            TEXT The check either holds or it doesn't. If it fails, the failure gets recorded, not hidden, and a check that doesn't hold moves to 
+            STARTTAG <code>
+              TEXT js/pending/
+            ENDTAG </code>
+            TEXT . A record also keeps its origin: who asked, when, and in their words, in 
+            STARTTAG <code>
+              TEXT ORIGINS.json
+            ENDTAG </code>
+            TEXT . All six predictions held. When a flaw turns up later, as the empty base did, the fix goes in as a new commit with a dated note in the file and a check of its own, so the first filing stays readable in the history.
+          ENDTAG </p>
+          TEXT \n
+          STARTTAG <pre>
+            STARTTAG <span class="c">
+              TEXT // ── 7. The empty base heads nothing but itself ──
+            ENDTAG </span>
+            TEXT \nassert.equal(verdict(N, base("IOU")), "RAISE", "an empty base does not mirror YHWH");\nassert.equal(verdict(N, base("1234")), "RAISE", "nor does a base of digits only");\nassert.equal(verdict(base("IOU"), base("1234")), "MIRROR", "the empty base mirrors only the empty base");\n\n$ node js/catalog/I-229.ts\nI-229: YHWH and its renderings — which keep the literal and which replace it — passed\n  RAISE (replace the base): ADONAI (DN), THE LORD (THLRD)\n  MIRROR (keep the base): YAHWEH (YHWH), YAH (YH, a prefix)\n  JAH, JEHOVAH: RAISE letter for letter (JH, JHVH); MIRROR only under the declared fold J-&gt;Y, V-&gt;W\n  Leningrad יְהוָה and MAM יְהֹוָה: one consonant literal; one mark apart, holam, the O of JEHOVAH\n\n$ make -C proofs js-docs\n116 records (116 holding)
+          ENDTAG </pre>
+          TEXT \n    
+          STARTTAG <p class="note">
+            TEXT The proof asserts how the letters relate. What a rendering means, and whether the fold is fair, are readings, and they stay open.
+          ENDTAG </p>
+          TEXT \n  
+        ENDTAG </div>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <footer>
+        TEXT \n  
+        STARTTAG <p>
+          TEXT Source: 
+          STARTTAG <a href="https://github.com/bthornemail/omi-axioms/blob/main/js/catalog/I-229.ts">
+            TEXT js/catalog/I-229.ts
+          ENDTAG </a>
+          TEXT  in 
+          STARTTAG <a href="https://github.com/bthornemail/omi-axioms">
+            TEXT omi-axioms
+          ENDTAG </a>
+          TEXT ; its generated document is 
+          STARTTAG <a href="https://github.com/bthornemail/omi-axioms/blob/main/js-docs/other/I-229.md">
+            TEXT js-docs/other/I-229.md
+          ENDTAG </a>
+          TEXT .
+        ENDTAG </p>
+        TEXT \n  
+        STARTTAG <p>
+          TEXT Hebrew texts: Westminster Leningrad Codex (public domain), and Miqra according to the Masorah, based on the Aleppo Codex (CC BY-SA 4.0), both via Sefaria. The one MAM word quoted here, יְהֹוָה from Deuteronomy 29:1, is shared under CC BY-SA.
+        ENDTAG </p>
+        TEXT \n
+      ENDTAG </footer>
+      TEXT \n
+    ENDTAG </div>
+    TEXT \n\n
+    STARTTAG <script>
+      RAWTEXT \nconst base = (s) => s.toUpperCase().replace(/[^A-Z]/g, "").replace(/[AEIOU]/g, "");\nconst verdict = (a, b) => {\n  if (a === b) return "MIRROR";\n  const [short, long] = a.length <= b.length ? [a, b] : [b, a];\n  return short.length > 0 && long.startsWith(short) ? "MIRROR" : "RAISE";\n};\nconst fold = (s) => s.replace(/J/g, "Y").replace(/V/g, "W");\nconst N = "YHWH";\nconst esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));\nconst show = (s) => s === "" ? "(empty)" : esc(s);\nconst pill = (v) => `<span class="pill ${v}">${v}</span>`;\nconst row = (k, v) => `<div class="row"><div class="k">${k}</div><div class="v">${v}</div></div>`;\n\nfunction why(a, b) {\n  if (a === b) return `${show(a)} === ${show(b)}: the same literal`;\n  if (b === "" || a === "") return `one base is empty; the empty base is a head of everything, so it is not counted`;\n  if (a.startsWith(b)) return `${show(a)} starts with ${show(b)}: a prefix`;\n  if (b.startsWith(a)) return `${show(b)} starts with ${show(a)}: a prefix`;\n  return `not equal, and neither starts with the other`;\n}\n\nconst nameIn = document.getElementById("name-in");\nconst NAMES = ["ADONAI", "THE LORD", "YAHWEH", "YAH", "JAH", "JEHOVAH"];\nconst samples = document.getElementById("name-samples");\nfor (const n of [...NAMES, "IOU", "1234"]) {\n  const b = document.createElement("button");\n  b.type = "button"; b.textContent = n;\n  b.addEventListener("click", () => { nameIn.value = n; renderName(); });\n  samples.append(b);\n}\n\nfunction renderName() {\n  const s = nameIn.value;\n  const up = s.toUpperCase();\n  const letters = up.replace(/[^A-Z]/g, "");\n  const b = letters.replace(/[AEIOU]/g, "");\n  document.getElementById("reduce-out").innerHTML =\n    row("input", show(s)) +\n    row("toUpperCase()", show(up)) +\n    row("A-Z only", show(letters)) +\n    row("vowels removed", `<strong>${show(b)}</strong>`);\n  const v = verdict(N, b), f = fold(b), vf = verdict(N, f);\n  let html =\n    row(`compare ${N} with`, show(b)) +\n    row("why", why(N, b)) +\n    row("verdict", pill(v)) +\n    row("with the fold", `${show(b)} → ${show(f)}`) +\n    row("why", why(N, f)) +\n    row("verdict under fold", pill(vf));\n  if (b === "") html += `<p class="note">The base is empty: no consonant is left to compare, so it does not mirror YHWH.</p>`;\n  document.getElementById("compare-out").innerHTML = html;\n}\nnameIn.addEventListener("input", renderName);\nrenderName();\n\ndocument.getElementById("fold-table").innerHTML =\n  `<thead><tr><th>name</th><th>base</th><th>verdict</th><th>folded</th><th>verdict under fold</th></tr></thead><tbody>` +\n  NAMES.map((n) => { const b = base(n), f = fold(b);\n    return `<tr><td>${n}</td><td>${b}</td><td>${pill(verdict(N, b))}</td><td>${f}</td><td>${pill(verdict(N, f))}</td></tr>`; }).join("") +\n  `</tbody>`;\n\n// Hebrew layers\nconst LETTERS = "alef bet gimel dalet he vav zayin het tet yod final-kaf kaf lamed final-mem mem final-nun nun samekh ayin final-pe pe final-tsadi tsadi qof resh shin tav".split(" ");\nconst MARKS = { 0x05B0: "sheva", 0x05B1: "hataf segol", 0x05B2: "hataf patah", 0x05B3: "hataf qamatz", 0x05B4: "hiriq",\n  0x05B5: "tsere", 0x05B6: "segol", 0x05B7: "patah", 0x05B8: "qamatz", 0x05B9: "holam", 0x05BA: "holam haser for vav",\n  0x05BB: "qubuts", 0x05BC: "dagesh or mappiq", 0x05BD: "meteg", 0x05BE: "maqaf", 0x05BF: "rafe", 0x05C1: "shin dot",\n  0x05C2: "sin dot", 0x05C7: "qamatz qatan" };\nconst SOUND = { 0x05B0: "E", 0x05B9: "O", 0x05B8: "A" };\nconst isLetter = (c) => c >= "א" && c <= "ת";\nconst cp = (c) => "U+" + c.codePointAt(0).toString(16).toUpperCase().padStart(4, "0");\nfunction kind(c) {\n  const n = c.codePointAt(0);\n  if (isLetter(c)) return ["letter", LETTERS[n - 0x05D0]];\n  if (n >= 0x0591 && n <= 0x05AF) return ["accent", "te'am (cantillation)"];\n  if (MARKS[n]) return ["mark", MARKS[n]];\n  return ["other", "not Hebrew"];\n}\nconst dotted = (c) => isLetter(c) ? c : "◌" + c;\n\nfunction layerTable(s) {\n  const chars = [...s];\n  if (!chars.length) return "";\n  return `<div class="table-wrap"><table><thead><tr><th>glyph</th><th>codepoint</th><th>layer</th><th>name</th></tr></thead><tbody>` +\n    chars.map((c) => { const [k, name] = kind(c);\n      return `<tr class="${k}"><td class="g">${esc(dotted(c))}</td><td>${cp(c)}</td><td>${k}</td><td>${name}</td></tr>`; }).join("") +\n    `</tbody></table></div>`;\n}\nconst consOf = (s) => [...s].filter(isLetter).join("");\nconst marksOf = (s) => [...s].filter((c) => kind(c)[0] === "mark");\n\nconst hebA = document.getElementById("heb-a"), hebB = document.getElementById("heb-b");\nconst HEB = [\n  ["Leningrad and MAM", "יְהוָה", "יְהֹוָה"],\n  ["Leningrad and Yah", "יְהוָה", "יָהּ"],\n];\nconst hs = document.getElementById("heb-samples");\nfor (const [label, a, b] of HEB) {\n  const btn = document.createElement("button");\n  btn.type = "button"; btn.textContent = label;\n  btn.addEventListener("click", () => { hebA.value = a; hebB.value = b; renderHeb(); });\n  hs.append(btn);\n}\nhebA.value = HEB[0][1]; hebB.value = HEB[0][2];\n\nfunction multisetMinus(x, y) {\n  const left = [...y];\n  return x.filter((m) => { const i = left.indexOf(m); if (i >= 0) { left.splice(i, 1); return false; } return true; });\n}\nfunction renderHeb() {\n  const a = hebA.value.normalize("NFC").trim(), b = hebB.value.normalize("NFC").trim();\n  const ca = consOf(a), cb = consOf(b), ma = marksOf(a), mb = marksOf(b);\n  const markNames = (ms) => ms.length ? ms.map((m) => MARKS[m.codePointAt(0)]).join(", ") : "none";\n  const sounds = (ms) => ms.map((m) => SOUND[m.codePointAt(0)] || "·").join("");\n  let rel;\n  if (!ca || !cb) rel = "Enter Hebrew in both boxes.";\n  else rel = `${pill(verdict(ca, cb))} ${ca === cb ? "the same consonants" : (ca.startsWith(cb) || cb.startsWith(ca)) ? "one is the head of the other" : "different consonants"}`;\n  const accents = [...a, ...b].some((c) => kind(c)[0] === "accent");\n  document.getElementById("heb-out").innerHTML =\n    `<div class="trace">` +\n    row("first: consonants", `<span class="heb">${esc(ca) || "(none)"}</span>`) +\n    row("second: consonants", `<span class="heb">${esc(cb) || "(none)"}</span>`) +\n    row("consonant layer", rel) +\n    row("first: marks", markNames(ma)) +\n    row("second: marks", markNames(mb)) +\n    row("only in first", markNames(multisetMinus(ma, mb))) +\n    row("only in second", markNames(multisetMinus(mb, ma))) +\n    row("E/O/A reading", `${sounds(ma) || "(none)"} · ${sounds(mb) || "(none)"} <span class="note">(sheva E, holam O, qamatz A; · for any other mark)</span>`) +\n    `</div>` +\n    (accents ? `<p class="note">This text carries cantillation accents. The proof removes them before comparing, and they are not counted as marks here.</p>` : "") +\n    `<div class="run-label">first, one codepoint per row</div>` + layerTable(a) +\n    `<div class="run-label">second, one codepoint per row</div>` + layerTable(b);\n}\nhebA.addEventListener("input", renderHeb);\nhebB.addEventListener("input", renderHeb);\nrenderHeb();\n
+    ENDTAG </script>
+    TEXT \n\n
+    ENDTAG </body>
+    OPEN
+ENDTAG </html>

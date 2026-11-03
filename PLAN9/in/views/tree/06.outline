@@ -1,0 +1,49 @@
+DOCTYPE <!DOCTYPE html>
+TEXT \n
+STARTTAG <html lang="en">
+  TEXT \n
+  STARTTAG <head>
+    TEXT \n    
+    STARTTAG <meta charset="UTF-8">
+    TEXT \n    
+    STARTTAG <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    TEXT \n    
+    STARTTAG <title>
+      RAWTEXT GENESIS Protocol - 3D Realm Explorer
+    ENDTAG </title>
+    TEXT \n    
+    STARTTAG <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+    ENDTAG </script>
+    TEXT \n    
+    STARTTAG <style>
+      RAWTEXT \n        body { margin: 0; background: #020617; color: #10b981; font-family: monospace; overflow: hidden; }\n        #ui { position: absolute; top: 20px; left: 20px; pointer-events: none; z-index: 10; }\n        .label { background: rgba(2, 6, 23, 0.8); padding: 10px; border-left: 3px solid #10b981; pointer-events: auto; }\n        .stats { margin-top: 10px; font-size: 12px; color: #64748b; }\n        canvas { display: block; }\n    
+    ENDTAG </style>
+    TEXT \n
+  ENDTAG </head>
+  TEXT \n
+  STARTTAG <body>
+    TEXT \n    
+    STARTTAG <div id="ui">
+      TEXT \n        
+      STARTTAG <div class="label">
+        TEXT \n            
+        STARTTAG <strong>
+          TEXT GENESIS PROTOCOL
+        ENDTAG </strong>
+        STARTTAG <br>
+        TEXT \n            Layer 0: Spatial Observation\n        
+      ENDTAG </div>
+      TEXT \n        
+      STARTTAG <div class="stats" id="info">
+        TEXT Initializing ThreeJS Wrapper...
+      ENDTAG </div>
+      TEXT \n    
+    ENDTAG </div>
+    TEXT \n\n    
+    STARTTAG <script>
+      RAWTEXT \n        let scene, camera, renderer, repoGroup;\n        const clock = new THREE.Clock();\n\n        // 1. Meta Tag to Geometry Mapping\n        const GEOMETRY_MAP = {\n            'kernel': new THREE.OctahedronGeometry(1, 0),\n            'source': new THREE.BoxGeometry(1, 1, 1),\n            'org': new THREE.IcosahedronGeometry(1, 0),\n            'asset': new THREE.SphereGeometry(0.7, 16, 16)\n        };\n\n        function init() {\n            scene = new THREE.Scene();\n            scene.fog = new THREE.FogExp2(0x020617, 0.05);\n\n            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);\n            camera.position.set(15, 10, 15);\n            camera.lookAt(0, 0, 0);\n\n            renderer = new THREE.WebGLRenderer({ antialias: true });\n            renderer.setSize(window.innerWidth, window.innerHeight);\n            renderer.setPixelRatio(window.devicePixelRatio);\n            document.body.appendChild(renderer.domElement);\n\n            const ambientLight = new THREE.AmbientLight(0x404040, 2);\n            scene.add(ambientLight);\n\n            const pointLight = new THREE.PointLight(0x10b981, 2, 50);\n            pointLight.position.set(10, 10, 10);\n            scene.add(pointLight);\n\n            repoGroup = new THREE.Group();\n            scene.add(repoGroup);\n\n            // Mock Data representing the result of 'genesis.sh scan'\n            const mockRepo = [\n                { path: '.genesis/kernel', type: 'kernel', depth: 0 },\n                { path: 'README.org', type: 'org', depth: 1 },\n                { path: 'src/core.sh', type: 'source', depth: 2 },\n                { path: 'src/utils.sh', type: 'source', depth: 2 },\n                { path: 'assets/logo.png', type: 'asset', depth: 1 }\n            ];\n\n            generateRepo(mockRepo);\n            animate();\n        }\n\n        // 2. Folder Group Order Logic\n        function generateRepo(data) {\n            const folderGroups = {};\n\n            data.forEach((item, index) => {\n                const parts = item.path.split('/');\n                const folderName = parts.length > 1 ? parts[0] : 'root';\n\n                if (!folderGroups[folderName]) {\n                    folderGroups[folderName] = new THREE.Group();\n                    const angle = (Object.keys(folderGroups).length * (Math.PI * 2)) / 5;\n                    folderGroups[folderName].position.x = Math.cos(angle) * 8;\n                    folderGroups[folderName].position.z = Math.sin(angle) * 8;\n                    repoGroup.add(folderGroups[folderName]);\n                    \n                    // Add a "Ring" to represent the Group boundary\n                    const ringGeo = new THREE.RingGeometry(1.5, 1.6, 32);\n                    const ringMat = new THREE.MeshBasicMaterial({ color: 0x1e293b, side: THREE.DoubleSide });\n                    const ring = new THREE.Mesh(ringGeo, ringMat);\n                    ring.rotation.x = Math.PI / 2;\n                    folderGroups[folderName].add(ring);\n                }\n\n                // Mesh Creation based on Meta Tags\n                const geometry = GEOMETRY_MAP[item.type] || GEOMETRY_MAP['source'];\n                const material = new THREE.MeshPhongMaterial({ \n                    color: item.type === 'kernel' ? 0x10b981 : 0x3b82f6,\n                    wireframe: true,\n                    transparent: true,\n                    opacity: 0.8\n                });\n\n                const fileMesh = new THREE.Mesh(geometry, material);\n                fileMesh.position.y = item.depth * 2;\n                fileMesh.position.x = (Math.random() - 0.5) * 2;\n                \n                // Add floating "Wrapper" (Shell)\n                const shellGeo = new THREE.SphereGeometry(1.2, 8, 8);\n                const shellMat = new THREE.MeshBasicMaterial({ color: 0x10b981, wireframe: true, opacity: 0.1, transparent: true });\n                const shell = new THREE.Mesh(shellGeo, shellMat);\n                fileMesh.add(shell);\n\n                folderGroups[folderName].add(fileMesh);\n            });\n\n            document.getElementById('info').innerText = `Observed: ${data.length} Atoms across ${Object.keys(folderGroups).length} Realms`;\n        }\n\n        function animate() {\n            requestAnimationFrame(animate);\n            const time = clock.getElapsedTime();\n\n            repoGroup.rotation.y += 0.002;\n            repoGroup.children.forEach((group, i) => {\n                group.children.forEach((child, j) => {\n                    if (child.isMesh) {\n                        child.rotation.y += 0.01;\n                        child.position.y += Math.sin(time + j) * 0.005;\n                    }\n                });\n            });\n\n            renderer.render(scene, camera);\n        }\n\n        window.addEventListener('resize', () => {\n            camera.aspect = window.innerWidth / window.innerHeight;\n            camera.updateProjectionMatrix();\n            renderer.setSize(window.innerWidth, window.innerHeight);\n        });\n\n        window.onload = init;\n    
+    ENDTAG </script>
+    TEXT \n
+  ENDTAG </body>
+  TEXT \n
+ENDTAG </html>

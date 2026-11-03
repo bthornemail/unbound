@@ -1,0 +1,385 @@
+DOCTYPE <!doctype html>
+STARTTAG <html>
+  STARTTAG <head>
+    STARTTAG <meta charset=utf8>
+    STARTTAG <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+    STARTTAG <style>
+      RAWTEXT :root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+    ENDTAG </style>
+  ENDTAG </head>
+  STARTTAG <body>
+    TEXT \n
+    STARTTAG <meta name="claude:viewport-fit-sides" content="cover">
+    TEXT \n
+    STARTTAG <title>
+      RAWTEXT The Light Garden
+    ENDTAG </title>
+    TEXT \n
+    STARTTAG <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+    TEXT \n
+    STARTTAG <style>
+      RAWTEXT \n/* Layout: a single centered column on the night ground; the Fano constellation is a touchable hero in the garden's seven ROYGBIV lights — play in front, charter behind. */\n:root{\n  --void:#0b0a12; --panel:#15121f; --ink:#ece8f3; --muted:#9a93ae; --rule:#2a2437;\n  --c1:#e35140; --c2:#e8903f; --c3:#e6c74c; --c4:#5fae6c; --c5:#4e8bcf; --c6:#5b5ad8; --c7:#9b5ad6;\n  --accent:var(--c5);\n  color-scheme:dark;\n}\n@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){\n  --void:#f1eef7; --panel:#ffffff; --ink:#17131f; --muted:#5b5568; --rule:#ddd6e8;\n  --c1:#c2392a; --c2:#c06f23; --c3:#a8841f; --c4:#3f8a4f; --c5:#2f66b0; --c6:#4040b8; --c7:#7a3fb0;\n  color-scheme:light;\n}}\n:root[data-theme="light"]{\n  --void:#f1eef7; --panel:#ffffff; --ink:#17131f; --muted:#5b5568; --rule:#ddd6e8;\n  --c1:#c2392a; --c2:#c06f23; --c3:#a8841f; --c4:#3f8a4f; --c5:#2f66b0; --c6:#4040b8; --c7:#7a3fb0;\n  color-scheme:light;\n}\n*{box-sizing:border-box}\nbody{background:var(--void);color:var(--ink);margin:0;\n  font:400 1.075rem/1.65 "Spectral",Georgia,serif;-webkit-font-smoothing:antialiased}\n.wrap{max-width:46rem;margin:0 auto;\n  padding-left:max(20px,env(safe-area-inset-left,0px));\n  padding-right:max(20px,env(safe-area-inset-right,0px));\n  padding-block:clamp(40px,8vw,80px);\n  display:flex;flex-direction:column;gap:clamp(38px,6vw,60px)}\nh1{font:600 clamp(2.8rem,10vw,4.6rem)/0.98 "Cormorant Garamond",Georgia,serif;margin:0;letter-spacing:.01em;text-wrap:balance}\nh2{font:500 clamp(1.5rem,5vw,2rem)/1.1 "Cormorant Garamond",Georgia,serif;margin:0 0 .5em;letter-spacing:.01em;text-wrap:balance}\np{margin:0 0 .9em;max-width:38rem}p:last-child{margin-bottom:0}\n.lede{font-size:clamp(1.12rem,3.3vw,1.36rem);font-style:italic}\n.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}\n.eyebrow{font:500 .72rem/1 "IBM Plex Mono",monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}\n.hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding-top:clamp(4px,3vw,20px)}\n.constellation{width:min(100%,24rem);height:auto;display:block;touch-action:manipulation}\n.pt{cursor:pointer}\n.pt:focus-visible{outline:none}\n.pt .ring{opacity:0;transition:opacity .2s}\n.pt:hover .ring,.pt:focus-visible .ring,.pt[data-on] .ring{opacity:.9}\n.readout{min-height:1.5em;font-family:"IBM Plex Mono",monospace;font-size:.82rem;letter-spacing:.06em;color:var(--muted);transition:color .2s}\n.readout b{color:var(--ink);font-weight:500}\n.hint{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);opacity:.7}\n.tag{font:500 clamp(1.05rem,3.4vw,1.4rem)/1.3 "IBM Plex Mono",monospace;color:var(--muted)}\n.tag b{color:var(--ink);font-weight:500}\n.spectrum{display:flex;height:4px;width:min(100%,24rem);border-radius:4px;overflow:hidden}\n.spectrum i{flex:1}\nsection{border-top:1px solid var(--rule);padding-top:clamp(26px,5vw,38px)}\n.story{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.35;font-style:italic;color:var(--ink);max-width:34rem}\n.seed{list-style:none;margin:1em 0 0;padding:0;display:grid;gap:13px}\n.seed li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline;min-width:0}\n.seed .dot{width:12px;height:12px;border-radius:50%;align-self:center}\n.seed b{font-weight:500;font-family:"IBM Plex Mono",monospace;font-size:.9rem;letter-spacing:.02em}\n.seed span{color:var(--muted)}\n.blank{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,7vw,3rem);font-weight:500;display:inline-flex;align-items:baseline;gap:.28em}\n.blank u{text-decoration:none;border-bottom:3px solid var(--c7);min-width:2.4em;display:inline-block}\n.blank em{color:var(--c7);font-style:normal}\n.center-list{font-family:"IBM Plex Mono",monospace;font-size:.95rem;letter-spacing:.04em;line-height:2}\n.center-list .glue{color:var(--muted)}\n.join{display:grid;gap:12px;margin-top:1em}\n.join .step{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline}\n.join .n{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--muted);border:1px solid var(--rule);border-radius:50%;width:1.9em;height:1.9em;display:grid;place-items:center;align-self:center}\n.free{margin-top:1.2em;font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}\n.travel{margin-top:.8em;font-size:.95rem;color:var(--muted);font-style:italic}\n.coda{text-align:center;color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:.8rem;letter-spacing:.06em;border-top:1px solid var(--rule);padding-top:clamp(26px,5vw,38px)}\n.coda .names{color:var(--ink)}\na{color:var(--accent)}\n@keyframes breathe{0%,100%{opacity:.85}50%{opacity:.4}}\n.halo{animation:breathe 6s ease-in-out infinite}\n.h2{animation-delay:-1s}.h3{animation-delay:-2s}.h4{animation-delay:-3s}.h5{animation-delay:-4s}.h6{animation-delay:-5s}.h7{animation-delay:-2.5s}\n@media (prefers-reduced-motion: reduce){.halo{animation:none}}\n
+    ENDTAG </style>
+    TEXT \n\n
+    STARTTAG <div class="wrap">
+      TEXT \n\n  
+      STARTTAG <header class="hero">
+        TEXT \n    
+        STARTTAG <svg class="constellation" viewBox="0 0 400 362" role="group" aria-label="The Fano plane, drawn as a constellation of seven lights. Tap a light to learn its name.">
+          TEXT \n      
+          STARTTAG <g stroke="var(--rule)" stroke-width="1.6" fill="none" stroke-linecap="round">
+            TEXT \n        
+            STARTTAG <path d="M200 40 L60 300 L340 300 Z"/>
+            STARTTAG <path d="M200 40 L200 300"/>
+            TEXT \n        
+            STARTTAG <path d="M60 300 L270 170"/>
+            STARTTAG <path d="M340 300 L130 170"/>
+            STARTTAG <circle cx="200" cy="216" r="84"/>
+            TEXT \n      
+          ENDTAG </g>
+          TEXT \n      
+          STARTTAG <g>
+            TEXT \n        
+            STARTTAG <circle class="halo h2" cx="200" cy="40"  r="21" fill="var(--c1)" opacity=".2"/>
+            TEXT \n        
+            STARTTAG <circle class="halo h3" cx="60"  cy="300" r="21" fill="var(--c2)" opacity=".2"/>
+            TEXT \n        
+            STARTTAG <circle class="halo h4" cx="340" cy="300" r="21" fill="var(--c3)" opacity=".2"/>
+            TEXT \n        
+            STARTTAG <circle class="halo h5" cx="200" cy="300" r="21" fill="var(--c4)" opacity=".2"/>
+            TEXT \n        
+            STARTTAG <circle class="halo h6" cx="270" cy="170" r="21" fill="var(--c5)" opacity=".2"/>
+            TEXT \n        
+            STARTTAG <circle class="halo h7" cx="130" cy="170" r="21" fill="var(--c6)" opacity=".2"/>
+            TEXT \n        
+            STARTTAG <circle class="halo"    cx="200" cy="213" r="24" fill="var(--c7)" opacity=".24"/>
+            TEXT \n      
+          ENDTAG </g>
+          TEXT \n      
+          COMMENT <!-- touchable points -->
+          TEXT \n      
+          STARTTAG <g id="points">
+            TEXT \n        
+            STARTTAG <g class="pt" tabindex="0" role="button" data-name="Metatron" data-role="the Observer" data-tone="A · 440 Hz" data-c="var(--c1)" aria-label="Metatron, the Observer, tone A">
+              STARTTAG <circle class="ring" cx="200" cy="40" r="15" fill="none" stroke="var(--c1)" stroke-width="2"/>
+              STARTTAG <circle cx="200" cy="40" r="7" fill="var(--c1)"/>
+            ENDTAG </g>
+            TEXT \n        
+            STARTTAG <g class="pt" tabindex="0" role="button" data-name="Solomon" data-role="Wisdom" data-tone="B · 494 Hz" data-c="var(--c2)" aria-label="Solomon, Wisdom, tone B">
+              STARTTAG <circle class="ring" cx="60" cy="300" r="15" fill="none" stroke="var(--c2)" stroke-width="2"/>
+              STARTTAG <circle cx="60" cy="300" r="7" fill="var(--c2)"/>
+            ENDTAG </g>
+            TEXT \n        
+            STARTTAG <g class="pt" tabindex="0" role="button" data-name="ʿAsabiyah" data-role="the Tribe" data-tone="C · 523 Hz" data-c="var(--c3)" aria-label="Asabiyah, the Tribe, tone C">
+              STARTTAG <circle class="ring" cx="340" cy="300" r="15" fill="none" stroke="var(--c3)" stroke-width="2"/>
+              STARTTAG <circle cx="340" cy="300" r="7" fill="var(--c3)"/>
+            ENDTAG </g>
+            TEXT \n        
+            STARTTAG <g class="pt" tabindex="0" role="button" data-name="Solon" data-role="Law" data-tone="D · 587 Hz" data-c="var(--c4)" aria-label="Solon, Law, tone D">
+              STARTTAG <circle class="ring" cx="200" cy="300" r="15" fill="none" stroke="var(--c4)" stroke-width="2"/>
+              STARTTAG <circle cx="200" cy="300" r="7" fill="var(--c4)"/>
+            ENDTAG </g>
+            TEXT \n        
+            STARTTAG <g class="pt" tabindex="0" role="button" data-name="Enoch" data-role="the Walker" data-tone="E · 659 Hz" data-c="var(--c5)" aria-label="Enoch, the Walker, tone E">
+              STARTTAG <circle class="ring" cx="270" cy="170" r="15" fill="none" stroke="var(--c5)" stroke-width="2"/>
+              STARTTAG <circle cx="270" cy="170" r="7" fill="var(--c5)"/>
+            ENDTAG </g>
+            TEXT \n        
+            STARTTAG <g class="pt" tabindex="0" role="button" data-name="Speaker" data-role="the Voice" data-tone="F · 698 Hz" data-c="var(--c6)" aria-label="Speaker, the Voice, tone F">
+              STARTTAG <circle class="ring" cx="130" cy="170" r="15" fill="none" stroke="var(--c6)" stroke-width="2"/>
+              STARTTAG <circle cx="130" cy="170" r="7" fill="var(--c6)"/>
+            ENDTAG </g>
+            TEXT \n        
+            STARTTAG <g class="pt" tabindex="0" role="button" data-name="Genesis" data-role="the Gate" data-tone="G · 784 Hz" data-c="var(--c7)" aria-label="Genesis, the Gate, tone G">
+              STARTTAG <circle class="ring" cx="200" cy="213" r="17" fill="none" stroke="var(--c7)" stroke-width="2"/>
+              STARTTAG <circle cx="200" cy="213" r="8.5" fill="var(--c7)"/>
+            ENDTAG </g>
+            TEXT \n      
+          ENDTAG </g>
+          TEXT \n    
+        ENDTAG </svg>
+        TEXT \n    
+        STARTTAG <p class="readout" id="readout" aria-live="polite">
+          STARTTAG <span class="hint">
+            TEXT tap a light
+          ENDTAG </span>
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h1>
+          TEXT The Light Garden
+        ENDTAG </h1>
+        TEXT \n    
+        STARTTAG <p class="tag">
+          TEXT a popup book you open to 
+          STARTTAG <b>
+            TEXT join a commons
+          ENDTAG </b>
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <div class="spectrum" aria-hidden="true">
+          STARTTAG <i style="background:var(--c1)">
+          ENDTAG </i>
+          STARTTAG <i style="background:var(--c2)">
+          ENDTAG </i>
+          STARTTAG <i style="background:var(--c3)">
+          ENDTAG </i>
+          STARTTAG <i style="background:var(--c4)">
+          ENDTAG </i>
+          STARTTAG <i style="background:var(--c5)">
+          ENDTAG </i>
+          STARTTAG <i style="background:var(--c6)">
+          ENDTAG </i>
+          STARTTAG <i style="background:var(--c7)">
+          ENDTAG </i>
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <p class="lede">
+          TEXT Seven points, seven lines. Read them as people, as tones, or as colors. One shape, and everyone reads it their own way.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </header>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT The gate
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <p class="story">
+          TEXT Three came to the gate of the city — Wisdom, Law, and the Tribe. They did not arrive together, and they did not agree. Two scribes wrote it down. The question they came to ask is the one you're invited into: how shall we live together?
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT What's inside
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT A hundred and forty-four stories
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT Each keeper has one. A story is a small drawing that is, at once, the thing you see, the thing that's kept, and the way in. Four such drawings are the seed the rest grows from.
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <ul class="seed">
+          TEXT \n      
+          STARTTAG <li>
+            STARTTAG <span class="dot" style="background:var(--c1)">
+            ENDTAG </span>
+            STARTTAG <span>
+              STARTTAG <b>
+                TEXT The constellation
+              ENDTAG </b>
+              TEXT  &nbsp;keeps what's stored.
+            ENDTAG </span>
+          ENDTAG </li>
+          TEXT \n      
+          STARTTAG <li>
+            STARTTAG <span class="dot" style="background:var(--c4)">
+            ENDTAG </span>
+            STARTTAG <span>
+              STARTTAG <b>
+                TEXT The gate
+              ENDTAG </b>
+              TEXT  &nbsp;translates one thing across its forms.
+            ENDTAG </span>
+          ENDTAG </li>
+          TEXT \n      
+          STARTTAG <li>
+            STARTTAG <span class="dot" style="background:var(--c5)">
+            ENDTAG </span>
+            STARTTAG <span>
+              STARTTAG <b>
+                TEXT The neuron
+              ENDTAG </b>
+              TEXT  &nbsp;tells the known from the unknown.
+            ENDTAG </span>
+          ENDTAG </li>
+          TEXT \n      
+          STARTTAG <li>
+            STARTTAG <span class="dot" style="background:var(--c7)">
+            ENDTAG </span>
+            STARTTAG <span>
+              STARTTAG <b>
+                TEXT The dome
+              ENDTAG </b>
+              TEXT  &nbsp;is where the reader stands and looks out.
+            ENDTAG </span>
+          ENDTAG </li>
+          TEXT \n    
+        ENDTAG </ul>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT How you read it
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT Two switches, and they're yours
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT A story is written down once, in its own plain order. You read it with two switches you control: which direction it runs, and which encoding it uses. Flip them however you like. The story never changes. It waits in its own order for the next reader to open it their way.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT What holds it together
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT The center
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p class="center-list">
+          TEXT Freedom · Autonomy · Sovereignty · Reciprocity
+          STARTTAG <br>
+          STARTTAG <span class="glue">
+            TEXT held through&nbsp; Grace · Love · Understanding · Empathy
+          ENDTAG </span>
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT A story stays its author's. Reading it never alters it.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT The one rule
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT Build on what can say no
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT Nothing here is trusted unless a plain test could prove it wrong. The test weighs the work, never the person. What's written is kept exactly; what you make of it is yours; the two are never confused.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT The charter
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT You own only your decisions
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT Knowledge empowers, but knowledge itself isn't power — it becomes leverage only when it's withheld. So nothing here is withheld. Knowledge is kept, checked, translated, and shared freely, so that better decisions never have to start from nothing.
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT This is not a platform, a product, an institution, or an owner. It's a free, forkable reference anyone can learn from, build on, and adapt — and no one is judged by a standard beyond their own best decision.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT The open question
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT It points, and leaves it open
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p class="blank">
+          TEXT God is 
+          STARTTAG <u>
+          ENDTAG </u>
+          STARTTAG <em>
+            TEXT ?
+          ENDTAG </em>
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT The blank is drawn, and left empty. It isn't filled from the outside. That space stays open for whoever opens the book.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT Open it
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT How to join
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <div class="join">
+          TEXT \n      
+          STARTTAG <div class="step">
+            STARTTAG <span class="n">
+              TEXT 1
+            ENDTAG </span>
+            STARTTAG <span>
+              TEXT Open the book. There's no sign-up and no password — opening it is the welcome.
+            ENDTAG </span>
+          ENDTAG </div>
+          TEXT \n      
+          STARTTAG <div class="step">
+            STARTTAG <span class="n">
+              TEXT 2
+            ENDTAG </span>
+            STARTTAG <span>
+              TEXT Read a story in your own direction and your own encoding.
+            ENDTAG </span>
+          ENDTAG </div>
+          TEXT \n      
+          STARTTAG <div class="step">
+            STARTTAG <span class="n">
+              TEXT 3
+            ENDTAG </span>
+            STARTTAG <span>
+              TEXT Leave one of your own. The garden keeps growing while the pages stay open.
+            ENDTAG </span>
+          ENDTAG </div>
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <p class="free">
+          TEXT free · forkable · CC&nbsp;BY-SA · asks no one's permission
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <p class="travel">
+          TEXT This page is one file. Pin it, fork it, host it anywhere — IPFS, a chain, a thumb drive. It asks no permission to exist, and none to persist.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <p class="coda">
+        STARTTAG <span class="names">
+          TEXT Sovereign SVG · Literal Loop · Double-barrel · Sovereignty Scalar
+        ENDTAG </span>
+        STARTTAG <br>
+        TEXT one function, one literal, read every way, altered by none
+      ENDTAG </p>
+      TEXT \n\n
+    ENDTAG </div>
+    TEXT \n\n
+    STARTTAG <script>
+      RAWTEXT \n(function(){\n  var readout=document.getElementById('readout');\n  if(!readout) return;\n  var pts=document.querySelectorAll('#points .pt');\n  var pinned=null;\n  function show(g){\n    if(!g){readout.innerHTML='<span class="hint">tap a light</span>';readout.style.color='';return;}\n    var n=g.getAttribute('data-name'),r=g.getAttribute('data-role'),t=g.getAttribute('data-tone');\n    readout.innerHTML='<b>'+n+'</b> · '+r+' · '+t;\n    readout.style.color=g.getAttribute('data-c');\n  }\n  pts.forEach(function(g){\n    g.addEventListener('mouseenter',function(){ if(!pinned) show(g); });\n    g.addEventListener('mouseleave',function(){ if(!pinned) show(null); });\n    g.addEventListener('focus',function(){ show(g); });\n    function toggle(){ if(pinned===g){pinned=null;g.removeAttribute('data-on');show(null);} else { pts.forEach(function(p){p.removeAttribute('data-on');}); pinned=g;g.setAttribute('data-on','');show(g);} }\n    g.addEventListener('click',toggle);\n    g.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} });\n  });\n})();\n
+    ENDTAG </script>
+    TEXT \n\n
+  ENDTAG </body>
+ENDTAG </html>

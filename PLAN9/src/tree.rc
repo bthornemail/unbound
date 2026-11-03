@@ -1,0 +1,35 @@
+#!/bin/rc
+# tree.rc - inside Plan 9: each page of unbound/HTML read into its tree by zviews (wsn/html.rules: its runes, its
+# pieces, its nesting), written as an outline and compared, byte for byte, with omi-types' OMI.View's outline of the
+# same page (in/views/tree, written on the host by in/views/tree.mjs). The falsifier: each page cut by its first end
+# tag; zviews must give OMI.View's outline of the cut page, and it must not be the page's own.
+rfork e
+w=/tmp/ztree
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data HTML PLAN9/src/zviews.c PLAN9/in/views/tree} || exit tar
+g=$w/unbound/PLAN9
+cd $g/src
+8c zviews.c && 8l -o $w/zviews zviews.8 || exit compile
+ifs='
+' pages=`{cat $g/in/views/tree/pages}
+same=()
+cut=()
+moved=()
+i=0
+for(p in $pages){
+	i=`{echo $i + 1 | hoc}
+	n=`{echo $i | sed 's/^.$/0&/'}
+	t=$g/in/views/tree/$n
+	$w/zviews $w/unbound/HTML/$p >$w/out
+	if(cmp -s $w/out $t.outline) same=($same x)
+	if not echo differs: $p
+	$w/zviews $t.cut >$w/out
+	if(cmp -s $w/out $t.cut.outline) cut=($cut x)
+	if not echo cut differs: $p
+	if(! cmp -s $w/out $t.outline) moved=($moved x)
+	if not echo cut unchanged: $p
+}
+echo zviews gives 'OMI.View''s' outline of $#same of $#pages pages
+echo the falsifier: of $#cut of $#pages pages cut by their first end tag, $#moved of them changed
+if(~ $#same $#pages && ~ $#cut $#pages && ~ $#moved $#pages) echo 'tree.rc: every answer as expected'

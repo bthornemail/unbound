@@ -1,0 +1,177 @@
+DOCTYPE <!DOCTYPE html>
+TEXT \n
+STARTTAG <html lang="en">
+  TEXT \n
+  STARTTAG <head>
+    TEXT \n
+    STARTTAG <meta charset="UTF-8" />
+    TEXT \n
+    STARTTAG <meta name="viewport" content="width=device-width, initial-scale=1" />
+    TEXT \n
+    STARTTAG <title>
+      RAWTEXT Zero-Graph Harmonic Client
+    ENDTAG </title>
+    TEXT \n
+    STARTTAG <style>
+      RAWTEXT \n  body { \n    font-family: 'Courier New', monospace; \n    max-width: 800px; \n    margin: 2rem auto; \n    padding: 1rem;\n    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);\n    color: #e0e0e0;\n    min-height: 100vh;\n  }\n  \n  h1 {\n    text-align: center;\n    color: #00d4aa;\n    text-shadow: 0 0 20px rgba(0, 212, 170, 0.3);\n    margin-bottom: 2rem;\n    font-size: 2.5rem;\n  }\n  \n  .container {\n    background: rgba(255, 255, 255, 0.05);\n    border: 1px solid rgba(0, 212, 170, 0.2);\n    border-radius: 15px;\n    padding: 2rem;\n    backdrop-filter: blur(10px);\n    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);\n  }\n  \n  label {\n    display: block;\n    margin-top: 1.5rem;\n    margin-bottom: 0.5rem;\n    color: #00d4aa;\n    font-weight: bold;\n  }\n  \n  input, button, textarea { \n    font-size: 1rem; \n    padding: 0.8rem; \n    margin: 0.3rem 0; \n    width: 100%; \n    box-sizing: border-box;\n    background: rgba(255, 255, 255, 0.1);\n    border: 1px solid rgba(0, 212, 170, 0.3);\n    border-radius: 8px;\n    color: #e0e0e0;\n    font-family: 'Courier New', monospace;\n    transition: all 0.3s ease;\n  }\n  \n  input:focus, button:focus {\n    outline: none;\n    border-color: #00d4aa;\n    box-shadow: 0 0 15px rgba(0, 212, 170, 0.3);\n  }\n  \n  button {\n    background: linear-gradient(45deg, #00d4aa, #0066cc);\n    border: none;\n    color: white;\n    cursor: pointer;\n    font-weight: bold;\n    text-transform: uppercase;\n    letter-spacing: 1px;\n    transition: all 0.3s ease;\n  }\n  \n  button:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 5px 20px rgba(0, 212, 170, 0.4);\n  }\n  \n  #entriesList { \n    list-style: none; \n    padding-left: 0; \n    margin-top: 1rem;\n    max-height: 400px;\n    overflow-y: auto;\n  }\n  \n  #entriesList li { \n    padding: 0.8rem; \n    border-bottom: 1px solid rgba(0, 212, 170, 0.2);\n    background: rgba(255, 255, 255, 0.03);\n    margin-bottom: 0.5rem;\n    border-radius: 8px;\n    transition: all 0.3s ease;\n    position: relative;\n  }\n  \n  #entriesList li:hover {\n    background: rgba(0, 212, 170, 0.1);\n    transform: translateX(5px);\n  }\n  \n  .similarity { \n    font-weight: bold; \n    float: right; \n    color: #00d4aa;\n    background: rgba(0, 212, 170, 0.2);\n    padding: 0.2rem 0.5rem;\n    border-radius: 15px;\n    font-size: 0.9rem;\n  }\n  \n  .stats {\n    display: flex;\n    justify-content: space-between;\n    margin-top: 1rem;\n    padding: 1rem;\n    background: rgba(0, 212, 170, 0.1);\n    border-radius: 8px;\n    font-size: 0.9rem;\n  }\n  \n  .file-input {\n    margin-top: 1rem;\n    padding: 0.5rem;\n    border: 2px dashed rgba(0, 212, 170, 0.3);\n    border-radius: 8px;\n    text-align: center;\n    cursor: pointer;\n    transition: all 0.3s ease;\n  }\n  \n  .file-input:hover {\n    border-color: #00d4aa;\n    background: rgba(0, 212, 170, 0.05);\n  }\n  \n  .section {\n    margin-bottom: 2rem;\n  }\n  \n  .pulse {\n    animation: pulse 2s infinite;\n  }\n  \n  @keyframes pulse {\n    0% { box-shadow: 0 0 0 0 rgba(0, 212, 170, 0.7); }\n    70% { box-shadow: 0 0 0 10px rgba(0, 212, 170, 0); }\n    100% { box-shadow: 0 0 0 0 rgba(0, 212, 170, 0); }\n  }\n  \n  .peer-status {\n    display: flex;\n    align-items: center;\n    gap: 0.5rem;\n    padding: 0.5rem;\n    background: rgba(0, 212, 170, 0.1);\n    border-radius: 8px;\n    margin-bottom: 1rem;\n  }\n  \n  .status-dot {\n    width: 12px;\n    height: 12px;\n    border-radius: 50%;\n    background: #cc0066;\n    animation: blink 2s infinite;\n  }\n  \n  .status-dot.connected {\n    background: #00d4aa;\n    animation: none;\n  }\n  \n  @keyframes blink {\n    0%, 50% { opacity: 1; }\n    51%, 100% { opacity: 0.3; }\n  }\n  \n  .peer-list {\n    max-height: 150px;\n    overflow-y: auto;\n    background: rgba(0, 0, 0, 0.2);\n    border-radius: 8px;\n    padding: 0.5rem;\n    margin-top: 0.5rem;\n  }\n  \n  .peer-item {\n    padding: 0.3rem;\n    border-bottom: 1px solid rgba(0, 212, 170, 0.1);\n    font-size: 0.9rem;\n    font\n
+    ENDTAG </style>
+    TEXT \n
+  ENDTAG </head>
+  TEXT \n
+  STARTTAG <body>
+    TEXT \n\n
+    STARTTAG <h1>
+      TEXT Zero-Graph Harmonic Client
+    ENDTAG </h1>
+    TEXT \n\n
+    STARTTAG <div class="container">
+      TEXT \n  
+      STARTTAG <div class="section">
+        TEXT \n    
+        STARTTAG <label for="addInput">
+          TEXT Add Word / Text:
+        ENDTAG </label>
+        TEXT \n    
+        STARTTAG <input type="text" id="addInput" placeholder="Type a word or phrase..." />
+        TEXT \n    
+        STARTTAG <button id="addBtn" class="pulse">
+          TEXT Add Entry
+        ENDTAG </button>
+        TEXT \n  
+      ENDTAG </div>
+      TEXT \n\n  
+      STARTTAG <div class="section">
+        TEXT \n    
+        STARTTAG <label for="searchInput">
+          TEXT Search Similarity:
+        ENDTAG </label>
+        TEXT \n    
+        STARTTAG <input type="text" id="searchInput" placeholder="Type to search harmonically..." />
+        TEXT \n  
+      ENDTAG </div>
+      TEXT \n\n  
+      STARTTAG <div class="section">
+        TEXT \n    
+        STARTTAG <h2 style="color: #00d4aa;">
+          TEXT P2P Network Status
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <div class="peer-status">
+          TEXT \n      
+          STARTTAG <div class="status-dot" id="connectionStatus">
+          ENDTAG </div>
+          TEXT \n      
+          STARTTAG <span id="statusText">
+            TEXT Initializing P2P Node...
+          ENDTAG </span>
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <div>
+          TEXT \n      
+          STARTTAG <button id="startNodeBtn">
+            TEXT Start P2P Node
+          ENDTAG </button>
+          TEXT \n      
+          STARTTAG <button id="stopNodeBtn" style="background: linear-gradient(45deg, #cc0066, #990033);">
+            TEXT Stop Node
+          ENDTAG </button>
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <div>
+          TEXT \n      
+          STARTTAG <label for="connectPeer">
+            TEXT Connect to Peer:
+          ENDTAG </label>
+          TEXT \n      
+          STARTTAG <input type="text" id="connectPeer" placeholder="/ip4/127.0.0.1/tcp/4001/p2p/12D3Ko..." />
+          TEXT \n      
+          STARTTAG <button id="connectBtn">
+            TEXT Connect
+          ENDTAG </button>
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <div class="peer-list" id="peerList">
+        ENDTAG </div>
+        TEXT \n  
+      ENDTAG </div>
+      TEXT \n\n  
+      STARTTAG <div class="section">
+        TEXT \n    
+        STARTTAG <h2 style="color: #00d4aa;">
+          TEXT Harmonic Entries
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <div class="stats">
+          TEXT \n      
+          STARTTAG <span>
+            TEXT Total Entries: 
+            STARTTAG <span id="totalCount">
+              TEXT 0
+            ENDTAG </span>
+          ENDTAG </span>
+          TEXT \n      
+          STARTTAG <span>
+            TEXT Visible: 
+            STARTTAG <span id="visibleCount">
+              TEXT 0
+            ENDTAG </span>
+          ENDTAG </span>
+          TEXT \n      
+          STARTTAG <span>
+            TEXT Search Active: 
+            STARTTAG <span id="searchActive">
+              TEXT No
+            ENDTAG </span>
+          ENDTAG </span>
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <ul id="entriesList">
+        ENDTAG </ul>
+        TEXT \n  
+      ENDTAG </div>
+      TEXT \n\n  
+      STARTTAG <div class="section">
+        TEXT \n    
+        STARTTAG <button id="exportBtn">
+          TEXT Export Harmonic Database
+        ENDTAG </button>
+        TEXT \n    
+        STARTTAG <button id="syncBtn" style="background: linear-gradient(45deg, #6600cc, #4400aa);">
+          TEXT Sync with P2P Network
+        ENDTAG </button>
+        TEXT \n    
+        STARTTAG <div class="file-input">
+          TEXT \n      
+          STARTTAG <input type="file" id="importFile" style="display: none;" accept=".json" />
+          TEXT \n      
+          STARTTAG <label for="importFile">
+            TEXT 📁 Import Harmonic Database (JSON)
+          ENDTAG </label>
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <button id="clearBtn" style="background: linear-gradient(45deg, #cc0066, #990033); margin-top: 1rem;">
+          TEXT Clear All Entries
+        ENDTAG </button>
+        TEXT \n  
+      ENDTAG </div>
+      TEXT \n
+    ENDTAG </div>
+    TEXT \n\n
+    STARTTAG <script src="https://cdnjs.cloudflare.com/ajax/libs/libp2p/0.46.4/libp2p.min.js">
+    ENDTAG </script>
+    TEXT \n
+    STARTTAG <script src="https://cdnjs.cloudflare.com/ajax/libs/it-pipe/3.0.1/it-pipe.min.js">
+    ENDTAG </script>
+    TEXT \n
+    STARTTAG <script>
+      RAWTEXT \n// Harmonic Vector Implementation\nclass HarmonicVector {\n  constructor(id, length, sin, cos, tan, h, buffer) {\n    this.id = id;\n    this.length = length;\n    this.sin = sin;\n    this.cos = cos;\n    this.tan = tan;\n    this.h = h;\n    this.buffer = buffer;\n  }\n}\n\nclass ZGDEntry {\n  constructor(id, buffer, vector, metadata = {}) {\n    this.id = id;\n    this.buffer = buffer;\n    this.vector = vector;\n    this.metadata = { timestamp: Date.now(), ...metadata };\n  }\n}\n\n// Harmonize function from spec\nfunction harmonize(input, originBuffer = null) {\n  let view;\n  if (typeof input === "string") {\n    view = new TextEncoder().encode(input.toUpperCase());\n  } else {\n    view = new Uint8Array(input.buffer || input);\n  }\n\n  const rawValues = Array.from(view);\n  const values = originBuffer\n    ? rawValues.map((v, i) => v ^ new Uint8Array(originBuffer)[i % originBuffer.byteLength])\n    : rawValues;\n\n  const h = Math.hypot(...values);\n  return new HarmonicVector(\n    typeof input === "string" ? input : `BUFFER_${view.length}`,\n    values.length,\n    Math.sin(h / Math.PI),\n    Math.cos(h / 1.61803398875), // Golden ratio\n    Math.tan(Math.PI / (h || 1e-10)),\n    h,\n    view.buffer\n  );\n}\n\n// Convert buffer to unit ray\nfunction typedArrayToRay(input) {\n  const norm = Math.hypot(...input);\n  return norm === 0 ? Array.from(input) : Array.from(input).map(v => v / norm);\n}\n\n// Cosine similarity\nfunction cosineSimilarity(a, b) {\n  const len = Math.min(a.length, b.length);\n  let dot = 0;\n  for (let i = 0; i < len; i++) dot += a[i] * b[i];\n  return dot;\n}\n\n// Application State\nlet database = [];\nlet p2pNode = null;\nlet isP2PActive = false;\n\n// P2P Protocol Handler\nconst ZERO_GRAPH_PROTOCOL = '/zero-graph/1.0.0';\n\nclass ZeroGraphP2P {\n  constructor() {\n    this.node = null;\n    this.peers = new Map();\n    this.messageHandlers = new Map();\n  }\n\n  async createNode() {\n    try {\n      // Create a basic libp2p node configuration\n      const { createLibp2p } = Libp2p;\n      const { webSockets } = WebSockets;\n      const { noise } = Noise;\n      const { mplex } = Mplex;\n      const { bootstrap } = Bootstrap;\n      \n      this.node = await createLibp2p({\n        addresses: {\n          listen: ['/ip4/0.0.0.0/tcp/0/ws']\n        },\n        transports: [webSockets()],\n        connectionEncryption: [noise()],\n        streamMuxers: [mplex()],\n        peerDiscovery: [\n          bootstrap({\n            list: [\n              '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',\n              '/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa'\n            ]\n          })\n        ]\n      });\n\n      // Handle incoming connections\n      this.node.handle(ZERO_GRAPH_PROTOCOL, ({ stream }) => {\n        this.handleIncomingStream(stream);\n      });\n\n      // Listen for peer connections\n      this.node.addEventListener('peer:connect', (evt) => {\n        const peerId = evt.detail.remotePeer.toString();\n        this.peers.set(peerId, evt.detail);\n        this.updatePeerList();\n        this.updateStatus('connected', `Connected to ${this.peers.size} peers`);\n      });\n\n      this.node.addEventListener('peer:disconnect', (evt) => {\n        const peerId = evt.detail.remotePeer.toString();\n        this.peers.delete(peerId);\n        this.updatePeerList();\n        this.updateStatus('connected', `Connected to ${this.peers.size} peers`);\n      });\n\n      await this.node.start();\n      isP2PActive = true;\n      this.updateStatus('connected', `P2P Node Started - ID: ${this.node.peerId.toString().slice(0, 20)}...`);\n      \n      return true;\n    } catch (error) {\n      console.error('Failed to create P2P node:', error);\n      this.updateStatus('disconnected', 'Failed to start P2P node');\n      return false;\n    }\n  }\n\n  async stopNode() {\n    if (this.node) {\n      await this.node.stop();\n      this.node = null;\n      isP2PActive = false;\n      this.peers.clear();\n      this.updatePeerList();\n      this.updateStatus('disconnected', 'P2P Node Stopped');\n    }\n  }\n\n  async connectToPeer(multiaddr) {\n    if (!this.node) return false;\n    \n    try {\n      const connection = await this.node.dial(multiaddr);\n      return true;\n    } catch (error) {\n      console.error('Failed to connect to peer:', error);\n      return false;\n    }\n  }\n\n  async broadcastHarmonicEntry(entry) {\n    if (!this.node || this.peers.size === 0) return;\n\n    const message = {\n      type: 'harmonic_entry',\n      data: {\n        id: entry.id,\n        buffer: Array.from(new Uint8Array(entry.buffer)),\n        vector: entry.vector,\n        metadata: entry.metadata\n      },\n      timestamp: Date.now()\n    };\n\n    const messageData = new TextEncoder().encode(JSON.stringify(message));\n\n    for (const [peerId, peer] of this.peers) {\n      try {\n        const stream = await this.node.dialProtocol(peer.remotePeer, ZERO_GRAPH_PROTOCOL);\n        await pipe([messageData], stream);\n      } catch (error) {\n        console.error(`Failed to send to peer ${peerId}:`, error);\n      }\n    }\n  }\n\n  async handleIncomingStream(stream) {\n    try {\n      const data = await pipe(stream, async function* (source) {\n        for await (const chunk of source) {\n          yield chunk;\n        }\n      });\n\n      const messageBuffer = Buffer.concat(data);\n      const message = JSON.parse(messageBuffer.toString());\n\n      if (message.type === 'harmonic_entry') {\n        this.handleHarmonicEntry(message.data);\n      } else if (message.type === 'sync_request') {\n        this.handleSyncRequest(message.data);\n      }\n    } catch (error) {\n      console.error('Error handling incoming stream:', error);\n    }\n  }\n\n  handleHarmonicEntry(entryData) {\n    // Check if entry already exists\n    const exists = database.some(entry => entry.id === entryData.id);\n    if (!exists) {\n      const entry = new ZGDEntry(\n        entryData.id,\n        new Uint8Array(entryData.buffer).buffer,\n        entryData.vector,\n        entryData.metadata\n      );\n      database.push(entry);\n      renderEntries(searchInput.value);\n      \n      // Visual notification of new peer entry\n      const notification = document.createElement('div');\n      notification.textContent = `📡 Received: ${entryData.id}`;\n      notification.style.cssText = `\n        position: fixed; top: 20px; right: 20px; \n        background: rgba(0, 212, 170, 0.9); \n        color: white; padding: 1rem; border-radius: 8px;\n        z-index: 1000; font-weight: bold;\n      `;\n      document.body.appendChild(notification);\n      setTimeout(() => notification.remove(), 3000);\n    }\n  }\n\n  async syncWithPeers() {\n    if (!this.node || this.peers.size === 0) return;\n\n    const syncMessage = {\n      type: 'sync_request',\n      data: database.map(entry => ({\n        id: entry.id,\n        buffer: Array.from(new Uint8Array(entry.buffer)),\n        vector: entry.vector,\n        metadata: entry.metadata\n      })),\n      timestamp: Date.now()\n    };\n\n    const messageData = new TextEncoder().encode(JSON.stringify(syncMessage));\n\n    for (const [peerId, peer] of this.peers) {\n      try {\n        const stream = await this.node.dialProtocol(peer.remotePeer, ZERO_GRAPH_PROTOCOL);\n        await pipe([messageData], stream);\n      } catch (error) {\n        console.error(`Failed to sync with peer ${peerId}:`, error);\n      }\n    }\n  }\n\n  updateStatus(status, message) {\n    const statusDot = document.getElementById('connectionStatus');\n    const statusText = document.getElementById('statusText');\n    \n    if (status === 'connected') {\n      statusDot.classList.add('connected');\n    } else {\n      statusDot.classList.remove('connected');\n    }\n    \n    statusText.textContent = message;\n  }\n\n  updatePeerList() {\n    const peerList = document.getElementById('peerList');\n    peerList.innerHTML = '';\n    \n    if (this.peers.size === 0) {\n      peerList.innerHTML = '<div class="peer-item">No peers connected</div>';\n      return;\n    }\n\n    for (const [peerId, peer] of this.peers) {\n      const peerItem = document.createElement('div');\n      peerItem.className = 'peer-item';\n      peerItem.textContent = `🔗 ${peerId.slice(0, 20)}...`;\n      peerList.appendChild(peerItem);\n    }\n  }\n}\n\n// Initialize P2P instance\nconst p2pInstance = new ZeroGraphP2P();\n\n// DOM Elements\nconst addInput = document.getElementById("addInput");\nconst addBtn = document.getElementById("addBtn");\nconst searchInput = document.getElementById("searchInput");\nconst entriesList = document.getElementById("entriesList");\nconst exportBtn = document.getElementById("exportBtn");\nconst importFile = document.getElementById("importFile");\nconst clearBtn = document.getElementById("clearBtn");\nconst totalCount = document.getElementById("totalCount");\nconst visibleCount = document.getElementById("visibleCount");\nconst searchActive = document.getElementById("searchActive");\n\n// P2P DOM Elements\nconst startNodeBtn = document.getElementById("startNodeBtn");\nconst stopNodeBtn = document.getElementById("stopNodeBtn");\nconst connectPeer = document.getElementById("connectPeer");\nconst connectBtn = document.getElementById("connectBtn");\nconst syncBtn = document.getElementById("syncBtn");\n\n// Render entries with optional similarity filter\nfunction renderEntries(filter = "") {\n  entriesList.innerHTML = "";\n  const hasFilter = filter.trim() !== "";\n  \n  const queryVector = hasFilter\n    ? typedArrayToRay(new TextEncoder().encode(filter.toUpperCase()))\n    : null;\n\n  const scored = database.map(entry => {\n    const sim = queryVector\n      ? cosineSimilarity(queryVector, entry.vector)\n      : null;\n    return { entry, similarity: sim };\n  });\n\n  const filtered = scored\n    .filter(x => hasFilter ? (x.similarity || 0) > 0.1 : true)\n    .sort((a, b) => (b.similarity || 0) - (a.similarity || 0));\n\n  // Update stats\n  totalCount.textContent = database.length;\n  visibleCount.textContent = filtered.length;\n  searchActive.textContent = hasFilter ? "Yes" : "No";\n\n  for (const { entry, similarity } of filtered) {\n    const li = document.createElement("li");\n    li.textContent = entry.id;\n    \n    if (similarity !== null) {\n      const span = document.createElement("span");\n      span.textContent = similarity.toFixed(3);\n      span.className = "similarity";\n      li.appendChild(span);\n    }\n    \n    entriesList.appendChild(li);\n  }\n}\n\n// Add new entry\nfunction addEntry(text) {\n  if (!text.trim()) return;\n  \n  // Check for duplicates\n  if (database.some(entry => entry.id === text)) {\n    alert("Entry already exists!");\n    return;\n  }\n  \n  const hv = harmonize(text);\n  const vector = typedArrayToRay(new Uint8Array(hv.buffer));\n  const entry = new ZGDEntry(text, hv.buffer, vector);\n  \n  database.push(entry);\n  renderEntries(searchInput.value);\n  \n  // Broadcast to P2P network\n  if (isP2PActive) {\n    p2pInstance.broadcastHarmonicEntry(entry);\n  }\n  \n  // Brief visual feedback\n  addBtn.style.background = "linear-gradient(45deg, #00ff88, #0088ff)";\n  setTimeout(() => {\n    addBtn.style.background = "linear-gradient(45deg, #00d4aa, #0066cc)";\n  }, 300);\n}\n\n// Event Listeners\naddBtn.onclick = () => {\n  addEntry(addInput.value);\n  addInput.value = "";\n  addInput.focus();\n};\n\naddInput.addEventListener("keypress", (e) => {\n  if (e.key === "Enter") {\n    addEntry(addInput.value);\n    addInput.value = "";\n  }\n});\n\nsearchInput.oninput = () => {\n  renderEntries(searchInput.value);\n};\n\nexportBtn.onclick = () => {\n  const exportData = database.map(entry => ({\n    id: entry.id,\n    buffer: Array.from(new Uint8Array(entry.buffer)),\n    vector: entry.vector,\n    metadata: entry.metadata,\n  }));\n  \n  const json = JSON.stringify(exportData, null, 2);\n  const blob = new Blob([json], { type: "application/json" });\n  const url = URL.createObjectURL(blob);\n  const a = document.createElement("a");\n  a.href = url;\n  a.download = `zero-graph-harmonic-${new Date().toISOString().split('T')[0]}.json`;\n  a.click();\n  URL.revokeObjectURL(url);\n};\n\nimportFile.onchange = (e) => {\n  const files = e.target.files;\n  if (!files || files.length === 0) return;\n  \n  const file = files[0];\n  const reader = new FileReader();\n  reader.onload = () => {\n    try {\n      const text = reader.result;\n      const imported = JSON.parse(text);\n      \n      let imported_count = 0;\n      for (const item of imported) {\n        // Check for duplicates\n        if (!database.some(entry => entry.id === item.id)) {\n          database.push(new ZGDEntry(\n            item.id,\n            new Uint8Array(item.buffer).buffer,\n            item.vector,\n            item.metadata\n          ));\n          imported_count++;\n        }\n      }\n      \n      renderEntries(searchInput.value);\n      alert(`Successfully imported ${imported_count} new entries!`);\n    } catch (err) {\n      alert("Failed to load JSON file: " + err.message);\n    }\n  };\n  reader.readAsText(file);\n  \n  // Reset file input\n  importFile.value = "";\n};\n\nclearBtn.onclick = () => {\n  if (database.length === 0) return;\n  \n  if (confirm(`Are you sure you want to clear all ${database.length} entries?`)) {\n    database = [];\n    renderEntries();\n  }\n};\n\n// P2P Event Listeners\nstartNodeBtn.onclick = async () => {\n  startNodeBtn.disabled = true;\n  startNodeBtn.textContent = "Starting...";\n  \n  const success = await p2pInstance.createNode();\n  \n  startNodeBtn.disabled = false;\n  startNodeBtn.textContent = "Start P2P Node";\n  \n  if (success) {\n    startNodeBtn.style.display = "none";\n    stopNodeBtn.style.display = "inline-block";\n  }\n};\n\nstopNodeBtn.onclick = async () => {\n  await p2pInstance.stopNode();\n  startNodeBtn.style.display = "inline-block";\n  stopNodeBtn.style.display = "none";\n};\n\nconnectBtn.onclick = async () => {\n  const multiaddr = connectPeer.value.trim();\n  if (!multiaddr) return;\n  \n  connectBtn.disabled = true;\n  connectBtn.textContent = "Connecting...";\n  \n  const success = await p2pInstance.connectToPeer(multiaddr);\n  \n  connectBtn.disabled = false;\n  connectBtn.textContent = "Connect";\n  \n  if (success) {\n    connectPeer.value = "";\n    alert("Connected to peer!");\n  } else {\n    alert("Failed to connect to peer");\n  }\n};\n\nsyncBtn.onclick = async () => {\n  if (!isP2PActive) {\n    alert("P2P node not active. Start the node first.");\n    return;\n  }\n  \n  syncBtn.disabled = true;\n  syncBtn.textContent = "Syncing...";\n  \n  await p2pInstance.syncWithPeers();\n  \n  syncBtn.disabled = false;\n  syncBtn.textContent = "Sync with P2P Network";\n  \n  alert("Sync request sent to all peers!");\n};\n\n// Initialize with some sample data\nfunction initializeSampleData() {\n  const samples = [\n    "harmony", "resonance", "frequency", "amplitude",\n    "wave", "oscillation", "vibration", "pattern",\n    "mathematics", "algorithm", "vector", "similarity"\n  ];\n  \n  samples.forEach(sample => addEntry(sample));\n}\n\n// Initialize the application\nrenderEntries();\n\n// Add sample data on first load\nif (database.length === 0) {\n  initializeSampleData();\n}\n\n// Initialize P2P status\np2pInstance.updateStatus('disconnected', 'P2P Node Offline');\np2pInstance.updatePeerList();\n\n// Hide stop button initially\ndocument.getElementById('stopNodeBtn').style.display = 'none';\n\n// Focus on input for immediate use\naddInput.focus();\n
+    ENDTAG </script>
+    TEXT \n
+  ENDTAG </body>
+  TEXT \n
+ENDTAG </html>

@@ -1,0 +1,182 @@
+DOCTYPE <!DOCTYPE html>
+TEXT \n
+STARTTAG <html lang="en">
+  TEXT \n
+  STARTTAG <head>
+    TEXT \n    
+    STARTTAG <meta charset="UTF-8">
+    TEXT \n    
+    STARTTAG <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    TEXT \n    
+    STARTTAG <title>
+      RAWTEXT Tetrahedral Consciousness Universe
+    ENDTAG </title>
+    TEXT \n    
+    STARTTAG <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+    ENDTAG </script>
+    TEXT \n    
+    STARTTAG <style>
+      RAWTEXT \n        body {\n            margin: 0;\n            padding: 0;\n            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);\n            font-family: 'Courier New', monospace;\n            color: #ffffff;\n            overflow: hidden;\n        }\n        \n        #container {\n            position: relative;\n            width: 100vw;\n            height: 100vh;\n        }\n        \n        #controls {\n            position: absolute;\n            top: 20px;\n            left: 20px;\n            z-index: 100;\n            background: rgba(0, 0, 0, 0.8);\n            padding: 20px;\n            border-radius: 10px;\n            border: 1px solid #444;\n            backdrop-filter: blur(10px);\n            min-width: 300px;\n        }\n        \n        #info {\n            position: absolute;\n            top: 20px;\n            right: 20px;\n            z-index: 100;\n            background: rgba(0, 0, 0, 0.8);\n            padding: 20px;\n            border-radius: 10px;\n            border: 1px solid #444;\n            backdrop-filter: blur(10px);\n            min-width: 250px;\n            font-size: 12px;\n        }\n        \n        .control-group {\n            margin-bottom: 15px;\n        }\n        \n        label {\n            display: block;\n            margin-bottom: 5px;\n            color: #00ffff;\n            font-size: 14px;\n        }\n        \n        input[type="range"] {\n            width: 100%;\n            margin-bottom: 5px;\n        }\n        \n        button {\n            background: linear-gradient(45deg, #ff6b6b, #ff8e53);\n            border: none;\n            color: white;\n            padding: 10px 20px;\n            border-radius: 5px;\n            cursor: pointer;\n            margin: 5px;\n            font-weight: bold;\n        }\n        \n        button:hover {\n            opacity: 0.8;\n        }\n        \n        .metric {\n            display: flex;\n            justify-content: space-between;\n            margin: 5px 0;\n            padding: 5px;\n            background: rgba(255, 255, 255, 0.1);\n            border-radius: 3px;\n        }\n        \n        .binary-display {\n            font-family: 'Courier New', monospace;\n            font-size: 11px;\n            margin: 2px 0;\n            padding: 3px;\n            background: rgba(0, 255, 255, 0.1);\n            border-radius: 2px;\n        }\n        \n        #title {\n            position: absolute;\n            bottom: 20px;\n            left: 50%;\n            transform: translateX(-50%);\n            z-index: 100;\n            font-size: 24px;\n            font-weight: bold;\n            color: #00ffff;\n            text-shadow: 0 0 10px #00ffff;\n        }\n    
+    ENDTAG </style>
+    TEXT \n
+  ENDTAG </head>
+  TEXT \n
+  STARTTAG <body>
+    TEXT \n    
+    STARTTAG <div id="container">
+      TEXT \n        
+      STARTTAG <div id="controls">
+        TEXT \n            
+        STARTTAG <h3 style="color: #00ffff; margin-top: 0;">
+          TEXT Consciousness Controls
+        ENDTAG </h3>
+        TEXT \n            \n            
+        STARTTAG <div class="control-group">
+          TEXT \n                
+          STARTTAG <label for="alpha">
+            TEXT Consciousness Focus (α): 
+            STARTTAG <span id="alphaValue">
+              TEXT 1.0
+            ENDTAG </span>
+          ENDTAG </label>
+          TEXT \n                
+          STARTTAG <input type="range" id="alpha" min="0.1" max="3.0" step="0.1" value="1.0">
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n            \n            
+        STARTTAG <div class="control-group">
+          TEXT \n                
+          STARTTAG <label for="mutationRate">
+            TEXT Quantum Noise: 
+            STARTTAG <span id="mutationValue">
+              TEXT 0.1
+            ENDTAG </span>
+          ENDTAG </label>
+          TEXT \n                
+          STARTTAG <input type="range" id="mutationRate" min="0.01" max="0.5" step="0.01" value="0.1">
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n            \n            
+        STARTTAG <div class="control-group">
+          TEXT \n                
+          STARTTAG <label for="evolutionSpeed">
+            TEXT Time Flow: 
+            STARTTAG <span id="speedValue">
+              TEXT 100
+            ENDTAG </span>
+            TEXT ms
+          ENDTAG </label>
+          TEXT \n                
+          STARTTAG <input type="range" id="evolutionSpeed" min="50" max="1000" step="50" value="300">
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n            \n            
+        STARTTAG <div class="control-group">
+          TEXT \n                
+          STARTTAG <button id="startStop">
+            TEXT Start Evolution
+          ENDTAG </button>
+          TEXT \n                
+          STARTTAG <button id="reset">
+            TEXT Reset Universe
+          ENDTAG </button>
+          TEXT \n                
+          STARTTAG <button id="step">
+            TEXT Single Step
+          ENDTAG </button>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n        
+      ENDTAG </div>
+      TEXT \n        \n        
+      STARTTAG <div id="info">
+        TEXT \n            
+        STARTTAG <h3 style="color: #00ffff; margin-top: 0;">
+          TEXT Consciousness Metrics
+        ENDTAG </h3>
+        TEXT \n            \n            
+        STARTTAG <div class="metric">
+          TEXT \n                
+          STARTTAG <span>
+            TEXT Time Step:
+          ENDTAG </span>
+          TEXT \n                
+          STARTTAG <span id="timeStep">
+            TEXT 0
+          ENDTAG </span>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n            \n            
+        STARTTAG <div class="metric">
+          TEXT \n                
+          STARTTAG <span>
+            TEXT Entropy:
+          ENDTAG </span>
+          TEXT \n                
+          STARTTAG <span id="entropy">
+            TEXT 0.000
+          ENDTAG </span>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n            \n            
+        STARTTAG <div class="metric">
+          TEXT \n                
+          STARTTAG <span>
+            TEXT Coherence:
+          ENDTAG </span>
+          TEXT \n                
+          STARTTAG <span id="coherence">
+            TEXT 0.000
+          ENDTAG </span>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n            \n            
+        STARTTAG <div class="metric">
+          TEXT \n                
+          STARTTAG <span>
+            TEXT Integration:
+          ENDTAG </span>
+          TEXT \n                
+          STARTTAG <span id="integration">
+            TEXT 0.000
+          ENDTAG </span>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n            \n            
+        STARTTAG <div style="margin-top: 15px;">
+          TEXT \n                
+          STARTTAG <h4 style="color: #00ffff;">
+            TEXT Binary States:
+          ENDTAG </h4>
+          TEXT \n                
+          STARTTAG <div id="binaryStates">
+          ENDTAG </div>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n            \n            
+        STARTTAG <div style="margin-top: 15px;">
+          TEXT \n                
+          STARTTAG <h4 style="color: #00ffff;">
+            TEXT Centroid:
+          ENDTAG </h4>
+          TEXT \n                
+          STARTTAG <div id="centroidDisplay" style="font-family: 'Courier New', monospace; font-size: 11px;">
+          ENDTAG </div>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n        
+      ENDTAG </div>
+      TEXT \n        \n        
+      STARTTAG <div id="title">
+        TEXT Tetrahedral Consciousness Universe
+      ENDTAG </div>
+      TEXT \n    
+    ENDTAG </div>
+    TEXT \n\n    
+    STARTTAG <script>
+      RAWTEXT \n        class TetrahedralConsciousness {\n            constructor() {\n                this.scene = new THREE.Scene();\n                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);\n                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });\n                \n                this.setupRenderer();\n                this.setupCamera();\n                this.setupLighting();\n                \n                // Tetrahedral vertices (normalized)\n                this.vertices = [\n                    new THREE.Vector3(1, 1, 1).normalize(),\n                    new THREE.Vector3(1, -1, -1).normalize(),\n                    new THREE.Vector3(-1, 1, -1).normalize(),\n                    new THREE.Vector3(-1, -1, 1).normalize()\n                ];\n                \n                // Binary states (8-bit each vertex)\n                this.binaryStates = [\n                    this.randomBinary(),\n                    this.randomBinary(),\n                    this.randomBinary(),\n                    this.randomBinary()\n                ];\n                \n                // Parameters\n                this.alpha = 1.0;\n                this.mutationRate = 0.1;\n                this.timeStep = 0;\n                this.isRunning = false;\n                this.evolutionInterval = null;\n                \n                // History for consciousness trajectory\n                this.centroidHistory = [];\n                this.maxHistoryLength = 100;\n                \n                // 3D Objects\n                this.vertexSpheres = [];\n                this.attentionArrows = [];\n                this.centroidStar = null;\n                this.trajectoryLine = null;\n                this.tetrahedronEdges = null;\n                \n                this.initializeScene();\n                this.setupControls();\n                this.updateDisplay();\n                this.animate();\n            }\n            \n            setupRenderer() {\n                this.renderer.setSize(window.innerWidth, window.innerHeight);\n                this.renderer.setClearColor(0x000000, 0);\n                this.renderer.shadowMap.enabled = true;\n                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;\n                document.getElementById('container').appendChild(this.renderer.domElement);\n            }\n            \n            setupCamera() {\n                this.camera.position.set(3, 3, 3);\n                this.camera.lookAt(0, 0, 0);\n            }\n            \n            setupLighting() {\n                // Ambient light\n                const ambientLight = new THREE.AmbientLight(0x404040, 0.3);\n                this.scene.add(ambientLight);\n                \n                // Directional light\n                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);\n                directionalLight.position.set(5, 5, 5);\n                directionalLight.castShadow = true;\n                this.scene.add(directionalLight);\n                \n                // Point lights for atmosphere\n                const pointLight1 = new THREE.PointLight(0x00ffff, 0.5, 10);\n                pointLight1.position.set(2, 2, 2);\n                this.scene.add(pointLight1);\n                \n                const pointLight2 = new THREE.PointLight(0xff00ff, 0.5, 10);\n                pointLight2.position.set(-2, -2, -2);\n                this.scene.add(pointLight2);\n            }\n            \n            randomBinary() {\n                return Array.from({length: 8}, () => Math.random() > 0.5 ? 1 : 0);\n            }\n            \n            binaryToAttentionVector(binary) {\n                // Convert 8-bit binary to spherical coordinates\n                const thetaBits = binary.slice(0, 4);\n                const phiBits = binary.slice(4, 8);\n                \n                const theta = (parseInt(thetaBits.join(''), 2) / 15.0) * Math.PI;\n                const phi = (parseInt(phiBits.join(''), 2) / 15.0) * 2 * Math.PI;\n                \n                return new THREE.Vector3(\n                    Math.sin(theta) * Math.cos(phi),\n                    Math.sin(theta) * Math.sin(phi),\n                    Math.cos(theta)\n                );\n            }\n            \n            getAttentionVectors() {\n                return this.binaryStates.map(binary => this.binaryToAttentionVector(binary));\n            }\n            \n            computeCentroid(attentionVectors) {\n                if (this.alpha === 1.0) {\n                    // Linear centroid\n                    const sum = attentionVectors.reduce((acc, vec) => acc.add(vec), new THREE.Vector3());\n                    return sum.divideScalar(attentionVectors.length);\n                } else {\n                    // Nonlinear centroid\n                    const weightedSum = new THREE.Vector3();\n                    attentionVectors.forEach(vec => {\n                        const powered = new THREE.Vector3(\n                            Math.sign(vec.x) * Math.pow(Math.abs(vec.x), this.alpha),\n                            Math.sign(vec.y) * Math.pow(Math.abs(vec.y), this.alpha),\n                            Math.sign(vec.z) * Math.pow(Math.abs(vec.z), this.alpha)\n                        );\n                        weightedSum.add(powered);\n                    });\n                    weightedSum.divideScalar(attentionVectors.length);\n                    \n                    return new THREE.Vector3(\n                        Math.sign(weightedSum.x) * Math.pow(Math.abs(weightedSum.x), 1/this.alpha),\n                        Math.sign(weightedSum.y) * Math.pow(Math.abs(weightedSum.y), 1/this.alpha),\n                        Math.sign(weightedSum.z) * Math.pow(Math.abs(weightedSum.z), 1/this.alpha)\n                    );\n                }\n            }\n            \n            computeMetrics(attentionVectors, centroid) {\n                // Shannon entropy\n                let entropy = 0;\n                this.binaryStates.forEach(binary => {\n                    const p = binary.reduce((sum, bit) => sum + bit, 0) / 8;\n                    if (p > 0 && p < 1) {\n                        entropy += -(p * Math.log2(p) + (1-p) * Math.log2(1-p));\n                    }\n                });\n                entropy /= 4;\n                \n                // Coherence - alignment with centroid\n                const coherence = attentionVectors.reduce((sum, vec) => \n                    sum + vec.dot(centroid), 0) / attentionVectors.length;\n                \n                // Integration - centroid magnitude\n                const integration = centroid.length();\n                \n                return { entropy, coherence, integration };\n            }\n            \n            evolveSystem() {\n                const attentionVectors = this.getAttentionVectors();\n                const centroid = this.computeCentroid(attentionVectors);\n                \n                // Store centroid in history\n                this.centroidHistory.push(centroid.clone());\n                if (this.centroidHistory.length > this.maxHistoryLength) {\n                    this.centroidHistory.shift();\n                }\n                \n                // Evolve binary states\n                for (let i = 0; i < 4; i++) {\n                    const alignment = attentionVectors[i].dot(centroid);\n                    const adaptiveMutation = this.mutationRate * (1 - Math.abs(alignment));\n                    \n                    for (let j = 0; j < 8; j++) {\n                        if (Math.random() < adaptiveMutation) {\n                            this.binaryStates[i][j] = 1 - this.binaryStates[i][j];\n                        }\n                    }\n                }\n                \n                this.timeStep++;\n                this.updateScene();\n                this.updateDisplay();\n            }\n            \n            initializeScene() {\n                // Create tetrahedron edges\n                const edgeGeometry = new THREE.BufferGeometry();\n                const edgePositions = [];\n                const edges = [[0,1], [0,2], [0,3], [1,2], [1,3], [2,3]];\n                \n                edges.forEach(([i, j]) => {\n                    edgePositions.push(...this.vertices[i].toArray());\n                    edgePositions.push(...this.vertices[j].toArray());\n                });\n                \n                edgeGeometry.setAttribute('position', new THREE.Float32BufferAttribute(edgePositions, 3));\n                const edgeMaterial = new THREE.LineBasicMaterial({ color: 0x444444, transparent: true, opacity: 0.3 });\n                this.tetrahedronEdges = new THREE.LineSegments(edgeGeometry, edgeMaterial);\n                this.scene.add(this.tetrahedronEdges);\n                \n                // Create vertex spheres\n                for (let i = 0; i < 4; i++) {\n                    const geometry = new THREE.SphereGeometry(0.08, 16, 16);\n                    const material = new THREE.MeshPhongMaterial({ \n                        color: 0xff0000,\n                        emissive: 0x330000,\n                        transparent: true,\n                        opacity: 0.8\n                    });\n                    const sphere = new THREE.Mesh(geometry, material);\n                    sphere.position.copy(this.vertices[i]);\n                    sphere.castShadow = true;\n                    this.vertexSpheres.push(sphere);\n                    this.scene.add(sphere);\n                }\n                \n                // Create centroid star\n                const starGeometry = new THREE.SphereGeometry(0.12, 8, 6);\n                const starMaterial = new THREE.MeshPhongMaterial({ \n                    color: 0xffd700,\n                    emissive: 0x664400,\n                    transparent: true,\n                    opacity: 0.9\n                });\n                this.centroidStar = new THREE.Mesh(starGeometry, starMaterial);\n                this.centroidStar.castShadow = true;\n                this.scene.add(this.centroidStar);\n                \n                this.updateScene();\n            }\n            \n            updateScene() {\n                const attentionVectors = this.getAttentionVectors();\n                const centroid = this.computeCentroid(attentionVectors);\n                \n                // Update vertex colors based on Hamming weight\n                this.vertexSpheres.forEach((sphere, i) => {\n                    const hammingWeight = this.binaryStates[i].reduce((sum, bit) => sum + bit, 0);\n                    const intensity = hammingWeight / 8;\n                    sphere.material.color.setHSL(0.6 - intensity * 0.6, 1, 0.5 + intensity * 0.3);\n                    sphere.material.emissive.setHSL(0.6 - intensity * 0.6, 1, intensity * 0.2);\n                });\n                \n                // Remove old attention arrows\n                this.attentionArrows.forEach(arrow => this.scene.remove(arrow));\n                this.attentionArrows = [];\n                \n                // Create new attention arrows\n                attentionVectors.forEach((vec, i) => {\n                    const origin = this.vertices[i];\n                    const direction = vec.clone().normalize();\n                    const length = 0.5;\n                    \n                    const arrowHelper = new THREE.ArrowHelper(direction, origin, length, \n                        this.vertexSpheres[i].material.color.getHex(), length * 0.2, length * 0.1);\n                    arrowHelper.line.material.transparent = true;\n                    arrowHelper.line.material.opacity = 0.7;\n                    arrowHelper.cone.material.transparent = true;\n                    arrowHelper.cone.material.opacity = 0.7;\n                    \n                    this.attentionArrows.push(arrowHelper);\n                    this.scene.add(arrowHelper);\n                });\n                \n                // Update centroid position\n                this.centroidStar.position.copy(centroid);\n                \n                // Update trajectory line\n                if (this.trajectoryLine) {\n                    this.scene.remove(this.trajectoryLine);\n                }\n                \n                if (this.centroidHistory.length > 1) {\n                    const trajectoryGeometry = new THREE.BufferGeometry();\n                    const positions = [];\n                    this.centroidHistory.forEach(point => {\n                        positions.push(...point.toArray());\n                    });\n                    trajectoryGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));\n                    \n                    const trajectoryMaterial = new THREE.LineBasicMaterial({ \n                        color: 0xffd700, \n                        transparent: true, \n                        opacity: 0.6 \n                    });\n                    this.trajectoryLine = new THREE.Line(trajectoryGeometry, trajectoryMaterial);\n                    this.scene.add(this.trajectoryLine);\n                }\n            }\n            \n            updateDisplay() {\n                const attentionVectors = this.getAttentionVectors();\n                const centroid = this.computeCentroid(attentionVectors);\n                const metrics = this.computeMetrics(attentionVectors, centroid);\n                \n                // Update metrics\n                document.getElementById('timeStep').textContent = this.timeStep;\n                document.getElementById('entropy').textContent = metrics.entropy.toFixed(3);\n                document.getElementById('coherence').textContent = metrics.coherence.toFixed(3);\n                document.getElementById('integration').textContent = metrics.integration.toFixed(3);\n                \n                // Update binary states display\n                const binaryContainer = document.getElementById('binaryStates');\n                binaryContainer.innerHTML = '';\n                this.binaryStates.forEach((binary, i) => {\n                    const div = document.createElement('div');\n                    div.className = 'binary-display';\n                    const hammingWeight = binary.reduce((sum, bit) => sum + bit, 0);\n                    div.innerHTML = `V${i}: ${binary.join('')} (${hammingWeight})`;\n                    binaryContainer.appendChild(div);\n                });\n                \n                // Update centroid display\n                document.getElementById('centroidDisplay').textContent = \n                    `[${centroid.x.toFixed(3)}, ${centroid.y.toFixed(3)}, ${centroid.z.toFixed(3)}]`;\n            }\n            \n            setupControls() {\n                // Alpha control\n                const alphaSlider = document.getElementById('alpha');\n                const alphaValue = document.getElementById('alphaValue');\n                alphaSlider.addEventListener('input', (e) => {\n                    this.alpha = parseFloat(e.target.value);\n                    alphaValue.textContent = this.alpha.toFixed(1);\n                    this.updateScene();\n                    this.updateDisplay();\n                });\n                \n                // Mutation rate control\n                const mutationSlider = document.getElementById('mutationRate');\n                const mutationValue = document.getElementById('mutationValue');\n                mutationSlider.addEventListener('input', (e) => {\n                    this.mutationRate = parseFloat(e.target.value);\n                    mutationValue.textContent = this.mutationRate.toFixed(2);\n                });\n                \n                // Evolution speed control\n                const speedSlider = document.getElementById('evolutionSpeed');\n                const speedValue = document.getElementById('speedValue');\n                speedSlider.addEventListener('input', (e) => {\n                    const speed = parseInt(e.target.value);\n                    speedValue.textContent = speed;\n                    if (this.isRunning) {\n                        this.stopEvolution();\n                        this.startEvolution(speed);\n                    }\n                });\n                \n                // Start/Stop button\n                document.getElementById('startStop').addEventListener('click', () => {\n                    if (this.isRunning) {\n                        this.stopEvolution();\n                    } else {\n                        const speed = parseInt(document.getElementById('evolutionSpeed').value);\n                        this.startEvolution(speed);\n                    }\n                });\n                \n                // Reset button\n                document.getElementById('reset').addEventListener('click', () => {\n                    this.reset();\n                });\n                \n                // Step button\n                document.getElementById('step').addEventListener('click', () => {\n                    this.evolveSystem();\n                });\n                \n                // Mouse controls for camera\n                let mouseDown = false;\n                let mouseX = 0, mouseY = 0;\n                \n                this.renderer.domElement.addEventListener('mousedown', (e) => {\n                    mouseDown = true;\n                    mouseX = e.clientX;\n                    mouseY = e.clientY;\n                });\n                \n                document.addEventListener('mouseup', () => {\n                    mouseDown = false;\n                });\n                \n                document.addEventListener('mousemove', (e) => {\n                    if (!mouseDown) return;\n                    \n                    const deltaX = e.clientX - mouseX;\n                    const deltaY = e.clientY - mouseY;\n                    \n                    const spherical = new THREE.Spherical();\n                    spherical.setFromVector3(this.camera.position);\n                    spherical.theta -= deltaX * 0.01;\n                    spherical.phi += deltaY * 0.01;\n                    spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, spherical.phi));\n                    \n                    this.camera.position.setFromSpherical(spherical);\n                    this.camera.lookAt(0, 0, 0);\n                    \n                    mouseX = e.clientX;\n                    mouseY = e.clientY;\n                });\n                \n                // Zoom with mouse wheel\n                this.renderer.domElement.addEventListener('wheel', (e) => {\n                    const distance = this.camera.position.length();\n                    const newDistance = distance + e.deltaY * 0.01;\n                    this.camera.position.normalize().multiplyScalar(Math.max(1, Math.min(10, newDistance)));\n                });\n            }\n            \n            startEvolution(speed = 300) {\n                this.evolutionInterval = setInterval(() => {\n                    this.evolveSystem();\n                }, speed);\n                this.isRunning = true;\n                document.getElementById('startStop').textContent = 'Stop Evolution';\n            }\n            \n            stopEvolution() {\n                if (this.evolutionInterval) {\n                    clearInterval(this.evolutionInterval);\n                }\n                this.isRunning = false;\n                document.getElementById('startStop').textContent = 'Start Evolution';\n            }\n            \n            reset() {\n                this.stopEvolution();\n                this.binaryStates = [\n                    this.randomBinary(),\n                    this.randomBinary(),\n                    this.randomBinary(),\n                    this.randomBinary()\n                ];\n                this.timeStep = 0;\n                this.centroidHistory = [];\n                this.updateScene();\n                this.updateDisplay();\n            }\n            \n            animate() {\n                requestAnimationFrame(() => this.animate());\n                \n                // Rotate camera slowly when not evolving\n                if (!this.isRunning) {\n                    const time = Date.now() * 0.0005;\n                    this.camera.position.x = Math.cos(time) * 3;\n                    this.camera.position.z = Math.sin(time) * 3;\n                    this.camera.lookAt(0, 0, 0);\n                }\n                \n                // Animate consciousness star\n                if (this.centroidStar) {\n                    const time = Date.now() * 0.003;\n                    this.centroidStar.scale.setScalar(1 + 0.2 * Math.sin(time));\n                    this.centroidStar.rotation.y = time;\n                }\n                \n                this.renderer.render(this.scene, this.camera);\n            }\n        }\n        \n        // Initialize the universe when page loads\n        window.addEventListener('load', () => {\n            new TetrahedralConsciousness();\n        });\n        \n        // Handle window resize\n        window.addEventListener('resize', () => {\n            const camera = window.universe?.camera;\n            const renderer = window.universe?.renderer;\n            if (camera && renderer) {\n                camera.aspect = window.innerWidth / window.innerHeight;\n                camera.updateProjectionMatrix();\n                renderer.setSize(window.innerWidth, window.innerHeight);\n            }\n        });\n    
+    ENDTAG </script>
+    TEXT \n
+  ENDTAG </body>
+  TEXT \n
+ENDTAG </html>

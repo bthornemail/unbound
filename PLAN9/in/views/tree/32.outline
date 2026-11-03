@@ -1,0 +1,270 @@
+DOCTYPE <!DOCTYPE html>
+TEXT \n
+STARTTAG <html lang="en">
+  TEXT \n
+  STARTTAG <head>
+    TEXT \n    
+    STARTTAG <meta charset="UTF-8">
+    TEXT \n    
+    STARTTAG <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    TEXT \n    
+    STARTTAG <title>
+      RAWTEXT 16-Bit Kernel Slide Ruler
+    ENDTAG </title>
+    TEXT \n    
+    STARTTAG <script src="https://cdn.tailwindcss.com">
+    ENDTAG </script>
+    TEXT \n    
+    STARTTAG <style>
+      RAWTEXT \n        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;700&display=swap');\n        \n        :root {\n            --kernel-bg: #0a0a0c;\n            --substrate-card: #16161e;\n        }\n\n        body {\n            background-color: var(--kernel-bg);\n            color: #d1d1d1;\n            font-family: 'Inter', sans-serif;\n        }\n\n        .mono { font-family: 'Fira+Code', monospace; }\n\n        /* Grid Layouts */\n        .header-grid {\n            display: grid;\n            grid-template-columns: repeat(17, 1fr);\n            gap: 4px;\n        }\n\n        .substrate-grid {\n            display: grid;\n            grid-template-columns: repeat(16, 1fr);\n            gap: 2px;\n        }\n\n        .cell {\n            aspect-ratio: 1;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            justify-content: center;\n            font-size: 0.65rem;\n            cursor: pointer;\n            transition: all 0.1s ease;\n            border: 1px solid #222;\n            position: relative;\n        }\n\n        .cell:hover {\n            background: #3b82f6 !important;\n            color: white;\n            z-index: 10;\n            transform: scale(1.1);\n        }\n\n        .header-cell {\n            background: #222;\n            border: 1px solid #444;\n            padding: 8px 0;\n            text-align: center;\n            border-radius: 4px;\n            cursor: pointer;\n        }\n\n        .header-cell.active {\n            border-color: #3b82f6;\n            background: #1e3a8a;\n        }\n\n        /* Substrate Coloring */\n        .sub-ascii { background: #1a202c; color: #63b3ed; }\n        .sub-braille-6 { background: #2d3748; color: #f6ad55; }\n        .sub-braille-8 { background: #1e293b; color: #fbbf24; }\n        .sub-aegean { background: #333; color: #a0aec0; }\n        \n        .active-kernel {\n            outline: 2px solid #3b82f6;\n            outline-offset: 2px;\n            box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);\n            background: #1e40af !important;\n        }\n\n        input[type=range] {\n            accent-color: #3b82f6;\n        }\n\n        .unicode-header {\n            background: linear-gradient(135deg, #1e1e2e 0%, #000 100%);\n            border-left: 4px solid #3b82f6;\n        }\n    
+    ENDTAG </style>
+    TEXT \n
+  ENDTAG </head>
+  TEXT \n
+  STARTTAG <body class="p-4 md:p-8">
+    TEXT \n    
+    STARTTAG <div class="max-w-6xl mx-auto">
+      TEXT \n        
+      COMMENT <!-- Header -->
+      TEXT \n        
+      STARTTAG <header class="mb-6 flex flex-col md:flex-row justify-between items-center border-b border-gray-800 pb-4">
+        TEXT \n            
+        STARTTAG <div>
+          TEXT \n                
+          STARTTAG <h1 class="text-2xl font-bold text-white mb-1">
+            TEXT 16-Bit Kernel Slide Ruler
+          ENDTAG </h1>
+          TEXT \n                
+          STARTTAG <p class="text-gray-500 mono text-xs">
+            TEXT Constitutional Substrate & Unicode Plane Navigator
+          ENDTAG </p>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n            
+        STARTTAG <div class="bg-black px-4 py-2 rounded-lg border border-gray-800 mono text-sm text-blue-400 mt-4 md:mt-0">
+          TEXT \n                rotl(x,1) ^ rotl(x,3) ^ rotr(x,2) ^ C\n            
+        ENDTAG </div>
+        TEXT \n        
+      ENDTAG </header>
+      TEXT \n\n        
+      COMMENT <!-- Navigator Area -->
+      TEXT \n        
+      STARTTAG <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+        TEXT \n            \n            
+        COMMENT <!-- Side Controls -->
+        TEXT \n            
+        STARTTAG <div class="lg:col-span-1 space-y-4">
+          TEXT \n                
+          STARTTAG <div class="bg-[#16161e] p-5 rounded-xl border border-gray-800 shadow-xl">
+            TEXT \n                    
+            STARTTAG <h2 class="text-blue-400 font-bold mb-4 uppercase tracking-tighter text-[0.7rem]">
+              TEXT Input Vectors
+            ENDTAG </h2>
+            TEXT \n                    
+            STARTTAG <div class="space-y-6">
+              TEXT \n                        
+              STARTTAG <div>
+                TEXT \n                            
+                STARTTAG <label class="flex justify-between text-[0.6rem] mb-1 text-gray-500 uppercase font-bold">
+                  TEXT \n                                
+                  STARTTAG <span>
+                    TEXT X (State)
+                  ENDTAG </span>
+                  TEXT \n                                
+                  STARTTAG <span id="xVal" class="text-blue-400">
+                    TEXT 0x0000
+                  ENDTAG </span>
+                  TEXT \n                            
+                ENDTAG </label>
+                TEXT \n                            
+                STARTTAG <input type="range" id="xSlider" min="0" max="65535" value="0" class="w-full">
+                TEXT \n                        
+              ENDTAG </div>
+              TEXT \n                        
+              STARTTAG <div>
+                TEXT \n                            
+                STARTTAG <label class="flex justify-between text-[0.6rem] mb-1 text-gray-500 uppercase font-bold">
+                  TEXT \n                                
+                  STARTTAG <span>
+                    TEXT C (Constant)
+                  ENDTAG </span>
+                  TEXT \n                                
+                  STARTTAG <span id="cVal" class="text-orange-400">
+                    TEXT 0x0049
+                  ENDTAG </span>
+                  TEXT \n                            
+                ENDTAG </label>
+                TEXT \n                            
+                STARTTAG <input type="range" id="cSlider" min="0" max="65535" value="73" class="w-full">
+                TEXT \n                        
+              ENDTAG </div>
+              TEXT \n                    
+            ENDTAG </div>
+            TEXT \n                
+          ENDTAG </div>
+          TEXT \n\n                
+          STARTTAG <div class="bg-black/50 p-4 rounded-xl border border-gray-800">
+            TEXT \n                    
+            STARTTAG <div class="text-[0.6rem] text-gray-500 uppercase mb-1">
+              TEXT Boolean Operator (Index res % 16)
+            ENDTAG </div>
+            TEXT \n                    
+            STARTTAG <div id="opLabel" class="text-lg font-bold text-green-400 mono">
+              TEXT IDENTITY
+            ENDTAG </div>
+            TEXT \n                
+          ENDTAG </div>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n\n            
+        COMMENT <!-- Central Projection Display -->
+        TEXT \n            
+        STARTTAG <div class="lg:col-span-3 space-y-4">
+          TEXT \n                
+          STARTTAG <div class="unicode-header p-6 rounded-xl border border-gray-800 shadow-2xl relative overflow-hidden">
+            TEXT \n                    
+            STARTTAG <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+              TEXT \n                        
+              STARTTAG <div class="text-center md:text-left">
+                TEXT \n                            
+                STARTTAG <div class="text-[0.5rem] text-blue-500 uppercase font-bold mb-1">
+                  TEXT Plane Selection (Aegean Header)
+                ENDTAG </div>
+                TEXT \n                            
+                STARTTAG <div id="projAegean" class="text-6xl text-white">
+                  TEXT 𐄇
+                ENDTAG </div>
+                TEXT \n                            
+                STARTTAG <div id="planeLabel" class="text-xs text-blue-400 mono mt-2">
+                  TEXT PLANE 0: BMP
+                ENDTAG </div>
+                TEXT \n                        
+              ENDTAG </div>
+              TEXT \n                        
+              STARTTAG <div class="text-center border-x border-gray-800/50 px-4">
+                TEXT \n                            
+                STARTTAG <div class="text-[0.5rem] text-orange-500 uppercase font-bold mb-1">
+                  TEXT Word Pointer (Braille Offset)
+                ENDTAG </div>
+                TEXT \n                            
+                STARTTAG <div id="projBraille" class="text-6xl text-orange-400">
+                  TEXT ⠀
+                ENDTAG </div>
+                TEXT \n                            
+                STARTTAG <div id="wordLabel" class="text-xs text-orange-600 mono mt-2">
+                  TEXT OFFSET: U+0000
+                ENDTAG </div>
+                TEXT \n                        
+              ENDTAG </div>
+              TEXT \n                        
+              STARTTAG <div class="text-center md:text-right">
+                TEXT \n                            
+                STARTTAG <div class="text-[0.5rem] text-green-500 uppercase font-bold mb-1">
+                  TEXT Resolved Codepoint
+                ENDTAG </div>
+                TEXT \n                            
+                STARTTAG <div id="finalGlyph" class="text-6xl text-green-400">
+                  TEXT ?
+                ENDTAG </div>
+                TEXT \n                            
+                STARTTAG <div id="resultHex" class="text-xs text-green-700 mono mt-2">
+                  TEXT 0x0000
+                ENDTAG </div>
+                TEXT \n                        
+              ENDTAG </div>
+              TEXT \n                    
+            ENDTAG </div>
+            TEXT \n                
+          ENDTAG </div>
+          TEXT \n                \n                
+          COMMENT <!-- Bit Visibility Strip -->
+          TEXT \n                
+          STARTTAG <div class="bg-[#16161e] p-3 rounded-lg border border-gray-800">
+            TEXT \n                    
+            STARTTAG <div id="bitStrip" class="flex gap-1">
+              TEXT \n                        
+              COMMENT <!-- JS generated bits -->
+              TEXT \n                    
+            ENDTAG </div>
+            TEXT \n                
+          ENDTAG </div>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n        
+      ENDTAG </div>
+      TEXT \n\n        
+      COMMENT <!-- The Constitutional Map -->
+      TEXT \n        
+      STARTTAG <div class="space-y-6">
+        TEXT \n            
+        COMMENT <!-- 1. Aegean Plane Header (Independent) -->
+        TEXT \n            
+        STARTTAG <section>
+          TEXT \n                
+          STARTTAG <h3 class="text-[0.6rem] font-bold text-gray-500 uppercase mb-2 tracking-widest">
+            TEXT I. Ordinal Header (Aegean Planes 0-16)
+          ENDTAG </h3>
+          TEXT \n                
+          STARTTAG <div id="aegeanHeader" class="header-grid">
+            TEXT \n                    
+            COMMENT <!-- Generated JS -->
+            TEXT \n                
+          ENDTAG </div>
+          TEXT \n            
+        ENDTAG </section>
+        TEXT \n\n            
+        COMMENT <!-- 2. Substrate Surfaces -->
+        TEXT \n            
+        STARTTAG <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          TEXT \n                
+          COMMENT <!-- ASCII & 6-Dot Braille -->
+          TEXT \n                
+          STARTTAG <section>
+            TEXT \n                    
+            STARTTAG <h3 class="text-[0.6rem] font-bold text-blue-400 uppercase mb-2 tracking-widest">
+              TEXT II. Control & 6-Dot Witness (0x00 - 0x3F)
+            ENDTAG </h3>
+            TEXT \n                    
+            STARTTAG <div id="asciiGrid" class="substrate-grid border border-gray-800 p-1 bg-black rounded">
+            ENDTAG </div>
+            TEXT \n                
+          ENDTAG </section>
+          TEXT \n\n                
+          COMMENT <!-- 8-Dot Braille Density -->
+          TEXT \n                
+          STARTTAG <section>
+            TEXT \n                    
+            STARTTAG <h3 class="text-[0.6rem] font-bold text-orange-400 uppercase mb-2 tracking-widest">
+              TEXT III. Dense State Surface (8-Dot patterns)
+            ENDTAG </h3>
+            TEXT \n                    
+            STARTTAG <div id="braille8Grid" class="substrate-grid border border-gray-800 p-1 bg-black rounded">
+            ENDTAG </div>
+            TEXT \n                
+          ENDTAG </section>
+          TEXT \n            
+        ENDTAG </div>
+        TEXT \n        
+      ENDTAG </div>
+      TEXT \n\n        
+      STARTTAG <footer class="mt-12 pt-4 border-t border-gray-900 text-[0.6rem] text-gray-600 mono flex justify-between">
+        TEXT \n            
+        STARTTAG <span>
+          TEXT &copy; KERNEL PROTOCOL v17.0
+        ENDTAG </span>
+        TEXT \n            
+        STARTTAG <span>
+          TEXT PLANE LIMIT: 17 (UTF-16) | STATE DEPTH: 16-BIT
+        ENDTAG </span>
+        TEXT \n        
+      ENDTAG </footer>
+      TEXT \n    
+    ENDTAG </div>
+    TEXT \n\n    
+    STARTTAG <script>
+      RAWTEXT \n        const xSlider = document.getElementById('xSlider');\n        const cSlider = document.getElementById('cSlider');\n        const xValDisplay = document.getElementById('xVal');\n        const cValDisplay = document.getElementById('cVal');\n        const resultHex = document.getElementById('resultHex');\n        const projBraille = document.getElementById('projBraille');\n        const projAegean = document.getElementById('projAegean');\n        const finalGlyph = document.getElementById('finalGlyph');\n        const planeLabel = document.getElementById('planeLabel');\n        const wordLabel = document.getElementById('wordLabel');\n        const bitStrip = document.getElementById('bitStrip');\n\n        const AEGEAN_START = 0x10107;\n        const BRAILLE_START = 0x2800;\n        const OP_NAMES = ["ZERO", "AND", "A_NOT_B", "A", "NOT_A_AND_B", "B", "XOR", "OR", "NOR", "XNOR", "NOT_B", "IF_B_THEN_A", "NOT_A", "IF_A_THEN_B", "NAND", "ONE"];\n\n        const ASCII_MAP = [\n            "NUL","SOH","STX","ETX","EOT","ENQ","ACK","BEL","BS","HT","LF","VT","FF","CR","SO","SI",\n            "DLE","DC1","DC2","DC3","DC4","NAK","SYN","ETB","CAN","EM","SUB","ESC","FS","GS","RS","US",\n            "SP","!","\\"","#","$","%","&","'","(",")","*","+",",","-",".","/",\n            "0","1","2","3","4","5","6","7","8","9",":",";","<","=","?","@"\n        ];\n\n        function rotl(val, n) { return ((val << n) | (val >>> (16 - n))) & 0xFFFF; }\n        function rotr(val, n) { return ((val >>> n) | (val << (16 - n))) & 0xFFFF; }\n        function kernel(x, c) { return (rotl(x, 1) ^ rotl(x, 3) ^ rotr(x, 2) ^ c) & 0xFFFF; }\n\n        function update() {\n            const x = parseInt(xSlider.value);\n            const c = parseInt(cSlider.value);\n            const res = kernel(x, c);\n\n            xValDisplay.textContent = '0x' + x.toString(16).padStart(4, '0').toUpperCase();\n            cValDisplay.textContent = '0x' + c.toString(16).padStart(4, '0').toUpperCase();\n            resultHex.textContent = '0x' + res.toString(16).padStart(4, '0').toUpperCase();\n\n            // Unicode Plane Navigation\n            const planeIdx = x % 17;\n            const unicodePoint = (planeIdx << 16) | res;\n\n            projAegean.textContent = String.fromCodePoint(AEGEAN_START + planeIdx);\n            projBraille.textContent = String.fromCodePoint(BRAILLE_START + (res % 256));\n            planeLabel.textContent = `PLANE ${planeIdx}`;\n            wordLabel.textContent = `OFFSET: U+${res.toString(16).padStart(4, '0').toUpperCase()}`;\n            \n            try {\n                finalGlyph.textContent = String.fromCodePoint(unicodePoint);\n            } catch(e) {\n                finalGlyph.textContent = "";\n            }\n\n            // Update Boolean Operator\n            document.getElementById('opLabel').textContent = OP_NAMES[res % 16];\n\n            // Render bit strip\n            bitStrip.innerHTML = '';\n            for(let i=15; i>=0; i--) {\n                const bit = (res >> i) & 1;\n                const div = document.createElement('div');\n                div.className = `flex-grow h-4 rounded-sm ${bit ? 'bg-blue-500' : 'bg-gray-800'}`;\n                bitStrip.appendChild(div);\n            }\n\n            // Highlight Aegean Header\n            document.querySelectorAll('.header-cell').forEach((cell, idx) => {\n                cell.classList.toggle('active', idx === planeIdx);\n            });\n\n            // Highlight Grid Matches\n            document.querySelectorAll('.cell').forEach(cell => {\n                cell.classList.remove('active-kernel');\n                if (parseInt(cell.dataset.addr) === (res % 256)) {\n                    cell.classList.add('active-kernel');\n                }\n            });\n        }\n\n        function initGrids() {\n            // 1. Aegean Header (0-16)\n            const hGrid = document.getElementById('aegeanHeader');\n            for(let i=0; i<17; i++) {\n                const div = document.createElement('div');\n                div.className = 'header-cell mono text-xs';\n                div.innerHTML = `<div class="text-white text-lg">${String.fromCodePoint(AEGEAN_START + i)}</div><div class="text-[0.5rem] opacity-50">${i}</div>`;\n                div.onclick = () => { xSlider.value = i * 3855; update(); }; // Jump X to plane markers\n                hGrid.appendChild(div);\n            }\n\n            // 2. ASCII / 6-Dot (0-63)\n            const aGrid = document.getElementById('asciiGrid');\n            for(let i=0; i<64; i++) {\n                const cell = document.createElement('div');\n                cell.dataset.addr = i;\n                cell.className = 'cell sub-ascii';\n                cell.innerHTML = `\n                    <span class="text-[0.4rem] opacity-40">${i.toString(16).toUpperCase()}</span>\n                    <span class="font-bold text-[0.7rem]">${ASCII_MAP[i]}</span>\n                    <span class="text-[0.6rem] text-orange-400/50">${String.fromCodePoint(BRAILLE_START + i)}</span>\n                `;\n                cell.onclick = () => { xSlider.value = i; update(); };\n                aGrid.appendChild(cell);\n            }\n\n            // 3. Braille 8-Dot (0-255)\n            const bGrid = document.getElementById('braille8Grid');\n            for(let i=0; i<256; i++) {\n                const cell = document.createElement('div');\n                cell.dataset.addr = i;\n                cell.className = 'cell sub-braille-8';\n                cell.innerHTML = `\n                    <span class="text-[0.4rem] opacity-30">${i.toString(16).toUpperCase()}</span>\n                    <span class="text-lg">${String.fromCodePoint(BRAILLE_START + i)}</span>\n                `;\n                cell.onclick = () => { xSlider.value = i; update(); };\n                bGrid.appendChild(cell);\n            }\n        }\n\n        xSlider.oninput = update;\n        cSlider.oninput = update;\n        initGrids();\n        update();\n    
+    ENDTAG </script>
+    TEXT \n
+  ENDTAG </body>
+  TEXT \n
+ENDTAG </html>

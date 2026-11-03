@@ -1,0 +1,134 @@
+DOCTYPE <!doctype html>
+STARTTAG <html>
+  STARTTAG <head>
+    STARTTAG <meta charset=utf8>
+    STARTTAG <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+    STARTTAG <style>
+      RAWTEXT :root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</head><body>\n<title>Term Treemap</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">\n<style>\n/* Layout: one column; the term's treemap over a witness scrubber, then the masks between witnesses. */\n:root {\n  --bg: #f3f4f1; --panel: #ffffff; --ink: #1d2320; --muted: #5d6762; --rule: #d6dbd6;\n  --letter: #2f5d7c; --letter-ink: #ffffff; --marks: #c98a2b; --marks-ink: #1d2320; --accent: #2f5d7c;\n  --f-body: "IBM Plex Sans", system-ui, sans-serif;\n  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;\n  --f-heb: "Frank Ruhl Libre", "SBL Hebrew", "Times New Roman", serif;\n}\n@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {\n  --bg: #121614; --panel: #1a201d; --ink: #e3e8e4; --muted: #9aa6a0; --rule: #2c3530;\n  --letter: #6fa8cf; --letter-ink: #0e1512; --marks: #e0a54a; --marks-ink: #0e1512; --accent: #6fa8cf; color-scheme: dark } }\n:root[data-theme="dark"] {\n  --bg: #121614; --panel: #1a201d; --ink: #e3e8e4; --muted: #9aa6a0; --rule: #2c3530;\n  --letter: #6fa8cf; --letter-ink: #0e1512; --marks: #e0a54a; --marks-ink: #0e1512; --accent: #6fa8cf; color-scheme: dark }\nbody { background: var(--bg); color: var(--ink); font: 16px/1.55 var(--f-body); }\n.wrap { max-width: 860px; margin: 0 auto; padding-block: 32px 64px; display: grid; gap: 20px;\n  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }\nh1 { font-size: 1.7rem; margin: 0; font-weight: 600; text-wrap: balance; }\np { margin: 0; max-width: 65ch; }\n.muted { color: var(--muted); }\n.eyebrow { font: 600 .75rem var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }\n.heb { font-family: var(--f-heb); }\n.stage { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 12px; display: grid; gap: 12px; min-width: 0; }\n.frame-label { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; font-family: var(--f-mono); }\n.frame-label .idx { color: var(--muted); }\n.frame-label .name { font-weight: 600; font-size: 1.1rem; }\n.frame-label .lit { font-family: var(--f-heb); font-size: 1.6rem; }\nsvg { display: block; width: 100%; height: auto; }\nsvg text { pointer-events: none; }\n.absent { font: 600 1rem var(--f-mono); fill: var(--muted); }\n.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }\nbutton { font: 600 .85rem var(--f-mono); padding: 6px 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--ink); cursor: pointer; }\nbutton:hover { border-color: var(--accent); }\nbutton:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }\ninput[type=range] { flex: 1 1 200px; accent-color: var(--accent); min-width: 0; }\n.ticks { display: grid; grid-template-columns: repeat(4, 1fr); font: .75rem var(--f-mono); color: var(--muted); }\n.ticks span:nth-child(2) { text-align: center; } .ticks span:nth-child(3) { text-align: center; } .ticks span:last-child { text-align: right; }\n.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: .9rem; }\n.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }\n.table-wrap { overflow-x: auto; }\ntable { border-collapse: collapse; font: .85rem var(--f-mono); font-variant-numeric: tabular-nums; }\nth, td { text-align: left; padding: 6px 12px; border-bottom: 1px solid var(--rule); white-space: nowrap; }\nth { color: var(--muted); font-weight: 600; }\ntd.on { color: var(--marks); font-weight: 600; }\nfooter { font-size: .85rem; color: var(--muted); display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 16px; }\n
+    ENDTAG </style>
+    TEXT \n\n
+    STARTTAG <div class="wrap">
+      TEXT \n  
+      STARTTAG <header style="display:grid;gap:8px">
+        TEXT \n    
+        STARTTAG <div class="eyebrow">
+          TEXT ZIGUAROTH · _CATALOG/YHWH
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <h1>
+          TEXT YHWH across the four witnesses
+        ENDTAG </h1>
+        TEXT \n    
+        STARTTAG <p class="muted">
+          TEXT The structure is fixed: the Name, its four letter cells, and in each cell a letter layer and a mark layer. Only the values change from witness to witness. A tile that grows or shrinks is where two witnesses differ. No witness is taken as right.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </header>
+      TEXT \n\n  
+      STARTTAG <section class="stage" aria-label="Treemap of the term">
+        TEXT \n    
+        STARTTAG <div class="frame-label" aria-live="polite">
+          TEXT \n      
+          STARTTAG <span class="idx" id="f-idx">
+            TEXT _CODICES[0]
+          ENDTAG </span>
+          TEXT \n      
+          STARTTAG <span class="name" id="f-name">
+            TEXT ALEPPO
+          ENDTAG </span>
+          TEXT \n      
+          STARTTAG <span class="lit" id="f-lit">
+          ENDTAG </span>
+          TEXT \n      
+          STARTTAG <span class="muted" id="f-src">
+          ENDTAG </span>
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <svg id="map" viewBox="0 0 800 420" role="img" aria-label="Treemap of YHWH's letter cells for the selected witness">
+        ENDTAG </svg>
+        TEXT \n    
+        STARTTAG <div class="controls">
+          TEXT \n      
+          STARTTAG <button type="button" id="play">
+            TEXT Play
+          ENDTAG </button>
+          TEXT \n      
+          STARTTAG <input type="range" id="scrub" min="0" max="3" step="1" value="0" aria-label="Witness">
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <div class="ticks">
+          STARTTAG <span>
+            TEXT [0] ALEPPO
+          ENDTAG </span>
+          STARTTAG <span>
+            TEXT [1] ROSETTA
+          ENDTAG </span>
+          STARTTAG <span>
+            TEXT [2] BEHISTUN
+          ENDTAG </span>
+          STARTTAG <span>
+            TEXT [3] LENINGRAD
+          ENDTAG </span>
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <div class="legend">
+          TEXT \n      
+          STARTTAG <span>
+            STARTTAG <i style="background:var(--letter)">
+            ENDTAG </i>
+            TEXT letter layer (the consonant)
+          ENDTAG </span>
+          TEXT \n      
+          STARTTAG <span>
+            STARTTAG <i style="background:var(--marks)">
+            ENDTAG </i>
+            TEXT mark layer (vowel points; size = how many)
+          ENDTAG </span>
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section style="display:grid;gap:10px">
+        TEXT \n    
+        STARTTAG <h2 style="font-size:1.1rem;margin:0">
+          TEXT The masks between witnesses
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p class="muted">
+          TEXT One bit per letter cell, read right to left with the Hebrew: 1 where the pair differs. An absent witness holds the empty base, so against a reading every cell differs, and two absent witnesses show no difference.
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <div class="table-wrap">
+          STARTTAG <table id="masks">
+          ENDTAG </table>
+        ENDTAG </div>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <footer>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT Leningrad: Westminster Leningrad Codex, Deuteronomy 29:1 (Sefaria's Hebrew numbering; 29:2 in most English Bibles), public domain, via Sefaria. Aleppo: Miqra according to the Masorah (MAM), based on the Aleppo Codex, he.wikisource via Sefaria, CC BY-SA; its one word here, יְהֹוָה, is shared under that licence. Accents removed. Rosetta and Behistun do not contain this passage.
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT After the animated treemap in Observable's D3 gallery: one hierarchy, keyframes that change only the values, laid out with d3.treemapResquarify so the tiles keep their places.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </footer>
+      TEXT \n
+    ENDTAG </div>
+    TEXT \n\n
+    STARTTAG <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js">
+    ENDTAG </script>
+    TEXT \n
+    STARTTAG <script>
+      RAWTEXT \n// Each witness, as its literal code points (accents removed). An empty string lacks the passage.\nconst WITNESSES = [\n  { idx: 0, name: "ALEPPO", src: "MAM, Deut 29:1", text: "יְהֹוָה" },\n  { idx: 1, name: "ROSETTA", src: "absent: the empty base", text: "" },\n  { idx: 2, name: "BEHISTUN", src: "absent: the empty base", text: "" },\n  { idx: 3, name: "LENINGRAD", src: "WLC, Deut 29:1", text: "יְהוָה" },\n];\nconst MARK = { 0x05B0: "sheva", 0x05B8: "qamatz", 0x05B9: "holam" };\nconst isLetter = (c) => c >= "א" && c <= "ת";\nfunction cells(text) {\n  const out = [];\n  for (const c of text.normalize("NFC")) {\n    if (isLetter(c) || !out.length) out.push({ letter: c, marks: [] });\n    else out[out.length - 1].marks.push(c);\n  }\n  return out;\n}\nconst perWitness = WITNESSES.map((w) => cells(w.text));\nconst n = Math.max(...perWitness.map((c) => c.length));\nconst LETTERS = [...Array(n).keys()].map((k) => perWitness.find((c) => c[k])?.[k].letter);\n\n// One fixed hierarchy; each leaf carries one value per witness.\nconst data = { name: "YHWH", children: LETTERS.map((letter, k) => ({\n  name: `cell ${k + 1}`, letter, k,\n  children: [\n    { name: "letter", layer: "letter", values: perWitness.map((c) => c[k] ? 1 : 0), labels: perWitness.map((c) => c[k]?.letter ?? "") },\n    { name: "marks", layer: "marks", values: perWitness.map((c) => c[k]?.marks.length ?? 0),\n      labels: perWitness.map((c) => (c[k]?.marks ?? []).map((m) => MARK[m.codePointAt(0)] ?? "mark").join(" ")) },\n  ] })) };\n\nconst W = 800, H = 420;\nconst svg = d3.select("#map");\nconst treemap = d3.treemap().tile(d3.treemapResquarify).size([W, H]).paddingInner(4).paddingOuter(2).round(true);\nconst root = treemap(d3.hierarchy(data).sum((d) => d.values ? d3.sum(d.values) : 0).sort((a, b) => b.value - a.value));\nconst leaves = root.leaves();\nconst css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();\n\nconst g = svg.selectAll("g.leaf").data(leaves).join("g").attr("class", "leaf");\ng.append("rect").attr("rx", 3);\ng.append("text").attr("class", "glyph heb").attr("text-anchor", "middle").attr("dominant-baseline", "central");\ng.append("text").attr("class", "cap").attr("text-anchor", "middle").style("font", "600 12px var(--f-mono)");\nconst absent = svg.append("text").attr("class", "absent").attr("x", W / 2).attr("y", H / 2).attr("text-anchor", "middle");\n\nconst reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;\nlet index = 0;\nfunction draw(i, animate) {\n  index = i;\n  const w = WITNESSES[i];\n  treemap(root.sum((d) => d.values ? d.values[i] : 0));\n  const t = svg.transition().duration(animate && !reduce ? 900 : 0).ease(d3.easeCubicInOut);\n  g.transition(t).attr("transform", (d) => `translate(${d.x0},${d.y0})`);\n  g.select("rect").attr("fill", (d) => css(d.data.layer === "letter" ? "--letter" : "--marks"))\n    .transition(t).attr("width", (d) => Math.max(0, d.x1 - d.x0)).attr("height", (d) => Math.max(0, d.y1 - d.y0));\n  g.select("text.glyph")\n    .attr("fill", (d) => css(d.data.layer === "letter" ? "--letter-ink" : "--marks-ink"))\n    .text((d) => d.data.layer === "letter" ? d.data.labels[i] : (d.data.labels[i] ? "◌" + perWitness[i][d.parent.data.k]?.marks.join("") : ""))\n    .transition(t).attr("x", (d) => (d.x1 - d.x0) / 2).attr("y", (d) => (d.y1 - d.y0) / 2 - 8)\n    .style("font-size", (d) => Math.max(0, Math.min(56, (d.y1 - d.y0) * 0.5, (d.x1 - d.x0) * 0.6)) + "px")\n    .style("opacity", (d) => d.value ? 1 : 0);\n  g.select("text.cap")\n    .attr("fill", (d) => css(d.data.layer === "letter" ? "--letter-ink" : "--marks-ink"))\n    .text((d) => d.data.layer === "letter" ? d.parent.data.name : d.data.labels[i])\n    .transition(t).attr("x", (d) => (d.x1 - d.x0) / 2).attr("y", (d) => Math.max(14, (d.y1 - d.y0) - 12))\n    .style("opacity", (d) => d.value && (d.x1 - d.x0) > 44 && (d.y1 - d.y0) > 40 ? 1 : 0);\n  absent.text(root.value ? "" : `${w.name} lacks this passage: the empty base`);\n  d3.select("#f-idx").text(`_CODICES[${w.idx}]`);\n  d3.select("#f-name").text(w.name);\n  d3.select("#f-lit").text(w.text || "∅");\n  d3.select("#f-src").text(w.src);\n  document.getElementById("scrub").value = i;\n}\n\n// Masks: every pair, no reference witness.\nconst mask = (a, b, key) => [...Array(n).keys()].map((k) => {\n  const x = a[k], y = b[k];\n  if (!x && !y) return "";\n  return x && y && (key === "letter" ? x.letter === y.letter : x.marks.join() === y.marks.join()) ? "0" : "1";\n}).join("");\nconst rows = [];\nfor (let i = 0; i < 4; i++) for (let j = i + 1; j < 4; j++) {\n  const L = mask(perWitness[i], perWitness[j], "letter"), M = mask(perWitness[i], perWitness[j], "marks");\n  rows.push(`<tr><td>[${i}] ${WITNESSES[i].name} · [${j}] ${WITNESSES[j].name}</td><td class="${L.includes("1") ? "on" : ""}">${L || "(both empty)"}</td><td class="${M.includes("1") ? "on" : ""}">${M || "(both empty)"}</td></tr>`);\n}\ndocument.getElementById("masks").innerHTML = `<thead><tr><th>pair</th><th>letters</th><th>marks</th></tr></thead><tbody>${rows.join("")}</tbody>`;\n\nlet timer = null;\nconst playBtn = document.getElementById("play");\nfunction stop() { clearInterval(timer); timer = null; playBtn.textContent = "Play"; }\nplayBtn.addEventListener("click", () => {\n  if (timer) return stop();\n  playBtn.textContent = "Pause";\n  timer = setInterval(() => draw((index + 1) % 4, true), 1800);\n});\ndocument.getElementById("scrub").addEventListener("input", (e) => { stop(); draw(+e.target.value, true); });\nmatchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => draw(index, false));\ndraw(0, false);\n
+    ENDTAG </script>
+    TEXT \n\n
+    ENDTAG </body>
+    OPEN
+ENDTAG </html>

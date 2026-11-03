@@ -1,0 +1,79 @@
+DOCTYPE <!DOCTYPE html>
+TEXT \n
+STARTTAG <html lang="en">
+  TEXT \n
+  STARTTAG <head>
+    TEXT \n    
+    STARTTAG <meta charset="UTF-8">
+    TEXT \n    
+    STARTTAG <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    TEXT \n    
+    STARTTAG <title>
+      RAWTEXT UBHP Harmonic Signature Demo
+    ENDTAG </title>
+    TEXT \n    
+    STARTTAG <style>
+      RAWTEXT \n        body {\n            font-family: 'Consolas', 'Monaco', monospace;\n            margin: 20px;\n            background: #1a1a1a;\n            color: #00ff00;\n        }\n        .container {\n            max-width: 1200px;\n            margin: 0 auto;\n        }\n        h1 {\n            color: #00ffff;\n            text-align: center;\n            margin-bottom: 30px;\n        }\n        .input-section {\n            margin-bottom: 30px;\n        }\n        textarea {\n            width: 100%;\n            height: 100px;\n            background: #2a2a2a;\n            color: #00ff00;\n            border: 1px solid #00ff00;\n            padding: 10px;\n            font-family: inherit;\n            resize: vertical;\n        }\n        button {\n            background: #004400;\n            color: #00ff00;\n            border: 1px solid #00ff00;\n            padding: 10px 20px;\n            cursor: pointer;\n            margin: 10px 5px;\n            font-family: inherit;\n        }\n        button:hover {\n            background: #006600;\n        }\n        .results {\n            display: grid;\n            grid-template-columns: 1fr 1fr;\n            gap: 20px;\n            margin-top: 20px;\n        }\n        .signature-box {\n            background: #2a2a2a;\n            border: 1px solid #00ff00;\n            padding: 15px;\n            margin: 10px 0;\n        }\n        .signature-title {\n            color: #00ffff;\n            font-weight: bold;\n            margin-bottom: 10px;\n        }\n        .similarity-matrix {\n            grid-column: 1 / -1;\n            margin-top: 20px;\n        }\n        table {\n            width: 100%;\n            border-collapse: collapse;\n            margin-top: 10px;\n        }\n        th, td {\n            border: 1px solid #00ff00;\n            padding: 8px;\n            text-align: center;\n        }\n        th {\n            background: #004400;\n            color: #00ffff;\n        }\n        .high-sim {\n            background: #004400;\n        }\n        .med-sim {\n            background: #442200;\n        }\n        .low-sim {\n            background: #440000;\n        }\n    
+    ENDTAG </style>
+    TEXT \n
+  ENDTAG </head>
+  TEXT \n
+  STARTTAG <body>
+    TEXT \n    
+    STARTTAG <div class="container">
+      TEXT \n        
+      STARTTAG <h1>
+        TEXT Universal Binary Hypergraph Protocol (UBHP)
+      ENDTAG </h1>
+      TEXT \n        
+      STARTTAG <h2 style="color: #00ffff; text-align: center;">
+        TEXT Harmonic Signature Demo
+      ENDTAG </h2>
+      TEXT \n        \n        
+      STARTTAG <div class="input-section">
+        TEXT \n            
+        STARTTAG <h3>
+          TEXT Test Content:
+        ENDTAG </h3>
+        TEXT \n            
+        STARTTAG <textarea id="input1" placeholder="Enter first text...">
+          RAWTEXT Hello World
+        ENDTAG </textarea>
+        TEXT \n            
+        STARTTAG <textarea id="input2" placeholder="Enter second text...">
+          RAWTEXT Hello World!
+        ENDTAG </textarea>
+        TEXT \n            
+        STARTTAG <textarea id="input3" placeholder="Enter third text...">
+          RAWTEXT machine learning
+        ENDTAG </textarea>
+        TEXT \n            
+        STARTTAG <textarea id="input4" placeholder="Enter fourth text...">
+          RAWTEXT artificial intelligence
+        ENDTAG </textarea>
+        TEXT \n            \n            
+        STARTTAG <button onclick="generateSignatures()">
+          TEXT Generate Harmonic Signatures
+        ENDTAG </button>
+        TEXT \n            
+        STARTTAG <button onclick="loadSamples()">
+          TEXT Load Sample Data
+        ENDTAG </button>
+        TEXT \n        
+      ENDTAG </div>
+      TEXT \n        \n        
+      STARTTAG <div class="results" id="results">
+      ENDTAG </div>
+      TEXT \n        \n        
+      STARTTAG <div class="similarity-matrix" id="similarity-matrix">
+      ENDTAG </div>
+      TEXT \n    
+    ENDTAG </div>
+    TEXT \n\n    
+    STARTTAG <script>
+      RAWTEXT \n        // UBHP Harmonic Signature Implementation\n        class UBHPHarmonic {\n            static harmonize(inputBuffer) {\n                const view = new Uint8Array(inputBuffer);\n                const values = Array.from(view);\n                \n                const h = Math.hypot(...values); // Euclidean norm\n                const sin = Math.sin(h / Math.PI);\n                const cos = Math.cos(h / 1.61803398875); // Golden ratio constant\n                const tan = Math.tan(Math.PI / (h || 1e-10)); // Avoid division by zero\n                \n                const id = `UBHP_${h.toFixed(8)}_${sin.toFixed(8)}_${cos.toFixed(8)}_${view.length}`;\n                \n                return {\n                    id,\n                    length: values.length,\n                    sin,\n                    cos,\n                    tan,\n                    h,\n                    buffer: inputBuffer\n                };\n            }\n            \n            static typedArrayToRay(inputBuffer) {\n                const input = new Uint8Array(inputBuffer);\n                const norm = Math.hypot(...input);\n                return norm === 0 ? Array.from(input) : Array.from(input).map(v => v / norm);\n            }\n            \n            static cosineSimilarity(a, b) {\n                let dot = 0;\n                let normA = 0;\n                let normB = 0;\n                const len = Math.min(a.length, b.length);\n                \n                for (let i = 0; i < len; i++) {\n                    dot += a[i] * b[i];\n                    normA += a[i] * a[i];\n                    normB += b[i] * b[i];\n                }\n                \n                const magnitude = Math.sqrt(normA) * Math.sqrt(normB);\n                return magnitude === 0 ? 0 : dot / magnitude;\n            }\n            \n            static harmonicDistance(sig1, sig2) {\n                // Calculate distance in harmonic space\n                const dh = sig1.h - sig2.h;\n                const dsin = sig1.sin - sig2.sin;\n                const dcos = sig1.cos - sig2.cos;\n                return Math.sqrt(dh*dh + dsin*dsin + dcos*dcos);\n            }\n        }\n        \n        function generateSignatures() {\n            const inputs = [\n                document.getElementById('input1').value,\n                document.getElementById('input2').value,\n                document.getElementById('input3').value,\n                document.getElementById('input4').value\n            ].filter(text => text.trim() !== '');\n            \n            const signatures = inputs.map(text => {\n                const buffer = new TextEncoder().encode(text).buffer;\n                return {\n                    text,\n                    signature: UBHPHarmonic.harmonize(buffer),\n                    ray: UBHPHarmonic.typedArrayToRay(buffer)\n                };\n            });\n            \n            displaySignatures(signatures);\n            displaySimilarityMatrix(signatures);\n        }\n        \n        function displaySignatures(signatures) {\n            const resultsDiv = document.getElementById('results');\n            resultsDiv.innerHTML = '';\n            \n            signatures.forEach((sig, index) => {\n                const box = document.createElement('div');\n                box.className = 'signature-box';\n                box.innerHTML = `\n                    <div class="signature-title">Input ${index + 1}: "${sig.text}"</div>\n                    <div><strong>ID:</strong> ${sig.signature.id}</div>\n                    <div><strong>h (norm):</strong> ${sig.signature.h.toFixed(6)}</div>\n                    <div><strong>sin(h/π):</strong> ${sig.signature.sin.toFixed(6)}</div>\n                    <div><strong>cos(h/φ):</strong> ${sig.signature.cos.toFixed(6)}</div>\n                    <div><strong>tan(π/h):</strong> ${sig.signature.tan.toFixed(6)}</div>\n                    <div><strong>Length:</strong> ${sig.signature.length} bytes</div>\n                    <div><strong>Ray (first 8):</strong> [${sig.ray.slice(0, 8).map(v => v.toFixed(3)).join(', ')}...]</div>\n                `;\n                resultsDiv.appendChild(box);\n            });\n        }\n        \n        function displaySimilarityMatrix(signatures) {\n            const matrixDiv = document.getElementById('similarity-matrix');\n            \n            if (signatures.length < 2) {\n                matrixDiv.innerHTML = '<p>Need at least 2 inputs to show similarity matrix</p>';\n                return;\n            }\n            \n            let table = '<h3>Similarity Matrix</h3><table><tr><th>Text</th>';\n            signatures.forEach((_, i) => {\n                table += `<th>Input ${i + 1}</th>`;\n            });\n            table += '</tr>';\n            \n            signatures.forEach((sig1, i) => {\n                table += `<tr><td><strong>"${sig1.text.substring(0, 20)}${sig1.text.length > 20 ? '...' : ''}"</strong></td>`;\n                signatures.forEach((sig2, j) => {\n                    if (i === j) {\n                        table += '<td style="background: #004400;">1.000</td>';\n                    } else {\n                        const cosSim = UBHPHarmonic.cosineSimilarity(sig1.ray, sig2.ray);\n                        const harmDist = UBHPHarmonic.harmonicDistance(sig1.signature, sig2.signature);\n                        \n                        let className = 'low-sim';\n                        if (cosSim > 0.8) className = 'high-sim';\n                        else if (cosSim > 0.5) className = 'med-sim';\n                        \n                        table += `<td class="${className}" title="Harmonic Distance: ${harmDist.toFixed(3)}">${cosSim.toFixed(3)}</td>`;\n                    }\n                });\n                table += '</tr>';\n            });\n            table += '</table>';\n            \n            matrixDiv.innerHTML = table;\n        }\n        \n        function loadSamples() {\n            document.getElementById('input1').value = "Hello World";\n            document.getElementById('input2').value = "Hello World!";\n            document.getElementById('input3').value = "machine learning";\n            document.getElementById('input4').value = "artificial intelligence";\n            generateSignatures();\n        }\n        \n        // Generate initial signatures\n        loadSamples();\n    
+    ENDTAG </script>
+    TEXT \n
+  ENDTAG </body>
+  TEXT \n
+ENDTAG </html>

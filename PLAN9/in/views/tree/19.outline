@@ -1,0 +1,199 @@
+DOCTYPE <!doctype html>
+STARTTAG <html>
+  STARTTAG <head>
+    STARTTAG <meta charset=utf8>
+    STARTTAG <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+    STARTTAG <style>
+      RAWTEXT :root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+    ENDTAG </style>
+  ENDTAG </head>
+  STARTTAG <body>
+    TEXT \n
+    STARTTAG <title>
+      RAWTEXT The 60-in-64 Clock
+    ENDTAG </title>
+    TEXT \n
+    STARTTAG <style>
+      RAWTEXT \n/* Layout: single readable column, dial diagram beside the first section on wide screens */\n:root{\n  --bg:#f6f7f5; --fg:#1d2420; --muted:#59645d; --rule:#d5dad5;\n  --dial:#2f6f5e; --spare:#c2571a; --panel:#eceee9;\n  --display:"Fraunces",Georgia,serif; --body:"Source Sans 3",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;\n}\n@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a17;--fg:#e6ebe7;--muted:#9aa89f;--rule:#2d3832;--dial:#6cc3a8;--spare:#f0925a;--panel:#1c2420;color-scheme:dark}}\n:root[data-theme="dark"]{--bg:#141a17;--fg:#e6ebe7;--muted:#9aa89f;--rule:#2d3832;--dial:#6cc3a8;--spare:#f0925a;--panel:#1c2420;color-scheme:dark}\nbody{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:28px}\nmain{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:22px}\nh1{font-family:var(--display);font-weight:600;font-size:2rem;line-height:1.15;margin:0;text-wrap:balance}\nh2{font-family:var(--display);font-weight:600;font-size:1.2rem;margin:0 0 6px;text-wrap:balance}\np{margin:0 0 8px;max-width:65ch}\n.lede{color:var(--muted);font-size:1.05rem}\nsection{border-top:1px solid var(--rule);padding-top:16px}\n.row{display:flex;gap:24px;align-items:center;flex-wrap:wrap}\n.row>div{flex:1 1 300px;min-width:0}\nsvg{width:220px;max-width:100%;height:auto;flex:0 0 auto}\n.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}\n.nums div{background:var(--panel);padding:10px 12px;border-radius:6px;min-width:0}\n.nums b{display:block;font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums}\n.nums span{color:var(--muted);font-size:.9rem}\ncode{font-family:var(--mono);font-size:.92em}\nul{margin:4px 0 0;padding-left:20px}\nli{margin-bottom:4px;max-width:65ch}\n.a{color:var(--dial);font-weight:600}.s{color:var(--spare);font-weight:600}\n
+    ENDTAG </style>
+    TEXT \n
+    STARTTAG <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=IBM+Plex+Mono&family=Source+Sans+3:wght@400;600&display=swap">
+    TEXT \n
+    STARTTAG <main>
+      TEXT \n
+      STARTTAG <header>
+        TEXT \n
+        STARTTAG <h1>
+          TEXT The 60-in-64 Clock
+        ENDTAG </h1>
+        TEXT \n
+        STARTTAG <p class="lede">
+          TEXT A dial of 64 slots where 60 carry time and 4 are held back for control. The same shape repeats at 256 slots, with 240 for time and 16 for control.
+        ENDTAG </p>
+        TEXT \n
+      ENDTAG </header>
+      TEXT \n\n
+      STARTTAG <section>
+        TEXT \n
+        STARTTAG <div class="row">
+          TEXT \n
+          STARTTAG <svg id="dial" viewBox="-110 -110 220 220" role="img" aria-label="A ring of 64 slots. Sixty are marked as positions and four, numbered 60 to 63, are marked as spare codes.">
+          ENDTAG </svg>
+          TEXT \n
+          STARTTAG <div>
+            TEXT \n
+            STARTTAG <h2>
+              TEXT The dial
+            ENDTAG </h2>
+            TEXT \n
+            STARTTAG <p>
+              TEXT Take 64 slots, numbered 0 to 63. The first 60 (0 to 59) are the positions, like the minute marks on a clock face. The last four (60 to 63) are spare.
+            ENDTAG </p>
+            TEXT \n
+            STARTTAG <p>
+              TEXT The bigger version works the same way: 256 slots, 240 positions, 16 spare. In both, 15 of every 16 slots carry time.
+            ENDTAG </p>
+            TEXT \n
+            STARTTAG <div class="nums">
+              TEXT \n
+              STARTTAG <div>
+                STARTTAG <b>
+                  TEXT 60 + 4 = 64
+                ENDTAG </b>
+                STARTTAG <span>
+                  TEXT small dial
+                ENDTAG </span>
+              ENDTAG </div>
+              TEXT \n
+              STARTTAG <div>
+                STARTTAG <b>
+                  TEXT 240 + 16 = 256
+                ENDTAG </b>
+                STARTTAG <span>
+                  TEXT large dial
+                ENDTAG </span>
+              ENDTAG </div>
+              TEXT \n
+              STARTTAG <div>
+                STARTTAG <b>
+                  TEXT 15 / 16
+                ENDTAG </b>
+                STARTTAG <span>
+                  TEXT share used for time, both sizes
+                ENDTAG </span>
+              ENDTAG </div>
+              TEXT \n
+            ENDTAG </div>
+            TEXT \n
+          ENDTAG </div>
+          TEXT \n
+        ENDTAG </div>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <section>
+        TEXT \n
+        STARTTAG <h2>
+          TEXT The spare codes
+        ENDTAG </h2>
+        TEXT \n
+        STARTTAG <p>
+          TEXT The spare slots are what turn a list of 60 numbers into a dial. They stand outside the count, so they can mark events: where a lap starts, where it wraps, or where a new cycle begins. Which job each spare code gets is your design choice. The structure only guarantees that there are four on the small dial and sixteen on the large one.
+        ENDTAG </p>
+        TEXT \n
+        STARTTAG <p>
+          TEXT The XOR orbital moves them around. Use 60 as the base and the 64 slots are rearranged so the four spare codes land on slots 0 to 3, and positions 0 to 3 land on 60 to 63. Nothing is lost or doubled. The rearrangement is its own undo: apply it twice and every slot is back where it started.
+        ENDTAG </p>
+        TEXT \n
+        STARTTAG <p>
+          TEXT Run the 16-row orbit from base 60 and it produces exactly the sixteen characters 
+          STARTTAG <code>
+            TEXT 0123456789:;&lt;=&gt;?
+          ENDTAG </code>
+          TEXT , in four groups of four. That is the same four-block pattern you use elsewhere.
+        ENDTAG </p>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <section>
+        TEXT \n
+        STARTTAG <h2>
+          TEXT The counter
+        ENDTAG </h2>
+        TEXT \n
+        STARTTAG <p>
+          TEXT The ticking comes from a counter that adds one at each step and wraps from 59 back to 0 (or from 239 back to 0 on the large dial). XOR alone only swaps slots back and forth, so it cannot advance a hand. The two jobs divide cleanly:
+        ENDTAG </p>
+        TEXT \n
+        STARTTAG <ul>
+          TEXT \n
+          STARTTAG <li>
+            STARTTAG <b>
+              TEXT Counter:
+            ENDTAG </b>
+            TEXT  decides which position is current.
+          ENDTAG </li>
+          TEXT \n
+          STARTTAG <li>
+            STARTTAG <b>
+              TEXT Orbital (XOR):
+            ENDTAG </b>
+            TEXT  decides how the slots are labelled, including where the spare codes sit.
+          ENDTAG </li>
+          TEXT \n
+        ENDTAG </ul>
+        TEXT \n
+        STARTTAG <p>
+          TEXT To cover more than one dial, stack counters like hours, minutes and seconds. For example, 7 × 3 × 240 = 5040, and numbering them as 
+          STARTTAG <code>
+            TEXT 7-part × 720 + 3-part × 240 + position
+          ENDTAG </code>
+          TEXT  gives every number from 0 to 5039 exactly once. What the 7-part and 3-part stand for is yours to define.
+        ENDTAG </p>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <section>
+        TEXT \n
+        STARTTAG <h2>
+          TEXT Why 240 and 60 fit together
+        ENDTAG </h2>
+        TEXT \n
+        STARTTAG <ul>
+          TEXT \n
+          STARTTAG <li>
+            TEXT 240 = 60 × 4, so each position of the small dial can appear in four phases on the large one.
+          ENDTAG </li>
+          TEXT \n
+          STARTTAG <li>
+            TEXT 240 = 15 × 16, which lines up with the 16 spare codes and the 15/16 share.
+          ENDTAG </li>
+          TEXT \n
+          STARTTAG <li>
+            TEXT 256 − 16 = 240, and 64 − 4 = 60, so the large dial is the small dial scaled by four.
+          ENDTAG </li>
+          TEXT \n
+        ENDTAG </ul>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n\n
+      STARTTAG <section>
+        TEXT \n
+        STARTTAG <h2>
+          TEXT Left out on purpose
+        ENDTAG </h2>
+        TEXT \n
+        STARTTAG <p>
+          TEXT This page uses only what holds up as arithmetic or was checked directly. It makes no claim that 240 is the size of a geometric rotation group, that the spare codes are the first Unicode control codes, or that the dial produces π.
+        ENDTAG </p>
+        TEXT \n
+      ENDTAG </section>
+      TEXT \n
+    ENDTAG </main>
+    TEXT \n
+    STARTTAG <script>
+      RAWTEXT \n(function(){\n  var svg=document.getElementById('dial'),out='',N=64,R=92;\n  for(var i=0;i<N;i++){\n    var a=(i/N)*2*Math.PI-Math.PI/2,spare=i>=60;\n    var r1=spare?R-12:R-7,x1=Math.cos(a)*r1,y1=Math.sin(a)*r1,x2=Math.cos(a)*R,y2=Math.sin(a)*R;\n    out+='<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="'+(spare?'var(--spare)':'var(--dial)')+'" stroke-width="'+(spare?3:2)+'" stroke-linecap="round"/>';\n  }\n  out+='<text x="0" y="-4" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="20" fill="var(--fg)">60</text>';\n  out+='<text x="0" y="16" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--spare)">+ 4 spare</text>';\n  svg.innerHTML=out;\n})();\n
+    ENDTAG </script>
+    TEXT \n\n
+  ENDTAG </body>
+ENDTAG </html>

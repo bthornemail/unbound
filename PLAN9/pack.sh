@@ -193,6 +193,9 @@ PLAN9/src/views.rc
 PLAN9/in/views/prods
 PLAN9/in/views/casts
 PLAN9/in/views/wrong.prods
+PLAN9/src/zviews.c
+PLAN9/src/tree.rc
+$(cd "$HERE" && find in/views/tree -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/runes -type f ! -name gen.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/mvuni -type f ! -name gen.mjs ! -name 'tool.*' ! -path '*/tool/*' | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/mvwir -type f ! -name gen.mjs ! -name 'tool.*' | LC_ALL=C sort | sed 's|^|PLAN9/|')

@@ -1,0 +1,326 @@
+DOCTYPE <!doctype html>
+STARTTAG <html>
+  STARTTAG <head>
+    STARTTAG <meta charset=utf8>
+    STARTTAG <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+    STARTTAG <style>
+      RAWTEXT :root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+    ENDTAG </style>
+  ENDTAG </head>
+  STARTTAG <body>
+    TEXT \n
+    STARTTAG <meta name="claude:viewport-fit-sides" content="cover">
+    TEXT \n
+    STARTTAG <title>
+      RAWTEXT Catastrophic Backtracking
+    ENDTAG </title>
+    TEXT \n
+    STARTTAG <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+    TEXT \n
+    STARTTAG <style>
+      RAWTEXT \n/* Layout: one reading column; a live instrument (slider -> chart + compass + readouts) is the hero. Hot = the blowup, cool = the linear fix. */\n:root{\n  --bg:#f4f6f8; --surface:#ffffff; --fg:#191d22; --muted:#596472; --rule:#d7dce2;\n  --hot:#c9431a; --cool:#0c8578; --grid:#e6eaef; --track:#dfe4ea;\n  --display:'Fraunces',Georgia,serif; --body:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;\n}\n@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){\n  --bg:#0e1217; --surface:#161c24; --fg:#e7ecf2; --muted:#8c99a8; --rule:#262e39;\n  --hot:#f1724a; --cool:#2fb9a7; --grid:#1c232c; --track:#222a34; color-scheme:dark;\n}}\n:root[data-theme="dark"]{\n  --bg:#0e1217; --surface:#161c24; --fg:#e7ecf2; --muted:#8c99a8; --rule:#262e39;\n  --hot:#f1724a; --cool:#2fb9a7; --grid:#1c232c; --track:#222a34; color-scheme:dark;\n}\n*{box-sizing:border-box}\nbody{background:var(--bg);color:var(--fg);margin:0;font:400 1.0625rem/1.65 var(--body);-webkit-font-smoothing:antialiased}\n.wrap{max-width:44rem;margin:0 auto;\n  padding-left:max(20px,env(safe-area-inset-left,0px));\n  padding-right:max(20px,env(safe-area-inset-right,0px));\n  padding-block:clamp(32px,6vw,60px);display:flex;flex-direction:column;gap:clamp(30px,5vw,48px)}\nh1{font:600 clamp(2.3rem,8vw,3.5rem)/1.02 var(--display);margin:0;letter-spacing:-.01em;text-wrap:balance}\nh2{font:600 clamp(1.35rem,4.5vw,1.85rem)/1.15 var(--display);margin:0 0 .35em;text-wrap:balance}\np{margin:0 0 .85em;max-width:38rem}p:last-child{margin-bottom:0}\n.lede{font-size:clamp(1.12rem,3.3vw,1.35rem);line-height:1.45}\n.eyebrow{font:500 .72rem/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}\nsection{border-top:1px solid var(--rule);padding-top:clamp(20px,4vw,30px);display:flex;flex-direction:column;gap:.5em}\ncode,.mono{font-family:var(--mono);font-size:.92em}\n.code{font-family:var(--mono);font-size:.9rem;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.5}\n.code .hot{color:var(--hot);font-weight:500}.code .cool{color:var(--cool);font-weight:500}\n.hero{display:flex;flex-direction:column;gap:16px}\n\n/* instrument */\n.panel{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:clamp(14px,3vw,20px);display:flex;flex-direction:column;gap:16px}\n.sl label{display:flex;justify-content:space-between;align-items:baseline;font:500 .78rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}\n.sl output{font-size:1.05rem;color:var(--fg);letter-spacing:0}\ninput[type=range]{width:100%;appearance:none;-webkit-appearance:none;height:6px;border-radius:6px;background:var(--track);outline:none}\ninput[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--hot);border:3px solid var(--surface);box-shadow:0 0 0 1px var(--rule);cursor:pointer}\ninput[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--hot);border:3px solid var(--surface);cursor:pointer}\ninput[type=range]:focus-visible{box-shadow:0 0 0 3px color-mix(in srgb, var(--hot) 40%, transparent)}\n.ros{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}\n.ro{border:1px solid var(--rule);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}\n.ro span{font:500 .68rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}\n.ro b{font:500 clamp(1.05rem,3.2vw,1.35rem)/1.1 var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}\n.ro.bt b{color:var(--hot)}.ro.sp b{color:var(--cool)}.ro.df b{color:var(--fg)}\n.instr{display:flex;flex-wrap:wrap;gap:14px}\n.instr .fig{flex:1 1 300px;min-width:0;background:transparent;border:none;padding:0}\n.instr .fig.compass{flex:1 1 200px;max-width:320px}\n.fig svg{display:block;width:100%;height:auto}\n.figtitle{font:500 .72rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}\n.marker,.needle{transition:all .18s ease}\n@media (prefers-reduced-motion: reduce){.marker,.needle{transition:none}}\n.caption{font:400 .82rem/1.45 var(--mono);color:var(--muted);margin-top:4px}\n\n.splits{font-family:var(--mono);font-size:.9rem;display:flex;flex-direction:column;gap:3px;color:var(--muted)}\n.splits b{color:var(--fg);font-weight:500}\n.kicker{font:500 1.05rem/1.4 var(--body);color:var(--cool)}\n.foot{color:var(--muted);font-size:.88rem;border-top:1px solid var(--rule);padding-top:20px}\na{color:var(--cool)}\n
+    ENDTAG </style>
+    TEXT \n\n
+    STARTTAG <div class="wrap">
+      TEXT \n\n  
+      STARTTAG <header class="hero">
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT A documented difficulty, measured — and live
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h1>
+          TEXT Catastrophic Backtracking
+        ENDTAG </h1>
+        TEXT \n    
+        STARTTAG <p class="lede">
+          TEXT A one-line pattern that should finish instantly can take minutes, then hours, then years — on a tiny input. Drag the length and watch the gap open.
+        ENDTAG </p>
+        TEXT \n\n    
+        STARTTAG <div class="panel">
+          TEXT \n      
+          STARTTAG <div class="sl">
+            TEXT \n        
+            STARTTAG <label for="n">
+              TEXT input length 
+              STARTTAG <output id="nval">
+                TEXT 28
+              ENDTAG </output>
+            ENDTAG </label>
+            TEXT \n        
+            STARTTAG <input type="range" id="n" min="4" max="44" value="28" step="1" aria-describedby="btTime spTime ratio">
+            TEXT \n      
+          ENDTAG </div>
+          TEXT \n      
+          STARTTAG <div class="ros">
+            TEXT \n        
+            STARTTAG <div class="ro bt">
+              STARTTAG <span>
+                TEXT backtracking 
+                STARTTAG <code>
+                  TEXT (a+)+$
+                ENDTAG </code>
+              ENDTAG </span>
+              STARTTAG <b id="btTime">
+                TEXT —
+              ENDTAG </b>
+            ENDTAG </div>
+            TEXT \n        
+            STARTTAG <div class="ro sp">
+              STARTTAG <span>
+                TEXT single pass 
+                STARTTAG <code>
+                  TEXT a+$
+                ENDTAG </code>
+              ENDTAG </span>
+              STARTTAG <b id="spTime">
+                TEXT —
+              ENDTAG </b>
+            ENDTAG </div>
+            TEXT \n        
+            STARTTAG <div class="ro df">
+              STARTTAG <span>
+                TEXT difference
+              ENDTAG </span>
+              STARTTAG <b id="ratio">
+                TEXT —
+              ENDTAG </b>
+            ENDTAG </div>
+            TEXT \n      
+          ENDTAG </div>
+          TEXT \n      
+          STARTTAG <div class="instr">
+            TEXT \n        
+            STARTTAG <div class="fig" aria-label="Time to match versus input length, on a logarithmic time axis. The backtracking curve climbs from milliseconds to a month; the single-pass line stays under a millisecond.">
+              TEXT \n          
+              STARTTAG <div class="figtitle">
+                TEXT time to match
+              ENDTAG </div>
+              TEXT \n          
+              STARTTAG <svg id="chart" viewBox="0 0 560 300" font-family="IBM Plex Mono, monospace">
+              ENDTAG </svg>
+              TEXT \n        
+            ENDTAG </div>
+            TEXT \n        
+            STARTTAG <div class="fig compass" aria-label="A difference compass: a needle that swings further right as backtracking grows more times slower than the single pass.">
+              TEXT \n          
+              STARTTAG <div class="figtitle">
+                TEXT the difference
+              ENDTAG </div>
+              TEXT \n          
+              STARTTAG <svg id="compass" viewBox="0 0 300 186" font-family="IBM Plex Mono, monospace">
+              ENDTAG </svg>
+              TEXT \n        
+            ENDTAG </div>
+            TEXT \n      
+          ENDTAG </div>
+          TEXT \n      
+          STARTTAG <p class="caption">
+            TEXT The curve is a model fit to five measured runs — exact at the dots, projected between and beyond. Solid to length 28 (measured), dashed past it.
+          ENDTAG </p>
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n  
+      ENDTAG </header>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT The pattern
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT Two patterns that accept the same strings
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT Both match “one or more 
+          STARTTAG <code>
+            TEXT a
+          ENDTAG </code>
+          TEXT ’s, and nothing else” — exactly the same strings. One is a trap.
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <div class="code">
+          STARTTAG <span class="cool">
+            TEXT /^a+$/
+          ENDTAG </span>
+          TEXT       &nbsp;— one or more a&#39;s\n
+          STARTTAG <span class="hot">
+            TEXT /^(a+)+$/
+          ENDTAG </span>
+          TEXT     — one or more 
+          STARTTAG <em>
+            TEXT groups
+          ENDTAG </em>
+          TEXT  of one or more a&#39;s
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT Feed each a run of 
+          STARTTAG <code>
+            TEXT a
+          ENDTAG </code>
+          TEXT ’s ending in one character that can’t match — 
+          STARTTAG <code>
+            TEXT "aaaa…!"
+          ENDTAG </code>
+          TEXT . The first says “no” at once. The second must prove no arrangement works first, and that is the fall.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT Why
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT The engine chases every path
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT The nested form is ambiguous: there are exponentially many ways to split a run of 
+          STARTTAG <code>
+            TEXT a
+          ENDTAG </code>
+          TEXT ’s into “groups of a’s.” For four a’s alone:
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <div class="splits">
+          TEXT \n      
+          STARTTAG <span>
+            STARTTAG <b>
+              TEXT aaaa
+            ENDTAG </b>
+          ENDTAG </span>
+          STARTTAG <span>
+            STARTTAG <b>
+              TEXT aaa
+            ENDTAG </b>
+            TEXT  · 
+            STARTTAG <b>
+              TEXT a
+            ENDTAG </b>
+          ENDTAG </span>
+          STARTTAG <span>
+            STARTTAG <b>
+              TEXT aa
+            ENDTAG </b>
+            TEXT  · 
+            STARTTAG <b>
+              TEXT aa
+            ENDTAG </b>
+          ENDTAG </span>
+          TEXT \n      
+          STARTTAG <span>
+            STARTTAG <b>
+              TEXT a
+            ENDTAG </b>
+            TEXT  · 
+            STARTTAG <b>
+              TEXT aaa
+            ENDTAG </b>
+          ENDTAG </span>
+          STARTTAG <span>
+            STARTTAG <b>
+              TEXT aa
+            ENDTAG </b>
+            TEXT  · 
+            STARTTAG <b>
+              TEXT a
+            ENDTAG </b>
+            TEXT  · 
+            STARTTAG <b>
+              TEXT a
+            ENDTAG </b>
+          ENDTAG </span>
+          STARTTAG <span>
+            TEXT … and more
+          ENDTAG </span>
+          TEXT \n    
+        ENDTAG </div>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT A backtracking engine tries one split, walks to the end, hits the 
+          STARTTAG <code>
+            TEXT !
+          ENDTAG </code>
+          TEXT , fails, backs up, and tries the next — all of them — before it can answer “no.” The count roughly doubles with each character added. That is the climbing curve, and the compass needle swinging right.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT The fix
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT Hold the set; step once per character
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT Don’t commit to a path and back up. Keep the 
+          STARTTAG <em>
+            TEXT set
+          ENDTAG </em>
+          TEXT  of every place the pattern could be at once, and advance the whole set by one character at a time. Each step is one bounded move; when the input ends, check whether any live place accepts.
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT There is never anything to back up from, because you never chose a single path — you carried them all together. The work is one pass: 
+          STARTTAG <strong>
+            TEXT linear
+          ENDTAG </strong>
+          TEXT , however ambiguous the pattern. That is the flat line, and it is the idea Ken Thompson published in 1968 — why tools like 
+          STARTTAG <code>
+            TEXT grep
+          ENDTAG </code>
+          TEXT  and RE2 cannot be made to blow up.
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <p class="kicker">
+          TEXT Same pattern, same input — years collapses to under a millisecond, just by refusing to guess.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <section>
+        TEXT \n    
+        STARTTAG <p class="eyebrow">
+          TEXT The principle
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <h2>
+          TEXT The blowup is the test
+        ENDTAG </h2>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT This is the shape of every search that explodes: pick one possibility and plan to back up if it fails, and the failures multiply. Carry all the possibilities together and move them in lockstep, and the explosion flattens into a walk.
+        ENDTAG </p>
+        TEXT \n    
+        STARTTAG <p>
+          TEXT So the blowup is diagnostic. If a matcher — or any step-by-step process — explodes, it is chasing paths one at a time. If it stays linear, it is holding the whole set and advancing it by one step. You can tell which from the clock alone.
+        ENDTAG </p>
+        TEXT \n  
+      ENDTAG </section>
+      TEXT \n\n  
+      STARTTAG <p class="foot">
+        TEXT Five runs were measured directly (16→16 ms, 20→44 ms, 24→703 ms, 26→2 951 ms, 28→13 502 ms); the curve is 
+        STARTTAG <code>
+          TEXT 15 + 7.58e-6 · 2.14ⁿ
+        ENDTAG </code>
+        TEXT  ms, which passes through them. Beyond length 28 the times are that model’s projection, shown dashed. Reproduce the measured points in any language with a backtracking regex engine.
+      ENDTAG </p>
+      TEXT \n\n
+    ENDTAG </div>
+    TEXT \n\n
+    STARTTAG <script>
+      RAWTEXT \n(function(){\n  // --- model, fit to the five measured runs (ms) ---\n  const BT = n => 15 + 7.58e-6 * Math.pow(2.14, n);\n  const SP = n => 0.05 + 0.0008 * n;            // single pass: ~linear, sub-millisecond\n  const measured = [[16,16],[20,44],[24,703],[26,2951],[28,13502]];\n  const NMIN=4, NMAX=44;\n\n  // --- chart geometry (log time axis) ---\n  const L=64,R=548,T=16,B=260, W=R-L, Hh=B-T;\n  const LGMIN=0, LGMAX=9.6;                      // 1 ms .. ~1 month\n  const xOf = n => L + (n-NMIN)/(NMAX-NMIN)*W;\n  const yOf = ms => { let lg=Math.log10(Math.max(ms,1)); lg=Math.max(LGMIN,Math.min(LGMAX,lg)); return T + (1-(lg-LGMIN)/(LGMAX-LGMIN))*Hh; };\n  const ticks = [[1,'1 ms'],[1000,'1 s'],[60000,'1 min'],[3600000,'1 hr'],[86400000,'1 day'],[2592000000,'1 month']];\n  const svgns='http://www.w3.org/2000/svg';\n  const el=(t,a)=>{const e=document.createElementNS(svgns,t);for(const k in a)e.setAttribute(k,a[k]);return e;};\n\n  const chart=document.getElementById('chart');\n  // gridlines + y labels\n  for(const [ms,lab] of ticks){ const y=yOf(ms);\n    chart.appendChild(el('line',{x1:L,y1:y,x2:R,y2:y,stroke:'var(--grid)','stroke-width':1}));\n    const tx=el('text',{x:L-8,y:y+4,fill:'var(--muted)','font-size':11,'text-anchor':'end'}); tx.textContent=lab; chart.appendChild(tx);\n  }\n  // axes\n  chart.appendChild(el('line',{x1:L,y1:T,x2:L,y2:B,stroke:'var(--rule)','stroke-width':1.5}));\n  chart.appendChild(el('line',{x1:L,y1:B,x2:R,y2:B,stroke:'var(--rule)','stroke-width':1.5}));\n  // x labels\n  for(const n of [4,12,20,28,36,44]){ const t=el('text',{x:xOf(n),y:B+16,fill:'var(--muted)','font-size':11,'text-anchor':'middle'}); t.textContent=n; chart.appendChild(t); }\n  const xl=el('text',{x:(L+R)/2,y:B+30,fill:'var(--muted)','font-size':11,'text-anchor':'middle'}); xl.textContent='input length (characters)'; chart.appendChild(xl);\n  // single-pass flat line (on the floor)\n  chart.appendChild(el('line',{x1:xOf(NMIN),y1:B-2,x2:xOf(NMAX),y2:B-2,stroke:'var(--cool)','stroke-width':2.5,'stroke-dasharray':'2 4'}));\n  const spl=el('text',{x:xOf(22),y:B-7,fill:'var(--cool)','font-size':11,'text-anchor':'middle','font-weight':500}); spl.textContent='single pass — under 1 ms'; chart.appendChild(spl);\n  // backtracking curve: solid 4..28 (measured range), dashed 28..44 (projected)\n  const pts=a=>{let d='';for(let n=a[0];n<=a[1]+0.001;n+=0.5){d+=(d?'L':'M')+xOf(n).toFixed(1)+' '+yOf(BT(n)).toFixed(1)+' ';}return d;};\n  chart.appendChild(el('path',{d:pts([4,28]),fill:'none',stroke:'var(--hot)','stroke-width':2.5}));\n  chart.appendChild(el('path',{d:pts([28,44]),fill:'none',stroke:'var(--hot)','stroke-width':2.5,'stroke-dasharray':'4 4',opacity:.75}));\n  // measured dots\n  for(const [n,ms] of measured) chart.appendChild(el('circle',{cx:xOf(n),cy:yOf(ms),r:4,fill:'var(--hot)',stroke:'var(--surface)','stroke-width':1.5}));\n  // dynamic marker\n  const mLine=el('line',{class:'marker',x1:xOf(28),y1:T,x2:xOf(28),y2:B,stroke:'var(--fg)','stroke-width':1,'stroke-dasharray':'3 3',opacity:.5});\n  const mDot=el('circle',{class:'marker',cx:xOf(28),cy:yOf(BT(28)),r:6,fill:'var(--hot)',stroke:'var(--surface)','stroke-width':2});\n  chart.appendChild(mLine); chart.appendChild(mDot);\n\n  // --- compass (semicircle gauge: difference in orders of magnitude) ---\n  const compass=document.getElementById('compass');\n  const CX=150,CY=162,RR=116, LOGCAP=12;\n  const pol=(a,r)=>[CX+r*Math.cos(a*Math.PI/180), CY-r*Math.sin(a*Math.PI/180)];\n  // arc face\n  const [ax,ay]=pol(180,RR), [bx,by]=pol(0,RR);\n  compass.appendChild(el('path',{d:`M ${ax} ${ay} A ${RR} ${RR} 0 0 1 ${bx} ${by}`,fill:'none',stroke:'var(--track)','stroke-width':10,'stroke-linecap':'round'}));\n  // ticks at 1x,1e3,1e6,1e9,1e12\n  const tk=[[0,'1×'],[3,'10³'],[6,'10⁶'],[9,'10⁹'],[12,'10¹²']];\n  for(const [lg,lab] of tk){ const a=180-(lg/LOGCAP)*180; const [x1,y1]=pol(a,RR-7),[x2,y2]=pol(a,RR+2);\n    compass.appendChild(el('line',{x1,y1,x2,y2,stroke:'var(--muted)','stroke-width':1.5}));\n    const [lx,ly]=pol(a,RR+15); const t=el('text',{x:lx,y:ly+3,fill:'var(--muted)','font-size':10,'text-anchor':'middle'}); t.textContent=lab; compass.appendChild(t);\n  }\n  compass.appendChild(el('circle',{cx:CX,cy:CY,r:6,fill:'var(--muted)'}));\n  const needle=el('line',{class:'needle',x1:CX,y1:CY,x2:CX-RR+14,y2:CY,stroke:'var(--hot)','stroke-width':3.5,'stroke-linecap':'round'});\n  compass.appendChild(needle);\n  const cRead=el('text',{x:CX,y:CY+30,fill:'var(--fg)','font-size':16,'text-anchor':'middle','font-weight':500}); compass.appendChild(cRead);\n  const cLab=el('text',{x:CX,y:CY+46,fill:'var(--muted)','font-size':10,'text-anchor':'middle'}); cLab.textContent='times slower'; compass.appendChild(cLab);\n\n  // --- formatting ---\n  function fmtTime(ms){ if(ms<1)return '< 1 ms'; if(ms<1000)return Math.round(ms)+' ms';\n    const s=ms/1000; if(s<60)return s.toFixed(1)+' s'; const m=s/60; if(m<60)return m.toFixed(1)+' min';\n    const h=m/60; if(h<24)return h.toFixed(1)+' hr'; const d=h/24; if(d<365)return d.toFixed(1)+' days'; return (d/365).toFixed(1)+' yr'; }\n  function fmtRatio(r){ if(r<1e5)return Math.round(r).toLocaleString()+'×';\n    const e=Math.floor(Math.log10(r)); const m=r/Math.pow(10,e); return m.toFixed(1)+'×10'+String(e).split('').map(c=>'⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(c)]).join('')+'×'; }\n\n  // --- update ---\n  const input=document.getElementById('n'), nval=document.getElementById('nval');\n  const btO=document.getElementById('btTime'), spO=document.getElementById('spTime'), rO=document.getElementById('ratio');\n  function update(){\n    const n=+input.value, bt=BT(n), sp=SP(n), ratio=bt/sp;\n    nval.textContent=n;\n    btO.textContent=fmtTime(bt); spO.textContent=fmtTime(sp)==='< 1 ms'?'< 1 ms':fmtTime(sp); rO.textContent=fmtRatio(ratio);\n    const x=xOf(n), y=yOf(bt);\n    mLine.setAttribute('x1',x); mLine.setAttribute('x2',x);\n    mDot.setAttribute('cx',x); mDot.setAttribute('cy',y);\n    const lg=Math.max(0,Math.min(LOGCAP,Math.log10(ratio))); const a=180-(lg/LOGCAP)*180; const [tx,ty]=pol(a,RR-14);\n    needle.setAttribute('x2',tx); needle.setAttribute('y2',ty);\n    cRead.textContent=fmtRatio(ratio);\n  }\n  input.addEventListener('input',update);\n  update();\n})();\n
+    ENDTAG </script>
+    TEXT \n\n
+  ENDTAG </body>
+ENDTAG </html>
