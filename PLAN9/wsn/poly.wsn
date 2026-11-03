@@ -1,0 +1,8 @@
+POLY = "0" | TERM { "+" TERM } .
+TERM = "1" | XONE .
+XONE = "x1" [ "*" XTWO ] | XTWO .
+XTWO = "x2" [ "*" XTHREE ] | XTHREE .
+XTHREE = "x3" [ "*" XFOUR ] | XFOUR .
+XFOUR = "x4" [ "*" XFIVE ] | XFIVE .
+XFIVE = "x5" [ "*" XSIX ] | XSIX .
+XSIX = "x6" .

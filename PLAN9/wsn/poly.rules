@@ -1,0 +1,8 @@
+poly.wsn is the written form of a polynomial over F2 in x1 to x6, as Metaverse Kit's tools/wave28-poly-lib.js writes
+it (renderPolyFromMasks) and reads it (parsePolyCanonical): "0", or terms joined by "+"; a term "1" or its variables
+joined by "*", each of x1 to x6 at most once and in increasing order (XONE to XSIX, a term from x1 on, from x2 on, and so to x6; a WSN identifier is letters only). A term is a 6-bit mask, x_i its bit
+i - 1 ("1" the mask 0). What the grammar does not say, stated here as the reader's rules:
+1. The terms are in increasing order of their masks (the library sorts the masks' 6-digit bit strings, x6 first,
+   which is their order as numbers).
+2. No term is written twice (over F2 a term twice is no term).
+So a polynomial is the set of its masks, a subset of the 64, and each subset is written one way.

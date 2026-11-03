@@ -200,6 +200,11 @@ PLAN9/in/views/libhtml/T
 PLAN9/in/views/libhtml/B
 PLAN9/in/views/libhtml/A
 PLAN9/src/match.rc
+PLAN9/src/polywsn.rc
+PLAN9/wsn/poly.rules
+PLAN9/in/polywsn/yes
+PLAN9/in/polywsn/no
+PLAN9/in/polywsn/rules
 $(cd "$HERE" && find in/views/match -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/views/tree -type f | LC_ALL=C sort | sed 's|^|PLAN9/|')
 $(cd "$HERE" && find in/runes -type f ! -name gen.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')

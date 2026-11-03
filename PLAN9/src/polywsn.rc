@@ -1,0 +1,42 @@
+#!/bin/rc
+# polywsn.rc - inside Plan 9: the written polynomials of Metaverse Kit's poly tools asked of wsn/poly.wsn by zlazy
+# (polynomials over F2 in x1 to x6, "0" or terms joined by "+", a term "1" or its variables in increasing order;
+# wsn/poly.rules the terms' order and that none repeats, which the grammar does not say). in/polywsn written on the
+# host by in/polywsn/gen.mjs with the kit's own tools/wave28-poly-lib.js beside it: yes, every polynomial the
+# library writes and reads back (in/mvpoly's literals, each of the 64 terms, all 64, 120 drawn), each must be
+# accepted; no, each written wrongly in a way the library refuses (a variable out of order or twice, x0 or x7, an
+# empty term, "0" or "1" joined to a term), each must be refused; rules, out of order or a term twice, which the
+# library refuses by poly.rules and the grammar must accept, being what a context-free grammar here does not say.
+rfork e
+w=/tmp/zpolywsn
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/zlazy.c PLAN9/wsn/poly.wsn PLAN9/in/polywsn} || exit tar
+g=$w/unbound/PLAN9
+cd $g/src
+8c zlazy.c && 8l -o $w/zlazy zlazy.8 || exit compile
+ifs='
+' {
+	y=`{cat $g/in/polywsn/yes}
+	n=`{cat $g/in/polywsn/no}
+	r=`{cat $g/in/polywsn/rules}
+}
+ok=()
+for(q in $y){
+	if($w/zlazy $g/wsn/poly.wsn POLY $q >/dev/null) ok=($ok x)
+	if not echo refused: $q
+}
+refused=()
+for(q in $n){
+	if(! $w/zlazy $g/wsn/poly.wsn POLY $q >/dev/null) refused=($refused x)
+	if not echo accepted: $q
+}
+rules=()
+for(q in $r){
+	if($w/zlazy $g/wsn/poly.wsn POLY $q >/dev/null) rules=($rules x)
+	if not echo rules refused: $q
+}
+echo poly.wsn accepts $#ok of $#y polynomials the library writes
+echo the falsifier: refuses $#refused of $#n written wrongly
+echo and accepts $#rules of $#r out of order or repeated, left to poly.rules
+if(~ $#ok $#y && ~ $#refused $#n && ~ $#rules $#r) echo 'polywsn.rc: every answer as expected'
