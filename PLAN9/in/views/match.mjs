@@ -7,7 +7,8 @@
 // cast symbol regex reads otherwise, written \.). A match is a line: the template's ordinal, the production, the
 // span's first and past-last rune offsets, its runes (a line feed \n, a tab \t, a backslash \\). The falsifier: two
 // mutants of each template, its last symbol the next in the alphabet, its first symbol "." (any); their matches
-// filed as they come, fewer, more or the same.
+// filed as they come, fewer, more or the same. And each page's spans, a line each in page order (its production,
+// its rune offsets), which zviews -p and omi-types' OMI.View must read the same.
 //	node match.mjs <unbound/HTML> <out: in/views/match>
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import { pieces, attrs, cast } from "./pieces.mjs";
@@ -64,6 +65,7 @@ pages.forEach((p, i) => {
   const a = run(tl, p), b = run(ml, p);
   writeFileSync(`${OUT}/${nn(i)}`, a.text);
   writeFileSync(`${OUT}/${nn(i)}.mut`, b.text);
+  writeFileSync(`${OUT}/${nn(i)}.spans`, p.spans.map((s) => `${s.prod}\t${s.a}\t${s.b}\n`).join(""));
   a.counts.forEach((c, k) => (tc[k] += c));
   b.counts.forEach((c, k) => (mc[k] += c));
 });

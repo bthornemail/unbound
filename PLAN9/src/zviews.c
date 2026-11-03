@@ -13,6 +13,7 @@
  *				pattern, regexp(2) as it is, over the span's cast; the spans the pieces and each start
  *				tag's ATTR, ATTRNAME and VALUE by html.wsn, a tag before its attributes; a match a line,
  *				the template's ordinal, the production, the span's rune offsets, its runes (\n \t \\)
+ *	zviews -p page		the page's spans in page order, a line each: the production, the rune offsets
  * A rune is the bytes its lead byte calls for, as OMI.View reads: under 0x80 alone, 110xxxxx one more, 1110xxxx
  * two, 11110xxx three, any other alone; its cast in html.wsn's alphabet a letter's lower case, a digit and each of
  * < > / = " ' - _ : . # & ; ! itself, white space a space, any other rune "~".
@@ -493,6 +494,18 @@ attrs(Piece *p)
 }
 
 static void
+spans(void)
+{
+	long i;
+
+	for(i = 0; i < np; i++){
+		addspan(ps[i].kind, ps[i].a, ps[i].b);
+		if(ps[i].kind == Starttag)
+			attrs(&ps[i]);
+	}
+}
+
+static void
 match(char *file)
 {
 	Biobuf *t;
@@ -502,11 +515,7 @@ match(char *file)
 	long i, k, n, ord;
 	int kind;
 
-	for(i = 0; i < np; i++){
-		addspan(ps[i].kind, ps[i].a, ps[i].b);
-		if(ps[i].kind == Starttag)
-			attrs(&ps[i]);
-	}
+	spans();
 	if((t = Bopen(file, OREAD)) == nil)
 		sysfatal("open %s: %r", file);
 	c = malloc(nr + 1);
@@ -552,13 +561,16 @@ match(char *file)
 void
 main(int argc, char **argv)
 {
-	int fd, n, w, s;
+	int fd, n, w, s, p;
 	char *m;
 	long k, i;
 
-	w = s = 0;
+	w = s = p = 0;
 	m = nil;
 	ARGBEGIN{
+	case 'p':
+		p = 1;
+		break;
 	case 'm':
 		m = ARGF();
 		break;
@@ -578,11 +590,11 @@ main(int argc, char **argv)
 		notextarea = 1;
 		break;
 	default:
-		fprint(2, "usage: zviews [-w [-TBA] | -s | -m templates] file\n");
+		fprint(2, "usage: zviews [-w [-TBA] | -s | -m templates | -p] file\n");
 		exits("usage");
 	}ARGEND
 	if(argc != 1){
-		fprint(2, "usage: zviews [-w [-TBA] | -s | -m templates] file\n");
+		fprint(2, "usage: zviews [-w [-TBA] | -s | -m templates | -p] file\n");
 		exits("usage");
 	}
 	if((fd = open(argv[0], OREAD)) < 0)
@@ -634,7 +646,11 @@ main(int argc, char **argv)
 	if(opened == nil)
 		sysfatal("malloc: %r");
 	pi = 0;
-	if(m != nil)
+	if(p){
+		spans();
+		for(i = 0; i < nsp; i++)
+			Bprint(&out, "%s\t%ld\t%ld\n", prod[sp[i].kind], sp[i].a, sp[i].b);
+	}else if(m != nil)
 		match(m);
 	else if(w)
 		words();

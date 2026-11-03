@@ -6,7 +6,8 @@
 # start tag, each attribute name, each value on two pages or more), and what each names on each page was found on the
 # host by JavaScript's RegExp (in/views/match, by in/views/match.mjs): zviews -m must name the same spans with the same
 # runes, byte for byte. The falsifier: two mutants of each template (its last symbol the next, its first "."), their
-# spans filed on the host before the guest ran, fewer, more or the same; zviews -m must name exactly those.
+# spans filed on the host before the guest ran, fewer, more or the same; zviews -m must name exactly those. And each
+# page's spans, zviews -p, must be those pieces.mjs reads (omi-types' OMI.View checked against the same, the third).
 rfork e
 w=/tmp/zmatch
 rm -rf $w
@@ -20,10 +21,14 @@ ifs='
 ' pages=`{cat $m/pages}
 same=()
 mut=()
+spans=()
 i=0
 for(p in $pages){
 	i=`{echo $i + 1 | hoc}
 	n=`{echo $i | sed 's/^.$/0&/'}
+	$w/zviews -p $w/unbound/HTML/$p >$w/out
+	if(cmp -s $w/out $m/$n.spans) spans=($spans x)
+	if not echo spans differ: $p
 	$w/zviews -m $m/templates $w/unbound/HTML/$p >$w/out
 	if(cmp -s $w/out $m/$n) same=($same x)
 	if not echo differs: $p
@@ -31,6 +36,7 @@ for(p in $pages){
 	if(cmp -s $w/out $m/$n.mut) mut=($mut x)
 	if not echo mutants differ: $p
 }
+echo zviews reads the spans pieces.mjs reads, productions and rune offsets, on $#spans of $#pages pages
 echo 'regexp(2) names RegExp''s spans' for `{wc -l <$m/templates} templates on $#same of $#pages pages
 echo the falsifier: `{wc -l <$m/mutants} mutants name the filed spans on $#mut of $#pages pages
-if(~ $#same $#pages && ~ $#mut $#pages) echo 'match.rc: every answer as expected'
+if(~ $#spans $#pages && ~ $#same $#pages && ~ $#mut $#pages) echo 'match.rc: every answer as expected'
