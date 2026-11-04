@@ -510,3 +510,7 @@ blackboard-half
 two-views
 00:02:06.000 --> 00:02:07.000
 2026-11-03 the author, of blackboard-half: "its like how the dominoes have a horizontal and vertical view". In the record: Unicode's dominoes in two orientations, 49 horizontal and 49 vertical, the same values drawn turned a quarter (domino-fano, domino-plane); their 8 empty dots the vertical 4 and the horizontal 4, the cube's two colours, dark and light (domino-stella), the turning moves D, TD, WD taking one view to the other and the kept line T W TW keeping each. So the image's two halves, the kept record and the blackboard for trying new bits, as the dominoes' two views of the same values: the author's reading.
+
+thirty-to-sixty
+00:02:07.000 --> 00:02:08.000
+2026-11-03 the author, of two-views: "yes of the same but when they are the circulation of the animation frame how the step.svg resolves 30 to 60". In the record, the author's own words of 2026-10-13 in proofs/svg/tools/e8.mjs: "the sum-30 is the sub cycle of the 60", "the 30 is either side and the 60 is both"; E8 in two frames, the even-parity sign bytes and the odd (frames.svg, 128 and 128), each frame its own Coxeter element c, c^30 = 1 and c^15 = -1, its 240 roots in 8 cycles of 30 (coxeter-plane.svg draws both); the step's 30 frames, 15 of c + r and 15 of c - r (instantiation-portal). So one frame circulates 30 and the two together, either side and both, 60: the two views of two-views as the two frames, the author's reading.
