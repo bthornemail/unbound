@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Decimal Dial</title>
+<meta name="description" content="The 60-in-64 dial in decimal: 1/998001 counts 000 to 999 and holds 998 back, orbited by the clean cycle 123456789/9999999999.">
+<style>
+/* Layout: one column, as I-230 Sonar Closure: the claim, the dial with its orbit, the digits, the precession,
+   9² and 10, the checks run live. Self-contained: no fonts or scripts are fetched. */
+:root {
+  --bg: #f4f3ef; --panel: #ffffff; --ink: #1d1f22; --muted: #5f646b; --rule: #d8d6cf;
+  --time: #2f6f8f; --held: #b9b4a6; --hand: #c2492b; --orbit: #b8860b; --ok: #2e7d4f; --bad: #b3261e;
+  --f-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15171a; --panel: #1d2024; --ink: #e6e7e9; --muted: #9aa0a8; --rule: #30343a;
+  --time: #6fb3d6; --held: #4a4f57; --hand: #ff7a59; --orbit: #e2b44a; --ok: #6fcf97; --bad: #ff8a80; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #15171a; --panel: #1d2024; --ink: #e6e7e9; --muted: #9aa0a8; --rule: #30343a;
+  --time: #6fb3d6; --held: #4a4f57; --hand: #ff7a59; --orbit: #e2b44a; --ok: #6fcf97; --bad: #ff8a80; color-scheme: dark }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--f-body); }
+.wrap { max-width: 900px; margin: 0 auto; padding-block: 32px 64px; display: grid; gap: 28px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1 { font-size: 1.8rem; line-height: 1.2; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.2rem; margin: 0; }
+p { margin: 0; max-width: 68ch; }
+.muted { color: var(--muted); }
+.eyebrow { font: 600 .75rem var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+code, .mono { font-family: var(--f-mono); font-size: .9em; }
+section { display: grid; gap: 12px; }
+.panel { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.claim { border-left: 4px solid var(--hand); padding-left: 14px; font-size: 1.05rem; }
+.two { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 20px; align-items: center; }
+@media (max-width: 680px) { .two { grid-template-columns: 1fr; } }
+svg { display: block; width: 100%; height: auto; }
+.readout { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font: .92rem var(--f-mono); }
+.readout dt { color: var(--muted); } .readout dd { margin: 0; overflow-wrap: anywhere; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button { font: 600 .85rem var(--f-mono); padding: 6px 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--ink); cursor: pointer; }
+button[aria-pressed="true"] { border-color: var(--hand); color: var(--hand); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--hand); outline-offset: 2px; }
+input[type=range] { flex: 1 1 220px; accent-color: var(--hand); min-width: 0; }
+.strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+@media (max-width: 480px) { .strip { grid-template-columns: repeat(2, 1fr); } }
+.cycle { border: 1px solid var(--rule); border-radius: 6px; padding: 8px 4px; text-align: center; font: .85rem var(--f-mono); }
+.cycle b { display: block; font-size: 1.3rem; color: var(--orbit); }
+.cycle.now { border-color: var(--hand); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .88rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.digits { font: .95rem/1.9 var(--f-mono); font-variant-numeric: tabular-nums; overflow-x: auto; white-space: nowrap; }
+.digits .lbl { display: inline-block; width: 11ch; color: var(--muted); }
+.digits span.cur { background: var(--hand); color: var(--panel); border-radius: 2px; }
+.digits span.held { color: var(--hand); font-weight: 700; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; font: .9rem var(--f-mono); font-variant-numeric: tabular-nums; width: 100%; }
+th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+.pred { display: grid; grid-template-columns: 2.6rem 1fr auto; gap: 4px 12px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.pred .id { font: 700 .9rem var(--f-mono); }
+.pred .got { font: .82rem var(--f-mono); color: var(--muted); grid-column: 2 / 4; overflow-wrap: anywhere; }
+.mark { font: 700 .85rem var(--f-mono); }
+.mark.ok { color: var(--ok); } .mark.bad { color: var(--bad); }
+footer { font-size: .88rem; color: var(--muted); display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header style="display:grid;gap:10px">
+  <div class="eyebrow">unbound · beside I-230 · a visual check</div>
+  <h1>The decimal dial: 1/998001 holds 998 back, the clean cycle orbits it</h1>
+  <p class="claim">1/998001 = 1/999² writes every three-digit number in order, 000 to 999, except <b>998</b>: a dial of 1,000 places with 999 carrying time and one held back, as the 60-in-64 clock holds 4. Around it runs the clean cycle <b>123456789/9999999999 = 0.0123456789…</b>, all ten digits, period 10, no carry. The two close after <b>29,970</b> digits.</p>
+  <p class="muted">Every number on this page is computed here, live, by exact division (BigInt). Nothing is fetched.</p>
+</header>
+
+<section>
+  <h2>1. One dial at three widths</h2>
+  <p>1/(10ⁿ − 1)² counts the n-digit numbers and holds back the one before the last, where the carry from 10ⁿ folds it into the next: 1/81 holds 8, 1/9801 holds 98, 1/998001 holds 998. The hand reads the count; the gold ring is the clean cycle at the same digit.</p>
+  <div class="panel two">
+    <svg id="dial" viewBox="-160 -160 320 320" role="img" aria-label="The decimal dial with the clean cycle as an orbit ring"></svg>
+    <div style="display:grid;gap:12px">
+      <div class="controls" id="widths"></div>
+      <dl class="readout" aria-live="polite">
+        <dt>digit</dt><dd id="r-digit"></dd>
+        <dt>period</dt><dd id="r-period"></dd>
+        <dt>block · count</dt><dd id="r-block"></dd>
+        <dt>orbit digit</dt><dd id="r-orbit"></dd>
+        <dt>closes after</dt><dd id="r-close"></dd>
+      </dl>
+      <div class="controls">
+        <button type="button" id="play">Play</button>
+        <button type="button" id="jump">Next period</button>
+        <button type="button" id="carry">To the carry</button>
+        <input type="range" id="scrub" min="0" max="0" step="1" value="0" aria-label="Digit">
+      </div>
+      <div class="legend"><span><i style="background:var(--time)"></i>place that carries time</span><span><i style="background:var(--held)"></i>place held back</span><span><i style="background:var(--hand)"></i>the count</span><span><i style="background:var(--orbit)"></i>the clean cycle</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>2. The digits, side by side</h2>
+  <div class="panel"><div class="digits" id="digits"></div></div>
+</section>
+
+<section>
+  <h2>3. The precession</h2>
+  <p id="prec-text"></p>
+  <div class="panel">
+    <div class="strip" id="strip"></div>
+    <p class="muted mono" id="strip-note"></p>
+  </div>
+</section>
+
+<section>
+  <h2>4. 9² and 10</h2>
+  <div class="panel">
+    <div class="table-wrap"><table id="nine"></table></div>
+    <p>12345679 × 81 is 999,999,999 (10⁹ − 1, nine nines), not 9²; 81 itself is 9². Ten over 9² is 0.123456790…: the count with its carry, where 8 9 became 9 0. 123456789 is one less, 10 × 12345679 − 1: the count without the carry. Over 10¹⁰ − 1 it repeats as the clean cycle with the 8 in place.</p>
+  </div>
+</section>
+
+<section>
+  <h2>5. The checks, run now</h2>
+  <div class="panel" id="preds"></div>
+</section>
+
+<footer>
+  <p>Sources: unbound global.vtt cues counter-998001, tangent-998, why-no-998, clean-cycle, delta-modulus-four, sonar-tracks-it; the dial after <em>I-230 Sonar Closure</em> and <em>The 60-in-64 Clock</em> in this folder.</p>
+  <p>What is computed is arithmetic. That 998 is the tangent point, the orbit a triangulation, or the dial the delta law's held four in decimal is the author's reading, held open.</p>
+</footer>
+</div>
+
+<script>
+"use strict";
+const ORBIT = "0123456789";	// 123456789/9999999999, period 10
+const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+const lcm = (a, b) => (a / gcd(a, b)) * b;
+const digitsOf = (num, den, k) => { let r = BigInt(num), d = BigInt(den), s = ""; for (let i = 0; i < k; i++) { r *= 10n; s += r / d; r %= d; } return s; };
+const periodOf = (den) => { const d = BigInt(den); let r = 1n, k = 0; do { r = (r * 10n) % d; k++; } while (r !== 1n); return k; };
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const NS = "http://www.w3.org/2000/svg";
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; };
+
+// The three widths: n digits a place, den (10^n - 1)^2, its period, its digits, its blocks.
+const WIDTHS = [1, 2, 3].map((n) => {
+  const base = 10 ** n - 1, den = base * base, P = periodOf(den), s = digitsOf(1, den, P);
+  const blocks = []; for (let i = 0; i < P; i += n) blocks.push(+s.slice(i, i + n));
+  const held = [...Array(10 ** n).keys()].filter((v) => !blocks.includes(v));
+  return { n, den, P, s, blocks, held, places: 10 ** n };
+});
+let W = WIDTHS[2], d = 0, timer = null;
+
+// ── the dial ──
+const dial = document.getElementById("dial");
+let marks = [], hand, orbitEls = [];
+const ang = (i, n) => (i / n) * 2 * Math.PI - Math.PI / 2;
+const pt = (r, a) => `${(r * Math.cos(a)).toFixed(2)} ${(r * Math.sin(a)).toFixed(2)}`;
+function drawDial() {
+  dial.replaceChildren();
+  marks = [];
+  const N = W.places, R = 132, r = W.n === 3 ? 112 : 106;
+  for (let v = 0; v < N; v++) {
+    const held = W.held.includes(v), a0 = ang(v, N), a1 = ang(v + (N > 100 ? 0.7 : 0.86), N);
+    const e = N > 100
+      ? el("line", { x1: (r * Math.cos(a0)).toFixed(2), y1: (r * Math.sin(a0)).toFixed(2), x2: (R * Math.cos(a0)).toFixed(2), y2: (R * Math.sin(a0)).toFixed(2), stroke: css(held ? "--held" : "--time"), "stroke-width": held ? 2.2 : .5, opacity: held ? 1 : .4 }, dial)
+      : el("path", { d: `M ${pt(r, a0)} L ${pt(R, a0)} A ${R} ${R} 0 0 1 ${pt(R, a1)} L ${pt(r, a1)} A ${r} ${r} 0 0 0 ${pt(r, a0)} Z`, fill: css(held ? "--held" : "--time"), opacity: held ? 1 : .35 }, dial);
+    marks.push(e);
+  }
+  for (const v of W.held) {
+    const a = ang(v + 0.5, N);
+    el("text", { x: (148 * Math.cos(a)).toFixed(1), y: (148 * Math.sin(a)).toFixed(1), "text-anchor": "middle", "dominant-baseline": "central", fill: css("--hand"), "font-size": "11", "font-weight": "700", "font-family": "ui-monospace, monospace" }, dial).textContent = String(v).padStart(W.n, "0");
+  }
+  // the orbit: ten places, the clean cycle
+  orbitEls = [];
+  for (let k = 0; k < 10; k++) {
+    const a0 = ang(k, 10), a1 = ang(k + 0.9, 10), R2 = 96, r2 = 80;
+    orbitEls.push(el("path", { d: `M ${pt(r2, a0)} L ${pt(R2, a0)} A ${R2} ${R2} 0 0 1 ${pt(R2, a1)} L ${pt(r2, a1)} A ${r2} ${r2} 0 0 0 ${pt(r2, a0)} Z`, fill: css("--orbit"), opacity: .25 }, dial));
+    const am = ang(k + 0.45, 10);
+    el("text", { x: (88 * Math.cos(am)).toFixed(1), y: (88 * Math.sin(am)).toFixed(1), "text-anchor": "middle", "dominant-baseline": "central", fill: css("--ink"), "font-size": "10", "font-family": "ui-monospace, monospace" }, dial).textContent = ORBIT[k];
+  }
+  hand = el("line", { x1: 0, y1: 0, x2: 0, y2: -128, stroke: css("--hand"), "stroke-width": 2.5, "stroke-linecap": "round" }, dial);
+  el("circle", { r: 4, fill: css("--hand") }, dial);
+  const t1 = el("text", { y: -6, "text-anchor": "middle", fill: css("--ink"), "font-size": "24", "font-weight": "700", "font-family": "ui-monospace, monospace" }, dial); t1.id = "center1";
+  const t2 = el("text", { y: 16, "text-anchor": "middle", fill: css("--muted"), "font-size": "10", "font-family": "ui-monospace, monospace" }, dial); t2.id = "center2";
+}
+
+function render() {
+  const P = W.P, n = W.n, inP = d % P, b = Math.floor(inP / n), v = W.blocks[b], o = d % 10, L = lcm(P, 10);
+  marks.forEach((e, i) => { if (!W.held.includes(i)) e.setAttribute("opacity", i === v ? 1 : (W.places > 100 ? .4 : .35)); });
+  orbitEls.forEach((e, k) => e.setAttribute("opacity", k === o ? 1 : .25));
+  hand.setAttribute("transform", `rotate(${((v + 0.5) / W.places * 360).toFixed(2)})`);
+  document.getElementById("center1").textContent = String(v).padStart(n, "0");
+  document.getElementById("center2").textContent = `1/${W.den.toLocaleString("en-US")}`;
+  document.getElementById("r-digit").textContent = `${d.toLocaleString("en-US")} of ${L.toLocaleString("en-US")}`;
+  document.getElementById("r-period").textContent = `${Math.floor(d / P)} (each ${P.toLocaleString("en-US")} digits)`;
+  const next = W.blocks[b + 1];
+  document.getElementById("r-block").textContent = `${b} · ${String(v).padStart(n, "0")}` + (next !== undefined && next - v === 2 ? `  (next ${String(next).padStart(n, "0")}: ${String(v + 1).padStart(n, "0")} skipped)` : "");
+  document.getElementById("r-orbit").textContent = `${ORBIT[o]} (digit ${o} of 0123456789)`;
+  document.getElementById("r-close").textContent = `lcm(${P}, 10) = ${L.toLocaleString("en-US")} = ${L / P} periods`;
+  const sc = document.getElementById("scrub"); sc.max = L - 1; sc.value = d;
+
+  // the digits around d
+  const lo = Math.max(0, d - 18 - (d % n)), hi = lo + 39, row = (label, get, cls) => {
+    let h = `<span class="lbl">${label}</span>`;
+    for (let i = lo; i < hi; i++) { const c = [i === d ? "cur" : "", cls && cls(i) ? "held" : ""].join(" ").trim(); h += `<span${c ? ` class="${c}"` : ""}>${get(i)}</span>`; if ((i + 1) % n === 0 && n > 1) h += " "; }
+    return h;
+  };
+  const nearCarry = (i) => { const bb = Math.floor((i % P) / n); return W.blocks[bb] === W.places - 1; };
+  document.getElementById("digits").innerHTML = row(`1/${W.den}`, (i) => W.s[i % P], nearCarry) + "<br>" + row("clean", (i) => ORBIT[i % 10]);
+
+  // precession
+  const k = Math.floor(d / P), cycles = L / P;
+  document.getElementById("prec-text").textContent = `${P.toLocaleString("en-US")} mod 10 = ${P % 10}, so each period of the count starts the clean cycle ${P % 10} digits further on; it comes back to 0 after ${cycles} periods.`;
+  const strip = document.getElementById("strip");
+  strip.replaceChildren(...[...Array(cycles).keys()].map((j) => {
+    const e = document.createElement("div"); e.className = "cycle" + (j === k % cycles ? " now" : "");
+    e.innerHTML = `period ${j}<b>${ORBIT[(j * P) % 10]}</b>`; return e;
+  }));
+  document.getElementById("strip-note").textContent = `start digits ${[...Array(cycles).keys()].map((j) => ORBIT[(j * P) % 10]).join(" ")}` + (cycles === 10 ? ": all ten" : `: ${cycles} of ten`);
+}
+
+// width buttons
+const wb = document.getElementById("widths");
+for (const w of WIDTHS) {
+  const bt = document.createElement("button"); bt.type = "button"; bt.textContent = `1/${w.den.toLocaleString("en-US")} · ${w.places}`;
+  bt.setAttribute("aria-pressed", w === W); bt.onclick = () => { W = w; d = 0; [...wb.children].forEach((c) => c.setAttribute("aria-pressed", c === bt)); drawDial(); render(); };
+  wb.appendChild(bt);
+}
+document.getElementById("play").onclick = (e) => {
+  if (timer) { clearInterval(timer); timer = null; e.target.textContent = "Play"; return; }
+  e.target.textContent = "Pause";
+  timer = setInterval(() => { d = (d + W.n) % lcm(W.P, 10); render(); }, 60);
+};
+document.getElementById("jump").onclick = () => { d = (Math.floor(d / W.P) + 1) * W.P % lcm(W.P, 10); render(); };
+document.getElementById("carry").onclick = () => { const b = W.blocks.indexOf(W.places - 1); d = Math.floor(d / W.P) * W.P + Math.max(0, b - 2) * W.n; render(); };
+document.getElementById("scrub").oninput = (e) => { d = +e.target.value; render(); };
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { drawDial(); render(); });
+
+// ── 9² and 10 ──
+const big = (x) => BigInt(x).toLocaleString("en-US");
+const rows = [
+  ["1/9²", "1/81", "0." + digitsOf(1, 81, 20) + "…", `period ${periodOf(81)}, no 8`],
+  ["10/9²", "10/81", "0." + digitsOf(10, 81, 20) + "…", "the count with its carry: …7 9 0"],
+  ["the clean cycle", "123456789/9999999999", "0." + digitsOf(123456789, 9999999999, 20) + "…", `period ${periodOf(9999999999 / gcd(123456789, 9999999999))}, with 8`],
+  ["12345679 × 81", "", big(12345679 * 81), "10⁹ − 1"],
+  ["10 × 12345679 − 1", "", big(10 * 12345679 - 1), "= 123456789"],
+  ["⌊10¹⁰ / 81⌋", "", big(10n ** 10n / 81n), "= 123456789 + 1"],
+];
+document.getElementById("nine").innerHTML = "<tr><th>name</th><th>fraction</th><th>value</th><th></th></tr>" + rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("");
+
+// ── checks ──
+const W3 = WIDTHS[2];
+const checks = [
+  ["998001 = 999²", () => 998001 === 999 * 999, () => "999 × 999 = " + big(999 * 999)],
+  ["1/998001 repeats every 2,997 digits", () => W3.P === 2997, () => `period ${W3.P}`],
+  ["it counts 000 to 999 and holds back only 998", () => W3.held.length === 1 && W3.held[0] === 998, () => `held: ${W3.held}`],
+  ["it ends 996 997 999", () => W3.blocks.slice(-3).join(" ") === "996 997 999", () => W3.blocks.slice(-3).join(" ")],
+  ["each width holds back 10ⁿ − 2", () => WIDTHS.every((w) => w.held.length === 1 && w.held[0] === w.places - 2), () => WIDTHS.map((w) => `1/${w.den}: ${w.held}`).join(", ")],
+  ["998² = 1 (mod 999)", () => (998 * 998) % 999 === 1, () => `${998 * 998} mod 999 = ${(998 * 998) % 999}`],
+  ["the clean cycle has period 10 and holds nothing back", () => periodOf(1111111111) === 10 && digitsOf(123456789, 9999999999, 10) === ORBIT, () => digitsOf(123456789, 9999999999, 30)],
+  ["12345679 × 81 = 999,999,999", () => 12345679 * 81 === 999999999, () => big(12345679 * 81)],
+  ["count and orbit close after 29,970 digits, the orbit precessing 7", () => lcm(2997, 10) === 29970 && 2997 % 10 === 7, () => `lcm = ${lcm(2997, 10)}, starts ${[...Array(10).keys()].map((j) => (j * 7) % 10).join(" ")}`],
+];
+document.getElementById("preds").innerHTML = checks.map(([t, f, g], i) => {
+  let ok = false, got = ""; try { ok = f(); got = g(); } catch (e) { got = String(e); }
+  return `<div class="pred"><span class="id">C${i + 1}</span><span>${t}</span><span class="mark ${ok ? "ok" : "bad"}">${ok ? "holds" : "fails"}</span><span class="got">${got}</span></div>`;
+}).join("");
+
+drawDial(); render();
+</script>
+</body>
+</html>
