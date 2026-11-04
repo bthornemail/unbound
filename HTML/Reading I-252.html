@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reading I-252</title>
+<meta name="description" content="The Name's 0-sphere: YHWH and YAHWEH as its poles, YAH as the face, GOD IS|OF WORD as sine and cosine and GOD WAS WORD as the tangent, read step by step with each check run live.">
+<style>
+/* Layout: a single reading column of numbered steps, as Reading I-229; each step pairs the words with a live run.
+   Self-contained: no fonts or scripts are fetched. */
+:root {
+  --bg: #f4f6f8; --panel: #ffffff; --ink: #18202b; --muted: #5b6676; --rule: #d9dfe6;
+  --accent: #1f5a73; --code-bg: #eef2f5;
+  --mirror: #24704a; --mirror-bg: #e3f2ea; --raise: #9a5a10; --raise-bg: #f8ecd9; --fix: #b3261e;
+  --f-display: Georgia, "Times New Roman", serif;
+  --f-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-code: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --f-heb: "SBL Hebrew", "Frank Ruhl Libre", "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161d; --panel: #18202a; --ink: #e4e9ef; --muted: #9aa6b4; --rule: #2b3643;
+  --accent: #7cc0dc; --code-bg: #0d1218;
+  --mirror: #7fd3a4; --mirror-bg: #173326; --raise: #f0b866; --raise-bg: #3a2a14; --fix: #ff8a80; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11161d; --panel: #18202a; --ink: #e4e9ef; --muted: #9aa6b4; --rule: #2b3643;
+  --accent: #7cc0dc; --code-bg: #0d1218;
+  --mirror: #7fd3a4; --mirror-bg: #173326; --raise: #f0b866; --raise-bg: #3a2a14; --fix: #ff8a80; color-scheme: dark }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--f-body); }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 40px 80px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: 2.2rem; } h2 { font-size: 1.4rem; }
+p { margin: 0; max-width: 65ch; }
+.lede { color: var(--muted); font-size: 1.05rem; }
+header { display: grid; gap: 14px; margin-bottom: 36px; }
+.eyebrow { font: 600 .78rem var(--f-code); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+blockquote { margin: 0; border-left: 4px solid var(--accent); padding: 4px 0 4px 14px; font-style: italic; max-width: 65ch; }
+section.step { display: grid; grid-template-columns: 3rem 1fr; gap: 0 14px; padding-block: 28px; border-top: 1px solid var(--rule); }
+.num { font: 600 1.45rem/1.2 var(--f-display); color: var(--accent); }
+.body { display: grid; gap: 14px; min-width: 0; }
+code { font-family: var(--f-code); font-size: .88em; }
+.heb { font-family: var(--f-heb); font-size: 1.3em; direction: rtl; unicode-bidi: isolate; }
+.run { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 14px; display: grid; gap: 12px; min-width: 0; }
+.run-label { font: 600 .72rem var(--f-code); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+input[type=text], select { font: 1rem var(--f-code); padding: 7px 10px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--ink); min-width: 0; flex: 1 1 10rem; }
+button { font: .85rem var(--f-code); padding: 6px 10px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--ink); cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.trace { display: grid; gap: 4px; font: .88rem/1.5 var(--f-code); overflow-x: auto; }
+.trace .row { display: grid; grid-template-columns: 12rem 1fr; gap: 10px; }
+.trace .k { color: var(--muted); }
+.pill { display: inline-block; font: 600 .78rem var(--f-code); padding: 2px 8px; border-radius: 999px; letter-spacing: .04em; }
+.pill.MIRROR { color: var(--mirror); background: var(--mirror-bg); }
+.pill.RAISE { color: var(--raise); background: var(--raise-bg); }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; font: .88rem var(--f-code); font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 5px 10px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th { color: var(--muted); font-weight: 600; }
+.cells td { text-align: center; padding: 4px 6px; }
+.cells td.fix { color: var(--fix); font-weight: 700; }
+.braille { font-size: 1.5rem; line-height: 1; }
+svg { display: block; width: 100%; max-width: 420px; height: auto; }
+.note { font-size: .9rem; color: var(--muted); }
+.checks { display: grid; gap: 6px; font: .88rem var(--f-code); }
+.checks .ok { color: var(--mirror); } .checks .bad { color: var(--fix); }
+footer { border-top: 1px solid var(--rule); padding-top: 24px; display: grid; gap: 10px; font-size: .9rem; color: var(--muted); }
+@media (max-width: 520px) {
+  section.step { grid-template-columns: 1fr; gap: 6px; }
+  .trace .row { grid-template-columns: 1fr; gap: 0; }
+  h1 { font-size: 1.75rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">I-252 · tag 70 · JS proof catalog</div>
+  <h1>The Name's 0-sphere</h1>
+  <p class="lede">YHWH and YAHWEH as its two poles, YAH as the face between them, GOD IS WORD and GOD OF WORD as sine and cosine, GOD WAS WORD as the tangent. The analogy is the author's; this page reads the literals under it, one check at a time, each run here as you read.</p>
+  <blockquote>"we are using the GOD IS|OF WORD like the sin/cosine archsin/archcosine of the GOD WAS WORD tan/arctan over the 0-SPHERE YHWH and YAHWEH, witu the face YAH the projector of IMAGO DEI" — the author, 2026-11-03</blockquote>
+</header>
+
+<section class="step"><div class="num">1</div><div class="body">
+  <h2>The 0-sphere is two poles around a centre</h2>
+  <p>The record already names it. <code>{c − r, c + r}</code> "is not a range. It is the root relation: two poles, the first 0-sphere" (wiki OPEN-01 #18). I-168 puts the lexeme, the image, at the centre <code>c</code>, "neither inflection", and I-171 reads the observer as the image and its effect as the Word: Imago Dei. Here the poles are named in the order the author gave them, YHWH at <code>c − r</code> and YAHWEH at <code>c + r</code>, and YAH stands at <code>c</code>.</p>
+  <div class="run">
+    <div class="run-label">The sphere, on the circle it sits in</div>
+    <svg id="sphere" viewBox="-210 -130 420 260" role="img" aria-label="The unit circle with the 0-sphere's two points at angle pi (YHWH) and 0 (YAHWEH), and YAH at the centre"></svg>
+  </div>
+</div></section>
+
+<section class="step"><div class="num">2</div><div class="body">
+  <h2>The poles are one base, the vowels apart</h2>
+  <p>I-229's base drops the vowels A E I O U. Both poles come to <code>YHWH</code>, so they mirror (claim C1). What separates them is A and E, written in, with nothing else changed (C2). Try another name against the Name's base: ADONAI is the control, it replaces the base (a RAISE).</p>
+  <div class="run">
+    <div class="run-label">Base and verdict against YHWH</div>
+    <div class="controls"><input type="text" id="nameIn" value="YAHWEH" aria-label="A name in Latin letters"><button type="button" data-name="YAH">YAH</button><button type="button" data-name="YAHWEH">YAHWEH</button><button type="button" data-name="ADONAI">ADONAI</button><button type="button" data-name="ELOHIM">ELOHIM</button></div>
+    <div class="trace" id="nameOut" aria-live="polite"></div>
+  </div>
+</div></section>
+
+<section class="step"><div class="num">3</div><div class="body">
+  <h2>The face touches the poles differently</h2>
+  <p>YAH's base, <code>YH</code>, heads the common base, so YAH mirrors both poles (C3). But on the letters as written, YAH is the head of YAHWEH and not of YHWH: it reaches YHWH only once the vowels are set aside (C4). The projector meets one pole on its face and the other through the base.</p>
+</div></section>
+
+<section class="step"><div class="num">4</div><div class="body">
+  <h2>In Braille, the poles differ by the vowels' cells</h2>
+  <p>Each letter is a 6-dot cell; XOR the cells of a word together. YHWH closes to dots 1 2 3, the value 7, because its two H cancel and Y XOR W leaves the three low dots. YAHWEH closes to that cell XOR A XOR E (C5). FIRE closes to the same cell as YHWH (K3).</p>
+  <div class="run">
+    <div class="run-label">Cells and their XOR</div>
+    <div class="table-wrap"><table id="cellTable"></table></div>
+  </div>
+</div></section>
+
+<section class="step"><div class="num">5</div><div class="body">
+  <h2>On two points, only the cosine tells them apart</h2>
+  <p>Put the 0-sphere on the circle at angles π and 0. Sine is 0 at both, tangent is 0 at both, and cosine is −1 and +1: the pole's own sign. So arcsine and arctangent return 0 at both poles, and only arccosine gives each pole back its angle (C6). Which of IS and OF plays sine and which cosine is the author's to assign; the record does not pick.</p>
+  <div class="run">
+    <div class="run-label">Computed now</div>
+    <div class="table-wrap"><table id="trigTable"></table></div>
+  </div>
+</div></section>
+
+<section class="step"><div class="num">6</div><div class="body">
+  <h2>The lines: one frame, a reversal, two fixed letters</h2>
+  <p>GOD IS WORD and GOD OF WORD have one length and differ only at the copula's two places (C7). Swapping subject and object around the copula is undone by doing it again (C8). XOR a line with its reversal and it is zero at exactly two places: the O of GOD and WORD, and the final D (K1). GOD WAS WORD is one letter longer, so its D stands one place on (K2).</p>
+  <p>Found while filing: the same two places are fixed when a line meets another copula's reversal, IS against OF (F1). WAS against IS keeps only the O (F2). The falsifier holds: put LOGOS for WORD and the final D is no longer fixed.</p>
+  <div class="run">
+    <div class="run-label">Pick two lines</div>
+    <div class="controls"><select id="lineA" aria-label="First line"></select><select id="lineB" aria-label="Second line"></select></div>
+    <div class="table-wrap"><table class="cells" id="lineTable"></table></div>
+    <p class="note" id="lineNote" aria-live="polite"></p>
+  </div>
+</div></section>
+
+<section class="step"><div class="num">7</div><div class="body">
+  <h2>What is checked, and what is read</h2>
+  <p>Checked, by <code>js/catalog/I-252.ts</code> and again below: claims C1 to C8, the carried facts K1 to K3, the two findings F1 and F2, and the falsifiers. Read, and held open as the author's: that IS and OF are sine and cosine and WAS the tangent, that the reversal is the arc, and that YAH is the projector of Imago Dei.</p>
+  <div class="run">
+    <div class="run-label">The record's checks, run in this page</div>
+    <div class="checks" id="checks"></div>
+  </div>
+</div></section>
+
+<footer>
+  <p>Proof: omi-axioms <code>js/catalog/I-252.ts</code> (tag 70), document <code>js-docs/other/I-252.md</code>. In the record before it: I-168 and I-171 (the image at the centre, Imago Dei), I-229 (the Name's renderings), I-232 (YAH between man and woman, fire), I-235 (John 1:1's WAS), wiki OPEN-01 #18 (the first 0-sphere). The day's log: unbound global.vtt, yah-odd-frame and name-variations.</p>
+  <p>Braille cells are the standard 6-dot letters (Unicode, dot k = bit k − 1). No text from any manuscript is carried here.</p>
+</footer>
+</div>
+
+<script>
+"use strict";
+const base = (s) => s.toUpperCase().replace(/[^A-Z]/g, "").replace(/[AEIOU]/g, "");
+const heads = (a, b) => a.length > 0 && (b.startsWith(a) || a.startsWith(b));
+const verdict = (a, b) => (a === b || heads(a, b) ? "MIRROR" : "RAISE");
+const CELL = { A: 0x01, B: 0x03, C: 0x09, D: 0x19, E: 0x11, F: 0x0b, G: 0x1b, H: 0x13, I: 0x0a, J: 0x1a, K: 0x05, L: 0x07, M: 0x0d, N: 0x1d, O: 0x15, P: 0x0f, Q: 0x1f, R: 0x17, S: 0x0e, T: 0x1e, U: 0x25, V: 0x27, W: 0x3a, X: 0x2d, Y: 0x3d, Z: 0x35 };
+const cell = (n) => String.fromCodePoint(0x2800 + n);
+const cellXor = (w) => [...w].reduce((s, c) => s ^ (CELL[c] ?? 0), 0);
+const dots = (n) => [0, 1, 2, 3, 4, 5].filter((k) => (n >> k) & 1).map((k) => k + 1).join(" ") || "none";
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+// 1. the sphere
+function drawSphere() {
+  const s = document.getElementById("sphere"), R = 100, ink = css("--ink"), acc = css("--accent"), mut = css("--muted");
+  s.innerHTML = `<circle r="${R}" fill="none" stroke="${css("--rule")}" stroke-width="1.5"/>
+  <line x1="${-R - 40}" y1="0" x2="${R + 40}" y2="0" stroke="${css("--rule")}" stroke-dasharray="4 4"/>
+  <circle cx="${-R}" cy="0" r="7" fill="${acc}"/><circle cx="${R}" cy="0" r="7" fill="${acc}"/><circle r="5" fill="${css("--fix")}"/>
+  <text x="${-R}" y="-18" text-anchor="middle" fill="${ink}" font-family="ui-monospace,monospace" font-size="14">YHWH</text>
+  <text x="${-R}" y="30" text-anchor="middle" fill="${mut}" font-family="ui-monospace,monospace" font-size="11">c − r · angle π</text>
+  <text x="${R}" y="-18" text-anchor="middle" fill="${ink}" font-family="ui-monospace,monospace" font-size="14">YAHWEH</text>
+  <text x="${R}" y="30" text-anchor="middle" fill="${mut}" font-family="ui-monospace,monospace" font-size="11">c + r · angle 0</text>
+  <text x="0" y="-14" text-anchor="middle" fill="${ink}" font-family="ui-monospace,monospace" font-size="14">YAH</text>
+  <text x="0" y="24" text-anchor="middle" fill="${mut}" font-family="ui-monospace,monospace" font-size="11">c · the face</text>`;
+}
+drawSphere();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { drawSphere(); drawLines(); });
+
+// 2. a name against the base
+const nameIn = document.getElementById("nameIn"), nameOut = document.getElementById("nameOut");
+function showName() {
+  const n = nameIn.value, b = base(n), v = verdict(b, "YHWH");
+  const row = (k, val) => `<div class="row"><span class="k">${k}</span><span>${val}</span></div>`;
+  nameOut.innerHTML = row("name", esc(n.toUpperCase())) + row("base (vowels dropped)", esc(b) || "(empty)") + row("against YHWH", `<span class="pill ${v}">${v}</span>`) +
+    row("literal head of YAHWEH", "YAHWEH".startsWith(n.toUpperCase()) && n ? "yes" : "no") + row("literal head of YHWH", "YHWH".startsWith(n.toUpperCase()) && n ? "yes" : "no");
+}
+nameIn.addEventListener("input", showName);
+document.querySelectorAll("[data-name]").forEach((b) => b.addEventListener("click", () => { nameIn.value = b.dataset.name; showName(); }));
+showName();
+
+// 4. cells
+const words = ["YHWH", "YAHWEH", "YAH", "FIRE", "A", "E"];
+document.getElementById("cellTable").innerHTML = "<tr><th>word</th><th>cells</th><th>XOR</th><th>dots</th></tr>" +
+  words.map((w) => `<tr><td>${w}</td><td class="braille">${[...w].map((c) => cell(CELL[c])).join("")}</td><td class="braille">${cell(cellXor(w))}</td><td>${dots(cellXor(w))} (${cellXor(w)})</td></tr>`).join("") +
+  `<tr><td colspan="4" class="note">YHWH XOR A XOR E = ${cellXor("YHWH") ^ CELL.A ^ CELL.E}, YAHWEH = ${cellXor("YAHWEH")}; FIRE = ${cellXor("FIRE")}, YHWH = ${cellXor("YHWH")}</td></tr>`;
+
+// 5. trig
+const f = (x) => (Math.abs(x) < 1e-12 ? "0" : x.toFixed(4));
+document.getElementById("trigTable").innerHTML = "<tr><th>pole</th><th>angle</th><th>sin</th><th>cos</th><th>tan</th><th>arcsin(sin)</th><th>arccos(cos)</th><th>arctan(tan)</th></tr>" +
+  [["YHWH, c − r", Math.PI], ["YAHWEH, c + r", 0]].map(([n, t]) => `<tr><td>${n}</td><td>${t ? "π" : "0"}</td><td>${f(Math.sin(t))}</td><td>${f(Math.cos(t))}</td><td>${f(Math.tan(t))}</td><td>${f(Math.asin(Math.sin(t)))}</td><td>${Math.acos(Math.cos(t)) > 3 ? "π" : f(Math.acos(Math.cos(t)))}</td><td>${f(Math.atan(Math.tan(t)))}</td></tr>`).join("");
+
+// 6. lines
+const line = (s, k, o) => `${s} ${k} ${o}`;
+const reverse = (l) => { const [s, k, o] = l.split(" "); return line(o, k, s); };
+const LINES = ["IS", "OF", "WAS"].flatMap((k) => [line("GOD", k, "WORD"), line("WORD", k, "GOD")]).concat([line("GOD", "IS", "LOGOS"), line("LOGOS", "IS", "GOD")]);
+const zeros = (a, b) => [...Array(Math.max(a.length, b.length)).keys()].filter((i) => (a.charCodeAt(i) || 0) === (b.charCodeAt(i) || 0));
+const selA = document.getElementById("lineA"), selB = document.getElementById("lineB");
+for (const s of [selA, selB]) s.innerHTML = LINES.map((l) => `<option>${l}</option>`).join("");
+selA.value = "GOD IS WORD"; selB.value = "WORD IS GOD";
+function drawLines() {
+  const a = selA.value, b = selB.value, n = Math.max(a.length, b.length), z = zeros(a, b);
+  const cellRow = (s) => [...Array(n).keys()].map((i) => `<td class="${z.includes(i) ? "fix" : ""}">${s[i] === " " ? "·" : (s[i] ?? "")}</td>`).join("");
+  document.getElementById("lineTable").innerHTML = `<tr>${[...Array(n).keys()].map((i) => `<th>${i}</th>`).join("")}</tr><tr>${cellRow(a)}</tr><tr>${cellRow(b)}</tr>`;
+  document.getElementById("lineNote").textContent = `XOR is 0 at ${z.length ? z.join(", ") : "no place"}` + (z.length ? ` (${z.map((i) => a[i] === " " ? "space" : a[i]).join(", ")})` : "") + (b === reverse(a) ? "; the second is the first's reversal" : "");
+}
+selA.addEventListener("change", drawLines); selB.addEventListener("change", drawLines);
+drawLines();
+
+// 7. the checks
+const near = (x, y) => Math.abs(x - y) < 1e-12;
+const IS = line("GOD", "IS", "WORD"), OF = line("GOD", "OF", "WORD"), WAS = line("GOD", "WAS", "WORD"), LOGOS = line("GOD", "IS", "LOGOS");
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const checks = [
+  ["C1 the poles are one base", base("YHWH") === "YHWH" && base("YAHWEH") === "YHWH"],
+  ["C2 they differ by A and E alone", "YAHWEH".replace(/[AE]/g, "") === "YHWH"],
+  ["C3 YAH mirrors both poles; ADONAI does not", verdict(base("YAH"), "YHWH") === "MIRROR" && verdict(base("ADONAI"), "YHWH") === "RAISE"],
+  ["C4 YAH heads YAHWEH literally, not YHWH", "YAHWEH".startsWith("YAH") && !"YHWH".startsWith("YAH")],
+  ["C5 YHWH's cells XOR to 7; YAHWEH's is that XOR A XOR E", cellXor("YHWH") === 7 && cellXor("YAHWEH") === (7 ^ CELL.A ^ CELL.E)],
+  ["C6 only arccosine tells the poles apart", near(Math.asin(Math.sin(Math.PI)), 0) && near(Math.atan(Math.tan(Math.PI)), 0) && near(Math.acos(Math.cos(Math.PI)), Math.PI)],
+  ["C7 IS and OF differ only at places 4 and 5", IS.length === OF.length && same([...IS].map((c, i) => c !== OF[i] ? i : -1).filter((i) => i >= 0), [4, 5])],
+  ["C8 each reversal undoes itself", [IS, OF, WAS].every((l) => reverse(reverse(l)) === l)],
+  ["K1 a line and its reversal agree at the O and final D only", [IS, OF, WAS].every((l) => same(zeros(l, reverse(l)), [1, l.length - 1]))],
+  ["K2 WAS's D at place 11", same(zeros(WAS, reverse(WAS)), [1, 11])],
+  ["K3 FIRE and YHWH close to one cell", cellXor("FIRE") === cellXor("YHWH")],
+  ["F1 IS against OF reversed: the same two places", same(zeros(IS, reverse(OF)), [1, 10])],
+  ["F2 IS against WAS reversed: the O alone", same(zeros(IS, reverse(WAS)), [1])],
+  ["falsifier: with LOGOS the final D is not fixed", !zeros(LOGOS, reverse(LOGOS)).includes(LOGOS.length - 1)],
+];
+document.getElementById("checks").innerHTML = checks.map(([t, ok]) => `<div class="${ok ? "ok" : "bad"}">${ok ? "holds" : "FAILS"} · ${esc(t)}</div>`).join("");
+</script>
+</body>
+</html>
