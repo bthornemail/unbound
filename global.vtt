@@ -506,3 +506,7 @@ emmc-2mib
 blackboard-half
 00:02:05.000 --> 00:02:06.000
 2026-11-03 the author, of the 2 MiB image's free half: "that other half is like the blackboard swap space, its like the cache, becuase the 256 is only needed for the 65536 resolution but the 512 allows for trying on new bits". In the record: 256 x 256 = 65,536, a wall of the normalised cube (normalised-space), and the proof Blob at the image's start is 8,192 bytes, 65,536 bits (I-94); the image's sectors are 512 bytes, the proof tree laid out one record a sector boundary (proof-emmc.ts); at 2 MiB the 137 records end at 1,055,744 bytes, so 1,041,408 bytes, about half, are not yet written. That free half as a blackboard, a swap space or cache where new bits are tried before they are kept, the 256 for the 65,536 and the 512 for the trying: the author's reading, not built (nothing yet writes there).
+
+two-views
+00:02:06.000 --> 00:02:07.000
+2026-11-03 the author, of blackboard-half: "its like how the dominoes have a horizontal and vertical view". In the record: Unicode's dominoes in two orientations, 49 horizontal and 49 vertical, the same values drawn turned a quarter (domino-fano, domino-plane); their 8 empty dots the vertical 4 and the horizontal 4, the cube's two colours, dark and light (domino-stella), the turning moves D, TD, WD taking one view to the other and the kept line T W TW keeping each. So the image's two halves, the kept record and the blackboard for trying new bits, as the dominoes' two views of the same values: the author's reading.
