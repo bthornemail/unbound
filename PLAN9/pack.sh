@@ -140,6 +140,10 @@ PLAN9/src/mk.rc
 PLAN9/src/mkfs.c
 PLAN9/src/mkd.c
 PLAN9/src/mkworld.rc
+PLAN9/src/repfs.c
+PLAN9/src/repfs.rc
+PLAN9/in/repfs/cases
+PLAN9/in/repfs/expected
 PLAN9/src/zctl.c
 PLAN9/src/ctl.rc
 PLAN9/src/zcons.c
