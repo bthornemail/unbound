@@ -4,12 +4,14 @@
  *	aux/listen1 -t tcp!*!8001 mkd
  * It reads /n/mk, mounting /srv/mk there if it is not yet.
  *	GET  /tiles			each tile, SPACE Z/X/Y, one a line
- *	GET  /events?SPACE&Z/X/Y	the tile's events, one a line
- *	GET  /state?SPACE&Z/X/Y		the tile's state, mkfs's fold, one node a line
- *	POST /events?SPACE&Z/X/Y	append the body's lines: taken whole when
+ *	GET  /events/SPACE/Z/X/Y	the tile's events, one a line
+ *	GET  /state/SPACE/Z/X/Y		the tile's state, mkfs's fold, one node a line
+ *	POST /events/SPACE/Z/X/Y	append the body's lines: taken whole when
  *					the grammar accepts every line, else 400
  *					and nothing appended
  * Only POST writes. Every answer allows any origin, for boxedPINE's space/.
+ * The path is the query (HTTP 0.2, the author: "we dont need query path
+ * because the path is the query"): a request with a query string is refused.
  */
 #include <u.h>
 #include <libc.h>
@@ -55,15 +57,15 @@ readall(char *file, long *n)
 	return s;
 }
 
-/* SPACE&Z/X/Y as the tile's directory, or nil */
+/* SPACE/Z/X/Y as the tile's directory, or nil */
 static char*
 tiledir(char *q)
 {
-	char *f[2];
+	char *t;
 
-	if(q == nil || getfields(q, f, 2, 0, "&") != 2 || strstr(f[0], "..") || strstr(f[1], "..") || strchr(f[0], '/'))
+	if(q == nil || strstr(q, "..") || (t = strchr(q, '/')) == nil || t == q || t[1] == 0)
 		return nil;
-	return smprint("/n/mk/spaces/%s/tiles/%s", f[0], f[1]);
+	return smprint("/n/mk/spaces/%.*s/tiles/%s", (int)(t - q), q, t + 1);
 }
 
 static void
@@ -116,15 +118,20 @@ main(void)
 			len = atol(s + 15);
 		free(s);
 	}
-	path = f[1];
-	if((q = strchr(path, '?')) != nil)
-		*q++ = 0;
-	if(strcmp(path, "/tiles") == 0)
+	if(strchr(f[1], '?') != nil)
+		fail("400 Bad Request", "no query strings: the path is the query, /events/SPACE/Z/X/Y");
+	if(strcmp(f[1], "/tiles") == 0)
 		tiles();
-	if(strcmp(path, "/events") != 0 && strcmp(path, "/state") != 0)
-		fail("404 Not Found", "GET /tiles, /events?SPACE&Z/X/Y or /state?SPACE&Z/X/Y; POST /events?SPACE&Z/X/Y");
+	if(strncmp(f[1], "/events/", 8) == 0){
+		path = "/events";
+		q = f[1] + 8;
+	}else if(strncmp(f[1], "/state/", 7) == 0){
+		path = "/state";
+		q = f[1] + 7;
+	}else
+		fail("404 Not Found", "GET /tiles, /events/SPACE/Z/X/Y or /state/SPACE/Z/X/Y; POST /events/SPACE/Z/X/Y");
 	if((d = tiledir(q)) == nil || access(d, AEXIST) < 0)
-		fail("404 Not Found", "no such tile: ?SPACE&Z/X/Y");
+		fail("404 Not Found", "no such tile: /SPACE/Z/X/Y");
 	if(strcmp(f[0], "POST") == 0){
 		if(strcmp(path, "/events") != 0)
 			fail("405 Method Not Allowed", "the state is the fold of the events: POST to /events");
