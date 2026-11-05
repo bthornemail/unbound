@@ -219,6 +219,9 @@ PLAN9/in/translate/counts.wrong
 PLAN9/in/translate/counts.page
 PLAN9/src/ztranslit.c
 PLAN9/src/translit.rc
+PLAN9/src/wsn.y
+PLAN9/src/lalr.rc
+$(cd "$HERE" && find in/lalr -type f ! -name gen.mjs | LC_ALL=C sort | sed 's|^|PLAN9/|')
 PLAN9/src/zexpand.c
 PLAN9/src/expand.rc
 $(cd "$HERE" && find in/wiki -type f ! -name "*.mjs" | LC_ALL=C sort | sed 's|^|PLAN9/|')

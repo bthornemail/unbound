@@ -1,0 +1,25 @@
+PAGE? = { ITEM } .
+ITEM = COMMENT | DOCTYPE | ENDTAG | STARTTAG | TEXT .
+COMMENT = "<!--" { ANY } "-->" .
+DOCTYPE = "<!doctype" SPACES "html" [ SPACES ] ">" .
+STARTTAG = "<" NAME { SPACES ATTR } [ SPACES ] [ "/" ] ">" .
+ENDTAG = "</" NAME [ SPACES ] ">" .
+ATTR = ATTRNAME [ [ SPACES ] "=" [ SPACES ] VALUE ] .
+VALUE = """" { NOTDQ } """" | "'" { NOTSQ } "'" | UNQUOTED .
+UNQUOTED = UQ { UQ } .
+ATTRNAME = AN { AN } .
+NAME = LETTER { NAMECHAR } .
+NAMECHAR = LETTER | DIGIT | "-" | ":" | "_" | "." .
+TEXT = TX { TX } .
+RAWTEXT = { ANY } .
+ENTITY = "&" ( NAME | "#" DIGIT { DIGIT } ) ";" .
+SPACES = " " { " " } .
+LETTER = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" .
+DIGIT = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" .
+MARK = "-" | "_" | ":" | "." | "#" | "&" | ";" | "!" | "~" .
+ANY = LETTER | DIGIT | MARK | " " | "<" | ">" | "/" | "=" | """" | "'" .
+TX = LETTER | DIGIT | MARK | " " | ">" | "/" | "=" | """" | "'" .
+NOTDQ = LETTER | DIGIT | MARK | " " | "<" | ">" | "/" | "=" | "'" .
+NOTSQ = LETTER | DIGIT | MARK | " " | "<" | ">" | "/" | "=" | """" .
+UQ = LETTER | DIGIT | MARK | "/" .
+AN = LETTER | DIGIT | MARK | "<" .

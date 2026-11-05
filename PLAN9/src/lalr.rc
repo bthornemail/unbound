@@ -1,0 +1,30 @@
+#!/bin/rc
+# lalr.rc - inside Plan 9: Wirth syntax notation read by an LALR parser and by recursive descent, which must agree.
+# src/wsn.y is built with Plan 9's own yacc (the LALR generator: DeRemer 1969, the author's "lrlr") and src/zwsn.c
+# compiled beside it; both read, from PLAN9, the record's grammars (wsn/*.wsn), the 514 in wsn/js and wsn/unbound
+# (wsn/LIST), and the 87 one-change mutants (in/lalr/mutants, by in/lalr/gen.mjs on the host). zwsn's reasons are
+# written as "rejected", so the two lines compare. Both answers go to the output disk as a tar; on the host GNU Bison
+# builds the same wsn.y and lalr.sh compares all three.
+rfork e
+w=/tmp/zl
+rm -rf $w
+mkdir -p $w/unbound $w/zout
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/wsn.y PLAN9/src/zwsn.c PLAN9/wsn PLAN9/in/lalr} || exit tar
+g=$w/unbound/PLAN9
+cd $g/src
+yacc wsn.y && 8c -DPLAN9 y.tab.c && 8l -o $w/zlalr y.tab.8 || exit yacc
+8c zwsn.c && 8l -o $w/zwsn zwsn.8 || exit compile
+cd $g
+ifs='
+' sub=`{sed 's|^|wsn/|' wsn/LIST}
+ifs='
+' mut=`{sed 's|^|in/lalr/mutants/|' in/lalr/mutants/LIST}
+for(r in zlalr zwsn){
+	$w/$r wsn/*.wsn >$w/zout/$r.txt
+	$w/$r $sub >>$w/zout/$r.txt
+	$w/$r $mut >>$w/zout/$r.txt
+}
+sed 's/^([^:]*:[0-9]+): .*/\1: rejected/' $w/zout/zwsn.txt >$w/zout/zwsn.norm
+if(cmp -s $w/zout/zlalr.txt $w/zout/zwsn.norm) echo 'yacc and zwsn agree on' `{wc -l <$w/zout/zlalr.txt} files
+if not echo 'yacc and zwsn DIFFER'
+@{cd $w && tar cf /dev/sd02/data zout} || exit tar
