@@ -1,0 +1,44 @@
+#!/bin/rc
+# viewfs.rc - inside Plan 9: any file read through a circuit as a Braille stream, nothing changed (src/viewfs.c).
+# Builds viewfs, mounts it at /n/view, and reads in/viewfs/words and in/viewfs/bytes through each circuit; each view
+# must be byte for byte in/viewfs/expected/CIRCUIT.FILE (computed on the host by in/viewfs/gen.mjs, apart from the
+# C). Then: the inputs unchanged (their copies taken before), a write refused, a view of the view refused, the
+# directory listed as it is. With -s, viewfs stays mounted.
+rfork e
+ifs='
+'
+w=/tmp/zviewfs
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/viewfs.c PLAN9/in/viewfs} || exit tar
+p=$w/unbound/PLAN9
+d=$p/in/viewfs
+cp $d/words $w/words.before
+cp $d/bytes $w/bytes.before
+cd $p/src
+8c viewfs.c && 8l -o $w/viewfs viewfs.8 || exit compile
+unmount /n/view >[2]/dev/null
+rm -f /srv/view
+$w/viewfs || exit viewfs
+fail=0
+n=0
+for(f in words bytes){
+	for(c in braille xor/YHWH xor/YAHWEH xnor/YHWH xnor/YAHWEH pixels spectrum){
+		e=`{echo $c | sed 's|/|-|'}
+		cat /n/view/$c$d/$f >$w/got
+		if(cmp -s $w/got $d/expected/$e.$f) n=`{echo $n + 1 | hoc}
+		if not { echo FAIL $c $f; fail=1 }
+	}
+}
+echo $n of 14 views as expected
+if(cmp -s $w/words.before $d/words && cmp -s $w/bytes.before $d/bytes) echo ok the inputs unchanged
+if not { echo FAIL an input changed; fail=1 }
+if(@{echo x >>/n/view/braille$d/words} >[2]/dev/null) { echo FAIL a write taken; fail=1 }
+if not echo ok a write refused
+if(@{test -e /n/view/braille/n/view/braille} >[2]/dev/null) { echo FAIL a view of the view; fail=1 }
+if not echo ok a view of the view refused
+l=`{ls -p /n/view/pixels$d | grep -v expected}
+if(~ $"l 'bytes gen.mjs words') echo ok the directory listed as it is
+if not { echo FAIL listing: $l; fail=1 }
+if(~ $fail 0) echo 'viewfs.rc: every answer as expected'
+if(! ~ $1 -s) unmount /n/view
