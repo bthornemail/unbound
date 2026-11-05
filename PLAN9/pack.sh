@@ -144,6 +144,10 @@ PLAN9/src/repfs.c
 PLAN9/src/repfs.rc
 PLAN9/in/repfs/cases
 PLAN9/in/repfs/expected
+PLAN9/src/wordfs.c
+PLAN9/src/wordfs.rc
+PLAN9/in/wordfs/cases
+PLAN9/in/wordfs/expected
 PLAN9/src/zctl.c
 PLAN9/src/ctl.rc
 PLAN9/src/zcons.c

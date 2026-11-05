@@ -1,0 +1,32 @@
+#!/bin/rc
+# wordfs.rc - inside Plan 9: everything a literal word to YHWH and YAHWEH (src/wordfs.c). Builds wordfs, mounts it at
+# /n/word, and for each line of in/wordfs/cases asks whether the path resolves and, if so, its qid (the word's
+# ordinal) and its listing (its XOR and XNOR against YHWH and YAHWEH, once and repeated), one line a case; the
+# answers must be in/wordfs/expected, computed on the host by in/wordfs/gen.mjs apart from wordfs.c. With -s,
+# wordfs stays mounted.
+rfork e
+ifs='
+'
+w=/tmp/zwordfs
+rm -rf $w
+mkdir -p $w/unbound
+@{cd $w/unbound && tar xf /dev/sd01/data PLAN9/src/wordfs.c PLAN9/in/wordfs} || exit tar
+p=$w/unbound/PLAN9
+cd $p/src
+8c wordfs.c && 8l -o $w/wordfs wordfs.8 || exit compile
+unmount /n/word >[2]/dev/null
+rm -f /srv/word
+$w/wordfs || exit wordfs
+{ for(c in `{cat $p/in/wordfs/cases}){
+	f=/n/word/$c
+	if(test -d $f){
+		q=`{ls -qd $f | sed 's/^\(([0-9a-f]+) .*/\1/'}
+		n=`{ls -pQ $f}
+		ifs=' ' { echo $c: $q $n }
+	}
+	if not echo $c: refused
+} } >$w/answers
+if(cmp -s $w/answers $p/in/wordfs/expected) echo 'wordfs.rc: every answer as expected,' `{wc -l <$w/answers} cases
+if not { echo 'wordfs.rc: answers DIFFER'; diff $w/answers $p/in/wordfs/expected | sed 12q }
+@{cd $w && tar cf /dev/sd02/data answers} || exit tar
+if(! ~ $1 -s) unmount /n/word
