@@ -21,8 +21,13 @@ DISKS=
 KVM=
 [ -w /dev/kvm ] && KVM='-machine accel=kvm'
 
-# shellcheck disable=SC2086 # KVM and DISKS split into words
-qemu-system-x86_64 $KVM -m 1024 -vga std -display none \
+# VNC=1: the guest's screen on 127.0.0.1:5901 (display :1), no password, loopback only (open it in Remmina or Boxes'
+# remote connection); start rio on the console to have the graphical session drawterm would give without auth.
+VIEW=
+[ "${VNC:-}" = 1 ] && VIEW='-vnc 127.0.0.1:1'
+
+# shellcheck disable=SC2086 # KVM, VIEW and DISKS split into words
+qemu-system-x86_64 $KVM -m 1024 -vga std -display none $VIEW \
     -monitor "unix:$RUN/monitor,server,nowait" \
     -serial "file:$RUN/serial.log" \
     -nic "user,model=virtio,hostfwd=tcp:127.0.0.1:17010-:17010,hostfwd=tcp:127.0.0.1:10564-:564,hostfwd=tcp:127.0.0.1:10567-:567,hostfwd=tcp:127.0.0.1:18000-:8000,hostfwd=tcp:127.0.0.1:18001-:8001" \
