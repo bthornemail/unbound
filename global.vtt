@@ -1166,3 +1166,7 @@ transform-at-will
 time-mixes
 00:04:51.000 --> 00:04:52.000
 2026-11-04 the author, of transform-at-will: "yes the cues bind over calendar time and the litelras have logical counerparts". Checked, time as the step that crosses bytes: the exchange (boxedPINE space/src/exchange.ts) is Atomics.compareExchange(svg, 60 ^ frame, 127, 63), its index set by the frame, and 60 ^ frame over frames 0 to 127 visits all 128 byte places exactly once (computed: 128 places, 0 to 127); so no one step mixes bytes, but the sequence of cues does, one place a frame, the whole 128 bytes in 128 frames; a cue's time (one second a cue, the record's convention) is the frame. The literals' logical counterparts: each codex literal has an XOR line and an XNOR line against a key, and the two are complements, byte by byte summing to FF (checked on YHWH): the literal, its XOR, its XNOR, one value in three readings. Adopted: diffusion across the data is carried by time, the cues, as the author says; transform-at-will's missing mixing step is the frame.
+
+time-mixes-limit
+00:04:52.000 --> 00:04:53.000
+A limit on time-mixes, mine: the frames reach every byte, which is coverage; a change made in one byte reaches another only if some frame's write depends on a byte it does not write (the exchange's compare reads only its own cell, so today a change at one place still stays at that place). Coverage over time is in place; carrying one byte's change into the others needs the frame's write to read a neighbour, not yet so.
