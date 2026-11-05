@@ -982,3 +982,7 @@ project-line
 project-line-readme
 00:04:05.000 --> 00:04:06.000
 2026-11-04 the author, of project-line ("that line could become the opening sentence of the boxedPINE or unbound README"): "yes lets do it". Done (boxedPINE b3f81a0): README.md now opens, under its title, "A metaverse building kit based on an autonomous continuum of the Agent Commons in Plan 9: a real-time, infinite world generation." (the author's words, "an" made "a", the colon and the capitals added), before the older description. unbound has no README at its root (PLAN9/README.md is the guest's); not written there.
+
+every-project
+00:04:06.000 --> 00:04:07.000
+2026-11-04 the author, of project-line-readme: "yes this has been the road for every project". Beside the record: the author's path (the-path) runs the same line through each project in turn, the metaverse kit, Polytron, Omnicron, and now boxedPINE, unbound and ZIGUAROTH; the line stands first in boxedPINE's README. Kept as the author's statement: one road under every project.
